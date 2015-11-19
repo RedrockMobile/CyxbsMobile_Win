@@ -1,0 +1,98 @@
+﻿<Page
+    x:Class="ZSCY_Win10.SettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY_Win10"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="VisualState750">
+                    <VisualState.Setters>
+                        <Setter Target="importKB2calendarButton.(FrameworkElement.HorizontalAlignment)" Value="Left"/>
+                        <Setter Target="importKB2calendarButton.(FrameworkElement.Width)" Value="200"/>
+                        <Setter Target="importKB2calendarButton.(FrameworkElement.MaxWidth)" Value="200"/>
+                        <!--<Setter Target="importKB2calendarButton.(FrameworkElement.Margin)">
+                            <Setter.Value>
+                                <Thickness>20,0,0,0</Thickness>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Target="ClearButton.(FrameworkElement.Margin)">
+                            <Setter.Value>
+                                <Thickness>20,0,0,0</Thickness>
+                            </Setter.Value>
+                        </Setter>-->
+                        <Setter Target="ClearButton.(FrameworkElement.HorizontalAlignment)" Value="Left"/>
+                        <Setter Target="ClearButton.(FrameworkElement.Width)" Value="200"/>
+                        <Setter Target="ClearButton.(FrameworkElement.MaxWidth)" Value="200"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="750"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid Background="#068cfd" Grid.Row="0">
+                <Grid Name="JWTitleGrid"  HorizontalAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <AppBarToggleButton Name="BackAppBarToggleButton" Visibility="Collapsed" Icon="Back" Foreground="White" Click="BackAppBarToggleButton_Click"/>
+                        <TextBlock Name="HubSectionKBTitle" Text="设置" Foreground="White" Margin="10,0,0,0"  FontSize="20" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Name="TitlecutoffLineGrid" Visibility="Collapsed" Margin="400,0,0,0" Width="1"  HorizontalAlignment="Left">
+                    <Line Y1="0" Y2="48" Stroke="Gray" StrokeThickness="1"/>
+                </Grid>
+            </Grid>
+            <Grid Margin="10" Grid.Row="1">
+                <Pivot>
+                    <PivotItem Header="功能">
+                        <StackPanel Margin="0,10">
+                            <TextBlock Text="实验室功能" Margin="0,0,0,10" Foreground="#333" Style="{StaticResource TitleTextBlockStyle}"/>
+                            <Button Name="importKB2calendarButton" Foreground="#333" HorizontalAlignment="Stretch"    Content="订阅当前账号课表到日历"  Click="importKB2calendarButton_Click"/>
+
+                            <TextBlock Text="使用透明磁贴" FontSize="20" Foreground="Gray" Margin="0,10"/>
+                            <ToggleSwitch  Name="OpacityToggleSwitch" IsOn="False" OnContent="开" OffContent="关" Toggled="OpacityToggleSwitch_Toggled" Foreground="Black" />
+
+                        </StackPanel>
+                    </PivotItem>
+                    <PivotItem Header="重置"  >
+                        <StackPanel Margin="0,10">
+                            <TextBlock Text="删除缓存" Margin="0,0,0,10" Foreground="#333" Style="{StaticResource TitleTextBlockStyle}"/>
+                            <Button Name="ClearButton" HorizontalAlignment="Stretch"  Foreground="#333" Content="删除所有缓存"    Click="ClearButton_Click"/>
+                        </StackPanel>
+                    </PivotItem>
+                </Pivot>
+            </Grid>
+            <Grid x:Name="about" Grid.Row="1">
+                <Frame x:Name="frame">
+                    <Frame.ContentTransitions>
+                        <TransitionCollection>
+                            <NavigationThemeTransition>
+                                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                    <EntranceNavigationTransitionInfo/>
+                                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                            </NavigationThemeTransition>
+                        </TransitionCollection>
+                    </Frame.ContentTransitions>
+                </Frame>
+            </Grid>
+        </Grid>
+        
+    </Grid>
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Label="切换账号" Icon="Switch" Click="SwitchAppBarButton_Click"/>
+            <AppBarToggleButton Name="LikeAppBarToggleButton" Icon="Like" Label="好评我" Click="LikeAppBarToggleButton_Click"/>
+            <AppBarToggleButton Name="AboutAppBarToggleButton" Icon="Help" Label="关于" Click="AboutAppBarToggleButton_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>

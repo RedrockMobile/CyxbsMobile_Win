@@ -1,0 +1,34 @@
+﻿<Page
+    x:Class="ZSCY.Pages.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="#068cfd">
+
+    <Grid Background="#eeeeee">
+        <StackPanel>
+            <Grid Background="#068cfd">
+                <TextBlock Name="ExamTextBlock" Text="关于我们" Foreground="White" Margin="15" FontSize="40"></TextBlock>
+            </Grid>
+            <StackPanel Name="ExamStackPanel" Margin="15">
+                <Image Margin="0,30,0,30" Source="../Assets/BlueLogo/Logo.scale-240.png" Height="120" Width="120"></Image>
+                <TextBlock Margin="0,0,0,10" Text="掌上重邮 For Windows" Foreground="Black" FontSize="25" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock Text="Version 2.0" HorizontalAlignment="Center" Foreground="Black" FontSize="20"></TextBlock>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Margin="0,0,0,20" VerticalAlignment="Bottom">
+            <TextBlock Text="重庆邮电大学红岩网校工作站" FontSize="18" Foreground="Black" HorizontalAlignment="Center"></TextBlock>
+            <HyperlinkButton Margin="0,0,0,20" Content="http://hongyan.cqupt.edu.cn" NavigateUri="http://hongyan.cqupt.edu.cn" FontSize="18" Foreground="Black" HorizontalAlignment="Center"></HyperlinkButton>
+            <TextBlock Text="Copyright © 2014 - 2015 All Right Reserved" FontSize="15" Foreground="Black" HorizontalAlignment="Center"></TextBlock>
+        </StackPanel>
+    </Grid>
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarToggleButton Name="LikeAppBarToggleButton" Icon="Like" Label="好评我" Click="LikeAppBarToggleButton_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>

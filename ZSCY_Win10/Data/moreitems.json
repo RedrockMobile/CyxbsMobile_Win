@@ -1,0 +1,40 @@
+{
+  "Items": [
+    {
+      "UniqueId": "Calendar",
+      "Itemname": "校历查询",
+      "ItemPage": "CalendarPage",
+      "Itemimgsrc": " Assets/more_calendar333.png"
+    },
+    {
+      "UniqueId": "ClassRoom",
+      "Itemname": "教室查询",
+      "ItemPage": "EmptyRoomsPage",
+      "Itemimgsrc": "Assets/more_empty333.png"
+    },
+    {
+      "UniqueId": "Exam",
+      "Itemname": "考试查询",
+      "ItemPage": "ExamPage",
+      "Itemimgsrc": "Assets/more_exam333.png"
+    },
+    {
+      "UniqueId": "ReExam",
+      "Itemname": "补考查询",
+      "ItemPage": "ExamPage",
+      "Itemimgsrc": "Assets/more_reexam333.png"
+    },
+    {
+      "UniqueId": "Socre",
+      "Itemname": "成绩查询",
+      "ItemPage": "ScorePage",
+      "Itemimgsrc": "Assets/more_score333.png"
+    },
+    {
+      "UniqueId": "Card",
+      "Itemname": "一卡通",
+      "ItemPage": "CardApp",
+      "Itemimgsrc": "Assets/more_card333.png"
+    }
+  ]
+}

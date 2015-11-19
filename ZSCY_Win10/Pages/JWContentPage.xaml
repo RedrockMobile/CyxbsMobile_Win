@@ -1,0 +1,25 @@
+﻿<Page
+    Name="page"
+    x:Class="ZSCY_Win10.JWContentPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY_Win10"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer Background="White">
+        <StackPanel Margin="15">
+            <TextBlock Name="TitleTextBlock" Foreground="#333" FontSize="20" TextWrapping="WrapWholeWords" FontWeight="Bold"></TextBlock>
+            <Grid Margin="0,10">
+                <TextBlock Name="DateReadTextBlock" Foreground="#737373" FontSize="12"></TextBlock>
+                <!--<TextBlock Name="ReadTextBlock" Foreground="#737373" FontSize="12" HorizontalAlignment="Right"></TextBlock>-->
+            </Grid>
+            <Grid>
+                <Line Margin="-15,0,-15,10" X1="0" X2="{Binding ElementName=page,Path=ActualWidth,Mode=OneWay}" Y1="0" Y2="1" Height="1" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                <Line Margin="-15,0,-15,10" X1="0" X2="{Binding ElementName=page,Path=ActualWidth,Mode=OneWay}" Y1="1" Y2="0" Height="1" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+            </Grid>
+            <TextBlock Name="ContentTextBlock" TextWrapping="WrapWholeWords" Foreground="#333" FontSize="16"></TextBlock>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

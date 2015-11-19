@@ -1,0 +1,108 @@
+﻿<Page
+    x:Class="ZSCY_Win10.MorePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY_Win10"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:ZSCY_Win10.Data"
+    DataContext="{Binding Morepageclass,RelativeSource={RelativeSource Self}}"
+    d:DataContext="{Binding Source={d:DesignData Source=Data/moreitems.json, Type=data:DataSource}}"
+    mc:Ignorable="d">
+
+    <Grid x:Name="grid">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="VisualState000">
+                    <VisualState.Setters>
+                        <Setter Target="MoreListgrid.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="MoreContentGrid.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="MoreTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Stretch"/>
+                        <Setter Target="cutoffLine.(FrameworkElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="MoreContentGrid.(FrameworkElement.Margin)">
+                            <Setter.Value>
+                                <Thickness>-1,0,0,0</Thickness>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Target="grid.(FrameworkElement.MinHeight)" Value="0"/>
+                        <Setter Target="grid1.(FrameworkElement.MinHeight)" Value="0"/>
+                        <Setter Target="MoreListgrid.(FrameworkElement.MinHeight)" Value="0"/>
+                        <Setter Target="MoreContentGrid.(FrameworkElement.MinHeight)" Value="0"/>
+                        <Setter Target="frame.(FrameworkElement.MinHeight)" Value="0"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualState700">
+                    <VisualState.Setters>
+                        <Setter Target="MoreTitleGrid.(FrameworkElement.Width)" Value="300"/>
+                        <Setter Target="MoreListgrid.(FrameworkElement.Width)" Value="300"/>
+                        <Setter Target="MoreTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Left"/>
+                        <Setter Target="TitlecutoffLineGrid.(FrameworkElement.Visibility)" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <!--header-->
+        <Grid Background="#068cfd" Grid.Row="0">
+            <Grid Name="MoreTitleGrid"  HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <AppBarButton Name="MoreBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="MoreBackAppBarButton_Click"/>
+                    <TextBlock Name="HubSectionKBTitle" Text="更多" Foreground="White" Margin="10,0,0,0"  FontSize="20" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                </StackPanel>
+            </Grid>
+            <Grid Name="TitlecutoffLineGrid" Visibility="Collapsed" Margin="300,0,0,0" HorizontalAlignment="Left">
+                <Line Y1="0" Y2="48" Width="1" Stroke="#58b3ff" HorizontalAlignment="Left" StrokeThickness="1"/>
+                <TextBlock Name="MoreContentTitleTextBlock" Foreground="White" Margin="10,0,0,0"  FontSize="20" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+            </Grid>
+        </Grid>
+
+        <!--实体-->
+        <Grid x:Name="grid1" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!--列表-->
+            <Grid x:Name="MoreListgrid" Grid.Column="0" DataContext="{Binding Group[0]}">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <ListView Name="MoreListView" IsItemClickEnabled="True" ItemClick="MoreListView_ItemClick" ItemsSource="{Binding items}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate >
+                                <Grid Margin="-12,0">
+                                    <Grid Margin="15,10">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
+                                            <Image Grid.Column="0" Source="{Binding Itemimgsrc}" Width="30" />
+                                            <TextBlock Margin="5,0,0,0" Grid.Column="1" Text="{Binding Itemname}" FontSize="15" Foreground="#333" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <Line X1="0" X2="750" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                    <Line X1="0" X2="750" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
+            </Grid>
+
+            <!--正文-->
+            <Grid Name="MoreContentGrid" Grid.Column="1">
+                <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1"/>
+                <Frame x:Name="frame" Margin="1,0,0,0">
+                    <Frame.ContentTransitions>
+                        <TransitionCollection>
+                            <NavigationThemeTransition>
+                                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                    <EntranceNavigationTransitionInfo/>
+                                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                            </NavigationThemeTransition>
+                        </TransitionCollection>
+                    </Frame.ContentTransitions>
+                </Frame>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

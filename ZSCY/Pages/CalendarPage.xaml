@@ -1,0 +1,33 @@
+﻿<Page
+    x:Class="ZSCY.Pages.CalendarPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    x:Name="itemPage"
+    FontFamily="Microsoft YaHei UI"
+    xmlns:converter="using:ZSCY.Util.Converter"
+    FontWeight="Light"
+    Background="#068cfd">
+    <Page.Resources>
+        <converter:itemScrollViewerHeighConverter x:Key="itemScrollViewerHeighConverter"/>
+    </Page.Resources>
+    <Grid Background="#f8f8f8">
+        <StackPanel>
+
+            <Grid Name="BlueBackGrid" Background="#068cfd" VerticalAlignment="Top" Height="80">
+                <TextBlock Text="校历" Foreground="White" VerticalAlignment="Center" FontSize="40" FontWeight="Light"  FontFamily="Microsoft Yahei UI" Margin="15,0,0,0"></TextBlock>
+            </Grid>
+            <ScrollViewer ZoomMode="Enabled" Height="{Binding ActualHeight, Converter={StaticResource itemScrollViewerHeighConverter}, ElementName=itemPage, Mode=OneWay}"  MinZoomFactor="0.8" MaxZoomFactor="2.5" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" >
+                <ScrollViewer.Content>
+                    <Grid>
+                        <ProgressBar Name="progress" Visibility="Visible" IsIndeterminate="True"/>
+                        <Image Name="CalendarImage" Source="http://www.cqupt.edu.cn/cqupt/img/public/xl.png" Height="{Binding ActualHeight, Converter={StaticResource itemScrollViewerHeighConverter}, ElementName=itemPage, Mode=OneWay}" Stretch="UniformToFill" ></Image>
+                    </Grid>
+                </ScrollViewer.Content>
+            </ScrollViewer>
+        </StackPanel>
+    </Grid>
+</Page>

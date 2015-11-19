@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="ZSCY.Pages.SettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:converter="using:ZSCY.Util.Converter"
+    FontFamily="Microsoft YaHei UI"
+    FontWeight="Light"
+    x:Name="itemPage"
+    Background="#068cfd">
+
+    <Page.Resources>
+        <converter:itemScrollViewerHeighConverter x:Key="itemScrollViewerHeighConverter"/>
+    </Page.Resources>
+    <StackPanel Name="itemStackPanel">
+        <Grid Background="#068cfd" Height="70">
+            <TextBlock Text="设置" Foreground="White" FontWeight="Light" FontFamily="Microsoft YaHei UI" VerticalAlignment="Center" Margin="15,0" FontSize="40"></TextBlock>
+        </Grid>
+        <ScrollViewer Height="{Binding ActualHeight, Converter={StaticResource itemScrollViewerHeighConverter}, ElementName=itemPage, Mode=OneWay}" Background="#f8f8f8">
+            <StackPanel Margin="10">
+                <TextBlock Text="实验室功能" FontSize="20" Foreground="Gray"/>
+                <Button Name="importKB2calendarButton" HorizontalAlignment="Stretch" Content="订阅当前账号课表到日历" RequestedTheme="Light" FontWeight="Light" FontFamily="Microsoft YaHei UI" Click="importKB2calendarButton_Click"/>
+                <!--<Button Name="SearchFreeTime" HorizontalAlignment="Stretch" Content="查询多人空闲时段" RequestedTheme="Light" FontWeight="Light" FontFamily="Microsoft YaHei UI" Click="SearchFreeTime_Click"/>-->
+
+
+                <TextBlock Text="使用透明磁贴" FontSize="20" Foreground="Gray" Margin="0,10"/>
+                <ToggleSwitch  Name="OpacityToggleSwitch" IsOn="False" OnContent="开" OffContent="关" Toggled="OpacityToggleSwitch_Toggled" Foreground="Black" />
+
+                <TextBlock Text="重置本应用" FontSize="20" Foreground="Gray" Margin="0,10"/>
+                <Button Name="ClearButton" HorizontalAlignment="Stretch" Content="删除所有缓存" RequestedTheme="Light" FontWeight="Light" FontFamily="Microsoft YaHei UI" Click="ClearButton_Click"/>
+            </StackPanel>
+        </ScrollViewer>
+    </StackPanel>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarToggleButton Name="AboutAppBarToggleButton" Icon="Help" Label="关于" Click="AboutAppBarToggleButton_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>

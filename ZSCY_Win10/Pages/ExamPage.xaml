@@ -1,0 +1,56 @@
+﻿<Page
+    x:Class="ZSCY.Pages.ExamPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="Microsoft YaHei UI"
+    FontWeight="Light"
+    x:Name="itemPage">
+
+    <Grid  Background="White">
+        <ScrollViewer Name="ExamListScrollViewer" Background="White">
+            <Grid>
+                <ListView Name="ExamListView" HorizontalAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="-12,0">
+                                <Grid Margin="10,20">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding Course}" Foreground="#068cfd" FontSize="25" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
+                                    <Grid  Grid.Row="1">
+                                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                            <Image Source="../Assets/dialog_course_time.png" Margin="0,0,5,0" Height="20"/>
+                                            <TextBlock Text="{Binding DateTime}" Foreground="#333" FontSize="12" VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
+                                        </StackPanel>
+                                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                            <Image Source="../Assets/dialog_course_add.png" Margin="0,0,5,0" Height="20"/>
+                                            <TextBlock Text="{Binding Classroom}" Foreground="#333" FontSize="14" VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
+                                        </StackPanel>
+                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                            <Image Source="../Assets/dialog_course_type.png" Margin="0,0,5,0" Height="20"/>
+                                            <TextBlock Text="{Binding Seat}" Foreground="#333" FontSize="14" VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                                <Line X1="0" X2="999999" Y1="0" Y2="1" Height="1" VerticalAlignment="Top" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                <Line X1="0" X2="999999" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <StackPanel Name="ListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="ListFailedStackPanel_Tapped">
+                    <Image Name="ListFailedStackPanelImage" Source="../Assets/ic_failed.png" Height="80" Width="80" HorizontalAlignment="Center" />
+                    <TextBlock Name="ListFailedStackPanelTextBlock" Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+                </StackPanel>
+                <ProgressRing Name="progress" Visibility="Visible" IsActive="True"  Height="60" Width="60"/>
+
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>

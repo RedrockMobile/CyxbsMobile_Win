@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>Push setup is almost complete...</title>
+      <style>
+        body {
+            background: #fff;
+            color: #505050;
+            font-size: 11px; 
+            font-family: 'Segoe UI', tahoma, arial, helvetica, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+
+        #footer {
+            clear: both;
+            font-size: 0.80em;
+            padding-top: 100px;
+        }
+
+        #header {
+            padding: 0;
+            
+        }
+
+        #header p {
+            margin-top: 0px;
+            margin-bottom: 0px;
+            font-size: 12px;
+            padding: 0px 30px;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+          h1 {
+            font-size: 44px;
+            font-weight: lighter;
+            padding: 0px 30px 8px;
+            margin: 0;
+            color: #5a0077;
+          }
+
+          #main {
+            padding: 0px 30px;
+          }
+
+        .section {
+            width: 400px;
+            float: left;
+            margin: 0 4% 10px 0;
+        }
+
+        section h2 {
+            font-size: 18px;
+            font-weight: normal;
+            margin: 0;
+            margin-top: 30px;
+            color: #5a0077;
+        }
+
+        ol {
+            margin: 20px 0;
+            margin-top: 14px;
+            padding-left: 22px;
+        }
+
+        ol li {
+            margin: 0;
+            padding: 0;
+            list-style-type: lower-roman;
+        }
+        ol li .url {
+            color: #777;
+            color: #2E74B5;
+        }
+        code {
+            padding: 20px;
+            margin: 0px;
+            border: 1px solid #AAA;
+            border-radius: 4px;
+            display: block;
+        }
+
+        pre {
+            font-family: Consolas, 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        code .keyword-token {
+	        color: #00F;
+        }
+        code .key-token {
+	        color: #F00;
+        }
+        code .definition-token {
+            color: #2B91AF;
+        }
+        code .string-token {
+            color: #A31515;
+        }
+        code .comment-token, code .comment-token .key-token, code .comment-token .definition-token, code .comment-token .keyword-token, code .comment-token .string-token {
+            color: #008000;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>Push setup is almost complete...</h1>
+        <p>ZSCY has been configured to receive push notifications. Complete the process by configuring your Mobile Service and client projects. After following the steps below, you’ll be able to send push notifications with your Mobile Service.</p>
+       </div>
+
+    <div id="main">
+
+        <section>
+            <h2>Step 1: Create new Custom Controller</h2>
+            <p><strong>Create</strong> a new Custom Controller called "NotifyAllUsersController" in the Mobile Service project containing code for zscy. In your Mobile Service project right-click on the Controllers folder, then click Add -> Controller. In the resulting dialog select "Windows Azure Mobile Services Custom Controller," then click Add.</p>
+        </section>
+        <section>
+            <h2>Step 2: Insert snippet into Controller</h2>
+            <p><strong>Insert</strong> the following snippet in the "NotifyAllUsersController":</p>
+<h3>C#</h3>
+            <code>
+<pre><span class="comment-token">// The following call is for illustration purpose only. The function
+// body should be moved to a controller in your app where you want
+// to send a notification.</span>
+<span class="keyword-token">public async</span> <span class="definition-token">Task</span>&lt;<span class="keyword-token">bool</span>&gt; Post(JObject data)
+{
+    <span class="keyword-token">try</span>
+    {
+        <span class="keyword-token">string</span> wnsToast = string.Format(<span class="string-token">"&lt;?xml version=\"1.0\" encoding=\"utf-8\"?>&lt;toast&gt;&lt;visual&gt;&lt;binding template=\"ToastText01\"&gt;&lt;text id=\"1\"&gt;{0}&lt;/text&gt;&lt;/binding&gt;&lt;/visual&gt;&lt;/toast&gt;"</span>, data.GetValue(<span class="string-token">"toast"</span>).Value&lt;string&gt;());
+        WindowsPushMessage message = <span class="keyword-token">new</span> WindowsPushMessage();
+        message.XmlPayload = wnsToast;
+        <span class="keyword-token">await</span> Services.Push.SendAsync(message);
+        <span class="keyword-token">return true</span>;
+    }
+    <span class="keyword-token">catch</span> (<span class="definition-token">Exception</span> e)
+    {
+        Services.Log.Error(e.ToString());
+    }
+    <span class="keyword-token">return false</span>;
+}
+</pre></code>
+<h3>VB</h3>
+<code>
+<pre><span class="comment-token">' The following call is for illustration purpose only. The function
+' body should be moved to a controller in your app where you want 
+' to send a notification.</span>
+<span class="keyword-token">Public Async Function</span> Post(data <span class="keyword-token">As</span> JObject) <span class="keyword-token">As</span> <span class="definition-token">Task</span>(<span class="keyword-token">Of Boolean</span>)
+    <span class="keyword-token">Try
+        Dim</span> wnsToast <span class="keyword-token">As String</span> = <span class="keyword-token">String</span>.Format(<span class="string-token">"&lt;?xml  version=""1.0"" encoding=""utf-8""?&gt;&lt;toast&gt;&lt;visual&gt;&lt;binding template=""ToastText01""&gt;&lt;text id=""1""&gt;{0}&lt;/text&gt;&lt;/binding&gt;&lt;/visual&gt;&lt;/toast&gt;"</span>, data.GetValue(<span class="string-token">"toast"</span>).Value(<span class="keyword-token">Of String</span>)())
+        <span class="keyword-token">Dim</span> message <span class="keyword-token">As</span> New WindowsPushMessage()
+        message.XmlPayload = wnsToast
+        <span class="keyword-token">Await</span> Services.Push.SendAsync(message)
+        <span class="keyword-token">Return True</span>
+    <span class="keyword-token">Catch</span> e <span class="keyword-token">As</span> Exception
+        Services.Log.Error(e.ToString())
+    <span class="keyword-token">End Try
+    Return False
+End Function</span>
+</pre>
+            </code>
+
+        </section>
+        <section>
+            <h2>Step 3: Modify Web Config</h2>
+            <p><strong>Add</strong> the following connection string in the &lt;connectionStrings&gt; section in web.config:</p>
+            <code><pre><span class="keyword-token">&lt;</span><span class="string-token">add</span> <span class="key-token">name</span><span class="keyword-token">="MS_NotificationHubconnectionString"</span> <span class="key-token">connectionString</span><span class="keyword-token">="Endpoint=sb://zscyhub-ns.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=0JAfY8UOZEc//CB65SS8aQBsrnxe9T8p7bzBEBdzZO8=" /&gt;</span></pre>
+            </code>
+
+            <p><strong>Replace</strong> the "MS_NotificationHubName" key in the &lt;appSettings&gt; section in web.config with the following:</p>
+<code><pre><span class="keyword-token">&lt;<span class="string-token">add</span> <span class="key-token">key</span><span class="keyword-token">="MS_NotificationHubName"</span> <span class="key-token">value</span><span class="keyword-token">="zscyHub" /&gt;</span></pre></code>
+        </section>
+        <section>
+            <h2>Step 4: Modify Client Project</h2>
+            <p><strong>Modify</strong> your client project to target the Mobile Services project.</p>
+            <ol>
+                <li><strong>Debug</strong> your Mobile Service project and copy the URL from your browser. e.g. – http://localhost:17470</li>
+                <li><strong>Open</strong> App.xaml.cs or App.xaml.vb, comment out the existing reference to MobileServiceClient. Follow this with a new reference to localhost; remember to use the URL you copied in the previous step. The resulting code should look similar to the following:</p></li>
+            </ol>
+<h3>C#</h3>
+            <code>
+<pre><span class="comment-token">// http://go.microsoft.com/fwlink/?LinkID=290993&clcid=0x804 </span>
+<span class="keyword-token">public static</span> Microsoft.WindowsAzure.MobileServices.<span class="definition-token">MobileServiceClient</span> zscyClient = <span class="keyword-token">new</span> Microsoft.WindowsAzure.MobileServices.<span class="definition-token">MobileServiceClient</span>(<span class="string-token">"http://localhost:17470"</span>);
+
+<span class="comment-token">//<span class="keyword-token">public static</span> Microsoft.WindowsAzure.MobileServices.<span class="definition-token">MobileServiceClient</span> zscyClient = <span class="keyword-token">new</span> Microsoft.WindowsAzure.MobileServices.<span class="definition-token">MobileServiceClient</span>(
+//                            <span class="string-token">"https://zscy.azure-mobile.net/"</span>,
+//                            <span class="string-token">"MHivtuOzhghyXRlAQAPSxXbIkkSyhq16"</span>);</span></pre>
+            </code>
+<h3>VB</h3>
+            <code>
+<pre><span class="comment-token">' http://go.microsoft.com/fwlink/?LinkID=290990&clcid=0x804 </span>
+<span class="keyword-token">Public Shared</span> zscyClient <span class="keyword-token">As</span> New Microsoft.WindowsAzure.MobileServices.MobileServiceClient(
+            <span class="string-token">"http://localhost:17470"</span>)
+
+<span class="comment-token">' Public Shared zscyClient As New Microsoft.WindowsAzure.MobileServices.MobileServiceClient(
+'             "https://zscy.azure-mobile.net/",
+'             "MHivtuOzhghyXRlAQAPSxXbIkkSyhq16")</span></pre>
+            </code>
+<h3>JavaScript</h3>
+            <code>
+<pre><span class="comment-token">// http://go.microsoft.com/fwlink/?LinkID=290993&clcid=0x804 </span>
+<span class="keyword-token">var</span> zscyClient = <span class="keyword-token">new</span> WindowsAzure.MobileServiceClient(
+            <span class="string-token">"http://localhost:17470"</span>);
+
+<span class="comment-token">// var zscyClient = new WindowsAzure.MobileServiceClient(
+//                 "https://zscy.azure-mobile.net/",
+//                 "MHivtuOzhghyXRlAQAPSxXbIkkSyhq16");</span></pre>
+            </code>
+        </section>
+        <section>
+            <h2>Step 5: Invoke Custom Controller</h2>
+            <p><strong>Invoke</strong> the custom controller you created in Step 1 by inserting the below snippet in the push.register.cs or push.register.vb file immediately after the GetPush().RegisterNativeAsync call. JavaScript users will already have this call in push.register.js. The resulting code should look similar to the following:</p>
+<h3>C#</h3>
+           <code>
+<pre><span class="keyword-token">try</span>
+{
+    <span class="keyword-token">await</span> App.zscyClient.GetPush().RegisterNativeAsync(channel.Uri);     
+    <span class="keyword-token">await</span> App.zscyClient.InvokeApiAsync(<span class="string-token">"notifyAllUsers"</span>,
+        <span class="keyword-token">new</span> JObject(<span class="keyword-token">new</span> JProperty(<span class="string-token">"toast"</span>, <span class="string-token">"Sample Toast"</span>)));
+}</pre>
+          </code>
+<h3>VB</h3>
+          <code>
+<pre><span class="keyword-token">Dim</span> channel = <span class="keyword-token">Await</span> Windows.Networking.PushNotifications.PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync()
+<span class="keyword-token">Try
+    Await</span> App.zscyClient.GetPush().RegisterNativeAsync(channel.Uri)
+    <span class="keyword-token">Await</span> App.zscyClient.InvokeApiAsync(<span class="string-token">"notifyAllUsers"</span>, <span class="keyword-token">New</span> JObject(<span class="keyword-token">New</span> JProperty(<span class="string-token">"toast"</span>, <span class="string-token">"Sample Toast"</span>)))
+<span class="keyword-token">Catch</span> exception <span class="keyword-token">As</span> Exception
+</pre>
+          </code>
+        </section>
+        <section>
+            <h2>Step 6: Debug your app</h2>
+            <p>Set the startup project to your client project, then debug.</p>
+        </section>
+        <section>
+            <h2>You'll now see a Push Notification!</h2>
+             <p>Learn more about <a href="http://go.microsoft.com/fwlink/?LinkID=402911&clcid=0x804" target="_blank">adding push notifications to your client projects.</a></p>
+        </section>
+</div>
+</body>
+</html>
