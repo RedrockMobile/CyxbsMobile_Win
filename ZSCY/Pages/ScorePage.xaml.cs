@@ -94,7 +94,7 @@ namespace ZSCY.Pages
                 }
                 else if (Int32.Parse(obj["status"].ToString()) == 300)
                 {
-                    ListFailedStackPanelTextBlock.Text = "暂无数据，过几再来看看";
+                    ListFailedStackPanelTextBlock.Text = "暂无数据，过几天再来看看";
 
                     ListFailedStackPanel.Visibility = Visibility.Visible;
                     ListFailedStackPanelImage.Visibility = Visibility.Collapsed;

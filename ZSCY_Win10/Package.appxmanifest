@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="26092662B8482.24247F5326900" Publisher="CN=amvincible" Version="2.0.7.0" />
+  <Identity Name="26092662B8482.24247F5326900" Publisher="CN=3CE58E64-6EFC-43AC-A445-9CBA89BCEA42" Version="2.0.8.0" />
   <mp:PhoneIdentity PhoneProductId="8a75ac9c-dcaa-4ac8-9e5f-8f62d186bda6" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>掌上重邮—重邮小帮手</DisplayName>
