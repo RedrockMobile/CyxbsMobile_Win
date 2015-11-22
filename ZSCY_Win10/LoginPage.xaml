@@ -8,6 +8,53 @@
     mc:Ignorable="d"
     >
 
+    <Page.Resources>
+        <!--圆角button-->
+        <Style x:Key="RoundButton" TargetType="Button">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="FontWeight" Value="Black"/>
+            <Setter Property="Foreground" Value="WhiteSmoke"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#FFFF4300"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border BorderBrush="{TemplateBinding Control.BorderBrush}" BorderThickness="0" CornerRadius="5" Name="PART_Background">
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="0,0" StartPoint="0,0">
+                                    <GradientStop Color="#3CC3F5" Offset="0.5" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <ContentPresenter Content="{TemplateBinding ContentControl.Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--<Style x:Key="TextBox" TargetType="TextBox">
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <LinearGradientBrush  StartPoint="0,1" EndPoint="0,0">
+                        <GradientStop Color="#FF3E3E3E" Offset="0"/>
+                        <GradientStop Color="#FF7C7A78" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <Rectangle RadiusX="5" RadiusY="5" Fill="{TemplateBinding Background}" Stroke="#FF898989"  StrokeThickness="1"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+
+    </Page.Resources>
     <Grid x:Name="grid" Background="#068cfd" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
@@ -28,16 +75,19 @@
         <StackPanel Name="MainStackPanel" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image  Source="Assets\Logo.png" VerticalAlignment="Top" Margin="15" Height="150" Width="150" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"></Image>
             <StackPanel Margin="60,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Grid Background="White" Width="250">
-                    <TextBox Background="White" Width="250" Name="StuNumTextBox" InputScope="Number" PlaceholderText="学号" Foreground="Black" TextChanged="StuNumTextBox_TextChanged" BorderBrush="#FF7A7A7A" KeyUp="TextBox_KeyUp"/>
+                <Grid  Width="250">
+                    <Border CornerRadius="10" Background="White" Width="250" >
+
+                        <TextBox Background="White" Margin=" 5,0" Width="240"  Name="StuNumTextBox" InputScope="Number" PlaceholderText="学号" Foreground="Black" TextChanged="StuNumTextBox_TextChanged" BorderBrush="#FF7A7A7A" KeyUp="TextBox_KeyUp"/>
+                    </Border>
                 </Grid>
-                
+
                 <Grid Background="White" Margin="0,10,0,0" Width="250">
                     <PasswordBox Background="White" Width="250"  Name="IdNumPasswordBox" PlaceholderText="身份证后六位" Foreground="Black" PasswordChanged="IdNumPasswordBox_PasswordChanged" KeyUp="TextBox_KeyUp"></PasswordBox>
                 </Grid>
-                <Grid Margin="0,20,0,0" Background="White" Width="250">
+                <Grid Margin="0,20,0,0" Width="250">
                     <Grid  Width="250">
-                        <Button Name="LoginButton" Content="登 录" IsEnabled="False" HorizontalAlignment="Stretch" Click="LoginButton_Click" Background="#55068CFD"></Button>
+                        <Button Name="LoginButton" Content="登 录" Style="{StaticResource RoundButton}"  IsEnabled="False" HorizontalAlignment="Stretch" Click="LoginButton_Click" Background="#55068CFD"></Button>
                         <ProgressBar VerticalAlignment="Center" Name="LoginProgressBar" Visibility="Collapsed" IsIndeterminate="True" Margin="0,5,0,0" />
                     </Grid>
                 </Grid>
