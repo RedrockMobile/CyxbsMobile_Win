@@ -160,7 +160,7 @@ namespace ZSCY_Win10
                     {
                         kb = streamReader.ReadToEnd();
                     }
-                    HubSectionKBNum.Text = " | 第" + appSetting.Values["nowWeek"].ToString() + "周";
+                    HubSectionKBNum.Text = "第" + appSetting.Values["nowWeek"].ToString() + "周";
 #if DEBUG
                     showKB(2, 5);
 #else
@@ -171,7 +171,9 @@ namespace ZSCY_Win10
             }
             if (stuNum == appSetting.Values["stuNum"].ToString())
             {
-                HubSectionKBTitle.Text = "我的课表";
+                HubSectionKBTitle.Text = "我的课表 | ";
+                HubSectionKBTitle.FontSize = 18;
+
             }
 
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
@@ -310,7 +312,7 @@ namespace ZSCY_Win10
                         if (Array.IndexOf(classitem.Week, Int32.Parse(appSetting.Values["nowWeek"].ToString())) != -1)
                         {
                             SetClassAll(classitem, ClassColor);
-                            HubSectionKBNum.Text = " | 第" + appSetting.Values["nowWeek"].ToString() + "周";
+                            HubSectionKBNum.Text = "第" + appSetting.Values["nowWeek"].ToString() + "周";
                         }
                     }
                     else
@@ -318,7 +320,7 @@ namespace ZSCY_Win10
                         if (Array.IndexOf(classitem.Week, week) != -1)
                         {
                             SetClassAll(classitem, ClassColor);
-                            HubSectionKBNum.Text = " | 第" + week.ToString() + "周";
+                            HubSectionKBNum.Text = "第" + week.ToString() + "周";
                         }
                     }
                 }
@@ -570,7 +572,7 @@ namespace ZSCY_Win10
             {
                 wOa = 2;
                 HubSectionKBNum.Visibility = Visibility.Collapsed;
-                HubSectionKBNum.Text = " | 第" + appSetting.Values["nowWeek"].ToString() + "周";
+                HubSectionKBNum.Text = "第" + appSetting.Values["nowWeek"].ToString() + "周";
             }
             else
             {
@@ -587,11 +589,18 @@ namespace ZSCY_Win10
 
         private void KBSearchButton_Click(object sender, RoutedEventArgs e)
         {
+            KBSearch();
+            
+        }
+
+        private void KBSearch()
+        {
             KBSearchButton.IsChecked = false;
             if (KBZoomFlyoutTextBox.Text != "" && KBZoomFlyoutTextBox.Text.Length == 10 && KBZoomFlyoutTextBox.Text.IndexOf(".") == -1)
             {
                 stuNum = KBZoomFlyoutTextBox.Text;
-                HubSectionKBTitle.Text = stuNum + "的课表";
+                HubSectionKBTitle.Text = stuNum + "的课表 | ";
+                HubSectionKBTitle.FontSize = 15;
                 initKB();
                 wOa = 1;
                 KBZoomFlyout.Hide();
@@ -608,11 +617,16 @@ namespace ZSCY_Win10
 
         private void KBNumSearchButton_Click(object sender, RoutedEventArgs e)
         {
+            KBNumSearch();
+        }
+
+        private void KBNumSearch()
+        {
             KBNumSearchButton.IsChecked = false;
             if (KBNumFlyoutTextBox.Text != "" && KBNumFlyoutTextBox.Text.IndexOf(".") == -1)
             {
                 showKB(2, Int16.Parse(KBNumFlyoutTextBox.Text));
-                HubSectionKBNum.Text = " | 第" + KBNumFlyoutTextBox.Text + "周";
+                HubSectionKBNum.Text = "第" + KBNumFlyoutTextBox.Text + "周";
                 DateTime now = DateTime.Now;
                 DateTime weekstart = GetWeekFirstDayMon(KBNumFlyoutTextBox.Text == "" ? now : now.AddDays((Int16.Parse(KBNumFlyoutTextBox.Text) - Int16.Parse(appSetting.Values["nowWeek"].ToString())) * 7));
                 DateTime weekend = GetWeekLastDaySun(KBNumFlyoutTextBox.Text == "" ? now : now.AddDays((Int16.Parse(KBNumFlyoutTextBox.Text) - Int16.Parse(appSetting.Values["nowWeek"].ToString())) * 7));
@@ -622,6 +636,7 @@ namespace ZSCY_Win10
             else
                 Utils.Message("请输入正确的周次");
         }
+
         private void initToday()
         {
             todaydateTextBlock.Text = DateTime.Now.Year + "年" + DateTime.Now.Month + "月" + DateTime.Now.Day + "日";
@@ -632,9 +647,40 @@ namespace ZSCY_Win10
             catch (Exception)
             {
                 todayNumofstuTextBlock.Text = "开学第 天";
-
             }
         }
 
+        private void KBNumFlyoutTextBox_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                Debug.WriteLine("enter");
+                if (KBNumFlyoutTextBox.Text != "")
+                    KBNumSearch();
+                else
+                {
+                    Utils.Message("信息不完全");
+                    KBNumFlyout.ShowAt(page);
+                    HubSectionKBNum.SelectAll();
+                }
+            }
+        }
+
+
+        private void KBZoomFlyoutTextBox_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                Debug.WriteLine("enter");
+                if (KBZoomFlyoutTextBox.Text != "")
+                    KBSearch();
+                else
+                {
+                    Utils.Message("信息不完全");
+                    KBZoomFlyout.ShowAt(page);
+                    KBZoomFlyoutTextBox.SelectAll();
+                }
+            }
+        }
     }
 }

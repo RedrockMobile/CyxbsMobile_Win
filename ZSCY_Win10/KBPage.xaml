@@ -60,7 +60,7 @@
             <Grid Name="KBTitleGrid"  HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"></ColumnDefinition>
-                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition ></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
@@ -68,9 +68,11 @@
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Name="HubSectionKBTitle" Text="我的课表 |" Foreground="White" Margin="10,0,0,0"  FontSize="20" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
-                    <TextBlock Grid.Column="1"  Name="HubSectionKBNum" Text=" 第  周"  Foreground="White"  FontSize="14"  VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
-                    <TextBlock Grid.Column="2" Name="HubSectionKBDate" Margin="5,0,0,0" Text=""  Foreground="White"  FontSize="14"  VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
+                    <TextBlock Grid.Column="0" Name="HubSectionKBTitle" Text="我的课表 | " Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="5,0" Tapped="HubSectionKBNum_Tapped">
+                        <TextBlock Grid.Column="1"  Name="HubSectionKBNum" Text=" 第  周"  Foreground="White"  FontSize="13"  VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
+                        <TextBlock Grid.Column="2" Name="HubSectionKBDate"  Text=""  Foreground="White"  FontSize="13"  VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
+                    </StackPanel>
                     <FlyoutBase.AttachedFlyout>
                         <Flyout x:Name="KBNumFlyout" >
                             <StackPanel Margin="10" Width="300">
@@ -80,14 +82,14 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBox VerticalAlignment="Center" Grid.Column="0" Name="KBNumFlyoutTextBox" PlaceholderText="输入要查询的周次" InputScope="Number"/>
+                                    <TextBox VerticalAlignment="Center" Grid.Column="0" Name="KBNumFlyoutTextBox" PlaceholderText="输入要查询的周次" InputScope="Number" KeyUp="KBNumFlyoutTextBox_KeyUp"/>
                                     <AppBarToggleButton Grid.Column="1"  Name="KBNumSearchButton" Icon="Zoom" Click="KBNumSearchButton_Click"/>
                                 </Grid>
                             </StackPanel>
                         </Flyout>
                     </FlyoutBase.AttachedFlyout>
                 </Grid>
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="1" HorizontalAlignment="Right">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -104,7 +106,7 @@
                                             <ColumnDefinition />
                                             <ColumnDefinition Width="auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBox VerticalAlignment="Center" Grid.Column="0" Name="KBZoomFlyoutTextBox" PlaceholderText="输入学号以查询" InputScope="Number"/>
+                                        <TextBox VerticalAlignment="Center" Grid.Column="0" Name="KBZoomFlyoutTextBox" PlaceholderText="输入学号以查询" InputScope="Number" KeyUp="KBZoomFlyoutTextBox_KeyUp"/>
                                         <AppBarToggleButton Grid.Column="1"  Name="KBSearchButton" Icon="Zoom" Click="KBSearchButton_Click" />
                                     </Grid>
                                 </StackPanel>
@@ -117,7 +119,7 @@
 
             <StackPanel Name="TodayTitleStackPanel" Orientation="Horizontal" Margin="360,0,0,0" Visibility="Collapsed">
                 <Line  Y1="0" Y2="48" Stroke="#58b3ff" StrokeThickness="1"/>
-                <TextBlock Text="今日" Foreground="White" Margin="10,0,0,0"  FontSize="20" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                <TextBlock Text="今日" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
             </StackPanel>
 
         </Grid>
