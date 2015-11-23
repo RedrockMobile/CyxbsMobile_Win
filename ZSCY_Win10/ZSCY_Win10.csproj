@@ -149,6 +149,10 @@
     <Content Include="Assets\more_exam333.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\more_freetime.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\more_freetime333.png" />
     <Content Include="Assets\more_reexam333.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -190,6 +194,7 @@
     <Compile Include="Data\DataSource.cs" />
     <Compile Include="Data\EmptyRoomList.cs" />
     <Compile Include="Data\ExamList.cs" />
+    <Compile Include="Data\IdList.cs" />
     <Compile Include="Data\JWList.cs" />
     <Compile Include="Data\PersonalIno.cs" />
     <Compile Include="Data\ScoreList.cs" />
@@ -229,6 +234,12 @@
     </Compile>
     <Compile Include="Pages\ScorePage.xaml.cs">
       <DependentUpon>ScorePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SearchFreeTimeNumPage.xaml.cs">
+      <DependentUpon>SearchFreeTimeNumPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SearchFreeTimeResultPage.xaml.cs">
+      <DependentUpon>SearchFreeTimeResultPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingPage.xaml.cs">
@@ -429,6 +440,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\ScorePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\SearchFreeTimeNumPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\SearchFreeTimeResultPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

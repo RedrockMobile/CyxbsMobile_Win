@@ -31,6 +31,12 @@
       "Itemimgsrc": "Assets/more_score333.png"
     },
     {
+      "UniqueId": "FreeTime",
+      "Itemname": "空闲查询",
+      "ItemPage": "SearchFreeTimeNumPage.xaml",
+      "Itemimgsrc": "Assets/more_freetime333.png"
+    },
+    {
       "UniqueId": "Card",
       "Itemname": "一卡通",
       "ItemPage": "CardApp",

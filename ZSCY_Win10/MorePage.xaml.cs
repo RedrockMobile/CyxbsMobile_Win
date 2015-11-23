@@ -136,6 +136,9 @@ namespace ZSCY_Win10
                     case "Calendar":
                         MoreFrame.Navigate(typeof(CalendarPage));
                         MoreFrame.Visibility = Visibility.Visible; break;
+                    case "FreeTime":
+                        MoreFrame.Navigate(typeof(SearchFreeTimeNumPage));
+                        MoreFrame.Visibility = Visibility.Visible; break;
                     case "Card":
                         var a = await Launcher.LaunchUriAsync(new Uri("cquptcard:"));
                         MoreFrame.Visibility = Visibility.Collapsed;

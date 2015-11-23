@@ -11,13 +11,13 @@
     >
 
     <Page.Resources>
-        
+
         <!--圆角button-->
         <Style x:Key="RoundButton" TargetType="Button">
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Margin" Value="4"/>
             <Setter Property="FontWeight" Value="Black"/>
-            <Setter Property="Foreground" Value="WhiteSmoke"/>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background" Value="#FFFF4300"/>
             <Setter Property="Width" Value="100"/>
@@ -27,9 +27,11 @@
                     <ControlTemplate TargetType="Button">
                         <!--<Border BorderBrush="{TemplateBinding Control.BorderBrush}" BorderThickness="0" CornerRadius="5" Name="PART_Background">
                             <Border.Background>
-                                --><!--<LinearGradientBrush EndPoint="0,0" StartPoint="0,0">
+                                -->
+                        <!--<LinearGradientBrush EndPoint="0,0" StartPoint="0,0">
                                     <GradientStop Color="#3CC3F5" Offset="0.5" />
-                                </LinearGradientBrush>--><!--
+                                </LinearGradientBrush>-->
+                        <!--
                                 <SolidColorBrush Color="#3CC3F5"></SolidColorBrush>
                             </Border.Background>
                             <ContentPresenter Content="{TemplateBinding ContentControl.Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -57,7 +59,8 @@
                                     <VisualState x:Name="Normal">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundThemeBrush}"/>
+                                                <!--<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundThemeBrush}"/>-->
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#fff"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Border">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="#FF3CC3F5"/>
@@ -67,7 +70,8 @@
                                     <VisualState x:Name="PointerOver">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonPointerOverForegroundThemeBrush}"/>
+                                                <!--<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonPointerOverForegroundThemeBrush}"/>-->
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#FFF"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Border">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="#FF0583F2"/>
@@ -78,7 +82,8 @@
                                         <Storyboard>
                                             <PointerDownThemeAnimation Storyboard.TargetName="Grid"/>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonPressedForegroundThemeBrush}"/>
+                                                <!--<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonPressedForegroundThemeBrush}"/>-->
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#FFF"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Border">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="#FF0476D9"/>
@@ -128,16 +133,16 @@
 
         <StackPanel Name="MainStackPanel" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image  Source="Assets\Logo.png" VerticalAlignment="Top" Margin="15" Height="150" Width="150" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"></Image>
-            <StackPanel Margin="60,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Grid  Width="250">
-                    <TextBox Background="White" Width="250"  Name="StuNumTextBox" InputScope="Number" PlaceholderText="学号" Foreground="Black" TextChanged="StuNumTextBox_TextChanged" KeyUp="TextBox_KeyUp"/>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid  Width="200">
+                    <TextBox Background="White" Width="200"  Name="StuNumTextBox" InputScope="Number" PlaceholderText="学号" Foreground="Black" TextChanged="StuNumTextBox_TextChanged" KeyUp="TextBox_KeyUp"/>
                 </Grid>
-                <Grid Background="White" Margin="0,10,0,0" Width="250">
-                    <PasswordBox Background="White" Width="250"  Name="IdNumPasswordBox" PlaceholderText="身份证后六位" Foreground="Black" PasswordChanged="IdNumPasswordBox_PasswordChanged" KeyUp="TextBox_KeyUp"></PasswordBox>
+                <Grid Background="White" Margin="0,10,0,0" Width="200">
+                    <PasswordBox Background="White" Width="200"  Name="IdNumPasswordBox" PlaceholderText="身份证后六位" Foreground="Black" PasswordChanged="IdNumPasswordBox_PasswordChanged" KeyUp="TextBox_KeyUp"></PasswordBox>
                 </Grid>
-                <Grid Margin="0,20,0,0" Width="250">
-                    <Grid  Width="250">
-                        <Button Name="LoginButton" Content="登 录" Style="{StaticResource RoundButton}"  IsEnabled="False" HorizontalAlignment="Stretch" Click="LoginButton_Click" Foreground="White" Background="#FF2884F3"></Button>
+                <Grid Margin="0,20,0,0" Width="200">
+                    <Grid  Width="200">
+                        <Button Name="LoginButton" Content="登 录" Style="{StaticResource RoundButton}"  IsEnabled="False" HorizontalAlignment="Stretch" Click="LoginButton_Click" Foreground="White" Background="#FF2884F3"/>
                         <ProgressRing VerticalAlignment="Center" Name="LoginProgressBar" IsActive="False" Width="50" Height="50" Margin="0,5,0,0"  Foreground="White"/>
                     </Grid>
                 </Grid>
