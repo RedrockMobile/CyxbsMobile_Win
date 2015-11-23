@@ -49,7 +49,7 @@
         <Grid Background="#068cfd" Grid.Row="0">
             <Grid Name="MoreTitleGrid"  HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <AppBarButton Name="MoreBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="MoreBackAppBarButton_Click"/>
+                    <!--<AppBarButton Name="MoreBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="MoreBackAppBarButton_Click"/>-->
                     <TextBlock Name="HubSectionKBTitle" Text="更多" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
                 </StackPanel>
             </Grid>

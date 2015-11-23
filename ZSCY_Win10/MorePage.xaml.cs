@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -40,14 +41,18 @@ namespace ZSCY_Win10
                 {
                     if (MoreListView.SelectedIndex != -1)
                     {
-                        MoreBackAppBarButton.Visibility = Visibility.Visible;
+                        //MoreBackAppBarButton.Visibility = Visibility.Visible;
+                        SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                         HubSectionKBTitle.Text = MoreContentTitleTextBlock.Text;
                     }
                     MoreListView.Width = e.NewSize.Width;
                 }
                 if (e.NewSize.Width > 700)
                 {
-                    MoreBackAppBarButton.Visibility = Visibility.Collapsed;
+                    //MoreBackAppBarButton.Visibility = Visibility.Collapsed;
+                    SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                     HubSectionKBTitle.Text = "更多";
                     MoreListView.Width = 300;
                     state = "VisualState700";
@@ -56,6 +61,9 @@ namespace ZSCY_Win10
                 cutoffLine.Y2 = e.NewSize.Height;
             };
         }
+
+       
+
         public ObservableDictionary Morepageclass
         {
             get
@@ -91,7 +99,30 @@ namespace ZSCY_Win10
             //{
             //    JWFrame.GoBack();
             //}
-            MoreBackAppBarButton.Visibility = Visibility.Collapsed;
+            //MoreBackAppBarButton.Visibility = Visibility.Collapsed;
+            MoreFrame.Visibility = Visibility.Collapsed;
+            MoreContentTitleTextBlock.Text = "";
+            HubSectionKBTitle.Text = "更多";
+            MoreListView.SelectedIndex = -1;
+
+            CommandBar c = new CommandBar();
+            this.BottomAppBar = c;
+            c.Visibility = Visibility.Collapsed;
+        }
+
+        private void App_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            //if (JWFrame == null)
+            //    return;
+            //if (JWFrame.CanGoBack)
+            //{
+            //    JWFrame.GoBack();
+            //}
+            //MoreBackAppBarButton.Visibility = Visibility.Collapsed;
+            SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             MoreFrame.Visibility = Visibility.Collapsed;
             MoreContentTitleTextBlock.Text = "";
             HubSectionKBTitle.Text = "更多";
@@ -106,13 +137,17 @@ namespace ZSCY_Win10
         {
 
             var item = e.ClickedItem as Morepageclass;
-            if (MoreListgrid.Width != null && MoreListgrid.Width == 300)
+            if ((MoreListgrid.Width != null && MoreListgrid.Width == 300) || item.UniqueID == "Card")
             {
-                MoreBackAppBarButton.Visibility = Visibility.Collapsed;
+                //MoreBackAppBarButton.Visibility = Visibility.Collapsed;
+                SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             }
             else
             {
-                MoreBackAppBarButton.Visibility = Visibility.Visible;
+                //MoreBackAppBarButton.Visibility = Visibility.Visible;
+                SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                 HubSectionKBTitle.Text = item.Itemname;
             }
             MoreFrame.Visibility = Visibility.Visible;

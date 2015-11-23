@@ -9,6 +9,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -46,7 +47,8 @@ namespace ZSCY.Pages
         /// 此参数通常用于配置页。</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            //HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
+            //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             AuIdList auIdList = (AuIdList)e.Parameter;
             muIdList = auIdList.muIdList;
             week = auIdList.week;
@@ -97,6 +99,20 @@ namespace ZSCY.Pages
                 Debug.WriteLine(FreeLoddingProgressBar.Value);
             }
             initFreeList();
+        }
+
+        private void App_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame == null)
+                return;
+            if (rootFrame.CanGoBack && e.Handled == false)
+            {
+                e.Handled = true;
+                rootFrame.GoBack();
+                SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            }
         }
 
         private void initFreeList()

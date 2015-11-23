@@ -41,14 +41,18 @@ namespace ZSCY_Win10
                 {
                     if (JWListView.SelectedIndex != -1)
                     {
-                        JWBackAppBarButton.Visibility = Visibility.Visible;
+                        //JWBackAppBarButton.Visibility = Visibility.Visible;
+                        SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                         JWRefreshAppBarButton.Visibility = Visibility.Collapsed;
                     }
                     JWListView.Width = e.NewSize.Width;
                 }
                 if (e.NewSize.Width > 750)
                 {
-                    JWBackAppBarButton.Visibility = Visibility.Collapsed;
+                    //JWBackAppBarButton.Visibility = Visibility.Collapsed;
+                    SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                     JWRefreshAppBarButton.Visibility = Visibility.Visible;
                     state = "VisualState750";
                     JWListView.Width = 400;
@@ -59,7 +63,7 @@ namespace ZSCY_Win10
             Debug.WriteLine("Init");
         }
 
-        protected  override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             JWListView.ItemsSource = JWList;
             //if (App.JWListCache.Count == 0)
@@ -70,6 +74,8 @@ namespace ZSCY_Win10
             //}
             UmengSDK.UmengAnalytics.TrackPageStart("JWPage");
         }
+
+
 
         private async void getJWCache()
         {
@@ -252,12 +258,16 @@ namespace ZSCY_Win10
             Debug.WriteLine("JWListgrid.Width" + JWListgrid.Width);
             if (JWListgrid.Width != null && JWListgrid.Width == 400)
             {
-                JWBackAppBarButton.Visibility = Visibility.Collapsed;
+                //JWBackAppBarButton.Visibility = Visibility.Collapsed;
+                SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                 JWRefreshAppBarButton.Visibility = Visibility.Visible;
             }
             else
             {
-                JWBackAppBarButton.Visibility = Visibility.Visible;
+                //JWBackAppBarButton.Visibility = Visibility.Visible;
+                SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                 JWRefreshAppBarButton.Visibility = Visibility.Collapsed;
             }
             JWFrame.Visibility = Visibility.Visible;
@@ -272,10 +282,29 @@ namespace ZSCY_Win10
             //{
             //    JWFrame.GoBack();
             //}
-            JWBackAppBarButton.Visibility = Visibility.Collapsed;
+            //JWBackAppBarButton.Visibility = Visibility.Collapsed;
+            SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             JWFrame.Visibility = Visibility.Collapsed;
             JWRefreshAppBarButton.Visibility = Visibility.Visible;
             JWListView.SelectedIndex = -1;
         }
+
+        private void App_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            //if (JWFrame == null)
+            //    return;
+            //if (JWFrame.CanGoBack)
+            //{
+            //    JWFrame.GoBack();
+            //}
+            //JWBackAppBarButton.Visibility = Visibility.Collapsed;
+            SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            JWFrame.Visibility = Visibility.Collapsed;
+            JWRefreshAppBarButton.Visibility = Visibility.Visible;
+            JWListView.SelectedIndex = -1;
+        }
+
     }
 }

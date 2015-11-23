@@ -44,6 +44,7 @@ namespace ZSCY.Pages
         {
             //HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             uIdListView.ItemsSource = muIdList;
+            UmengSDK.UmengAnalytics.TrackPageStart("SearchFreeTime");
         }
 
 
@@ -51,6 +52,7 @@ namespace ZSCY.Pages
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             //HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
+            UmengSDK.UmengAnalytics.TrackPageEnd("SearchFreeTime");
         }
 
 

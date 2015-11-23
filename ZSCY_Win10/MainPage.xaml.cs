@@ -71,7 +71,7 @@ namespace ZSCY_Win10
             this.AppFrame.Navigate(navlist[0].DestPage, navlist[0].Arguments);
 
 
-            SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequseted;
+            //SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequseted;
             //如果是在手机上，有实体键，隐藏返回键。
             if (ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
             {
@@ -173,6 +173,7 @@ namespace ZSCY_Win10
                     item.DestPage != this.AppFrame.CurrentSourcePageType)
                 {
                     this.AppFrame.Navigate(item.DestPage, item.Arguments);
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                 }
             }
         }
