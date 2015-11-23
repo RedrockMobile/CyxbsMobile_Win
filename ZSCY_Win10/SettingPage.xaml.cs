@@ -11,6 +11,7 @@ using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -92,7 +93,9 @@ namespace ZSCY_Win10
             //Frame.Visibility = Visibility.Collapsed;
             AboutAppBarToggleButton.IsChecked = false;
             HubSectionKBTitle.Text = "关于我们";
-            BackAppBarToggleButton.Visibility = Visibility.Visible;
+            //BackAppBarToggleButton.Visibility = Visibility.Visible;
+            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
         private async void LikeAppBarToggleButton_Click(object sender, RoutedEventArgs e)
         {
@@ -131,8 +134,18 @@ namespace ZSCY_Win10
 
         private void BackAppBarToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            BackAppBarToggleButton.IsChecked = false;
-            BackAppBarToggleButton.Visibility = Visibility.Collapsed;
+            //BackAppBarToggleButton.IsChecked = false;
+            //BackAppBarToggleButton.Visibility = Visibility.Collapsed;
+            HubSectionKBTitle.Text = "设置";
+            frame.Visibility = Visibility.Collapsed;
+        }
+
+        private void App_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            //BackAppBarToggleButton.IsChecked = false;
+            //BackAppBarToggleButton.Visibility = Visibility.Collapsed;
+            SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             HubSectionKBTitle.Text = "设置";
             frame.Visibility = Visibility.Collapsed;
         }

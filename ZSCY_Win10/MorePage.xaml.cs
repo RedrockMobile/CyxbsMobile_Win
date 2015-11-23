@@ -121,8 +121,6 @@ namespace ZSCY_Win10
             //MoreBackAppBarButton.Visibility = Visibility.Collapsed;
             SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             MoreFrame.Visibility = Visibility.Collapsed;
             MoreContentTitleTextBlock.Text = "";
             HubSectionKBTitle.Text = "更多";
