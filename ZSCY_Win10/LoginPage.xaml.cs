@@ -47,7 +47,8 @@ namespace ZSCY_Win10
 
         private async void mlogin()
         {
-            LoginProgressBar.Visibility = Visibility.Visible;
+            LoginProgressBar.IsActive = true;
+            LoginButton.Visibility = Visibility.Collapsed;
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", StuNumTextBox.Text));
             paramList.Add(new KeyValuePair<string, string>("idNum", IdNumPasswordBox.Password));
@@ -84,8 +85,8 @@ namespace ZSCY_Win10
             }
             else
                 Utils.Message("网络异常");
-
-            LoginProgressBar.Visibility = Visibility.Collapsed;
+            LoginButton.Visibility = Visibility.Visible;
+            LoginProgressBar.IsActive = false;
         }
 
         private void StuNumTextBox_TextChanged(object sender, TextChangedEventArgs e)
