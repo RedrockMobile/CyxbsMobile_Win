@@ -150,7 +150,7 @@ namespace ZSCY_Win10
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                 HubSectionKBTitle.Text = item.Itemname;
             }
-            MoreFrame.Visibility = Visibility.Visible;
+            //MoreFrame.Visibility = Visibility.Visible;
             MoreContentTitleTextBlock.Text = item.Itemname;
             Debug.WriteLine(item.UniqueID);
             {
