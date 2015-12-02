@@ -13,6 +13,7 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Popups;
+using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -158,6 +159,8 @@ namespace ZSCY_Win10
             try
             {
                 storageFileWR.DeleteAsync();
+                if (JumpList.IsSupported())
+                    DisableSystemJumpListAsync();
             }
             catch (Exception)
             {
@@ -165,6 +168,14 @@ namespace ZSCY_Win10
             }
             Frame rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(LoginPage));
+        }
+
+        private async void DisableSystemJumpListAsync()
+        {
+            var jumpList = await Windows.UI.StartScreen.JumpList.LoadCurrentAsync();
+            jumpList.SystemGroupKind = Windows.UI.StartScreen.JumpListSystemGroupKind.None;
+            jumpList.Items.Clear();
+            await jumpList.SaveAsync();
         }
 
         private async void OpacityToggleSwitch_Toggled(object sender, RoutedEventArgs e)

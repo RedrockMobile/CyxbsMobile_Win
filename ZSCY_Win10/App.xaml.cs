@@ -11,6 +11,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -43,7 +44,38 @@ namespace ZSCY_Win10
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             this.Resuming += this.OnResuming;
+            if (JumpList.IsSupported() && appSetting.Values.ContainsKey("idNum"))
+                SetSystemGroupAsync();
+            else
+                DisableSystemJumpListAsync();
         }
+
+        private async void DisableSystemJumpListAsync()
+        {
+            var jumpList = await Windows.UI.StartScreen.JumpList.LoadCurrentAsync();
+            jumpList.SystemGroupKind = Windows.UI.StartScreen.JumpListSystemGroupKind.None;
+            jumpList.Items.Clear();
+            await jumpList.SaveAsync();
+        }
+        private Windows.UI.StartScreen.JumpListItem CreateJumpListItemTask(string u, string description, string uri)
+        {
+            var taskItem = JumpListItem.CreateWithArguments(
+                                    u, description);
+            taskItem.Description = description;
+            taskItem.Logo = new Uri(uri);
+            return taskItem;
+        }
+        private async void SetSystemGroupAsync()
+        {
+            var jumpList = await Windows.UI.StartScreen.JumpList.LoadCurrentAsync();
+            jumpList.SystemGroupKind = Windows.UI.StartScreen.JumpListSystemGroupKind.Frequent;
+            jumpList.Items.Clear();
+            jumpList.Items.Add(CreateJumpListItemTask("/jwzx", "教务信息", "ms-appx:///Assets/iconfont-news_w.png"));
+            jumpList.Items.Add(CreateJumpListItemTask("/more", "更多", "ms-appx:///Assets/iconfont-more_w.png"));
+            await jumpList.SaveAsync();
+        }
+
+
 
         /// <summary>
         /// 在应用程序由最终用户正常启动时进行调用。
@@ -87,33 +119,42 @@ namespace ZSCY_Win10
 #if WINDOWS_PHONE_APP
                 Debug.WriteLine("#if WINDOWS_PHONE_APP");
 #endif
-                if (!appSetting.Values.ContainsKey("idNum"))
+                if (e.Kind == ActivationKind.Launch && (e.Arguments == "/jwzx" || e.Arguments == "/more") && appSetting.Values.ContainsKey("idNum"))
                 {
-                    if (!rootFrame.Navigate(typeof(LoginPage), e.Arguments))
+                    if (!rootFrame.Navigate(typeof(MainPage), e.Arguments))
                     {
                         throw new Exception("Failed to create initial page");
                     }
                 }
-                else
-                {
-                    if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar") && Utils.getPhoneWidth() < 400)
+                else {
+                    if (!appSetting.Values.ContainsKey("idNum"))
                     {
-                        Debug.WriteLine("小于400的Phone"+ Utils.getPhoneWidth());
-                        //if (!rootFrame.Navigate(typeof(MainPage_m), e.Arguments))
-                        //{
-                        //    throw new Exception("Failed to create initial page");
-                        //}
-                        if (!rootFrame.Navigate(typeof(MainPage), e.Arguments))
+                        if (!rootFrame.Navigate(typeof(LoginPage), e.Arguments))
                         {
                             throw new Exception("Failed to create initial page");
                         }
                     }
                     else
                     {
-                        Debug.WriteLine("大于400的phone OR PC");
-                        if (!rootFrame.Navigate(typeof(MainPage), e.Arguments))
+                        if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar") && Utils.getPhoneWidth() < 400)
                         {
-                            throw new Exception("Failed to create initial page");
+                            Debug.WriteLine("小于400的Phone" + Utils.getPhoneWidth());
+                            //if (!rootFrame.Navigate(typeof(MainPage_m), e.Arguments))
+                            //{
+                            //    throw new Exception("Failed to create initial page");
+                            //}
+                            if (!rootFrame.Navigate(typeof(MainPage), "/kb"))
+                            {
+                                throw new Exception("Failed to create initial page");
+                            }
+                        }
+                        else
+                        {
+                            Debug.WriteLine("大于400的phone OR PC");
+                            if (!rootFrame.Navigate(typeof(MainPage), "/kb"))
+                            {
+                                throw new Exception("Failed to create initial page");
+                            }
                         }
                     }
                 }

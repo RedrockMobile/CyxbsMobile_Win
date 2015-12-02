@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -39,10 +40,10 @@ namespace ZSCY_Win10
               };
         }
 
-        private  void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             mlogin();
-           
+
         }
 
         private async void mlogin()
@@ -69,7 +70,11 @@ namespace ZSCY_Win10
                         appSetting.Values["gender"] = dataobj["gender"].ToString();
                         appSetting.Values["major"] = dataobj["major"].ToString();
                         appSetting.Values["college"] = dataobj["college"].ToString();
-                        Frame.Navigate(typeof(MainPage));
+                        if (JumpList.IsSupported())
+                            SetSystemGroupAsync();
+                        else
+                            DisableSystemJumpListAsync();
+                        Frame.Navigate(typeof(MainPage), "/kb");
                     }
                     else if (Int32.Parse(obj["status"].ToString()) == -100)
                         Utils.Message("学号不存在");
@@ -87,6 +92,31 @@ namespace ZSCY_Win10
                 Utils.Message("网络异常");
             LoginButton.Visibility = Visibility.Visible;
             LoginProgressBar.IsActive = false;
+        }
+
+        private async void DisableSystemJumpListAsync()
+        {
+            var jumpList = await Windows.UI.StartScreen.JumpList.LoadCurrentAsync();
+            jumpList.SystemGroupKind = Windows.UI.StartScreen.JumpListSystemGroupKind.None;
+            jumpList.Items.Clear();
+            await jumpList.SaveAsync();
+        }
+        private Windows.UI.StartScreen.JumpListItem CreateJumpListItemTask(string u, string description, string uri)
+        {
+            var taskItem = JumpListItem.CreateWithArguments(
+                                    u, description);
+            taskItem.Description = description;
+            taskItem.Logo = new Uri(uri);
+            return taskItem;
+        }
+        private async void SetSystemGroupAsync()
+        {
+            var jumpList = await Windows.UI.StartScreen.JumpList.LoadCurrentAsync();
+            jumpList.SystemGroupKind = Windows.UI.StartScreen.JumpListSystemGroupKind.Frequent;
+            jumpList.Items.Clear();
+            jumpList.Items.Add(CreateJumpListItemTask("/jwzx", "教务信息", "ms-appx:///Assets/iconfont-news_w.png"));
+            jumpList.Items.Add(CreateJumpListItemTask("/more", "更多", "ms-appx:///Assets/iconfont-more_w.png"));
+            await jumpList.SaveAsync();
         }
 
         private void StuNumTextBox_TextChanged(object sender, TextChangedEventArgs e)

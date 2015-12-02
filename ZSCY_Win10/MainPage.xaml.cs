@@ -68,7 +68,7 @@ namespace ZSCY_Win10
                 //然并卵
                 this.TogglePaneButton.Focus(FocusState.Programmatic);
             };
-            this.AppFrame.Navigate(navlist[0].DestPage, navlist[0].Arguments);
+            //this.AppFrame.Navigate(navlist[0].DestPage, navlist[0].Arguments);
 
 
             //SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequseted;
@@ -78,7 +78,7 @@ namespace ZSCY_Win10
                 //this.BackButton.Visibility = Visibility.Collapsed;
             }
             NavMenuList.ItemsSource = navlist;
-            NavMenuList.SelectedIndex = 0;
+            //NavMenuList.SelectedIndex = 0;
         }
 
         public Frame AppFrame { get { return this.frame; } }
@@ -211,9 +211,35 @@ namespace ZSCY_Win10
                 if (container != null) container.IsTabStop = true;
             }
         }
-
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            try
+            {
+                NavMenuList.ItemsSource = navlist;
+                var jump = e.Parameter.ToString();
+                switch (jump)
+                {
+                    case "/kb":
+                        NavMenuList.SelectedItem = 0;
+                        this.AppFrame.Navigate(navlist[0].DestPage, navlist[0].Arguments);
+                        break;
+                    case "/jwzx":
+                        NavMenuList.SelectedItem = 1;
+                        this.AppFrame.Navigate(navlist[1].DestPage, navlist[1].Arguments);
+                        break;
+                    case "/more":
+                        NavMenuList.SelectedItem = 2;
+                        this.AppFrame.Navigate(navlist[2].DestPage, navlist[2].Arguments);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception) { }
+        }
         private void OnNavigatedToPage(object sender, NavigationEventArgs e)
         {
+
             // After a successful navigation set keyboard focus to the loaded page
             if (e.Content is Page && e.Content != null)
             {
