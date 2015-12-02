@@ -256,7 +256,7 @@ namespace ZSCY_Win10
             JWList JWItem = new JWList(((JWList)e.ClickedItem).ID, ((JWList)e.ClickedItem).Title, ((JWList)e.ClickedItem).Date, ((JWList)e.ClickedItem).Read, ((JWList)e.ClickedItem).Content == null ? "加载中..." : ((JWList)e.ClickedItem).Content);
 
             Debug.WriteLine("JWListgrid.Width" + JWListgrid.Width);
-            if (JWListgrid.Width != null && JWListgrid.Width == 400)
+            if (JWListgrid.Width == 400)
             {
                 //JWBackAppBarButton.Visibility = Visibility.Collapsed;
                 SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;

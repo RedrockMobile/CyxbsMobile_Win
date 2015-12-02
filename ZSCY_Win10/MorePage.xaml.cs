@@ -135,7 +135,7 @@ namespace ZSCY_Win10
         {
 
             var item = e.ClickedItem as Morepageclass;
-            if ((MoreListgrid.Width != null && MoreListgrid.Width == 300) || item.UniqueID == "Card")
+            if ((MoreListgrid.Width == 300) || item.UniqueID == "Card")
             {
                 //MoreBackAppBarButton.Visibility = Visibility.Collapsed;
                 SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
