@@ -139,7 +139,7 @@ namespace ZSCY_Win10
             TextBlock KebiaoWeek = new TextBlock();
             KebiaoWeek.Text = Utils.GetWeek(2);
             KebiaoWeek.FontSize = 20;
-            KebiaoWeek.Foreground = new SolidColorBrush(Color.FromArgb(255, 51, 51, 51));
+            KebiaoWeek.Foreground = new SolidColorBrush(Colors.Black);
             KebiaoWeek.FontWeight = FontWeights.Light;
             KebiaoWeek.VerticalAlignment = VerticalAlignment.Center;
             KebiaoWeek.HorizontalAlignment = HorizontalAlignment.Center;
