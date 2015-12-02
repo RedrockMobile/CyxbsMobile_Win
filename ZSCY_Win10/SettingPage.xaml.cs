@@ -158,9 +158,10 @@ namespace ZSCY_Win10
             IStorageFile storageFileWR = await applicationFolder.CreateFileAsync("kb", CreationCollisionOption.OpenIfExists);
             try
             {
-                storageFileWR.DeleteAsync();
+                await storageFileWR.DeleteAsync();
                 if (JumpList.IsSupported())
                     DisableSystemJumpListAsync();
+
             }
             catch (Exception)
             {

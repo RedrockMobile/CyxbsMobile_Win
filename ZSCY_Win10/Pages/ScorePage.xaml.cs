@@ -51,7 +51,7 @@ namespace ZSCY.Pages
         }
 
         //离开页面时，取消事件
-        protected async override void OnNavigatedFrom(NavigationEventArgs e)
+        protected  override void OnNavigatedFrom(NavigationEventArgs e)
         {
             //StatusBar statusBar = StatusBar.GetForCurrentView();
             UmengSDK.UmengAnalytics.TrackPageEnd("ScorePage");

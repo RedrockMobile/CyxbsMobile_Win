@@ -84,14 +84,14 @@ namespace ZSCY.Pages
 
 
         //离开页面时，取消事件
-        protected async override void OnNavigatedFrom(NavigationEventArgs e)
+        protected  override void OnNavigatedFrom(NavigationEventArgs e)
         {
             //StatusBar statusBar = StatusBar.GetForCurrentView();
             //await statusBar.ProgressIndicator.HideAsync();
             UmengSDK.UmengAnalytics.TrackPageEnd("EmptyRoomsPage");
         }
 
-        private async void Time08Grid_Tapped(object sender, TappedRoutedEventArgs e)
+        private void Time08Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (!gridColor[0])
             {
