@@ -44,10 +44,13 @@ namespace ZSCY_Win10
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             this.Resuming += this.OnResuming;
-            if (JumpList.IsSupported() && appSetting.Values.ContainsKey("idNum"))
-                SetSystemGroupAsync();
-            else
-                DisableSystemJumpListAsync();
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.StartScreen.JumpList"))
+            {
+                if (JumpList.IsSupported() && appSetting.Values.ContainsKey("idNum"))
+                    SetSystemGroupAsync();
+                else if (JumpList.IsSupported())
+                    DisableSystemJumpListAsync();
+            }
         }
 
         private async void DisableSystemJumpListAsync()

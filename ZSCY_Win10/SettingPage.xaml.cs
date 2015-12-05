@@ -159,9 +159,11 @@ namespace ZSCY_Win10
             try
             {
                 await storageFileWR.DeleteAsync();
-                if (JumpList.IsSupported())
-                    DisableSystemJumpListAsync();
-
+                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.StartScreen.JumpList"))
+                {
+                    if (JumpList.IsSupported())
+                        DisableSystemJumpListAsync();
+                }
             }
             catch (Exception)
             {

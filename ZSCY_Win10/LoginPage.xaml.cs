@@ -73,11 +73,14 @@ namespace ZSCY_Win10
                         appSetting.Values["gender"] = dataobj["gender"].ToString();
                         appSetting.Values["major"] = dataobj["major"].ToString();
                         appSetting.Values["college"] = dataobj["college"].ToString();
-                        if (JumpList.IsSupported())
-                            SetSystemGroupAsync();
-                        else
-                            DisableSystemJumpListAsync();
-                        Frame.Navigate(typeof(MainPage), "/kb");
+                        if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.StartScreen.JumpList"))
+                        {
+                            if (JumpList.IsSupported())
+                                SetSystemGroupAsync();
+                            else if (JumpList.IsSupported())
+                                DisableSystemJumpListAsync();
+                            Frame.Navigate(typeof(MainPage), "/kb");
+                        }
                     }
                     else if (Int32.Parse(obj["status"].ToString()) == -100)
                         Utils.Message("学号不存在");
