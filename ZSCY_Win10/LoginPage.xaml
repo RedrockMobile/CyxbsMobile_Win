@@ -126,14 +126,15 @@
                 <VisualState x:Name="VisualState600">
                     <VisualState.Setters>
                         <Setter Target="MainStackPanel.(StackPanel.Orientation)" Value="Horizontal"/>
+                        <Setter Target="stackPanel.(FrameworkElement.VerticalAlignment)" Value="Top"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <StackPanel Name="MainStackPanel" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Image  Source="Assets\Logo.png" VerticalAlignment="Top" Margin="15" Height="150" Width="150" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"></Image>
-            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Name="MainStackPanel" Orientation="Vertical" HorizontalAlignment="Center"  Margin="0,100,0,0">
+            <Image  Source="Assets\Logo.png" VerticalAlignment="Top" Margin="15,0,15,15" Height="150" Width="150" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"></Image>
+            <StackPanel x:Name="stackPanel" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Grid  Width="200">
                     <TextBox Background="White" Width="200"  Name="StuNumTextBox" InputScope="Number" PlaceholderText="学号" Foreground="Black" TextChanged="StuNumTextBox_TextChanged" KeyUp="TextBox_KeyUp"/>
                 </Grid>

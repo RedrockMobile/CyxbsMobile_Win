@@ -48,7 +48,10 @@ namespace ZSCY_Win10
 
         private async void mlogin()
         {
+            StuNumTextBox.IsEnabled = false;
+            IdNumPasswordBox.IsEnabled = false;
             LoginProgressBar.IsActive = true;
+            this.Focus(FocusState.Pointer);
             LoginButton.Visibility = Visibility.Collapsed;
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", StuNumTextBox.Text));
@@ -92,6 +95,11 @@ namespace ZSCY_Win10
                 Utils.Message("网络异常");
             LoginButton.Visibility = Visibility.Visible;
             LoginProgressBar.IsActive = false;
+            StuNumTextBox.IsEnabled = true;
+            IdNumPasswordBox.IsEnabled = true;
+            // Debug.WriteLine(StuNumTextBox.FocusState);
+            //StuNumTextBox.Focus(FocusState.Unfocused);
+            // IdNumPasswordBox.Focus(FocusState.Pointer);
         }
 
         private async void DisableSystemJumpListAsync()
