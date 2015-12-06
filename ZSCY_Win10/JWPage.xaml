@@ -61,7 +61,7 @@
             </Grid.ColumnDefinitions>
 
             <!--列表-->
-            <Grid x:Name="JWListgrid" Grid.Column="0">
+            <Grid x:Name="JWListgrid" Grid.Column="0" Background="White">
                 <ScrollViewer VerticalScrollBarVisibility="Hidden">
                     <Grid>
                         <Grid.RowDefinitions>
