@@ -10,6 +10,7 @@ namespace ZSCY.Data
     public class uIdList
     {
         public string uId { get; set; }
+        public string uName { get; set; }
     }
 
     public class AuIdList

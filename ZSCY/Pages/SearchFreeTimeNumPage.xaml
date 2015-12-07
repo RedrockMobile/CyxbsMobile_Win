@@ -52,7 +52,7 @@
             <ListView Name="uIdListView" Grid.Row="1" IsItemClickEnabled="True" ItemClick="uIdListView_ItemClick">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding uId}" FontSize="18" Foreground="#333"></TextBlock>
+                        <TextBlock Text="{Binding uName}" FontSize="18" Foreground="#333"></TextBlock>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

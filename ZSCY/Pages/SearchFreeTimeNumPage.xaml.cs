@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -65,9 +66,8 @@ namespace ZSCY.Pages
 
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
-
             var muIDArray = muIdList.ToArray().ToList();
             if (AddTextBox.Text.Length != 10)
             {
@@ -78,7 +78,43 @@ namespace ZSCY.Pages
             else
             {
                 //for (int i = 0; i < 15; i++)
-                muIdList.Add(new uIdList { uId = AddTextBox.Text });
+                string usename = AddTextBox.Text;
+                string useid = AddTextBox.Text;
+                muIdList.Add(new uIdList { uId = AddTextBox.Text, uName = AddTextBox.Text });
+                string name = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/searchPeople?stunum=" + AddTextBox.Text, PostORGet: 1);
+                Debug.WriteLine("name->" + name);
+                if (name != "")
+                {
+                    try
+                    {
+                        JObject obj = JObject.Parse(name);
+                        if (Int32.Parse(obj["state"].ToString()) == 200)
+                        {
+                            JObject dataobj = JObject.Parse(obj["data"].ToString());
+                            usename = dataobj["name"].ToString();
+                        }
+                    }
+                    catch (Exception) { }
+
+                }
+                if (usename != "")
+                    for (int i = 0; i < muIdList.Count; i++)
+                    {
+                        if (muIdList[i].uId == useid)
+                        {
+                            ListViewItem item = new ListViewItem();
+                            muIdList[i].uName = usename;
+                            uIdListView.ItemsSource = null;
+                            uIdListView.ItemsSource = muIdList;
+                        }
+                    }
+                else
+                {
+                     Utils.Message("学号不正确");
+                    muIDArray = muIdList.ToArray().ToList();
+                    uIdList u = muIDArray.Find(p => p.uId.Equals(useid));
+                    muIdList.Remove(u);
+                }
                 AddTextBox.Text = "";
             }
         }
@@ -86,7 +122,7 @@ namespace ZSCY.Pages
         private async void uIdListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             ;
-            var dig = new MessageDialog("确定删除" + ((uIdList)e.ClickedItem).uId, "警告");
+            var dig = new MessageDialog("确定删除" + (((uIdList)e.ClickedItem).uName) + "(" + ((uIdList)e.ClickedItem).uId + ")", "警告");
             var btnOk = new UICommand("是");
             dig.Commands.Add(btnOk);
             var btnCancel = new UICommand("否");

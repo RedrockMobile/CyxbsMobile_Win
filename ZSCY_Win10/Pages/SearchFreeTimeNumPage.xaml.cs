@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -9,6 +10,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -73,7 +75,7 @@ namespace ZSCY.Pages
             mAddButton();
         }
 
-        private void mAddButton()
+        private async void mAddButton()
         {
             var muIDArray = muIdList.ToArray().ToList();
             if (AddTextBox.Text.Length != 10)
@@ -84,8 +86,61 @@ namespace ZSCY.Pages
                 Utils.Message("此学号已添加");
             else
             {
-                //for (int i = 0; i < 15; i++)
-                muIdList.Add(new uIdList { uId = AddTextBox.Text });
+                string usename = AddTextBox.Text;
+                string useid = AddTextBox.Text;
+
+                //TextBlock t = new TextBlock();
+                //t.FontSize = 18;
+                //t.Foreground = new SolidColorBrush(Color.FromArgb(255, 51, 51, 51));
+                //t.Text = useid;
+                //uIdStackPanel.Children.Add(t);
+
+
+
+
+
+
+
+                string name = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/searchPeople?stunum=" + AddTextBox.Text, PostORGet: 1);
+                muIdList.Add(new uIdList { uId = AddTextBox.Text, uName = usename });
+                Debug.WriteLine("name->" + name);
+                if (name != "")
+                {
+                    try
+                    {
+                        JObject obj = JObject.Parse(name);
+                        if (Int32.Parse(obj["state"].ToString()) == 200)
+                        {
+                            JObject dataobj = JObject.Parse(obj["data"].ToString());
+                            usename = dataobj["name"].ToString();
+                            //foreach (var item in uIdStackPanel.Children)
+                            //{
+                            //    if (((TextBlock)item).Text == useid)
+                            //        uIdStackPanel.Children.Remove(item);
+                            //}
+                        }
+                    }
+                    catch (Exception) { }
+
+                }
+                if (usename != "")
+                    for (int i = 0; i < muIdList.Count; i++)
+                    {
+                        if (muIdList[i].uId == useid)
+                        {
+                            ListViewItem item = new ListViewItem();
+                            muIdList[i].uName = usename;
+                            //uIdListView.ItemsSource = null;
+                            uIdListView.ItemsSource = muIdList;
+                        }
+                    }
+                else
+                {
+                    Utils.Message("学号不正确");
+                    muIDArray = muIdList.ToArray().ToList();
+                    uIdList u = muIDArray.Find(p => p.uId.Equals(useid));
+                    muIdList.Remove(u);
+                }
                 AddTextBox.Text = "";
             }
         }
@@ -93,7 +148,7 @@ namespace ZSCY.Pages
         private async void uIdListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             ;
-            var dig = new MessageDialog("确定删除" + ((uIdList)e.ClickedItem).uId, "警告");
+            var dig = new MessageDialog("确定删除" + (((uIdList)e.ClickedItem).uName) + "(" + ((uIdList)e.ClickedItem).uId + ")", "警告");
             var btnOk = new UICommand("是");
             dig.Commands.Add(btnOk);
             var btnCancel = new UICommand("否");

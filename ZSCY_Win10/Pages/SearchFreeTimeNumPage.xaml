@@ -10,11 +10,15 @@
     Background="#068cfd">
 
     <Grid Background="#fff">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="73*"/>
+            <ColumnDefinition Width="47*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel VerticalAlignment="Top" Orientation="Horizontal" Grid.Row="0" Background="#068cfd" >
+        <StackPanel VerticalAlignment="Top" Orientation="Horizontal" Grid.Row="0" Background="#068cfd" Grid.ColumnSpan="2" Grid.RowSpan="2" >
             <!--<TextBlock Text="找空闲" FontSize="35" VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" Margin="15,0,0,0"></TextBlock>
                 <TextBlock  Text="第" Margin="5,0,0,0" Foreground="White"  FontSize="20"  VerticalAlignment="Bottom" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
                 <TextBlock Name="HubSectionKBNum" Text=" "  Foreground="White"  FontSize="20"  VerticalAlignment="Bottom" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
@@ -36,7 +40,7 @@
                 </FlyoutBase.AttachedFlyout>-->
         </StackPanel>
 
-        <Grid Grid.Row="1" Margin="15">
+        <Grid Grid.Row="1" Margin="15" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition />
@@ -49,13 +53,23 @@
                 <TextBox Name="AddTextBox" PlaceholderText="请输入学号" InputScope="Number" Grid.Column="0" KeyUp="AddTextBox_KeyUp"></TextBox>
                 <Button Name="AddButton" Margin="5,0,0,0" RequestedTheme="Light" VerticalAlignment="Top" Content="Add" Grid.Column="1" Click="AddButton_Click"/>
             </Grid>
-            <ListView Name="uIdListView" Grid.Row="1" IsItemClickEnabled="True" ItemClick="uIdListView_ItemClick">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding uId}" FontSize="18" Foreground="#333"></TextBlock>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <ListView Name="uIdListView" Grid.Row="0" IsItemClickEnabled="True" ItemClick="uIdListView_ItemClick">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding uName}" FontSize="18" Foreground="#333"></TextBlock>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <StackPanel Name="uIdStackPanel" Grid.Row="1">
+
+                </StackPanel>
+            </Grid>
+
 
         </Grid>
     </Grid>

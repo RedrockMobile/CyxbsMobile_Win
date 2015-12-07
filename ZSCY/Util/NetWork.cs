@@ -15,7 +15,14 @@ namespace ZSCY.Util
 {
     class NetWork
     {
-        public static async Task<string> getHttpWebRequest(string api, List<KeyValuePair<String, String>> paramList = null)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="api"></param>
+        /// <param name="paramList"></param>
+        /// <param name="PostORGet">0：POST，1：GET</param>
+        /// <returns></returns>
+        public static async Task<string> getHttpWebRequest(string api, List<KeyValuePair<String, String>> paramList = null, int PostORGet = 0)
         {
             string content = "";
             return await Task.Run(() =>
@@ -28,8 +35,18 @@ namespace ZSCY.Util
                        string uri = "http://hongyan.cqupt.edu.cn/" + api;
                        httpClient.DefaultRequestHeaders.Add("API_APP", "winphone");
                        httpClient.DefaultRequestHeaders.Add("API_TOKEN", "0zLUZA0j+OL77OsjXC0ulOz50KaI6yANZtkOk2vQIDg=");
-                       HttpRequestMessage requst = new HttpRequestMessage(HttpMethod.Post, new Uri(uri));
-                       System.Net.Http.HttpResponseMessage response = httpClient.PostAsync(new Uri(uri), new FormUrlEncodedContent(paramList)).Result;
+                       HttpRequestMessage requst;
+                       System.Net.Http.HttpResponseMessage response;
+                       if (PostORGet == 0)
+                       {
+                           requst = new HttpRequestMessage(HttpMethod.Post, new Uri(uri));
+                           response = httpClient.PostAsync(new Uri(uri), new FormUrlEncodedContent(paramList)).Result;
+                       }
+                       else
+                       {
+                           requst = new HttpRequestMessage(HttpMethod.Get, new Uri(uri));
+                           response = httpClient.GetAsync(new Uri(uri)).Result;
+                       }
                        if (response.StatusCode == HttpStatusCode.OK)
                            content = response.Content.ReadAsStringAsync().Result;
                        else if (response.StatusCode == HttpStatusCode.NotFound)
