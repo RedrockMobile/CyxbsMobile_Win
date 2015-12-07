@@ -67,7 +67,7 @@
             </Grid.ColumnDefinitions>
 
             <!--列表-->
-            <Grid x:Name="MoreListgrid" Grid.Column="0" DataContext="{Binding Group[0]}">
+            <Grid x:Name="MoreListgrid" Grid.Column="0" DataContext="{Binding Group[0]}" Background="White">
                 <ScrollViewer VerticalScrollBarVisibility="Hidden">
                     <ListView Name="MoreListView" IsItemClickEnabled="True" ItemClick="MoreListView_ItemClick" ItemsSource="{Binding items}">
                         <ListView.ItemTemplate>
