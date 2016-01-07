@@ -137,7 +137,7 @@ namespace ZSCY.Pages
                 else
                 {
                     Utils.Message("学号不正确");
-                    muIDArray = muIdList.ToArray().ToList();
+                    muIDArray = muIdList.ToList();
                     uIdList u = muIDArray.Find(p => p.uId.Equals(useid));
                     muIdList.Remove(u);
                 }
@@ -156,7 +156,7 @@ namespace ZSCY.Pages
             var result = await dig.ShowAsync();
             if (null != result && result.Label == "是")
             {
-                var muIDArray = muIdList.ToArray().ToList();
+                var muIDArray = muIdList.ToList();
                 uIdList u = muIDArray.Find(p => p.uId.Equals(((uIdList)e.ClickedItem).uId));
                 muIdList.Remove(u);
             }

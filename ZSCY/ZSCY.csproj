@@ -278,6 +278,7 @@
     <Content Include="Assets\Square71x71Logo.scale-240a.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="app.config" />
     <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -359,8 +360,8 @@
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\wpa81\System.Net.Http.Primitives.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UmengAnalyticsUniversal, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UmengAnalytics.2.0.2\lib\wpa81\UmengAnalyticsUniversal.dll</HintPath>
+    <Reference Include="UmengAnalyticsUniversal, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmengAnalytics.3.1.0\lib\wpa81\UmengAnalyticsUniversal.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
