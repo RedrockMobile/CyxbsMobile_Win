@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Data;
 
 namespace ZSCY_Win10.Util.Converter
 {
-    class KBAllScrollViewerHeightConverter : IValueConverter
+    public class KBAllScrollViewerHeightConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {

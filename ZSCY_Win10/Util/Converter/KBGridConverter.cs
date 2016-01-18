@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Data;
 
 namespace ZSCY_Win10.Util.Converter
 {
-    class KBGridWidthConverter : IValueConverter
+    public class KBGridWidthConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -20,7 +20,7 @@ namespace ZSCY_Win10.Util.Converter
         }
     }
 
-    class KBGridHeighConverter : IValueConverter
+    public class KBGridHeighConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -59,6 +59,6 @@ namespace ZSCY_Win10.Util.Converter
         }
     }
 
-    
+
 
 }

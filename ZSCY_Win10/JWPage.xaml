@@ -5,6 +5,7 @@
     xmlns:local="using:ZSCY_Win10"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pr="using:PullToRefresh.UWP"
     mc:Ignorable="d">
 
     <Grid >
@@ -62,59 +63,60 @@
 
             <!--列表-->
             <Grid x:Name="JWListgrid" Grid.Column="0" Background="White">
-                <ScrollViewer VerticalScrollBarVisibility="Hidden">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <ListView Name="JWListView" IsItemClickEnabled="True" ItemClick="JWListView_ItemClick" HorizontalAlignment="Stretch" >
-                            <ListView.ItemTemplate>
-                                <DataTemplate >
-                                    <Grid Margin="-12,0">
-                                        <Grid Margin="15,10">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition/>
-                                                <RowDefinition />
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition Width="auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <!--标题-->
-                                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" TextTrimming="WordEllipsis" HorizontalAlignment="Stretch" FontSize="16" Foreground="#333333" FontFamily="Microsoft YaHei UI" ></TextBlock>
-                                            <!--正文-->
-                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Content}" VerticalAlignment="Top" MaxLines="2" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
-                                            <!--阅读、时间-->
-                                            <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
-                                                <TextBlock Text="{Binding Read}" FontSize="12" HorizontalAlignment="Right" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
-                                                <TextBlock Text="{Binding Date}" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
-                                            </StackPanel>
+                <pr:PullToRefreshBox x:Name="JWListpr" RefreshInvoked="JWListpr_RefreshInvoked"  VerticalAlignment="Stretch" >                    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <ListView Name="JWListView" IsItemClickEnabled="True" ItemClick="JWListView_ItemClick" HorizontalAlignment="Stretch" >
+                                <ListView.ItemTemplate>
+                                    <DataTemplate >
+                                        <Grid Margin="-12,0">
+                                            <Grid Margin="15,10">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <!--标题-->
+                                                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" TextTrimming="WordEllipsis" HorizontalAlignment="Stretch" FontSize="16" Foreground="#333333" FontFamily="Microsoft YaHei UI" ></TextBlock>
+                                                <!--正文-->
+                                                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Content}" VerticalAlignment="Top" MaxLines="2" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                <!--阅读、时间-->
+                                                <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
+                                                    <TextBlock Text="{Binding Read}" FontSize="12" HorizontalAlignment="Right" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                    <TextBlock Text="{Binding Date}" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Line X1="0" X2="750" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                            <Line X1="0" X2="750" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                         </Grid>
-                                        <Line X1="0" X2="750" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                        <Line X1="0" X2="750" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                        <StackPanel Grid.Row="1">
-                            <!--列表的加载条-->
-                            <StackPanel Name="JWListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
-                                <ProgressBar IsIndeterminate="True" />
-                                <TextBlock Text="疯狂加载中..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <StackPanel Grid.Row="1">
+                                <!--列表的加载条-->
+                                <StackPanel Name="JWListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
+                                    <ProgressBar IsIndeterminate="True" />
+                                    <TextBlock Text="疯狂加载中..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
+                                </StackPanel>
+                                <!--列表的失败报错-->
+                                <StackPanel Name="JWListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="JWListFailedStackPanel_Tapped">
+                                    <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
+                                    <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+                                </StackPanel>
+                                <!--继续加载-->
+                                <Grid Name="continueJWGrid" Height="50" Tapped="continueJWGrid_Tapped" Visibility="Collapsed">
+                                    <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
+                                </Grid>
                             </StackPanel>
-                            <!--列表的失败报错-->
-                            <StackPanel Name="JWListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="JWListFailedStackPanel_Tapped">
-                                <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
-                                <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
-                            </StackPanel>
-                            <!--继续加载-->
-                            <Grid Name="continueJWGrid" Height="50" Tapped="continueJWGrid_Tapped" Visibility="Collapsed">
-                                <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
-                            </Grid>
-                        </StackPanel>
-                    </Grid>
-                </ScrollViewer>
+                        </Grid>
+                    </ScrollViewer>
+                </pr:PullToRefreshBox>
             </Grid>
 
             <!--正文-->

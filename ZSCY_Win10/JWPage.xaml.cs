@@ -306,5 +306,12 @@ namespace ZSCY_Win10
             JWListView.SelectedIndex = -1;
         }
 
+        private void JWListpr_RefreshInvoked(DependencyObject sender, object args)
+        {
+            page = 1;
+            JWList.Clear();
+            continueJWGrid.Visibility = Visibility.Collapsed;
+            initJWList();
+        }
     }
 }

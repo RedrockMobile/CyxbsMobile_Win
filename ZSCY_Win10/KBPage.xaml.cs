@@ -74,7 +74,8 @@ namespace ZSCY_Win10
                 VisualStateManager.GoToState(this, state, true);
                 Debug.WriteLine("KBAllGrid" + KBAllGrid.Width);
                 Debug.WriteLine(e.NewSize.Width);
-                KebiaoAllScrollViewer.Height = e.NewSize.Height - 48 - 25;
+                //KebiaoAllScrollViewer.Height = e.NewSize.Height - 48 - 25;
+                KebiaoAllpr.Height = e.NewSize.Height - 48 - 25;
                 cutoffLine.Y2 = e.NewSize.Height - 48;
                 cutoffLine2.Y2 = e.NewSize.Height - 48;
             };
@@ -681,6 +682,15 @@ namespace ZSCY_Win10
                     KBZoomFlyoutTextBox.SelectAll();
                 }
             }
+        }
+
+        private void KebiaoAllpr_RefreshInvoked(DependencyObject sender, object args)
+        {
+            this.progress.IsActive = true;
+            stuNum = appSetting.Values["stuNum"].ToString();
+            wOa = 1;
+            initKB(true);
+            this.progress.IsActive = false;
         }
     }
 }
