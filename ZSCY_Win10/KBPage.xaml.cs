@@ -39,6 +39,7 @@ namespace ZSCY_Win10
         ApplicationDataContainer appSettingclass = Windows.Storage.ApplicationData.Current.RoamingSettings;
         IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
         Grid backweekgrid = new Grid();
+        TextBlock[] DateOnKBTextBlock = new TextBlock[7] { new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock() };
         List<ClassList> classList = new List<ClassList>();
         string[,][] classtime = new string[7, 6][];
         public KBPage()
@@ -125,27 +126,33 @@ namespace ZSCY_Win10
                 kebiaoGrid.Children.Add(backgrid);
 
                 backweekgrid.Background = new SolidColorBrush(Color.FromArgb(255, 254, 245, 207));
-                backweekgrid.SetValue(Grid.ColumnProperty, (Int16.Parse(Utils.GetWeek()) == 0 ? 7 : Int16.Parse(Utils.GetWeek())));
-                KebiaoWeekGrid.Children.Remove(backweekgrid);
-                KebiaoWeekGrid.Children.Add(backweekgrid);
+                backweekgrid.SetValue(Grid.ColumnProperty, (Int16.Parse(Utils.GetWeek()) == 0 ? 6 : Int16.Parse(Utils.GetWeek()) - 1));
+                backweekgrid.SetValue(Grid.RowSpanProperty, 2);
+                KebiaoWeekTitleGrid.Children.Remove(backweekgrid);
+                KebiaoWeekTitleGrid.Children.Add(backweekgrid);
 
             }
             else
             {
                 backweekgrid.Background = new SolidColorBrush(Color.FromArgb(255, 248, 248, 248));
-                backweekgrid.SetValue(Grid.ColumnProperty, (Int16.Parse(Utils.GetWeek()) == 0 ? 7 : Int16.Parse(Utils.GetWeek())));
-                KebiaoWeekGrid.Children.Remove(backweekgrid);
-                KebiaoWeekGrid.Children.Add(backweekgrid);
+                backweekgrid.SetValue(Grid.ColumnProperty, (Int16.Parse(Utils.GetWeek()) == 0 ? 6 : Int16.Parse(Utils.GetWeek()) - 1));
+                backweekgrid.SetValue(Grid.RowSpanProperty, 2);
+                KebiaoWeekTitleGrid.Children.Remove(backweekgrid);
+                KebiaoWeekTitleGrid.Children.Add(backweekgrid);
             }
+            //当日的星期
             TextBlock KebiaoWeek = new TextBlock();
             KebiaoWeek.Text = Utils.GetWeek(2);
-            KebiaoWeek.FontSize = 20;
-            KebiaoWeek.Foreground = new SolidColorBrush(Colors.Black);
+            KebiaoWeek.FontSize = 18;
+            KebiaoWeek.Foreground = new SolidColorBrush(Color.FromArgb(255, 33, 33, 33));
             KebiaoWeek.FontWeight = FontWeights.Light;
             KebiaoWeek.VerticalAlignment = VerticalAlignment.Center;
             KebiaoWeek.HorizontalAlignment = HorizontalAlignment.Center;
-            KebiaoWeek.SetValue(Grid.ColumnProperty, (Int16.Parse(Utils.GetWeek()) == 0 ? 7 : Int16.Parse(Utils.GetWeek())));
-            KebiaoWeekGrid.Children.Add(KebiaoWeek);
+            KebiaoWeek.SetValue(Grid.ColumnProperty, (Int16.Parse(Utils.GetWeek()) == 0 ? 6 : Int16.Parse(Utils.GetWeek()) - 1));
+            KebiaoWeek.SetValue(Grid.RowProperty, 1);
+            KebiaoWeekTitleGrid.Children.Add(KebiaoWeek);
+
+
         }
 
         private async void initKB(bool isRefresh = false)
@@ -243,6 +250,8 @@ namespace ZSCY_Win10
             DateTime weekstart = GetWeekFirstDayMon(now);
             DateTime weekend = GetWeekLastDaySun(now);
             this.HubSectionKBDate.Text = weekstart.Month + "." + weekstart.Day + "--" + weekend.Month + "." + weekend.Day;
+            ShowWeekOnKB(weekstart);
+
         }
         public DateTime GetWeekFirstDayMon(DateTime datetime)
         {
@@ -268,6 +277,25 @@ namespace ZSCY_Win10
             //本周最后一天   
             string LastDay = datetime.AddDays(daydiff).ToString("yyyy-MM-dd");
             return Convert.ToDateTime(LastDay);
+        }
+
+        public void ShowWeekOnKB(DateTime datestart)
+        {
+            MonthTextBlock.Text = datestart.Month.ToString() + "月";
+            for (int i = 0; i < 7; i++)
+            {
+                DateOnKBTextBlock[i].Text = datestart.AddDays(i).Day.ToString();
+                DateOnKBTextBlock[i].FontSize = 18;
+                DateOnKBTextBlock[i].Foreground = new SolidColorBrush(Color.FromArgb(255, 66, 66, 66));
+                DateOnKBTextBlock[i].FontWeight = FontWeights.Light;
+                DateOnKBTextBlock[i].VerticalAlignment = VerticalAlignment.Center;
+                DateOnKBTextBlock[i].HorizontalAlignment = HorizontalAlignment.Center;
+                DateOnKBTextBlock[i].SetValue(Grid.ColumnProperty, i);
+                DateOnKBTextBlock[i].SetValue(Grid.RowProperty, 0);
+                var aaa = KebiaoWeekTitleGrid.Children.ToArray();
+                KebiaoWeekTitleGrid.Children.Remove(DateOnKBTextBlock[i]);
+                KebiaoWeekTitleGrid.Children.Add(DateOnKBTextBlock[i]);
+            }
         }
 
         private void showKB(int weekOrAll = 1, int week = 0)
@@ -569,6 +597,10 @@ namespace ZSCY_Win10
         private void KBCalendarAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             showKB(wOa);
+            DateTime now = DateTime.Now;
+            DateTime weekstart = GetWeekFirstDayMon(now);
+            DateTime weekend = GetWeekLastDaySun(now);
+            ShowWeekOnKB(weekstart);
             if (wOa == 1)
             {
                 wOa = 2;
@@ -579,9 +611,7 @@ namespace ZSCY_Win10
             {
                 wOa = 1;
                 HubSectionKBNum.Visibility = Visibility.Visible;
-                DateTime now = DateTime.Now;
-                DateTime weekstart = GetWeekFirstDayMon(now);
-                DateTime weekend = GetWeekLastDaySun(now);
+                HubSectionKBDate.Text = weekstart.Month + "." + weekstart.Day + "--" + weekend.Month + "." + weekend.Day;
                 HubSectionKBDate.Text = weekstart.Month + "." + weekstart.Day + "--" + weekend.Month + "." + weekend.Day;
             }
         }
@@ -591,7 +621,7 @@ namespace ZSCY_Win10
         private void KBSearchButton_Click(object sender, RoutedEventArgs e)
         {
             KBSearch();
-            
+
         }
 
         private void KBSearch()
@@ -632,6 +662,7 @@ namespace ZSCY_Win10
                 DateTime weekstart = GetWeekFirstDayMon(KBNumFlyoutTextBox.Text == "" ? now : now.AddDays((Int16.Parse(KBNumFlyoutTextBox.Text) - Int16.Parse(appSetting.Values["nowWeek"].ToString())) * 7));
                 DateTime weekend = GetWeekLastDaySun(KBNumFlyoutTextBox.Text == "" ? now : now.AddDays((Int16.Parse(KBNumFlyoutTextBox.Text) - Int16.Parse(appSetting.Values["nowWeek"].ToString())) * 7));
                 this.HubSectionKBDate.Text = weekstart.Month + "." + weekstart.Day + "--" + weekend.Month + "." + weekend.Day;
+                ShowWeekOnKB(weekstart);
                 KBNumFlyout.Hide();
             }
             else
