@@ -63,7 +63,8 @@
 
             <!--列表-->
             <Grid x:Name="JWListgrid" Grid.Column="0" Background="White">
-                <pr:PullToRefreshBox x:Name="JWListpr" RefreshInvoked="JWListpr_RefreshInvoked"  VerticalAlignment="Stretch" >                    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                <pr:PullToRefreshBox x:Name="JWListpr" RefreshInvoked="JWListpr_RefreshInvoked"  VerticalAlignment="Stretch" >
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
