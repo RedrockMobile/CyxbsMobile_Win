@@ -306,6 +306,11 @@ namespace ZSCY_Win10
             JWListView.SelectedIndex = -1;
         }
 
+        /// <summary>
+        /// 下拉刷新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void JWListpr_RefreshInvoked(DependencyObject sender, object args)
         {
             page = 1;
