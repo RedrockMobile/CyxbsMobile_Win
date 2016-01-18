@@ -134,6 +134,7 @@
             <!--大课表Grid-->
             <Grid x:Name="KBAllGrid" Grid.Column="0">
                 <StackPanel >
+                    <!--日期星期-->
                     <Grid x:Name="KebiaoWeekGrid" Height="50">
                         <Grid.ColumnDefinitions>
                             <!--列-->
@@ -204,7 +205,6 @@
                     <pr:PullToRefreshBox x:Name="KebiaoAllpr" VerticalAlignment="Stretch" RefreshInvoked="KebiaoAllpr_RefreshInvoked">
                         <ScrollViewer VerticalScrollBarVisibility="Hidden">
                             <!--<ScrollViewer x:Name="KebiaoAllScrollViewer" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Hidden" Height="{Binding ActualHeight, Converter={StaticResource KBAllScrollViewerHeightConverter}, ElementName=page, Mode=OneWay}">-->
-
                             <Grid >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2 *"/>
