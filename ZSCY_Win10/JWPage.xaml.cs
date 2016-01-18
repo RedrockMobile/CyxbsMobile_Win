@@ -101,11 +101,6 @@ namespace ZSCY_Win10
             });
         }
 
-
-
-
-
-
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -307,7 +302,7 @@ namespace ZSCY_Win10
         }
 
         /// <summary>
-        /// 下拉刷新
+        /// 下拉刷新的事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
