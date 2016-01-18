@@ -76,7 +76,7 @@ namespace ZSCY_Win10
                 Debug.WriteLine("KBAllGrid" + KBAllGrid.Width);
                 Debug.WriteLine(e.NewSize.Width);
                 //KebiaoAllScrollViewer.Height = e.NewSize.Height - 48 - 25;
-                KebiaoAllpr.Height = e.NewSize.Height - 48 - 25;
+                KebiaoAllpr.Height = e.NewSize.Height - 48 - 50;
                 cutoffLine.Y2 = e.NewSize.Height - 48;
                 cutoffLine2.Y2 = e.NewSize.Height - 48;
             };

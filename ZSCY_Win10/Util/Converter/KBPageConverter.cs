@@ -11,7 +11,7 @@ namespace ZSCY_Win10.Util.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return Utils.getPhoneHeight() - 48 - 25;
+            return Utils.getPhoneHeight() - 48 - 50;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
