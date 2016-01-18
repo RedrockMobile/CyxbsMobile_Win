@@ -134,7 +134,7 @@
             <!--大课表Grid-->
             <Grid x:Name="KBAllGrid" Grid.Column="0">
                 <StackPanel >
-                    <Grid x:Name="KebiaoWeekGrid" Height="25">
+                    <Grid x:Name="KebiaoWeekGrid" Height="50">
                         <Grid.ColumnDefinitions>
                             <!--列-->
                             <ColumnDefinition Width="2 *"/>
@@ -146,15 +146,63 @@
                             <ColumnDefinition Width="3 *"/>
                             <ColumnDefinition Width="3 *"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="一" FontSize="20" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" FontWeight="Light"/>
-                        <TextBlock Text="二" FontSize="20" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2" FontWeight="Light"/>
-                        <TextBlock Text="三" FontSize="20" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="3" FontWeight="Light"/>
-                        <TextBlock Text="四" FontSize="20" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="4" FontWeight="Light"/>
-                        <TextBlock Text="五" FontSize="20" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="5" FontWeight="Light"/>
-                        <TextBlock Text="六" FontSize="20" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="6" FontWeight="Light"/>
-                        <TextBlock Text="日" FontSize="20" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="7" FontWeight="Light"/>
+                        <TextBlock Name="MonthTextBlock" Text="12月" FontSize="18" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        <Grid Name="KebiaoWeekTitleGrid" Grid.ColumnSpan="7" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1 *"/>
+                                <ColumnDefinition Width="1 *"/>
+                                <ColumnDefinition Width="1 *"/>
+                                <ColumnDefinition Width="1 *"/>
+                                <ColumnDefinition Width="1 *"/>
+                                <ColumnDefinition Width="1 *"/>
+                                <ColumnDefinition Width="1 *"/>
+                            </Grid.ColumnDefinitions>
+
+
+                            <TextBlock Text="一" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="二" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="三" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="四" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="五" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="六" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="日" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+
+                        </Grid>
+                        <!--<StackPanel Grid.Row="0" Grid.Column="1">
+                            <TextBlock Text="18" FontSize="18" Foreground="#555" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="一" FontSize="18" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="2">
+                            <TextBlock Text="18" FontSize="18" Foreground="#555" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="二" FontSize="18" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="3">
+                            <TextBlock Text="18" FontSize="18" Foreground="#555" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="三" FontSize="18" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="4">
+                            <TextBlock Text="18" FontSize="18" Foreground="#555" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="四" FontSize="18" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="5">
+                            <TextBlock Text="18" FontSize="18" Foreground="#555" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="五" FontSize="18" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="6">
+                            <TextBlock Text="18" FontSize="18" Foreground="#555" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="六" FontSize="18" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="7">
+                            <TextBlock Text="18" FontSize="18" Foreground="#555" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="日" FontSize="18" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        </StackPanel>-->
                     </Grid>
-                    <pr:PullToRefreshBox x:Name="KebiaoAllpr" VerticalAlignment="Stretch" RefreshInvoked="KebiaoAllpr_RefreshInvoked">                        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <pr:PullToRefreshBox x:Name="KebiaoAllpr" VerticalAlignment="Stretch" RefreshInvoked="KebiaoAllpr_RefreshInvoked">
+                        <ScrollViewer VerticalScrollBarVisibility="Hidden">
                             <!--<ScrollViewer x:Name="KebiaoAllScrollViewer" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Hidden" Height="{Binding ActualHeight, Converter={StaticResource KBAllScrollViewerHeightConverter}, ElementName=page, Mode=OneWay}">-->
 
                             <Grid >
