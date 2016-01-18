@@ -5,6 +5,7 @@
     "Microsoft.ApplicationInsights.WindowsApps": "1.0.0",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
     "Newtonsoft.Json": "8.0.1",
+    "PullToRefresh.UWP": "0.3.3",
     "UmengAnalytics": "3.1.0"
   },
   "frameworks": {
