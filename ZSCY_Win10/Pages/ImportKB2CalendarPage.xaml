@@ -9,8 +9,8 @@
     FontFamily="Microsoft YaHei UI"
     FontWeight="Light"
     x:Name="itemPage"
-    Background="#068cfd">
-    <ScrollViewer >
+    Background="White">
+    <ScrollViewer Background="White">
         <StackPanel Margin="15">
             <StackPanel Orientation="Vertical">
                 <TextBlock  Text="1）复制以下URL" Foreground="#333" VerticalAlignment="Center" FontSize="15" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>

@@ -127,6 +127,7 @@ namespace ZSCY_Win10
             //    JWFrame.GoBack();
             //}
             //MoreBackAppBarButton.Visibility = Visibility.Collapsed;
+            e.Handled = true;
             SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             MoreFrame.Visibility = Visibility.Collapsed;

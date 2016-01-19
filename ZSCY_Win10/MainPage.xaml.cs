@@ -88,7 +88,7 @@ namespace ZSCY_Win10
             };
 
 
-            //SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequseted;
+            SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequseted;
             //如果是在手机上，有实体键，隐藏返回键。
             if (ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
             {
@@ -102,9 +102,8 @@ namespace ZSCY_Win10
 
         private void SystemNavigationManager_BackRequseted(object sender, BackRequestedEventArgs e)
         {
-            bool handled = e.Handled;
-            this.BackRequested(ref handled);
-            e.Handled = handled;
+            //e.Handled =true ;
+            //Application.Current.Exit();
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)

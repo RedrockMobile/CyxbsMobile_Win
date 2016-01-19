@@ -9,6 +9,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -39,7 +40,11 @@ namespace ZSCY_Win10
                     state = "VisualState_W0H2";
                 VisualStateManager.GoToState(this, state, true);
             };
+            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
         }
+
+        private void App_BackRequested(object sender, BackRequestedEventArgs e)
+        { }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -52,8 +57,8 @@ namespace ZSCY_Win10
             UmengSDK.UmengAnalytics.TrackPageEnd("AboutPage");
         }
 
-       
 
-       
+
+
     }
 }

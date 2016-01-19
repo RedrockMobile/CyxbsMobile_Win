@@ -11,6 +11,7 @@ using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -70,6 +71,12 @@ namespace ZSCY.Pages
             }
             NowWeekday = (Int16.Parse(Utils.GetWeek()) == 0 ? 7 : Int16.Parse(Utils.GetWeek())).ToString();
             EmptyGridView.ItemsSource = emptyRoomList;
+            //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+        }
+
+        private void App_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            e.Handled = true;
         }
 
         /// <summary>

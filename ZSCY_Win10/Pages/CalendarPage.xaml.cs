@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -33,6 +34,12 @@ namespace ZSCY.Pages
                 CalendarImage.Height = e.NewSize.Height;
             };
             this.CalendarImage.ImageOpened += CalendarImage_ImageOpened;
+            //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+        }
+
+        private void App_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            e.Handled = true;
         }
 
         private void CalendarImage_ImageOpened(object sender, RoutedEventArgs e)

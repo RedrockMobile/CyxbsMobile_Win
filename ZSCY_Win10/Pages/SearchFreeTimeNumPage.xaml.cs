@@ -11,6 +11,7 @@ using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -40,6 +41,12 @@ namespace ZSCY.Pages
             //HubSectionKBNum.Text = appSetting.Values["nowWeek"].ToString();
             appSetting.Values["FreeWeek"] = appSetting.Values["nowWeek"];
             FilterAppBarToggleButton.Label = "第" + appSetting.Values["nowWeek"].ToString() + "周";
+            //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+        }
+
+        private void App_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            e.Handled = true;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
