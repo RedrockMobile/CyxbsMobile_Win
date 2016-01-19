@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -69,6 +70,22 @@ namespace ZSCY_Win10
                 this.TogglePaneButton.Focus(FocusState.Programmatic);
             };
             //this.AppFrame.Navigate(navlist[0].DestPage, navlist[0].Arguments);
+            this.SizeChanged += (s, e) =>
+            {
+                Debug.WriteLine(e.NewSize.Width);
+                if (e.NewSize.Width >= 400)
+                {
+                    RootSplitView.CompactPaneLength = 48;
+                    TogglePaneButton.Visibility = Visibility.Visible;
+                    TogglePaneLightButton.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    RootSplitView.CompactPaneLength = 0;
+                    TogglePaneButton.Visibility = Visibility.Collapsed;
+                    TogglePaneLightButton.Visibility = Visibility.Visible;
+                }
+            };
 
 
             //SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequseted;
@@ -296,6 +313,9 @@ namespace ZSCY_Win10
                 this.TogglePaneButtonRect = new Rect();
             }
 
+            TogglePaneButton.Visibility = Visibility.Visible;
+            TogglePaneLightButton.Visibility = Visibility.Collapsed;
+
             var handler = this.TogglePaneButtonRectChanged;
             if (handler != null)
             {
@@ -322,6 +342,21 @@ namespace ZSCY_Win10
             }
         }
 
-
+        private void RootSplitView_LayoutUpdated(object sender, object e)
+        {
+            if (RootSplitView.IsPaneOpen)
+            {
+                TogglePaneButton.Visibility = Visibility.Visible;
+                TogglePaneLightButton.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                if (Util.Utils.getPhoneWidth() < 400)
+                {
+                    TogglePaneButton.Visibility = Visibility.Collapsed;
+                    TogglePaneLightButton.Visibility = Visibility.Visible;
+                }
+            }
+        }
     }
 }

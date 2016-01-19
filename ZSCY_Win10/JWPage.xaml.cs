@@ -48,6 +48,14 @@ namespace ZSCY_Win10
                     }
                     JWListView.Width = e.NewSize.Width;
                 }
+                if (e.NewSize.Width < 400)
+                {
+                    JWTitleGrid.Margin = new Thickness(48, 0, 0, 0);
+                }
+                else
+                {
+                    JWTitleGrid.Margin = new Thickness(0);
+                }
                 if (e.NewSize.Width > 750)
                 {
                     //JWBackAppBarButton.Visibility = Visibility.Collapsed;

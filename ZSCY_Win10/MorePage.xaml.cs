@@ -48,6 +48,14 @@ namespace ZSCY_Win10
                     }
                     MoreListView.Width = e.NewSize.Width;
                 }
+                if (e.NewSize.Width < 400)
+                {
+                    MoreTitleGrid.Margin = new Thickness(48, 0, 0, 0);
+                }
+                else
+                {
+                    MoreTitleGrid.Margin = new Thickness(0);
+                }
                 if (e.NewSize.Width > 700)
                 {
                     //MoreBackAppBarButton.Visibility = Visibility.Collapsed;
