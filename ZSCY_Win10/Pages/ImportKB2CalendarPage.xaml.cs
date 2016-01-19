@@ -8,6 +8,7 @@ using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -31,6 +32,7 @@ namespace ZSCY.Pages
             this.InitializeComponent();
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
         }
+
 
         /// <summary>
         /// 在此页将要在 Frame 中显示时进行调用。

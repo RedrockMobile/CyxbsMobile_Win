@@ -46,7 +46,19 @@ namespace ZSCY_Win10
                 OpacityToggleSwitch.IsOn = false;
                 appSetting.Values["OpacityTile"] = false;
             }
+            this.SizeChanged += (s, e) =>
+            {
+                if (e.NewSize.Width < 400)
+                {
+                    SetTitleGrid.Margin = new Thickness(48, 0, 0, 0);
+                }
+                else
+                {
+                    SetTitleGrid.Margin = new Thickness(0);
+                }
+            };
         }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             //HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
@@ -79,7 +91,11 @@ namespace ZSCY_Win10
             var result = await dig.ShowAsync();
             if (null != result && result.Label == "是")
             {
-                Frame.Navigate(typeof(ImportKB2CalendarPage));
+                this.frame.Visibility = Visibility.Visible;
+                HubSectionKBTitle.Text = "订阅课表";
+                this.frame.Navigate(typeof(ImportKB2CalendarPage));
+                SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             }
             else if (null != result && result.Label == "否")
             {
@@ -143,6 +159,7 @@ namespace ZSCY_Win10
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
+            e.Handled = true;
             //BackAppBarToggleButton.IsChecked = false;
             //BackAppBarToggleButton.Visibility = Visibility.Collapsed;
             SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
