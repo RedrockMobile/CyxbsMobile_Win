@@ -52,11 +52,20 @@ namespace ZSCY_Win10
                 {
                     TodayTitleStackPanel.Visibility = Visibility.Collapsed;
                 }
+                if (e.NewSize.Width < 400)
+                {
+                    KBTitleGrid.Margin = new Thickness(48, 0, 0, 0);
+                }
+                else
+                {
+                    KBTitleGrid.Margin = new Thickness(0);
+                }
                 if (e.NewSize.Width > 600)
                 {
                     TodayTitleStackPanel.Margin = new Thickness(400, 0, 0, 0);
                     TodayTitleStackPanel.Visibility = Visibility.Visible;
                     state = "VisualState550";
+                    cutoffLine2.Visibility = Visibility.Collapsed;
                 }
                 if (e.NewSize.Width > 750)
                 {
@@ -64,6 +73,7 @@ namespace ZSCY_Win10
                     TodayTitleStackPanel.Visibility = Visibility.Visible;
                     KBDayFLine.X2 = e.NewSize.Width - 400;
                     state = "VisualState750";
+                    cutoffLine2.Visibility = Visibility.Visible;
                 }
                 if (e.NewSize.Width > 1000)
                 {
@@ -71,6 +81,7 @@ namespace ZSCY_Win10
                     TodayTitleStackPanel.Visibility = Visibility.Visible;
                     KBDayFLine.X2 = e.NewSize.Width - 400 - 250;
                     state = "VisualState1000";
+                    cutoffLine2.Visibility = Visibility.Visible;
                 }
                 VisualStateManager.GoToState(this, state, true);
                 Debug.WriteLine("KBAllGrid" + KBAllGrid.Width);
@@ -80,6 +91,10 @@ namespace ZSCY_Win10
                 cutoffLine.Y2 = e.NewSize.Height - 48;
                 cutoffLine2.Y2 = e.NewSize.Height - 48;
             };
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar") && Utils.getPhoneWidth() < 400)
+            {
+                KBRefreshAppBarButton.Visibility = Visibility.Collapsed;
+            }
         }
 
 
@@ -168,7 +183,7 @@ namespace ZSCY_Win10
                     {
                         kb = streamReader.ReadToEnd();
                     }
-                    HubSectionKBNum.Text = "第" + appSetting.Values["nowWeek"].ToString() + "周";
+                    HubSectionKBNum.Text = " | 第" + appSetting.Values["nowWeek"].ToString() + "周";
 #if DEBUG
                     showKB(2, 5);
 #else
@@ -179,7 +194,7 @@ namespace ZSCY_Win10
             }
             if (stuNum == appSetting.Values["stuNum"].ToString())
             {
-                HubSectionKBTitle.Text = "我的课表 | ";
+                HubSectionKBTitle.Text = "我的课表";
                 HubSectionKBTitle.FontSize = 18;
 
             }
@@ -237,7 +252,7 @@ namespace ZSCY_Win10
                     }
                     else
                         appSetting.Values["nowWeek"] = obj["nowWeek"].ToString();
-                    HubSectionKBNum.Text = "第" + appSetting.Values["nowWeek"].ToString() + "周";
+                    HubSectionKBNum.Text = " | 第" + appSetting.Values["nowWeek"].ToString() + "周";
                     //showKB(2, Int32.Parse(appSetting.Values["nowWeek"].ToString()));
 #if DEBUG
                     showKB(2);
@@ -341,7 +356,7 @@ namespace ZSCY_Win10
                         if (Array.IndexOf(classitem.Week, Int32.Parse(appSetting.Values["nowWeek"].ToString())) != -1)
                         {
                             SetClassAll(classitem, ClassColor);
-                            HubSectionKBNum.Text = "第" + appSetting.Values["nowWeek"].ToString() + "周";
+                            HubSectionKBNum.Text = " | 第" + appSetting.Values["nowWeek"].ToString() + "周";
                         }
                     }
                     else
@@ -349,7 +364,7 @@ namespace ZSCY_Win10
                         if (Array.IndexOf(classitem.Week, week) != -1)
                         {
                             SetClassAll(classitem, ClassColor);
-                            HubSectionKBNum.Text = "第" + week.ToString() + "周";
+                            HubSectionKBNum.Text = " | 第" + week.ToString() + "周";
                         }
                     }
                 }
@@ -605,7 +620,7 @@ namespace ZSCY_Win10
             {
                 wOa = 2;
                 HubSectionKBNum.Visibility = Visibility.Collapsed;
-                HubSectionKBNum.Text = "第" + appSetting.Values["nowWeek"].ToString() + "周";
+                HubSectionKBNum.Text = " | 第" + appSetting.Values["nowWeek"].ToString() + "周";
             }
             else
             {
@@ -630,7 +645,7 @@ namespace ZSCY_Win10
             if (KBZoomFlyoutTextBox.Text != "" && KBZoomFlyoutTextBox.Text.Length == 10 && KBZoomFlyoutTextBox.Text.IndexOf(".") == -1)
             {
                 stuNum = KBZoomFlyoutTextBox.Text;
-                HubSectionKBTitle.Text = stuNum + "的课表 | ";
+                HubSectionKBTitle.Text = stuNum + "的课表";
                 HubSectionKBTitle.FontSize = 15;
                 initKB();
                 wOa = 1;
@@ -657,7 +672,7 @@ namespace ZSCY_Win10
             if (KBNumFlyoutTextBox.Text != "" && KBNumFlyoutTextBox.Text.IndexOf(".") == -1)
             {
                 showKB(2, Int16.Parse(KBNumFlyoutTextBox.Text));
-                HubSectionKBNum.Text = "第" + KBNumFlyoutTextBox.Text + "周";
+                HubSectionKBNum.Text = " | 第" + KBNumFlyoutTextBox.Text + "周";
                 DateTime now = DateTime.Now;
                 DateTime weekstart = GetWeekFirstDayMon(KBNumFlyoutTextBox.Text == "" ? now : now.AddDays((Int16.Parse(KBNumFlyoutTextBox.Text) - Int16.Parse(appSetting.Values["nowWeek"].ToString())) * 7));
                 DateTime weekend = GetWeekLastDaySun(KBNumFlyoutTextBox.Text == "" ? now : now.AddDays((Int16.Parse(KBNumFlyoutTextBox.Text) - Int16.Parse(appSetting.Values["nowWeek"].ToString())) * 7));

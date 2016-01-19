@@ -26,7 +26,7 @@
         </DataTemplate>
     </Page.Resources>
     <Grid>
-        <SplitView x:Name="RootSplitView" OpenPaneLength="250" CompactPaneLength="48"  DisplayMode="CompactOverlay" IsPaneOpen="False">
+        <SplitView x:Name="RootSplitView" OpenPaneLength="250" CompactPaneLength="0"  DisplayMode="CompactOverlay" IsPaneOpen="False" LayoutUpdated="RootSplitView_LayoutUpdated">
             <SplitView.Pane>
                 <!--重写的ListView-->
                 <controls:NavMenuListView x:Name="NavMenuList"
@@ -58,6 +58,14 @@
         <ToggleButton x:Name="TogglePaneButton"
                       TabIndex="1"
                       Style="{StaticResource SplitViewTogglePaneButtonStyle}"
+                      IsChecked="{Binding IsPaneOpen, ElementName=RootSplitView, Mode=TwoWay}"
+                      Unchecked="TogglePaneButton_Checked"
+                      AutomationProperties.Name="Menu"
+                      ToolTipService.ToolTip="Menu" />
+        <ToggleButton x:Name="TogglePaneLightButton"
+                      TabIndex="1"
+                      Visibility="Collapsed"
+                      Style="{StaticResource SplitViewTogglePaneButtonLightStyle}"
                       IsChecked="{Binding IsPaneOpen, ElementName=RootSplitView, Mode=TwoWay}"
                       Unchecked="TogglePaneButton_Checked"
                       AutomationProperties.Name="Menu"

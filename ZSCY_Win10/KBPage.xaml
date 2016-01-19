@@ -72,7 +72,7 @@
                     <TextBlock Grid.Column="0" Name="HubSectionKBTitle" Text="我的课表 | " Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
                     <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="5,0" Tapped="HubSectionKBNum_Tapped">
                         <TextBlock Grid.Column="1"  Name="HubSectionKBNum" Text=" 第  周"  Foreground="White"  FontSize="13"  VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
-                        <TextBlock Grid.Column="2" Name="HubSectionKBDate"  Text=""  Foreground="White"  FontSize="13"  VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
+                        <TextBlock Grid.Column="2" Visibility="Collapsed" Name="HubSectionKBDate"  Text=""  Foreground="White"  FontSize="13"  VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
                     </StackPanel>
                     <FlyoutBase.AttachedFlyout>
                         <Flyout x:Name="KBNumFlyout" >
@@ -147,7 +147,7 @@
                             <ColumnDefinition Width="3 *"/>
                             <ColumnDefinition Width="3 *"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Name="MonthTextBlock" Text="12月" FontSize="18" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        <TextBlock Name="MonthTextBlock" Text="" FontSize="18" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
                         <Grid Name="KebiaoWeekTitleGrid" Grid.ColumnSpan="7" Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1 *"/>
@@ -227,62 +227,62 @@
                                         <RowDefinition Height="1 *"/>
                                         <RowDefinition Height="1 *"/>
                                     </Grid.RowDefinitions>
-                                    <Grid Name="KBAllnum1Grid" Grid.Row="0" Grid.Column="0" Height="70" >
+                                    <Grid Name="KBAllnum1Grid" Grid.Row="0" Grid.Column="0" Height="65" >
                                         <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     	<Run Text="1"/>
                                         </TextBlock>
                                     </Grid>
-                                    <Grid Grid.Row="1" Grid.Column="0" Height="70" >
+                                    <Grid Grid.Row="1" Grid.Column="0" Height="65" >
                                         <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     	<Run Text="2"/>
                                         </TextBlock>
                                     </Grid>
-                                    <Grid Grid.Row="2" Grid.Column="0" Height="70" >
+                                    <Grid Grid.Row="2" Grid.Column="0" Height="65" >
                                         <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     	<Run Text="3"/>
                                         </TextBlock>
                                     </Grid>
-                                    <Grid Grid.Row="3" Grid.Column="0" Height="70" >
+                                    <Grid Grid.Row="3" Grid.Column="0" Height="65" >
                                         <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     	<Run Text="4"/>
                                         </TextBlock>
                                     </Grid>
-                                    <Grid Grid.Row="4" Grid.Column="0" Height="70" >
+                                    <Grid Grid.Row="4" Grid.Column="0" Height="65" >
                                         <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     	<Run Text="5"/>
                                         </TextBlock>
                                     </Grid>
-                                    <Grid Grid.Row="5" Grid.Column="0" Height="70" >
+                                    <Grid Grid.Row="5" Grid.Column="0" Height="65" >
                                         <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     	<Run Text="6"/>
                                         </TextBlock>
                                     </Grid>
-                                    <Grid Grid.Row="6" Grid.Column="0" Height="70" >
+                                    <Grid Grid.Row="6" Grid.Column="0" Height="65" >
                                         <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     	<Run Text="7"/>
                                         </TextBlock>
                                     </Grid>
-                                    <Grid Grid.Row="7" Grid.Column="0" Height="70" >
+                                    <Grid Grid.Row="7" Grid.Column="0" Height="65" >
                                         <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     	<Run Text="8"/>
                                         </TextBlock>
                                     </Grid>
-                                    <Grid Grid.Row="8" Grid.Column="0" Height="70" >
+                                    <Grid Grid.Row="8" Grid.Column="0" Height="65" >
                                         <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     	<Run Text="9"/>
                                         </TextBlock>
                                     </Grid>
-                                    <Grid Grid.Row="9" Grid.Column="0" Height="70" >
+                                    <Grid Grid.Row="9" Grid.Column="0" Height="65" >
                                         <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     	<Run Text="10"/>
                                         </TextBlock>
                                     </Grid>
-                                    <Grid Grid.Row="10" Grid.Column="0" Height="70" >
+                                    <Grid Grid.Row="10" Grid.Column="0" Height="65" >
                                         <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     	<Run Text="11"/>
                                         </TextBlock>
                                     </Grid>
-                                    <Grid Grid.Row="11" Grid.Column="0" Height="70" >
+                                    <Grid Grid.Row="11" Grid.Column="0" Height="65" >
                                         <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     	<Run Text="12"/>
                                         </TextBlock>
