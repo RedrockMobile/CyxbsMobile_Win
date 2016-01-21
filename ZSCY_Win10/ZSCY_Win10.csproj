@@ -197,9 +197,14 @@
     <Compile Include="Data\EmptyRoomList.cs" />
     <Compile Include="Data\ExamList.cs" />
     <Compile Include="Data\IdList.cs" />
+    <Compile Include="Data\NewsContentList.cs" />
+    <Compile Include="Data\NewsList.cs" />
     <Compile Include="Data\JWList.cs" />
     <Compile Include="Data\PersonalIno.cs" />
     <Compile Include="Data\ScoreList.cs" />
+    <Compile Include="NewsPage.xaml.cs">
+      <DependentUpon>NewsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="JWPage.xaml.cs">
       <DependentUpon>JWPage.xaml</DependentUpon>
     </Compile>
@@ -230,6 +235,9 @@
     </Compile>
     <Compile Include="Pages\ImportKB2CalendarPage.xaml.cs">
       <DependentUpon>ImportKB2CalendarPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\NewsContentPage.xaml.cs">
+      <DependentUpon>NewsContentPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\JWContentPage.xaml.cs">
       <DependentUpon>JWContentPage.xaml</DependentUpon>
@@ -397,6 +405,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="NewsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="JWPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -434,6 +446,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\ImportKB2CalendarPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\NewsContentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
