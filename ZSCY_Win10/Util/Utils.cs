@@ -172,8 +172,8 @@ namespace ZSCY_Win10.Util
             if (jsonstring != "")
             {
                 JObject obj = JObject.Parse(jsonstring);
-                if (Int32.Parse(obj["status"].ToString()) == 200)
-                {
+                //if (Int32.Parse(obj["status"].ToString()) == 200)
+                //{
                     JObject jObject = (JObject)JsonConvert.DeserializeObject(jsonstring);
                     try
                     {
@@ -185,12 +185,12 @@ namespace ZSCY_Win10.Util
                     {
                     }
                     return null;
-                }
-                else
-                {
-                    Message("请求失败", "失败");
-                    return null;
-                }
+                //}
+                //else
+                //{
+                //    Message("请求失败", "失败");
+                //    return null;
+                //}
             }
 
             else

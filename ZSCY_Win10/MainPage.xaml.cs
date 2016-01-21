@@ -42,7 +42,7 @@ namespace ZSCY_Win10
                 {
                     Image = "ms-appx:///Assets/iconfont-news.png",
                     Label = "教务信息",
-                    DestPage = typeof(JWPage)
+                    DestPage = typeof(NewsPage)
                 },
                           new NavMenuItem()
                 {
