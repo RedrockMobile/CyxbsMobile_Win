@@ -167,17 +167,17 @@ namespace ZSCY_Win10.Util
             return dtStart.Add(toNow);
         }
 
-        public static JArray ReadJso(string jsonstring)
+        public static JArray ReadJso(string jsonstring, string sdata = "data")
         {
             if (jsonstring != "")
             {
                 JObject obj = JObject.Parse(jsonstring);
-                //if (Int32.Parse(obj["status"].ToString()) == 200)
+                //if (Int32.Parse(obj[sstatus].ToString()) == 200)
                 //{
                     JObject jObject = (JObject)JsonConvert.DeserializeObject(jsonstring);
                     try
                     {
-                        string json = jObject["data"].ToString();
+                        string json = jObject[sdata].ToString();
                         JArray jArray = (JArray)JsonConvert.DeserializeObject(json);
                         return jArray;
                     }

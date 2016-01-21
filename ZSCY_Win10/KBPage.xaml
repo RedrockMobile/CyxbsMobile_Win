@@ -84,7 +84,7 @@
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBox VerticalAlignment="Center" Grid.Column="0" Name="KBNumFlyoutTextBox" PlaceholderText="输入要查询的周次" InputScope="Number" KeyUp="KBNumFlyoutTextBox_KeyUp"/>
-                                    <AppBarToggleButton Grid.Column="1"  Name="KBNumSearchButton" Icon="Zoom" Click="KBNumSearchButton_Click"/>
+                                    <AppBarButton Grid.Column="1"  Name="KBNumSearchButton" Icon="Zoom" Click="KBNumSearchButton_Click"/>
                                 </Grid>
                             </StackPanel>
                         </Flyout>
@@ -108,7 +108,7 @@
                                             <ColumnDefinition Width="auto"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBox VerticalAlignment="Center" Grid.Column="0" Name="KBZoomFlyoutTextBox" PlaceholderText="输入学号以查询" InputScope="Number" KeyUp="KBZoomFlyoutTextBox_KeyUp"/>
-                                        <AppBarToggleButton Grid.Column="1"  Name="KBSearchButton" Icon="Zoom" Click="KBSearchButton_Click" />
+                                        <AppBarButton Grid.Column="1"  Name="KBSearchButton" Icon="Zoom" Click="KBSearchButton_Click" />
                                     </Grid>
                                 </StackPanel>
                             </Flyout>
@@ -147,7 +147,7 @@
                             <ColumnDefinition Width="3 *"/>
                             <ColumnDefinition Width="3 *"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Name="MonthTextBlock" Text="" FontSize="18" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        <TextBlock Margin="3,0,0,0" Name="MonthTextBlock" Text="" FontSize="16" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
                         <Grid Name="KebiaoWeekTitleGrid" Grid.ColumnSpan="7" Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1 *"/>
