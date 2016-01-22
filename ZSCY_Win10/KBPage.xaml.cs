@@ -641,7 +641,7 @@ namespace ZSCY_Win10
 
         private void KBSearch()
         {
-            KBSearchButton.IsChecked = false;
+            //KBSearchButton.IsChecked = false;
             if (KBZoomFlyoutTextBox.Text != "" && KBZoomFlyoutTextBox.Text.Length == 10 && KBZoomFlyoutTextBox.Text.IndexOf(".") == -1)
             {
                 stuNum = KBZoomFlyoutTextBox.Text;
@@ -668,7 +668,7 @@ namespace ZSCY_Win10
 
         private void KBNumSearch()
         {
-            KBNumSearchButton.IsChecked = false;
+            //KBNumSearchButton.IsChecked = false;
             if (KBNumFlyoutTextBox.Text != "" && KBNumFlyoutTextBox.Text.IndexOf(".") == -1)
             {
                 showKB(2, Int16.Parse(KBNumFlyoutTextBox.Text));

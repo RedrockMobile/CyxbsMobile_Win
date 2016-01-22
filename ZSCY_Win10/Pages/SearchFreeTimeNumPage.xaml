@@ -76,8 +76,8 @@
 
     <Page.BottomAppBar>
         <CommandBar Name="commandBar">
-            <AppBarToggleButton Name="FilterAppBarToggleButton" Icon="Filter" Label="第 周" Click="FilterAppBarToggleButton_Click"></AppBarToggleButton>
-            <AppBarToggleButton Name="ForwardAppBarToggleButton" Icon="Forward" Label="下一步" Click="ForwardAppBarToggleButton_Click"/>
+            <AppBarButton Name="FilterAppBarToggleButton" Icon="Filter" Label="第 周" Click="FilterAppBarToggleButton_Click"></AppBarButton>
+            <AppBarButton Name="ForwardAppBarToggleButton" Icon="Forward" Label="下一步" Click="ForwardAppBarToggleButton_Click"/>
             <FlyoutBase.AttachedFlyout>
                 <Flyout x:Name="KBNumFlyout" >
                     <StackPanel Margin="10" Width="300">
@@ -88,7 +88,7 @@
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBox VerticalAlignment="Center" Grid.Column="0" Name="KBNumFlyoutTextBox" PlaceholderText="输入学号以查询" InputScope="Number" KeyUp="KBNumFlyoutTextBox_KeyUp"/>
-                            <AppBarToggleButton Grid.Column="1"  Name="KBNumSearchButton" Icon="Zoom" Click="KBNumSearchButton_Click" />
+                            <AppBarButton Grid.Column="1"  Name="KBNumSearchButton" Icon="Zoom" Click="KBNumSearchButton_Click" />
                         </Grid>
                     </StackPanel>
                 </Flyout>

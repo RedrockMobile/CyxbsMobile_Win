@@ -46,8 +46,16 @@ namespace ZSCY_Win10
 
             TitleTextBlock.Text = NewsItem.Title;
             //ContentTextBlock.Text = NewsItem.Content_all;
-            ContentWebView.NavigateToString(NewsItem.Content_all);
-            DateReadTextBlock.Text = "发布时间:" + NewsItem.Date + "阅读人数:" + NewsItem.Read;
+
+            if (NewsItem.Content_all != "")
+            {
+                JObject newsContentobj = JObject.Parse(NewsItem.Content_all);
+                if (Int32.Parse(newsContentobj["state"].ToString()) == 200)
+                {
+                    ContentWebView.NavigateToString((JObject.Parse(newsContentobj["data"].ToString()))["content"].ToString());
+                }
+            }
+            DateReadTextBlock.Text = "发布时间:" + NewsItem.Date + " 阅读人数:" + NewsItem.Read;
             UmengSDK.UmengAnalytics.TrackPageStart("JWContentPage");
         }
 
@@ -92,37 +100,7 @@ namespace ZSCY_Win10
                 if (Int32.Parse(newsContentobj["state"].ToString()) == 200)
                 {
                     string content = (JObject.Parse(newsContentobj["data"].ToString()))["content"].ToString();
-                    string content_all = content;
-                    Debug.WriteLine("content->" + content);
-                    while (content.IndexOf("<") != -1)
-                    {
-                        content = content.Remove(content.IndexOf("<"), content.IndexOf(">") - content.IndexOf("<") + 1);
-                    }
-                    //content.Replace("&nbsp;", "");
-
-                    while (content.StartsWith("\r") || content.StartsWith("\n") || content.StartsWith("\t") || content.StartsWith(" ") || content.StartsWith("&nbsp;"))
-                        content = content.Substring(1);
-                    while (content.StartsWith("&nbsp;"))
-                        content = content.Substring(6);
-                    //while (content.StartsWith("\r\n "))
-                    //    content = content.Substring(3);
-                    //while (content.StartsWith("\r\n"))
-                    //    content = content.Substring(2);
-                    //while (content.StartsWith("\n\t"))
-                    //    content = content.Substring(2);
-                    //while (content.StartsWith("\n"))
-                    //    content = content.Substring(1);
-                    //while (content.StartsWith("\r"))
-                    //    content = content.Substring(1);
-                    //while (content.StartsWith("\t"))
-                    //    content = content.Substring(1);
-                    //while (content.StartsWith("\\"))
-                    //    content = content.Substring(1);
-                    //content.Replace('\r', '\a');
-                    //content.Replace('\n', '\a');
-                    //content.Replace(" ", "");
                     ContentWebView.NavigateToString(content);
-                    Debug.WriteLine("content->" + content);
                 }
             }
         }

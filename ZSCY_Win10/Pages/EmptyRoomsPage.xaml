@@ -84,7 +84,7 @@
 
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarToggleButton Name="FilterAppBarToggleButton" Icon="Filter" Label="二教" Click="FilterAppBarToggleButton_Click"/>
+            <AppBarButton Name="FilterAppBarToggleButton" Icon="Filter" Label="二教" Click="FilterAppBarToggleButton_Click"/>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

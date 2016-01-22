@@ -108,7 +108,7 @@ namespace ZSCY_Win10
             this.frame.Visibility = Visibility.Visible;
             this.frame.Navigate(typeof(AboutPage));
             //Frame.Visibility = Visibility.Collapsed;
-            AboutAppBarToggleButton.IsChecked = false;
+            //AboutAppBarToggleButton.IsChecked = false;
             HubSectionKBTitle.Text = "关于我们";
             //BackAppBarToggleButton.Visibility = Visibility.Visible;
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
@@ -116,7 +116,7 @@ namespace ZSCY_Win10
         }
         private async void LikeAppBarToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            LikeAppBarToggleButton.IsChecked = false;
+            //LikeAppBarToggleButton.IsChecked = false;
             await Launcher.LaunchUriAsync(new Uri("zune:reviewapp?appid=" + CurrentApp.AppId)); //用于商店app，自动获取ID
         }
         private async void ClearButton_Click(object sender, RoutedEventArgs e)

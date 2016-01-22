@@ -11,7 +11,7 @@ namespace ZSCY_Win10.Util
 {
     class NetWork
     {
-        public static async Task<string> getHttpWebRequest(string api, List<KeyValuePair<String, String>> paramList = null, int PostORGet = 0)
+        public static async Task<string> getHttpWebRequest(string api, List<KeyValuePair<String, String>> paramList = null, int PostORGet = 0, bool fulluri = false)
         {
             string content = "";
             return await Task.Run(() =>
@@ -21,7 +21,11 @@ namespace ZSCY_Win10.Util
                     try
                     {
                         HttpClient httpClient = new HttpClient();
-                        string uri = "http://hongyan.cqupt.edu.cn/" + api;
+                        string uri;
+                        if (!fulluri)
+                            uri = "http://hongyan.cqupt.edu.cn/" + api;
+                        else
+                            uri = api;
                         httpClient.DefaultRequestHeaders.Add("API_APP", "winphone");
                         httpClient.DefaultRequestHeaders.Add("API_TOKEN", "0zLUZA0j+OL77OsjXC0ulOz50KaI6yANZtkOk2vQIDg=");
                         HttpRequestMessage requst;
@@ -50,10 +54,10 @@ namespace ZSCY_Win10.Util
                 else
                 {
                 }
-                if (content.IndexOf("{") != 0)
-                    return "";
-                else
-                    return content;
+                //if (content.IndexOf("{") != 0)
+                //    return "";
+                //else
+                return content;
 
             });
         }

@@ -91,8 +91,8 @@
     <Page.BottomAppBar>
         <CommandBar>
             <AppBarButton Label="切换账号" Icon="Switch" Click="SwitchAppBarButton_Click"/>
-            <AppBarToggleButton Name="LikeAppBarToggleButton" Icon="Like" Label="好评我" Click="LikeAppBarToggleButton_Click"/>
-            <AppBarToggleButton Name="AboutAppBarToggleButton" Icon="Help" Label="关于" Click="AboutAppBarToggleButton_Click"/>
+            <AppBarButton Name="LikeAppBarToggleButton" Icon="Like" Label="好评我" Click="LikeAppBarToggleButton_Click"/>
+            <AppBarButton Name="AboutAppBarToggleButton" Icon="Help" Label="关于" Click="AboutAppBarToggleButton_Click"/>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

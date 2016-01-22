@@ -266,6 +266,7 @@
     <Compile Include="Util\Converter\KBGridConverter.cs" />
     <Compile Include="Util\Converter\KBPageConverter.cs" />
     <Compile Include="Util\Converter\LongClassRoomConverter.cs" />
+    <Compile Include="Util\Converter\NewsConverter.cs" />
     <Compile Include="Util\Converter\StarFillConverter.cs" />
     <Compile Include="Util\NetWork.cs" />
     <Compile Include="Util\Utils.cs" />

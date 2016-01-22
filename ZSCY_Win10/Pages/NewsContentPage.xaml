@@ -8,12 +8,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <ScrollViewer Background="White">
-        <StackPanel Margin="15">
+    <Grid Background="White">
+        <!--<StackPanel Margin="15">
             <TextBlock Name="TitleTextBlock" Foreground="#333" FontSize="20" TextWrapping="WrapWholeWords" FontWeight="Bold"></TextBlock>
             <Grid Margin="0,10">
                 <TextBlock Name="DateReadTextBlock" Foreground="#737373" FontSize="12"></TextBlock>
-                <!--<TextBlock Name="ReadTextBlock" Foreground="#737373" FontSize="12" HorizontalAlignment="Right"></TextBlock>-->
+                --><!--<TextBlock Name="ReadTextBlock" Foreground="#737373" FontSize="12" HorizontalAlignment="Right"></TextBlock>--><!--
             </Grid>
             <Grid>
                 <Line Margin="-15,0,-15,10" X1="0" X2="{Binding ElementName=page,Path=ActualWidth,Mode=OneWay}" Y1="0" Y2="1" Height="1" Stroke="#E6E6E6" StrokeThickness="1"></Line>
@@ -21,6 +21,25 @@
             </Grid>
             <WebView Name="ContentWebView" Height="600" ></WebView>
             <TextBlock Name="ContentTextBlock" TextWrapping="WrapWholeWords" Foreground="#333" FontSize="16"></TextBlock>
-        </StackPanel>
-    </ScrollViewer>
+        </StackPanel>-->
+
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Name="TitleTextBlock" Margin="15,7,0,0" Grid.Row="0" Foreground="#333" FontSize="18" TextWrapping="WrapWholeWords" FontWeight="Bold"></TextBlock>
+            <Grid Margin="15,10" Grid.Row="1" >
+                <TextBlock Name="DateReadTextBlock" Foreground="#737373" FontSize="12"></TextBlock>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Line Margin="0,0,0,10" X1="0" X2="{Binding ElementName=page,Path=ActualWidth,Mode=OneWay}" Y1="0" Y2="1" Height="1" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                <Line Margin="0,0,0,10" X1="0" X2="{Binding ElementName=page,Path=ActualWidth,Mode=OneWay}" Y1="1" Y2="0" Height="1" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+            </Grid>
+            <WebView Name="ContentWebView" Margin="15,0" Grid.Row="3" ></WebView>
+        </Grid>
+
+    </Grid>
 </Page>
