@@ -99,8 +99,13 @@ namespace ZSCY.Pages
                                 examitem.DateTime = "日期:" + examitem.Date + "\r\n" + "时间:" + examitem.Time;
                             examList.Add(examitem);
                         }
-                       examList= examList.OrderByDescending(x =>x.DateTime).ToList();
-                        ExamListView.ItemsSource = examList;
+                        examList = examList.OrderBy(x => x.DateTime).ToList();
+                        var nonzeroweek = from x in examList where x.Begin_time=="待定" select x;//    examList.Select(x => !x.DateTime.Contains("周0")).ToList();
+                        var zeroweek = from x in examList where x.Begin_time!="待定" select x;// examList.Select(x => x.DateTime.Contains("周0"));
+                        List<ExamList> orderedlist = new List<ExamList>();
+                        orderedlist.AddRange(zeroweek);
+                        orderedlist.AddRange(nonzeroweek);
+                        ExamListView.ItemsSource = orderedlist;
                     }
                     else if (Int32.Parse(obj["status"].ToString()) == 300)
                     {
