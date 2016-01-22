@@ -57,6 +57,7 @@ namespace ZSCY_Win10
             }
             if (NewsItem.Read != "")
             {
+                DateReadTextBlock.Text = "发布时间:" + NewsItem.Date +" 阅读人数:" + NewsItem.Read;
             }
             else
             {
