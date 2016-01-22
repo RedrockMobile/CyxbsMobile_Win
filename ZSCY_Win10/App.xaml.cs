@@ -73,7 +73,7 @@ namespace ZSCY_Win10
             var jumpList = await Windows.UI.StartScreen.JumpList.LoadCurrentAsync();
             jumpList.SystemGroupKind = Windows.UI.StartScreen.JumpListSystemGroupKind.Frequent;
             jumpList.Items.Clear();
-            jumpList.Items.Add(CreateJumpListItemTask("/jwzx", "教务信息", "ms-appx:///Assets/iconfont-news_w.png"));
+            jumpList.Items.Add(CreateJumpListItemTask("/jwzx", "资讯", "ms-appx:///Assets/iconfont-news_w.png"));
             jumpList.Items.Add(CreateJumpListItemTask("/more", "更多", "ms-appx:///Assets/iconfont-more_w.png"));
             await jumpList.SaveAsync();
         }

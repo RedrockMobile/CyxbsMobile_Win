@@ -31,6 +31,7 @@ namespace ZSCY_Win10.Data
         {
             public string name { get; set; }
             public string address { get; set; }
+            public Uri Anneximg { get; set; }
 
             public void GetAttribute(JObject AnnexDetailJObject)
             {

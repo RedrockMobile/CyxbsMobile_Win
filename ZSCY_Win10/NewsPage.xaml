@@ -49,7 +49,7 @@
             <Grid Name="NewsTitleGrid"  HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <!--<AppBarButton Name="JWBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="JWBackAppBarButton_Click"/>-->
-                    <TextBlock Name="HubSectionNewsTitle" Text="新闻" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                    <TextBlock Name="HubSectionNewsTitle" Text="资讯" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <AppBarButton Name="NewsRefreshAppBarButton" Icon="Refresh" Foreground="White" Click="NewsRefreshAppBarButton_Click"/>
@@ -65,7 +65,14 @@
                         <ListView Name="AnnexListView" Width="280" IsItemClickEnabled="True" ItemClick="AnnexListView_ItemClick">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding name}" FontSize="13" TextWrapping="WrapWholeWords"></TextBlock>
+                                    <Grid Margin="-5,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="{Binding Anneximg}" VerticalAlignment="Center" Width="15" Height="20" Margin="0,5,5,10"/>
+                                        <TextBlock Text="{Binding name}" VerticalAlignment="Center" Grid.Column="1" FontSize="13" TextWrapping="WrapWholeWords"></TextBlock>
+                                    </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
