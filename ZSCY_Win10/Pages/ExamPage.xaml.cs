@@ -99,6 +99,7 @@ namespace ZSCY.Pages
                                 examitem.DateTime = "日期:" + examitem.Date + "\r\n" + "时间:" + examitem.Time;
                             examList.Add(examitem);
                         }
+                       examList= examList.OrderByDescending(x =>x.DateTime).ToList();
                         ExamListView.ItemsSource = examList;
                     }
                     else if (Int32.Parse(obj["status"].ToString()) == 300)

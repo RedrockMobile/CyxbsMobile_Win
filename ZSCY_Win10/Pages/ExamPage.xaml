@@ -5,17 +5,85 @@
     xmlns:local="using:ZSCY.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converter="using:ZSCY_Win10.Util.Converter"
     mc:Ignorable="d"
     FontFamily="Microsoft YaHei UI"
     FontWeight="Light"
     x:Name="itemPage">
     <!--分支测试-->
-        <Grid  Background="White">
-        <ScrollViewer Name="ExamListScrollViewer" Background="White">
+    <Page.Resources>
+        <DataTemplate x:Key="examcontent">
             <Grid>
-                <ListView Name="ExamListView" HorizontalAlignment="Stretch">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
+
+            </Grid>
+        </DataTemplate>
+        <!--<Style TargetType="ListViewItem">
+            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+        </Style>-->
+        <converter:ExamDateConverter x:Key="ExamDateConverter"></converter:ExamDateConverter>
+        <converter:ExamTimeConverter x:Key="ExamTimeConverter"></converter:ExamTimeConverter>
+        <converter:StarFillConverter x:Key="StarFillConverter"></converter:StarFillConverter>
+    </Page.Resources>
+    <Grid  Background="White">
+
+        <Grid>
+            <ListView Name="ExamListView"  IsItemClickEnabled="False" SelectionMode="None">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <!--<Setter Property="HorizontalAlignment" Value="Stretch"></Setter>-->
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="10,0,10,0" Height="100">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Vertical" Margin="0">
+                                <Line X1="50" Y1="0" X2="50" Y2="30" Stroke="#FF3498DB" StrokeThickness="2" Stretch="Fill"/>
+                                <TextBlock Text="{Binding DateTime ,Converter={StaticResource ExamDateConverter}}" TextAlignment="Center"></TextBlock>
+                                <Line X1="50" Y1="0" X2="50" Y2="30" Stroke="#FF3498DB" StrokeThickness="2" Stretch="Fill"/>
+
+                            </StackPanel>
+                            <Grid Grid.Column="1">
+                                <Image Source="{Binding DateTime,Converter={StaticResource StarFillConverter}}" Height="25" Width="25"></Image>
+                            </Grid>
+                            <Border Grid.Column="2" BorderThickness="2,2,2,3" CornerRadius="8" Background="#FBFBFB" Height="80">
+                                <Border.BorderBrush>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#FFC9C9C9" Offset="0"/>
+                                        <GradientStop Color="#FFC9C9C9" Offset="0.98"/>
+                                        <GradientStop Color="#FFF0F0F0" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.BorderBrush>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                                        <Image Source="../Assets/dialog_course_type.png" Margin="0,0,5,0" Height="20"/>
+                                        <TextBlock Text="{Binding Course}"></TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                        <Image Source="../Assets/dialog_course_add.png" Margin="0,0,5,0" Height="20"/>
+                                        <TextBlock Text="{Binding Classroom}"></TextBlock>
+                                        <TextBlock Text="@"></TextBlock>
+                                        <TextBlock Text="{Binding Seat}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                        <Image Source="../Assets/dialog_course_time.png" Margin="0,0,5,0" Height="20"/>
+                                        <TextBlock Text="{Binding DateTime,Converter={StaticResource ExamTimeConverter}}"></TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                    <!--<DataTemplate>
                             <Grid Margin="-12,0">
                                 <Grid Margin="10,20">
                                     <Grid.RowDefinitions>
@@ -41,16 +109,14 @@
                                 <Line X1="0" X2="999999" Y1="0" Y2="1" Height="1" VerticalAlignment="Top" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                 <Line X1="0" X2="999999" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                             </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <StackPanel Name="ListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="ListFailedStackPanel_Tapped">
-                    <Image Name="ListFailedStackPanelImage" Source="../Assets/ic_failed.png" Height="80" Width="80" HorizontalAlignment="Center" />
-                    <TextBlock Name="ListFailedStackPanelTextBlock" Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
-                </StackPanel>
-                <ProgressRing Name="progress" Visibility="Visible" IsActive="True"  Height="60" Width="60"/>
-
-            </Grid>
-        </ScrollViewer>
+                        </DataTemplate>-->
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackPanel Name="ListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="ListFailedStackPanel_Tapped">
+                <Image Name="ListFailedStackPanelImage" Source="../Assets/ic_failed.png" Height="80" Width="80" HorizontalAlignment="Center" />
+                <TextBlock Name="ListFailedStackPanelTextBlock" Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+            </StackPanel>
+            <ProgressRing Name="progress" Visibility="Visible" IsActive="True"  Height="60" Width="60"/>
+        </Grid>
     </Grid>
 </Page>

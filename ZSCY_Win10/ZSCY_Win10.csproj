@@ -170,6 +170,9 @@
     <Content Include="Assets\Square71x71Logo.scale-400.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\StarEmpty.png" />
+    <Content Include="Assets\StarFilled.png" />
+    <Content Include="Assets\starun.png" />
     <Content Include="Assets\StoreLogo.scale-400.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -255,12 +258,15 @@
     <Compile Include="SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\Converter\ExamDateConverter.cs" />
+    <Compile Include="Util\Converter\ExamTimeConverter.cs" />
     <Compile Include="Util\Converter\FreeConverter.cs" />
     <Compile Include="Util\Converter\GenderConverter.cs" />
     <Compile Include="Util\Converter\itemPageConverter.cs" />
     <Compile Include="Util\Converter\KBGridConverter.cs" />
     <Compile Include="Util\Converter\KBPageConverter.cs" />
     <Compile Include="Util\Converter\LongClassRoomConverter.cs" />
+    <Compile Include="Util\Converter\StarFillConverter.cs" />
     <Compile Include="Util\NetWork.cs" />
     <Compile Include="Util\Utils.cs" />
   </ItemGroup>
