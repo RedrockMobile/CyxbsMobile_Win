@@ -22,6 +22,10 @@ namespace ZSCY_Win10.Util.Converter
                 Regex r = new Regex(@"\d+");
                 var w = r.Matches(date[0]);
                 int week = Int32.Parse(w[0].Value);
+                if (week > 99)
+                {
+                    return week/10000+"\r"+week%10000/100+"/"+week%10;
+                }
                 int nowweek = Int32.Parse(appSetting.Values["nowWeek"].ToString());
                 DateTime now = DateTime.Now;
                 int dayofweek = (int)now.DayOfWeek==0?7:(int)now.DayOfWeek;
