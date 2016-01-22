@@ -45,7 +45,7 @@ namespace ZSCY.Data
             Title = NewsListJObject["title"].ToString();
             Head = NewsListJObject["head"] != null ? NewsListJObject["head"].ToString() : "";
             Date = NewsListJObject["date"].ToString();
-            Read = NewsListJObject["read"].ToString();
+            Read = NewsListJObject["read"] != null ? NewsListJObject["read"].ToString() : "";
         }
     }
 

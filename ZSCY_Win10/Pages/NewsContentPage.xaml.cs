@@ -55,7 +55,13 @@ namespace ZSCY_Win10
                     ContentWebView.NavigateToString((JObject.Parse(newsContentobj["data"].ToString()))["content"].ToString());
                 }
             }
-            DateReadTextBlock.Text = "发布时间:" + NewsItem.Date + " 阅读人数:" + NewsItem.Read;
+            if (NewsItem.Read != "")
+            {
+            }
+            else
+            {
+                DateReadTextBlock.Text = "发布时间:" + NewsItem.Date;
+            }
             UmengSDK.UmengAnalytics.TrackPageStart("JWContentPage");
         }
 

@@ -65,7 +65,14 @@
                         <ListView Name="AnnexListView" Width="280" IsItemClickEnabled="True" ItemClick="AnnexListView_ItemClick">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding name}" FontSize="13" TextWrapping="WrapWholeWords"></TextBlock>
+                                    <Grid Margin="-5,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="{Binding Anneximg}" VerticalAlignment="Center" Width="15" Height="20" Margin="0,5,5,10"/>
+                                        <TextBlock Text="{Binding name}" VerticalAlignment="Center" Grid.Column="1" FontSize="13" TextWrapping="WrapWholeWords"></TextBlock>
+                                    </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>

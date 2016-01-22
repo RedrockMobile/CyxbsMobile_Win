@@ -109,6 +109,18 @@
     <Content Include="Assets\AlphaLogo\Square71x71Logo.scale-400.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Annex_img\Annex_apk.png" />
+    <Content Include="Assets\Annex_img\Annex_doc.png" />
+    <Content Include="Assets\Annex_img\Annex_ics.png" />
+    <Content Include="Assets\Annex_img\Annex_img.png" />
+    <Content Include="Assets\Annex_img\Annex_other.png" />
+    <Content Include="Assets\Annex_img\Annex_music.png" />
+    <Content Include="Assets\Annex_img\Annex_pdf.png" />
+    <Content Include="Assets\Annex_img\Annex_ppt.png" />
+    <Content Include="Assets\Annex_img\Annex_rar.png" />
+    <Content Include="Assets\Annex_img\Annex_video.png" />
+    <Content Include="Assets\Annex_img\Annex_xls.png" />
+    <Content Include="Assets\Annex_img\Annex_zip.png" />
     <Content Include="Assets\BlueLogo\Square150x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -493,6 +505,7 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
