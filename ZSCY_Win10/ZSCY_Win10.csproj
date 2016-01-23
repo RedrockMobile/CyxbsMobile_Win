@@ -264,6 +264,9 @@
     <Compile Include="Pages\SearchFreeTimeNumPage.xaml.cs">
       <DependentUpon>SearchFreeTimeNumPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SearchFreeTimeResultPage_new.xaml.cs">
+      <DependentUpon>SearchFreeTimeResultPage_new.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SearchFreeTimeResultPage.xaml.cs">
       <DependentUpon>SearchFreeTimeResultPage.xaml</DependentUpon>
     </Compile>
@@ -482,6 +485,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\SearchFreeTimeNumPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\SearchFreeTimeResultPage_new.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -42,6 +42,7 @@ namespace ZSCY.Pages
             appSetting.Values["FreeWeek"] = appSetting.Values["nowWeek"];
             FilterAppBarToggleButton.Label = "第" + appSetting.Values["nowWeek"].ToString() + "周";
             //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            muIdList.Add(new uIdList { uId = appSetting.Values["stuNum"].ToString(), uName = appSetting.Values["name"].ToString() });
         }
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
@@ -96,18 +97,6 @@ namespace ZSCY.Pages
                 string usename = AddTextBox.Text;
                 string useid = AddTextBox.Text;
 
-                //TextBlock t = new TextBlock();
-                //t.FontSize = 18;
-                //t.Foreground = new SolidColorBrush(Color.FromArgb(255, 51, 51, 51));
-                //t.Text = useid;
-                //uIdStackPanel.Children.Add(t);
-
-
-
-
-
-
-
                 string name = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/searchPeople?stunum=" + AddTextBox.Text, PostORGet: 1);
                 muIdList.Add(new uIdList { uId = AddTextBox.Text, uName = usename });
                 Debug.WriteLine("name->" + name);
@@ -120,11 +109,6 @@ namespace ZSCY.Pages
                         {
                             JObject dataobj = JObject.Parse(obj["data"].ToString());
                             usename = dataobj["name"].ToString();
-                            //foreach (var item in uIdStackPanel.Children)
-                            //{
-                            //    if (((TextBlock)item).Text == useid)
-                            //        uIdStackPanel.Children.Remove(item);
-                            //}
                         }
                     }
                     catch (Exception) { }
@@ -178,7 +162,7 @@ namespace ZSCY.Pages
             else
             {
                 AuIdList Au = new AuIdList { muIdList = muIdList, week = int.Parse(appSetting.Values["FreeWeek"].ToString()) };
-                Frame.Navigate(typeof(SearchFreeTimeResultPage), Au);
+                Frame.Navigate(typeof(SearchFreeTimeResultPage_new), Au);
             }
         }
 
