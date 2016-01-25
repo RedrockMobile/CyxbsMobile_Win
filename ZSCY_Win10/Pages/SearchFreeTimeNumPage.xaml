@@ -51,7 +51,7 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBox Name="AddTextBox" PlaceholderText="请输入学号" InputScope="Number" Grid.Column="0" KeyUp="AddTextBox_KeyUp"></TextBox>
-                <Button Name="AddButton" Margin="5,0,0,0" RequestedTheme="Light" VerticalAlignment="Top" Content="Add" Grid.Column="1" Click="AddButton_Click"/>
+                <Button Name="AddButton" Margin="5,0,0,0" RequestedTheme="Light" VerticalAlignment="Top" Content="添加" Grid.Column="1" Click="AddButton_Click"/>
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -77,9 +77,9 @@
     <Page.BottomAppBar>
         <CommandBar Name="commandBar">
             <AppBarButton Name="DeleteAppBarToggleButton" Icon="Delete" Label="清空" Click="DeleteAppBarToggleButton_Click"></AppBarButton>
-            <AppBarButton Name="FilterAppBarToggleButton" Icon="Filter" Label="第 周" Click="FilterAppBarToggleButton_Click"></AppBarButton>
+            <!--<AppBarButton Name="FilterAppBarToggleButton" Icon="Filter" Label="第 周" Click="FilterAppBarToggleButton_Click"></AppBarButton>-->
             <AppBarButton Name="ForwardAppBarToggleButton" Icon="Forward" Label="下一步" Click="ForwardAppBarToggleButton_Click"/>
-            <FlyoutBase.AttachedFlyout>
+            <!--<FlyoutBase.AttachedFlyout>
                 <Flyout x:Name="KBNumFlyout" >
                     <StackPanel Margin="10" Width="300">
                         <TextBlock Text="输入要查询的周次" Foreground="#333" FontSize="15"/>
@@ -93,7 +93,7 @@
                         </Grid>
                     </StackPanel>
                 </Flyout>
-            </FlyoutBase.AttachedFlyout>
+            </FlyoutBase.AttachedFlyout>-->
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

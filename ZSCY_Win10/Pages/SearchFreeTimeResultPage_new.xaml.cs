@@ -9,6 +9,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
+using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -32,9 +33,13 @@ namespace ZSCY.Pages
     {
         private ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>(); //存放学号的List
         string[] kb; //课表数据的数组
+        int week; //周次，0为学期
+        int week_old; //周次，切换到学期后保存切换前的周次
 
+        private ApplicationDataContainer appSetting;
         public SearchFreeTimeResultPage_new()
         {
+            appSetting = ApplicationData.Current.LocalSettings; //本地存储
             this.InitializeComponent();
             this.SizeChanged += (s, e) =>
             {
@@ -43,8 +48,12 @@ namespace ZSCY.Pages
                 {
                     state = "VisualState600";
                 }
+                KebiaoAllScrollViewer.Height = e.NewSize.Height - 48 - 25;
+
                 VisualStateManager.GoToState(this, state, true);
             };
+            week_old = week = int.Parse(appSetting.Values["nowWeek"].ToString());
+            FilterAppBarButton.Label = "第" + appSetting.Values["nowWeek"].ToString() + "周";
         }
 
         /// <summary>
@@ -56,7 +65,6 @@ namespace ZSCY.Pages
         {
             AuIdList auIdList = (AuIdList)e.Parameter;
             muIdList = auIdList.muIdList;
-            //auIdList里面还有一个week 是从num页面传过来的周次，现在不知道怎么用，也可以把学号页面的周次去掉，在这个页面进行周次的选择
 
             initFree();
         }
@@ -96,7 +104,7 @@ namespace ZSCY.Pages
                 Debug.WriteLine(FreeLoddingProgressBar.Value);
             }
             FreeLoddingStackPanel.Visibility = Visibility.Collapsed;
-            FreeKBTableStackPanel.Visibility = Visibility.Visible;
+            FreeKBTableGrid.Visibility = Visibility.Visible;
         }
 
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
@@ -118,5 +126,73 @@ namespace ZSCY.Pages
             }
         }
 
+        private void FilterAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            KBNumFlyout.ShowAt(commandBar);
+        }
+
+        /// <summary>
+        /// 周次选择的搜索键
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void KBNumSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            KBNumSearch();
+        }
+
+        /// <summary>
+        /// 课表选择页面对回车键的监听
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void KBNumFlyoutTextBox_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                Debug.WriteLine("enter");
+                if (KBNumFlyoutTextBox.Text != "")
+                    KBNumSearch();
+                else
+                {
+                    Utils.Message("信息不完全");
+                }
+            }
+        }
+
+        private void KBNumSearch()
+        {
+            if (KBNumFlyoutTextBox.Text != "" && KBNumFlyoutTextBox.Text.IndexOf(".") == -1)
+            {
+                try
+                {
+                    week = int.Parse(KBNumFlyoutTextBox.Text);
+                    FilterAppBarButton.Label = "第" + KBNumFlyoutTextBox.Text + "周";
+                    KBNumFlyout.Hide();
+                }
+                catch (Exception)
+                {
+                    Utils.Message("请输入正确的周次");
+                }
+            }
+            else
+                Utils.Message("请输入正确的周次");
+        }
+
+        private void CalendarWeekAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (week != 0)
+            {
+                week_old = week;
+                week = 0;
+                FilterAppBarButton.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                week = week_old;
+                FilterAppBarButton.Label = "第" + week + "周";
+                FilterAppBarButton.Visibility = Visibility.Visible;
+            }
+        }
     }
 }

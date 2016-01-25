@@ -16,7 +16,7 @@ namespace ZSCY.Data
     public class AuIdList
     {
         public ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>();
-        public int week { get; set; }
+        //public int week { get; set; }
 
     }
 

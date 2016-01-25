@@ -10,6 +10,10 @@
     xmlns:converter="using:ZSCY_Win10.Util.Converter"
     Background="#068cfd">
 
+    <Page.Resources>
+        <converter:FreeKBScrollViewerHeightConverter x:Key="FreeKBScrollViewerHeightConverter"/>
+    </Page.Resources>
+    
     <Grid Background="#fff">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
@@ -37,9 +41,13 @@
         <!--课表视图-->
         <Grid Name="FreeKBGrid" Grid.Column="0" Background="AliceBlue">
             <!--课程表格-->
-            <StackPanel Name="FreeKBTableStackPanel" Visibility="Collapsed" >
+            <Grid Name="FreeKBTableGrid" Visibility="Collapsed" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
                 <!--日期星期-->
-                <Grid x:Name="KebiaoWeekGrid" Height="25">
+                <Grid x:Name="KebiaoWeekGrid" Height="25" Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <!--列-->
                         <ColumnDefinition Width="2 *"/>
@@ -71,8 +79,7 @@
 
                     </Grid>
                 </Grid>
-                <ScrollViewer VerticalScrollBarVisibility="Hidden">
-                    <!--<ScrollViewer x:Name="KebiaoAllScrollViewer" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Hidden" Height="{Binding ActualHeight, Converter={StaticResource KBAllScrollViewerHeightConverter}, ElementName=page, Mode=OneWay}">-->
+                <ScrollViewer x:Name="KebiaoAllScrollViewer" Height="{Binding ActualHeight, Converter={StaticResource FreeKBScrollViewerHeightConverter}, ElementName=page, Mode=OneWay}" Grid.Row="1" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Hidden">
                     <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2 *"/>
@@ -217,9 +224,8 @@
                             </FlyoutBase.AttachedFlyout>
                         </Grid>
                     </Grid>
-                    <!--</ScrollViewer>-->
                 </ScrollViewer>
-            </StackPanel>
+            </Grid>
             <!--加载条-->
             <StackPanel Name="FreeLoddingStackPanel" Margin="5,0" VerticalAlignment="Center">
                 <TextBlock Name="FreeLoddingTextBlock" HorizontalAlignment="Center" FontSize="15" Margin="0,0,0,5" Foreground="#333" Text="正在加载..."/>
@@ -231,4 +237,26 @@
         <Grid Name="FreeDetailGrid" Grid.Column="1" Visibility="Collapsed" Background="AntiqueWhite"></Grid>
 
     </Grid>
+    <Page.BottomAppBar>
+        <CommandBar Name="commandBar">
+            <AppBarButton Name="FilterAppBarButton" Icon="Filter" Click="FilterAppBarButton_Click">
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout x:Name="KBNumFlyout" >
+                        <StackPanel Margin="10" Width="300">
+                            <TextBlock Text="输入要查询的周次" Foreground="#333" FontSize="15"/>
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox VerticalAlignment="Center" Grid.Column="0" Name="KBNumFlyoutTextBox" PlaceholderText="输入学号以查询" InputScope="Number" KeyUp="KBNumFlyoutTextBox_KeyUp"/>
+                                <AppBarButton Grid.Column="1"  Name="KBNumSearchButton" Icon="Zoom" Click="KBNumSearchButton_Click" />
+                            </Grid>
+                        </StackPanel>
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+            </AppBarButton>
+            <AppBarButton Name="CalendarWeekAppBarButton" Icon="CalendarWeek" Label="学期" Click="CalendarWeekAppBarButton_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

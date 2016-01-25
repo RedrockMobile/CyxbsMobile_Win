@@ -41,7 +41,6 @@ namespace ZSCY.Pages
             this.InitializeComponent();
             //HubSectionKBNum.Text = appSetting.Values["nowWeek"].ToString();
             appSetting.Values["FreeWeek"] = appSetting.Values["nowWeek"];
-            FilterAppBarToggleButton.Label = "第" + appSetting.Values["nowWeek"].ToString() + "周";
             //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             if (App.muIdList.Count == 0)
                 App.muIdList.Add(new uIdList { uId = appSetting.Values["stuNum"].ToString(), uName = appSetting.Values["name"].ToString() });
@@ -164,7 +163,7 @@ namespace ZSCY.Pages
             else
             {
                 //Au中包含：1、学号List 2、选择的周次
-                AuIdList Au = new AuIdList { muIdList = App.muIdList, week = int.Parse(appSetting.Values["FreeWeek"].ToString()) };
+                AuIdList Au = new AuIdList { muIdList = App.muIdList };
                 MorePage.isFreeRe = 1;
                 Frame.Navigate(typeof(SearchFreeTimeResultPage_new), Au);
             }
@@ -175,41 +174,6 @@ namespace ZSCY.Pages
         //    KBNumFlyout.ShowAt(page);
         //    //HubSectionKBNum.SelectAll();
         //}
-        private void KBNumSearchButton_Click(object sender, RoutedEventArgs e)
-        {
-            KBNumSearch();
-        }
-
-        private void KBNumSearch()
-        {
-            if (KBNumFlyoutTextBox.Text != "" && KBNumFlyoutTextBox.Text.IndexOf(".") == -1)
-            {
-                FilterAppBarToggleButton.Label = "第" + KBNumFlyoutTextBox.Text + "周";
-                appSetting.Values["FreeWeek"] = KBNumFlyoutTextBox.Text;
-                KBNumFlyout.Hide();
-            }
-            else
-                Utils.Message("请输入正确的周次");
-        }
-
-        private void FilterAppBarToggleButton_Click(object sender, RoutedEventArgs e)
-        {
-            KBNumFlyout.ShowAt(commandBar);
-        }
-
-        private void KBNumFlyoutTextBox_KeyUp(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.Enter)
-            {
-                Debug.WriteLine("enter");
-                if (KBNumFlyoutTextBox.Text != "")
-                    KBNumSearch();
-                else
-                {
-                    Utils.Message("信息不完全");
-                }
-            }
-        }
 
         private void AddTextBox_KeyUp(object sender, KeyRoutedEventArgs e)
         {

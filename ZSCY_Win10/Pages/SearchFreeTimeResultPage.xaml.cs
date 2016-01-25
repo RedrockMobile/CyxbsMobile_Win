@@ -51,7 +51,6 @@ namespace ZSCY.Pages
             //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             AuIdList auIdList = (AuIdList)e.Parameter;
             muIdList = auIdList.muIdList;
-            week = auIdList.week;
 
             initFree();
         }
