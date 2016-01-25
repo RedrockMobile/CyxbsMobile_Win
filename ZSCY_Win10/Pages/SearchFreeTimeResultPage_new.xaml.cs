@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
+using ZSCY_Win10;
 using ZSCY_Win10.Util;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
@@ -29,15 +30,21 @@ namespace ZSCY.Pages
     /// </summary>
     public sealed partial class SearchFreeTimeResultPage_new : Page
     {
-        private ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>();
-        private ObservableCollection<FreeList> mFreeList = new ObservableCollection<FreeList>();
-        string[] kb;
-        private int week;
-        int[,] freeclasstime = new int[7, 6]; //7*6数组
+        private ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>(); //存放学号的List
+        string[] kb; //课表数据的数组
+
         public SearchFreeTimeResultPage_new()
         {
             this.InitializeComponent();
-            FreeListView.ItemsSource = mFreeList;
+            this.SizeChanged += (s, e) =>
+            {
+                var state = "VisualState000";
+                if (e.NewSize.Width > 600)
+                {
+                    state = "VisualState600";
+                }
+                VisualStateManager.GoToState(this, state, true);
+            };
         }
 
         /// <summary>
@@ -47,11 +54,9 @@ namespace ZSCY.Pages
         /// 此参数通常用于配置页。</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
-            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             AuIdList auIdList = (AuIdList)e.Parameter;
             muIdList = auIdList.muIdList;
-            week = auIdList.week;
+            //auIdList里面还有一个week 是从num页面传过来的周次，现在不知道怎么用，也可以把学号页面的周次去掉，在这个页面进行周次的选择
 
             initFree();
         }
@@ -62,24 +67,16 @@ namespace ZSCY.Pages
             //HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
         }
 
-        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
-        {
-            Frame rootFrame = Window.Current.Content as Frame;
-            if (rootFrame != null && rootFrame.CanGoBack)
-            {
-                rootFrame.GoBack();
-                e.Handled = true;
-            }
-
-        }
-
+        /// <summary>
+        /// 对学号的List中的学号一个个请求课表，存入kb数组
+        /// </summary>
         private async void initFree()
         {
             kb = new string[muIdList.Count];
             for (int i = 0; i < muIdList.Count; i++)
             {
                 int issuccess = 0;
-                while (issuccess < 2)
+                while (issuccess < 2) //失败后重试两次
                 {
                     List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
                     paramList.Add(new KeyValuePair<string, string>("stuNum", muIdList[i].uId));
@@ -98,8 +95,14 @@ namespace ZSCY.Pages
                 FreeLoddingProgressBar.Value = FreeLoddingProgressBar.Value + 100.0 / muIdList.Count;
                 Debug.WriteLine(FreeLoddingProgressBar.Value);
             }
-            initFreeList();
+            FreeLoddingStackPanel.Visibility = Visibility.Collapsed;
+            FreeKBTableStackPanel.Visibility = Visibility.Visible;
         }
+
+        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
+        {
+        }
+
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
@@ -115,60 +118,5 @@ namespace ZSCY.Pages
             }
         }
 
-        private void initFreeList()
-        {
-            FreeLoddingTextBlock.Text = "处理中...";
-            FreeLoddingProgressBar.Value = 0;
-            for (int i = 0; i < kb.Length; i++)
-            {
-                if (kb[i] != "")
-                {
-                    JObject obj = JObject.Parse(kb[i]);
-                    if (Int32.Parse(obj["status"].ToString()) == 200)
-                    {
-                        JArray ClassListArray = Utils.ReadJso(kb[i]);
-                        for (int j = 0; j < ClassListArray.Count; j++)
-                        {
-                            ClassList classitem = new ClassList();
-                            classitem.GetAttribute((JObject)ClassListArray[j]);
-                            Debug.WriteLine(Array.IndexOf(classitem.Week, week));
-                            if (Array.IndexOf(classitem.Week, week) != -1)
-                            {
-                                freeclasstime[classitem.Hash_day, classitem.Hash_lesson] = 1;
-                            }
-                        }
-                    }
-                }
-                FreeLoddingProgressBar.Value = FreeLoddingProgressBar.Value + 100.0 / muIdList.Count;
-                Debug.WriteLine(FreeLoddingProgressBar.Value);
-            }
-            FreeLoddingStackPanel.Visibility = Visibility.Collapsed;
-
-            for (int i = 0; i < 7; i++)
-            {
-                for (int j = 0; j < 6; j++)
-                {
-                    if (freeclasstime[i, j] == 0)
-                    {
-                        FreeList ft = new FreeList();
-                        ft.vis = 1;
-                        ft.weekday = i;
-                        mFreeList.Add(ft);
-                        break;
-                    }
-                }
-
-                for (int j = 0; j < 6; j++)
-                {
-                    if (freeclasstime[i, j] == 0)
-                    {
-                        FreeList fc = new FreeList();
-                        fc.vis = 0;
-                        fc.time = j;
-                        mFreeList.Add(fc);
-                    }
-                }
-            }
-        }
     }
 }

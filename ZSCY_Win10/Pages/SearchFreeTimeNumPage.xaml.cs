@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
+using ZSCY_Win10;
 using ZSCY_Win10.Util;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
@@ -33,7 +34,7 @@ namespace ZSCY.Pages
     public sealed partial class SearchFreeTimeNumPage : Page
     {
         private ApplicationDataContainer appSetting;
-        private ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>();
+        //private ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>();
         public SearchFreeTimeNumPage()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
@@ -42,7 +43,8 @@ namespace ZSCY.Pages
             appSetting.Values["FreeWeek"] = appSetting.Values["nowWeek"];
             FilterAppBarToggleButton.Label = "第" + appSetting.Values["nowWeek"].ToString() + "周";
             //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
-            muIdList.Add(new uIdList { uId = appSetting.Values["stuNum"].ToString(), uName = appSetting.Values["name"].ToString() });
+            if (App.muIdList.Count == 0)
+                App.muIdList.Add(new uIdList { uId = appSetting.Values["stuNum"].ToString(), uName = appSetting.Values["name"].ToString() });
         }
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
@@ -53,7 +55,8 @@ namespace ZSCY.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             //HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
-            uIdListView.ItemsSource = muIdList;
+            uIdListView.ItemsSource = App.muIdList;
+            MorePage.isFreeRe = 0;
             UmengSDK.UmengAnalytics.TrackPageStart("SearchFreeTime");
         }
 
@@ -85,7 +88,7 @@ namespace ZSCY.Pages
 
         private async void mAddButton()
         {
-            var muIDArray = muIdList.ToArray().ToList();
+            var muIDArray = App.muIdList.ToArray().ToList();
             if (AddTextBox.Text.Length != 10)
             {
                 Utils.Message("学号不正确");
@@ -98,7 +101,7 @@ namespace ZSCY.Pages
                 string useid = AddTextBox.Text;
 
                 string name = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/searchPeople?stunum=" + AddTextBox.Text, PostORGet: 1);
-                muIdList.Add(new uIdList { uId = AddTextBox.Text, uName = usename });
+                App.muIdList.Add(new uIdList { uId = AddTextBox.Text, uName = usename });
                 Debug.WriteLine("name->" + name);
                 if (name != "")
                 {
@@ -115,22 +118,22 @@ namespace ZSCY.Pages
 
                 }
                 if (usename != "")
-                    for (int i = 0; i < muIdList.Count; i++)
+                    for (int i = 0; i < App.muIdList.Count; i++)
                     {
-                        if (muIdList[i].uId == useid)
+                        if (App.muIdList[i].uId == useid)
                         {
                             ListViewItem item = new ListViewItem();
-                            muIdList[i].uName = usename;
+                            App.muIdList[i].uName = usename;
                             //uIdListView.ItemsSource = null;
-                            uIdListView.ItemsSource = muIdList;
+                            uIdListView.ItemsSource = App.muIdList;
                         }
                     }
                 else
                 {
                     Utils.Message("学号不正确");
-                    muIDArray = muIdList.ToList();
+                    muIDArray = App.muIdList.ToList();
                     uIdList u = muIDArray.Find(p => p.uId.Equals(useid));
-                    muIdList.Remove(u);
+                    App.muIdList.Remove(u);
                 }
                 AddTextBox.Text = "";
             }
@@ -138,7 +141,6 @@ namespace ZSCY.Pages
 
         private async void uIdListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            ;
             var dig = new MessageDialog("确定删除" + (((uIdList)e.ClickedItem).uName) + "(" + ((uIdList)e.ClickedItem).uId + ")", "警告");
             var btnOk = new UICommand("是");
             dig.Commands.Add(btnOk);
@@ -147,21 +149,23 @@ namespace ZSCY.Pages
             var result = await dig.ShowAsync();
             if (null != result && result.Label == "是")
             {
-                var muIDArray = muIdList.ToList();
+                var muIDArray = App.muIdList.ToList();
                 uIdList u = muIDArray.Find(p => p.uId.Equals(((uIdList)e.ClickedItem).uId));
-                muIdList.Remove(u);
+                App.muIdList.Remove(u);
             }
         }
 
         private void ForwardAppBarToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            if (muIdList.Count < 2)
+            if (App.muIdList.Count < 2)
             {
                 Utils.Message("请至少输入2个要查询学号");
             }
             else
             {
-                AuIdList Au = new AuIdList { muIdList = muIdList, week = int.Parse(appSetting.Values["FreeWeek"].ToString()) };
+                //Au中包含：1、学号List 2、选择的周次
+                AuIdList Au = new AuIdList { muIdList = App.muIdList, week = int.Parse(appSetting.Values["FreeWeek"].ToString()) };
+                MorePage.isFreeRe = 1;
                 Frame.Navigate(typeof(SearchFreeTimeResultPage_new), Au);
             }
         }
@@ -218,6 +222,20 @@ namespace ZSCY.Pages
                 //{
                 //    Utils.Message("信息不完全");
                 //}
+            }
+        }
+
+        private async void DeleteAppBarToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dig = new MessageDialog("确定删除所有数据", "警告");
+            var btnOk = new UICommand("是");
+            dig.Commands.Add(btnOk);
+            var btnCancel = new UICommand("否");
+            dig.Commands.Add(btnCancel);
+            var result = await dig.ShowAsync();
+            if (null != result && result.Label == "是")
+            {
+                App.muIdList.Clear();
             }
         }
     }

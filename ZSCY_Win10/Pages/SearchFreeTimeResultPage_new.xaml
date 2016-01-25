@@ -10,46 +10,225 @@
     xmlns:converter="using:ZSCY_Win10.Util.Converter"
     Background="#068cfd">
 
-    <Page.Resources>
-        <converter:FreeisTiVisConverter x:Key="FreeisTiVisConverter"/>
-        <converter:FreeisCoVisConverter x:Key="FreeisCoVisConverter"/>
-        <converter:FreeWeekdayCoVisConverter x:Key="FreeWeekdayCoVisConverter"/>
-        <converter:FreeTimeCoVisConverter x:Key="FreeTimeCoVisConverter"/>
-    </Page.Resources>
-
     <Grid Background="#fff">
-        <Grid.RowDefinitions>
-            <!--<RowDefinition Height="auto"/>-->
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <!--<StackPanel VerticalAlignment="Top" Orientation="Horizontal" Grid.Row="0" Background="#068cfd" >
-            <TextBlock Text="找空闲" FontSize="35" VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" Margin="15,0,0,0"></TextBlock>
-        </StackPanel>-->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="VisualState000">
+                    <VisualState.Setters>
+                        <Setter Target="FreeKBGrid.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="FreeDetailGrid.(UIElement.Visibility)" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualState600">
+                    <VisualState.Setters>
+                        <Setter Target="FreeKBGrid.(FrameworkElement.Width)" Value="400"/>
+                        <Setter Target="FreeDetailGrid.(Grid.Column)" Value="1"/>
+                        <Setter Target="FreeDetailGrid.(UIElement.Visibility)" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
-        <Grid Grid.Row="1" Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
 
-            <ListView Name="FreeListView">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <TextBlock Text="{Binding weekday,Converter={StaticResource FreeWeekdayCoVisConverter}}" Visibility="{Binding vis,Converter={StaticResource FreeisTiVisConverter}}" FontSize="15" Foreground="#068cfd"/>
-                            <StackPanel Visibility="{Binding vis,Converter={StaticResource FreeisCoVisConverter}}" >
-                                <TextBlock Text="{Binding time,Converter={StaticResource FreeTimeCoVisConverter}}" Margin="0,0,0,1" FontSize="25" Foreground="#333" VerticalAlignment="Center"></TextBlock>
-                                <Line Margin="0,0,0,10" X1="0" X2="{Binding ActualWidth, ElementName=page, Mode=OneWay}" Stroke="Black" StrokeThickness="1"></Line>
-                            </StackPanel>
+        <!--课表视图-->
+        <Grid Name="FreeKBGrid" Grid.Column="0" Background="AliceBlue">
+            <!--课程表格-->
+            <StackPanel Name="FreeKBTableStackPanel" Visibility="Collapsed" >
+                <!--日期星期-->
+                <Grid x:Name="KebiaoWeekGrid" Height="25">
+                    <Grid.ColumnDefinitions>
+                        <!--列-->
+                        <ColumnDefinition Width="2 *"/>
+                        <ColumnDefinition Width="3 *"/>
+                        <ColumnDefinition Width="3 *"/>
+                        <ColumnDefinition Width="3 *"/>
+                        <ColumnDefinition Width="3 *"/>
+                        <ColumnDefinition Width="3 *"/>
+                        <ColumnDefinition Width="3 *"/>
+                        <ColumnDefinition Width="3 *"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Name="KebiaoWeekTitleGrid" Grid.ColumnSpan="7" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1 *"/>
+                            <ColumnDefinition Width="1 *"/>
+                            <ColumnDefinition Width="1 *"/>
+                            <ColumnDefinition Width="1 *"/>
+                            <ColumnDefinition Width="1 *"/>
+                            <ColumnDefinition Width="1 *"/>
+                            <ColumnDefinition Width="1 *"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="一" FontSize="18" Foreground="#333" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        <TextBlock Text="二" FontSize="18" Foreground="#333" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        <TextBlock Text="三" FontSize="18" Foreground="#333" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        <TextBlock Text="四" FontSize="18" Foreground="#333" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        <TextBlock Text="五" FontSize="18" Foreground="#333" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        <TextBlock Text="六" FontSize="18" Foreground="#333" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        <TextBlock Text="日" FontSize="18" Foreground="#333" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+
+                    </Grid>
+                </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <!--<ScrollViewer x:Name="KebiaoAllScrollViewer" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Hidden" Height="{Binding ActualHeight, Converter={StaticResource KBAllScrollViewerHeightConverter}, ElementName=page, Mode=OneWay}">-->
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2 *"/>
+                            <ColumnDefinition Width="21 *"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0" >
+                            <Grid.RowDefinitions>
+                                <!--行-->
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                            </Grid.RowDefinitions>
+                            <Grid Name="KBAllnum1Grid" Grid.Row="0" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="1"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="1" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="2"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="2" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="3"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="3" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="4"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="4" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="5"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="5" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="6"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="6" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="7"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="7" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="8"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="8" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="9"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="9" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="10"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="10" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="11"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="11" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="12"/>
+                                </TextBlock>
+                            </Grid>
                         </Grid>
+                        <!--放课表格子的Grid-->
+                        <Grid VerticalAlignment="Stretch" x:Name="kebiaoGrid" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <!--列-->
+                                <ColumnDefinition Width="3 *"/>
+                                <ColumnDefinition Width="3 *"/>
+                                <ColumnDefinition Width="3 *"/>
+                                <ColumnDefinition Width="3 *"/>
+                                <ColumnDefinition Width="3 *"/>
+                                <ColumnDefinition Width="3 *"/>
+                                <ColumnDefinition Width="3 *"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <!--行-->
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                            </Grid.RowDefinitions>
+                            <FlyoutBase.AttachedFlyout>
+                                <Flyout x:Name="KBCLassFlyout" >
+                                    <Pivot x:Name="KBCLassFlyoutPivot" Width="400">
+                                        <PivotItem x:Name="KBCLassFlyoutPivotItem">
+                                            <ListView  x:Name="KBCLassFlyoutListView" ScrollViewer.VerticalScrollBarVisibility="Disabled" >
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate ScrollViewer.HorizontalScrollMode="Disabled">
+                                                        <Grid  Margin="0,0,0,10">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="auto"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="1 *"/>
+                                                                <RowDefinition Height="1 *"/>
+                                                                <RowDefinition Height="1 *"/>
+                                                                <RowDefinition Height="1 *"/>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Text="时  间" Foreground="#333" Grid.Column="0" Grid.Row="0" FontSize="18" Margin="0,2.5,5,2.5"/>
+                                                            <TextBlock Text="小伙伴" Foreground="#333" Grid.Column="0" Grid.Row="3" FontSize="18" Margin="0,2.5,5,2.5"/>
 
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                                                            <TextBlock Text="{Binding Classroom}" Foreground="#333" Grid.Column="1" Grid.Row="0" FontSize="18" VerticalAlignment="Center"/>
+                                                            <TextBlock Text="{Binding Teacher}" Foreground="#333" Grid.Column="1" Grid.Row="1" FontSize="18" VerticalAlignment="Center"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
 
-            </ListView>
-
-
-
-            <StackPanel Name="FreeLoddingStackPanel" VerticalAlignment="Center">
+                                        </PivotItem>
+                                    </Pivot>
+                                </Flyout>
+                            </FlyoutBase.AttachedFlyout>
+                        </Grid>
+                    </Grid>
+                    <!--</ScrollViewer>-->
+                </ScrollViewer>
+            </StackPanel>
+            <!--加载条-->
+            <StackPanel Name="FreeLoddingStackPanel" Margin="5,0" VerticalAlignment="Center">
                 <TextBlock Name="FreeLoddingTextBlock" HorizontalAlignment="Center" FontSize="15" Margin="0,0,0,5" Foreground="#333" Text="正在加载..."/>
                 <ProgressBar Name="FreeLoddingProgressBar" IsIndeterminate="False" Value="0"/>
             </StackPanel>
         </Grid>
+
+        <!--人员详情-->
+        <Grid Name="FreeDetailGrid" Grid.Column="1" Visibility="Collapsed" Background="AntiqueWhite"></Grid>
+
     </Grid>
 </Page>

@@ -32,6 +32,7 @@ namespace ZSCY_Win10
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         //public static JWList[] jwlistCache;
         public static ObservableCollection<JWList> JWListCache = new ObservableCollection<JWList>();
+        public static ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>();
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。

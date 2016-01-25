@@ -76,6 +76,7 @@
 
     <Page.BottomAppBar>
         <CommandBar Name="commandBar">
+            <AppBarButton Name="DeleteAppBarToggleButton" Icon="Delete" Label="清空" Click="DeleteAppBarToggleButton_Click"></AppBarButton>
             <AppBarButton Name="FilterAppBarToggleButton" Icon="Filter" Label="第 周" Click="FilterAppBarToggleButton_Click"></AppBarButton>
             <AppBarButton Name="ForwardAppBarToggleButton" Icon="Forward" Label="下一步" Click="ForwardAppBarToggleButton_Click"/>
             <FlyoutBase.AttachedFlyout>

@@ -31,6 +31,7 @@ namespace ZSCY_Win10
     public sealed partial class MorePage : Page
     {
         ObservableDictionary morepageclass = new ObservableDictionary();
+        public static int isFreeRe = 0;
         public MorePage()
         {
             this.InitializeComponent();
@@ -70,7 +71,7 @@ namespace ZSCY_Win10
             };
         }
 
-       
+
 
         public ObservableDictionary Morepageclass
         {
@@ -98,6 +99,8 @@ namespace ZSCY_Win10
 
 
         public Frame MoreFrame { get { return this.frame; } }
+
+
 
         private void MoreBackAppBarButton_Click(object sender, RoutedEventArgs e)
         {
@@ -128,16 +131,27 @@ namespace ZSCY_Win10
             //}
             //MoreBackAppBarButton.Visibility = Visibility.Collapsed;
             e.Handled = true;
-            SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            MoreFrame.Visibility = Visibility.Collapsed;
-            MoreContentTitleTextBlock.Text = "";
-            HubSectionKBTitle.Text = "更多";
-            MoreListView.SelectedIndex = -1;
+            if (isFreeRe == 0)
+            {
+                SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                MoreFrame.Visibility = Visibility.Collapsed;
+                MoreContentTitleTextBlock.Text = "";
+                HubSectionKBTitle.Text = "更多";
+                MoreListView.SelectedIndex = -1;
 
-            CommandBar c = new CommandBar();
-            this.BottomAppBar = c;
-            c.Visibility = Visibility.Collapsed;
+                CommandBar c = new CommandBar();
+                this.BottomAppBar = c;
+                c.Visibility = Visibility.Collapsed;
+            }
+            else if (isFreeRe == 1)
+            {
+                if (MoreFrame != null && MoreFrame.CanGoBack)
+                {
+                    MoreFrame.GoBack();
+                    isFreeRe = 2;
+                }
+            }
         }
 
         private async void MoreListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -165,22 +179,34 @@ namespace ZSCY_Win10
                 {
                     case "ReExam":
                         MoreFrame.Navigate(typeof(ExamPage), 3); ;
-                        MoreFrame.Visibility = Visibility.Visible; break;
+                        MoreFrame.Visibility = Visibility.Visible;
+                        isFreeRe = 0;
+                        break;
                     case "Exam":
                         MoreFrame.Navigate(typeof(ExamPage), 2);
-                        MoreFrame.Visibility = Visibility.Visible; break;
+                        MoreFrame.Visibility = Visibility.Visible;
+                        isFreeRe = 0;
+                        break;
                     case "Socre":
                         MoreFrame.Navigate(typeof(ScorePage));
-                        MoreFrame.Visibility = Visibility.Visible; break;
+                        MoreFrame.Visibility = Visibility.Visible;
+                        isFreeRe = 0;
+                        break;
                     case "ClassRoom":
                         MoreFrame.Navigate(typeof(EmptyRoomsPage));
-                        MoreFrame.Visibility = Visibility.Visible; break;
+                        MoreFrame.Visibility = Visibility.Visible;
+                        isFreeRe = 0;
+                        break;
                     case "Calendar":
                         MoreFrame.Navigate(typeof(CalendarPage));
-                        MoreFrame.Visibility = Visibility.Visible; break;
+                        MoreFrame.Visibility = Visibility.Visible;
+                        isFreeRe = 0;
+                        break;
                     case "FreeTime":
                         MoreFrame.Navigate(typeof(SearchFreeTimeNumPage));
-                        MoreFrame.Visibility = Visibility.Visible; break;
+                        MoreFrame.Visibility = Visibility.Visible;
+                        isFreeRe = 0;
+                        break;
                     case "Card":
                         var a = await Launcher.LaunchUriAsync(new Uri("cquptcard:"));
                         MoreFrame.Visibility = Visibility.Collapsed;
