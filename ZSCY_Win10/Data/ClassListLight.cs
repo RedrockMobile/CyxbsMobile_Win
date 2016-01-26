@@ -16,7 +16,7 @@ namespace ZSCY_Win10.Data
         public int[] LessonLast { get; set; }
         public int[] Week { get; set; }
         public string Course { get; set; }
-        public string Name { get; set; }
+        public string[] Name { get; set; }
 
         public ClassListLight getattribute(JObject classDetailJObject)
         {
@@ -40,7 +40,7 @@ namespace ZSCY_Win10.Data
             Course = classDetailJObject["course"].ToString();
             if (Period == 3)
             {
-                return new ClassListLight { Hash_day = this.Hash_day, Hash_lesson = this.Hash_lesson, Begin_lesson = this.Begin_lesson, Period = this.Period, Week = this.Week };
+                return new ClassListLight { Hash_day = this.Hash_day, Hash_lesson = this.Hash_lesson + 1, Begin_lesson = this.Begin_lesson, Period = 2, Week = this.Week, Name = this.Name };
             }
             else
                 return null;
