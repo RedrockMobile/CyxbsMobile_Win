@@ -209,8 +209,10 @@
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Controls\NavMenuListView.cs" />
     <Compile Include="Data\ClassList.cs" />
+    <Compile Include="Data\ClassListLight.cs" />
     <Compile Include="Data\DataSource.cs" />
     <Compile Include="Data\EmptyRoomList.cs" />
+    <Compile Include="Data\EmptyTable.cs" />
     <Compile Include="Data\ExamList.cs" />
     <Compile Include="Data\IdList.cs" />
     <Compile Include="Data\NewsContentList.cs" />
