@@ -63,7 +63,7 @@ namespace ZSCY_Win10
             {
                 DateReadTextBlock.Text = "发布时间:" + NewsItem.Date;
             }
-            UmengSDK.UmengAnalytics.TrackPageStart("JWContentPage");
+            UmengSDK.UmengAnalytics.TrackPageStart("NewsContentPage");
         }
 
 
@@ -114,7 +114,7 @@ namespace ZSCY_Win10
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            UmengSDK.UmengAnalytics.TrackPageEnd("JWContentPage");
+            UmengSDK.UmengAnalytics.TrackPageEnd("NewsContentPage");
         }
     }
 }

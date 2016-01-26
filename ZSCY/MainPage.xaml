@@ -246,8 +246,254 @@
                         <Grid VerticalAlignment="Center" Grid.Row="0" Height="{Binding ElementName=BlueBackGrid,Path=Height}">
                             <TextBlock Name="HubSectionJWTitle" Text="教务信息" Foreground="White"  FontSize="35" FontWeight="Light" VerticalAlignment="Bottom" FontFamily="Microsoft YaHei UI"/>
                         </Grid>
+                        <Pivot Name="NewsPivot"  Grid.Row="1" Width="{Binding ElementName=JWHubSection,Path=Width,Converter={StaticResource KBGridWidthConverterKey}}" SelectionChanged="NewsPivot_SelectionChanged">
+                            <PivotItem Margin="-10,0,0,0">
+                                <PivotItem.Header>
+                                    <TextBlock Name="JWTextBlock" Text="教务新闻" FontWeight="Light" Foreground="#666" FontSize="20"></TextBlock>
+                                </PivotItem.Header>
+                                <ScrollViewer VerticalScrollBarVisibility="Hidden" Height="{Binding ActualHeight, Converter={StaticResource JWScrollViewerHeighConverter}, ElementName=AppCommandBar, Mode=OneWay}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <ListView Name="JWListView" IsItemClickEnabled="True" ItemClick="NewsListView_ItemClick" HorizontalAlignment="Stretch" >
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate >
+                                                    <Grid >
+                                                        <Grid Margin="12">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition/>
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <!--标题-->
+                                                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" TextTrimming="WordEllipsis" HorizontalAlignment="Stretch" FontSize="16" Foreground="#333333" FontFamily="Microsoft YaHei UI" ></TextBlock>
+                                                            <!--正文-->
+                                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Content}" VerticalAlignment="Top" MaxLines="2" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                            <!--阅读、时间-->
+                                                            <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
+                                                                <TextBlock Text="{Binding Read}" FontSize="12" HorizontalAlignment="Right" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                                <TextBlock Text="{Binding Date}" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                        <Line X1="0" X2="750" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                                        <Line X1="0" X2="750" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                        <StackPanel Grid.Row="1">
+                                            <!--列表的加载条-->
+                                            <StackPanel Name="JWListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
+                                                <ProgressBar IsIndeterminate="True" />
+                                                <TextBlock Text="疯狂加载中..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
+                                            </StackPanel>
+                                            <!--列表的失败报错-->
+                                            <StackPanel Name="JWListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="NewsListFailedStackPanel_Tapped">
+                                                <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
+                                                <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+                                            </StackPanel>
+                                            <!--继续加载-->
+                                            <Grid Name="continueJWGrid" Height="50" Tapped="continueNewsGrid_Tapped" Visibility="Collapsed">
+                                                <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                </ScrollViewer>
+                            </PivotItem>
+                            <PivotItem Margin="-10,0,0,0">
+                                <PivotItem.Header>
+                                    <TextBlock Name="XWTextBlock" Text="校务公告" FontWeight="Light" Foreground="#666" FontSize="20"></TextBlock>
+                                </PivotItem.Header>
+                                <ScrollViewer VerticalScrollBarVisibility="Hidden"  Height="{Binding ActualHeight, Converter={StaticResource JWScrollViewerHeighConverter}, ElementName=AppCommandBar, Mode=OneWay}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <ListView Name="XWListView" IsItemClickEnabled="True" ItemClick="NewsListView_ItemClick" HorizontalAlignment="Stretch" >
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate >
+                                                    <Grid >
+                                                        <Grid Margin="12">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition/>
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <!--标题-->
+                                                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" TextTrimming="WordEllipsis" HorizontalAlignment="Stretch" FontSize="16" Foreground="#333333" FontFamily="Microsoft YaHei UI" ></TextBlock>
+                                                            <!--正文-->
+                                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Content}" VerticalAlignment="Top" MaxLines="2" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                            <!--阅读、时间-->
+                                                            <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
+                                                                <TextBlock Text="{Binding Read}" FontSize="12" HorizontalAlignment="Right" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                                <TextBlock Text="{Binding Date}" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                        <Line X1="0" X2="750" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                                        <Line X1="0" X2="750" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                        <StackPanel Grid.Row="1">
+                                            <!--列表的加载条-->
+                                            <StackPanel Name="XWListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
+                                                <ProgressBar IsIndeterminate="True" />
+                                                <TextBlock Text="疯狂加载中..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
+                                            </StackPanel>
+                                            <!--列表的失败报错-->
+                                            <StackPanel Name="XWListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="NewsListFailedStackPanel_Tapped">
+                                                <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
+                                                <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+                                            </StackPanel>
+                                            <!--继续加载-->
+                                            <Grid Name="continueXWGrid" Height="50" Tapped="continueNewsGrid_Tapped" Visibility="Collapsed">
+                                                <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                </ScrollViewer>
+                            </PivotItem>
+                            <PivotItem Margin="-10,0,0,0">
+                                <PivotItem.Header>
+                                    <TextBlock Name="CYTextBlock" Text="重邮新闻" FontWeight="Light" Foreground="#666" FontSize="20"></TextBlock>
+                                </PivotItem.Header>
 
-                        <StackPanel Grid.Row="1" Margin="0,10,0,0" Width="{Binding ElementName=JWHubSection,Path=Width,Converter={StaticResource KBGridWidthConverterKey}}">
+                                <ScrollViewer VerticalScrollBarVisibility="Hidden"  Height="{Binding ActualHeight, Converter={StaticResource JWScrollViewerHeighConverter}, ElementName=AppCommandBar, Mode=OneWay}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <ListView Name="CYListView" IsItemClickEnabled="True" ItemClick="NewsListView_ItemClick" HorizontalAlignment="Stretch" >
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate >
+                                                    <Grid >
+                                                        <Grid Margin="12">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition/>
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <!--标题-->
+
+                                                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" TextTrimming="WordEllipsis" HorizontalAlignment="Stretch" FontSize="16" Foreground="#333333" FontFamily="Microsoft YaHei UI" ></TextBlock>
+
+                                                            <!--正文-->
+
+                                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Content}" VerticalAlignment="Top" MaxLines="2" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+
+                                                            <!--阅读、时间-->
+
+                                                            <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
+                                                                <TextBlock Text="{Binding Read}" FontSize="12" HorizontalAlignment="Right" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                                <TextBlock Text="{Binding Date}" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                        <Line X1="0" X2="750" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                                        <Line X1="0" X2="750" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                        <StackPanel Grid.Row="1">
+
+                                            <!--列表的加载条-->
+
+                                            <StackPanel Name="CYListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
+                                                <ProgressBar IsIndeterminate="True" />
+                                                <TextBlock Text="疯狂加载中..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
+                                            </StackPanel>
+
+                                            <!--列表的失败报错-->
+
+                                            <StackPanel Name="CYListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="NewsListFailedStackPanel_Tapped">
+                                                <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
+                                                <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+                                            </StackPanel>
+
+                                            <!--继续加载-->
+
+                                            <Grid Name="continueCYGrid" Height="50" Tapped="continueNewsGrid_Tapped" Visibility="Collapsed">
+                                                <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                </ScrollViewer>
+                            </PivotItem>
+                            <PivotItem Margin="-10,0,0,0">
+                                <PivotItem.Header>
+                                    <TextBlock Name="XSTextBlock" Text="学术讲座" FontWeight="Light" Foreground="#666" FontSize="20"></TextBlock>
+                                </PivotItem.Header>
+                                <ScrollViewer VerticalScrollBarVisibility="Hidden"  Height="{Binding ActualHeight, Converter={StaticResource JWScrollViewerHeighConverter}, ElementName=AppCommandBar, Mode=OneWay}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <ListView Name="XSListView" IsItemClickEnabled="True" ItemClick="NewsListView_ItemClick" HorizontalAlignment="Stretch" >
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate >
+                                                    <Grid>
+                                                        <Grid Margin="12">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition/>
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <!--标题-->
+                                                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" TextTrimming="WordEllipsis" HorizontalAlignment="Stretch" FontSize="16" Foreground="#333333" FontFamily="Microsoft YaHei UI" ></TextBlock>
+                                                            <!--正文-->
+                                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Content}" VerticalAlignment="Top" MaxLines="2" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                            <!--阅读、时间-->
+                                                            <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
+                                                                <TextBlock Text="{Binding Read}" FontSize="12" HorizontalAlignment="Right" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                                <TextBlock Text="{Binding Date}" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                        <Line X1="0" X2="750" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                                        <Line X1="0" X2="750" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                        <StackPanel Grid.Row="1">
+                                            <!--列表的加载条-->
+                                            <StackPanel Name="XSListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
+                                                <ProgressBar IsIndeterminate="True" />
+                                                <TextBlock Text="疯狂加载中..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
+                                            </StackPanel>
+                                            <!--列表的失败报错-->
+                                            <StackPanel Name="XSListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="NewsListFailedStackPanel_Tapped">
+                                                <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
+                                                <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+                                            </StackPanel>
+                                            <!--继续加载-->
+                                            <Grid Name="continueXSGrid" Height="50" Tapped="continueNewsGrid_Tapped" Visibility="Collapsed">
+                                                <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                </ScrollViewer>
+                            </PivotItem>
+                        </Pivot>
+                        <!--<StackPanel Grid.Row="1" Margin="0,10,0,0" Width="{Binding ElementName=JWHubSection,Path=Width,Converter={StaticResource KBGridWidthConverterKey}}">
                             <ScrollViewer Grid.Row="1" Height="{Binding ActualHeight, Converter={StaticResource JWScrollViewerHeighConverter}, ElementName=AppCommandBar, Mode=OneWay}" Width="{Binding ElementName=KBHubSection,Path=Width,Converter={StaticResource KBGridWidthConverterKey}}" >
                                 <StackPanel Name="JWListStackPanel">
                                     <ListView Name="JWListView" IsItemClickEnabled="True" ItemClick="JiaowuListView_ItemClick" HorizontalAlignment="Stretch" >
@@ -276,17 +522,17 @@
                                         </Grid.Resources>
                                     </Grid>
 
-                                    <!--列表的加载条-->
+                                    --><!--列表的加载条--><!--
                                     <StackPanel Name="JWListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
                                         <ProgressBar IsIndeterminate="True" />
                                         <TextBlock Text="疯狂加载中..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
                                     </StackPanel>
-                                    <!--列表的失败报错-->
+                                    --><!--列表的失败报错--><!--
                                     <StackPanel Name="JWListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="JWListFailedStackPanel_Tapped">
                                         <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
                                         <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
                                     </StackPanel>
-                                    <!--继续加载-->
+                                    --><!--继续加载--><!--
                                     <Grid Name="continueJWGrid" Height="50" Tapped="continueJWGrid_Tapped" Visibility="Collapsed">
                                         <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
                                     </Grid>
@@ -294,8 +540,9 @@
                             </ScrollViewer>
 
 
-                        </StackPanel>
+                        </StackPanel>-->
                     </Grid>
+                    
                 </HubSection.Header>
 
             </HubSection>
@@ -353,7 +600,7 @@
                 </FlyoutBase.AttachedFlyout>
             </AppBarButton>
             <AppBarButton Name="KBCalendarAppBarButton" Icon="Calendar" Label="学期/本周" Click="KBCalendarAppBarButton_Click"/>
-            <AppBarButton Name="JWRefreshAppBarButton" Icon="Refresh" Label="刷新" Click="JWRefreshAppBarButton_Click" Visibility="Collapsed"/>
+            <AppBarButton Name="NewsRefreshAppBarButton" Icon="Refresh" Label="刷新" Click="NewsRefreshAppBarButton_Click" Visibility="Collapsed"/>
             <AppBarButton Name="MoreSwitchAppBarButton" Label="个人信息" Click="MoreSwitchAppBarButton_Click" Visibility="Collapsed">
                 <AppBarButton.Icon>
                     <BitmapIcon UriSource="Assets/Contacts-100.png"/>

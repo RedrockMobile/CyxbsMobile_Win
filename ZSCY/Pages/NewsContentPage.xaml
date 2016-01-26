@@ -1,0 +1,72 @@
+﻿<Page
+    Name="page"
+    x:Class="ZSCY.Pages.NewsContentPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="White">
+        <!--<StackPanel Margin="15">
+            <TextBlock Name="TitleTextBlock" Foreground="#333" FontSize="20" TextWrapping="WrapWholeWords" FontWeight="Bold"></TextBlock>
+            <Grid Margin="0,10">
+                <TextBlock Name="DateReadTextBlock" Foreground="#737373" FontSize="12"></TextBlock>
+                -->
+        <!--<TextBlock Name="ReadTextBlock" Foreground="#737373" FontSize="12" HorizontalAlignment="Right"></TextBlock>-->
+        <!--
+            </Grid>
+            <Grid>
+                <Line Margin="-15,0,-15,10" X1="0" X2="{Binding ElementName=page,Path=ActualWidth,Mode=OneWay}" Y1="0" Y2="1" Height="1" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                <Line Margin="-15,0,-15,10" X1="0" X2="{Binding ElementName=page,Path=ActualWidth,Mode=OneWay}" Y1="1" Y2="0" Height="1" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+            </Grid>
+            <WebView Name="ContentWebView" Height="600" ></WebView>
+            <TextBlock Name="ContentTextBlock" TextWrapping="WrapWholeWords" Foreground="#333" FontSize="16"></TextBlock>
+        </StackPanel>-->
+
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Name="TitleTextBlock" Margin="15,7,0,0" Grid.Row="0" Foreground="#333" FontSize="18" TextWrapping="WrapWholeWords" FontWeight="Bold"></TextBlock>
+            <Grid Margin="15,10" Grid.Row="1" >
+                <TextBlock Name="DateReadTextBlock" Foreground="#737373" FontSize="12"></TextBlock>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Line Margin="0,0,0,10" X1="0" X2="{Binding ElementName=page,Path=ActualWidth,Mode=OneWay}" Y1="0" Y2="1" Height="1" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                <Line Margin="0,0,0,10" X1="0" X2="{Binding ElementName=page,Path=ActualWidth,Mode=OneWay}" Y1="1" Y2="0" Height="1" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+            </Grid>
+            <WebView Name="ContentWebView" Margin="15,0" Grid.Row="3" ></WebView>
+        </Grid>
+    </Grid>
+    <Page.BottomAppBar>
+        <CommandBar Name="commandBar">
+            <AppBarButton Name="DownloadAppBarButton" Label="附件下载" Icon="Download" Click="DownloadAppBarButton_Click"/>
+            <FlyoutBase.AttachedFlyout>
+                <Flyout x:Name="DownloadFlyout">
+                    <!--<ScrollViewer HorizontalScrollMode="Enabled" Width="280" >-->
+                    <ListView Name="AnnexListView" IsItemClickEnabled="True" ItemClick="AnnexListView_ItemClick">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="10,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{Binding Anneximg}" VerticalAlignment="Center" Width="15" Height="20" Margin="0,5,5,10"/>
+                                    <TextBlock Text="{Binding name}" VerticalAlignment="Center" Grid.Column="1" FontSize="16" TextWrapping="WrapWholeWords"></TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <!--</ScrollViewer>-->
+                </Flyout>
+            </FlyoutBase.AttachedFlyout>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>

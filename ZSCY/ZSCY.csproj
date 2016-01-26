@@ -96,6 +96,8 @@
     <Compile Include="Data\IdList.cs" />
     <Compile Include="Data\JWList.cs" />
     <Compile Include="Data\DataSource.cs" />
+    <Compile Include="Data\NewsContentList.cs" />
+    <Compile Include="Data\NewsList.cs" />
     <Compile Include="Data\PersonalIno.cs" />
     <Compile Include="Data\ScoreList.cs" />
     <Compile Include="LoginPage.xaml.cs">
@@ -121,6 +123,9 @@
     </Compile>
     <Compile Include="Pages\JWContentPage.xaml.cs">
       <DependentUpon>JWContentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\NewsContentPage.xaml.cs">
+      <DependentUpon>NewsContentPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PersonPage.xaml.cs">
       <DependentUpon>PersonPage.xaml</DependentUpon>
@@ -161,6 +166,18 @@
     <Content Include="Assets\AlphaLogo\Square71x71Logo.scale-240.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Annex_img\Annex_apk.png" />
+    <Content Include="Assets\Annex_img\Annex_doc.png" />
+    <Content Include="Assets\Annex_img\Annex_ics.png" />
+    <Content Include="Assets\Annex_img\Annex_img.png" />
+    <Content Include="Assets\Annex_img\Annex_music.png" />
+    <Content Include="Assets\Annex_img\Annex_other.png" />
+    <Content Include="Assets\Annex_img\Annex_pdf.png" />
+    <Content Include="Assets\Annex_img\Annex_ppt.png" />
+    <Content Include="Assets\Annex_img\Annex_rar.png" />
+    <Content Include="Assets\Annex_img\Annex_video.png" />
+    <Content Include="Assets\Annex_img\Annex_xls.png" />
+    <Content Include="Assets\Annex_img\Annex_zip.png" />
     <Content Include="Assets\BlueLogo\Logo.scale-240.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -315,6 +332,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\JWContentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\NewsContentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

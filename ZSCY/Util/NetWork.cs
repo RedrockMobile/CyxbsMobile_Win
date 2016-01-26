@@ -22,7 +22,7 @@ namespace ZSCY.Util
         /// <param name="paramList"></param>
         /// <param name="PostORGet">0：POST，1：GET</param>
         /// <returns></returns>
-        public static async Task<string> getHttpWebRequest(string api, List<KeyValuePair<String, String>> paramList = null, int PostORGet = 0)
+        public static async Task<string> getHttpWebRequest(string api, List<KeyValuePair<String, String>> paramList = null, int PostORGet = 0, bool fulluri = false)
         {
             string content = "";
             return await Task.Run(() =>
@@ -32,7 +32,11 @@ namespace ZSCY.Util
                    try
                    {
                        HttpClient httpClient = new HttpClient();
-                       string uri = "http://hongyan.cqupt.edu.cn/" + api;
+                       string uri;
+                       if (!fulluri)
+                           uri = "http://hongyan.cqupt.edu.cn/" + api;
+                       else
+                           uri = api;
                        httpClient.DefaultRequestHeaders.Add("API_APP", "winphone");
                        httpClient.DefaultRequestHeaders.Add("API_TOKEN", "0zLUZA0j+OL77OsjXC0ulOz50KaI6yANZtkOk2vQIDg=");
                        HttpRequestMessage requst;
@@ -61,9 +65,9 @@ namespace ZSCY.Util
                else
                {
                }
-               if (content.IndexOf("{") != 0)
-                   return "";
-               else
+               //if (content.IndexOf("{") != 0)
+               //    return "";
+               //else
                    return content;
 
            });

@@ -257,59 +257,6 @@ namespace ZSCY_Win10
                                 }
                             }
 
-                            //    string JWContentText = jwContent.Replace("(\r?\n(\\s*\r?\n)+)", "\r\n");
-
-                            //    JObject jwContentobj = JObject.Parse(JWContentText);
-                            //    if (Int32.Parse(jwContentobj["status"].ToString()) == 200)
-                            //    {
-                            //        JWitem.Content = jwContentobj["data"]["content"].ToString();
-                            //        while (JWitem.Content.StartsWith("\r\n "))
-                            //            JWitem.Content = JWitem.Content.Substring(3);
-                            //        while (JWitem.Content.StartsWith("\r\n"))
-                            //            JWitem.Content = JWitem.Content.Substring(2);
-                            //        while (JWitem.Content.StartsWith("\n\t"))
-                            //            JWitem.Content = JWitem.Content.Substring(2);
-                            //        while (JWitem.Content.StartsWith("\n"))
-                            //            JWitem.Content = JWitem.Content.Substring(1);
-                            //    }
-                            //    else
-                            //    {
-                            //        JWitem.Content = "";
-                            //        failednum++;
-                            //    }
-                            //}
-                            //else
-                            //{
-                            //    failednum++;
-                            //    if (failednum < 2)
-                            //    {
-                            //        jwContent = await NetWork.getHttpWebRequest("api/jwNewsContent", contentparamList);
-                            //        Debug.WriteLine("jwContent->" + jwContent);
-                            //        if (jwContent != "")
-                            //        {
-                            //            string JWContentText = jwContent.Replace("(\r?\n(\\s*\r?\n)+)", "\r\n");
-                            //            JObject jwContentobj = JObject.Parse(JWContentText);
-                            //            if (Int32.Parse(jwContentobj["status"].ToString()) == 200)
-                            //            {
-                            //                JWitem.Content = jwContentobj["data"]["content"].ToString();
-                            //                while (JWitem.Content.StartsWith("\r\n "))
-                            //                    JWitem.Content = JWitem.Content.Substring(3);
-                            //                while (JWitem.Content.StartsWith("\r\n"))
-                            //                    JWitem.Content = JWitem.Content.Substring(2);
-                            //                while (JWitem.Content.StartsWith("\n\t"))
-                            //                    JWitem.Content = JWitem.Content.Substring(2);
-                            //                while (JWitem.Content.StartsWith("\n"))
-                            //                    JWitem.Content = JWitem.Content.Substring(1);
-                            //            }
-                            //            else
-                            //            {
-                            //                JWitem.Content = "";
-                            //                failednum++;
-                            //            }
-                            //        }
-                            //    }
-                            //}
-                            //setOpacity();
                         }
                     }
                     //JWListView.ItemsSource = JWList;
@@ -402,19 +349,22 @@ namespace ZSCY_Win10
             {
                 case 0:
                     type = "jwzx";
+                    continueJWGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 1:
                     type = "xwgg";
+                    continueXWGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 2:
                     type = "cyxw ";
+                    continueCYGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 3:
                     type = "xsjz ";
+                    continueXSGrid.Visibility = Visibility.Collapsed;
                     break;
             }
             initNewsList(type, page);
-            continueJWGrid.Visibility = Visibility.Collapsed;
 
         }
 
@@ -443,25 +393,28 @@ namespace ZSCY_Win10
         {
 
             page = 0;
-            continueJWGrid.Visibility = Visibility.Collapsed;
             string type = "";
             switch (NewsPivot.SelectedIndex)
             {
                 case 0:
                     type = "jwzx";
                     JWList.Clear();
+                    continueJWGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 1:
                     type = "xwgg";
                     XWList.Clear();
+                    continueXWGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 2:
                     type = "cyxw ";
                     CYList.Clear();
+                    continueCYGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 3:
                     type = "xsjz ";
                     XSList.Clear();
+                    continueXSGrid.Visibility = Visibility.Collapsed;
                     break;
             }
             initNewsList(type);
@@ -548,7 +501,7 @@ namespace ZSCY_Win10
                                     Anneximg = new Uri("ms-appx:///Assets/Annex_img/Annex_other.png", UriKind.Absolute);
                                 }
 
-                                annexList.Add(new NewsContentList.Annex { name = annex.name, address = annex.address,Anneximg = Anneximg });
+                                annexList.Add(new NewsContentList.Annex { name = annex.name, address = annex.address, Anneximg = Anneximg });
                                 DownloadAppBarButton.Visibility = Visibility.Visible;
                             }
                             else
@@ -644,21 +597,24 @@ namespace ZSCY_Win10
                 case 0:
                     type = "jwzx";
                     JWList.Clear();
+                    continueJWGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 1:
                     type = "xwgg";
                     XWList.Clear();
+                    continueXWGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 2:
                     type = "cyxw ";
                     CYList.Clear();
+                    continueCYGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 3:
                     type = "xsjz ";
                     XSList.Clear();
+                    continueXSGrid.Visibility = Visibility.Collapsed;
                     break;
             }
-            continueJWGrid.Visibility = Visibility.Collapsed;
             initNewsList(type);
         }
 
