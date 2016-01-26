@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -20,6 +21,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10;
+using ZSCY_Win10.Data;
 using ZSCY_Win10.Util;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
@@ -32,6 +34,9 @@ namespace ZSCY.Pages
     public sealed partial class SearchFreeTimeResultPage_new : Page
     {
         private ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>(); //存放学号的List
+        //private List<List<ClassListLight>> forsearchlist = new List<List<ClassListLight>>();//存放查到学号的课
+        private Dictionary<string, List<ClassListLight>> forsearchlist = new Dictionary<string, List<ClassListLight>>();
+        private List<ClassListLight> result = new List<ClassListLight>();
         string[] kb; //课表数据的数组
         int week; //周次，0为学期
         int week_old; //周次，切换到学期后保存切换前的周次
@@ -84,6 +89,7 @@ namespace ZSCY.Pages
             for (int i = 0; i < muIdList.Count; i++)
             {
                 int issuccess = 0;
+                List<ClassListLight> clist = new List<ClassListLight>();
                 while (issuccess < 2) //失败后重试两次
                 {
                     List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
@@ -91,6 +97,23 @@ namespace ZSCY.Pages
                     string kbtemp = await NetWork.getHttpWebRequest("redapi2/api/kebiao", paramList); //新
                     if (kbtemp != "")
                     {
+                        JObject job = JObject.Parse(kbtemp);
+                        if (Int32.Parse(job["status"].ToString()) == 200)
+                        {
+                            JArray jarry = Utils.ReadJso(kbtemp);
+                            for (int j = 0; j < jarry.Count; j++)
+                            {
+                                ClassListLight cll = new ClassListLight();
+                                var istriple = cll.getattribute((JObject)jarry[j]);
+                                cll.Name = muIdList[i].uName;
+                                if (istriple != null)
+                                {
+                                    clist.Add(istriple);
+                                    istriple.Name = cll.Name;
+                                }
+                                clist.Add(cll);
+                            }
+                        }
                         kb[i] = kbtemp;
                         issuccess = 2;
                     }
@@ -100,9 +123,12 @@ namespace ZSCY.Pages
                         issuccess++;
                     }
                 }
+                forsearchlist.Add(muIdList[i].uName, clist);
                 FreeLoddingProgressBar.Value = FreeLoddingProgressBar.Value + 100.0 / muIdList.Count;
                 Debug.WriteLine(FreeLoddingProgressBar.Value);
             }
+            //查无课表，参数第几周==
+            freetime(11, forsearchlist);
             FreeLoddingStackPanel.Visibility = Visibility.Collapsed;
             FreeKBTableGrid.Visibility = Visibility.Visible;
         }
@@ -192,6 +218,27 @@ namespace ZSCY.Pages
                 week = week_old;
                 FilterAppBarButton.Label = "第" + week + "周";
                 FilterAppBarButton.Visibility = Visibility.Visible;
+            }
+        }
+        /// <summary>
+        /// 传入周数，返回该周多人空闲时段
+        /// </summary>
+        /// <param name="weeknum"></param>
+        private void freetime(int weeknum, Dictionary<string, List<ClassListLight>> searchlist)
+        {
+            //星期，时间段，人名数组
+            List<ClassListLight> clist = new List<ClassListLight>();
+            foreach (var key in searchlist.Keys)
+            {
+                //找到该周的所有课程
+                clist.AddRange((from n in searchlist[key] where n.Week.Contains(weeknum) select n).ToList());
+            }
+            //筛选出该周内所有不在同一时间上课的课    
+            var diisclist = from n in clist group n by new { n.Hash_day, n.Hash_lesson } into g where g.Count() < forsearchlist.Count select g;
+            var ll = diisclist.ToList();
+            foreach (var item in ll)
+            {
+                result.Add(item.ToList()[0]);
             }
         }
     }
