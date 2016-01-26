@@ -307,7 +307,6 @@ namespace ZSCY_Win10
                 DateOnKBTextBlock[i].HorizontalAlignment = HorizontalAlignment.Center;
                 DateOnKBTextBlock[i].SetValue(Grid.ColumnProperty, i);
                 DateOnKBTextBlock[i].SetValue(Grid.RowProperty, 0);
-                var aaa = KebiaoWeekTitleGrid.Children.ToArray();
                 KebiaoWeekTitleGrid.Children.Remove(DateOnKBTextBlock[i]);
                 KebiaoWeekTitleGrid.Children.Add(DateOnKBTextBlock[i]);
             }
@@ -626,7 +625,6 @@ namespace ZSCY_Win10
             {
                 wOa = 1;
                 HubSectionKBNum.Visibility = Visibility.Visible;
-                HubSectionKBDate.Text = weekstart.Month + "." + weekstart.Day + "--" + weekend.Month + "." + weekend.Day;
                 HubSectionKBDate.Text = weekstart.Month + "." + weekstart.Day + "--" + weekend.Month + "." + weekend.Day;
             }
         }

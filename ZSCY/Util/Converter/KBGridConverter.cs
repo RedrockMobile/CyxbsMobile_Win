@@ -50,7 +50,7 @@ namespace ZSCY.Util.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return Utils.getPhoneHeight() - double.Parse(value.ToString()) - 50 - 25 - 15;
+            return Utils.getPhoneHeight() - double.Parse(value.ToString()) - 50 - 25 - 15 - 30;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
@@ -59,6 +59,6 @@ namespace ZSCY.Util.Converter
         }
     }
 
-    
+
 
 }

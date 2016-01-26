@@ -153,29 +153,30 @@ namespace ZSCY.Util
             return dtStart.Add(toNow);
         }
 
-        public static JArray ReadJso(string jsonstring)
+        public static JArray ReadJso(string jsonstring, string sdata = "data")
         {
             if (jsonstring != "")
             {
                 JObject obj = JObject.Parse(jsonstring);
-                if (Int32.Parse(obj["status"].ToString()) == 200)
+                //if (Int32.Parse(obj[sstatus].ToString()) == 200)
+                //{
+                JObject jObject = (JObject)JsonConvert.DeserializeObject(jsonstring);
+                try
                 {
-                    JObject jObject = (JObject)JsonConvert.DeserializeObject(jsonstring);
-                    try
-                    {
-                        string json = jObject["data"].ToString();
-                        JArray jArray = (JArray)JsonConvert.DeserializeObject(json);
-                        return jArray;
-                    }
-                    catch(Exception) {
-                    }
-                    return null;
+                    string json = jObject[sdata].ToString();
+                    JArray jArray = (JArray)JsonConvert.DeserializeObject(json);
+                    return jArray;
                 }
-                else
+                catch (Exception)
                 {
-                    Message("请求失败", "失败");
-                    return null;
                 }
+                return null;
+                //}
+                //else
+                //{
+                //    Message("请求失败", "失败");
+                //    return null;
+                //}
             }
 
             else
@@ -205,7 +206,7 @@ namespace ZSCY.Util
                     await memoryStream.WriteAsync(buffer);//将buffer写入memorystream
                     await memoryStream.FlushAsync();//刷新
                     var decoder = await Windows.Graphics.Imaging.BitmapDecoder.CreateAsync(memoryStream);//解密文件流
-                    //确定图片大小
+                                                                                                         //确定图片大小
                     var bt = new Windows.Graphics.Imaging.BitmapTransform();
                     bt.ScaledWidth = (uint)scaleSize.Width;
                     bt.ScaledHeight = (uint)scaleSize.Height;
