@@ -105,7 +105,7 @@ namespace ZSCY.Pages
                             {
                                 ClassListLight cll = new ClassListLight();
                                 var istriple = cll.getattribute((JObject)jarry[j]);
-                                cll.Name = muIdList[i].uName;
+                                cll.Name = new string[] { muIdList[i].uName }; // muIdList[i].uName;
                                 if (istriple != null)
                                 {
                                     clist.Add(istriple);
@@ -128,7 +128,9 @@ namespace ZSCY.Pages
                 Debug.WriteLine(FreeLoddingProgressBar.Value);
             }
             //查无课表，参数第几周==
-            freetime(11, forsearchlist);
+            EmptyClass ec = new EmptyClass(week, forsearchlist);
+            ec.getfreetime(ref result);
+            //freetime(11, forsearchlist);
             FreeLoddingStackPanel.Visibility = Visibility.Collapsed;
             FreeKBTableGrid.Visibility = Visibility.Visible;
         }
@@ -220,26 +222,85 @@ namespace ZSCY.Pages
                 FilterAppBarButton.Visibility = Visibility.Visible;
             }
         }
-        /// <summary>
-        /// 传入周数，返回该周多人空闲时段
-        /// </summary>
-        /// <param name="weeknum"></param>
-        private void freetime(int weeknum, Dictionary<string, List<ClassListLight>> searchlist)
-        {
-            //星期，时间段，人名数组
-            List<ClassListLight> clist = new List<ClassListLight>();
-            foreach (var key in searchlist.Keys)
-            {
-                //找到该周的所有课程
-                clist.AddRange((from n in searchlist[key] where n.Week.Contains(weeknum) select n).ToList());
-            }
-            //筛选出该周内所有不在同一时间上课的课    
-            var diisclist = from n in clist group n by new { n.Hash_day, n.Hash_lesson } into g where g.Count() < forsearchlist.Count select g;
-            var ll = diisclist.ToList();
-            foreach (var item in ll)
-            {
-                result.Add(item.ToList()[0]);
-            }
-        }
+        ///// <summary>
+        ///// 传入周数，返回该周多人空闲时段
+        ///// </summary>
+        ///// <param name="weeknum"></param>
+        //private void freetime(int weeknum, Dictionary<string, List<ClassListLight>> searchlist)
+        //{
+        //    //所有人的名字
+        //    string[] names = (from n in muIdList select n.uName).ToArray();
+        //    //星期，时间段，人名数组
+        //    List<ClassListLight> clist = new List<ClassListLight>();
+        //    if (weeknum != 0)
+        //    {
+
+        //        foreach (var key in searchlist.Keys)
+        //        {
+        //            //找到该周的所有课程
+        //            clist.AddRange((from n in searchlist[key] where n.Week.Contains(weeknum) select n).ToList());
+        //        }
+        //        //添加都没课的时间
+        //        //day和lesson都没有在clist里出现过就添加一个classlistlight对象
+        //        for (int i = 0; i < 7; i++)//一周
+        //        {
+        //            for (int j = 0; j < 6; j++)//一天
+        //            {
+        //                //查时间有没有在集合里出现过
+        //                ClassListLight ourfreetime = new ClassListLight() { Hash_day = i, Hash_lesson = j };
+        //                if (!clist.Contains(ourfreetime, new ClassListLigthCompare()))
+        //                {
+        //                    ourfreetime.Name = names;
+        //                    clist.Add(ourfreetime);
+        //                }
+        //            }
+        //        }
+        //        clist = clist.OrderBy(x => x.Hash_day).ToList();
+        //        //筛选出该周内所有不在同一时间上课的课    
+        //        var diisclist = from n in clist group n by new { n.Hash_day, n.Hash_lesson } into g where g.Count() < forsearchlist.Count select g;
+        //        var ll = diisclist.ToList();
+        //        for (int i = 0; i < ll.Count; i++)
+        //        {
+        //            ClassListLight tobeadded = ll[i].ToList()[0];
+        //            if (tobeadded.Name != names)
+        //            {
+        //                tobeadded.Name = names.Except(tobeadded.Name).ToArray();
+        //            }
+        //            if (tobeadded.Course != null)
+        //                Debug.WriteLine(tobeadded.Course);
+        //            result.Add(tobeadded);
+        //        }
+        //        //大家都没课的时间
+        //    }
+        //    else
+        //    {
+        //        //todo学期空课表
+
+
+
+
+
+        //    }
+        //}
+        ///// <summary>
+        ///// 比较器
+        ///// </summary>
+        //private class ClassListLigthCompare : IEqualityComparer<ClassListLight>
+        //{
+        //    public bool Equals(ClassListLight x, ClassListLight y)
+        //    {
+        //        if (x.Hash_day == y.Hash_day && x.Hash_lesson == y.Hash_lesson)
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //            return false;
+        //    }
+
+        //    public int GetHashCode(ClassListLight obj)
+        //    {
+        //        return 0;
+        //    }
+        //}
     }
 }
