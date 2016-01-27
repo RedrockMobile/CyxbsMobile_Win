@@ -286,6 +286,7 @@
     <Compile Include="Util\Converter\LongClassRoomConverter.cs" />
     <Compile Include="Util\Converter\NewsConverter.cs" />
     <Compile Include="Util\Converter\StarFillConverter.cs" />
+    <Compile Include="Util\EmptyClass.cs" />
     <Compile Include="Util\NetWork.cs" />
     <Compile Include="Util\Utils.cs" />
   </ItemGroup>
