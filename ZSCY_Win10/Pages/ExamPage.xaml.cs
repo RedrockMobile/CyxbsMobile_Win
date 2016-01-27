@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
@@ -105,7 +107,13 @@ namespace ZSCY.Pages
                         List<ExamList> orderedlist = new List<ExamList>();
                         orderedlist.AddRange(zeroweek);
                         orderedlist.AddRange(nonzeroweek);
-                        ExamListView.ItemsSource = orderedlist;
+                        ObservableCollection<ExamList> move = new ObservableCollection<ExamList>();
+                        ExamListView.ItemsSource = move;
+                        for (int i = 0; i < orderedlist.Count; i++)
+                        {
+                            move.Add(orderedlist[i]);
+                            await Task.Delay(60);
+                        }
                     }
                     else if (Int32.Parse(obj["status"].ToString()) == 300)
                     {
