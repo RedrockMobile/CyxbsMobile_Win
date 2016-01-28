@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,12 +10,12 @@ namespace ZSCY_Win10.Data
 {
     class ClassListLight
     {
-        public int Hash_day { get; set; }
-        public int Hash_lesson { get; set; }
+        public int Hash_day { get; set; } //周，0开始
+        public int Hash_lesson { get; set; } //开始节，1开始
         public int Begin_lesson { get; set; }
-        public int Period { get; set; }
+        public int Period { get; set; } //2节连上，3节连上
         public int[] LessonLast { get; set; }
-        public int[] Week { get; set; }
+        public int[] Week { get; set; } //上课的周次
         public string Course { get; set; }
         public string[] Name { get; set; }
 
@@ -45,5 +46,10 @@ namespace ZSCY_Win10.Data
             else
                 return null;
         }
+    }
+
+    public class People
+    {
+        public string name { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace ZSCY_Win10.Util
             this.Searchlist = searchlist;
 #endif
         }
-        public void getfreetime(ref List<ClassListLight> result)
+        public void getfreetime(ref ObservableCollection<ClassListLight> result)
         {
             //所有人的名字
             string[] names = (from n in Searchlist.Keys select n).ToArray();

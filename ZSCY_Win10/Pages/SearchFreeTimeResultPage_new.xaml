@@ -13,8 +13,8 @@
     <Page.Resources>
         <converter:FreeKBScrollViewerHeightConverter x:Key="FreeKBScrollViewerHeightConverter"/>
     </Page.Resources>
-    
-    <Grid Background="#fff">
+
+    <Grid Name="rootGrid" Background="#fff">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualState000">
@@ -39,9 +39,9 @@
         </Grid.ColumnDefinitions>
 
         <!--课表视图-->
-        <Grid Name="FreeKBGrid" Grid.Column="0" Background="AliceBlue">
+        <Grid Name="FreeKBGrid" Grid.Column="0" >
             <!--课程表格-->
-            <Grid Name="FreeKBTableGrid" Visibility="Collapsed" >
+            <Grid Name="FreeKBTableGrid" Visibility="Collapsed" Margin="0,0,13,0" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="auto"/>
@@ -192,37 +192,61 @@
                             </Grid.RowDefinitions>
                             <FlyoutBase.AttachedFlyout>
                                 <Flyout x:Name="KBCLassFlyout" >
-                                    <Pivot x:Name="KBCLassFlyoutPivot" Width="400">
-                                        <PivotItem x:Name="KBCLassFlyoutPivotItem">
-                                            <ListView  x:Name="KBCLassFlyoutListView" ScrollViewer.VerticalScrollBarVisibility="Disabled" >
-                                                <ListView.ItemTemplate>
-                                                    <DataTemplate ScrollViewer.HorizontalScrollMode="Disabled">
-                                                        <Grid  Margin="0,0,0,10">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="auto"/>
-                                                                <ColumnDefinition Width="auto"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="1 *"/>
-                                                                <RowDefinition Height="1 *"/>
-                                                                <RowDefinition Height="1 *"/>
-                                                                <RowDefinition Height="1 *"/>
-                                                            </Grid.RowDefinitions>
-                                                            <TextBlock Text="时  间" Foreground="#333" Grid.Column="0" Grid.Row="0" FontSize="18" Margin="0,2.5,5,2.5"/>
-                                                            <TextBlock Text="小伙伴" Foreground="#333" Grid.Column="0" Grid.Row="3" FontSize="18" Margin="0,2.5,5,2.5"/>
+                                    <StackPanel Margin="13,25" Width="300">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Source="../Assets/dialog_course_time.png" VerticalAlignment="Top" Width="20" Height="20"/>
+                                            <TextBlock Margin="5,0,0,0"  Text="时    间" Foreground="#333" Grid.Column="1" VerticalAlignment="Top" Height="20" FontWeight="Light"/>
+                                            <Grid Margin="5,0,0,0" Grid.Column="2">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Name="FlyoutFreeDetailWeekTextBlock" Foreground="#333" Grid.Row="0" FontWeight="Light" Height="20"/>
+                                                <TextBlock Name="FlyoutFreeDetailTimeTextBlock" Foreground="#333" Grid.Row="1" FontWeight="Light" Height="20"/>
+                                            </Grid>
+                                        </Grid>
 
-                                                            <TextBlock Text="{Binding Classroom}" Foreground="#333" Grid.Column="1" Grid.Row="0" FontSize="18" VerticalAlignment="Center"/>
-                                                            <TextBlock Text="{Binding Teacher}" Foreground="#333" Grid.Column="1" Grid.Row="1" FontSize="18" VerticalAlignment="Center"/>
-                                                        </Grid>
-                                                    </DataTemplate>
-                                                </ListView.ItemTemplate>
-                                            </ListView>
+                                        <Grid Margin="0,10,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Source="../Assets/dialog_course_peo.png" VerticalAlignment="Top" Width="20" Height="20"/>
 
-                                        </PivotItem>
-                                    </Pivot>
+                                            <Grid Grid.Column="1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="小伙伴" Margin="5,0,0,0" Grid.Column="0" VerticalAlignment="Top" Foreground="#333" Height="20" FontWeight="Light"/>
+                                                    <TextBlock Name="FlyoutFreeDetailPeopleTextBlock" Grid.Column="1" Foreground="#333" Margin="5,0,0,0" VerticalAlignment="Top" Height="20" FontWeight="Light"/>
+                                                </Grid>
+                                                <GridView Name="FlyoutFreeDetailNameGridView" Grid.Row="1">
+                                                    <GridView.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Grid >
+                                                                <TextBlock Text="{Binding name}" HorizontalAlignment="Center" FontWeight="Light" Foreground="#333"></TextBlock>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </GridView.ItemTemplate>
+                                                </GridView>
+                                            </Grid>
+                                        </Grid>
+                                    </StackPanel>
                                 </Flyout>
                             </FlyoutBase.AttachedFlyout>
                         </Grid>
+                        
                     </Grid>
                 </ScrollViewer>
             </Grid>
@@ -234,7 +258,66 @@
         </Grid>
 
         <!--人员详情-->
-        <Grid Name="FreeDetailGrid" Grid.Column="1" Visibility="Collapsed" Background="AntiqueWhite"></Grid>
+        <Grid Name="FreeDetailGrid" Grid.Column="1" Visibility="Visible">
+            <Line  x:Name="cutoffLine" HorizontalAlignment="Left" Stroke="Gray" StrokeThickness="1"/>
+            <!--详情-->
+            <StackPanel Name="FreeDetailStackPanel" Margin="13,25" Visibility="Collapsed" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="../Assets/dialog_course_time.png" VerticalAlignment="Top" Width="20" Height="20"/>
+                    <TextBlock Margin="5,0,0,0"  Text="时    间" Foreground="#333" Grid.Column="1" VerticalAlignment="Top" Height="20" FontWeight="Light"/>
+                    <Grid Margin="5,0,0,0" Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock Name="FreeDetailWeekTextBlock" Foreground="#333" Grid.Row="0" FontWeight="Light" Height="20"/>
+                        <TextBlock Name="FreeDetailTimeTextBlock" Foreground="#333" Grid.Row="1" FontWeight="Light" Height="20"/>
+                    </Grid>
+                </Grid>
+
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="../Assets/dialog_course_peo.png" VerticalAlignment="Top" Width="20" Height="20"/>
+
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="小伙伴" Margin="5,0,0,0" Grid.Column="0" VerticalAlignment="Top" Foreground="#333" Height="20" FontWeight="Light"/>
+                            <TextBlock Name="FreeDetailPeopleTextBlock" Grid.Column="1" Foreground="#333" Margin="5,0,0,0" VerticalAlignment="Top" Height="20" FontWeight="Light"/>
+                        </Grid>
+                        <GridView Name="FreeDetailNameGridView" Grid.Row="1">
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid >
+                                        <TextBlock Text="{Binding name}" HorizontalAlignment="Center" FontWeight="Light" Foreground="#333"></TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                    </Grid>
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Name="FreeNoClickStackPanel" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.3">
+                <Image Source="../Assets/iconfont-coffee.png" Width="100" Height="100"/>
+                <TextBlock Text="没课约" Margin="0,10" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
 
     </Grid>
     <Page.BottomAppBar>
@@ -257,6 +340,9 @@
                 </FlyoutBase.AttachedFlyout>
             </AppBarButton>
             <AppBarButton Name="CalendarWeekAppBarButton" Icon="CalendarWeek" Label="学期" Click="CalendarWeekAppBarButton_Click"/>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Name="ShowWeekendAppBarButton" Label="显示周末课表" Visibility="Collapsed" Click="ShowWeekendAppBarButton_Click"/>
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

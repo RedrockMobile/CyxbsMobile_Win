@@ -79,8 +79,8 @@ namespace ZSCY_Win10
                                 SetSystemGroupAsync();
                             else if (JumpList.IsSupported())
                                 DisableSystemJumpListAsync();
-                            Frame.Navigate(typeof(MainPage), "/kb");
                         }
+                        Frame.Navigate(typeof(MainPage), "/kb");
                     }
                     else if (Int32.Parse(obj["status"].ToString()) == -100)
                         Utils.Message("学号不存在");
