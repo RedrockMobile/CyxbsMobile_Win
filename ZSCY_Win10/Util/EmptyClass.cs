@@ -30,7 +30,7 @@ namespace ZSCY_Win10.Util
             this.Searchlist = searchlist;
 #endif
         }
-        public void getfreetime(ref ObservableCollection<ClassListLight> result)
+        public void getfreetime(ref ObservableCollection<ClassListLight> weekresult, ref ObservableCollection<EmptyTable> termresult)
         {
             //所有人的名字
             string[] names = (from n in Searchlist.Keys select n).ToArray();
@@ -69,7 +69,7 @@ namespace ZSCY_Win10.Util
                     {
                         tobeadded.Name = names.Except(tobeadded.Name).ToArray();
                     }
-                    result.Add(tobeadded);
+                    weekresult.Add(tobeadded);
                 }
                 //大家都没课的时间
             }
@@ -84,7 +84,6 @@ namespace ZSCY_Win10.Util
                 //那么就得到了           张三            历史           王五
                 //那么这个类就应该是 周，时间，姓名[]，那几周空[]----周，时间，  键值对（名字，有空的周[]）
                 //前面挖了个坑，这里又要一个类，EmptyTable，不兼容啊卧槽。
-                List<EmptyTable> etable = new List<EmptyTable>();
                 int[] allweeks = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
                 for (int i = 0; i < 7; i++)//星期
                 {
@@ -122,7 +121,7 @@ namespace ZSCY_Win10.Util
                                 temp.nameweek.Add(key, free);
                             }
                         }
-                        etable.Add(temp);
+                        termresult.Add(temp);
                     }
                 }
                 Debug.WriteLine(etable.Count);
