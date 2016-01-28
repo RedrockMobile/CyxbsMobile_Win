@@ -514,7 +514,7 @@ namespace ZSCY_Win10
             BackGrid.SetValue(Grid.RowProperty, System.Int32.Parse(item.Hash_lesson * 2 + ""));
             BackGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(item.Hash_day + ""));
             BackGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(item.Period + ""));
-
+            BackGrid.Margin = new Thickness(0.5);
             BackGrid.Children.Add(ClassTextBlock);
 
             if (classtime[item.Hash_day, item.Hash_lesson] != null)

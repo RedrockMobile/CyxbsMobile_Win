@@ -41,6 +41,10 @@ namespace ZSCY.Pages
             this.InitializeComponent();
             //HubSectionKBNum.Text = appSetting.Values["nowWeek"].ToString();
             appSetting.Values["FreeWeek"] = appSetting.Values["nowWeek"];
+            this.SizeChanged += (s, e) =>
+            {
+                //uIdListView.Height = e.NewSize.Height - 20 - 40;
+            };
             //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             if (App.muIdList.Count == 0)
                 App.muIdList.Add(new uIdList { uId = appSetting.Values["stuNum"].ToString(), uName = appSetting.Values["name"].ToString() });
@@ -88,6 +92,8 @@ namespace ZSCY.Pages
         private async void mAddButton()
         {
             var muIDArray = App.muIdList.ToArray().ToList();
+            AddButton.IsEnabled = false;
+            AddProgressRing.IsActive = true;
             if (AddTextBox.Text.Length != 10)
             {
                 Utils.Message("学号不正确");
@@ -97,10 +103,8 @@ namespace ZSCY.Pages
             else
             {
                 string usename = AddTextBox.Text;
-                string useid = AddTextBox.Text;
-
-                string name = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/searchPeople?stunum=" + AddTextBox.Text, PostORGet: 1);
-                App.muIdList.Add(new uIdList { uId = AddTextBox.Text, uName = usename });
+                string useid = usename;
+                string name = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/searchPeople?stunum=" + useid, PostORGet: 1);
                 Debug.WriteLine("name->" + name);
                 if (name != "")
                 {
@@ -117,25 +121,28 @@ namespace ZSCY.Pages
 
                 }
                 if (usename != "")
-                    for (int i = 0; i < App.muIdList.Count; i++)
-                    {
-                        if (App.muIdList[i].uId == useid)
-                        {
-                            ListViewItem item = new ListViewItem();
-                            App.muIdList[i].uName = usename;
-                            //uIdListView.ItemsSource = null;
-                            uIdListView.ItemsSource = App.muIdList;
-                        }
-                    }
+                    //for (int i = 0; i < App.muIdList.Count; i++)
+                    //{
+                    //    if (App.muIdList[i].uId == useid)
+                    //    {
+                    //        ListViewItem item = new ListViewItem();
+                    //        App.muIdList[i].uName = usename;
+                    //        //uIdListView.ItemsSource = null;
+                    //        uIdListView.ItemsSource = App.muIdList;
+                    //    }
+                    //}
+                    App.muIdList.Add(new uIdList { uId = useid, uName = usename });
                 else
                 {
                     Utils.Message("学号不正确");
-                    muIDArray = App.muIdList.ToList();
-                    uIdList u = muIDArray.Find(p => p.uId.Equals(useid));
-                    App.muIdList.Remove(u);
+                    //muIDArray = App.muIdList.ToList();
+                    //uIdList u = muIDArray.Find(p => p.uId.Equals(useid));
+                    //App.muIdList.Remove(u);
                 }
                 AddTextBox.Text = "";
             }
+            AddButton.IsEnabled = true;
+            AddProgressRing.IsActive = false;
         }
 
         private async void uIdListView_ItemClick(object sender, ItemClickEventArgs e)
