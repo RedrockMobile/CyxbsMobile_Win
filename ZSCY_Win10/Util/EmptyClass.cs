@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,12 +18,12 @@ namespace ZSCY_Win10.Util
         /// <summary>
         /// 所有学号的课程，数据源
         /// </summary>
-        public Dictionary<string,List<ClassListLight>> Searchlist { get; set; }
+        public Dictionary<string, List<ClassListLight>> Searchlist { get; set; }
 
         public EmptyClass(int weeknum, Dictionary<string, List<ClassListLight>> searchlist)
         {
 #if DEBUG
-            this.Weeknum = 11;// weeknum;
+            this.Weeknum = 0;// weeknum;
             this.Searchlist = searchlist;
 #else
             this.Weeknum=weeknum;
@@ -80,9 +81,51 @@ namespace ZSCY_Win10.Util
                 //查到所有这个时间段的周：EX :星期一第一二节课，  得到一个周的列表   1,2,3,4,5,6     得到每个人的周列表，2,4,6,8    1,3,5,7 ，找出都没课的周
                 //怎么找呢   
                 //找出每个人没课的周 7,8,9,10  1,3,4,7,9,10  2,4,5,8,10
-
-
-
+                //那么就得到了           张三            历史           王五
+                //那么这个类就应该是 周，时间，姓名[]，那几周空[]----周，时间，  键值对（名字，有空的周[]）
+                //前面挖了个坑，这里又要一个类，EmptyTable，不兼容啊卧槽。
+                List<EmptyTable> etable = new List<EmptyTable>();
+                int[] allweeks = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
+                for (int i = 0; i < 7; i++)//星期
+                {
+                    for (int j = 0; j < 6; j++)//时段
+                    {
+                        EmptyTable temp = new EmptyTable { Hash_day = i, Hash_lesson = j };
+                        temp.nameweek = new Dictionary<string, int[]>();
+                        foreach (var key in Searchlist.Keys)
+                        {
+                            IEnumerable<int[]> a = from n in Searchlist[key] where n.Hash_day == i && n.Hash_lesson == j select n.Week;
+                            //var b=from x in Searchlist group x.Value by x.Key into g 
+                            List<int[]> listweek = a.ToList();
+                            int sumlength = 0;
+                            for (int k = 0; k < listweek.Count; k++)
+                            {
+                                sumlength += listweek[k].Length;
+                            }
+                            if (listweek.Count == 0)//这个时候我没课
+                            {
+                                temp.nameweek.Add(key, allweeks);
+                            }
+                            else if (sumlength == 18)
+                            {
+                                //这个时候我一学期都有课
+                                continue;
+                            }
+                            else//这个时候我有课,找出我没课的周
+                            {
+                                List<int> onweeks = new List<int>();
+                                for (int m = 0; m < listweek.Count; m++)
+                                {
+                                    onweeks.AddRange(listweek[m]);
+                                }
+                                int[] free = allweeks.Except(onweeks.ToArray()).ToArray();
+                                temp.nameweek.Add(key, free);
+                            }
+                        }
+                        etable.Add(temp);
+                    }
+                }
+                Debug.WriteLine(etable.Count);
 
 
             }

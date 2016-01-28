@@ -10,6 +10,6 @@ namespace ZSCY_Win10.Data
     {
         public int Hash_day { get; set; }
         public int Hash_lesson { get; set; }
-        public string[] Names { get; set; }
+        public Dictionary<string,int[]> nameweek { get; set; }
     }
 }
