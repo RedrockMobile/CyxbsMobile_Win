@@ -43,7 +43,6 @@ namespace ZSCY.Pages
         private Dictionary<string, int> colorlist = new Dictionary<string, int>();
 
         private string[,][] ResultName = new string[7, 6][];
-        string[] kb; //课表数据的数组
         int week; //周次，0为学期
         int week_old; //周次，切换到学期后保存切换前的周次
         bool showWeekend = false;
@@ -95,11 +94,10 @@ namespace ZSCY.Pages
         }
 
         /// <summary>
-        /// 对学号的List中的学号一个个请求课表，存入kb数组
+        /// 获得各个学号的课表
         /// </summary>
         private async void initFree()
         {
-            kb = new string[muIdList.Count];
             for (int i = 0; i < muIdList.Count; i++)
             {
                 int issuccess = 0;
@@ -128,12 +126,10 @@ namespace ZSCY.Pages
                                 clist.Add(cll);
                             }
                         }
-                        kb[i] = kbtemp;
                         issuccess = 2;
                     }
                     else
                     {
-                        kb[i] = "";
                         issuccess++;
                     }
                 }
@@ -143,18 +139,22 @@ namespace ZSCY.Pages
             }
             //查无课表，参数第几周==
             EmptyClass ec = new EmptyClass(week, forsearchlist);
-            ec.getfreetime(ref result,ref termresult);
+            ec.getfreetime(ref result, ref termresult);
             //freetime(11, forsearchlist);
             FreeLoddingStackPanel.Visibility = Visibility.Collapsed;
             FreeKBTableGrid.Visibility = Visibility.Visible;
             ShowWeekendAppBarButton.Visibility = Visibility.Visible;
-            showFreeKB(result);
+            if (result.Count != 0)
+                showFreeKB(result);
+            else
+                showFreeKB(termresult);
         }
 
         private void showFreeKB(ObservableCollection<ClassListLight> result, bool showWeekend = false)
         {
             kebiaoGrid.Children.Clear();
             int ClassColor = 0;
+
             for (int i = 0; i < result.Count; i++)
             {
                 peoplelist.Clear();
@@ -178,8 +178,46 @@ namespace ZSCY.Pages
                 }
             }
         }
+        /// <summary>
+        /// 给每个时间指定颜色，根据名字，尽量不同。。。
+        /// </summary>
+        /// <param name="termresult"></param>
+        /// <param name="showWeekend"></param>
+        private void showFreeKB(ObservableCollection<EmptyTable> termresult, bool showWeekend = false)
+        {
+            kebiaoGrid.Children.Clear();
+            int ClassColor = 0;
 
-        private void SetClassAll(ClassListLight item, int ClassColor)
+            for (int i = 0; i < termresult.Count; i++)
+            {
+                peoplelist.Clear();
+                string nametemp = "";
+                string[] names = termresult[i].nameweek.Keys.ToArray();
+                for (int j = 0; j < names.Length; j++)
+                {
+                    nametemp = nametemp + names[j];
+                    //peoplelist.Add(new People { name = result[i].Name[j] });
+                }
+                if (!colorlist.ContainsKey(nametemp))
+                {
+                    if (termresult[i].Hash_day <= 4 || showWeekend)
+                        SetClassAll(termresult[i], ClassColor);
+                    colorlist.Add(nametemp, ClassColor);
+                    ClassColor = (ClassColor + 1) % 4;
+                }
+                else
+                {
+                    if (termresult[i].Hash_day <= 4 || showWeekend)
+                        SetClassAll(termresult[i], colorlist[nametemp]);
+                }
+            }
+        }
+        /// <summary>
+        /// 给一个课程格子设置颜色，并添加到视图中
+        /// </summary>
+        /// <param name="setcoloritem"></param>
+        /// <param name="ClassColor"></param>
+        private void SetClassAll(EmptyClassDayLesson setcoloritem, int ClassColor)
         {
             Color[] colors = new Color[]{
                    Color.FromArgb(255,255, 181, 68),//黄
@@ -187,13 +225,31 @@ namespace ZSCY.Pages
                    Color.FromArgb(255,172, 222, 76),//绿
                    Color.FromArgb(255,249, 130, 130),//红
                 };
-
-            ResultName[item.Hash_day, item.Hash_lesson] = item.Name;
-
+            int day = setcoloritem.Hash_day;
+            int lesson = setcoloritem.Hash_lesson;
             TextBlock ClassTextBlock = new TextBlock();
-            foreach (var nameitem in item.Name)
+            if (setcoloritem is ClassListLight)
             {
-                ClassTextBlock.Text = ClassTextBlock.Text + "\n" + nameitem;
+                ClassListLight item = setcoloritem as ClassListLight;
+                ResultName[day, lesson] = item.Name;
+                foreach (var nameitem in ResultName[day, lesson])
+                {
+                    ClassTextBlock.Text = ClassTextBlock.Text + "\n" + nameitem;
+                }
+            }
+            if (setcoloritem is EmptyTable)
+            {
+                EmptyTable item = setcoloritem as EmptyTable;
+                ResultName[day, lesson] = item.nameweek.Keys.ToArray();
+                foreach (var nameitem in ResultName[day, lesson])
+                {
+                    ClassTextBlock.Text = ClassTextBlock.Text + "\n" + nameitem + "\r";
+                    for (int n = 0; n < item.nameweek[nameitem].Length; n++)
+                    {
+                        //TODO 格子上的周数显示
+                        ClassTextBlock.Text = ClassTextBlock.Text + item.nameweek[nameitem][n] + ",";
+                    }
+                }
             }
             ClassTextBlock.Foreground = new SolidColorBrush(Colors.White);
             ClassTextBlock.FontSize = 12;
@@ -208,12 +264,12 @@ namespace ZSCY.Pages
 
             Grid BackGrid = new Grid();
             BackGrid.Background = new SolidColorBrush(colors[ClassColor]);
-            BackGrid.SetValue(Grid.RowProperty, System.Int32.Parse(item.Hash_lesson * 2 + ""));
-            BackGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(item.Hash_day + ""));
+            BackGrid.SetValue(Grid.RowProperty, System.Int32.Parse(lesson * 2 + ""));
+            BackGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(day + ""));
             BackGrid.SetValue(Grid.RowSpanProperty, 2);
             BackGrid.Margin = new Thickness(0.5);
 
-            if (item.Name.Length == muIdList.Count)
+            if (ResultName[day, lesson].Length == muIdList.Count)
             {
                 TextBlock AllPeopleTextBlock = new TextBlock();
                 AllPeopleTextBlock.Foreground = new SolidColorBrush(Colors.White);
@@ -228,6 +284,7 @@ namespace ZSCY.Pages
             BackGrid.Children.Add(ClassTextBlock);
             BackGrid.Tapped += BackGrid_Tapped;
             kebiaoGrid.Children.Add(BackGrid);
+
         }
 
         private void BackGrid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -236,12 +293,13 @@ namespace ZSCY.Pages
             Grid g = sender as Grid;
             Debug.WriteLine(g.GetValue(Grid.ColumnProperty));
             Debug.WriteLine(g.GetValue(Grid.RowProperty));
-            string[] temp = ResultName[Int32.Parse(g.GetValue(Grid.ColumnProperty).ToString()), Int32.Parse(g.GetValue(Grid.RowProperty).ToString()) / 2];
-
+            int day = Int32.Parse(g.GetValue(Grid.ColumnProperty).ToString());
+            int lesson = Int32.Parse(g.GetValue(Grid.RowProperty).ToString()) / 2;
+            string[] temp = ResultName[day, lesson];
             string week = "";
             string nowclass = "";
             string time = "";
-            switch (g.GetValue(Grid.ColumnProperty).ToString())
+            switch (day.ToString())
             {
                 case "0":
                     week = "一";
@@ -265,8 +323,7 @@ namespace ZSCY.Pages
                     week = "日";
                     break;
             }
-
-            switch (Int32.Parse(g.GetValue(Grid.RowProperty).ToString()) / 2)
+            switch (lesson)
             {
                 case 0:
                     nowclass = "1-2节";
@@ -293,7 +350,6 @@ namespace ZSCY.Pages
                     time = "20:50 - 22:30 PM";
                     break;
             }
-
             FreeDetailWeekTextBlock.Text = "星期" + week + " " + nowclass;
             FreeDetailTimeTextBlock.Text = time;
             FreeDetailPeopleTextBlock.Text = "共计" + temp.Length + "人";
@@ -303,7 +359,22 @@ namespace ZSCY.Pages
             FlyoutFreeDetailPeopleTextBlock.Text = "共计" + temp.Length + "人";
             for (int i = 0; i < temp.Length; i++)
             {
-                peoplelist.Add(new People { name = temp[i] });
+                int[] weeks = (from n in termresult where n.Hash_day == day && n.Hash_lesson == lesson select n.nameweek[temp[i]]).ToArray()[0];
+                string weekstr = string.Empty;
+                for (int p = 0; p < weeks.Length; p++)
+                {
+                    weekstr += $"{weeks[p]}";
+                    if (p != weeks.Length - 1)
+                    {
+                        weekstr += ",";
+                    }
+                    else
+                    {
+                        weekstr += "周";
+                    }
+                }
+                peoplelist.Add(new People { name = temp[i], weekstostr = weekstr });
+
             }
             if (FreeDetailGrid.Visibility == Visibility.Collapsed)
                 KBCLassFlyout.ShowAt(commandBar);

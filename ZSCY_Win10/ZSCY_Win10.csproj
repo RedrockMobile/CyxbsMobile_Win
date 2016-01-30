@@ -212,6 +212,7 @@
     <Compile Include="Data\ClassList.cs" />
     <Compile Include="Data\ClassListLight.cs" />
     <Compile Include="Data\DataSource.cs" />
+    <Compile Include="Data\EmptyClassDayLesson.cs" />
     <Compile Include="Data\EmptyRoomList.cs" />
     <Compile Include="Data\EmptyTable.cs" />
     <Compile Include="Data\ExamList.cs" />

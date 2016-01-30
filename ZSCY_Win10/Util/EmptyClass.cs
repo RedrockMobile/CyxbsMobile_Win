@@ -96,37 +96,30 @@ namespace ZSCY_Win10.Util
                             IEnumerable<int[]> a = from n in Searchlist[key] where n.Hash_day == i && n.Hash_lesson == j select n.Week;
                             //var b=from x in Searchlist group x.Value by x.Key into g 
                             List<int[]> listweek = a.ToList();
-                            int sumlength = 0;
-                            for (int k = 0; k < listweek.Count; k++)
+                            List<int> onweeks = new List<int>();
+                            for (int m = 0; m < listweek.Count; m++)
                             {
-                                sumlength += listweek[k].Length;
+                                onweeks.AddRange(listweek[m]);
                             }
+                            int[] free = allweeks.Except(onweeks.ToArray()).ToArray();
+                            free = free.Distinct().ToArray() ;
                             if (listweek.Count == 0)//这个时候我没课
                             {
                                 temp.nameweek.Add(key, allweeks);
                             }
-                            else if (sumlength == 18)
+                            else if (free.Length == 18)
                             {
                                 //这个时候我一学期都有课
                                 continue;
                             }
                             else//这个时候我有课,找出我没课的周
                             {
-                                List<int> onweeks = new List<int>();
-                                for (int m = 0; m < listweek.Count; m++)
-                                {
-                                    onweeks.AddRange(listweek[m]);
-                                }
-                                int[] free = allweeks.Except(onweeks.ToArray()).ToArray();
                                 temp.nameweek.Add(key, free);
                             }
                         }
                         termresult.Add(temp);
                     }
                 }
-                Debug.WriteLine(etable.Count);
-
-
             }
         }
         private class ClassListLigthCompare : IEqualityComparer<ClassListLight>

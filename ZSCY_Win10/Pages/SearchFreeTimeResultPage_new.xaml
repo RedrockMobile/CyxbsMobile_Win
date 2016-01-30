@@ -303,9 +303,10 @@
                         <GridView Name="FreeDetailNameGridView" Grid.Row="1">
                             <GridView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid >
+                                    <StackPanel Orientation="Vertical" >
                                         <TextBlock Text="{Binding name}" HorizontalAlignment="Center" FontWeight="Light" Foreground="#333"></TextBlock>
-                                    </Grid>
+                                        <TextBlock Text="{Binding weekstostr}" HorizontalAlignment="Center" FontWeight="Light" Foreground="#333"></TextBlock>
+                                    </StackPanel>
                                 </DataTemplate>
                             </GridView.ItemTemplate>
                         </GridView>

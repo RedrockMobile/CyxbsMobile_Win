@@ -3,10 +3,8 @@ using System;
 
 namespace ZSCY_Win10.Data
 {
-    class ClassListLight
+    class ClassListLight:EmptyClassDayLesson
     {
-        public int Hash_day { get; set; } //周，0开始
-        public int Hash_lesson { get; set; } //开始节，1开始
         public int Begin_lesson { get; set; }
         public int Period { get; set; } //2节连上，3节连上
         //public int[] LessonLast { get; set; }
@@ -46,5 +44,6 @@ namespace ZSCY_Win10.Data
     public class People
     {
         public string name { get; set; }
+        public string weekstostr{get;set;}
     }
 }
