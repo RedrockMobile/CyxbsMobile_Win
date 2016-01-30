@@ -231,15 +231,16 @@
                                                     <TextBlock Text="小伙伴" Margin="5,0,0,0" Grid.Column="0" VerticalAlignment="Top" Foreground="#333" Height="20" FontWeight="Light"/>
                                                     <TextBlock Name="FlyoutFreeDetailPeopleTextBlock" Grid.Column="1" Foreground="#333" Margin="5,0,0,0" VerticalAlignment="Top" Height="20" FontWeight="Light"/>
                                                 </Grid>
-                                                <GridView Name="FlyoutFreeDetailNameGridView" Grid.Row="1">
-                                                    <GridView.ItemTemplate>
+                                                <ListView Name="FlyoutFreeDetailNameGridView" Grid.Row="1">
+                                                    <ListView.ItemTemplate>
                                                         <DataTemplate>
-                                                            <Grid >
-                                                                <TextBlock Text="{Binding name}" HorizontalAlignment="Center" FontWeight="Light" Foreground="#333"></TextBlock>
-                                                            </Grid>
+                                                            <StackPanel Orientation="Horizontal" >
+                                                                <TextBlock Text="{Binding name}" HorizontalAlignment="Left" FontWeight="Light" Foreground="#333"></TextBlock>
+                                                                <TextBlock Text="{Binding weekstostr}" HorizontalAlignment="Left" FontWeight="Light" Foreground="#333"></TextBlock>
+                                                            </StackPanel>
                                                         </DataTemplate>
-                                                    </GridView.ItemTemplate>
-                                                </GridView>
+                                                    </ListView.ItemTemplate>
+                                                </ListView>
                                             </Grid>
                                         </Grid>
                                     </StackPanel>
@@ -300,16 +301,16 @@
                             <TextBlock Text="小伙伴" Margin="5,0,0,0" Grid.Column="0" VerticalAlignment="Top" Foreground="#333" Height="20" FontWeight="Light"/>
                             <TextBlock Name="FreeDetailPeopleTextBlock" Grid.Column="1" Foreground="#333" Margin="5,0,0,0" VerticalAlignment="Top" Height="20" FontWeight="Light"/>
                         </Grid>
-                        <GridView Name="FreeDetailNameGridView" Grid.Row="1">
-                            <GridView.ItemTemplate>
+                        <ListView Name="FreeDetailNameGridView" Grid.Row="1" Width="auto">
+                            <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical" >
-                                        <TextBlock Text="{Binding name}" HorizontalAlignment="Center" FontWeight="Light" Foreground="#333"></TextBlock>
-                                        <TextBlock Text="{Binding weekstostr}" HorizontalAlignment="Center" FontWeight="Light" Foreground="#333"></TextBlock>
+                                        <TextBlock Text="{Binding name}" HorizontalAlignment="Left" FontWeight="Light" Foreground="#333"></TextBlock>
+                                        <TextBlock Text="{Binding weekstostr}" HorizontalAlignment="Left" FontWeight="Light" Foreground="#333"></TextBlock>
                                     </StackPanel>
                                 </DataTemplate>
-                            </GridView.ItemTemplate>
-                        </GridView>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Grid>
                 </Grid>
             </StackPanel>

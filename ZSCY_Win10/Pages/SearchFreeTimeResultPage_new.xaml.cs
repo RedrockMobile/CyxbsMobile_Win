@@ -244,11 +244,7 @@ namespace ZSCY.Pages
                 foreach (var nameitem in ResultName[day, lesson])
                 {
                     ClassTextBlock.Text = ClassTextBlock.Text + "\n" + nameitem + "\r";
-                    for (int n = 0; n < item.nameweek[nameitem].Length; n++)
-                    {
-                        //TODO 格子上的周数显示
-                        ClassTextBlock.Text = ClassTextBlock.Text + item.nameweek[nameitem][n] + ",";
-                    }
+                    ClassTextBlock.Text = ClassTextBlock.Text + WeeknumConverter(item.nameweek[nameitem]);
                 }
             }
             ClassTextBlock.Foreground = new SolidColorBrush(Colors.White);
@@ -360,19 +356,7 @@ namespace ZSCY.Pages
             for (int i = 0; i < temp.Length; i++)
             {
                 int[] weeks = (from n in termresult where n.Hash_day == day && n.Hash_lesson == lesson select n.nameweek[temp[i]]).ToArray()[0];
-                string weekstr = string.Empty;
-                for (int p = 0; p < weeks.Length; p++)
-                {
-                    weekstr += $"{weeks[p]}";
-                    if (p != weeks.Length - 1)
-                    {
-                        weekstr += ",";
-                    }
-                    else
-                    {
-                        weekstr += "周";
-                    }
-                }
+                string weekstr = WeeknumConverter(weeks);
                 peoplelist.Add(new People { name = temp[i], weekstostr = weekstr });
 
             }
@@ -478,6 +462,66 @@ namespace ZSCY.Pages
                 ShowWeekendAppBarButton.Label = "隐藏周末课表";
             showWeekend = !showWeekend;
             showFreeKB(result, showWeekend);
+        }
+
+        /// <summary>
+        /// 周数友好显示
+        /// </summary>
+        /// <param name="weeks"></param>
+        /// <returns></returns>
+        private string WeeknumConverter(int[] weeks)
+        {
+
+            int len = weeks.Length;
+            Array.Sort(weeks);
+            if (len == 18)
+            {
+                return "";
+            }
+            else if (weeks.All(x => x % 2 == 0) && weeks[0] == 2 && weeks[weeks.Length - 1] == 18)
+            {
+                return "双周";
+            }
+            else if (weeks.All(x => x % 2 == 2) && weeks[0] == 1 && weeks[weeks.Length - 1] == 17)
+            {
+                return "单周";
+            }
+            else if (weeks[len - 1] - weeks[0] == len - 1&&len!=1)
+            {
+                return $"{weeks[0]}-{weeks[len - 1]}周";
+            }
+            else if (weeks.Length < 9)
+            {
+                string r = string.Empty;
+                for (int i = 0; i < weeks.Length; i++)
+                {
+                    r += $"{weeks[i]} ";
+                }
+                return r + "周";
+            }
+            else
+            {
+                int[] allweeks = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
+                int[] exceptweeks = allweeks.Except(weeks).ToArray();
+                Array.Sort(exceptweeks);
+                if (exceptweeks.Length == 1)
+                {
+                    return $"除{exceptweeks[0]}周";
+                }
+                else if (exceptweeks[exceptweeks.Length - 1] - exceptweeks[0] == exceptweeks.Length - 1)
+                {
+                    return $"除{exceptweeks[0]}-{exceptweeks[exceptweeks.Length - 1]}周";
+                }
+                else
+                {
+                    string r = string.Empty;
+                    for (int i = 0; i < exceptweeks.Length; i++)
+                    {
+                        r += $"{exceptweeks[i]} ";
+                    }
+                    return "除" + r + "周";
+                }
+            }
         }
     }
 }
