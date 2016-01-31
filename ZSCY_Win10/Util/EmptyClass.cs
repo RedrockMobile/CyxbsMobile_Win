@@ -22,13 +22,13 @@ namespace ZSCY_Win10.Util
 
         public EmptyClass(int weeknum, Dictionary<string, List<ClassListLight>> searchlist)
         {
-#if DEBUG
-            this.Weeknum = 0;// weeknum;
-            this.Searchlist = searchlist;
-#else
+
             this.Weeknum=weeknum;
             this.Searchlist = searchlist;
-#endif
+            if (weeknum < 0)
+            {
+                this.Weeknum = 11;
+            }
         }
         public void getfreetime(ref ObservableCollection<ClassListLight> weekresult, ref ObservableCollection<EmptyTable> termresult)
         {

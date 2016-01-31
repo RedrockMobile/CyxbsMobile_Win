@@ -41,6 +41,7 @@ namespace ZSCY.Pages
         private ObservableCollection<EmptyTable> termresult = new ObservableCollection<EmptyTable>();
         private ObservableCollection<People> peoplelist = new ObservableCollection<People>();
         private Dictionary<string, int> colorlist = new Dictionary<string, int>();
+        private bool weekorterm = false;//查询的是周还是学期，周false,学期true;
 
         private string[,][] ResultName = new string[7, 6][];
         int week; //周次，0为学期
@@ -353,12 +354,23 @@ namespace ZSCY.Pages
             FlyoutFreeDetailWeekTextBlock.Text = "星期" + week + " " + nowclass;
             FlyoutFreeDetailTimeTextBlock.Text = time;
             FlyoutFreeDetailPeopleTextBlock.Text = "共计" + temp.Length + "人";
-            for (int i = 0; i < temp.Length; i++)
+            if (!weekorterm)
             {
-                int[] weeks = (from n in termresult where n.Hash_day == day && n.Hash_lesson == lesson select n.nameweek[temp[i]]).ToArray()[0];
-                string weekstr = WeeknumConverter(weeks);
-                peoplelist.Add(new People { name = temp[i], weekstostr = weekstr });
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    peoplelist.Add(new People { name = temp[i] });
+                }
 
+            }
+            else
+            {
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    int[] weeks = (from n in termresult where n.Hash_day == day && n.Hash_lesson == lesson select n.nameweek[temp[i]]).ToArray()[0];
+                    string weekstr = WeeknumConverter(weeks);
+                    peoplelist.Add(new People { name = temp[i], weekstostr = weekstr });
+
+                }
             }
             if (FreeDetailGrid.Visibility == Visibility.Collapsed)
                 KBCLassFlyout.ShowAt(commandBar);
@@ -397,7 +409,9 @@ namespace ZSCY.Pages
         /// <param name="e"></param>
         private void KBNumSearchButton_Click(object sender, RoutedEventArgs e)
         {
+            weekorterm = false;
             KBNumSearch();
+
         }
 
         /// <summary>
@@ -418,7 +432,9 @@ namespace ZSCY.Pages
                 }
             }
         }
-
+        /// <summary>
+        /// 输入周查课表
+        /// </summary>
         private void KBNumSearch()
         {
             if (KBNumFlyoutTextBox.Text != "" && KBNumFlyoutTextBox.Text.IndexOf(".") == -1)
@@ -428,6 +444,10 @@ namespace ZSCY.Pages
                     week = int.Parse(KBNumFlyoutTextBox.Text);
                     FilterAppBarButton.Label = "第" + KBNumFlyoutTextBox.Text + "周";
                     KBNumFlyout.Hide();
+                    ResultName = new string[7, 6][];
+                    EmptyClass ec = new EmptyClass(week, forsearchlist);
+                    ec.getfreetime(ref result, ref termresult);
+                    showFreeKB(result);
                 }
                 catch (Exception)
                 {
@@ -437,23 +457,41 @@ namespace ZSCY.Pages
             else
                 Utils.Message("请输入正确的周次");
         }
-
+        /// <summary>
+        /// 学期和周的切换
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CalendarWeekAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             if (week != 0)
             {
                 week_old = week;
                 week = 0;
+                weekorterm = true;
                 FilterAppBarButton.Visibility = Visibility.Collapsed;
+                ResultName.Initialize();
+                EmptyClass ec = new EmptyClass(week, forsearchlist);
+                ec.getfreetime(ref result, ref termresult);
+                showFreeKB(termresult);
             }
             else
             {
+                weekorterm = false;
                 week = week_old;
                 FilterAppBarButton.Label = "第" + week + "周";
                 FilterAppBarButton.Visibility = Visibility.Visible;
+                ResultName.Initialize();
+                EmptyClass ec = new EmptyClass(week, forsearchlist);
+                ec.getfreetime(ref result, ref termresult);
+                showFreeKB(result);
             }
         }
-
+        /// <summary>
+        /// 显示隐藏周末
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowWeekendAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             if (showWeekend)
@@ -467,8 +505,8 @@ namespace ZSCY.Pages
         /// <summary>
         /// 周数友好显示
         /// </summary>
-        /// <param name="weeks"></param>
-        /// <returns></returns>
+        /// <param name="weeks">空闲周数组</param>
+        /// <returns>友好的字符串</returns>
         private string WeeknumConverter(int[] weeks)
         {
 
@@ -486,7 +524,7 @@ namespace ZSCY.Pages
             {
                 return "单周";
             }
-            else if (weeks[len - 1] - weeks[0] == len - 1&&len!=1)
+            else if (weeks[len - 1] - weeks[0] == len - 1 && len != 1)
             {
                 return $"{weeks[0]}-{weeks[len - 1]}周";
             }
