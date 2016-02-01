@@ -143,11 +143,14 @@
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\Converter\ExamDateConverter.cs" />
+    <Compile Include="Util\Converter\ExamTimeConverter.cs" />
     <Compile Include="Util\Converter\FreeConverter.cs" />
     <Compile Include="Util\Converter\GenderConverter.cs" />
     <Compile Include="Util\Converter\itemPageConverter.cs" />
     <Compile Include="Util\Converter\KBGridConverter.cs" />
     <Compile Include="Util\Converter\LongClassRoomConverter.cs" />
+    <Compile Include="Util\Converter\StarFillConverter.cs" />
     <Compile Include="Util\NetWork.cs" />
     <Compile Include="Util\Utils.cs" />
   </ItemGroup>
