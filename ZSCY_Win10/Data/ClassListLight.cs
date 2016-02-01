@@ -1,5 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ZSCY_Win10.Data;
 
 namespace ZSCY_Win10.Data
 {
@@ -12,6 +19,19 @@ namespace ZSCY_Win10.Data
         //public string Course { get; set; }
         public string[] Name { get; set; }
 
+        public ClassListLight Clone()
+        {
+            ClassListLight cll = new ClassListLight();
+            cll.Begin_lesson = this.Begin_lesson;
+            cll.Period = this.Period;
+            cll.Week = this.Week;
+            cll.Name = new string[this.Name.Length];
+            for (int i = 0; i < this.Name.Length; i++)
+            {
+                cll.Name[i] = new string(this.Name[i].ToCharArray());//Name[i].ToString();
+            }
+            return cll;
+        }
         public ClassListLight getattribute(JObject classDetailJObject)
         {
             Hash_day = (int)classDetailJObject["hash_day"];
