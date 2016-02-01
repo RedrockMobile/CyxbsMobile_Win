@@ -30,7 +30,7 @@ namespace ZSCY_Win10.Util
                 this.Weeknum = 11;
             }
         }
-        public void getfreetime(ref ObservableCollection<ClassListLight> weekresult, ref ObservableCollection<EmptyTable> termresult)
+        public void getfreetime(ObservableCollection<ClassListLight> weekresult, ObservableCollection<EmptyTable> termresult)
         {
             //所有人的名字
             string[] names = (from n in Searchlist.Keys select n).ToArray();

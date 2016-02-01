@@ -140,7 +140,7 @@ namespace ZSCY.Pages
             }
             //查无课表，参数第几周==
             EmptyClass ec = new EmptyClass(week, forsearchlist);
-            ec.getfreetime(ref result, ref termresult);
+            ec.getfreetime(result, termresult);
             //freetime(11, forsearchlist);
             FreeLoddingStackPanel.Visibility = Visibility.Collapsed;
             FreeKBTableGrid.Visibility = Visibility.Visible;
@@ -446,7 +446,7 @@ namespace ZSCY.Pages
                     KBNumFlyout.Hide();
                     ResultName = new string[7, 6][];
                     EmptyClass ec = new EmptyClass(week, forsearchlist);
-                    ec.getfreetime(ref result, ref termresult);
+                    ec.getfreetime(result, termresult);
                     showFreeKB(result);
                 }
                 catch (Exception)
@@ -472,7 +472,7 @@ namespace ZSCY.Pages
                 FilterAppBarButton.Visibility = Visibility.Collapsed;
                 ResultName.Initialize();
                 EmptyClass ec = new EmptyClass(week, forsearchlist);
-                ec.getfreetime(ref result, ref termresult);
+                ec.getfreetime(result, termresult);
                 showFreeKB(termresult);
             }
             else
@@ -483,7 +483,7 @@ namespace ZSCY.Pages
                 FilterAppBarButton.Visibility = Visibility.Visible;
                 ResultName.Initialize();
                 EmptyClass ec = new EmptyClass(week, forsearchlist);
-                ec.getfreetime(ref result, ref termresult);
+                ec.getfreetime(result, termresult);
                 showFreeKB(result);
             }
         }
