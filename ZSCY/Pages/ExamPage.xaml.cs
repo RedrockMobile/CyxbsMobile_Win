@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
@@ -95,7 +97,20 @@ namespace ZSCY.Pages
                                 examitem.DateTime = "日期:" + examitem.Date + "\r\n" + "时间:" + examitem.Time;
                             examList.Add(examitem);
                         }
-                        ExamListView.ItemsSource = examList;
+                        examList = examList.OrderBy(x => x.DateTime).ToList();
+                        var nonzeroweek = from x in examList where x.Begin_time == "待定" select x;//    examList.Select(x => !x.DateTime.Contains("周0")).ToList();
+                        var zeroweek = from x in examList where x.Begin_time != "待定" select x;// examList.Select(x => x.DateTime.Contains("周0"));
+                        List<ExamList> orderedlist = new List<ExamList>();
+                        orderedlist.AddRange(zeroweek);
+                        orderedlist.AddRange(nonzeroweek);
+                        ObservableCollection<ExamList> move = new ObservableCollection<ExamList>();
+                        ExamListView.ItemsSource = move;
+                        for (int i = 0; i < orderedlist.Count; i++)
+                        {
+                            move.Add(orderedlist[i]);
+                            await Task.Delay(60);
+                        }
+                        //ExamListView.ItemsSource = examList;
                     }
                     else if (Int32.Parse(obj["status"].ToString()) == 300)
                     {
