@@ -446,6 +446,7 @@ namespace ZSCY.Pages
                     KBNumFlyout.Hide();
                     ResultName = new string[7, 6][];
                     EmptyClass ec = new EmptyClass(week, forsearchlist);
+                    result = new ObservableCollection<ClassListLight>();
                     ec.getfreetime(result, termresult);
                     showFreeKB(result);
                 }

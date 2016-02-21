@@ -65,7 +65,7 @@ namespace ZSCY_Win10.Util
                 for (int i = 0; i < ll.Count; i++)
                 {
                     ClassListLight tobeadded = ll[i].ToList()[0].Clone();
-                    if (tobeadded.Name != names)
+                    if (tobeadded.Name.Length!= names.Length)
                     {
                         tobeadded.Name = names.Except(tobeadded.Name).ToArray();
                     }

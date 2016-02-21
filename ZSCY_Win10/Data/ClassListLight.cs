@@ -26,6 +26,8 @@ namespace ZSCY_Win10.Data
             cll.Period = this.Period;
             cll.Week = this.Week;
             cll.Name = new string[this.Name.Length];
+            cll.Hash_day = this.Hash_day;
+            cll.Hash_lesson = this.Hash_lesson;
             for (int i = 0; i < this.Name.Length; i++)
             {
                 cll.Name[i] = new string(this.Name[i].ToCharArray());//Name[i].ToString();
