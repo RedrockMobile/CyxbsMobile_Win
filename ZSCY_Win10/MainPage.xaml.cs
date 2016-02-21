@@ -8,7 +8,9 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
@@ -70,6 +72,11 @@ namespace ZSCY_Win10
                 this.TogglePaneButton.Focus(FocusState.Programmatic);
             };
             //this.AppFrame.Navigate(navlist[0].DestPage, navlist[0].Arguments);
+            var view = ApplicationView.GetForCurrentView();
+            view.TitleBar.BackgroundColor = Color.FromArgb(255, 4, 131, 239);
+            view.TitleBar.ButtonBackgroundColor = Color.FromArgb(255, 4, 131, 239);
+            view.TitleBar.ButtonHoverBackgroundColor = Color.FromArgb(255, 2, 126, 231);
+            view.TitleBar.ButtonPressedBackgroundColor = Color.FromArgb(255,2, 111, 203);
             this.SizeChanged += (s, e) =>
             {
                 Debug.WriteLine(e.NewSize.Width);

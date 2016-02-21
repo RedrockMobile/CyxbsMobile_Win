@@ -29,13 +29,19 @@
         <Grid Grid.Row="1" Margin="15">
 
             <ListView Name="FreeListView">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <!--<Setter Property="HorizontalAlignment" Value="Stretch"></Setter>-->
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
                             <TextBlock Text="{Binding weekday,Converter={StaticResource FreeWeekdayCoVisConverter}}" Visibility="{Binding vis,Converter={StaticResource FreeisTiVisConverter}}" FontSize="15" Foreground="#068cfd"/>
                             <StackPanel Visibility="{Binding vis,Converter={StaticResource FreeisCoVisConverter}}" >
                                 <TextBlock Text="{Binding time,Converter={StaticResource FreeTimeCoVisConverter}}" Margin="0,0,0,1" FontSize="25" Foreground="#333" VerticalAlignment="Center"></TextBlock>
-                                <Line Margin="0,0,0,10" X1="0" X2="{Binding ActualWidth, ElementName=page, Mode=OneWay}" Stroke="Black" StrokeThickness="1"></Line>
+                                <!--<Line Margin="0,0,0,10" X1="0" X2="{Binding ActualWidth, ElementName=page, Mode=OneWay}" Stroke="Black" StrokeThickness="1"></Line>-->
                             </StackPanel>
                         </Grid>
 

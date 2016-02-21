@@ -25,7 +25,7 @@
         <ScrollViewer Height="{Binding ActualHeight, Converter={StaticResource itemScrollViewerHeighConverter}, ElementName=itemPage, Mode=OneWay}" Background="#f8f8f8">
             <Grid>
 
-                <ListView Name="ExamListView" Width="{Binding ActualWidth, ElementName=itemPage, Mode=OneWay}">
+                <ListView Name="ExamListView" SelectionMode="None" Width="{Binding ActualWidth, ElementName=itemPage, Mode=OneWay}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <!--<Setter Property="HorizontalAlignment" Value="Stretch"></Setter>-->
