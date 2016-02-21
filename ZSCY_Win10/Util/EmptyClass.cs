@@ -30,7 +30,7 @@ namespace ZSCY_Win10.Util
                 this.Weeknum = 11;
             }
         }
-        public void getfreetime(ref ObservableCollection<ClassListLight> weekresult, ref ObservableCollection<EmptyTable> termresult)
+        public void getfreetime(ObservableCollection<ClassListLight> weekresult, ObservableCollection<EmptyTable> termresult)
         {
             //所有人的名字
             string[] names = (from n in Searchlist.Keys select n).ToArray();
@@ -64,7 +64,7 @@ namespace ZSCY_Win10.Util
                 var ll = diisclist.ToList();
                 for (int i = 0; i < ll.Count; i++)
                 {
-                    ClassListLight tobeadded = ll[i].ToList()[0];
+                    ClassListLight tobeadded = ll[i].ToList()[0].Clone();
                     if (tobeadded.Name != names)
                     {
                         tobeadded.Name = names.Except(tobeadded.Name).ToArray();
