@@ -31,19 +31,20 @@ namespace ZSCY.Pages
     public sealed partial class SearchFreeTimeNumPage : Page
     {
         private ApplicationDataContainer appSetting;
-        private ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>();
         public SearchFreeTimeNumPage()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
             this.InitializeComponent();
-            HubSectionKBNum.Text = appSetting.Values["nowWeek"].ToString();
+            //HubSectionKBNum.Text = appSetting.Values["nowWeek"].ToString();
             appSetting.Values["FreeWeek"] = appSetting.Values["nowWeek"];
+            if (App.muIdList.Count == 0)
+                App.muIdList.Add(new uIdList { uId = appSetting.Values["stuNum"].ToString(), uName = appSetting.Values["name"].ToString() });
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
-            uIdListView.ItemsSource = muIdList;
+            uIdListView.ItemsSource = App.muIdList;
         }
 
 
@@ -68,8 +69,9 @@ namespace ZSCY.Pages
 
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            var muIDArray = muIdList.ToArray().ToList();
-            if (AddTextBox.Text.Length != 10)
+            var muIDArray = App.muIdList.ToArray().ToList();
+            AddButton.IsEnabled = false;
+            AddProgressRing.IsActive = true; if (AddTextBox.Text.Length != 10)
             {
                 Utils.Message("学号不正确");
             }
@@ -79,8 +81,7 @@ namespace ZSCY.Pages
             {
                 //for (int i = 0; i < 15; i++)
                 string usename = AddTextBox.Text;
-                string useid = AddTextBox.Text;
-                muIdList.Add(new uIdList { uId = AddTextBox.Text, uName = AddTextBox.Text });
+                string useid = usename;
                 string name = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/searchPeople?stunum=" + AddTextBox.Text, PostORGet: 1);
                 Debug.WriteLine("name->" + name);
                 if (name != "")
@@ -98,25 +99,16 @@ namespace ZSCY.Pages
 
                 }
                 if (usename != "")
-                    for (int i = 0; i < muIdList.Count; i++)
-                    {
-                        if (muIdList[i].uId == useid)
-                        {
-                            ListViewItem item = new ListViewItem();
-                            muIdList[i].uName = usename;
-                            uIdListView.ItemsSource = null;
-                            uIdListView.ItemsSource = muIdList;
-                        }
-                    }
+                    App.muIdList.Add(new uIdList { uId = useid, uName = usename });
                 else
                 {
-                     Utils.Message("学号不正确");
-                    muIDArray = muIdList.ToArray().ToList();
-                    uIdList u = muIDArray.Find(p => p.uId.Equals(useid));
-                    muIdList.Remove(u);
+                    Utils.Message("学号不正确");
                 }
                 AddTextBox.Text = "";
+
             }
+            AddButton.IsEnabled = true;
+            AddProgressRing.IsActive = false;
         }
 
         private async void uIdListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -130,40 +122,54 @@ namespace ZSCY.Pages
             var result = await dig.ShowAsync();
             if (null != result && result.Label == "是")
             {
-                var muIDArray = muIdList.ToArray().ToList();
+                var muIDArray = App.muIdList.ToArray().ToList();
                 uIdList u = muIDArray.Find(p => p.uId.Equals(((uIdList)e.ClickedItem).uId));
-                muIdList.Remove(u);
+                App.muIdList.Remove(u);
             }
         }
 
         private void ForwardAppBarToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            if (muIdList.Count < 2)
+            if (App.muIdList.Count < 2)
             {
                 Utils.Message("请至少输入2个要查询学号");
             }
             else
             {
-                AuIdList Au = new AuIdList { muIdList = muIdList, week = int.Parse(HubSectionKBNum.Text) };
-                Frame.Navigate(typeof(SearchFreeTimeResultPage), Au);
+                AuIdList Au = new AuIdList { muIdList = App.muIdList };
+                Frame.Navigate(typeof(SearchFreeTimeResultPage_new), Au);
             }
         }
 
-        private void HubSectionKBNum_Tapped(object sender, TappedRoutedEventArgs e)
+        //private void HubSectionKBNum_Tapped(object sender, TappedRoutedEventArgs e)
+        //{
+        //    KBNumFlyout.ShowAt(page);
+        //    HubSectionKBNum.SelectAll();
+        //}
+        //private void KBNumSearchButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (KBNumFlyoutTextBox.Text != "" && KBNumFlyoutTextBox.Text.IndexOf(".") == -1)
+        //    {
+        //        HubSectionKBNum.Text = KBNumFlyoutTextBox.Text;
+        //        appSetting.Values["FreeWeek"] = KBNumFlyoutTextBox.Text;
+        //        KBNumFlyout.Hide();
+        //    }
+        //    else
+        //        Utils.Message("请输入正确的周次");
+        //}
+
+        private async void DeleteAppBarToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            KBNumFlyout.ShowAt(page);
-            HubSectionKBNum.SelectAll();
-        }
-        private void KBNumSearchButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (KBNumFlyoutTextBox.Text != "" && KBNumFlyoutTextBox.Text.IndexOf(".") == -1)
+            var dig = new MessageDialog("确定删除所有数据", "警告");
+            var btnOk = new UICommand("是");
+            dig.Commands.Add(btnOk);
+            var btnCancel = new UICommand("否");
+            dig.Commands.Add(btnCancel);
+            var result = await dig.ShowAsync();
+            if (null != result && result.Label == "是")
             {
-                HubSectionKBNum.Text = KBNumFlyoutTextBox.Text;
-                appSetting.Values["FreeWeek"] = KBNumFlyoutTextBox.Text;
-                KBNumFlyout.Hide();
+                App.muIdList.Clear();
             }
-            else
-                Utils.Message("请输入正确的周次");
         }
     }
 }

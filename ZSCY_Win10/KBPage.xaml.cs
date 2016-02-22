@@ -387,7 +387,7 @@ namespace ZSCY_Win10
                 }
 #endif
             }
-
+            colorlist.Clear();
 
         }
 

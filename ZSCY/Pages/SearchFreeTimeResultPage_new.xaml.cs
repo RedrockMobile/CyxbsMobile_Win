@@ -21,9 +21,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
-using ZSCY_Win10;
-using ZSCY_Win10.Data;
-using ZSCY_Win10.Util;
+using ZSCY.Util;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -53,25 +51,8 @@ namespace ZSCY.Pages
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
             this.InitializeComponent();
-            this.SizeChanged += (s, e) =>
-            {
-                var state = "VisualState000";
-                if (e.NewSize.Width > 600)
-                {
-                    KBCLassFlyout.Hide();
-                    state = "VisualState600";
-                }
-                //else
-                //{
-                //    if(FreeDetailStackPanel.Visibility ==Visibility.Visible)
-                //        KBCLassFlyout.ShowAt(FreeDetailGrid);
-                //}
-                KebiaoAllScrollViewer.Height = e.NewSize.Height - 48 - 25;
-                cutoffLine.Y2 = e.NewSize.Height;
-                VisualStateManager.GoToState(this, state, true);
-            };
             week_old = week = int.Parse(appSetting.Values["nowWeek"].ToString());
-            FilterAppBarButton.Label = "第" + appSetting.Values["nowWeek"].ToString() + "周";
+            HubSectionKBNum.Text = appSetting.Values["nowWeek"].ToString();
         }
 
         /// <summary>
@@ -83,15 +64,26 @@ namespace ZSCY.Pages
         {
             AuIdList auIdList = (AuIdList)e.Parameter;
             muIdList = auIdList.muIdList;
-            FreeDetailNameGridView.ItemsSource = peoplelist;
             FlyoutFreeDetailNameGridView.ItemsSource = peoplelist;
+            HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             initFree();
         }
 
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            //HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
+            HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
+        }
+
+        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame != null && rootFrame.CanGoBack)
+            {
+                rootFrame.GoBack();
+                e.Handled = true;
+            }
+
         }
 
         /// <summary>
@@ -156,7 +148,6 @@ namespace ZSCY.Pages
             kebiaoGrid.Children.Clear();
             int ClassColor = 0;
             colorlist.Clear();
-
             for (int i = 0; i < result.Count; i++)
             {
                 peoplelist.Clear();
@@ -189,7 +180,6 @@ namespace ZSCY.Pages
         {
             kebiaoGrid.Children.Clear();
             int ClassColor = 0;
-            colorlist.Clear();
             colorlist.Clear();
             for (int i = 0; i < termresult.Count; i++)
             {
@@ -352,9 +342,6 @@ namespace ZSCY.Pages
                     time = "20:50 - 22:30 PM";
                     break;
             }
-            FreeDetailWeekTextBlock.Text = "星期" + week + " " + nowclass;
-            FreeDetailTimeTextBlock.Text = time;
-            FreeDetailPeopleTextBlock.Text = "共计" + temp.Length + "人";
 
             FlyoutFreeDetailWeekTextBlock.Text = "星期" + week + " " + nowclass;
             FlyoutFreeDetailTimeTextBlock.Text = time;
@@ -375,34 +362,13 @@ namespace ZSCY.Pages
                     string weekstr = "";
                     if (weeks.Length != 0)
                         weekstr = WeeknumConverter(weeks);
-                    peoplelist.Add(new People { name = temp[i], weekstostr = weekstr });
+                    peoplelist.Add(new People { name = temp[i], weekstostr = " " + weekstr });
 
                 }
             }
-            if (FreeDetailGrid.Visibility == Visibility.Collapsed)
-                KBCLassFlyout.ShowAt(commandBar);
-            FreeNoClickStackPanel.Visibility = Visibility.Collapsed;
-            FreeDetailStackPanel.Visibility = Visibility.Visible;
+            KBCLassFlyout.ShowAt(page);
         }
 
-        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
-        {
-        }
-
-
-        private void App_BackRequested(object sender, BackRequestedEventArgs e)
-        {
-            Frame rootFrame = Window.Current.Content as Frame;
-            if (rootFrame == null)
-                return;
-            if (rootFrame.CanGoBack && e.Handled == false)
-            {
-                e.Handled = true;
-                rootFrame.GoBack();
-                SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            }
-        }
 
         private void FilterAppBarButton_Click(object sender, RoutedEventArgs e)
         {
@@ -449,7 +415,7 @@ namespace ZSCY.Pages
                 try
                 {
                     week = int.Parse(KBNumFlyoutTextBox.Text);
-                    FilterAppBarButton.Label = "第" + KBNumFlyoutTextBox.Text + "周";
+                    HubSectionKBNum.Text = KBNumFlyoutTextBox.Text;
                     KBNumFlyout.Hide();
                     ResultName = new string[7, 6][];
                     EmptyClass ec = new EmptyClass(week, forsearchlist);
@@ -477,7 +443,9 @@ namespace ZSCY.Pages
                 week_old = week;
                 week = -100;
                 weekorterm = true;
-                FilterAppBarButton.Visibility = Visibility.Collapsed;
+                HubSectionKBNum.Visibility = Visibility.Collapsed;
+                HubSectionKBNumD.Visibility = Visibility.Collapsed;
+                HubSectionKBNumZ.Visibility = Visibility.Collapsed;
                 ResultName.Initialize();
                 EmptyClass ec = new EmptyClass(week, forsearchlist);
                 ec.getfreetime(result, termresult);
@@ -487,8 +455,10 @@ namespace ZSCY.Pages
             {
                 weekorterm = false;
                 week = week_old;
-                FilterAppBarButton.Label = "第" + week + "周";
-                FilterAppBarButton.Visibility = Visibility.Visible;
+                HubSectionKBNum.Text = week.ToString();
+                HubSectionKBNum.Visibility = Visibility.Visible;
+                HubSectionKBNumD.Visibility = Visibility.Visible;
+                HubSectionKBNumZ.Visibility = Visibility.Visible;
                 ResultName.Initialize();
                 EmptyClass ec = new EmptyClass(week, forsearchlist);
                 ec.getfreetime(result, termresult);
@@ -576,6 +546,11 @@ namespace ZSCY.Pages
                     return "除" + r + "周";
                 }
             }
+        }
+
+        private void HubSectionKBNum_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            KBNumFlyout.ShowAt(page);
         }
     }
 }

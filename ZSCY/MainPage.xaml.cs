@@ -340,6 +340,8 @@ namespace ZSCY
                     }
                 }
             }
+            colorlist.Clear();
+
         }
 
 

@@ -22,7 +22,7 @@
         <Grid Background="#068cfd" Height="70">
             <TextBlock Name="ExamTextBlock" Foreground="White" FontWeight="Light" FontFamily="Microsoft YaHei UI" VerticalAlignment="Center" Margin="15,0" FontSize="40"></TextBlock>
         </Grid>
-        <ScrollViewer Height="{Binding ActualHeight, Converter={StaticResource itemScrollViewerHeighConverter}, ElementName=itemPage, Mode=OneWay}" Background="#f8f8f8">
+        <ScrollViewer Name="ExamListScrollViewer" Height="{Binding ActualHeight, Converter={StaticResource itemScrollViewerHeighConverter}, ElementName=itemPage, Mode=OneWay}" Background="#f8f8f8">
             <Grid>
 
                 <ListView Name="ExamListView" SelectionMode="None" Width="{Binding ActualWidth, ElementName=itemPage, Mode=OneWay}">
