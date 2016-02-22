@@ -219,6 +219,8 @@ namespace ZSCY_Win10
                                     content = content.Replace("\n", "");
                                     content = content.Replace("&nbsp;", "");
                                     content = content.Replace(" ", "");
+                                    content = content.Replace("（见附件）", "见附件");
+                                    content = content.Replace("Normal07.8磅02falsefalsefalseMicrosoftInternetExplorer4", "");
 
 
                                     //while (content.StartsWith("\r\n "))

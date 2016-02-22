@@ -44,7 +44,7 @@ namespace ZSCY.Pages
         private bool weekorterm = false;//查询的是周还是学期，周false,学期true;
 
         private string[,][] ResultName = new string[7, 6][];
-        int week; //周次，0为学期
+        int week; //周次，-100为学期
         int week_old; //周次，切换到学期后保存切换前的周次
         bool showWeekend = false;
 
@@ -465,10 +465,10 @@ namespace ZSCY.Pages
         /// <param name="e"></param>
         private void CalendarWeekAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            if (week != 0)
+            if (week != -100)
             {
                 week_old = week;
-                week = 0;
+                week = -100;
                 weekorterm = true;
                 FilterAppBarButton.Visibility = Visibility.Collapsed;
                 ResultName.Initialize();

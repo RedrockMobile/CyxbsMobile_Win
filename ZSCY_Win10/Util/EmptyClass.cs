@@ -25,7 +25,7 @@ namespace ZSCY_Win10.Util
 
             this.Weeknum=weeknum;
             this.Searchlist = searchlist;
-            if (weeknum < 0)
+            if (weeknum < 0 && weeknum !=-100)
             {
                 this.Weeknum = 11;
             }
@@ -36,7 +36,7 @@ namespace ZSCY_Win10.Util
             string[] names = (from n in Searchlist.Keys select n).ToArray();
             //星期，时间段，人名数组
             List<ClassListLight> clist = new List<ClassListLight>();
-            if (Weeknum != 0)
+            if (Weeknum != -100)
             {
                 foreach (var key in Searchlist.Keys)
                 {

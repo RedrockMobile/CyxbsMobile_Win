@@ -34,7 +34,6 @@ namespace ZSCY
     public sealed partial class MainPage : Page
     {
         private ApplicationDataContainer appSetting;
-        private ApplicationDataContainer appSettingclass;
         private bool isExit = false;
         private int page = 1;
         private int wOa = 1;
@@ -47,6 +46,7 @@ namespace ZSCY
         //private  ObservableCollection<Morepageclass> morepageclass= new ObservableCollection<Morepageclass>();
         //private string[,,] classtime = new string[7, 6,*];
         string[,][] classtime = new string[7, 6][];
+        private Dictionary<string, int> colorlist = new Dictionary<string, int>(); //课表格子颜色
 
         List<ClassList> classList = new List<ClassList>();
         ObservableCollection<NewsList> JWList = new ObservableCollection<NewsList>();
@@ -71,7 +71,6 @@ namespace ZSCY
         public MainPage()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
-            appSettingclass = ApplicationData.Current.RoamingSettings;
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Required;
 
@@ -303,9 +302,9 @@ namespace ZSCY
                 classitem.GetAttribute((JObject)ClassListArray[i]);
                 classList.Add(classitem);
                 int ClassColor = 0;
-                if (!appSettingclass.Values.ContainsKey(classitem.Course))
+                if (!colorlist.ContainsKey(classitem.Course))
                 {
-                    appSettingclass.Values[classitem.Course] = ColorI;
+                    colorlist[classitem.Course] = ColorI;
                     ClassColor = ColorI;
                     ColorI++;
                     if (ColorI > 2)
@@ -313,7 +312,7 @@ namespace ZSCY
                 }
                 else
                 {
-                    ClassColor = System.Int32.Parse(appSettingclass.Values[classitem.Course].ToString());
+                    ClassColor = System.Int32.Parse(colorlist[classitem.Course].ToString());
                 }
                 if (weekOrAll == 1)
                 {
@@ -341,8 +340,6 @@ namespace ZSCY
                     }
                 }
             }
-            appSettingclass.Values.Clear();
-
         }
 
 
@@ -645,7 +642,8 @@ namespace ZSCY
                                     content = content.Replace("\n", "");
                                     content = content.Replace("&nbsp;", "");
                                     content = content.Replace(" ", "");
-
+                                    content = content.Replace("（见附件）", "见附件");
+                                    content = content.Replace("Normal07.8磅02falsefalsefalseMicrosoftInternetExplorer4", "");
 
                                     //while (content.StartsWith("\r\n "))
                                     //    content = content.Substring(3);
@@ -1113,7 +1111,7 @@ namespace ZSCY
             {
                 case 0:
                     type = "jwzx";
-                    JWTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255,11,11,11));
+                    JWTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 11, 11, 11));
                     XWTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 66, 66, 66));
                     CYTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 66, 66, 66));
                     XSTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 66, 66, 66));
