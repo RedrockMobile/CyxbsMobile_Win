@@ -42,7 +42,7 @@
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Vertical" Margin="0">
                                     <Line X1="35" Y1="0" X2="35" Y2="30" Stroke="#FF3498DB" StrokeThickness="2" Stretch="Fill"/>
-                                    <TextBlock Text="{Binding DateTime ,Converter={StaticResource ExamDateConverter}}" TextAlignment="Center"></TextBlock>
+                                    <TextBlock Text="{Binding DateTime ,Converter={StaticResource ExamDateConverter}}" FontSize="15" Foreground="#333" TextAlignment="Center"></TextBlock>
                                     <Line X1="35" Y1="0" X2="35" Y2="30" Stroke="#FF3498DB" StrokeThickness="2" Stretch="Fill"/>
 
                                 </StackPanel>
@@ -70,17 +70,17 @@
                                         </Grid.RowDefinitions>
                                         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5,5,5,0">
                                             <Image Source="../Assets/dialog_course_type_white.png" Margin="0,0,5,0" Height="20"/>
-                                            <TextBlock Text="{Binding Course}"></TextBlock>
+                                            <TextBlock Text="{Binding Course}" FontSize="16" VerticalAlignment="Center"></TextBlock>
                                         </StackPanel>
                                         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5,5,5,0">
                                             <Image Source="../Assets/dialog_course_add_white.png" Margin="0,0,5,0" Height="20"/>
-                                            <TextBlock Text="{Binding Classroom}"></TextBlock>
-                                            <TextBlock Text="@"></TextBlock>
-                                            <TextBlock Text="{Binding Seat}"/>
+                                            <TextBlock Text="{Binding Classroom}" FontSize="16" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="@" FontSize="16" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="{Binding Seat}" FontSize="16" VerticalAlignment="Center"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5,5,5,0">
                                             <Image Source="../Assets/dialog_course_time_white.png" Margin="0,0,5,0" Height="20"/>
-                                            <TextBlock Text="{Binding DateTime,Converter={StaticResource ExamTimeConverter}}"></TextBlock>
+                                            <TextBlock Text="{Binding DateTime,Converter={StaticResource ExamTimeConverter}}" FontSize="16" VerticalAlignment="Center"></TextBlock>
                                         </StackPanel>
                                     </Grid>
                                 </Border>

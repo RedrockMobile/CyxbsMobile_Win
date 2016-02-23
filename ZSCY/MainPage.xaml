@@ -65,7 +65,7 @@
                             </FlyoutBase.AttachedFlyout>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Margin="-7,0,0,0">
-                            <Grid Name="KebiaoWeekGrid" Margin="0,7,0,0" Width="{Binding ElementName=KBHubSection,Path=Width,Converter={StaticResource KBGridWidthConverterKey}}" Height="50">
+                            <Grid Name="KebiaoWeekGrid" Margin="0,4,0,0" Width="{Binding ElementName=KBHubSection,Path=Width,Converter={StaticResource KBGridWidthConverterKey}}" Height="50">
                                 <Grid.ColumnDefinitions>
                                     <!--列-->
                                     <ColumnDefinition Width="2 *"/>
@@ -273,7 +273,7 @@
                                                             <!--标题-->
                                                             <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" TextTrimming="WordEllipsis" HorizontalAlignment="Stretch" FontSize="16" Foreground="#333333" FontFamily="Microsoft YaHei UI" ></TextBlock>
                                                             <!--正文-->
-                                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Content}" VerticalAlignment="Top" MaxLines="2" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Content}" VerticalAlignment="Top" MaxLines="2" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" FontSize="14" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
                                                             <!--阅读、时间-->
                                                             <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
                                                                 <TextBlock Text="{Binding Read}" FontSize="12" HorizontalAlignment="Right" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
@@ -331,7 +331,7 @@
                                                             <!--标题-->
                                                             <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" TextTrimming="WordEllipsis" HorizontalAlignment="Stretch" FontSize="16" Foreground="#333333" FontFamily="Microsoft YaHei UI" ></TextBlock>
                                                             <!--正文-->
-                                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Content}" VerticalAlignment="Top" MaxLines="2" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Content}" VerticalAlignment="Top" MaxLines="2" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" FontSize="14" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
                                                             <!--阅读、时间-->
                                                             <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
                                                                 <TextBlock Text="{Binding Read}" FontSize="12" HorizontalAlignment="Right" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
@@ -394,7 +394,7 @@
 
                                                             <!--正文-->
 
-                                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Content}" VerticalAlignment="Top" MaxLines="2" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Content}" VerticalAlignment="Top" MaxLines="2" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" FontSize="14" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
 
                                                             <!--阅读、时间-->
 
@@ -460,7 +460,7 @@
                                                             <!--标题-->
                                                             <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" TextTrimming="WordEllipsis" HorizontalAlignment="Stretch" FontSize="16" Foreground="#333333" FontFamily="Microsoft YaHei UI" ></TextBlock>
                                                             <!--正文-->
-                                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Content}" VerticalAlignment="Top" MaxLines="2" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
+                                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Content}" VerticalAlignment="Top" MaxLines="2" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" FontSize="14" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
                                                             <!--阅读、时间-->
                                                             <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
                                                                 <TextBlock Text="{Binding Read}" FontSize="12" HorizontalAlignment="Right" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>

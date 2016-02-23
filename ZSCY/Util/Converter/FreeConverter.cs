@@ -12,7 +12,7 @@ namespace ZSCY.Util.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return Utils.getPhoneHeight() - 48 - 50 - 48-35;
+            return Utils.getPhoneHeight() - 48 - 50 - 48-30;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

@@ -244,7 +244,7 @@ namespace ZSCY.Pages
                 }
             }
             ClassTextBlock.Foreground = new SolidColorBrush(Colors.White);
-            ClassTextBlock.FontSize = 12;
+            ClassTextBlock.FontSize = 14;
             ClassTextBlock.TextWrapping = TextWrapping.WrapWholeWords;
             ClassTextBlock.VerticalAlignment = VerticalAlignment.Center;
             ClassTextBlock.HorizontalAlignment = HorizontalAlignment.Center;
