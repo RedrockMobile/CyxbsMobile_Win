@@ -149,7 +149,7 @@ namespace ZSCY_Win10
                 if (MoreFrame != null && MoreFrame.CanGoBack)
                 {
                     MoreFrame.GoBack();
-                    isFreeRe = 2;
+                    isFreeRe = 0;
                 }
             }
         }
