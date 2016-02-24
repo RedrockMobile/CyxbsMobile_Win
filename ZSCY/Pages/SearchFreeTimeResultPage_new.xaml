@@ -83,7 +83,7 @@
 
                         </Grid>
                     </Grid>
-                    <ScrollViewer x:Name="KebiaoAllScrollViewer" Height="{Binding ActualHeight, Converter={StaticResource FreeKBScrollViewerHeightConverter}, ElementName=page, Mode=OneWay}" Grid.Row="1" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Hidden">
+                    <ScrollViewer x:Name="KebiaoAllScrollViewer" Height="{Binding ActualHeight, Converter={StaticResource FreeKBScrollViewerHeightConverter}, ElementName=commandBar, Mode=OneWay}" Grid.Row="1" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Hidden">
                         <Grid >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2 *"/>

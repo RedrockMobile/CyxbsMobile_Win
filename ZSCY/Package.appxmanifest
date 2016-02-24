@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="26092662B8482.24247F5326900" Publisher="CN=3CE58E64-6EFC-43AC-A445-9CBA89BCEA42" Version="2.0.1.17" />
+  <Identity Name="26092662B8482.24247F5326900" Publisher="CN=3CE58E64-6EFC-43AC-A445-9CBA89BCEA42" Version="2.0.1.18" />
   <mp:PhoneIdentity PhoneProductId="07e673ab-bd02-41d4-8260-5db5d2affb29" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>掌上重邮—重邮小帮手</DisplayName>
