@@ -253,6 +253,7 @@ namespace ZSCY_Win10
                     else
                         appSetting.Values["nowWeek"] = obj["nowWeek"].ToString();
                     HubSectionKBNum.Text = " | 第" + appSetting.Values["nowWeek"].ToString() + "周";
+                    todayNumofstuTextBlock.Text = "开学第" + ((Int16.Parse(appSetting.Values["nowWeek"].ToString()) - 1) * 7 + (Int16.Parse(Utils.GetWeek()) == 0 ? 7 : Int16.Parse(Utils.GetWeek()))).ToString() + "天";
                     //showKB(2, Int32.Parse(appSetting.Values["nowWeek"].ToString()));
 #if DEBUG
                     showKB(2);
