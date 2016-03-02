@@ -71,44 +71,97 @@ namespace ZSCY.Pages
         {
             var muIDArray = App.muIdList.ToArray().ToList();
             AddButton.IsEnabled = false;
-            AddProgressRing.IsActive = true; if (AddTextBox.Text.Length != 10)
-            {
-                Utils.Message("学号不正确");
-            }
-            else if (muIDArray.Find(p => p.uId.Equals(AddTextBox.Text)) != null)
+            AddProgressRing.IsActive = true;
+            //if (AddTextBox.Text.Length != 10)
+            //{
+            //    Utils.Message("学号不正确");
+            //}
+            if (muIDArray.Find(p => p.uId.Equals(AddTextBox.Text)) != null)
                 Utils.Message("此学号已添加");
             else
             {
                 //for (int i = 0; i < 15; i++)
                 string usename = AddTextBox.Text;
                 string useid = usename;
-                string name = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/searchPeople?stunum=" + AddTextBox.Text, PostORGet: 1);
-                Debug.WriteLine("name->" + name);
-                if (name != "")
+                string peopleinfo = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/searchPeople/peopleList?stu=" + useid, PostORGet: 1);
+                Debug.WriteLine("peopleinfo->" + peopleinfo);
+                if (peopleinfo != "")
                 {
                     try
                     {
-                        JObject obj = JObject.Parse(name);
+                        JObject obj = JObject.Parse(peopleinfo);
                         if (Int32.Parse(obj["state"].ToString()) == 200)
                         {
-                            JObject dataobj = JObject.Parse(obj["data"].ToString());
-                            usename = dataobj["name"].ToString();
+                            JArray PeopleListArray = Utils.ReadJso(peopleinfo);
+                            if (PeopleListArray.Count != 1)
+                            {
+                                MenuFlyout PeopleListMenuFlyout = new MenuFlyout();
+                                for (int i = 0; i < PeopleListArray.Count; i++)
+                                {
+                                    PersonalIno Personalitem = new PersonalIno();
+                                    Personalitem.GetAttribute((JObject)PeopleListArray[i]);
+                                    PeopleListMenuFlyout.Items.Add(getPeopleListMenuFlyoutItem(Personalitem.Name + "-" + Personalitem.Major + "-" + Personalitem.Stunum));
+                                }
+                                PeopleListMenuFlyout.ShowAt(AddTextBox);
+
+                            }
+                            else
+                            {
+                                PersonalIno Personalitem = new PersonalIno();
+                                Personalitem.GetAttribute((JObject)PeopleListArray[0]);
+                                if (muIDArray.Find(p => p.uId.Equals(Personalitem.Stunum)) != null)
+                                    Utils.Message("此学号已添加");
+                                else
+                                    App.muIdList.Add(new uIdList { uId = Personalitem.Stunum, uName = Personalitem.Name });
+                            }
+                            //JObject dataobj = JObject.Parse(obj["data"].ToString());
                         }
+                        else
+                            Utils.Message("学号或姓名不正确");
                     }
                     catch (Exception) { }
 
-                }
-                if (usename != "")
-                    App.muIdList.Add(new uIdList { uId = useid, uName = usename });
-                else
-                {
-                    Utils.Message("学号不正确");
                 }
                 AddTextBox.Text = "";
 
             }
             AddButton.IsEnabled = true;
             AddProgressRing.IsActive = false;
+        }
+
+        private MenuFlyoutItem getPeopleListMenuFlyoutItem(string text)
+        {
+            MenuFlyoutItem menuFlyoutItem = new MenuFlyoutItem();
+            menuFlyoutItem.Text = text;
+            menuFlyoutItem.Click += PeopleListMenuFlyoutItem_click;
+            return menuFlyoutItem;
+        }
+
+        private void PeopleListMenuFlyoutItem_click(object sender, RoutedEventArgs e)
+        {
+            MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
+            string menuFlyoutItemText = menuFlyoutItem.Text;
+            string menuFlyoutItemname = menuFlyoutItemText.Substring(0, menuFlyoutItemText.IndexOf("-"));
+            string menuFlyoutItemnum = menuFlyoutItemText.Substring(menuFlyoutItem.Text.Length - 10);
+            var muIDArray = App.muIdList.ToArray().ToList();
+            if (muIDArray.Find(p => p.uId.Equals(menuFlyoutItemnum)) != null)
+                Utils.Message("此学号已添加");
+            else
+                App.muIdList.Add(new uIdList { uId = menuFlyoutItemnum, uName = menuFlyoutItemname });
+
+            //AddDateCostTextBox.Text = menuFlyoutItem.Text;
+            //switch (menuFlyoutItem.Text)
+            //{
+            //    case "AA":
+            //        cost_model = 1;
+            //        break;
+            //    case "你请客":
+            //        cost_model = 2;
+            //        break;
+            //    case "我买单":
+            //        cost_model = 3;
+            //        break;
+            //}
         }
 
         private async void uIdListView_ItemClick(object sender, ItemClickEventArgs e)

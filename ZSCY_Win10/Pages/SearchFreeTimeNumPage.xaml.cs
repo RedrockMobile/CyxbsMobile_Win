@@ -94,55 +94,96 @@ namespace ZSCY.Pages
             var muIDArray = App.muIdList.ToArray().ToList();
             AddButton.IsEnabled = false;
             AddProgressRing.IsActive = true;
-            if (AddTextBox.Text.Length != 10)
-            {
-                Utils.Message("学号不正确");
-            }
-            else if (muIDArray.Find(p => p.uId.Equals(AddTextBox.Text)) != null)
+            //if (AddTextBox.Text.Length != 10)
+            //{
+            //    Utils.Message("学号不正确");
+            //}
+            if (muIDArray.Find(p => p.uId.Equals(AddTextBox.Text)) != null)
                 Utils.Message("此学号已添加");
             else
             {
                 string usename = AddTextBox.Text;
                 string useid = usename;
-                string name = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/searchPeople?stunum=" + useid, PostORGet: 1);
-                Debug.WriteLine("name->" + name);
-                if (name != "")
+                string peopleinfo = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/searchPeople/peopleList?stu=" + useid, PostORGet: 1);
+                Debug.WriteLine("peopleinfo->" + peopleinfo);
+                //peopleinfo = "{\"state\":200,\"info\":\"success\",\"data\":[{\"stunum\":\"2014210825\",\"name\":\"\\u6768\\u5b87\",\"gender\":\"\\u7537        \",\"classnum\":\"0201410\",\"major\":\"\\u7535\\u5b50\\u5de5\\u7a0b\\u7c7b\",\"depart\":\"\\u5149\\u7535\\u5de5\\u7a0b\\u5b66\\u9662\",\"grade\":\"2014      \"},{\"stunum\":\"2015211173\",\"name\":\"\\u6768\\u5b87\",\"gender\":\"\\u7537        \",\"classnum\":\"03081502\",\"major\":\"\\u5de5\\u7a0b\\u7ba1\\u7406\",\"depart\":\"\\u7ecf\\u6d4e\\u7ba1\\u7406\\u5b66\\u9662\",\"grade\":\"2015      \"},{\"stunum\":\"2013211594\",\"name\":\"\\u6768\\u5b87\\u661f\",\"gender\":\"\\u7537        \",\"classnum\":\"0441302\",\"major\":\"\\u4fe1\\u606f\\u5b89\\u5168\",\"depart\":\"\\u8ba1\\u7b97\\u673a\\u79d1\\u5b66\\u4e0e\\u6280\\u672f\\u5b66\\u9662\",\"grade\":\"2013      \"},{\"stunum\":\"2014212099\",\"name\":\"\\u6768\\u5b87\\u822a\",\"gender\":\"\\u7537        \",\"classnum\":\"0611403\",\"major\":\"\\u751f\\u7269\\u533b\\u5b66\\u5de5\\u7a0b\",\"depart\":\"\\u751f\\u7269\\u4fe1\\u606f\\u5b66\\u9662\",\"grade\":\"2014      \"},{\"stunum\":\"2015212379\",\"name\":\"\\u6768\\u5b87\\u4f73\",\"gender\":\"\\u5973        \",\"classnum\":\"07111503\",\"major\":\"\\u6cd5\\u5b66\\u7c7b\",\"depart\":\"\\u6cd5\\u5b66\\u9662\",\"grade\":\"2015      \"},{\"stunum\":\"2015213755\",\"name\":\"\\u6768\\u5b87\\u5b81\",\"gender\":\"\\u5973        \",\"classnum\":\"12121504\",\"major\":\"\\u6570\\u5b57\\u5a92\\u4f53\\u827a\\u672f\\u4e0e\\u52a8\\u753b\\u5927\\u7c7b\",\"depart\":\"\\u4f20\\u5a92\\u827a\\u672f\\u5b66\\u9662\",\"grade\":\"2015      \"},{\"stunum\":\"2012213099\",\"name\":\"\\u6768\\u5b87\\u822a\",\"gender\":\"\\u7537        \",\"classnum\":\"0841201\",\"major\":\"\\u673a\\u68b0\\u8bbe\\u8ba1\\u5236\\u9020\\u53ca\\u5176\\u81ea\\u52a8\\u5316\",\"depart\":\"\\u5148\\u8fdb\\u5236\\u9020\\u5de5\\u7a0b\\u5b66\\u9662\",\"grade\":\"2012      \"}]}";
+                if (peopleinfo != "")
                 {
                     try
                     {
-                        JObject obj = JObject.Parse(name);
+                        JObject obj = JObject.Parse(peopleinfo);
                         if (Int32.Parse(obj["state"].ToString()) == 200)
                         {
-                            JObject dataobj = JObject.Parse(obj["data"].ToString());
-                            usename = dataobj["name"].ToString();
+                            JArray PeopleListArray = Utils.ReadJso(peopleinfo);
+                            if (PeopleListArray.Count != 1)
+                            {
+                                MenuFlyout PeopleListMenuFlyout = new MenuFlyout();
+                                for (int i = 0; i < PeopleListArray.Count; i++)
+                                {
+                                    PersonalIno Personalitem = new PersonalIno();
+                                    Personalitem.GetAttribute((JObject)PeopleListArray[i]);
+                                    PeopleListMenuFlyout.Items.Add(getPeopleListMenuFlyoutItem(Personalitem.Name + "-" + Personalitem.Major + "-" + Personalitem.Stunum));
+                                }
+                                PeopleListMenuFlyout.ShowAt(AddTextBox);
+
+                            }
+                            else
+                            {
+                                PersonalIno Personalitem = new PersonalIno();
+                                Personalitem.GetAttribute((JObject)PeopleListArray[0]);
+                                if (muIDArray.Find(p => p.uId.Equals(Personalitem.Stunum)) != null)
+                                    Utils.Message("此学号已添加");
+                                else
+                                    App.muIdList.Add(new uIdList { uId = Personalitem.Stunum, uName = Personalitem.Name });
+                            }
+                            //JObject dataobj = JObject.Parse(obj["data"].ToString());
                         }
+                        else
+                            Utils.Message("学号或姓名不正确");
+
                     }
                     catch (Exception) { }
 
-                }
-                if (usename != "")
-                    //for (int i = 0; i < App.muIdList.Count; i++)
-                    //{
-                    //    if (App.muIdList[i].uId == useid)
-                    //    {
-                    //        ListViewItem item = new ListViewItem();
-                    //        App.muIdList[i].uName = usename;
-                    //        //uIdListView.ItemsSource = null;
-                    //        uIdListView.ItemsSource = App.muIdList;
-                    //    }
-                    //}
-                    App.muIdList.Add(new uIdList { uId = useid, uName = usename });
-                else
-                {
-                    Utils.Message("学号不正确");
-                    //muIDArray = App.muIdList.ToList();
-                    //uIdList u = muIDArray.Find(p => p.uId.Equals(useid));
-                    //App.muIdList.Remove(u);
                 }
                 AddTextBox.Text = "";
             }
             AddButton.IsEnabled = true;
             AddProgressRing.IsActive = false;
+        }
+
+        private MenuFlyoutItem getPeopleListMenuFlyoutItem(string text)
+        {
+            MenuFlyoutItem menuFlyoutItem = new MenuFlyoutItem();
+            menuFlyoutItem.Text = text;
+            menuFlyoutItem.Click += PeopleListMenuFlyoutItem_click;
+            return menuFlyoutItem;
+        }
+
+        private void PeopleListMenuFlyoutItem_click(object sender, RoutedEventArgs e)
+        {
+            MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
+            string menuFlyoutItemText = menuFlyoutItem.Text;
+            string menuFlyoutItemname = menuFlyoutItemText.Substring(0, menuFlyoutItemText.IndexOf("-"));
+            string menuFlyoutItemnum = menuFlyoutItemText.Substring(menuFlyoutItem.Text.Length - 10);
+            var muIDArray = App.muIdList.ToArray().ToList();
+            if (muIDArray.Find(p => p.uId.Equals(menuFlyoutItemnum)) != null)
+                Utils.Message("此学号已添加");
+            else
+                App.muIdList.Add(new uIdList { uId = menuFlyoutItemnum, uName = menuFlyoutItemname });
+
+            //AddDateCostTextBox.Text = menuFlyoutItem.Text;
+            //switch (menuFlyoutItem.Text)
+            //{
+            //    case "AA":
+            //        cost_model = 1;
+            //        break;
+            //    case "你请客":
+            //        cost_model = 2;
+            //        break;
+            //    case "我买单":
+            //        cost_model = 3;
+            //        break;
+            //}
         }
 
         private async void uIdListView_ItemClick(object sender, ItemClickEventArgs e)

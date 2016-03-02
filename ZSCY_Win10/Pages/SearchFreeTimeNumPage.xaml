@@ -50,8 +50,8 @@
                     <ColumnDefinition />
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Name="AddTextBox" PlaceholderText="请输入学号" InputScope="Number" Grid.Column="0" KeyUp="AddTextBox_KeyUp"></TextBox>
-                <Grid Grid.Column="1" Margin="5,0,0,0"> 
+                <TextBox Name="AddTextBox" PlaceholderText="请输入学号或姓名" Grid.Column="0" KeyUp="AddTextBox_KeyUp"></TextBox>
+                <Grid Grid.Column="1" Margin="5,0,0,0">
                     <Button Name="AddButton" RequestedTheme="Light" VerticalAlignment="Top" Content="添加" Click="AddButton_Click"/>
                     <ProgressRing Name="AddProgressRing" />
                 </Grid>
@@ -60,7 +60,10 @@
                 <ListView Name="uIdListView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="uIdListView_ItemClick">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding uName}" FontSize="18" Foreground="#333"></TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding uName}" FontSize="18" Foreground="#333"></TextBlock>
+                                <TextBlock Text="{Binding uId}" Margin="5,0,0,0" FontSize="18" Foreground="#333"></TextBlock>
+                            </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
