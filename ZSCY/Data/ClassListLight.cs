@@ -6,9 +6,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZSCY_Win10.Data;
+using ZSCY.Data;
 
-namespace ZSCY_Win10.Data
+namespace ZSCY.Data
 {
     class ClassListLight:EmptyClassDayLesson
     {

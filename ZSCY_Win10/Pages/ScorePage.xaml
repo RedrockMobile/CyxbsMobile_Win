@@ -13,11 +13,17 @@
     <Grid Background="White">
         <ScrollViewer Background="White">
             <Grid>
-                <ListView Name="ScoreListView">
+                <ListView Name="ScoreListView" SelectionMode="None">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <!--<Setter Property="HorizontalAlignment" Value="Stretch"></Setter>-->
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="-12,0">
-                                <Grid Margin="10,20">
+                                <Grid Margin="10,20,15,20">
                                     <TextBlock Text="{Binding Course}" FontSize="20" Foreground="#068cfd" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
                                     <TextBlock Text="{Binding Grade}" HorizontalAlignment="Right" FontSize="20" Foreground="#333" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
                                 </Grid>

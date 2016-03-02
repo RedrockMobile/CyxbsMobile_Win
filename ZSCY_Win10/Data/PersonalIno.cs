@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using Windows.Storage;
 
 namespace ZSCY.Data
@@ -16,17 +17,20 @@ namespace ZSCY.Data
         private string clsssnum;
         private string major;
         private string college;
+        private string classnum;
+        private string depart;
+        private string grade;
         private ApplicationDataContainer appSetting;
 
         public PersonalIno()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
-            this.Stunum= appSetting.Values["stuNum"].ToString();
-            this.Name= appSetting.Values["name"].ToString();
-            this.Classnum= appSetting.Values["classNum"].ToString();
-            this.Major= appSetting.Values["major"].ToString();
-            this.College= appSetting.Values["college"].ToString();
-            this.Gender= appSetting.Values["gender"].ToString();
+            this.Stunum = appSetting.Values["stuNum"].ToString();
+            this.Name = appSetting.Values["name"].ToString();
+            this.Classnum = appSetting.Values["classNum"].ToString();
+            this.Major = appSetting.Values["major"].ToString();
+            this.College = appSetting.Values["college"].ToString();
+            this.Gender = appSetting.Values["gender"].ToString();
         }
 
         public string Stunum
@@ -118,6 +122,17 @@ namespace ZSCY.Data
             {
                 college = value;
             }
+        }
+
+        public void GetAttribute(JObject PeopleDetailJObject)
+        {
+            stunum = PeopleDetailJObject["stunum"].ToString();
+            name = PeopleDetailJObject["name"].ToString();
+            gender = PeopleDetailJObject["gender"].ToString();
+            classnum = PeopleDetailJObject["classnum"].ToString();
+            major = PeopleDetailJObject["major"].ToString();
+            depart = PeopleDetailJObject["depart"].ToString();
+            grade = PeopleDetailJObject["grade"].ToString();
         }
     }
 }

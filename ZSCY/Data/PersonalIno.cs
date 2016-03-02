@@ -20,6 +20,9 @@ namespace ZSCY.Data
         private string clsssnum;
         private string major;
         private string college;
+        private string classnum;
+        private string depart;
+        private string grade;
         private ApplicationDataContainer appSetting;
 
         public PersonalIno()
@@ -174,6 +177,16 @@ namespace ZSCY.Data
             {
                 college = value;
             }
+        }
+        public void GetAttribute(JObject PeopleDetailJObject)
+        {
+            stunum = PeopleDetailJObject["stunum"].ToString();
+            name = PeopleDetailJObject["name"].ToString();
+            gender = PeopleDetailJObject["gender"].ToString();
+            classnum = PeopleDetailJObject["classnum"].ToString();
+            major = PeopleDetailJObject["major"].ToString();
+            depart = PeopleDetailJObject["depart"].ToString();
+            grade = PeopleDetailJObject["grade"].ToString();
         }
     }
 }

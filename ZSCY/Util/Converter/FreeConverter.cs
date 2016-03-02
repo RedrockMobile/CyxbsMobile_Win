@@ -8,6 +8,18 @@ using Windows.UI.Xaml.Data;
 
 namespace ZSCY.Util.Converter
 {
+    public class FreeKBScrollViewerHeightConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            return Utils.getPhoneHeight() - double.Parse(value.ToString()) - 50 - 50;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
+    }
     public class FreeisTiVisConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

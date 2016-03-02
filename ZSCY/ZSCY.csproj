@@ -91,7 +91,10 @@
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Data\ClassList.cs" />
+    <Compile Include="Data\ClassListLight.cs" />
+    <Compile Include="Data\EmptyClassDayLesson.cs" />
     <Compile Include="Data\EmptyRoomList.cs" />
+    <Compile Include="Data\EmptyTable.cs" />
     <Compile Include="Data\ExamList.cs" />
     <Compile Include="Data\IdList.cs" />
     <Compile Include="Data\JWList.cs" />
@@ -139,6 +142,9 @@
     <Compile Include="Pages\SearchFreeTimeResultPage.xaml.cs">
       <DependentUpon>SearchFreeTimeResultPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SearchFreeTimeResultPage_new.xaml.cs">
+      <DependentUpon>SearchFreeTimeResultPage_new.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
@@ -151,6 +157,7 @@
     <Compile Include="Util\Converter\KBGridConverter.cs" />
     <Compile Include="Util\Converter\LongClassRoomConverter.cs" />
     <Compile Include="Util\Converter\StarFillConverter.cs" />
+    <Compile Include="Util\EmptyClass.cs" />
     <Compile Include="Util\NetWork.cs" />
     <Compile Include="Util\Utils.cs" />
   </ItemGroup>
@@ -199,10 +206,20 @@
     <Content Include="Assets\dialog_course_add.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\dialog_course_add_white.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\dialog_course_peo_white.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\dialog_course_time.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\dialog_course_time_white.png" />
     <Content Include="Assets\dialog_course_type.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\dialog_course_type_white.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Girl-100.png">
@@ -357,6 +374,10 @@
     <Page Include="Pages\SearchFreeTimeResultPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SearchFreeTimeResultPage_new.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\SettingPage.xaml">
       <SubType>Designer</SubType>

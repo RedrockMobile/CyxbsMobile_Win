@@ -1,0 +1,292 @@
+﻿<Page
+    x:Class="ZSCY.Pages.SearchFreeTimeResultPage_new"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Name="page"
+    xmlns:converter="using:ZSCY.Util.Converter"
+    Background="#068cfd">
+
+    <Page.Resources>
+        <converter:FreeKBScrollViewerHeightConverter x:Key="FreeKBScrollViewerHeightConverter"/>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel VerticalAlignment="Top" Orientation="Horizontal" Grid.Row="0" Background="#068cfd" >
+            <TextBlock Text="找空闲" FontSize="35" VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" Margin="15,0,0,0"></TextBlock>
+            <TextBlock  Name="HubSectionKBNumD" Text="第" Margin="5,0,0,0" Foreground="White"  FontSize="20"  VerticalAlignment="Bottom" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
+            <TextBlock Name="HubSectionKBNum" Text=" "  Foreground="White"  FontSize="20"  VerticalAlignment="Bottom" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
+            <TextBlock  Name="HubSectionKBNumZ" Text="周"  Foreground="White"  FontSize="20"  VerticalAlignment="Bottom" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
+            <FlyoutBase.AttachedFlyout>
+                <Flyout x:Name="KBNumFlyout" >
+                    <StackPanel Margin="10">
+                        <TextBlock Text="输入要查询的周次" FontSize="20"/>
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox  Grid.Column="0" Name="KBNumFlyoutTextBox" PlaceholderText="输入要查询的周次" InputScope="Number" KeyUp="KBNumFlyoutTextBox_KeyUp"/>
+                            <AppBarButton Grid.Column="1"  Name="KBNumSearchButton" Icon="Zoom" Click="KBNumSearchButton_Click"/>
+                        </Grid>
+                    </StackPanel>
+                </Flyout>
+            </FlyoutBase.AttachedFlyout>
+        </StackPanel>
+
+        <Grid Name="rootGrid" Grid.Row="1" Background="#fff">
+            <!--课表视图-->
+            <Grid Name="FreeKBGrid"  >
+                <!--课程表格-->
+                <Grid Name="FreeKBTableGrid" Visibility="Collapsed" Margin="0,0,13,0" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <!--日期星期-->
+                    <Grid x:Name="KebiaoWeekGrid" Height="25" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <!--列-->
+                            <ColumnDefinition Width="2 *"/>
+                            <ColumnDefinition Width="3 *"/>
+                            <ColumnDefinition Width="3 *"/>
+                            <ColumnDefinition Width="3 *"/>
+                            <ColumnDefinition Width="3 *"/>
+                            <ColumnDefinition Width="3 *"/>
+                            <ColumnDefinition Width="3 *"/>
+                            <ColumnDefinition Width="3 *"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Name="KebiaoWeekTitleGrid" Grid.ColumnSpan="7" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1 *"/>
+                                <ColumnDefinition Width="1 *"/>
+                                <ColumnDefinition Width="1 *"/>
+                                <ColumnDefinition Width="1 *"/>
+                                <ColumnDefinition Width="1 *"/>
+                                <ColumnDefinition Width="1 *"/>
+                                <ColumnDefinition Width="1 *"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="一" FontSize="18" Foreground="#333" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="二" FontSize="18" Foreground="#333" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="三" FontSize="18" Foreground="#333" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="四" FontSize="18" Foreground="#333" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="五" FontSize="18" Foreground="#333" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="六" FontSize="18" Foreground="#333" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                            <TextBlock Text="日" FontSize="18" Foreground="#333" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+
+                        </Grid>
+                    </Grid>
+                    <ScrollViewer x:Name="KebiaoAllScrollViewer" Height="{Binding ActualHeight, Converter={StaticResource FreeKBScrollViewerHeightConverter}, ElementName=commandBar, Mode=OneWay}" Grid.Row="1" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Hidden">
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2 *"/>
+                                <ColumnDefinition Width="21 *"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0" >
+                                <Grid.RowDefinitions>
+                                    <!--行-->
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                </Grid.RowDefinitions>
+                                <Grid Name="KBAllnum1Grid" Grid.Row="0" Grid.Column="0" Height="65" >
+                                    <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="1"/>
+                                    </TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="1" Grid.Column="0" Height="65" >
+                                    <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="2"/>
+                                    </TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="2" Grid.Column="0" Height="65" >
+                                    <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="3"/>
+                                    </TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="3" Grid.Column="0" Height="65" >
+                                    <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="4"/>
+                                    </TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="4" Grid.Column="0" Height="65" >
+                                    <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="5"/>
+                                    </TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="5" Grid.Column="0" Height="65" >
+                                    <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="6"/>
+                                    </TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="6" Grid.Column="0" Height="65" >
+                                    <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="7"/>
+                                    </TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="7" Grid.Column="0" Height="65" >
+                                    <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="8"/>
+                                    </TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="8" Grid.Column="0" Height="65" >
+                                    <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="9"/>
+                                    </TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="9" Grid.Column="0" Height="65" >
+                                    <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="10"/>
+                                    </TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="10" Grid.Column="0" Height="65" >
+                                    <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="11"/>
+                                    </TextBlock>
+                                </Grid>
+                                <Grid Grid.Row="11" Grid.Column="0" Height="65" >
+                                    <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="12"/>
+                                    </TextBlock>
+                                </Grid>
+                            </Grid>
+                            <!--放课表格子的Grid-->
+                            <Grid VerticalAlignment="Stretch" x:Name="kebiaoGrid" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <!--列-->
+                                    <ColumnDefinition Width="3 *"/>
+                                    <ColumnDefinition Width="3 *"/>
+                                    <ColumnDefinition Width="3 *"/>
+                                    <ColumnDefinition Width="3 *"/>
+                                    <ColumnDefinition Width="3 *"/>
+                                    <ColumnDefinition Width="3 *"/>
+                                    <ColumnDefinition Width="3 *"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <!--行-->
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                    <RowDefinition Height="1 *"/>
+                                </Grid.RowDefinitions>
+                                <FlyoutBase.AttachedFlyout>
+                                    <Flyout x:Name="KBCLassFlyout" >
+                                        <StackPanel Margin="10,10,0,0" >
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Source="../Assets/dialog_course_time_white.png" VerticalAlignment="Top" Width="20" Height="20"/>
+                                                <TextBlock Margin="5,0,0,0"  Text="时    间" FontSize="18" Foreground="White" Grid.Column="1" VerticalAlignment="Top" Height="20" FontWeight="Light"/>
+                                                <Grid Margin="5,0,0,0" Grid.Column="2">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Name="FlyoutFreeDetailWeekTextBlock"  FontSize="18" Foreground="White" Grid.Row="0" FontWeight="Light" Height="20"/>
+                                                    <TextBlock Name="FlyoutFreeDetailTimeTextBlock"  FontSize="18" Foreground="White" Grid.Row="1" FontWeight="Light" Height="20"/>
+                                                </Grid>
+                                            </Grid>
+
+                                            <Grid Margin="0,10,0,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Source="../Assets/dialog_course_peo_white.png" VerticalAlignment="Top" Width="20" Height="20"/>
+
+                                                <Grid Grid.Column="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid Margin="5,0,0,0" >
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="auto"/>
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="小伙伴"  FontSize="18" Grid.Column="0" VerticalAlignment="Top" Foreground="White" Height="20" FontWeight="Light"/>
+                                                        <TextBlock Name="FlyoutFreeDetailPeopleTextBlock"  FontSize="18" Grid.Column="1" Foreground="White" Margin="5,0,0,0" VerticalAlignment="Top" Height="20" FontWeight="Light"/>
+                                                    </Grid>
+                                                    <ListView Name="FlyoutFreeDetailNameGridView" Grid.Row="1">
+                                                        <ListView.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel Orientation="Horizontal" >
+                                                                    <TextBlock Text="{Binding name}" HorizontalAlignment="Left" FontWeight="Light"  FontSize="18" Foreground="White"></TextBlock>
+                                                                    <TextBlock Text="{Binding weekstostr}" HorizontalAlignment="Left" FontWeight="Light"  FontSize="18" Foreground="White"></TextBlock>
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </ListView.ItemTemplate>
+                                                    </ListView>
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Flyout>
+                                </FlyoutBase.AttachedFlyout>
+                            </Grid>
+
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+                <!--加载条-->
+                <StackPanel Name="FreeLoddingStackPanel" Margin="5,0" VerticalAlignment="Center">
+                    <TextBlock Name="FreeLoddingTextBlock" HorizontalAlignment="Center" FontSize="15" Margin="0,0,0,5" Foreground="#333" Text="正在加载..."/>
+                    <ProgressBar Name="FreeLoddingProgressBar" IsIndeterminate="False" Value="0"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar Name="commandBar">
+            <!--<AppBarButton Name="FilterAppBarButton" Icon="Filter" Click="FilterAppBarButton_Click">
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout x:Name="KBNumFlyout" >
+                        <StackPanel Margin="10">
+                            <TextBlock Text="输入要查询的周次" Foreground="#333" FontSize="15"/>
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox VerticalAlignment="Center" Grid.Column="0" Name="KBNumFlyoutTextBox" PlaceholderText="输入学号以查询" InputScope="Number" KeyUp="KBNumFlyoutTextBox_KeyUp"/>
+                                <AppBarButton Grid.Column="1"  Name="KBNumSearchButton" Icon="Zoom" Click="KBNumSearchButton_Click" />
+                            </Grid>
+                        </StackPanel>
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+            </AppBarButton>-->
+            <AppBarButton Name="CalendarWeekAppBarButton" Icon="CalendarWeek" Label="学期" Click="CalendarWeekAppBarButton_Click"/>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Name="ShowWeekendAppBarButton" Label="显示周末课表" Visibility="Collapsed" Click="ShowWeekendAppBarButton_Click"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>

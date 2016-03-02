@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         <StackPanel VerticalAlignment="Top" Orientation="Horizontal" Grid.Row="0" Background="#068cfd" >
             <TextBlock Text="找空闲" FontSize="35" VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" Margin="15,0,0,0"></TextBlock>
-            <TextBlock  Text="第" Margin="5,0,0,0" Foreground="White"  FontSize="20"  VerticalAlignment="Bottom" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
+            <!--<TextBlock  Text="第" Margin="5,0,0,0" Foreground="White"  FontSize="20"  VerticalAlignment="Bottom" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
             <TextBlock Name="HubSectionKBNum" Text=" "  Foreground="White"  FontSize="20"  VerticalAlignment="Bottom" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
             <TextBlock  Text="周"  Foreground="White"  FontSize="20"  VerticalAlignment="Bottom" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
             <FlyoutBase.AttachedFlyout>
@@ -33,7 +33,7 @@
                         </Grid>
                     </StackPanel>
                 </Flyout>
-            </FlyoutBase.AttachedFlyout>
+            </FlyoutBase.AttachedFlyout>-->
         </StackPanel>
 
         <Grid Grid.Row="1" Margin="15">
@@ -46,13 +46,19 @@
                     <ColumnDefinition />
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Name="AddTextBox" PlaceholderText="请输入学号" InputScope="Number" Grid.Column="0"></TextBox>
-                <Button Name="AddButton" Margin="5,0,0,0" RequestedTheme="Light" VerticalAlignment="Top" Content="Add" Grid.Column="1" Click="AddButton_Click"/>
+                <TextBox Name="AddTextBox" PlaceholderText="请输入学号" Grid.Column="0"></TextBox>
+                <Grid Grid.Column="1" Margin="5,0,0,0">
+                    <Button Name="AddButton" Margin="5,0,0,0" RequestedTheme="Light" VerticalAlignment="Top" Content="添加" Grid.Column="1" Click="AddButton_Click"/>
+                    <ProgressRing Name="AddProgressRing" Background="Transparent" />
+                </Grid>
             </Grid>
-            <ListView Name="uIdListView" Grid.Row="1" IsItemClickEnabled="True" ItemClick="uIdListView_ItemClick">
+            <ListView Name="uIdListView" SelectionMode="None" Grid.Row="1" IsItemClickEnabled="True" ItemClick="uIdListView_ItemClick">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding uName}" FontSize="18" Foreground="#333"></TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding uName}" FontSize="18" Foreground="#333"></TextBlock>
+                            <TextBlock Text="{Binding uId}" Margin="5,0,0,0" FontSize="18" Foreground="#333"></TextBlock>
+                        </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
@@ -62,6 +68,7 @@
 
     <Page.BottomAppBar>
         <CommandBar>
+            <AppBarButton Name="DeleteAppBarToggleButton" Icon="Delete" Label="清空" Click="DeleteAppBarToggleButton_Click"></AppBarButton>
             <AppBarToggleButton Name="ForwardAppBarToggleButton" Icon="Forward" Label="下一步" Click="ForwardAppBarToggleButton_Click"/>
         </CommandBar>
     </Page.BottomAppBar>

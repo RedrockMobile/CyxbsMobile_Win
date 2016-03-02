@@ -174,17 +174,17 @@ namespace ZSCY_Win10.Util
                 JObject obj = JObject.Parse(jsonstring);
                 //if (Int32.Parse(obj[sstatus].ToString()) == 200)
                 //{
-                    JObject jObject = (JObject)JsonConvert.DeserializeObject(jsonstring);
-                    try
-                    {
-                        string json = jObject[sdata].ToString();
-                        JArray jArray = (JArray)JsonConvert.DeserializeObject(json);
-                        return jArray;
-                    }
-                    catch (Exception)
-                    {
-                    }
-                    return null;
+                JObject jObject = (JObject)JsonConvert.DeserializeObject(jsonstring);
+                try
+                {
+                    string json = jObject[sdata].ToString();
+                    JArray jArray = (JArray)JsonConvert.DeserializeObject(json);
+                    return jArray;
+                }
+                catch (Exception)
+                {
+                }
+                return null;
                 //}
                 //else
                 //{
@@ -215,25 +215,25 @@ namespace ZSCY_Win10.Util
                 {
                     case 0:
                         return "日";
-                        //break;你都return了还要什么break
+                    //break;你都return了还要什么break
                     case 1:
                         return "一";
-                        //break;
+                    //break;
                     case 2:
                         return "二";
-                        //break;
+                    //break;
                     case 3:
                         return "三";
-                        //break;
+                    //break;
                     case 4:
                         return "四";
-                        //break;
+                    //break;
                     case 5:
                         return "五";
-                        //break;
+                    //break;
                     case 6:
                         return "六";
-                        //break;
+                    //break;
                     default:
                         return "";
                 }

@@ -8,7 +8,9 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.StartScreen;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -31,6 +33,11 @@ namespace ZSCY_Win10
         public LoginPage()
         {
             this.InitializeComponent();
+            var view = ApplicationView.GetForCurrentView();
+            view.TitleBar.BackgroundColor = Color.FromArgb(255, 4, 131, 239);
+            view.TitleBar.ButtonBackgroundColor = Color.FromArgb(255, 4, 131, 239);
+            view.TitleBar.ButtonHoverBackgroundColor = Color.FromArgb(255, 2, 126, 231);
+            view.TitleBar.ButtonPressedBackgroundColor = Color.FromArgb(255, 2, 111, 203);
             this.SizeChanged += (s, e) =>
               {
                   var state = "VisualState000";

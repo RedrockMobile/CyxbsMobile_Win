@@ -36,12 +36,12 @@ namespace ZSCY_Win10
         private string kb = "";
         private int wOa = 1;
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
-        ApplicationDataContainer appSettingclass = Windows.Storage.ApplicationData.Current.RoamingSettings;
         IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
         Grid backweekgrid = new Grid();
         TextBlock[] DateOnKBTextBlock = new TextBlock[7] { new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock() };
         List<ClassList> classList = new List<ClassList>();
         string[,][] classtime = new string[7, 6][];
+        private Dictionary<string, int> colorlist = new Dictionary<string, int>(); //课表格子颜色
         public KBPage()
         {
             this.InitializeComponent();
@@ -253,6 +253,7 @@ namespace ZSCY_Win10
                     else
                         appSetting.Values["nowWeek"] = obj["nowWeek"].ToString();
                     HubSectionKBNum.Text = " | 第" + appSetting.Values["nowWeek"].ToString() + "周";
+                    todayNumofstuTextBlock.Text = "开学第" + ((Int16.Parse(appSetting.Values["nowWeek"].ToString()) - 1) * 7 + (Int16.Parse(Utils.GetWeek()) == 0 ? 7 : Int16.Parse(Utils.GetWeek()))).ToString() + "天";
                     //showKB(2, Int32.Parse(appSetting.Values["nowWeek"].ToString()));
 #if DEBUG
                     showKB(2);
@@ -330,9 +331,9 @@ namespace ZSCY_Win10
                 classitem.GetAttribute((JObject)ClassListArray[i]);
                 classList.Add(classitem);
                 int ClassColor = 0;
-                if (!appSettingclass.Values.ContainsKey(classitem.Course))
+                if (!colorlist.ContainsKey(classitem.Course))
                 {
-                    appSettingclass.Values[classitem.Course] = ColorI;
+                    colorlist[classitem.Course] = ColorI;
                     ClassColor = ColorI;
                     ColorI++;
                     if (ColorI > 2)
@@ -340,7 +341,7 @@ namespace ZSCY_Win10
                 }
                 else
                 {
-                    ClassColor = System.Int32.Parse(appSettingclass.Values[classitem.Course].ToString());
+                    ClassColor = System.Int32.Parse(colorlist[classitem.Course].ToString());
                 }
                 if (weekOrAll == 1)
                 {
@@ -368,7 +369,6 @@ namespace ZSCY_Win10
                     }
                 }
             }
-            appSettingclass.Values.Clear();
 
             //当日课表显示
             KebiaoDayGrid.Children.Clear();
@@ -388,7 +388,7 @@ namespace ZSCY_Win10
                 }
 #endif
             }
-
+            colorlist.Clear();
 
         }
 
