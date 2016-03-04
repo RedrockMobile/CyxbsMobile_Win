@@ -64,7 +64,23 @@ namespace ZSCY.Util
                 var ll = diisclist.ToList();
                 for (int i = 0; i < ll.Count; i++)
                 {
-                    ClassListLight tobeadded = ll[i].ToList()[0].Clone();
+                    var len = ll[i].ToList();
+                    ClassListLight tobeadded = len[0].Clone();
+                    if (len.Count == 1)
+                    {
+                        tobeadded.Name = len[0].Name;
+                        Debug.WriteLine("长度是" + len.Count);
+                    }
+                    if (len.Count > 1)
+                    {
+                        string[] haveclassname = new string[len.Count];
+                        //获得一个ClassListLight的深复制
+                        tobeadded.Name = haveclassname;
+                        for (int k = 0; k < len.Count; k++)
+                        {
+                            tobeadded.Name[k] = len[k].Name[0];
+                        }
+                    }
                     if (tobeadded.Name.Length!= names.Length)
                     {
                         tobeadded.Name = names.Except(tobeadded.Name).ToArray();
