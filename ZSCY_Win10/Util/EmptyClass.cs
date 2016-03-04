@@ -67,8 +67,6 @@ namespace ZSCY_Win10.Util
                 //遍历这个List
                 for (int i = 0; i < ll.Count; i++)
                 {
-                    //ll[i].Count=1&&人名数组， 全部人
-                    //ll[i].Count>1
                     var len = ll[i].ToList();
                     ClassListLight tobeadded = len[0].Clone();
                     if (len.Count == 1)
