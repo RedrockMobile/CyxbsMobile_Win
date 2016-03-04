@@ -23,9 +23,9 @@ namespace ZSCY_Win10.Util
         public EmptyClass(int weeknum, Dictionary<string, List<ClassListLight>> searchlist)
         {
 
-            this.Weeknum=weeknum;
+            this.Weeknum = weeknum;
             this.Searchlist = searchlist;
-            if (weeknum < 0 && weeknum !=-100)
+            if (weeknum < 0 && weeknum != -100)
             {
                 this.Weeknum = 11;
             }
@@ -60,14 +60,34 @@ namespace ZSCY_Win10.Util
                 }
                 //clist = clist.OrderBy(x => x.Hash_day).ToList();
                 //筛选出该周内所有不在同一时间上课的课    
+                //按上课周几和上课时段分组，如果某个组长度小于总人数则选择这个组//即得到不是所有人都有课的时间，
                 var diisclist = from n in clist group n by new { n.Hash_day, n.Hash_lesson } into g where g.Count() < names.Length select g;
+                //将结果从IEnumerable<T>转成List
                 var ll = diisclist.ToList();
+                //遍历这个List
                 for (int i = 0; i < ll.Count; i++)
                 {
-                    ClassListLight tobeadded = ll[i].ToList()[0].Clone();
-                    if (tobeadded.Name.Length!= names.Length)
+                    var len = ll[i].ToList();
+                    ClassListLight tobeadded = len[0].Clone();
+                    if (len.Count == 1)
                     {
-                        tobeadded.Name = (from n in names where !tobeadded.Name.Contains(n) select n).ToArray();//names.Except(tobeadded.Name).ToArray();
+                        tobeadded.Name = len[0].Name;
+                        Debug.WriteLine("长度是" + len.Count);
+                    }
+                    if (len.Count > 1)
+                    {
+                        string[] haveclassname = new string[len.Count];
+                        //获得一个ClassListLight的深复制
+                        tobeadded.Name = haveclassname;
+                        for (int k = 0; k < len.Count; k++)
+                        {
+                            tobeadded.Name[k] = len[k].Name[0];
+                        }
+                    }
+
+                    if (tobeadded.Name.Length != names.Length)
+                    {
+                        tobeadded.Name = names.Except(tobeadded.Name).ToArray();
                     }
                     weekresult.Add(tobeadded);
                 }
@@ -102,7 +122,7 @@ namespace ZSCY_Win10.Util
                                 onweeks.AddRange(listweek[m]);
                             }
                             int[] free = allweeks.Except(onweeks.ToArray()).ToArray();
-                            free = free.Distinct().ToArray() ;
+                            free = free.Distinct().ToArray();
                             if (listweek.Count == 0)//这个时候我没课
                             {
                                 temp.nameweek.Add(key, allweeks);
