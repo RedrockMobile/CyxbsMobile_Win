@@ -66,6 +66,7 @@ namespace ZSCY.Pages
                 //    if(FreeDetailStackPanel.Visibility ==Visibility.Visible)
                 //        KBCLassFlyout.ShowAt(FreeDetailGrid);
                 //}
+                FreeDetailNameListView.Height = e.NewSize.Height - 50 - 40 - 10 - 20 - 48;
                 KebiaoAllScrollViewer.Height = e.NewSize.Height - 48 - 25;
                 cutoffLine.Y2 = e.NewSize.Height;
                 VisualStateManager.GoToState(this, state, true);
@@ -83,7 +84,7 @@ namespace ZSCY.Pages
         {
             AuIdList auIdList = (AuIdList)e.Parameter;
             muIdList = auIdList.muIdList;
-            FreeDetailNameGridView.ItemsSource = peoplelist;
+            FreeDetailNameListView.ItemsSource = peoplelist;
             FlyoutFreeDetailNameGridView.ItemsSource = peoplelist;
             initFree();
         }

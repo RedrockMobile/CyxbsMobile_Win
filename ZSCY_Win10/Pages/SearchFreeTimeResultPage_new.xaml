@@ -247,7 +247,7 @@
                                 </Flyout>
                             </FlyoutBase.AttachedFlyout>
                         </Grid>
-                        
+
                     </Grid>
                 </ScrollViewer>
             </Grid>
@@ -301,16 +301,18 @@
                             <TextBlock Text="小伙伴" Margin="5,0,0,0" Grid.Column="0" VerticalAlignment="Top" Foreground="#333" Height="20" FontWeight="Light"/>
                             <TextBlock Name="FreeDetailPeopleTextBlock" Grid.Column="1" Foreground="#333" Margin="5,0,0,0" VerticalAlignment="Top" Height="20" FontWeight="Light"/>
                         </Grid>
-                        <ListView Name="FreeDetailNameGridView" Grid.Row="1" Width="auto">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Vertical" >
-                                        <TextBlock Text="{Binding name}" HorizontalAlignment="Left" FontWeight="Light" Foreground="#333"></TextBlock>
-                                        <TextBlock Text="{Binding weekstostr}" HorizontalAlignment="Left" FontWeight="Light" Foreground="#333"></TextBlock>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                        <ScrollViewer Grid.Row="1" Width="auto">
+                            <ListView Name="FreeDetailNameListView"  Grid.Row="1" Width="auto">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Vertical" >
+                                            <TextBlock Text="{Binding name}" HorizontalAlignment="Left" FontWeight="Light" Foreground="#333"></TextBlock>
+                                            <TextBlock Text="{Binding weekstostr}" HorizontalAlignment="Left" FontWeight="Light" Foreground="#333"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </ScrollViewer>
                     </Grid>
                 </Grid>
             </StackPanel>
