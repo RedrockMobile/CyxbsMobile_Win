@@ -67,7 +67,7 @@ namespace ZSCY_Win10.Util
                     ClassListLight tobeadded = ll[i].ToList()[0].Clone();
                     if (tobeadded.Name.Length!= names.Length)
                     {
-                        tobeadded.Name = (from n in names where tobeadded.Name.Contains(n) select n).ToArray();//names.Except(tobeadded.Name).ToArray();
+                        tobeadded.Name = (from n in names where !tobeadded.Name.Contains(n) select n).ToArray();//names.Except(tobeadded.Name).ToArray();
                     }
                     weekresult.Add(tobeadded);
                 }
