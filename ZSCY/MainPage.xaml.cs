@@ -79,6 +79,7 @@ namespace ZSCY
             //MoreGRNumTextBlock.Text = appSetting.Values["stuNum"].ToString();
             //this.navigationHelper = new NavigationHelper(this);
             //this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
+            this.NavigationCacheMode = NavigationCacheMode.Required;
 
             stuNum = appSetting.Values["stuNum"].ToString();
             //initKB();
@@ -776,19 +777,26 @@ namespace ZSCY
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            JWListView.ItemsSource = JWList;
-            XWListView.ItemsSource = XWList;
-            CYListView.ItemsSource = CYList;
-            XSListView.ItemsSource = XSList;
+            //JWListView.ItemsSource = JWList;
+            //XWListView.ItemsSource = XWList;
+            //CYListView.ItemsSource = CYList;
+            //XSListView.ItemsSource = XSList;
             UmengSDK.UmengAnalytics.TrackPageStart("MainPage");
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
                                                                        //this.navigationHelper.OnNavigatedTo(e);
             var group = await DataSource.Get();
-            this.Morepageclass["Group"] = group;
             if (e.NavigationMode == NavigationMode.Forward || e.NavigationMode == NavigationMode.New)
+            {
+
+                this.Morepageclass["Group"] = group;
                 initKB();
+            }
 
-
+            await Task.Delay(1);
+            JWListView.ItemsSource = JWList;
+            XWListView.ItemsSource = XWList;
+            CYListView.ItemsSource = CYList;
+            XSListView.ItemsSource = XSList;
 
             //PushNotificationChannel channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
             // 如果本地设置中没有相关键，表明是第一次使用
@@ -859,6 +867,33 @@ namespace ZSCY
             UmengSDK.UmengAnalytics.TrackPageEnd("MainPage");
             await statusBar.ProgressIndicator.HideAsync();
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
+            //switch (NewsPivot.SelectedIndex)
+            //{
+            //    case 0:
+            //        XWListView.ItemsSource = null;
+            //        CYListView.ItemsSource = null;
+            //        XSListView.ItemsSource = null;
+            //        break;
+            //    case 1:
+            //        JWListView.ItemsSource = null;
+            //        CYListView.ItemsSource = null;
+            //        XSListView.ItemsSource = null;
+            //        break;
+            //    case 2:
+            //        JWListView.ItemsSource = null;
+            //        XWListView.ItemsSource = null;
+            //        XSListView.ItemsSource = null;
+            //        break;
+            //    case 3:
+            //        JWListView.ItemsSource = null;
+            //        XWListView.ItemsSource = null;
+            //        CYListView.ItemsSource = null;
+            //        break;
+            //}
+            JWListView.ItemsSource = null;
+            XWListView.ItemsSource = null;
+            CYListView.ItemsSource = null;
+            XSListView.ItemsSource = null;
             //this.navigationHelper.OnNavigatedFrom(e);
 
         }
@@ -915,6 +950,21 @@ namespace ZSCY
                         KBCalendarAppBarButton.Visibility = Visibility.Collapsed;
                         NewsRefreshAppBarButton.Visibility = Visibility.Visible;
                         MoreSwitchAppBarButton.Visibility = Visibility.Collapsed;
+                        //switch (NewsPivot.SelectedIndex)
+                        //{
+                        //    case 0:
+                        //        JWListView.ItemsSource = JWList;
+                        //        break;
+                        //    case 1:
+                        //        XWListView.ItemsSource = XWList;
+                        //        break;
+                        //    case 2:
+                        //        CYListView.ItemsSource = CYList;
+                        //        break;
+                        //    case 3:
+                        //        XSListView.ItemsSource = XSList;
+                        //        break;
+                        //}
                         break;
                     case "MoreHubSection":
                         //MoreGRGrid.Margin = new Thickness(-20,0,0,0);
@@ -1113,6 +1163,10 @@ namespace ZSCY
             {
                 case 0:
                     type = "jwzx";
+                    JWListView.ItemsSource = JWList;
+                    XWListView.ItemsSource = null;
+                    CYListView.ItemsSource = null;
+                    XSListView.ItemsSource = null;
                     JWTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 11, 11, 11));
                     XWTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 66, 66, 66));
                     CYTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 66, 66, 66));
@@ -1120,6 +1174,10 @@ namespace ZSCY
                     break;
                 case 1:
                     type = "xwgg";
+                    XWListView.ItemsSource = XWList;
+                    JWListView.ItemsSource = null;
+                    CYListView.ItemsSource = null;
+                    XSListView.ItemsSource = null;
                     JWTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 66, 66, 66));
                     XWTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 11, 11, 11));
                     CYTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 66, 66, 66));
@@ -1127,6 +1185,10 @@ namespace ZSCY
                     break;
                 case 2:
                     type = "cyxw ";
+                    CYListView.ItemsSource = CYList;
+                    JWListView.ItemsSource = null;
+                    XWListView.ItemsSource = null;
+                    XSListView.ItemsSource = null;
                     JWTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 66, 66, 66));
                     XWTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 66, 66, 66));
                     CYTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 11, 11, 11));
@@ -1134,6 +1196,10 @@ namespace ZSCY
                     break;
                 case 3:
                     type = "xsjz ";
+                    XSListView.ItemsSource = XSList;
+                    JWListView.ItemsSource = null;
+                    XWListView.ItemsSource = null;
+                    CYListView.ItemsSource = null;
                     JWTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 66, 66, 66));
                     XWTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 66, 66, 66));
                     CYTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 66, 66, 66));
