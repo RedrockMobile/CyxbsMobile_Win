@@ -42,7 +42,7 @@ namespace ZSCY.Pages
         private ObservableCollection<People> peoplelist = new ObservableCollection<People>();
         private Dictionary<string, int> colorlist = new Dictionary<string, int>();
         private bool weekorterm = false;//查询的是周还是学期，周false,学期true;
-        
+
         private string[,][] ResultName = new string[7, 6][];
         int week; //周次，-100为学期
         int week_old; //周次，切换到学期后保存切换前的周次
@@ -281,8 +281,12 @@ namespace ZSCY.Pages
                 AllPeopleTextBlock.VerticalAlignment = VerticalAlignment.Bottom;
                 AllPeopleTextBlock.HorizontalAlignment = HorizontalAlignment.Right;
                 AllPeopleTextBlock.Margin = new Thickness(1);
+                //BackGrid.Background = new SolidColorBrush(Color.FromArgb(255, 88, 179, 255));
                 BackGrid.Children.Add(AllPeopleTextBlock);
             }
+            //else
+            //    BackGrid.Background = new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
+
 
             BackGrid.Children.Add(ClassTextBlock);
             BackGrid.Tapped += BackGrid_Tapped;

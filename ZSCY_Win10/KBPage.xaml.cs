@@ -52,7 +52,7 @@ namespace ZSCY_Win10
                 {
                     TodayTitleStackPanel.Visibility = Visibility.Collapsed;
                 }
-                if (e.NewSize.Width < (400-48))
+                if (e.NewSize.Width < (400))
                 {
                     KBTitleGrid.Margin = new Thickness(48, 0, 0, 0);
                 }

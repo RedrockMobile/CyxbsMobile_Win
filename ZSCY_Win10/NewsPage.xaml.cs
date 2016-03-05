@@ -55,7 +55,7 @@ namespace ZSCY_Win10
                     }
                     JWListView.Width = e.NewSize.Width;
                 }
-                if (e.NewSize.Width < (400 - 48))
+                if (e.NewSize.Width < (400))
                 {
                     NewsTitleGrid.Margin = new Thickness(48, 0, 0, 0);
                 }

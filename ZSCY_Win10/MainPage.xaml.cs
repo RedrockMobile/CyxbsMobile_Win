@@ -364,5 +364,15 @@ namespace ZSCY_Win10
                 }
             }
         }
+
+        private void ManipulationStackPanel_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
+        {
+
+        }
+
+        private void ManipulationStackPanel_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingRoutedEventArgs e)
+        {
+            RootSplitView.IsPaneOpen = true;
+        }
     }
 }

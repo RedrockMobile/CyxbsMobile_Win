@@ -32,6 +32,8 @@
                 <controls:NavMenuListView x:Name="NavMenuList"
                                           TabIndex="3"
                                           Margin="0,48,0,0"
+                                          ManipulationInertiaStarting="ManipulationStackPanel_ManipulationInertiaStarting"
+                                          ManipulationMode="All"
                                           ContainerContentChanging="NavMenuItemContainerContentChanging"
                                           ItemContainerStyle="{StaticResource NavMenuItemContainerStyle}"
                                           ItemTemplate="{StaticResource NavMenuItemTemplate}"
@@ -54,6 +56,11 @@
                 </Frame.ContentTransitions>
             </Frame>
         </SplitView>
+
+        <StackPanel Name="ManipulationStackPanel" Width="20" Background="#00ffffff" HorizontalAlignment="Left" VerticalAlignment="Stretch" ManipulationStarted="ManipulationStackPanel_ManipulationStarted" ManipulationInertiaStarting="ManipulationStackPanel_ManipulationInertiaStarting" ManipulationMode="All">
+            
+        </StackPanel>
+        
         <!--汉堡菜单-->
         <ToggleButton x:Name="TogglePaneButton"
                       TabIndex="1"
