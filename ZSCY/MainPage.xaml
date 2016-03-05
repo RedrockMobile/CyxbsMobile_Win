@@ -251,7 +251,7 @@
                                 <PivotItem.Header>
                                     <TextBlock Name="JWTextBlock" Text="教务新闻" FontWeight="Light" Foreground="#666" FontSize="20"></TextBlock>
                                 </PivotItem.Header>
-                                <ScrollViewer VerticalScrollBarVisibility="Hidden" Height="{Binding ActualHeight, Converter={StaticResource JWScrollViewerHeighConverter}, ElementName=AppCommandBar, Mode=OneWay}">
+                                <ScrollViewer Name="JWScrollViewer" VerticalScrollBarVisibility="Hidden" Height="{Binding ActualHeight, Converter={StaticResource JWScrollViewerHeighConverter}, ElementName=AppCommandBar, Mode=OneWay}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition/>
@@ -309,7 +309,7 @@
                                 <PivotItem.Header>
                                     <TextBlock Name="XWTextBlock" Text="校务公告" FontWeight="Light" Foreground="#666" FontSize="20"></TextBlock>
                                 </PivotItem.Header>
-                                <ScrollViewer VerticalScrollBarVisibility="Hidden"  Height="{Binding ActualHeight, Converter={StaticResource JWScrollViewerHeighConverter}, ElementName=AppCommandBar, Mode=OneWay}">
+                                <ScrollViewer Name="XWScrollViewer" VerticalScrollBarVisibility="Hidden"  Height="{Binding ActualHeight, Converter={StaticResource JWScrollViewerHeighConverter}, ElementName=AppCommandBar, Mode=OneWay}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition/>
@@ -368,7 +368,7 @@
                                     <TextBlock Name="CYTextBlock" Text="重邮新闻" FontWeight="Light" Foreground="#666" FontSize="20"></TextBlock>
                                 </PivotItem.Header>
 
-                                <ScrollViewer VerticalScrollBarVisibility="Hidden"  Height="{Binding ActualHeight, Converter={StaticResource JWScrollViewerHeighConverter}, ElementName=AppCommandBar, Mode=OneWay}">
+                                <ScrollViewer Name="CYScrollViewer" VerticalScrollBarVisibility="Hidden"  Height="{Binding ActualHeight, Converter={StaticResource JWScrollViewerHeighConverter}, ElementName=AppCommandBar, Mode=OneWay}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition/>
@@ -438,7 +438,7 @@
                                 <PivotItem.Header>
                                     <TextBlock Name="XSTextBlock" Text="学术讲座" FontWeight="Light" Foreground="#666" FontSize="20"></TextBlock>
                                 </PivotItem.Header>
-                                <ScrollViewer VerticalScrollBarVisibility="Hidden"  Height="{Binding ActualHeight, Converter={StaticResource JWScrollViewerHeighConverter}, ElementName=AppCommandBar, Mode=OneWay}">
+                                <ScrollViewer Name="XSScrollViewer" VerticalScrollBarVisibility="Hidden"  Height="{Binding ActualHeight, Converter={StaticResource JWScrollViewerHeighConverter}, ElementName=AppCommandBar, Mode=OneWay}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition/>

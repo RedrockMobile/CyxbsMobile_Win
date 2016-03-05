@@ -53,6 +53,9 @@ namespace ZSCY
         ObservableCollection<NewsList> XWList = new ObservableCollection<NewsList>();
         ObservableCollection<NewsList> CYList = new ObservableCollection<NewsList>();
         ObservableCollection<NewsList> XSList = new ObservableCollection<NewsList>();
+
+        double[] ScrollViewerVerticalOffset = new double[] { 0, 0, 0, 0 };
+
         int[] pagestatus = new int[] { 0, 0, 0, 0 };
 
 
@@ -83,7 +86,7 @@ namespace ZSCY
 
             stuNum = appSetting.Values["stuNum"].ToString();
             //initKB();
-            initJW();
+            //initJW();
         }
 
         private void SetKebiaoGridBorder(int week)
@@ -646,7 +649,8 @@ namespace ZSCY
                                     content = content.Replace("&nbsp;", "");
                                     content = content.Replace(" ", "");
                                     content = content.Replace("（见附件）", "见附件");
-                                    content = content.Replace("Normal07.8磅02falsefalsefalseMicrosoftInternetExplorer4", "");
+                                    content = content.Replace("MicrosoftInternetExplorer4", "");
+                                    content = content.Replace("Normal07.8磅02falsefalsefalse", "");
 
                                     //while (content.StartsWith("\r\n "))
                                     //    content = content.Substring(3);
@@ -797,6 +801,10 @@ namespace ZSCY
             XWListView.ItemsSource = XWList;
             CYListView.ItemsSource = CYList;
             XSListView.ItemsSource = XSList;
+            JWScrollViewer.ChangeView(0, ScrollViewerVerticalOffset[0], 1);
+            XWScrollViewer.ChangeView(0, ScrollViewerVerticalOffset[1], 1);
+            CYScrollViewer.ChangeView(0, ScrollViewerVerticalOffset[2], 1);
+            XSScrollViewer.ChangeView(0, ScrollViewerVerticalOffset[3], 1);
 
             //PushNotificationChannel channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
             // 如果本地设置中没有相关键，表明是第一次使用
@@ -890,6 +898,12 @@ namespace ZSCY
             //        CYListView.ItemsSource = null;
             //        break;
             //}
+
+            ScrollViewerVerticalOffset[0] = JWScrollViewer.VerticalOffset;
+            ScrollViewerVerticalOffset[1] = XWScrollViewer.VerticalOffset;
+            ScrollViewerVerticalOffset[2] = CYScrollViewer.VerticalOffset;
+            ScrollViewerVerticalOffset[3] = XSScrollViewer.VerticalOffset;
+
             JWListView.ItemsSource = null;
             XWListView.ItemsSource = null;
             CYListView.ItemsSource = null;
