@@ -49,7 +49,7 @@ namespace ZSCY_Win10
                     }
                     MoreListView.Width = e.NewSize.Width;
                 }
-                if (e.NewSize.Width < (400))
+                if (!App.showpane)
                 {
                     MoreTitleGrid.Margin = new Thickness(48, 0, 0, 0);
                 }

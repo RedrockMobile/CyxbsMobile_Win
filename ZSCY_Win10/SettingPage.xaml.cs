@@ -48,7 +48,7 @@ namespace ZSCY_Win10
             }
             this.SizeChanged += (s, e) =>
             {
-                if (e.NewSize.Width < (400))
+                if (!App.showpane)
                 {
                     SetTitleGrid.Margin = new Thickness(48, 0, 0, 0);
                 }

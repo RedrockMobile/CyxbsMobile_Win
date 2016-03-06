@@ -57,7 +57,7 @@
             </Frame>
         </SplitView>
 
-        <StackPanel Name="ManipulationStackPanel" Width="20" Background="#00ffffff" HorizontalAlignment="Left" VerticalAlignment="Stretch" ManipulationStarted="ManipulationStackPanel_ManipulationStarted" ManipulationInertiaStarting="ManipulationStackPanel_ManipulationInertiaStarting" ManipulationMode="All">
+        <StackPanel Name="ManipulationStackPanel" Width="20" Background="#00ffffff" HorizontalAlignment="Left" VerticalAlignment="Stretch" ManipulationInertiaStarting="ManipulationStackPanel_ManipulationInertiaStarting" ManipulationMode="All">
             
         </StackPanel>
         
