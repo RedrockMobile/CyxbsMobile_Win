@@ -31,11 +31,6 @@
       "Itemimgsrc": "Assets/more_freetime.png"
     },
     {
-      "UniqueId": "Card",
-      "Itemname": "一卡通",
-      "Itemimgsrc": "Assets/more_card.png"
-    },
-    {
       "UniqueId": "Setting",
       "Itemname": "设置",
       "Itemimgsrc": "Assets/Settings-100.png"

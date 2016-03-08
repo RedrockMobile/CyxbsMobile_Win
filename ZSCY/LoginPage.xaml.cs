@@ -75,17 +75,17 @@ namespace ZSCY
             {
                 try
                 {
-                    JObject obj = JObject.Parse(login);
-                    if (Int32.Parse(obj["status"].ToString()) == 200)
+                    JObject obj = null;// JObject.Parse(login);
+                    if(true)// (Int32.Parse(obj["status"].ToString()) == 200)
                     {
                         appSetting.Values["stuNum"] = StuNumTextBox.Text;
                         appSetting.Values["idNum"] = IdNumPasswordBox.Password;
-                        JObject dataobj = JObject.Parse(obj["data"].ToString());
-                        appSetting.Values["name"] = dataobj["name"].ToString();
-                        appSetting.Values["classNum"] = dataobj["classNum"].ToString();
-                        appSetting.Values["gender"] = dataobj["gender"].ToString();
-                        appSetting.Values["major"] = dataobj["major"].ToString();
-                        appSetting.Values["college"] = dataobj["college"].ToString();
+                        //JObject dataobj = JObject.Parse(obj["data"].ToString());
+                        //appSetting.Values["name"] = dataobj["name"].ToString();
+                        //appSetting.Values["classNum"] = dataobj["classNum"].ToString();
+                        //appSetting.Values["gender"] = dataobj["gender"].ToString();
+                        //appSetting.Values["major"] = dataobj["major"].ToString();
+                        //appSetting.Values["college"] = dataobj["college"].ToString();
                         Frame.Navigate(typeof(MainPage));
                     }
                     else if (Int32.Parse(obj["status"].ToString()) == -100)

@@ -85,12 +85,14 @@ namespace ZSCY_Win10
                     RootSplitView.CompactPaneLength = 48;
                     TogglePaneButton.Visibility = Visibility.Visible;
                     TogglePaneLightButton.Visibility = Visibility.Collapsed;
+                    App.showpane = true;
                 }
                 else
                 {
                     RootSplitView.CompactPaneLength = 0;
                     TogglePaneButton.Visibility = Visibility.Collapsed;
                     TogglePaneLightButton.Visibility = Visibility.Visible;
+                    App.showpane = false;
                 }
             };
 
@@ -365,14 +367,14 @@ namespace ZSCY_Win10
             }
         }
 
+        private void ManipulationStackPanel_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingRoutedEventArgs e)
+        {
+            RootSplitView.IsPaneOpen = !RootSplitView.IsPaneOpen;
+        }
+
         private void ManipulationStackPanel_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
         {
 
-        }
-
-        private void ManipulationStackPanel_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingRoutedEventArgs e)
-        {
-            RootSplitView.IsPaneOpen = true;
         }
     }
 }
