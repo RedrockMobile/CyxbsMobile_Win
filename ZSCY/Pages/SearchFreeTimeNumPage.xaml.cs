@@ -112,7 +112,16 @@ namespace ZSCY.Pages
                                 if (muIDArray.Find(p => p.uId.Equals(Personalitem.Stunum)) != null)
                                     Utils.Message("此学号已添加");
                                 else
-                                    App.muIdList.Add(new uIdList { uId = Personalitem.Stunum, uName = Personalitem.Name });
+                                {
+                                    if (Personalitem.Stunum == AddTextBox.Text || Personalitem.Name == AddTextBox.Text)
+                                        App.muIdList.Add(new uIdList { uId = Personalitem.Stunum, uName = Personalitem.Name });
+                                    else
+                                    {
+                                        MenuFlyout PeopleListMenuFlyout = new MenuFlyout();
+                                        PeopleListMenuFlyout.Items.Add(getPeopleListMenuFlyoutItem(Personalitem.Name + "-" + Personalitem.Major + "-" + Personalitem.Stunum));
+                                        PeopleListMenuFlyout.ShowAt(AddTextBox);
+                                    }
+                                }
                             }
                             //JObject dataobj = JObject.Parse(obj["data"].ToString());
                         }
