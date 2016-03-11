@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
@@ -42,12 +43,12 @@ namespace ZSCY.Pages
         private ObservableCollection<People> peoplelist = new ObservableCollection<People>();
         private Dictionary<string, int> colorlist = new Dictionary<string, int>();
         private bool weekorterm = false;//查询的是周还是学期，周false,学期true;
-
+        public bool IsBusy = false;
         private string[,][] ResultName = new string[7, 6][];
         int week; //周次，-100为学期
         int week_old; //周次，切换到学期后保存切换前的周次
         bool showWeekend = false;
-
+        #region 一些方法太多了。。
         private ApplicationDataContainer appSetting;
         public SearchFreeTimeResultPage_new()
         {
@@ -141,7 +142,9 @@ namespace ZSCY.Pages
             }
             //查无课表，参数第几周==
             EmptyClass ec = new EmptyClass(week, forsearchlist);
-            ec.getfreetime(result, termresult);
+            //ec.getfreetime(result, termresult);
+            // await ec.getfreetimeasync(result, termresult);
+           await GetData(ec);
             //freetime(11, forsearchlist);
             FreeLoddingStackPanel.Visibility = Visibility.Collapsed;
             FreeKBTableGrid.Visibility = Visibility.Visible;
@@ -390,11 +393,6 @@ namespace ZSCY.Pages
             FreeDetailStackPanel.Visibility = Visibility.Visible;
         }
 
-        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
-        {
-        }
-
-
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
@@ -423,7 +421,6 @@ namespace ZSCY.Pages
         {
             weekorterm = false;
             KBNumSearch();
-
         }
 
         /// <summary>
@@ -447,7 +444,7 @@ namespace ZSCY.Pages
         /// <summary>
         /// 输入周查课表
         /// </summary>
-        private void KBNumSearch()
+        private async void KBNumSearch()
         {
             if (KBNumFlyoutTextBox.Text != "" && KBNumFlyoutTextBox.Text.IndexOf(".") == -1)
             {
@@ -459,7 +456,9 @@ namespace ZSCY.Pages
                     ResultName = new string[7, 6][];
                     EmptyClass ec = new EmptyClass(week, forsearchlist);
                     result = new ObservableCollection<ClassListLight>();
-                    ec.getfreetime(result, termresult);
+                    //ec.getfreetime(result, termresult);
+                    //await ec.getfreetimeasync(result, termresult);
+                    await GetData(ec);
                     showFreeKB(result, showWeekend);
                 }
                 catch (Exception)
@@ -475,7 +474,7 @@ namespace ZSCY.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CalendarWeekAppBarButton_Click(object sender, RoutedEventArgs e)
+        private async void CalendarWeekAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             if (week != -100)
             {
@@ -485,7 +484,9 @@ namespace ZSCY.Pages
                 FilterAppBarButton.Visibility = Visibility.Collapsed;
                 ResultName.Initialize();
                 EmptyClass ec = new EmptyClass(week, forsearchlist);
-                ec.getfreetime(result, termresult);
+                //ec.getfreetime(result, termresult);
+                //await ec.getfreetimeasync(result, termresult);
+                await GetData(ec);
                 showFreeKB(termresult, showWeekend);
             }
             else
@@ -496,7 +497,9 @@ namespace ZSCY.Pages
                 FilterAppBarButton.Visibility = Visibility.Visible;
                 ResultName.Initialize();
                 EmptyClass ec = new EmptyClass(week, forsearchlist);
-                ec.getfreetime(result, termresult);
+                //ec.getfreetime(result, termresult);
+                //await ec.getfreetimeasync(result, termresult);
+                await GetData(ec);
                 showFreeKB(result, showWeekend);
             }
         }
@@ -505,7 +508,7 @@ namespace ZSCY.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ShowWeekendAppBarButton_Click(object sender, RoutedEventArgs e)
+        private async void ShowWeekendAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             if (showWeekend)
                 ShowWeekendAppBarButton.Label = "显示周末课表";
@@ -513,7 +516,10 @@ namespace ZSCY.Pages
                 ShowWeekendAppBarButton.Label = "隐藏周末课表";
             showWeekend = !showWeekend;
             EmptyClass ec = new EmptyClass(week, forsearchlist);
-            ec.getfreetime(result, termresult); if (week != -100)
+            //ec.getfreetime(result, termresult); if (week != -100)
+            //await ec.getfreetimeasync(result, termresult);
+            await GetData(ec);
+            if (week != -100)
             {
                 showFreeKB(result, showWeekend);
             }
@@ -581,6 +587,32 @@ namespace ZSCY.Pages
                     return "除" + r + "周";
                 }
             }
+        }
+        #endregion
+        private async Task GetData(EmptyClass ec)
+        {
+            IsBusy = true;
+            Func<ObservableCollection<ClassListLight>> calcw = () =>
+            {
+                ObservableCollection<ClassListLight> w = new ObservableCollection<ClassListLight>();
+                w = ec.getweekresult();
+                return w;
+            };
+            Func<ObservableCollection<EmptyTable>> calct = () =>
+            {
+                ObservableCollection<EmptyTable> t = new ObservableCollection<EmptyTable>();
+                t = ec.gettermresult();
+                return t;
+            };
+            if (ec.Weeknum !=-100)
+            {
+                this.result = await Task.Run(calcw);
+            }
+            else
+            {
+                this.termresult = await Task.Run(calct);
+            }
+            IsBusy = false;
         }
     }
 }
