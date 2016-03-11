@@ -596,12 +596,22 @@ namespace ZSCY.Pages
             {
                 ObservableCollection<ClassListLight> w = new ObservableCollection<ClassListLight>();
                 w = ec.getweekresult();
+                for (int i = 0; i < 5000; i++)
+                {
+                    string x = i.ToString();
+                    Debug.WriteLine(i);
+                }
                 return w;
             };
             Func<ObservableCollection<EmptyTable>> calct = () =>
             {
                 ObservableCollection<EmptyTable> t = new ObservableCollection<EmptyTable>();
                 t = ec.gettermresult();
+                for (int i = 0; i < 5000; i++)
+                {
+                    string x = i.ToString();
+                    Debug.WriteLine(i);
+                }
                 return t;
             };
             if (ec.Weeknum !=-100)
