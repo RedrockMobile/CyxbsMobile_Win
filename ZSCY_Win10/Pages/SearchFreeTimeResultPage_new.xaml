@@ -37,7 +37,7 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-
+        <ProgressRing Height="50" Width="50" IsActive="{x:Bind IsBusy}"></ProgressRing>
         <!--课表视图-->
         <Grid Name="FreeKBGrid" Grid.Column="0" >
             <!--课程表格-->
@@ -47,6 +47,7 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <!--日期星期-->
+
                 <Grid x:Name="KebiaoWeekGrid" Height="25" Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <!--列-->
@@ -257,6 +258,7 @@
                 <ProgressBar Name="FreeLoddingProgressBar" IsIndeterminate="False" Value="0"/>
             </StackPanel>
         </Grid>
+
 
         <!--人员详情-->
         <Grid Name="FreeDetailGrid" Grid.Column="1" Visibility="Visible">
