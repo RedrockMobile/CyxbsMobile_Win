@@ -10,6 +10,7 @@ using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
@@ -76,7 +77,7 @@ namespace ZSCY_Win10
             view.TitleBar.BackgroundColor = Color.FromArgb(255, 4, 131, 239);
             view.TitleBar.ButtonBackgroundColor = Color.FromArgb(255, 4, 131, 239);
             view.TitleBar.ButtonHoverBackgroundColor = Color.FromArgb(255, 2, 126, 231);
-            view.TitleBar.ButtonPressedBackgroundColor = Color.FromArgb(255,2, 111, 203);
+            view.TitleBar.ButtonPressedBackgroundColor = Color.FromArgb(255, 2, 111, 203);
             this.SizeChanged += (s, e) =>
             {
                 Debug.WriteLine(e.NewSize.Width);
@@ -105,6 +106,36 @@ namespace ZSCY_Win10
             }
             NavMenuList.ItemsSource = navlist;
             //NavMenuList.SelectedIndex = 0;
+            var a = DateTime.Now;
+            if (DateTimeOffset.Now < DateTimeOffset.Parse("2016/3/15 00:00:00"))
+                showNotice();
+            else
+                appSetting.Values.Remove("showNotice");
+        }
+
+        private async void showNotice()
+        {
+            if (!appSetting.Values.ContainsKey("showNotice"))
+            {
+                appSetting.Values["showNotice"] = true;
+            }
+            if (Boolean.Parse(appSetting.Values["showNotice"].ToString()))
+            {
+                var dig = new MessageDialog("[移动开发部春招]Android、iOS、Windows全平台方向开始了，有兴趣的同学请于2016年3月14日前将自己的个人介绍发送至290799684@qq.com\n邮件主题：2016移动开发部春招XX方向-姓名-学号-手机号", "通知");
+                var btnOk = new UICommand("关闭");
+                dig.Commands.Add(btnOk);
+                var btnCancel = new UICommand("不再提醒");
+                dig.Commands.Add(btnCancel);
+                var result = await dig.ShowAsync();
+                if (null != result && result.Label == "不再提醒")
+                {
+                    appSetting.Values["showNotice"] = false;
+                }
+                else if (null != result && result.Label == "关闭")
+                {
+                }
+            }
+
         }
 
         public Frame AppFrame { get { return this.frame; } }

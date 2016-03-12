@@ -11,6 +11,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Popups;
 using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -53,7 +54,9 @@ namespace ZSCY_Win10
                 else if (JumpList.IsSupported())
                     DisableSystemJumpListAsync();
             }
+
         }
+
 
         private async void DisableSystemJumpListAsync()
         {
