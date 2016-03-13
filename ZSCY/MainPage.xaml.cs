@@ -460,6 +460,7 @@ namespace ZSCY
         /// <param name="page">页码</param>
         private async void initJW(int page = 1)
         {
+            int[] temp = pagestatus;
             JWListFailedStackPanel.Visibility = Visibility.Collapsed;
             JWListProgressStackPanel.Visibility = Visibility.Visible;
 
@@ -483,6 +484,11 @@ namespace ZSCY
                         contentparamList.Add(new KeyValuePair<string, string>("id", JWitem.ID));
                         string jwContent = await NetWork.getHttpWebRequest("api/jwNewsContent", contentparamList);
                         Debug.WriteLine("jwContent->" + jwContent);
+                        if (temp[NewsPivot.SelectedIndex] != pagestatus[NewsPivot.SelectedIndex])
+                        {
+                            Debug.WriteLine("newsContent->在此退出");
+                            return;
+                        }
                         if (jwContent != "")
                         {
                             string JWContentText = jwContent.Replace("(\r?\n(\\s*\r?\n)+)", "\r\n");
@@ -556,6 +562,8 @@ namespace ZSCY
 
         private async void initNewsList(string type, int page = 0)
         {
+            int[] temp = pagestatus;
+
             switch (type)
             {
                 case "jwzx":
@@ -620,6 +628,11 @@ namespace ZSCY
                             contentparamList.Add(new KeyValuePair<string, string>("articleid", Newsitem.Articleid));
                             string newsContent = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/news/searchcontent", contentparamList);
                             //Debug.WriteLine("newsContent->" + newsContent);
+                            if (temp[NewsPivot.SelectedIndex] != pagestatus[NewsPivot.SelectedIndex])
+                            {
+                                Debug.WriteLine("newsContent->在此退出");
+                                return;
+                            }
                             if (newsContent != "")
                             {
                                 JObject newsContentobj = JObject.Parse(newsContent);
@@ -1063,6 +1076,8 @@ namespace ZSCY
 
             page = 0;
             string type = "";
+            pagestatus[NewsPivot.SelectedIndex]++;
+
             switch (NewsPivot.SelectedIndex)
             {
                 case 0:
@@ -1222,8 +1237,8 @@ namespace ZSCY
             }
             if (pagestatus[NewsPivot.SelectedIndex] == 0)
             {
+                pagestatus[NewsPivot.SelectedIndex]++;
                 initNewsList(type);
-                pagestatus[NewsPivot.SelectedIndex] = 1;
             }
         }
         private async void ItemView_ItemClick(object sender, ItemClickEventArgs e)
