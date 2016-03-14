@@ -47,7 +47,8 @@ namespace ZSCY_Win10
                 var state = "VisualState000";
                 if (e.NewSize.Width > 000 && e.NewSize.Width < 750)
                 {
-                    if (JWListView.SelectedIndex != -1)
+                    //if (JWListView.SelectedIndex != -1)
+                    if (NewsFrame.Visibility == Visibility.Visible)
                     {
                         //JWBackAppBarButton.Visibility = Visibility.Visible;
                         SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
