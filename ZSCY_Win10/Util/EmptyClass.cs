@@ -79,7 +79,6 @@ namespace ZSCY_Win10.Util
                     if (len.Count == 1)
                     {
                         tobeadded.Name = len[0].Name;
-                        Debug.WriteLine("长度是" + len.Count);
                     }
                     if (len.Count > 1)
                     {
@@ -191,7 +190,6 @@ namespace ZSCY_Win10.Util
                 if (len.Count == 1)
                 {
                     tobeadded.Name = len[0].Name;
-                    Debug.WriteLine("长度是" + len.Count);
                 }
                 if (len.Count > 1)
                 {
@@ -297,7 +295,6 @@ namespace ZSCY_Win10.Util
                     if (len.Count == 1)
                     {
                         tobeadded.Name = len[0].Name;
-                        Debug.WriteLine("长度是" + len.Count);
                     }
                     if (len.Count > 1)
                     {

@@ -6,7 +6,9 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using UmengSDK;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Graphics.Imaging;
 using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -32,7 +34,7 @@ namespace ZSCY_Win10.Pages
 
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame.CanGoBack)
@@ -48,7 +50,21 @@ namespace ZSCY_Win10.Pages
             //BitmapImage bitmapImage = new BitmapImage(new Uri(((StorageFile)e.Parameter).Path));
             //BitmapImage bitmapImage = new BitmapImage(new Uri("ms-appx:////Assets/grzx_black.png", UriKind.Absolute));
             //headImage.Source = bitmapImage;
-            headImage.Source = new BitmapImage(new Uri(((StorageFile)e.Parameter).Path, UriKind.Absolute));
+            //headImage.Source = new BitmapImage(new Uri(((StorageFile)e.Parameter).Path, UriKind.Absolute));
+            var file = (StorageFile)e.Parameter;
+            SoftwareBitmap sb = null;
+            using (IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.Read))
+            {
+                // Create the decoder from the stream
+                BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
+                // Get the SoftwareBitmap representation of the file
+                SoftwareBitmap softwareBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
+                sb = softwareBitmap;
+               // return softwareBitmap;
+            }
+            SoftwareBitmapSource source = new SoftwareBitmapSource();
+            await source.SetBitmapAsync(sb);
+            headImage.Source = source;
 
 
             UmengAnalytics.TrackPageStart("ClipHeadPage");

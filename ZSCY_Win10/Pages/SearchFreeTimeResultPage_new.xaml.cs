@@ -144,7 +144,7 @@ namespace ZSCY.Pages
             EmptyClass ec = new EmptyClass(week, forsearchlist);
             //ec.getfreetime(result, termresult);
             // await ec.getfreetimeasync(result, termresult);
-           await GetData(ec);
+            await GetData(ec);
             //freetime(11, forsearchlist);
             FreeLoddingStackPanel.Visibility = Visibility.Collapsed;
             FreeKBTableGrid.Visibility = Visibility.Visible;
@@ -289,13 +289,11 @@ namespace ZSCY.Pages
             }
             //else
             //    BackGrid.Background = new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
-
-
             BackGrid.Children.Add(ClassTextBlock);
             BackGrid.Tapped += BackGrid_Tapped;
             kebiaoGrid.Children.Add(BackGrid);
-
         }
+
 
         private void BackGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -486,7 +484,9 @@ namespace ZSCY.Pages
                 EmptyClass ec = new EmptyClass(week, forsearchlist);
                 //ec.getfreetime(result, termresult);
                 //await ec.getfreetimeasync(result, termresult);
+                Debug.WriteLine(DateTime.Now.Second + "---开始学期---" + DateTime.Now.Millisecond);
                 await GetData(ec);
+                Debug.WriteLine(DateTime.Now.Second + "---结束学期---" + DateTime.Now.Millisecond);
                 showFreeKB(termresult, showWeekend);
             }
             else
@@ -499,7 +499,9 @@ namespace ZSCY.Pages
                 EmptyClass ec = new EmptyClass(week, forsearchlist);
                 //ec.getfreetime(result, termresult);
                 //await ec.getfreetimeasync(result, termresult);
+                Debug.WriteLine(DateTime.Now.Second + "---开始学期---" + DateTime.Now.Millisecond);
                 await GetData(ec);
+                Debug.WriteLine(DateTime.Now.Second + "--完成学期---" + DateTime.Now.Millisecond);
                 showFreeKB(result, showWeekend);
             }
         }
@@ -596,31 +598,25 @@ namespace ZSCY.Pages
             {
                 ObservableCollection<ClassListLight> w = new ObservableCollection<ClassListLight>();
                 w = ec.getweekresult();
-                for (int i = 0; i < 5000; i++)
-                {
-                    string x = i.ToString();
-                    Debug.WriteLine(i);
-                }
                 return w;
             };
             Func<ObservableCollection<EmptyTable>> calct = () =>
             {
                 ObservableCollection<EmptyTable> t = new ObservableCollection<EmptyTable>();
                 t = ec.gettermresult();
-                for (int i = 0; i < 5000; i++)
-                {
-                    string x = i.ToString();
-                    Debug.WriteLine(i);
-                }
                 return t;
             };
-            if (ec.Weeknum !=-100)
+            if (ec.Weeknum != -100)
             {
+                Debug.WriteLine(DateTime.Now.Second + "开始0异步" + DateTime.Now.Millisecond);
                 this.result = await Task.Run(calcw);
+                Debug.WriteLine(DateTime.Now.Second + "结束0异步" + DateTime.Now.Millisecond);
             }
             else
             {
+                Debug.WriteLine(DateTime.Now.Second + "开始1异步" + DateTime.Now.Millisecond);
                 this.termresult = await Task.Run(calct);
+                Debug.WriteLine(DateTime.Now.Second + "结束1异步" + DateTime.Now.Millisecond);
             }
             IsBusy = false;
         }
