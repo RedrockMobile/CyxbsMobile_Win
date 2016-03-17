@@ -466,11 +466,17 @@ namespace ZSCY_Win10
             StorageFile file = await openPicker.PickSingleFileAsync();
             if (file != null)
             {
-                Frame.Navigate(typeof(ClipHeadPage), file);
+                ClipHeadFrame.Visibility = Visibility.Visible;
+                BackOpacityGrid.Visibility = Visibility.Visible;
+                ClipHeadFrame.Navigate(typeof(ClipHeadPage), file);
             }
 
         }
 
-
+        private void BackOpacityGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            ClipHeadFrame.Visibility = Visibility.Collapsed;
+            BackOpacityGrid.Visibility = Visibility.Collapsed;
+        }
     }
 }
