@@ -141,8 +141,21 @@ namespace ZSCY_Win10
 
                     Size downloadSize = new Size(48, 48);
                     await Utils.DownloadAndScale("headimg.png", objdata["photosrc"].ToString(), new Size(100, 100));
-                    //TODO:保存头像
                 }
+            }
+            else
+            {
+                try
+                {
+                    IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
+                    IStorageFile storageFileRE = await applicationFolder.GetFileAsync("headimg.png");
+                    headimgImageBrush.ImageSource = new BitmapImage(new Uri(storageFileRE.Path));
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("缓存头像文件不存在");
+                }
+
             }
         }
 

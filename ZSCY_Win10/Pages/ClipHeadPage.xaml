@@ -8,8 +8,8 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <!--<ScrollViewer Name="headScrollViewer" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" MinZoomFactor="0.5" MaxZoomFactor="3"  >-->
-        <Image Name="headImage" Width="100" Height="100" />
-        <!--</ScrollViewer>-->
+        <ScrollViewer Name="headScrollViewer" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" MinZoomFactor="0.5" MaxZoomFactor="3"  >
+            <Image Name="headImage" Width="100" Height="100" />
+        </ScrollViewer>
     </Grid>
 </Page>
