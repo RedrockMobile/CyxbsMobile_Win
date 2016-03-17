@@ -28,8 +28,9 @@
     <Grid>
         <SplitView x:Name="RootSplitView" OpenPaneLength="250" CompactPaneLength="0"  DisplayMode="CompactOverlay" IsPaneOpen="False" LayoutUpdated="RootSplitView_LayoutUpdated">
             <SplitView.Pane>
-                <!--重写的ListView-->
-                <controls:NavMenuListView x:Name="NavMenuList"
+                <Grid>
+                    <!--重写的ListView-->
+                    <controls:NavMenuListView x:Name="NavMenuList"
                                           TabIndex="3"
                                           Margin="0,48,0,0"
                                           ManipulationInertiaStarting="ManipulationStackPanel_ManipulationInertiaStarting"
@@ -38,7 +39,22 @@
                                           ItemContainerStyle="{StaticResource NavMenuItemContainerStyle}"
                                           ItemTemplate="{StaticResource NavMenuItemTemplate}"
                                           ItemInvoked="NavMenuList_ItemInvoked">
-                </controls:NavMenuListView>
+                    </controls:NavMenuListView>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="48">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <!--<Image Source="Assets/grzx_black.png" Width="30"></Image>-->
+                        <Rectangle x:Name="headimgRectangle" HorizontalAlignment="Center" Grid.Column="0" VerticalAlignment="Center" RadiusX="30" RadiusY="30"  Width="30" Height="30" Stroke="DarkGray" Tapped="headimgRectangle_Tapped">
+                            <Rectangle.Fill>
+                                <ImageBrush x:Name="headimgImageBrush" ImageSource="Assets/dialog_course_peo.png" Stretch="Fill"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock Name="stuNameTextBlock" VerticalAlignment="Center" Grid.Column="1"></TextBlock>
+                    </Grid>
+
+                </Grid>
 
             </SplitView.Pane>
             <!--Frame里面放导航到的Page-->
@@ -58,9 +74,9 @@
         </SplitView>
 
         <StackPanel Name="ManipulationStackPanel" Width="15" Background="#00ffffff" HorizontalAlignment="Left" VerticalAlignment="Stretch" ManipulationStarted="ManipulationStackPanel_ManipulationStarted" ManipulationInertiaStarting="ManipulationStackPanel_ManipulationInertiaStarting" ManipulationMode="All">
-            
+
         </StackPanel>
-        
+
         <!--汉堡菜单-->
         <ToggleButton x:Name="TogglePaneButton"
                       TabIndex="1"

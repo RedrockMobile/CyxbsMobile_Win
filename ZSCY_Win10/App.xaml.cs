@@ -54,6 +54,10 @@ namespace ZSCY_Win10
                 else if (JumpList.IsSupported())
                     DisableSystemJumpListAsync();
             }
+            //if (!appSetting.Values.ContainsKey("AllKBGray"))
+            //{
+            //    appSetting.Values["AllKBGray"] = false;
+            //}
 
         }
 
@@ -203,5 +207,7 @@ namespace ZSCY_Win10
             await UmengAnalytics.EndTrackAsync();
             deferral.Complete();
         }
+
+
     }
 }

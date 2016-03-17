@@ -59,6 +59,10 @@
                             <TextBlock Text="实验室功能" Margin="0,0,0,10" Foreground="#333" Style="{StaticResource TitleTextBlockStyle}"/>
                             <Button Name="importKB2calendarButton" Foreground="#333" HorizontalAlignment="Stretch"    Content="订阅当前账号课表到日历"  Click="importKB2calendarButton_Click"/>
 
+                            <!--<TextBlock Text="学期课表将非当前周置为灰色" Visibility="Visible" FontSize="20" Foreground="Gray" Margin="0,10"/>
+                            <ToggleSwitch  Name="AllKBGrayToggleSwitch" Visibility="Visible" IsOn="False" OnContent="开" OffContent="关" Toggled="AllKBGrayToggleSwitch_Toggled" Foreground="Black" />-->
+
+
                             <TextBlock Text="使用透明磁贴" Visibility="Collapsed" FontSize="20" Foreground="Gray" Margin="0,10"/>
                             <ToggleSwitch  Name="OpacityToggleSwitch" Visibility="Collapsed" IsOn="False" OnContent="开" OffContent="关" Toggled="OpacityToggleSwitch_Toggled" Foreground="Black" />
 

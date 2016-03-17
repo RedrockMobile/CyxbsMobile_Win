@@ -345,6 +345,12 @@ namespace ZSCY_Win10
                 }
                 if (weekOrAll == 1)
                 {
+                    //if (bool.Parse(appSetting.Values["AllKBGray"].ToString()))
+                    //    if (Array.IndexOf(classitem.Week, Int32.Parse(appSetting.Values["nowWeek"].ToString())) != -1)
+                    //        SetClassAll(classitem, ClassColor);
+                    //    else
+                    //        SetClassAll(classitem, 3);
+                    //else
                     SetClassAll(classitem, ClassColor);
                     HubSectionKBNum.Visibility = Visibility.Collapsed;
                 }
@@ -496,6 +502,7 @@ namespace ZSCY_Win10
                    Color.FromArgb(255,255, 161, 16),
                    Color.FromArgb(255,56, 188, 242),
                    Color.FromArgb(255,159, 213, 27),
+                   Color.FromArgb(255,200, 200, 200), //灰色
                 };
 
             TextBlock ClassTextBlock = new TextBlock();

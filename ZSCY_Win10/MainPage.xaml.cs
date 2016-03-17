@@ -1,13 +1,18 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
+using Windows.Graphics.Display;
+using Windows.Graphics.Imaging;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -19,8 +24,11 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Controls;
+using ZSCY_Win10.Pages;
+using ZSCY_Win10.Util;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -32,6 +40,8 @@ namespace ZSCY_Win10
     public sealed partial class MainPage : Page
     {
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private FileOpenPickerContinuationEventArgs _filePickerEventArgs = null;
+
         private List<NavMenuItem> navlist = new List<NavMenuItem>(
             new[]
             {
@@ -96,7 +106,7 @@ namespace ZSCY_Win10
                     App.showpane = false;
                 }
             };
-
+            stuNameTextBlock.Text = appSetting.Values["name"].ToString();
 
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequseted;
             //如果是在手机上，有实体键，隐藏返回键。
@@ -111,6 +121,29 @@ namespace ZSCY_Win10
                 showNotice();
             else
                 appSetting.Values.Remove("showNotice");
+            initHeadImage();
+        }
+
+        private async void initHeadImage()
+        {
+            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            paramList.Add(new KeyValuePair<string, string>("stunum", appSetting.Values["stuNum"].ToString()));
+            string headimg = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/Photo/search", paramList);
+            if (headimg != "")
+            {
+                JObject obj = JObject.Parse(headimg);
+                if (Int32.Parse(obj["state"].ToString()) == 200)
+                {
+                    string a = obj["data"].ToString();
+                    JObject objdata = JObject.Parse(obj["data"].ToString());
+                    appSetting.Values["headimgdate"] = objdata["date"].ToString();
+                    headimgImageBrush.ImageSource = new BitmapImage(new Uri(objdata["photosrc"].ToString()));
+
+                    Size downloadSize = new Size(48, 48);
+                    await Utils.DownloadAndScale("headimg.png", objdata["photosrc"].ToString(), new Size(100, 100));
+                    //TODO:保存头像
+                }
+            }
         }
 
         private async void showNotice()
@@ -407,5 +440,24 @@ namespace ZSCY_Win10
         {
 
         }
+
+        private async void headimgRectangle_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            FileOpenPicker openPicker = new FileOpenPicker();
+            openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            openPicker.FileTypeFilter.Add(".png");
+            openPicker.FileTypeFilter.Add(".jpg");
+            openPicker.FileTypeFilter.Add(".bmp");
+            openPicker.FileTypeFilter.Add(".gif");
+            openPicker.ContinuationData["Operation"] = "img";
+            StorageFile file = await openPicker.PickSingleFileAsync();
+            if (file != null)
+            {
+                Frame.Navigate(typeof(ClipHeadPage), file);
+            }
+
+        }
+
+
     }
 }
