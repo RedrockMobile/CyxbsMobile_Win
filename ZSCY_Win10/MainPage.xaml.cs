@@ -574,7 +574,8 @@ namespace ZSCY_Win10
 
         private void clipHeadDisButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ClipHeadGrid.Visibility = Visibility.Collapsed;
+            BackOpacityGrid.Visibility = Visibility.Collapsed;
         }
     }
 }
