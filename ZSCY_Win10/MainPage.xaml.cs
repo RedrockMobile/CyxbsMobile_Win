@@ -13,6 +13,7 @@ using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -40,8 +41,9 @@ namespace ZSCY_Win10
     public sealed partial class MainPage : Page
     {
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
-        private FileOpenPickerContinuationEventArgs _filePickerEventArgs = null;
-
+        private Point currentPoint; //最新的，当前的点
+        private Point oldPoint;//上一个点
+        private bool isPoint = false;
         private List<NavMenuItem> navlist = new List<NavMenuItem>(
             new[]
             {
@@ -466,17 +468,113 @@ namespace ZSCY_Win10
             StorageFile file = await openPicker.PickSingleFileAsync();
             if (file != null)
             {
-                ClipHeadFrame.Visibility = Visibility.Visible;
+                ClipHeadGrid.Visibility = Visibility.Visible;
                 BackOpacityGrid.Visibility = Visibility.Visible;
-                ClipHeadFrame.Navigate(typeof(ClipHeadPage), file);
+                //ClipHeadFrame.Navigate(typeof(ClipHeadPage), file);
+                SoftwareBitmap sb = null;
+                using (IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.Read))
+                {
+                    // Create the decoder from the stream
+                    BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
+                    // Get the SoftwareBitmap representation of the file
+                    SoftwareBitmap softwareBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
+                    sb = softwareBitmap;
+                    // return softwareBitmap;
+                }
+                SoftwareBitmapSource source = new SoftwareBitmapSource();
+                await source.SetBitmapAsync(sb);
+                headImage.Source = source;
             }
 
         }
 
         private void BackOpacityGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            ClipHeadFrame.Visibility = Visibility.Collapsed;
+            ClipHeadGrid.Visibility = Visibility.Collapsed;
             BackOpacityGrid.Visibility = Visibility.Collapsed;
+        }
+
+        private void headImage_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            oldPoint = e.GetCurrentPoint(headScrollViewer).Position;
+            isPoint = true;
+        }
+
+        private void headImage_PointerMoved(object sender, PointerRoutedEventArgs e)
+        {
+            if (isPoint)
+            {
+                currentPoint = e.GetCurrentPoint(headScrollViewer).Position;
+                Debug.WriteLine("X:" + (currentPoint.X - oldPoint.X));
+                Debug.WriteLine("Y:" + (currentPoint.Y - oldPoint.Y));
+                headScrollViewer.ScrollToHorizontalOffset(headScrollViewer.HorizontalOffset - (currentPoint.X - oldPoint.X));
+                headScrollViewer.ScrollToVerticalOffset(headScrollViewer.VerticalOffset - (currentPoint.Y - oldPoint.Y));
+                oldPoint = currentPoint;
+            }
+        }
+
+
+        private void headImage_PointerReleased(object sender, PointerRoutedEventArgs e)
+        {
+            isPoint = false;
+        }
+
+        private async void clipHeadOKButton_Click(object sender, RoutedEventArgs e)
+        {
+            upClipHeadProgressBar.Visibility = Visibility.Visible;
+            try
+            {
+                //HttpClient _httpClient = new HttpClient();
+                //CancellationTokenSource _cts = new CancellationTokenSource();
+                RenderTargetBitmap mapBitmap = new RenderTargetBitmap();
+                await mapBitmap.RenderAsync(headScrollViewer);
+                var pixelBuffer = await mapBitmap.GetPixelsAsync();
+                IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
+                IStorageFile saveFile = await applicationFolder.CreateFileAsync("temphead.png", CreationCollisionOption.OpenIfExists);
+                using (var fileStream = await saveFile.OpenAsync(FileAccessMode.ReadWrite))
+                {
+                    var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, fileStream);
+                    encoder.SetPixelData(
+                        BitmapPixelFormat.Bgra8,
+                        BitmapAlphaMode.Ignore,
+                        (uint)mapBitmap.PixelWidth,
+                        (uint)mapBitmap.PixelHeight,
+                        DisplayInformation.GetForCurrentView().LogicalDpi,
+                        DisplayInformation.GetForCurrentView().LogicalDpi,
+                        pixelBuffer.ToArray());
+                    await encoder.FlushAsync();
+                }
+                string uphead = await NetWork.headUpload(appSetting.Values["stuNum"].ToString(), "ms-appdata:///local/temphead.png");
+                Debug.WriteLine(uphead);
+                if (uphead != "")
+                {
+                    JObject obj = JObject.Parse(uphead);
+                    if (Int32.Parse(obj["state"].ToString()) == 200)
+                    {
+                        ClipHeadGrid.Visibility = Visibility.Collapsed;
+                        BackOpacityGrid.Visibility = Visibility.Collapsed;
+                        initHeadImage();
+                    }
+                    else
+                    {
+                        Utils.Toast("头像上传错误");
+                    }
+                }
+                else
+                {
+                    Utils.Toast("头像上传错误");
+                }
+                upClipHeadProgressBar.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("设置头像，保存新头像异常");
+            }
+        }
+
+        private void clipHeadDisButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
