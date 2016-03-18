@@ -28,7 +28,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Controls;
-using ZSCY_Win10.Pages;
 using ZSCY_Win10.Util;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
@@ -470,7 +469,6 @@ namespace ZSCY_Win10
             {
                 ClipHeadGrid.Visibility = Visibility.Visible;
                 BackOpacityGrid.Visibility = Visibility.Visible;
-                //ClipHeadFrame.Navigate(typeof(ClipHeadPage), file);
                 SoftwareBitmap sb = null;
                 using (IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.Read))
                 {

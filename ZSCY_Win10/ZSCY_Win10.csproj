@@ -248,9 +248,6 @@
     <Compile Include="Pages\CalendarPage.xaml.cs">
       <DependentUpon>CalendarPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ClipHeadPage.xaml.cs">
-      <DependentUpon>ClipHeadPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\EmptyRoomsPage.xaml.cs">
       <DependentUpon>EmptyRoomsPage.xaml</DependentUpon>
     </Compile>
@@ -468,10 +465,6 @@
     <Page Include="Pages\CalendarPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\ClipHeadPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\EmptyRoomsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
