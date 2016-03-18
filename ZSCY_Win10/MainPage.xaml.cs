@@ -516,6 +516,10 @@ namespace ZSCY_Win10
         {
             isPoint = false;
         }
+        private void headImage_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            isPoint = false;
+        }
 
         private async void clipHeadOKButton_Click(object sender, RoutedEventArgs e)
         {
@@ -575,5 +579,7 @@ namespace ZSCY_Win10
             ClipHeadGrid.Visibility = Visibility.Collapsed;
             BackOpacityGrid.Visibility = Visibility.Collapsed;
         }
+
+        
     }
 }

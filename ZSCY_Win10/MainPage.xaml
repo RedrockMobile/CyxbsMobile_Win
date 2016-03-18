@@ -46,7 +46,7 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <!--<Image Source="Assets/grzx_black.png" Width="30"></Image>-->
-                        <Rectangle x:Name="headimgRectangle" HorizontalAlignment="Center" Grid.Column="0" VerticalAlignment="Center" RadiusX="30" RadiusY="30"  Width="30" Height="30" Stroke="DarkGray" Tapped="headimgRectangle_Tapped">
+                        <Rectangle x:Name="headimgRectangle" HorizontalAlignment="Center" Grid.Column="0" VerticalAlignment="Center" RadiusX="35" RadiusY="35"  Width="35" Height="35" Stroke="DarkGray" Tapped="headimgRectangle_Tapped">
                             <Rectangle.Fill>
                                 <ImageBrush x:Name="headimgImageBrush" ImageSource="Assets/dialog_course_peo.png" Stretch="Fill"/>
                             </Rectangle.Fill>
@@ -86,20 +86,28 @@
                         </TransitionCollection>
                     </Frame.ContentTransitions>
                 </Frame>-->
-                <Grid Name="ClipHeadGrid" Background="White" Visibility="Collapsed" Width="300" Height="350">
-                    <ProgressBar Name="upClipHeadProgressBar" IsIndeterminate="True" Visibility="Collapsed"></ProgressBar>
+                <Grid Name="ClipHeadGrid" Background="#D3D3D3" Visibility="Collapsed" Width="300" Height="350">
+                    <ProgressBar Name="upClipHeadProgressBar" VerticalAlignment="Top" Margin="0,5,0,0" IsIndeterminate="True" Visibility="Collapsed"></ProgressBar>
                     <ScrollViewer Name="headScrollViewer" Width="280" Height="280" VerticalAlignment="Top" Margin="0,10" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled"  MinZoomFactor="0.3" MaxZoomFactor="3"  >
-                        <Image Name="headImage" PointerPressed="headImage_PointerPressed" PointerMoved="headImage_PointerMoved" PointerReleased="headImage_PointerReleased"/>
+                        <Image Name="headImage" PointerPressed="headImage_PointerPressed" PointerMoved="headImage_PointerMoved" PointerExited="headImage_PointerExited" PointerReleased="headImage_PointerReleased"/>
                     </ScrollViewer>
-                    <Rectangle Name="clipheadimgRectangle" Margin="0,10" HorizontalAlignment="Center" VerticalAlignment="Top" RadiusX="280" RadiusY="280" Stroke="DarkGray" Width="280" Height="280"/>
+                    <Path Fill="Black" Opacity="0.5" Margin="0,10" HorizontalAlignment="Center" VerticalAlignment="Top"  Width="280" Height="280">
+                        <Path.Data>
+                            <GeometryGroup>
+                                <RectangleGeometry Rect="0,0,280,280"></RectangleGeometry>
+                                <EllipseGeometry Center="140,140" RadiusX="140" RadiusY="140"/>
+                            </GeometryGroup>
+                        </Path.Data>
+                    </Path>
+                    <!--<Rectangle Name="clipheadimgRectangle" Margin="0,10" HorizontalAlignment="Center" VerticalAlignment="Top" RadiusX="280" RadiusY="280" Stroke="DarkGray" Width="280" Height="280"/>-->
 
                     <Grid VerticalAlignment="Bottom">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Name="clipHeadOKButton" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5,5" Content="确定" Click="clipHeadOKButton_Click"/>
-                        <Button Name="clipHeadDisButton" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5,5" Content="取消" Click="clipHeadDisButton_Click"/>
+                        <Button Name="clipHeadOKButton" Background="White" Grid.Column="0" HorizontalAlignment="Stretch" Margin="10" Content="确定" Click="clipHeadOKButton_Click"/>
+                        <Button Name="clipHeadDisButton" Background="White" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10" Content="取消" Click="clipHeadDisButton_Click"/>
                     </Grid>
                 </Grid>
             </Grid>
