@@ -146,6 +146,7 @@
     <Content Include="Assets\dialog_course_type_white.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\grzx_black.png" />
     <Content Include="Assets\iconfont-coffee.png" />
     <Content Include="Assets\iconfont-more_w.png" />
     <Content Include="Assets\iconfont-news_w.png" />

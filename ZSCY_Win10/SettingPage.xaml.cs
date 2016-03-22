@@ -46,6 +46,8 @@ namespace ZSCY_Win10
                 OpacityToggleSwitch.IsOn = false;
                 appSetting.Values["OpacityTile"] = false;
             }
+            //AllKBGrayToggleSwitch.IsOn = bool.Parse(appSetting.Values["AllKBGray"].ToString());
+
             this.SizeChanged += (s, e) =>
             {
                 if (!App.showpane)
@@ -351,5 +353,10 @@ namespace ZSCY_Win10
 
         }
 
+        private void AllKBGrayToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            //appSetting.Values["AllKBGray"] = !AllKBGrayToggleSwitch.IsOn;          
+            appSetting.Values["AllKBGray"] = true;
+        }
     }
 }

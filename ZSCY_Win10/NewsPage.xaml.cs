@@ -38,6 +38,7 @@ namespace ZSCY_Win10
         ObservableCollection<NewsList> CYList = new ObservableCollection<NewsList>();
         ObservableCollection<NewsList> XSList = new ObservableCollection<NewsList>();
         int[] pagestatus = new int[] { 0, 0, 0, 0 };
+
         public NewsPage()
         {
             this.InitializeComponent();
@@ -46,7 +47,8 @@ namespace ZSCY_Win10
                 var state = "VisualState000";
                 if (e.NewSize.Width > 000 && e.NewSize.Width < 750)
                 {
-                    if (JWListView.SelectedIndex != -1)
+                    //if (JWListView.SelectedIndex != -1)
+                    if (NewsFrame.Visibility == Visibility.Visible)
                     {
                         //JWBackAppBarButton.Visibility = Visibility.Visible;
                         SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
@@ -127,6 +129,7 @@ namespace ZSCY_Win10
         }
         private async void initNewsList(string type, int page = 0)
         {
+            int[] temp = pagestatus;
             switch (type)
             {
                 case "jwzx":
@@ -191,6 +194,11 @@ namespace ZSCY_Win10
                             contentparamList.Add(new KeyValuePair<string, string>("articleid", Newsitem.Articleid));
                             string newsContent = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/news/searchcontent", contentparamList);
                             //Debug.WriteLine("newsContent->" + newsContent);
+                            if (temp[NewsPivot.SelectedIndex] != pagestatus[NewsPivot.SelectedIndex])
+                            {
+                                Debug.WriteLine("newsContent->在此退出");
+                                return;
+                            }
                             if (newsContent != "")
                             {
                                 JObject newsContentobj = JObject.Parse(newsContent);
@@ -397,6 +405,7 @@ namespace ZSCY_Win10
 
             page = 0;
             string type = "";
+            pagestatus[NewsPivot.SelectedIndex]++;
             switch (NewsPivot.SelectedIndex)
             {
                 case 0:
@@ -595,6 +604,7 @@ namespace ZSCY_Win10
         {
             page = 0;
             string type = "";
+            pagestatus[NewsPivot.SelectedIndex]++;
             switch (NewsPivot.SelectedIndex)
             {
                 case 0:
@@ -641,8 +651,8 @@ namespace ZSCY_Win10
             }
             if (pagestatus[NewsPivot.SelectedIndex] == 0)
             {
+                pagestatus[NewsPivot.SelectedIndex]++;
                 initNewsList(type);
-                pagestatus[NewsPivot.SelectedIndex] = 1;
             }
         }
     }

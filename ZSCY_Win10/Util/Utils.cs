@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.Devices.Input;
+using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Streams;
@@ -18,6 +18,7 @@ using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Windows.Web.Http;
 
 namespace ZSCY_Win10.Util
 {
@@ -238,5 +239,62 @@ namespace ZSCY_Win10.Util
                         return "";
                 }
         }
+
+        /// <summary>
+        /// 异步从网络下载图片
+        /// </summary>
+        /// <param name="outfileName">下载保存到本地的图片文件名</param>
+        /// <param name="downloadUriString">图片uri</param>
+        /// <param name="scaleSize">图片尺寸</param>
+        /// <returns></returns>
+        public static async Task DownloadAndScale(string outfileName, string downloadUriString, Size scaleSize)
+        {
+            try
+            {
+                Uri downLoadingUri = new Uri(downloadUriString);//创建uri对象
+                HttpClient client = new HttpClient();//实例化httpclient对象
+                using (var response = await client.GetAsync(downLoadingUri))
+                {
+                    var buffer = await response.Content.ReadAsBufferAsync();//从返回的数据中读取buffer
+                    var memoryStream = new InMemoryRandomAccessStream();
+                    await memoryStream.WriteAsync(buffer);//将buffer写入memorystream
+                    await memoryStream.FlushAsync();//刷新
+                    var decoder = await Windows.Graphics.Imaging.BitmapDecoder.CreateAsync(memoryStream);//解密文件流
+                    //确定图片大小
+                    var bt = new Windows.Graphics.Imaging.BitmapTransform();
+                    bt.ScaledWidth = (uint)scaleSize.Width;
+                    bt.ScaledHeight = (uint)scaleSize.Height;
+                    //得到像素数值
+                    var pixelProvider = await decoder.GetPixelDataAsync(
+                        decoder.BitmapPixelFormat, decoder.BitmapAlphaMode, bt,
+                        ExifOrientationMode.IgnoreExifOrientation, ColorManagementMode.ColorManageToSRgb);
+
+
+                    //下面保存图片
+                    // Now that we have the pixel data, get the destination file
+                    var localFolder = ApplicationData.Current.LocalFolder;
+                    //var resultsFolder = await localFolder.CreateFolderAsync("Results", CreationCollisionOption.OpenIfExists);
+                    var scaledFile = await localFolder.CreateFileAsync(outfileName, CreationCollisionOption.ReplaceExisting);
+                    using (var scaledFileStream = await scaledFile.OpenAsync(FileAccessMode.ReadWrite))
+                    {
+                        var encoder = await BitmapEncoder.CreateAsync(
+                            BitmapEncoder.JpegEncoderId, scaledFileStream);
+                        var pixels = pixelProvider.DetachPixelData();
+                        encoder.SetPixelData(
+                            decoder.BitmapPixelFormat,
+                            decoder.BitmapAlphaMode,
+                            (uint)scaleSize.Width,
+                            (uint)scaleSize.Height,
+                            decoder.DpiX,
+                            decoder.DpiY,
+                            pixels
+                            );
+                        await encoder.FlushAsync();
+                    }
+                }
+            }
+            catch (Exception) { Debug.WriteLine("工具，图片异常"); }
+        }
+
     }
 }
