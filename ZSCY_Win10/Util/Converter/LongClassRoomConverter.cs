@@ -12,8 +12,8 @@ namespace ZSCY_Win10.Util.Converter
             string room = "";
             if (classroom.Length > 12)
             {
-                string pattern = "^[a-z0-9]*|[a-z0-9]*$";
-                Regex reg = new Regex("^[a-z0-9]*|[a-z0-9]*$", RegexOptions.IgnoreCase);
+                string pattern = "[A-Za-z0-9]+$";
+                Regex reg = new Regex(pattern,RegexOptions.None);
                 if (Regex.IsMatch(classroom, pattern))
                 {
 
