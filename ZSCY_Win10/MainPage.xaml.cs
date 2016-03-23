@@ -132,16 +132,23 @@ namespace ZSCY_Win10
             string headimg = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/Photo/search", paramList);
             if (headimg != "")
             {
-                JObject obj = JObject.Parse(headimg);
-                if (Int32.Parse(obj["state"].ToString()) == 200)
+                try
                 {
-                    string a = obj["data"].ToString();
-                    JObject objdata = JObject.Parse(obj["data"].ToString());
-                    appSetting.Values["headimgdate"] = objdata["date"].ToString();
-                    headimgImageBrush.ImageSource = new BitmapImage(new Uri(objdata["photosrc"].ToString()));
+                    JObject obj = JObject.Parse(headimg);
+                    if (Int32.Parse(obj["state"].ToString()) == 200)
+                    {
+                        string a = obj["data"].ToString();
+                        JObject objdata = JObject.Parse(obj["data"].ToString());
+                        appSetting.Values["headimgdate"] = objdata["date"].ToString();
+                        headimgImageBrush.ImageSource = new BitmapImage(new Uri(objdata["photosrc"].ToString()));
 
-                    Size downloadSize = new Size(48, 48);
-                    await Utils.DownloadAndScale("headimg.png", objdata["photosrc"].ToString(), new Size(100, 100));
+                        Size downloadSize = new Size(48, 48);
+                        await Utils.DownloadAndScale("headimg.png", objdata["photosrc"].ToString(), new Size(100, 100));
+                    }
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("头像下载失败");
                 }
             }
             else
@@ -492,12 +499,22 @@ namespace ZSCY_Win10
             BackOpacityGrid.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// 鼠标按下
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void headImage_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             oldPoint = e.GetCurrentPoint(headScrollViewer).Position;
             isPoint = true;
         }
 
+        /// <summary>
+        /// 鼠标在控件上移动
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void headImage_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
             if (isPoint)
@@ -511,11 +528,21 @@ namespace ZSCY_Win10
             }
         }
 
-
+        /// <summary>
+        /// 鼠标松开
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void headImage_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
             isPoint = false;
         }
+
+        /// <summary>
+        /// 鼠标离开控件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void headImage_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             isPoint = false;
@@ -580,6 +607,6 @@ namespace ZSCY_Win10
             BackOpacityGrid.Visibility = Visibility.Collapsed;
         }
 
-        
+
     }
 }
