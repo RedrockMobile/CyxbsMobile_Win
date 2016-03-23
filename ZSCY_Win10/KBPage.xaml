@@ -11,6 +11,7 @@
 
     <Page.Resources>
         <converter:KBAllScrollViewerHeightConverter x:Key="KBAllScrollViewerHeightConverter"/>
+        <converter:LongClassRoomConverter x:Key="LongClassRoomConverter"/>
     </Page.Resources>
 
     <Grid >
@@ -338,7 +339,7 @@
                                                                     <TextBlock Text="类型" Foreground="#333" Grid.Column="0" Grid.Row="2" FontSize="18" Margin="0,2.5,5,2.5"/>
                                                                     <TextBlock Text="周数" Foreground="#333" Grid.Column="0" Grid.Row="3" FontSize="18" Margin="0,2.5,5,2.5"/>
 
-                                                                    <TextBlock Text="{Binding Classroom}" Foreground="#333" Grid.Column="1" Grid.Row="0" FontSize="18" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="{Binding Classroom,Converter={StaticResource LongClassRoomConverter},Mode=OneWay}" Foreground="#333" Grid.Column="1" Grid.Row="0" FontSize="18" VerticalAlignment="Center"/>
                                                                     <TextBlock Text="{Binding Teacher}" Foreground="#333" Grid.Column="1" Grid.Row="1" FontSize="18" VerticalAlignment="Center"/>
                                                                     <TextBlock Text="{Binding Type}" Foreground="#333" Grid.Column="1" Grid.Row="2" FontSize="18" VerticalAlignment="Center"/>
                                                                     <TextBlock Text="{Binding RawWeek}" Foreground="#333" Grid.Column="1" Grid.Row="3" FontSize="18" VerticalAlignment="Center"/>
