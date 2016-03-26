@@ -45,7 +45,7 @@ namespace ZSCY_Win10
             this.SizeChanged += (s, e) =>
             {
                 var state = "VisualState000";
-                if (e.NewSize.Width > 000 && e.NewSize.Width < 750)
+                if (e.NewSize.Width > 000 && e.NewSize.Width < 800)
                 {
                     //if (JWListView.SelectedIndex != -1)
                     if (NewsFrame.Visibility == Visibility.Visible)
@@ -65,13 +65,13 @@ namespace ZSCY_Win10
                 {
                     NewsTitleGrid.Margin = new Thickness(0);
                 }
-                if (e.NewSize.Width > 750)
+                if (e.NewSize.Width > 800)
                 {
                     //JWBackAppBarButton.Visibility = Visibility.Collapsed;
                     SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                     NewsRefreshAppBarButton.Visibility = Visibility.Visible;
-                    state = "VisualState750";
+                    state = "VisualState800";
                     JWListView.Width = 400;
                 }
                 VisualStateManager.GoToState(this, state, true);

@@ -58,7 +58,13 @@ namespace ZSCY_Win10
                     Label = "资讯",
                     DestPage = typeof(NewsPage)
                 },
-                          new NavMenuItem()
+                new NavMenuItem()
+                {
+                    Image = "ms-appx:///Assets/iconfont-shequ.png",
+                    Label = "社区",
+                    DestPage = typeof(CommunityPage)
+                },
+                new NavMenuItem()
                 {
                     Image = "ms-appx:///Assets/iconfont-more.png",
                     Label = "更多",

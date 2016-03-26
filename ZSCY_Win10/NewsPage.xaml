@@ -30,7 +30,7 @@
                         </Setter>
                     </VisualState.Setters>
                 </VisualState>
-                <VisualState x:Name="VisualState750">
+                <VisualState x:Name="VisualState800">
                     <VisualState.Setters>
                         <Setter Target="NewsTitleGrid.(FrameworkElement.Width)" Value="400"/>
                         <Setter Target="NewsListgrid.(FrameworkElement.Width)" Value="400"/>
@@ -357,7 +357,7 @@
             <!--正文-->
             <Grid Name="NewsContentGrid" Grid.Column="1">
                 <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1"/>
-                <Frame x:Name="frame" Margin="1,0,0,0">
+                <Frame x:Name="frame" Margin="1,0,0,0" Visibility="Collapsed">
                     <Frame.ContentTransitions>
                         <TransitionCollection>
                             <NavigationThemeTransition>

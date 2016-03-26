@@ -38,7 +38,7 @@ namespace ZSCY_Win10
             this.SizeChanged += (s, e) =>
             {
                 var state = "VisualState000";
-                if (e.NewSize.Width > 000 && e.NewSize.Width < 750)
+                if (e.NewSize.Width > 000 && e.NewSize.Width < 700)
                 {
                     if (MoreListView.SelectedIndex != -1)
                     {
