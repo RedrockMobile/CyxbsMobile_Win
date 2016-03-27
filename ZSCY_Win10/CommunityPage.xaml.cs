@@ -23,6 +23,8 @@ namespace ZSCY_Win10
     /// </summary>
     public sealed partial class CommunityPage : Page
     {
+        private int page = 0;
+        int[] pagestatus = new int[] { 0, 0, 0, 0 };
         public CommunityPage()
         {
             this.InitializeComponent();
@@ -37,7 +39,14 @@ namespace ZSCY_Win10
                     //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     //    HubSectionKBTitle.Text = CommunityContentTitleTextBlock.Text;
                     //}
-                    //CommunityListView.Width = e.NewSize.Width;
+                    if (CommunityFrame.Visibility == Visibility.Visible)
+                    {
+                        //JWBackAppBarButton.Visibility = Visibility.Visible;
+                        SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+                        CommunityRefreshAppBarButton.Visibility = Visibility.Collapsed;
+                        ConmunityMyAppBarButton.Visibility = Visibility.Collapsed;
+                    }
                 }
                 if (!App.showpane)
                 {
@@ -52,7 +61,8 @@ namespace ZSCY_Win10
                     SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                     HubSectionKBTitle.Text = "社区";
-                    //CommunityListView.Width = 300;
+                    CommunityRefreshAppBarButton.Visibility = Visibility.Visible;
+
                     state = "VisualState800";
                 }
                 VisualStateManager.GoToState(this, state, true);
@@ -71,7 +81,144 @@ namespace ZSCY_Win10
             CommunityFrame.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// 下拉刷新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void CommunityListpr_RefreshInvoked(DependencyObject sender, object args)
+        {
+            page = 0;
+            string type = "";
+            pagestatus[CommunityPivot.SelectedIndex]++;
+            switch (CommunityPivot.SelectedIndex)
+            {
+                case 0:
+                    type = "RMDT";
+                    //RMDTList.Clear();
+                    continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
+                    break;
+                case 1:
+                    type = "BBDD";
+                    //BBDDList.Clear();
+                    continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
+                    break;
+                case 2:
+                    type = "GFZX ";
+                    //GFZXList.Clear();
+                    continueCommunityGFZXGrid.Visibility = Visibility.Collapsed;
+                    break;
+            }
+            //init
+        }
 
+        /// <summary>
+        /// 刷新按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CommunityRefreshAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            page = 0;
+            string type = "";
+            pagestatus[CommunityPivot.SelectedIndex]++;
+            switch (CommunityPivot.SelectedIndex)
+            {
+                case 0:
+                    type = "RMDT";
+                    //RMDTList.Clear();
+                    continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
+                    break;
+                case 1:
+                    type = "BBDD";
+                    //BBDDList.Clear();
+                    continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
+                    break;
+                case 2:
+                    type = "GFZX ";
+                    //GFZXList.Clear();
+                    continueCommunityGFZXGrid.Visibility = Visibility.Collapsed;
+                    break;
+            }
+            //init
+        }
+
+        /// <summary>
+        /// 继续加载
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void continueCommunityGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            page++;
+            string type = "";
+            switch (CommunityPivot.SelectedIndex)
+            {
+                case 0:
+                    type = "RMDT";
+                    continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
+                    break;
+                case 1:
+                    type = "BBDD";
+                    continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
+                    break;
+                case 2:
+                    type = "GFZX ";
+                    continueCommunityGFZXGrid.Visibility = Visibility.Collapsed;
+                    break;
+            }
+            //init
+        }
+
+        /// <summary>
+        /// Pivot切换
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CommunityPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string type = "";
+            switch (CommunityPivot.SelectedIndex)
+            {
+                case 0:
+                    type = "RMDT";
+                    break;
+                case 1:
+                    type = "BBDD";
+                    break;
+                case 2:
+                    type = "GFZX ";
+                    break;
+            }
+            if (pagestatus[CommunityPivot.SelectedIndex] == 0)
+            {
+                pagestatus[CommunityPivot.SelectedIndex]++;
+                //init
+            }
+        }
+
+        /// <summary>
+        /// 加载失败重新加载
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CommunityListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            string type = "";
+            switch (CommunityPivot.SelectedIndex)
+            {
+                case 0:
+                    type = "RMDT";
+                    break;
+                case 1:
+                    type = "BBDD";
+                    break;
+                case 2:
+                    type = "GFZX ";
+                    break;
+            }
+            //init
+        }
 
 
     }

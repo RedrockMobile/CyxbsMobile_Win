@@ -352,6 +352,11 @@ namespace ZSCY_Win10
             ((Page)sender).Loaded -= Page_Loaded;
         }
 
+        /// <summary>
+        /// 继续加载
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void continueNewsGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             page++;
@@ -379,6 +384,11 @@ namespace ZSCY_Win10
 
         }
 
+        /// <summary>
+        /// 加载失败重新加载
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NewsListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
             string type = "";
@@ -400,6 +410,11 @@ namespace ZSCY_Win10
             initNewsList(type);
         }
 
+        /// <summary>
+        /// 刷新按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NewsRefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -600,6 +615,12 @@ namespace ZSCY_Win10
             }
         }
 
+
+        /// <summary>
+        /// 下拉刷新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void NewsListpr_RefreshInvoked(DependencyObject sender, object args)
         {
             page = 0;
@@ -631,6 +652,11 @@ namespace ZSCY_Win10
             initNewsList(type);
         }
 
+        /// <summary>
+        /// Pivot切换
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NewsPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string type = "";

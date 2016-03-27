@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ZSCY_Win10"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:pr="using:PullToRefresh.UWP"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
@@ -49,6 +50,10 @@
                     <!--<AppBarButton Name="CommunityBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="CommunityBackAppBarButton_Click"/>-->
                     <TextBlock Name="HubSectionKBTitle" Text="社区" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <AppBarButton Name="ConmunityMyAppBarButton" Icon="Contact" Foreground="White"></AppBarButton>
+                    <AppBarButton Name="CommunityRefreshAppBarButton" Icon="Refresh" Foreground="White" Click="CommunityRefreshAppBarButton_Click"/>
+                </StackPanel>
             </Grid>
             <Grid Name="TitlecutoffLineGrid" Visibility="Collapsed" Margin="400,0,0,0" HorizontalAlignment="Left">
                 <Line Y1="0" Y2="48" Width="1" Stroke="#58b3ff" HorizontalAlignment="Left" StrokeThickness="1"/>
@@ -64,7 +69,125 @@
             </Grid.ColumnDefinitions>
 
             <!--列表-->
-            <Grid x:Name="CommunityListgrid" Grid.Column="0" DataContext="{Binding Group[0]}" Background="White">
+            <Grid x:Name="CommunityListgrid" Grid.Column="0" Background="White">
+                <Pivot Name="CommunityPivot" SelectionChanged="CommunityPivot_SelectionChanged">
+                    <PivotItem>
+                        <PivotItem.Header>
+                            <TextBlock Text="热门动态" FontSize="15"></TextBlock>
+                        </PivotItem.Header>
+                        <pr:PullToRefreshBox x:Name="RMDTListpr" RefreshInvoked="CommunityListpr_RefreshInvoked"  VerticalAlignment="Stretch"  Margin="-12,0" >
+                            <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <!--热门动态的ListView-->
+                                    <ListView Name="RMDTListView" IsItemClickEnabled="True"  HorizontalAlignment="Stretch" >
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate >
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <StackPanel Grid.Row="1">
+                                        <!--列表的加载条-->
+                                        <StackPanel Name="RMDTListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
+                                            <ProgressBar IsIndeterminate="True" />
+                                            <TextBlock Text="疯狂加载中..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
+                                        </StackPanel>
+                                        <!--列表的失败报错-->
+                                        <StackPanel Name="RMDTListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="CommunityListFailedStackPanel_Tapped">
+                                            <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
+                                            <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+                                        </StackPanel>
+                                        <!--继续加载-->
+                                        <Grid Name="continueCommunityRMDTGrid" Height="50" Tapped="continueCommunityGrid_Tapped" Visibility="Collapsed">
+                                            <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                            </ScrollViewer>
+                        </pr:PullToRefreshBox>
+                    </PivotItem>
+
+                    <PivotItem>
+                        <PivotItem.Header>
+                            <TextBlock Text="哔哔叨叨" FontSize="15"></TextBlock>
+                        </PivotItem.Header>
+                        <pr:PullToRefreshBox x:Name="BBDDListpr" RefreshInvoked="CommunityListpr_RefreshInvoked"  VerticalAlignment="Stretch"  Margin="-12,0" >
+                            <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <!--哔哔叨叨的ListView-->
+                                    <ListView Name="BBDDListView" IsItemClickEnabled="True"  HorizontalAlignment="Stretch" >
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate >
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <StackPanel Grid.Row="1">
+                                        <!--列表的加载条-->
+                                        <StackPanel Name="BBDDListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
+                                            <ProgressBar IsIndeterminate="True" />
+                                            <TextBlock Text="疯狂加载中..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
+                                        </StackPanel>
+                                        <!--列表的失败报错-->
+                                        <StackPanel Name="BBDDListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="CommunityListFailedStackPanel_Tapped">
+                                            <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
+                                            <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+                                        </StackPanel>
+                                        <!--继续加载-->
+                                        <Grid Name="continueCommunityBBDDGrid" Height="50" Tapped="continueCommunityGrid_Tapped" Visibility="Collapsed">
+                                            <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                            </ScrollViewer>
+                        </pr:PullToRefreshBox>
+                    </PivotItem>
+
+                    <PivotItem>
+                        <PivotItem.Header>
+                            <TextBlock Text="官方资讯" FontSize="15"></TextBlock>
+                        </PivotItem.Header>
+                        <pr:PullToRefreshBox x:Name="GFZXListpr" RefreshInvoked="CommunityListpr_RefreshInvoked"  VerticalAlignment="Stretch"  Margin="-12,0" >
+                            <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <!--官方资讯的ListView-->
+                                    <ListView Name="GFZXListView" IsItemClickEnabled="True"  HorizontalAlignment="Stretch" >
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate >
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <StackPanel Grid.Row="1">
+                                        <!--列表的加载条-->
+                                        <StackPanel Name="GFZXListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
+                                            <ProgressBar IsIndeterminate="True" />
+                                            <TextBlock Text="疯狂加载中..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
+                                        </StackPanel>
+                                        <!--列表的失败报错-->
+                                        <StackPanel Name="GFZXListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="CommunityListFailedStackPanel_Tapped">
+                                            <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
+                                            <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+                                        </StackPanel>
+                                        <!--继续加载-->
+                                        <Grid Name="continueCommunityGFZXGrid" Height="50" Tapped="continueCommunityGrid_Tapped" Visibility="Collapsed">
+                                            <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                            </ScrollViewer>
+                        </pr:PullToRefreshBox>
+                    </PivotItem>
+                </Pivot>
             </Grid>
 
             <!--正文-->
