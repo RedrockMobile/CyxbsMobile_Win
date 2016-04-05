@@ -227,6 +227,9 @@
     <Compile Include="Data\JWList.cs" />
     <Compile Include="Data\PersonalIno.cs" />
     <Compile Include="Data\ScoreList.cs" />
+    <Compile Include="MyPage.xaml.cs">
+      <DependentUpon>MyPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewsPage.xaml.cs">
       <DependentUpon>NewsPage.xaml</DependentUpon>
     </Compile>
@@ -251,6 +254,9 @@
     <Compile Include="NavMenuItem.cs" />
     <Compile Include="Pages\CalendarPage.xaml.cs">
       <DependentUpon>CalendarPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CommunityContentPage.xaml.cs">
+      <DependentUpon>CommunityContentPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\EmptyRoomsPage.xaml.cs">
       <DependentUpon>EmptyRoomsPage.xaml</DependentUpon>
@@ -442,6 +448,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NewsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -473,6 +483,10 @@
     <Page Include="Pages\CalendarPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\CommunityContentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\EmptyRoomsPage.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using ZSCY_Win10.Pages;
+using ZSCY_Win10.Util;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
@@ -45,7 +47,7 @@ namespace ZSCY_Win10
                         SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
                         SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                         CommunityRefreshAppBarButton.Visibility = Visibility.Collapsed;
-                        ConmunityMyAppBarButton.Visibility = Visibility.Collapsed;
+                        //ConmunityMyAppBarButton.Visibility = Visibility.Collapsed;
                     }
                 }
                 if (!App.showpane)
@@ -62,7 +64,7 @@ namespace ZSCY_Win10
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                     HubSectionKBTitle.Text = "社区";
                     CommunityRefreshAppBarButton.Visibility = Visibility.Visible;
-
+                    //ConmunityMyAppBarButton.Visibility = Visibility.Visible;
                     state = "VisualState800";
                 }
                 VisualStateManager.GoToState(this, state, true);
@@ -71,6 +73,7 @@ namespace ZSCY_Win10
         }
 
         public Frame CommunityFrame { get { return this.frame; } }
+        //public Frame MyFrame { get { return this.Myframe; } }
 
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
@@ -79,6 +82,8 @@ namespace ZSCY_Win10
             SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             CommunityFrame.Visibility = Visibility.Collapsed;
+            CommunityRefreshAppBarButton.Visibility = Visibility.Visible;
+            //ConmunityMyAppBarButton.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -220,6 +225,12 @@ namespace ZSCY_Win10
             //init
         }
 
-
+        //private void ConmunityMyAppBarButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Myframe.Visibility = Visibility.Visible;
+        //    SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+        //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+        //    Myframe.Navigate(typeof(CommunityMyPage));
+        //}
     }
 }

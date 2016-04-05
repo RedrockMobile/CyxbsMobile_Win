@@ -66,6 +66,12 @@ namespace ZSCY_Win10
                 },
                 new NavMenuItem()
                 {
+                    Image = "ms-appx:///Assets/grzx_black.png",
+                    Label = "个人中心",
+                    DestPage = typeof(MyPage)
+                },
+                new NavMenuItem()
+                {
                     Image = "ms-appx:///Assets/iconfont-more.png",
                     Label = "更多",
                     DestPage = typeof(MorePage)
