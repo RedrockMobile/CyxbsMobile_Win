@@ -99,6 +99,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\aCircle.png" />
     <Content Include="Assets\AlphaLogo\Square150x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -109,6 +110,7 @@
     <Content Include="Assets\AlphaLogo\Square71x71Logo.scale-400.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\anInterestingCircle.png" />
     <Content Include="Assets\Annex_img\Annex_apk.png" />
     <Content Include="Assets\Annex_img\Annex_doc.png" />
     <Content Include="Assets\Annex_img\Annex_ics.png" />

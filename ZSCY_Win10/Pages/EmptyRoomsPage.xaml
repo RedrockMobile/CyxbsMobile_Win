@@ -65,7 +65,22 @@
 
         <ScrollViewer Grid.Row="1" Background="White">
             <Grid  Margin="10">
-                <GridView Name="EmptyGridView">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid  Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" >
+                        <Image Source="../Assets/anInterestingCircle.png" Height="30"/>
+                        <TextBlock Text=" 查询记录" FontSize="25" VerticalAlignment="Center" Foreground="LightBlue" />
+                    </StackPanel>
+                </Grid>
+                <!--<GridView Name="EmptyGridView" Grid.Row="1">
                     <GridView.ItemTemplate>
                         <DataTemplate>
                             <Grid >
@@ -73,7 +88,127 @@
                             </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>
-                </GridView>
+                </GridView>-->
+                <Grid Grid.Row="1" Name="g1">
+                    <Grid.RowDefinitions >
+                        <RowDefinition />
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../Assets/aCircle.png" Height="10"/>
+                        <TextBlock Text=" 一楼" VerticalAlignment="Center" FontSize="20" Grid.Row="0"/>
+                    </StackPanel>
+                    <TextBlock Name="tx1" Text="此楼暂无空教室~" FontSize="20" Grid.Row="1" Visibility="Collapsed"/>
+                    <GridView Name="FirstFloor" Grid.Row="1">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock  Text="{Binding Room}" HorizontalAlignment="Center"   FontSize="20" Foreground="#333"></TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
+                <Grid Grid.Row="2" Name="g2">
+                    <Grid.RowDefinitions >
+                        <RowDefinition />
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../Assets/aCircle.png" Height="10"/>
+                        <TextBlock Text=" 二楼" VerticalAlignment="Center" FontSize="20" Grid.Row="0"/>
+                    </StackPanel>
+                    <TextBlock Name="tx2" Text="此楼暂无空教室~" FontSize="20" Grid.Row="1" Visibility="Collapsed"/>
+                    <GridView Name="SecondFloor" Grid.Row="1">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid >
+                                    <TextBlock  Text="{Binding Room}" HorizontalAlignment="Center"   FontSize="20" Foreground="#333"></TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
+                <Grid Grid.Row="3" Name="g3">
+                    <Grid.RowDefinitions >
+                        <RowDefinition />
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Name="tx3" Text="此楼暂无空教室~" FontSize="20" Grid.Row="1" Visibility="Collapsed"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../Assets/aCircle.png" Height="10"/>
+                        <TextBlock Text=" 三楼" VerticalAlignment="Center" FontSize="20" Grid.Row="0"/>
+                    </StackPanel>
+                    <GridView Name="ThirdFloor" Grid.Row="1">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid >
+                                    <TextBlock  Text="{Binding Room}" HorizontalAlignment="Center"   FontSize="20" Foreground="#333"></TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
+                <Grid Grid.Row="4" Name="g4">
+                    <Grid.RowDefinitions >
+                        <RowDefinition />
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../Assets/aCircle.png" Height="10"/>
+                        <TextBlock Text=" 四楼" VerticalAlignment="Center" FontSize="20" Grid.Row="0"/>
+                    </StackPanel>
+                    <TextBlock Name="tx4" Text="此楼暂无空教室~" FontSize="20" Grid.Row="1" Visibility="Collapsed"/>
+                    <GridView Name="FourthFloor" Grid.Row="1">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid >
+                                    <TextBlock  Text="{Binding Room}" HorizontalAlignment="Center"   FontSize="20" Foreground="#333"></TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
+                <Grid Grid.Row="5" Name="g5">
+                    <Grid.RowDefinitions >
+                        <RowDefinition />
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../Assets/aCircle.png" Height="10"/>
+                        <TextBlock Text=" 五楼" VerticalAlignment="Center" FontSize="20" Grid.Row="0"/>
+                    </StackPanel>
+                    <TextBlock Name="tx5" Text="此楼暂无空教室~" FontSize="20" Grid.Row="1" Visibility="Collapsed"/>
+                    <GridView Name="FifthFloor" Grid.Row="1">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid >
+                                    <TextBlock  Text="{Binding Room}" HorizontalAlignment="Center"   FontSize="20" Foreground="#333"></TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
+                <Grid Grid.Row="6" Name="g6">
+                    <Grid.RowDefinitions >
+                        <RowDefinition />
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../Assets/aCircle.png" Height="10"/>
+                        <TextBlock Text=" 六楼" VerticalAlignment="Center" FontSize="20" Grid.Row="0"/>
+                    </StackPanel>
+                    <TextBlock Name="tx6" Text="此楼暂无空教室~" FontSize="20" Grid.Row="1" Visibility="Collapsed"/>
+                    <GridView Name="SixthFloor" Grid.Row="1">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid >
+                                    <TextBlock  Text="{Binding Room}" HorizontalAlignment="Center"   FontSize="20" Foreground="#333"></TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
                 <StackPanel Name="ListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="ListFailedStackPanel_Tapped">
                     <Image Name="ListFailedStackPanelImage" Source="../Assets/ic_failed.png" Height="80" Width="80" HorizontalAlignment="Center" />
                     <TextBlock Name="ListFailedStackPanelTextBlock" Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />

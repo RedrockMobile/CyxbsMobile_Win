@@ -43,6 +43,7 @@ namespace ZSCY.Pages
             false,
             false,
         };
+        bool isBuildEight = false;
 
         string[] emptyReslut = new string[6]; //保存返回值
         string[][] emptyRoomReslut = new string[6][]; //保存返回的教室值
@@ -54,6 +55,12 @@ namespace ZSCY.Pages
         bool isShowEmpty = true;
 
         ObservableCollection<EmptyRoomList> emptyRoomList = new ObservableCollection<EmptyRoomList>();
+        ObservableCollection<EmptyRoomList> emptyRoomFirstFloor = new ObservableCollection<EmptyRoomList>();
+        ObservableCollection<EmptyRoomList> emptyRoomSecondFloor = new ObservableCollection<EmptyRoomList>();
+        ObservableCollection<EmptyRoomList> emptyRoomThirdFloor = new ObservableCollection<EmptyRoomList>();
+        ObservableCollection<EmptyRoomList> emptyRoomFourthFloor = new ObservableCollection<EmptyRoomList>();
+        ObservableCollection<EmptyRoomList> emptyRoomFifthFloor = new ObservableCollection<EmptyRoomList>();
+        ObservableCollection<EmptyRoomList> emptyRoomSixthFloor = new ObservableCollection<EmptyRoomList>();
 
         public EmptyRoomsPage()
         {
@@ -70,8 +77,37 @@ namespace ZSCY.Pages
                     emptyRoomReslut[i][j] = "";
             }
             NowWeekday = (Int16.Parse(Utils.GetWeek()) == 0 ? 7 : Int16.Parse(Utils.GetWeek())).ToString();
-            EmptyGridView.ItemsSource = emptyRoomList;
+            FirstFloor.ItemsSource = emptyRoomFirstFloor;
+            SecondFloor.ItemsSource = emptyRoomSecondFloor;
+            ThirdFloor.ItemsSource = emptyRoomThirdFloor;
+            FourthFloor.ItemsSource = emptyRoomFourthFloor;
+            FifthFloor.ItemsSource = emptyRoomFifthFloor;
+            SixthFloor.ItemsSource = emptyRoomSixthFloor;
             //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            if (emptyRoomFirstFloor.Count == 0)
+                g1.Visibility = Visibility.Collapsed;
+            //else
+            //    g1.Visibility = Visibility.Visible;
+            if (emptyRoomSecondFloor.Count == 0)
+                g2.Visibility = Visibility.Collapsed;
+            //else
+            //    g2.Visibility = Visibility.Visible;
+            if (emptyRoomThirdFloor.Count == 0)
+                g3.Visibility = Visibility.Collapsed;
+            //else
+            //    g3.Visibility = Visibility.Visible;
+            if (emptyRoomFourthFloor.Count == 0)
+                g4.Visibility = Visibility.Collapsed;
+            //else
+            //    g4.Visibility = Visibility.Visible;
+            if (emptyRoomFifthFloor.Count == 0)
+                g5.Visibility = Visibility.Collapsed;
+            //else
+            //    g5.Visibility = Visibility.Visible;
+            if (emptyRoomSixthFloor.Count == 0)
+                g6.Visibility = Visibility.Collapsed;
+            //else
+            //    g6.Visibility = Visibility.Visible;
         }
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
@@ -91,7 +127,7 @@ namespace ZSCY.Pages
 
 
         //离开页面时，取消事件
-        protected  override void OnNavigatedFrom(NavigationEventArgs e)
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             //StatusBar statusBar = StatusBar.GetForCurrentView();
             //await statusBar.ProgressIndicator.HideAsync();
@@ -280,12 +316,24 @@ namespace ZSCY.Pages
                     ListFailedStackPanel.Visibility = Visibility.Visible;
                     isShowEmpty = false;
                     emptyRoomList.Clear();
+                    emptyRoomFirstFloor.Clear();
+                    emptyRoomSecondFloor.Clear();
+                    emptyRoomThirdFloor.Clear();
+                    emptyRoomFourthFloor.Clear();
+                    emptyRoomFifthFloor.Clear();
+                    emptyRoomSixthFloor.Clear();
                 }
             }
             else
             {
                 ListFailedStackPanel.Visibility = Visibility.Visible;
                 emptyRoomList.Clear();
+                emptyRoomFirstFloor.Clear();
+                emptyRoomSecondFloor.Clear();
+                emptyRoomThirdFloor.Clear();
+                emptyRoomFourthFloor.Clear();
+                emptyRoomFifthFloor.Clear();
+                emptyRoomSixthFloor.Clear();
                 isShowEmpty = false;
             }
             //StatusBar statusBar = StatusBar.GetForCurrentView();
@@ -311,6 +359,12 @@ namespace ZSCY.Pages
                 }
             }
             emptyRoomList.Clear();
+            emptyRoomFirstFloor.Clear();
+            emptyRoomSecondFloor.Clear();
+            emptyRoomThirdFloor.Clear();
+            emptyRoomFourthFloor.Clear();
+            emptyRoomFifthFloor.Clear();
+            emptyRoomSixthFloor.Clear();
 
             if (emptyRoomReslutuse.Count != 0)
             {
@@ -324,7 +378,153 @@ namespace ZSCY.Pages
                     emptyRoomList.Add(new EmptyRoomList { Room = emptyRoomReslutuse[0][i] });
                 }
             }
+            foreach (var item in emptyRoomList)
+            {
+                if (item.Room.Substring(0, 1) == "8")
+                    isBuildEight = true;
+            }
+            if (!isBuildEight)
+            {
+                foreach (var item in emptyRoomList)
+                {
+                    //if (item.Room.Substring(1, 1) == "1")
+                    switch (item.Room.Substring(1, 1))
+                    {
+                        case "1":
+                            emptyRoomFirstFloor.Add(new EmptyRoomList { Room = item.Room });
+                            break;
+                        case "2":
+                            emptyRoomSecondFloor.Add(new EmptyRoomList { Room = item.Room });
+                            break;
+                        case "3":
+                            emptyRoomThirdFloor.Add(new EmptyRoomList { Room = item.Room });
+                            break;
+                        case "4":
+                            emptyRoomFourthFloor.Add(new EmptyRoomList { Room = item.Room });
+                            break;
+                        case "5":
+                            emptyRoomFifthFloor.Add(new EmptyRoomList { Room = item.Room });
+                            break;
+                        case "6":
+                            emptyRoomSixthFloor.Add(new EmptyRoomList { Room = item.Room });
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item in emptyRoomList)
+                {
+                    //if (item.Room.Substring(1, 1) == "1")
+                    switch (item.Room.Substring(2, 1))
+                    {
+                        case "1":
+                            emptyRoomFirstFloor.Add(new EmptyRoomList { Room = item.Room });
+                            break;
+                        case "2":
+                            emptyRoomSecondFloor.Add(new EmptyRoomList { Room = item.Room });
+                            break;
+                        case "3":
+                            emptyRoomThirdFloor.Add(new EmptyRoomList { Room = item.Room });
+                            break;
+                        case "4":
+                            emptyRoomFourthFloor.Add(new EmptyRoomList { Room = item.Room });
+                            break;
+                        case "5":
+                            emptyRoomFifthFloor.Add(new EmptyRoomList { Room = item.Room });
+                            break;
+                        case "6":
+                            emptyRoomSixthFloor.Add(new EmptyRoomList { Room = item.Room });
+                            break;
+                    }
+                }
+                isBuildEight = false;
+            }
+            if (emptyRoomList.Count != 0)
+            {
+                if (emptyRoomFirstFloor.Count == 0)
+                {
+                    g1.Visibility = Visibility.Visible;
+                    FirstFloor.Visibility = Visibility.Collapsed;
+                    tx1.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    g1.Visibility = Visibility.Visible;
+                    FirstFloor.Visibility = Visibility.Visible;
+                    tx1.Visibility = Visibility.Collapsed;
+                }
+                if (emptyRoomSecondFloor.Count == 0)
+                {
+                    g2.Visibility = Visibility.Visible;
+                    SecondFloor.Visibility = Visibility.Collapsed;
+                    tx2.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    g2.Visibility = Visibility.Visible;
+                    SecondFloor.Visibility = Visibility.Visible;
+                    tx2.Visibility = Visibility.Collapsed;
+                }
+                if (emptyRoomThirdFloor.Count == 0)
+                {
+                    g3.Visibility = Visibility.Visible;
+                    ThirdFloor.Visibility = Visibility.Collapsed;
+                    tx3.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    g3.Visibility = Visibility.Visible;
+                    ThirdFloor.Visibility = Visibility.Visible;
+                    tx3.Visibility = Visibility.Collapsed;
+                }
+                if (emptyRoomFourthFloor.Count == 0)
+                {
+                    g4.Visibility = Visibility.Visible;
+                    FourthFloor.Visibility = Visibility.Collapsed;
+                    tx4.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    g4.Visibility = Visibility.Visible;
+                    FourthFloor.Visibility = Visibility.Visible;
+                    tx4.Visibility = Visibility.Collapsed;
+                }
+                if (emptyRoomFifthFloor.Count == 0)
+                {
+                    g5.Visibility = Visibility.Visible;
+                    FifthFloor.Visibility = Visibility.Collapsed;
+                    tx5.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    g5.Visibility = Visibility.Visible;
+                    FifthFloor.Visibility = Visibility.Visible;
+                    tx5.Visibility = Visibility.Collapsed;
+                }
+                if (emptyRoomSixthFloor.Count == 0)
+                {
+                    g6.Visibility = Visibility.Visible;
+                    SixthFloor.Visibility = Visibility.Collapsed;
+                    tx6.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    g6.Visibility = Visibility.Visible;
+                    SixthFloor.Visibility = Visibility.Visible;
+                    tx6.Visibility = Visibility.Collapsed;
+                }
 
+            }
+            else
+            {
+                g1.Visibility = Visibility.Collapsed;
+                g2.Visibility = Visibility.Collapsed;
+                g3.Visibility = Visibility.Collapsed;
+                g4.Visibility = Visibility.Collapsed;
+                g5.Visibility = Visibility.Collapsed;
+                g6.Visibility = Visibility.Collapsed;
+            }
             //for (int i = 0, j = 0; i < 6; i++)
             //{
             //    Debug.WriteLine("item" + i + "   " + item[i]);
@@ -431,7 +631,12 @@ namespace ZSCY.Pages
                     break;
             }
             emptyRoomList.Clear();
-
+            emptyRoomFirstFloor.Clear();
+            emptyRoomSecondFloor.Clear();
+            emptyRoomThirdFloor.Clear();
+            emptyRoomFourthFloor.Clear();
+            emptyRoomFifthFloor.Clear();
+            emptyRoomSixthFloor.Clear();
             Time08Grid.Background = new SolidColorBrush(gridColorGray);
             Time10Grid.Background = new SolidColorBrush(gridColorGray);
             Time14Grid.Background = new SolidColorBrush(gridColorGray);
@@ -451,6 +656,14 @@ namespace ZSCY.Pages
 
         private void FilterAppBarToggleButton_Click(object sender, RoutedEventArgs e)
         {
+
+            g1.Visibility = Visibility.Collapsed;
+            g2.Visibility = Visibility.Collapsed;
+            g3.Visibility = Visibility.Collapsed;
+            g4.Visibility = Visibility.Collapsed;
+            g5.Visibility = Visibility.Collapsed;
+            g6.Visibility = Visibility.Collapsed;
+
             MenuFlyout JXLMenuFlyout = new MenuFlyout();
 
             JXLMenuFlyout.Items.Add(getJXLMenuFlyoutItem("二教"));
