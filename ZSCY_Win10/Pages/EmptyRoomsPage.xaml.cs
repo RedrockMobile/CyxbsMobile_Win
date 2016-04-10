@@ -451,7 +451,8 @@ namespace ZSCY.Pages
                     break;
             }
             emptyRoomList.Clear();
-          
+            emptyRoomAndFloor.Clear();
+
             Time08Grid.Background = new SolidColorBrush(gridColorGray);
             Time10Grid.Background = new SolidColorBrush(gridColorGray);
             Time14Grid.Background = new SolidColorBrush(gridColorGray);
@@ -472,7 +473,6 @@ namespace ZSCY.Pages
         private void FilterAppBarToggleButton_Click(object sender, RoutedEventArgs e)
         {
 
-            emptyRoomAndFloor.Clear();
 
             MenuFlyout JXLMenuFlyout = new MenuFlyout();
 
