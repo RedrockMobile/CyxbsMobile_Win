@@ -77,7 +77,7 @@
                 <Grid  Grid.Row="0">
                     <StackPanel Orientation="Horizontal" >
                         <Image Source="../Assets/anInterestingCircle.png" Height="30"/>
-                        <TextBlock Text=" 查询记录" FontSize="25" VerticalAlignment="Center" Foreground="LightBlue" />
+                        <TextBlock Text=" 查询记录" FontSize="25" VerticalAlignment="Center" Foreground="#068cfd" />
                     </StackPanel>
                 </Grid>
 
