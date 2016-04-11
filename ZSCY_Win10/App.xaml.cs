@@ -138,13 +138,16 @@ namespace ZSCY_Win10
                         throw new Exception("Failed to create initial page");
                     }
                 }
-                else {
+                else
+                {
                     if (!appSetting.Values.ContainsKey("idNum"))
                     {
                         if (!rootFrame.Navigate(typeof(LoginPage), e.Arguments))
                         {
                             throw new Exception("Failed to create initial page");
+
                         }
+                        Window.Current.Activate();
                     }
                     else
                     {
@@ -172,7 +175,6 @@ namespace ZSCY_Win10
                 }
             }
             // 确保当前窗口处于活动状态
-            Window.Current.Activate();
             await UmengAnalytics.StartTrackAsync("55cd8c8be0f55a20ba00440d", "Marketplace_Win10");
 
         }

@@ -93,7 +93,7 @@
         
     </Grid>
     <Page.BottomAppBar>
-        <CommandBar>
+        <CommandBar Name="commandbar" Margin="48,0,0,0" HorizontalAlignment="Right">
             <AppBarButton Label="切换账号" Icon="Switch" Click="SwitchAppBarButton_Click"/>
             <AppBarButton Name="LikeAppBarToggleButton" Icon="Like" Label="好评我" Click="LikeAppBarToggleButton_Click"/>
             <AppBarButton Name="AboutAppBarToggleButton" Icon="Help" Label="关于" Click="AboutAppBarToggleButton_Click"/>

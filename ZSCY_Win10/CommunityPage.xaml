@@ -52,6 +52,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <!--<AppBarButton Name="ConmunityMyAppBarButton" Icon="Contact" Foreground="White" Click="ConmunityMyAppBarButton_Click"></AppBarButton>-->
+                    <AppBarButton Name="CommunityAddAppBarButton" Icon="Add" Foreground="White" Click="CommunityAddAppBarButton_Click"/>
                     <AppBarButton Name="CommunityRefreshAppBarButton" Icon="Refresh" Foreground="White" Click="CommunityRefreshAppBarButton_Click"/>
                 </StackPanel>
             </Grid>

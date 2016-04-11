@@ -96,11 +96,18 @@ namespace ZSCY_Win10
                 this.TogglePaneButton.Focus(FocusState.Programmatic);
             };
             //this.AppFrame.Navigate(navlist[0].DestPage, navlist[0].Arguments);
-            var view = ApplicationView.GetForCurrentView();
-            view.TitleBar.BackgroundColor = Color.FromArgb(255, 4, 131, 239);
-            view.TitleBar.ButtonBackgroundColor = Color.FromArgb(255, 4, 131, 239);
-            view.TitleBar.ButtonHoverBackgroundColor = Color.FromArgb(255, 2, 126, 231);
-            view.TitleBar.ButtonPressedBackgroundColor = Color.FromArgb(255, 2, 111, 203);
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                Utils.ShowSystemTrayAsync(Color.FromArgb(255, 6, 140, 253), Colors.White);
+            }
+            else
+            {
+                var view = ApplicationView.GetForCurrentView();
+                view.TitleBar.BackgroundColor = Color.FromArgb(255, 4, 131, 239);
+                view.TitleBar.ButtonBackgroundColor = Color.FromArgb(255, 4, 131, 239);
+                view.TitleBar.ButtonHoverBackgroundColor = Color.FromArgb(255, 2, 126, 231);
+                view.TitleBar.ButtonPressedBackgroundColor = Color.FromArgb(255, 2, 111, 203);
+            }
             this.SizeChanged += (s, e) =>
             {
                 Debug.WriteLine(e.NewSize.Width);
@@ -128,6 +135,8 @@ namespace ZSCY_Win10
                 //this.BackButton.Visibility = Visibility.Collapsed;
             }
             NavMenuList.ItemsSource = navlist;
+            Window.Current.Activate();
+
             //NavMenuList.SelectedIndex = 0;
             var a = DateTime.Now;
             if (DateTimeOffset.Now < DateTimeOffset.Parse("2016/3/15 00:00:00"))
@@ -135,6 +144,7 @@ namespace ZSCY_Win10
             else
                 appSetting.Values.Remove("showNotice");
             initHeadImage();
+
         }
 
         private async void initHeadImage()

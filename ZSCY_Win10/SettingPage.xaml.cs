@@ -53,6 +53,7 @@ namespace ZSCY_Win10
                 if (!App.showpane)
                 {
                     SetTitleGrid.Margin = new Thickness(48, 0, 0, 0);
+                    commandbar.Margin = new Thickness(0);
                 }
                 else
                 {
