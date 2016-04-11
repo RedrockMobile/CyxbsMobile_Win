@@ -39,6 +39,7 @@ namespace ZSCY_Win10
     /// </summary>
     public sealed partial class MainPage : Page
     {
+
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         private Point currentPoint; //最新的，当前的点
         private Point oldPoint;//上一个点
