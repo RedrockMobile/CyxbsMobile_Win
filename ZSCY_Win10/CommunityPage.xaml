@@ -26,7 +26,7 @@
                         <Setter Target="grid1.(FrameworkElement.MinHeight)" Value="0"/>
                         <Setter Target="CommunityListgrid.(FrameworkElement.MinHeight)" Value="0"/>
                         <Setter Target="CommunityContentGrid.(FrameworkElement.MinHeight)" Value="0"/>
-                        <Setter Target="frame.(FrameworkElement.MinHeight)" Value="0"/>
+                        <Setter Target="cframe.(FrameworkElement.MinHeight)" Value="0"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualState800">

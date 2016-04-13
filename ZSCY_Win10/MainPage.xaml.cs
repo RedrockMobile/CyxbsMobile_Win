@@ -305,7 +305,7 @@ namespace ZSCY_Win10
                 if (item.DestPage != null &&
                     item.DestPage != this.AppFrame.CurrentSourcePageType)
                 {
-                    //appSetting.Values["CommunityPerInfo"] = true;
+                    appSetting.Values["CommunityPerInfo"] = true;
                     if (!bool.Parse(appSetting.Values["CommunityPerInfo"].ToString()) && (item.DestPage == typeof(MyPage) || item.DestPage == typeof(CommunityPage)))
                     {
                         BackOpacityGrid.Visibility = Visibility.Visible;
