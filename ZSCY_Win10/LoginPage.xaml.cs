@@ -87,6 +87,7 @@ namespace ZSCY_Win10
                         appSetting.Values["gender"] = dataobj["gender"].ToString();
                         appSetting.Values["major"] = dataobj["major"].ToString();
                         appSetting.Values["college"] = dataobj["college"].ToString();
+                        appSetting.Values["CommunityPerInfo"] = false;
                         if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.StartScreen.JumpList"))
                         {
                             if (JumpList.IsSupported())

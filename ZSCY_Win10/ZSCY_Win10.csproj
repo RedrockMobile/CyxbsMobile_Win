@@ -291,6 +291,9 @@
       <DependentUpon>SearchFreeTimeResultPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SetPersonInfoPage.xaml.cs">
+      <DependentUpon>SetPersonInfoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
@@ -532,6 +535,10 @@
     <Page Include="Pages\SearchFreeTimeResultPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SetPersonInfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SettingPage.xaml">
       <SubType>Designer</SubType>

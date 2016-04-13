@@ -74,7 +74,7 @@ namespace ZSCY_Win10
             };
         }
 
-        public Frame CommunityFrame { get { return this.frame; } }
+        public Frame CommunityFrame { get { return this.cframe; } }
         //public Frame MyFrame { get { return this.Myframe; } }
 
 
@@ -233,6 +233,7 @@ namespace ZSCY_Win10
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             CommunityFrame.Navigate(typeof(CommunityAddPage));
+
         }
 
         //private void ConmunityMyAppBarButton_Click(object sender, RoutedEventArgs e)

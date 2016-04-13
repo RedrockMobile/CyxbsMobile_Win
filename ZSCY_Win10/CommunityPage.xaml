@@ -195,7 +195,7 @@
             <!--正文-->
             <Grid Name="CommunityContentGrid" Grid.Column="1">
                 <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1"/>
-                <Frame x:Name="frame" Margin="1,0,0,0" Visibility="Collapsed">
+                <Frame x:Name="cframe" Margin="1,0,0,0" Visibility="Collapsed">
                     <Frame.ContentTransitions>
                         <TransitionCollection>
                             <NavigationThemeTransition>

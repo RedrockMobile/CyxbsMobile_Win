@@ -58,7 +58,10 @@ namespace ZSCY_Win10
             //{
             //    appSetting.Values["AllKBGray"] = false;
             //}
-
+            if (!appSetting.Values.ContainsKey("CommunityPerInfo"))
+            {
+                appSetting.Values["CommunityPerInfo"] = false;
+            }
         }
 
 

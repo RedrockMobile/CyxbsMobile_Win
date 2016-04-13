@@ -297,7 +297,7 @@ namespace ZSCY_Win10
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="listViewItem"></param>
-        private void NavMenuList_ItemInvoked(object sender, ListViewItem listViewItem)
+        private async void NavMenuList_ItemInvoked(object sender, ListViewItem listViewItem)
         {
             var item = (NavMenuItem)((NavMenuListView)sender).ItemFromContainer(listViewItem);
             if (item != null)
@@ -305,8 +305,56 @@ namespace ZSCY_Win10
                 if (item.DestPage != null &&
                     item.DestPage != this.AppFrame.CurrentSourcePageType)
                 {
-                    this.AppFrame.Navigate(item.DestPage, item.Arguments);
-                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                    //appSetting.Values["CommunityPerInfo"] = true;
+                    if (!bool.Parse(appSetting.Values["CommunityPerInfo"].ToString()) && (item.DestPage == typeof(MyPage) || item.DestPage == typeof(CommunityPage)))
+                    {
+                        BackOpacityGrid.Visibility = Visibility.Visible;
+                        loadingStackPanel.Visibility = Visibility.Visible;
+                        List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+                        paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+                        paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                        paramList.Add(new KeyValuePair<string, string>("stuuum", appSetting.Values["stuNum"].ToString()));
+                        string perInfo = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/search", paramList);
+                        if (perInfo != "")
+                        {
+                            JObject jPerInfo = JObject.Parse(perInfo);
+                            if (jPerInfo["data"].ToString() == "")
+                            {
+                                var dig = new MessageDialog("你需要先补充一些个人信息才能使用社区模块哦", "哎呀~我们没有你的数据");
+                                var btnOk = new UICommand("现在添加");
+                                dig.Commands.Add(btnOk);
+                                var btnCancel = new UICommand("下次吧");
+                                dig.Commands.Add(btnCancel);
+                                var result = await dig.ShowAsync();
+                                if (null != result && result.Label == "现在添加")
+                                {
+                                    Debug.WriteLine("添加信息");
+                                    BackOpacityGrid.Visibility = Visibility.Collapsed;
+                                    loadingStackPanel.Visibility = Visibility.Collapsed;
+                                    this.AppFrame.Navigate(typeof(SetPersonInfoPage), item.DestPage);
+
+                                }
+                                else if (null != result && result.Label == "下次吧")
+                                {
+                                    BackOpacityGrid.Visibility = Visibility.Collapsed;
+                                    loadingStackPanel.Visibility = Visibility.Collapsed;
+                                }
+                            }
+                            else
+                            {
+                                appSetting.Values["CommunityPerInfo"] = true;
+                                BackOpacityGrid.Visibility = Visibility.Collapsed;
+                                loadingStackPanel.Visibility = Visibility.Collapsed;
+                                this.AppFrame.Navigate(item.DestPage, item.Arguments);
+                                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        this.AppFrame.Navigate(item.DestPage, item.Arguments);
+                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                    }
                 }
             }
         }
