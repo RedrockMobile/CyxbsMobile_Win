@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Pages;
+using ZSCY_Win10.Pages.CommunityPages;
 using ZSCY_Win10.Util;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
@@ -33,6 +34,14 @@ namespace ZSCY_Win10
             this.SizeChanged += (s, e) =>
             {
                 var state = "VisualState000";
+                if (CommunityFrame.Visibility == Visibility.Visible)
+                {
+                    //JWBackAppBarButton.Visibility = Visibility.Visible;
+                    SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+                    CommunityRefreshAppBarButton.Visibility = Visibility.Collapsed;
+                    //ConmunityMyAppBarButton.Visibility = Visibility.Collapsed;
+                }
                 if (e.NewSize.Width > 000 && e.NewSize.Width < 850)
                 {
                     //if (CommunityListView.SelectedIndex != -1)
@@ -41,14 +50,7 @@ namespace ZSCY_Win10
                     //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     //    HubSectionKBTitle.Text = CommunityContentTitleTextBlock.Text;
                     //}
-                    if (CommunityFrame.Visibility == Visibility.Visible)
-                    {
-                        //JWBackAppBarButton.Visibility = Visibility.Visible;
-                        SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
-                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-                        CommunityRefreshAppBarButton.Visibility = Visibility.Collapsed;
-                        //ConmunityMyAppBarButton.Visibility = Visibility.Collapsed;
-                    }
+
                 }
                 if (!App.showpane)
                 {
@@ -60,8 +62,8 @@ namespace ZSCY_Win10
                 }
                 if (e.NewSize.Width > 800)
                 {
-                    SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
-                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                    //SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                    //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                     HubSectionKBTitle.Text = "社区";
                     CommunityRefreshAppBarButton.Visibility = Visibility.Visible;
                     //ConmunityMyAppBarButton.Visibility = Visibility.Visible;
@@ -72,7 +74,7 @@ namespace ZSCY_Win10
             };
         }
 
-        public Frame CommunityFrame { get { return this.frame; } }
+        public Frame CommunityFrame { get { return this.cframe; } }
         //public Frame MyFrame { get { return this.Myframe; } }
 
 
@@ -223,6 +225,15 @@ namespace ZSCY_Win10
                     break;
             }
             //init
+        }
+
+        private void CommunityAddAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            CommunityFrame.Visibility = Visibility.Visible;
+            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            CommunityFrame.Navigate(typeof(CommunityAddPage));
+
         }
 
         //private void ConmunityMyAppBarButton_Click(object sender, RoutedEventArgs e)

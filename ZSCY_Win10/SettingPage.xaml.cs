@@ -53,6 +53,7 @@ namespace ZSCY_Win10
                 if (!App.showpane)
                 {
                     SetTitleGrid.Margin = new Thickness(48, 0, 0, 0);
+                    commandbar.Margin = new Thickness(0);
                 }
                 else
                 {
@@ -173,6 +174,7 @@ namespace ZSCY_Win10
         private async void SwitchAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             appSetting.Values.Remove("idNum");
+            appSetting.Values["CommunityPerInfo"] = false;
             IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
             IStorageFile storageFileWR = await applicationFolder.CreateFileAsync("kb", CreationCollisionOption.OpenIfExists);
             try

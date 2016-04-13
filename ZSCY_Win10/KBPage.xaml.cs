@@ -201,6 +201,9 @@ namespace ZSCY_Win10
 
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
+            if (isRefresh)
+                paramList.Add(new KeyValuePair<string, string>("forceFetch", "true"));
+
 
             string kbtemp = await NetWork.getHttpWebRequest("redapi2/api/kebiao", paramList); //新
                                                                                               //string kbtemp = await NetWork.getHttpWebRequest("api/kebiao", paramList); //旧

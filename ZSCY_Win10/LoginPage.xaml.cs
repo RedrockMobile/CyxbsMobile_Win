@@ -33,11 +33,18 @@ namespace ZSCY_Win10
         public LoginPage()
         {
             this.InitializeComponent();
-            var view = ApplicationView.GetForCurrentView();
-            view.TitleBar.BackgroundColor = Color.FromArgb(255, 4, 131, 239);
-            view.TitleBar.ButtonBackgroundColor = Color.FromArgb(255, 4, 131, 239);
-            view.TitleBar.ButtonHoverBackgroundColor = Color.FromArgb(255, 2, 126, 231);
-            view.TitleBar.ButtonPressedBackgroundColor = Color.FromArgb(255, 2, 111, 203);
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                Utils.ShowSystemTrayAsync(Color.FromArgb(255, 6, 140, 253), Colors.White);
+            }
+            else
+            {
+                var view = ApplicationView.GetForCurrentView();
+                view.TitleBar.BackgroundColor = Color.FromArgb(255, 4, 131, 239);
+                view.TitleBar.ButtonBackgroundColor = Color.FromArgb(255, 4, 131, 239);
+                view.TitleBar.ButtonHoverBackgroundColor = Color.FromArgb(255, 2, 126, 231);
+                view.TitleBar.ButtonPressedBackgroundColor = Color.FromArgb(255, 2, 111, 203);
+            }
             this.SizeChanged += (s, e) =>
               {
                   var state = "VisualState000";
@@ -80,6 +87,7 @@ namespace ZSCY_Win10
                         appSetting.Values["gender"] = dataobj["gender"].ToString();
                         appSetting.Values["major"] = dataobj["major"].ToString();
                         appSetting.Values["college"] = dataobj["college"].ToString();
+                        appSetting.Values["CommunityPerInfo"] = false;
                         if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.StartScreen.JumpList"))
                         {
                             if (JumpList.IsSupported())

@@ -74,7 +74,11 @@
                 </Frame>
 
                 <Grid Name="BackOpacityGrid" Visibility="Collapsed" Background="Black" Opacity="0.5" Tapped="BackOpacityGrid_Tapped"></Grid>
-
+                <StackPanel Name="loadingStackPanel" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <ProgressRing IsActive="True"></ProgressRing>
+                    <TextBlock Text="正在查找个人信息" Foreground="White"/>
+                </StackPanel>
+                
                 <!--<Frame x:Name="ClipHeadFrame" Width="300" Height="350">
                     <Frame.ContentTransitions>
                         <TransitionCollection>

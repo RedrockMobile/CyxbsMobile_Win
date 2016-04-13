@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="ZSCY_Win10.SetPersonInfoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY_Win10"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Background="#068cfd" Grid.Row="0">
+            <Grid Name="SetPersonInfoTitleGrid"  HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <!--<AppBarButton Name="SetPersonInfoBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="SetPersonInfoBackAppBarButton_Click"/>-->
+                    <TextBlock Name="HubSectionKBTitle" Text="初始化个人信息" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <AppBarButton Name="SetPersonInfoOKAppBarButton" Icon="Accept" Foreground="White" IsEnabled="False" Click="SetPersonInfoOKAppBarButton_Click"/>
+                </StackPanel>
+            </Grid>
+            <Grid Name="TitlecutoffLineGrid" Visibility="Collapsed" Margin="400,0,0,0" HorizontalAlignment="Left">
+                <Line Y1="0" Y2="48" Width="1" Stroke="#58b3ff" HorizontalAlignment="Left" StrokeThickness="1"/>
+                <TextBlock Name="SetPersonInfoContentTitleTextBlock" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
