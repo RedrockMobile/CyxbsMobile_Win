@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -65,6 +67,18 @@ namespace ZSCY_Win10
                 VisualStateManager.GoToState(this, state, true);
                 cutoffLine.Y2 = e.NewSize.Height;
             };
+            ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+            if (appSetting.Values["gender"].ToString() == "男        ")
+            {
+                stuSexText.Text = "♂";
+                stuSexText.Foreground = new SolidColorBrush(Color.FromArgb(255, 6, 140, 253));
+            }
+            else
+                stuSexText.Text = "♀";
+            stuNumText.Text = appSetting.Values["stuNum"].ToString();
+            stuIntText.Text = "这是简介啦啦啦啦（凑字数用凑字数用凑字数用凑字数用凑字数用）";
+            phoneNumText.Text = "13800000000";
+            qqNumText.Text = "1000000000";
         }
         public Frame MyFrame { get { return this.frame; } }
 
