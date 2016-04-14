@@ -64,14 +64,19 @@ namespace ZSCY_Win10.Util
             });
         }
 
-        public static async Task<string> headUpload(string stunum, string fileUri)
+        public static async Task<string> headUpload(string stunum, string fileUri, string uri = "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/home/Photo/upload",bool isPath = false)
         {
             Windows.Web.Http.HttpClient _httpClient = new Windows.Web.Http.HttpClient();
             CancellationTokenSource _cts = new CancellationTokenSource();
             Windows.Web.Http.HttpStringContent stunumStringContent = new Windows.Web.Http.HttpStringContent(stunum);
             string head = "";
             //IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
-            IStorageFile saveFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(fileUri));
+            IStorageFile saveFile;
+            if (isPath)
+                 saveFile = await StorageFile.GetFileFromPathAsync(fileUri);
+            else
+                saveFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(fileUri));
+
             try
             {
                 // 构造需要上传的文件数据
@@ -84,7 +89,7 @@ namespace ZSCY_Win10.Util
 
                 Windows.Web.Http.HttpResponseMessage response =
                     await
-                        _httpClient.PostAsync(new Uri("http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/home/Photo/upload"), fileContent)
+                        _httpClient.PostAsync(new Uri(uri), fileContent)
                             .AsTask(_cts.Token);
                 head = Utils.ConvertUnicodeStringToChinese(await response.Content.ReadAsStringAsync().AsTask(_cts.Token));
                 Debug.WriteLine(head);

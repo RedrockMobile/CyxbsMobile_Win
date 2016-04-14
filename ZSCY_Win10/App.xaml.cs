@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
+using ZSCY_Win10.Pages.CommunityPages;
 using ZSCY_Win10.Util;
 
 namespace ZSCY_Win10
@@ -100,12 +101,12 @@ namespace ZSCY_Win10
         protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
 
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                this.DebugSettings.EnableFrameRateCounter = true;
-            }
-#endif
+//#if DEBUG
+//            if (System.Diagnostics.Debugger.IsAttached)
+//            {
+//                this.DebugSettings.EnableFrameRateCounter = true;
+//            }
+//#endif
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -173,6 +174,7 @@ namespace ZSCY_Win10
                             {
                                 throw new Exception("Failed to create initial page");
                             }
+
                         }
                     }
                 }

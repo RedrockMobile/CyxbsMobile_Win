@@ -68,7 +68,7 @@ namespace ZSCY_Win10
                 cutoffLine.Y2 = e.NewSize.Height;
             };
             ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
-            if (appSetting.Values["gender"].ToString() == "男        ")
+            if (appSetting.Values["gender"].ToString().IndexOf("男") != (-1))
             {
                 stuSexText.Text = "♂";
                 stuSexText.Foreground = new SolidColorBrush(Color.FromArgb(255, 6, 140, 253));

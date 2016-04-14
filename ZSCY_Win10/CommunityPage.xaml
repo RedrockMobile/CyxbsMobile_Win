@@ -6,8 +6,136 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:pr="using:PullToRefresh.UWP"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
-
+    mc:Ignorable="d"
+    xmlns:converters="using:ZSCY_Win10.Util.Converter"
+    xmlns:util="using:ZSCY_Win10.Util"
+    xmlns:models="using:ZSCY_Win10.Data.Community"
+    >
+    <Page.Resources>
+        <!--点赞状态值转换器-->
+        <converters:LikeValueConverter x:Key="LikeValueConverter"></converters:LikeValueConverter>
+        <!--时间用户名文本块样式-->
+        <Style x:Name="TimeTextBlock" x:Key="TimeTextBlock" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="10"></Setter>
+        </Style>
+        <Style x:Name="UsernameTextBlock" x:Key="UsernameTextBlock" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"></Setter>
+        </Style>
+        <Style x:Name="FeedsListView" x:Key="FeedsListView" TargetType="ListView">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="IsItemClickEnabled" Value="True"/>
+            <Setter Property="SelectionMode" Value="None"/>
+            <Setter Property="ItemTemplate" Value="{StaticResource ListDataTemplate}"/>
+        </Style>
+        <!--重写点赞按钮控件模板-->
+        <Style x:Name="LikeCommentButton" x:Key="LikeCommentButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="Grid">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#FFFFFF"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#FFFFFF"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#D5D5D5"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid x:Name="Border" BorderThickness="0">
+                                <ContentPresenter x:Name="ContentPresenter" Foreground="{TemplateBinding Foreground}"  AutomationProperties.AccessibilityView="Raw" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--根据图片数量动态选择数据模板-->
+        <util:ImgDataTemplateSelector x:Key="ImgDataTemplateSelector">
+            <util:ImgDataTemplateSelector.OnePhotoTemplate>
+                <DataTemplate  x:DataType="models:Img">
+                    <Grid MaxWidth="280">
+                        <Image  Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill"/>
+                    </Grid>
+                </DataTemplate>
+            </util:ImgDataTemplateSelector.OnePhotoTemplate>
+            <util:ImgDataTemplateSelector.TwoPhotoTemplate>
+                <DataTemplate x:DataType="models:Img">
+                    <Grid MinWidth="150" MaxWidth="160">
+                        <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill"/>
+                    </Grid>
+                </DataTemplate>
+            </util:ImgDataTemplateSelector.TwoPhotoTemplate>
+            <util:ImgDataTemplateSelector.MorePhotoTemplate>
+                <DataTemplate x:DataType="models:Img">
+                    <Grid Height="100" Width="100">
+                        <Image Source="{Binding ImgSmallSrc}" Stretch="UniformToFill"/>
+                    </Grid>
+                </DataTemplate>
+            </util:ImgDataTemplateSelector.MorePhotoTemplate>
+        </util:ImgDataTemplateSelector>
+        <!--动态数据模板-->
+        <DataTemplate x:DataType="models:Feeds" x:Key="ListDataTemplate">
+            <StackPanel Orientation="Vertical" Padding="10" Background="White" Margin="0,3">
+                <StackPanel Orientation="Horizontal" Margin="0,10">
+                    <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="{x:Bind UserHead}"></ImageBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <TextBlock Text="{x:Bind UserName}" Style="{StaticResource UsernameTextBlock}"></TextBlock>
+                        <TextBlock Text="{x:Bind Time}" Style="{StaticResource TimeTextBlock}"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="{x:Bind Content}" TextWrapping="Wrap"></TextBlock>
+                </StackPanel>
+                <GridView Name="PhotoGrid" Margin="0,10,0,0" ItemsSource="{x:Bind Img}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                </GridView>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Style="{StaticResource LikeCommentButton}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" Margin="10,5">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="{x:Bind IsMyLike,Converter={StaticResource LikeValueConverter}}" />
+                                <TextBlock Text="{x:Bind LikeNum}" Foreground="{x:Bind IsMyLike,Converter={StaticResource LikeValueConverter}}" Margin="5,0,5,2"></TextBlock>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button Style="{StaticResource LikeCommentButton}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" Margin="10,5">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
+                                <TextBlock Text="{x:Bind CommentNum}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
     <Grid x:Name="grid">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
@@ -72,6 +200,7 @@
             <!--列表-->
             <Grid x:Name="CommunityListgrid" Grid.Column="0" Background="White">
                 <Pivot Name="CommunityPivot" SelectionChanged="CommunityPivot_SelectionChanged">
+                    <!--热门动态-->
                     <PivotItem>
                         <PivotItem.Header>
                             <TextBlock Text="热门动态" FontSize="15"></TextBlock>
@@ -84,12 +213,7 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <!--热门动态的ListView-->
-                                    <ListView Name="RMDTListView" IsItemClickEnabled="True"  HorizontalAlignment="Stretch" >
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate >
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
+                                    <ListView Name="RMDTListView" Style="{StaticResource FeedsListView}"/>
                                     <StackPanel Grid.Row="1">
                                         <!--列表的加载条-->
                                         <StackPanel Name="RMDTListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
@@ -110,7 +234,7 @@
                             </ScrollViewer>
                         </pr:PullToRefreshBox>
                     </PivotItem>
-
+                    <!--bb叨叨-->
                     <PivotItem>
                         <PivotItem.Header>
                             <TextBlock Text="哔哔叨叨" FontSize="15"></TextBlock>
@@ -123,12 +247,7 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <!--哔哔叨叨的ListView-->
-                                    <ListView Name="BBDDListView" IsItemClickEnabled="True"  HorizontalAlignment="Stretch" >
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate >
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
+                                    <ListView Name="BBDDListView"  Style="{StaticResource FeedsListView}"/>
                                     <StackPanel Grid.Row="1">
                                         <!--列表的加载条-->
                                         <StackPanel Name="BBDDListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
@@ -149,7 +268,7 @@
                             </ScrollViewer>
                         </pr:PullToRefreshBox>
                     </PivotItem>
-
+                    <!--官方资讯-->
                     <PivotItem>
                         <PivotItem.Header>
                             <TextBlock Text="官方资讯" FontSize="15"></TextBlock>
@@ -162,12 +281,7 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <!--官方资讯的ListView-->
-                                    <ListView Name="GFZXListView" IsItemClickEnabled="True"  HorizontalAlignment="Stretch" >
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate >
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
+                                    <ListView Name="GFZXListView" Style="{StaticResource FeedsListView}" />
                                     <StackPanel Grid.Row="1">
                                         <!--列表的加载条-->
                                         <StackPanel Name="GFZXListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
