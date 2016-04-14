@@ -216,6 +216,7 @@
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="Common\ViewModelBase.cs" />
     <Compile Include="CommunityPage.xaml.cs">
       <DependentUpon>CommunityPage.xaml</DependentUpon>
     </Compile>
@@ -298,6 +299,7 @@
       <DependentUpon>SearchFreeTimeResultPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\CommunityFeedsService.cs" />
     <Compile Include="SetPersonInfoPage.xaml.cs">
       <DependentUpon>SetPersonInfoPage.xaml</DependentUpon>
     </Compile>
