@@ -41,6 +41,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <!--header-->
         <Grid Background="#068cfd" Grid.Row="0">
@@ -61,7 +62,7 @@
         </Grid>
 
         <!--实体-->
-        <Grid x:Name="grid1" Grid.Row="1">
+        <Grid x:Name="grid1" Grid.Row="1" Grid.RowSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
@@ -73,6 +74,7 @@
                 </Grid.RowDefinitions>
                 <Grid VerticalAlignment="Top" Margin="0,30,0,0" HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
@@ -131,6 +133,15 @@
                         <TextBlock Text="QQ" FontSize="23" Foreground="#666" />
                         <TextBlock Name="qqNumText" Grid.Row="1" Foreground="#999" Margin="0,10,0,0"/>
                     </Grid>
+                    <Grid Margin="30,20,30,0" Grid.Row="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Button Name="YWXG_button" Grid.Row="0" Content="与我相关"  Background="#FF8EDED0" HorizontalAlignment="Stretch"  Foreground="White" Click="YWXG_button_Click"/>
+                        <Button Name="GRDT_button" Grid.Row="1" Content="个人动态" Background="#FFFCBE81" HorizontalAlignment="Stretch" Foreground="White" Margin="0,10,0,0" Click="GRDT_button_Click"/>
+                    </Grid>
                 </Grid>
             </Grid>
 
@@ -150,6 +161,32 @@
                     </Frame.ContentTransitions>
                 </Frame>
             </Grid>
+        </Grid>
+
+        <!--与我相关-->
+        <Grid Name="grid2" Grid.Row="1" Visibility="Collapsed" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Click="YWXG_Back_Click" Height="25" >
+                <Button.Background>
+                    <ImageBrush Stretch="Fill" ImageSource="Assets/back.png"/>
+                </Button.Background>
+            </Button>
+
+        </Grid>
+        <!--个人动态-->
+        <Grid Name="grid3" Grid.Row="1" Visibility="Collapsed" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Click="GRDT_Back_Click" Height="25" >
+                <Button.Background>
+                    <ImageBrush Stretch="Fill" ImageSource="Assets/back.png"/>
+                </Button.Background>
+            </Button>
         </Grid>
     </Grid>
 </Page>

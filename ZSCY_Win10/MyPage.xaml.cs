@@ -32,7 +32,7 @@ namespace ZSCY_Win10
             {
                 var state = "VisualState000";
                 if (e.NewSize.Width > 000 && e.NewSize.Width < 850)
-                {
+                {  
                     //if (CommunityListView.SelectedIndex != -1)
                     //{
                     //    SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
@@ -92,5 +92,36 @@ namespace ZSCY_Win10
             //ConmunityMyAppBarButton.Visibility = Visibility.Visible;
         }
 
+      
+
+        private void YWXG_button_Click(object sender, RoutedEventArgs e)
+        {
+            grid1.Visibility = Visibility.Collapsed;
+            grid2.Visibility = Visibility.Visible;
+
+        }
+
+        private void GRDT_button_Click(object sender, RoutedEventArgs e)
+        {
+            grid1.Visibility = Visibility.Collapsed;
+            grid3.Visibility = Visibility.Visible;
+        }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void YWXG_Back_Click(object sender, RoutedEventArgs e)
+        {
+            grid1.Visibility = Visibility.Visible;
+            grid2.Visibility = Visibility.Collapsed;
+        }
+
+        private void GRDT_Back_Click(object sender, RoutedEventArgs e)
+        {
+            grid1.Visibility = Visibility.Visible;
+            grid3.Visibility = Visibility.Collapsed;
+        }
     }
 }

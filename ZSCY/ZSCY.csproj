@@ -188,6 +188,7 @@
     <Content Include="Assets\Annex_img\Annex_video.png" />
     <Content Include="Assets\Annex_img\Annex_xls.png" />
     <Content Include="Assets\Annex_img\Annex_zip.png" />
+    <Content Include="Assets\back.png" />
     <Content Include="Assets\BlueLogo\Logo.scale-240.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
