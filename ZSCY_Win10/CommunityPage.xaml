@@ -6,8 +6,124 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:pr="using:PullToRefresh.UWP"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
-
+    mc:Ignorable="d"
+    xmlns:converters="using:ZSCY_Win10.Util.Converter"
+    xmlns:util="using:ZSCY_Win10.Util"
+    xmlns:models="using:ZSCY_Win10.Data.Community"
+    >
+    <Page.Resources>
+        <converters:LikeValueConverter x:Key="LikeValueConverter"></converters:LikeValueConverter>
+        <Style x:Name="TimeTextBlock" x:Key="TimeTextBlock" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="10"></Setter>
+        </Style>
+        <Style x:Name="UsernameTextBlock" x:Key="UsernameTextBlock" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"></Setter>
+        </Style>
+        <Style x:Name="LikeCommentButton" x:Key="LikeCommentButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="Grid">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#FFFFFF"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#FFFFFF"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#D5D5D5"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid x:Name="Border" BorderThickness="0">
+                                <ContentPresenter x:Name="ContentPresenter" Foreground="{TemplateBinding Foreground}"  AutomationProperties.AccessibilityView="Raw" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <util:ImgDataTemplateSelector x:Key="ImgDataTemplateSelector">
+            <util:ImgDataTemplateSelector.OnePhotoTemplate>
+                <DataTemplate  x:DataType="models:Img">
+                    <Grid MaxWidth="280">
+                        <Image  Source="{x:Bind Img_small_src}" Stretch="UniformToFill"/>
+                    </Grid>
+                </DataTemplate>
+            </util:ImgDataTemplateSelector.OnePhotoTemplate>
+            <util:ImgDataTemplateSelector.TwoPhotoTemplate>
+                <DataTemplate x:DataType="models:Img">
+                    <Grid MinWidth="150" MaxWidth="160">
+                        <Image Source="{x:Bind Img_small_src}" Stretch="UniformToFill"/>
+                    </Grid>
+                </DataTemplate>
+            </util:ImgDataTemplateSelector.TwoPhotoTemplate>
+            <util:ImgDataTemplateSelector.MorePhotoTemplate>
+                <DataTemplate x:DataType="models:Img">
+                    <Grid Height="100" Width="100">
+                        <Image Source="{Binding Img_small_src}" Stretch="UniformToFill"/>
+                    </Grid>
+                </DataTemplate>
+            </util:ImgDataTemplateSelector.MorePhotoTemplate>
+        </util:ImgDataTemplateSelector>
+        <DataTemplate x:DataType="models:Feeds" x:Key="ListDataTemplate">
+            <StackPanel Orientation="Vertical" Padding="10" Background="White" Margin="0,3">
+                <StackPanel Orientation="Horizontal" Margin="0,10">
+                    <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="{x:Bind user_head}"></ImageBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <TextBlock Text="{x:Bind user_name}" Style="{StaticResource UsernameTextBlock}"></TextBlock>
+                        <TextBlock Text="{x:Bind time}" Style="{StaticResource TimeTextBlock}"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="{x:Bind content}" TextWrapping="Wrap"></TextBlock>
+                </StackPanel>
+                <GridView Name="PhotoGrid" Margin="0,10,0,0" ItemsSource="{x:Bind img}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                </GridView>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Style="{StaticResource LikeCommentButton}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" Margin="10,5">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="{x:Bind is_my_like,Converter={StaticResource LikeValueConverter}}" />
+                                <TextBlock Text="{x:Bind like_num}" Foreground="{x:Bind is_my_like,Converter={StaticResource LikeValueConverter}}" Margin="5,0,5,2"></TextBlock>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button Style="{StaticResource LikeCommentButton}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" Margin="10,5">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
+                                <TextBlock Text="{x:Bind comment_num}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
     <Grid x:Name="grid">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">

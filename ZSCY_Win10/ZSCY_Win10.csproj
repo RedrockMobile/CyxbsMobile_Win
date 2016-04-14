@@ -222,6 +222,8 @@
     <Compile Include="Data\ClassList.cs" />
     <Compile Include="Data\ClassListLight.cs" />
     <Compile Include="Data\CommunityImageList.cs" />
+    <Compile Include="Data\Community\Feeds.cs" />
+    <Compile Include="Data\Community\Img.cs" />
     <Compile Include="Data\DataSource.cs" />
     <Compile Include="Data\EmptyClassDayLesson.cs" />
     <Compile Include="Data\EmptyRoomList.cs" />
@@ -308,10 +310,12 @@
     <Compile Include="Util\Converter\itemPageConverter.cs" />
     <Compile Include="Util\Converter\KBGridConverter.cs" />
     <Compile Include="Util\Converter\KBPageConverter.cs" />
+    <Compile Include="Util\Converter\LikeValueConverter.cs" />
     <Compile Include="Util\Converter\LongClassRoomConverter.cs" />
     <Compile Include="Util\Converter\NewsConverter.cs" />
     <Compile Include="Util\Converter\StarFillConverter.cs" />
     <Compile Include="Util\EmptyClass.cs" />
+    <Compile Include="Util\ImgDataTemplateSelector.cs" />
     <Compile Include="Util\NetWork.cs" />
     <Compile Include="Util\Utils.cs" />
   </ItemGroup>
@@ -561,7 +565,9 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
