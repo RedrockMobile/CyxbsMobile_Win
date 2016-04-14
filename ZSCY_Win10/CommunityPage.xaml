@@ -62,10 +62,15 @@
         </Style>
         <!--根据图片数量动态选择数据模板-->
         <util:ImgDataTemplateSelector x:Key="ImgDataTemplateSelector">
+            <util:ImgDataTemplateSelector.NoPhotoTemplate>
+                <DataTemplate  x:DataType="models:Img">
+                  <Grid Width="0" Height="0"/>
+                </DataTemplate>
+            </util:ImgDataTemplateSelector.NoPhotoTemplate>
             <util:ImgDataTemplateSelector.OnePhotoTemplate>
                 <DataTemplate  x:DataType="models:Img">
                     <Grid MaxWidth="280">
-                        <Image  Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill"/>
+                        <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill"/>
                     </Grid>
                 </DataTemplate>
             </util:ImgDataTemplateSelector.OnePhotoTemplate>
@@ -101,7 +106,7 @@
                 <StackPanel>
                     <TextBlock Text="{x:Bind Content}" TextWrapping="Wrap"></TextBlock>
                 </StackPanel>
-                <GridView Name="PhotoGrid" Margin="0,10,0,0" ItemsSource="{x:Bind Img}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
+                <GridView Name="PhotoGrid" Margin="0,0,0,0" MinHeight="0" ItemsSource="{x:Bind Imgs}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
@@ -128,6 +133,9 @@
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
+        <Style x:Name="ItemContainerStyle" x:Key="ItemContainerStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+        </Style>
         <!--动态的列表样式-->
         <Style x:Name="FeedsListView" x:Key="FeedsListView" TargetType="ListView">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -135,6 +143,7 @@
             <Setter Property="IsItemClickEnabled" Value="True"/>
             <Setter Property="SelectionMode" Value="None"/>
             <Setter Property="ItemTemplate" Value="{StaticResource ListDataTemplate}"/>
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ItemContainerStyle}"/>
         </Style>
     </Page.Resources>
     <Grid x:Name="grid">
@@ -244,12 +253,12 @@
                             <ScrollViewer VerticalScrollBarVisibility="Hidden">
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition/>
+                                        <RowDefinition Height="auto"/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <!--哔哔叨叨的ListView-->
-                                    <ListView Name="BBDDListView"  Style="{StaticResource FeedsListView}"/>
-                                    <StackPanel Grid.Row="1">
+                                    <ListView Name="BBDDListView"  Style="{StaticResource FeedsListView}" ItemsSource="{x:Bind ViewModel.Bbdd}"/>
+                                    <StackPanel Grid.Row="1" Visibility="Collapsed">
                                         <!--列表的加载条-->
                                         <StackPanel Name="BBDDListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
                                             <ProgressBar IsIndeterminate="True" />

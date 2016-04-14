@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,24 +21,41 @@ namespace ZSCY_Win10.Data.Community
         public string IsMyLike { get; set; }
         public int CommentNum { get; set; }
 
-        public Feeds GetAttributes(JObject feedsJObject)
+        public void GetAttributes(JObject feedsJObject)
         {
             Id = feedsJObject["id"].ToString();
             UserId = feedsJObject["user_id"].ToString();
-            UserName = feedsJObject["user_name"].ToString();
+            UserName = feedsJObject["nick_name"].ToString();
             UserHead = feedsJObject["user_head"].ToString();
+            if (UserHead == "")
+            {
+                UserHead = "ms-appx:///Assets/Boy-100.png";
+                Debug.WriteLine("---没有头像---");
+            }
             Time = feedsJObject["time"].ToString();
             Content = feedsJObject["content"].ToString();
             LikeNum = int.Parse(feedsJObject["like_num"].ToString());
-            IsMyLike = feedsJObject["is_my_like"].ToString();
-            CommentNum =int.Parse(feedsJObject["comment_num"].ToString());
-            JArray imgs = (JArray) feedsJObject["img"];
-            Imgs = new Img[imgs.Count];
-            for (int i = 0; i < imgs.Count; i++)
+            IsMyLike = feedsJObject["is_my_Like"].ToString();
+            CommentNum = int.Parse(feedsJObject["remark_num"].ToString());
+            try
             {
-                Imgs[i] = new Img().GetAttributes((JObject)imgs[i]);
+                JArray imgs = (JArray)feedsJObject["img"];
+                Imgs = new Img[imgs.Count];
+                for (int i = 0; i < imgs.Count; i++)
+                {
+                    Imgs[i] = new Img();
+                    Imgs[i].GetAttributes((JObject)imgs[i]);
+                }
             }
-            return this;
-        } 
+            catch (InvalidCastException)
+            {
+                JObject img = (JObject)feedsJObject["img"];
+                Imgs = new Img[1];
+                Imgs[0] = new Img();
+                Imgs[0].GetAttributes(img);
+            }
+            return;
+
+        }
     }
 }

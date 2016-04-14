@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZSCY_Win10.Common;
 using ZSCY_Win10.Data.Community;
+using ZSCY_Win10.Service;
 
 namespace ZSCY_Win10.ViewModels.Community
 {
@@ -17,7 +18,18 @@ namespace ZSCY_Win10.ViewModels.Community
 
         public CommunityViewModel()
         {
-            
+            Get();
+        }
+
+        private async void Get()
+        {
+
+           List<Feeds> feeds= await CommunityFeedsService.GetDatas();
+            if(feeds!=null)
+            foreach (var item in feeds)
+            {
+                Bbdd.Add(item);
+            }
         }
 
     }

@@ -15,6 +15,7 @@ namespace ZSCY_Win10.Util
         public DataTemplate OnePhotoTemplate { get; set; }
         public DataTemplate TwoPhotoTemplate { get; set; }
         public DataTemplate MorePhotoTemplate { get; set; }
+        public DataTemplate NoPhotoTemplate { get; set; }
         protected override DataTemplate SelectTemplateCore(System.Object item, DependencyObject container)
         {
             FrameworkElement element = container as FrameworkElement;
@@ -27,6 +28,8 @@ namespace ZSCY_Win10.Util
                     return OnePhotoTemplate;
                 else if (itemssource.Length == 2)
                     return TwoPhotoTemplate;
+                else if (itemssource.Length == 0)
+                    return NoPhotoTemplate;
                 else return MorePhotoTemplate;
             }
             return null;
