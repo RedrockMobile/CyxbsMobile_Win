@@ -136,6 +136,7 @@
     <Content Include="Assets\BlueLogo\Square71x71Logo.scale-400.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\CommunityAddImg.png" />
     <Content Include="Assets\dialog_course_add_white.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -180,6 +181,7 @@
     <Content Include="Assets\more_score333.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Plane-8.png" />
     <Content Include="Assets\Square150x150Logo.scale-400.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -219,6 +221,7 @@
     <Compile Include="Controls\NavMenuListView.cs" />
     <Compile Include="Data\ClassList.cs" />
     <Compile Include="Data\ClassListLight.cs" />
+    <Compile Include="Data\CommunityImageList.cs" />
     <Compile Include="Data\DataSource.cs" />
     <Compile Include="Data\EmptyClassDayLesson.cs" />
     <Compile Include="Data\EmptyRoomList.cs" />
