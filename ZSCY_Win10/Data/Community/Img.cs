@@ -8,7 +8,7 @@ namespace ZSCY_Win10.Data.Community
 {
     public class Img
     {
-        public string Img_id { get; set; }
-        public string Img_small_src { get; set; }
+        public string ImgId { get; set; }
+        public string ImgSmallSrc { get; set; }
     }
 }

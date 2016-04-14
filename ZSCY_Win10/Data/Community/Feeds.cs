@@ -9,14 +9,14 @@ namespace ZSCY_Win10.Data.Community
     public class Feeds
     {
         public string Id { get; set; }
-        public string User_id { get; set; }
-        public string user_name { get; set; }
-        public string user_head { get; set; }
-        public string time { get; set; }
-        public string content { get; set; }
-        public Img[] img { get; set; }
-        public int like_num { get; set; }
-        public string is_my_like { get; set; }
-        public int comment_num { get; set; }
+        public string UserId { get; set; }
+        public string UserName { get; set; }
+        public string UserHead { get; set; }
+        public string Time { get; set; }
+        public string Content { get; set; }
+        public Img[] Img { get; set; }
+        public int LikeNum { get; set; }
+        public string IsMyLike { get; set; }
+        public int CommentNum { get; set; }
     }
 }

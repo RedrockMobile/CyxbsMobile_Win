@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Pages;
 using ZSCY_Win10.Pages.CommunityPages;
 using ZSCY_Win10.Util;
+using ZSCY_Win10.ViewModels.Community;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
@@ -28,6 +29,7 @@ namespace ZSCY_Win10
     {
         private int page = 0;
         int[] pagestatus = new int[] { 0, 0, 0, 0 };
+        CommunityViewModel ViewModel { get; set; }
         public CommunityPage()
         {
             this.InitializeComponent();
@@ -72,6 +74,7 @@ namespace ZSCY_Win10
                 VisualStateManager.GoToState(this, state, true);
                 cutoffLine.Y2 = e.NewSize.Height;
             };
+            ViewModel = new CommunityViewModel();
         }
 
         public Frame CommunityFrame { get { return this.cframe; } }

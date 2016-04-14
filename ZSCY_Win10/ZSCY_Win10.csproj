@@ -318,6 +318,7 @@
     <Compile Include="Util\ImgDataTemplateSelector.cs" />
     <Compile Include="Util\NetWork.cs" />
     <Compile Include="Util\Utils.cs" />
+    <Compile Include="ViewModels\Community\CommunityViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -565,9 +566,7 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
