@@ -21,13 +21,6 @@
         <Style x:Name="UsernameTextBlock" x:Key="UsernameTextBlock" TargetType="TextBlock">
             <Setter Property="FontSize" Value="16"></Setter>
         </Style>
-        <Style x:Name="FeedsListView" x:Key="FeedsListView" TargetType="ListView">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="IsItemClickEnabled" Value="True"/>
-            <Setter Property="SelectionMode" Value="None"/>
-            <Setter Property="ItemTemplate" Value="{StaticResource ListDataTemplate}"/>
-        </Style>
         <!--重写点赞按钮控件模板-->
         <Style x:Name="LikeCommentButton" x:Key="LikeCommentButton" TargetType="Button">
             <Setter Property="Template">
@@ -135,6 +128,14 @@
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
+        <!--动态的列表样式-->
+        <Style x:Name="FeedsListView" x:Key="FeedsListView" TargetType="ListView">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="IsItemClickEnabled" Value="True"/>
+            <Setter Property="SelectionMode" Value="None"/>
+            <Setter Property="ItemTemplate" Value="{StaticResource ListDataTemplate}"/>
+        </Style>
     </Page.Resources>
     <Grid x:Name="grid">
         <VisualStateManager.VisualStateGroups>
