@@ -13,6 +13,7 @@ using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -36,6 +37,8 @@ namespace ZSCY_Win10.Pages.CommunityPages
     {
         ObservableCollection<CommunityImageList> imageList = new ObservableCollection<CommunityImageList>();
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+
         public CommunityAddPage()
         {
             this.InitializeComponent();
@@ -58,8 +61,14 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     }
                 }
 
-
             };
+            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+
+        }
+
+        private void App_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            commandbar.Visibility = Visibility.Collapsed;
         }
 
         private async void init()

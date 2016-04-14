@@ -28,7 +28,7 @@
         </Grid>
     </ScrollViewer>
     <Page.BottomAppBar>
-        <CommandBar Name="commandbar">
+        <CommandBar Name="commandbar" Visibility="Visible">
             <AppBarButton Name="addArticleAppBarButton" IsEnabled="False" Label="发表" Click="addArticleAppBarButton_Click">
                 <BitmapIcon UriSource="ms-appx:///../Assets/Plane-8.png"></BitmapIcon>
             </AppBarButton>
