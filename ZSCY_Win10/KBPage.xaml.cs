@@ -385,17 +385,17 @@ namespace ZSCY_Win10
             {
                 ClassList classitem = new ClassList();
                 classitem.GetAttribute((JObject)ClassListArray[i]);
-#if DEBUG
-                if (Array.IndexOf(classitem.Week, 5) != -1 && classitem.Hash_day == 2)
-                {
-                    SetClassDay(classitem);
-                }
-#else
+//#if DEBUG
+//                if (Array.IndexOf(classitem.Week, 5) != -1 && classitem.Hash_day == 2)
+//                {
+//                    SetClassDay(classitem);
+//                }
+//#else
                 if (Array.IndexOf(classitem.Week, Int32.Parse(appSetting.Values["nowWeek"].ToString())) != -1 && classitem.Hash_day == (Int16.Parse(Utils.GetWeek()) + 6) % 7)
                 {
                     SetClassDay(classitem);
                 }
-#endif
+//#endif
             }
             colorlist.Clear();
 
