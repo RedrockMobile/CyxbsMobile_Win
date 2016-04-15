@@ -23,10 +23,28 @@ namespace ZSCY_Win10.ViewModels.Community
 
         private async void Get()
         {
-            List<Feeds> list = await CommunityFeedsService.GetDatas();
-            foreach (var item in list)
+            List<Feeds> list;
+            for (int i = 0; i <= 1; i++)
             {
-                Bbdd.Add(item);
+                //获取动态
+                //if (i == 0)
+                //{
+                //    list = await CommunityFeedsService.GetDatas(0, 1, 1, 0);
+                //    if (list != null)
+                //        foreach (var item in list)
+                //        {
+                //            HotFeeds.Add(item);
+                //        }
+                //}
+                //if (i == 1)
+                //{
+                //    list = await CommunityFeedsService.GetDatas(1, 1, 1, 5);
+                //    if (list != null)
+                //        foreach (var item in list)
+                //        {
+                //            Bbdd.Add(item);
+                //        }
+                //}
             }
         }
     }

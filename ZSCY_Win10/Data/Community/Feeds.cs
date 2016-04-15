@@ -58,4 +58,23 @@ namespace ZSCY_Win10.Data.Community
 
         }
     }
+
+
+    public class ArticleFeeds
+    {
+        public string Title { get; set; }
+        public string Id { get; set; }
+        public string ArticlePhotoSrc { get; set; }
+        public string ArticleThumbnailSrc { get; set; }
+        public string TypeId { get; set; }
+        public string Content { get; set; }
+        public string UpdatedTime { get; set; }
+        public string CreatedTime { get; set; }
+        public string LikeNum { get; set; }
+        public string CommentNum { get; set; }
+        public string UserName { get; set; }
+        public string Photo_src { get; set; }
+        public string photo_thumbnail_src { get; set; }
+        public bool IsMyLike { get; set; }
+    }
 }

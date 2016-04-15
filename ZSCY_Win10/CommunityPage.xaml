@@ -64,7 +64,7 @@
         <util:ImgDataTemplateSelector x:Key="ImgDataTemplateSelector">
             <util:ImgDataTemplateSelector.NoPhotoTemplate>
                 <DataTemplate  x:DataType="models:Img">
-                  <Grid Width="0" Height="0"/>
+                    <Grid Width="0" Height="0"/>
                 </DataTemplate>
             </util:ImgDataTemplateSelector.NoPhotoTemplate>
             <util:ImgDataTemplateSelector.OnePhotoTemplate>
@@ -223,7 +223,7 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <!--热门动态的ListView-->
-                                    <ListView Name="RMDTListView" Style="{StaticResource FeedsListView}"/>
+                                    <ListView Name="RMDTListView" Style="{StaticResource FeedsListView}" ItemsSource="{x:Bind ViewModel.HotFeeds}"/>
                                     <StackPanel Grid.Row="1">
                                         <!--列表的加载条-->
                                         <StackPanel Name="RMDTListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
@@ -291,7 +291,7 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <!--官方资讯的ListView-->
-                                    <ListView Name="GFZXListView" Style="{StaticResource FeedsListView}" />
+                                    <ListView Name="GFZXListView" Style="{StaticResource FeedsListView}" ItemsSource="{x:Bind ViewModel.OfficalFeeds}"/>
                                     <StackPanel Grid.Row="1">
                                         <!--列表的加载条-->
                                         <StackPanel Name="GFZXListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
