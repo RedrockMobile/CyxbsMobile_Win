@@ -41,7 +41,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
             <RowDefinition />
-            <RowDefinition />
         </Grid.RowDefinitions>
         <!--header-->
         <Grid Background="#068cfd" Grid.Row="0">
@@ -62,87 +61,97 @@
         </Grid>
 
         <!--实体-->
-        <Grid x:Name="grid1" Grid.Row="1" Grid.RowSpan="3">
+        <Grid x:Name="myPageGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid Name="MyListGrid" Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid VerticalAlignment="Top" Margin="0,30,0,0" HorizontalAlignment="Center">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="15"/>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle x:Name="mpgRectangle" HorizontalAlignment="Left" VerticalAlignment="Center" RadiusX="100" RadiusY="100"  Width="125" Height="125" Stroke="DarkGray" Margin="30,0,0,0">
-                            <Rectangle.Fill>
-                                <ImageBrush x:Name="mpgImageBrush" ImageSource="ms-appdata:///Local/headimg.png" Stretch="Fill"/>
-                            </Rectangle.Fill>
-                        </Rectangle>
-                        <Grid Grid.Column="2" VerticalAlignment="Center">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <Grid VerticalAlignment="Top" Margin="0,30,0,0" HorizontalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="15"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle x:Name="mpgRectangle" HorizontalAlignment="Left" VerticalAlignment="Center" RadiusX="100" RadiusY="100"  Width="125" Height="125" Stroke="DarkGray" Margin="30,0,0,0">
+                                <Rectangle.Fill>
+                                    <ImageBrush x:Name="mpgImageBrush" ImageSource="ms-appdata:///Local/headimg.png" Stretch="Fill"/>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <Grid Grid.Column="2" VerticalAlignment="Center">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Name="nickNameText" FontSize="24" TextWrapping="Wrap" Foreground="#999" VerticalAlignment="Bottom" Text="nickname"></TextBlock>
+                                    <TextBlock Name="stuSexText" Grid.Column="2" FontSize="24" Foreground="#EF8F9F"/>
+                                </Grid>
+                                <TextBlock Name="stuNumText" Grid.Row="2" FontSize="24" Foreground="#999"/>
+                            </Grid>
+                        </Grid>
+                        <Grid Margin="30,20,30,0" Grid.Row="1" >
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="5"/>
-                                <RowDefinition />
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <Grid>
+                            <TextBlock Text="简介" FontSize="23" Foreground="#666"/>
+                            <TextBlock Name="stuIntText" TextWrapping="Wrap" Grid.Row="1" Foreground="#999" Margin="0,10,0,0"/>
+                        </Grid>
+                        <Grid Margin="30,20,30,0" Grid.Row="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="手机" FontSize="23" Foreground="#666"/>
+                            <TextBlock Name="phoneNumText" Grid.Row="1" Foreground="#999" Margin="0,10,0,0"/>
+                        </Grid>
+                        <Grid Margin="30,20,30,0" Grid.Row="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="QQ" FontSize="23" Foreground="#666" />
+                            <TextBlock Name="qqNumText" Grid.Row="1" Foreground="#999" Margin="0,10,0,0"/>
+                        </Grid>
+                        <Button Name="aboutMe" Background="#58B3FF" Margin="30,20,30,0" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="40" Click="aboutMe_Click">
+                            <Grid Width="{Binding ActualWidth,ElementName=aboutMe}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="10"/>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Name="nickNameText" FontSize="24" TextWrapping="Wrap" Foreground="#999" VerticalAlignment="Bottom" Text="nickname"></TextBlock>
-                                <TextBlock Name="stuSexText" Grid.Column="2" FontSize="24" Foreground="#EF8F9F"/>
+                                <FontIcon Foreground="White" FontFamily="Segoe MDL2 Assets" FontSize="20" Glyph="&#xE168;" Margin="5,0,0,0" />
+                                <TextBlock Foreground="White" Text="与我相关" Grid.Column="1" FontSize="18" VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
                             </Grid>
-                            <TextBlock Name="stuNumText" Grid.Row="2" FontSize="24" Foreground="#999"/>
-                        </Grid>
+                        </Button>
+                        <Button Name="myTidings" Background="#58B3FF" Margin="30,20,30,20" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="40" Click="myTidings_Click">
+                            <Grid Width="{Binding ActualWidth,ElementName=myTidings}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <FontIcon Foreground="White" FontFamily="Segoe MDL2 Assets" FontSize="20" Glyph="&#xE121;" Margin="5,0,0,0" />
+                                <TextBlock Foreground="White" Text="我的动态" Grid.Column="1" FontSize="18" VerticalAlignment="Center" Margin="15,0,0,0" ></TextBlock>
+                            </Grid>
+                        </Button>
                     </Grid>
-                    <Grid Margin="30,20,30,0" Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="简介" FontSize="23" Foreground="#666"/>
-                        <TextBlock Name="stuIntText" TextWrapping="Wrap" Grid.Row="1" Foreground="#999" Margin="0,10,0,0"/>
-                    </Grid>
-                    <Grid Margin="30,20,30,0" Grid.Row="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="手机" FontSize="23" Foreground="#666"/>
-                        <TextBlock Name="phoneNumText" Grid.Row="1" Foreground="#999" Margin="0,10,0,0"/>
-                    </Grid>
-                    <Grid Margin="30,20,30,0" Grid.Row="3">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="QQ" FontSize="23" Foreground="#666" />
-                        <TextBlock Name="qqNumText" Grid.Row="1" Foreground="#999" Margin="0,10,0,0"/>
-                    </Grid>
-                    <Grid Margin="30,20,30,0" Grid.Row="4">
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-
-                        <Button Name="YWXG_button" Grid.Row="0" Content="与我相关"  Background="#FF8EDED0" HorizontalAlignment="Stretch"  Foreground="White" Click="YWXG_button_Click"/>
-                        <Button Name="GRDT_button" Grid.Row="1" Content="个人动态" Background="#FFFCBE81" HorizontalAlignment="Stretch" Foreground="White" Margin="0,10,0,0" Click="GRDT_button_Click"/>
-                    </Grid>
-                </Grid>
+                </ScrollViewer>
             </Grid>
 
 
@@ -164,12 +173,12 @@
         </Grid>
 
         <!--与我相关-->
-        <Grid Name="grid2" Grid.Row="1" Visibility="Collapsed" Grid.Column="1">
+        <Grid Name="aboutMeGrid" Grid.Row="1" Visibility="Collapsed" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Button Click="YWXG_Back_Click" Height="25" >
+            <Button Click="aboutMe_Back_Click" Height="25" >
                 <Button.Background>
                     <ImageBrush Stretch="Fill" ImageSource="Assets/back.png"/>
                 </Button.Background>
@@ -177,12 +186,12 @@
 
         </Grid>
         <!--个人动态-->
-        <Grid Name="grid3" Grid.Row="1" Visibility="Collapsed" Grid.Column="1">
+        <Grid Name="myTidingsGrid" Grid.Row="1" Visibility="Collapsed" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Button Click="GRDT_Back_Click" Height="25" >
+            <Button Click="myTidings_Back_Click" Height="25" >
                 <Button.Background>
                     <ImageBrush Stretch="Fill" ImageSource="Assets/back.png"/>
                 </Button.Background>

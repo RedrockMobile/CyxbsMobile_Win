@@ -320,13 +320,13 @@ namespace ZSCY_Win10
                             JObject jPerInfo = JObject.Parse(perInfo);
                             if (jPerInfo["data"].ToString() == "")
                             {
-                                var dig = new MessageDialog("你需要先补充一些个人信息才能使用社区模块哦", "哎呀~我们没有你的数据");
-                                var btnOk = new UICommand("现在添加");
+                                var dig = new MessageDialog( "没有完善资料不能登入友谊的小船哟");
+                                var btnOk = new UICommand("马上完善");
                                 dig.Commands.Add(btnOk);
-                                var btnCancel = new UICommand("下次吧");
+                                var btnCancel = new UICommand("暂时不了");
                                 dig.Commands.Add(btnCancel);
                                 var result = await dig.ShowAsync();
-                                if (null != result && result.Label == "现在添加")
+                                if (null != result && result.Label == "马上完善")
                                 {
                                     Debug.WriteLine("添加信息");
                                     BackOpacityGrid.Visibility = Visibility.Collapsed;
@@ -334,7 +334,7 @@ namespace ZSCY_Win10
                                     this.AppFrame.Navigate(typeof(SetPersonInfoPage), item.DestPage);
 
                                 }
-                                else if (null != result && result.Label == "下次吧")
+                                else if (null != result && result.Label == "暂时不了")
                                 {
                                     BackOpacityGrid.Visibility = Visibility.Collapsed;
                                     loadingStackPanel.Visibility = Visibility.Collapsed;
