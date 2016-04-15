@@ -10,7 +10,7 @@ using ZSCY_Win10.Service;
 
 namespace ZSCY_Win10.ViewModels.Community
 {
-    public class CommunityViewModel:ViewModelBase
+    public class CommunityViewModel : ViewModelBase
     {
         public ObservableCollection<Feeds> HotFeeds { get; set; } = new ObservableCollection<Feeds>();
         public ObservableCollection<Feeds> Bbdd { get; set; } = new ObservableCollection<Feeds>();
@@ -23,14 +23,11 @@ namespace ZSCY_Win10.ViewModels.Community
 
         private async void Get()
         {
-
-           List<Feeds> feeds= await CommunityFeedsService.GetDatas();
-            if(feeds!=null)
-            foreach (var item in feeds)
+            List<Feeds> list = await CommunityFeedsService.GetDatas();
+            foreach (var item in list)
             {
                 Bbdd.Add(item);
             }
         }
-
     }
 }

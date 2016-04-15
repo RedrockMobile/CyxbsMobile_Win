@@ -8,6 +8,7 @@ using Windows.Data.Json;
 using Newtonsoft.Json.Linq;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Util;
+using System.Collections.ObjectModel;
 
 namespace ZSCY_Win10.Service
 {

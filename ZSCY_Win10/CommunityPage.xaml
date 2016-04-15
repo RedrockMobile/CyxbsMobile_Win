@@ -208,7 +208,7 @@
             </Grid.ColumnDefinitions>
 
             <!--列表-->
-            <Grid x:Name="CommunityListgrid" Grid.Column="0" Background="White">
+            <Grid x:Name="CommunityListgrid" Grid.Column="0"  Background="#FFE6E6E6">
                 <Pivot Name="CommunityPivot" SelectionChanged="CommunityPivot_SelectionChanged">
                     <!--热门动态-->
                     <PivotItem>
