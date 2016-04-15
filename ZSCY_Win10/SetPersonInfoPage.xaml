@@ -27,5 +27,51 @@
                 <TextBlock Name="SetPersonInfoContentTitleTextBlock" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
             </Grid>
         </Grid>
+        <Grid Background="White" Grid.Row="1" >
+            <StackPanel>
+                <TextBox x:Name="nameTextBox" 
+                     Header="昵称：" 
+                     Margin="15,5,15,5"
+                     InputScope="ChineseFullWidth"
+                     TextChanged="nameTextBox_TextChanged"
+                     />
+                <TextBox x:Name="abstractTextBox" 
+                     Header="简介：" 
+                     Margin="15,5,15,5"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"    
+                     MinHeight="100"
+                     InputScope="ChineseFullWidth"
+                     MaxLength="30"
+                     TextChanged="abstractTextBox_TextChanged"
+                     />
+                <TextBlock x:Name="abstractTextBlock" Text="" FontSize="8" Margin="15,0,0,0"  Foreground="Red"/>
+                <TextBox x:Name="phoneTextBox" 
+                     Header="手机："
+                     Margin="15,5,15,0"
+                     InputScope="TelephoneNumber"
+                     TextChanged="phoneTextBox_TextChanged"
+                     />
+                <TextBlock x:Name="phoneTextBlock" Text="" FontSize="8" Margin="15,0,0,0"  Foreground="Red"/>
+                <TextBox x:Name="qqTextBox" 
+                     Header="QQ：" 
+                     Margin="15,5,15,5"
+                     InputScope="Number"
+                     TextChanged="qqTextBox_TextChanged"
+                     />
+                <TextBlock x:Name="qqTextBlock" Text="" FontSize="8" Margin="15,0,0,0"  Foreground="Red"/>
+
+                <Button Name="SetPersonInfoButton" 
+                    Content="完成" 
+                    Margin="15,20,15,5" 
+                    HorizontalAlignment="Right"
+                    IsEnabled="False"
+                    Click="SetPersonInfoButton_Click"/>
+
+                <!--信息展示-->
+                <TextBlock x:Name="textBlockone" Text="输入信息：" FontSize="12" Margin="15"/>
+                <TextBlock x:Name="textBlocktwo" TextWrapping="Wrap" FontSize="12"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
