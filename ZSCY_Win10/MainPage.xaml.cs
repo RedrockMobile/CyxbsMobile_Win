@@ -126,6 +126,15 @@ namespace ZSCY_Win10
                     TogglePaneLightButton.Visibility = Visibility.Visible;
                     App.showpane = false;
                 }
+                if (e.NewSize.Height - 96 < navlist.Count * 48)
+                {
+                    //高度太小
+                    NavMenuList.Margin = new Thickness(0, 48, 0, 48);
+                }
+                else
+                {
+                    NavMenuList.Margin = new Thickness(0, 48, 0, 0);
+                }
             };
             stuNameTextBlock.Text = appSetting.Values["name"].ToString();
 
@@ -320,7 +329,7 @@ namespace ZSCY_Win10
                             JObject jPerInfo = JObject.Parse(perInfo);
                             if (jPerInfo["data"].ToString() == "")
                             {
-                                var dig = new MessageDialog( "没有完善资料不能登入友谊的小船哟");
+                                var dig = new MessageDialog("没有完善资料不能登入友谊的小船哟");
                                 var btnOk = new UICommand("马上完善");
                                 dig.Commands.Add(btnOk);
                                 var btnCancel = new UICommand("暂时不了");
