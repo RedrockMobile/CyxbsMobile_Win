@@ -94,34 +94,29 @@ namespace ZSCY_Win10
 
       
 
-        private void YWXG_button_Click(object sender, RoutedEventArgs e)
+        private void aboutMe_Click(object sender, RoutedEventArgs e)
         {
-            grid1.Visibility = Visibility.Collapsed;
-            grid2.Visibility = Visibility.Visible;
+            myPageGrid.Visibility = Visibility.Collapsed;
+            aboutMeGrid.Visibility = Visibility.Visible;
 
         }
 
-        private void GRDT_button_Click(object sender, RoutedEventArgs e)
+        private void myTidings_Click(object sender, RoutedEventArgs e)
         {
-            grid1.Visibility = Visibility.Collapsed;
-            grid3.Visibility = Visibility.Visible;
+            myPageGrid.Visibility = Visibility.Collapsed;
+            myTidingsGrid.Visibility = Visibility.Visible;
         }
 
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        private void aboutMe_Back_Click(object sender, RoutedEventArgs e)
         {
-
+            myPageGrid.Visibility = Visibility.Visible;
+            aboutMeGrid.Visibility = Visibility.Collapsed;
         }
 
-        private void YWXG_Back_Click(object sender, RoutedEventArgs e)
+        private void myTidings_Back_Click(object sender, RoutedEventArgs e)
         {
-            grid1.Visibility = Visibility.Visible;
-            grid2.Visibility = Visibility.Collapsed;
-        }
-
-        private void GRDT_Back_Click(object sender, RoutedEventArgs e)
-        {
-            grid1.Visibility = Visibility.Visible;
-            grid3.Visibility = Visibility.Collapsed;
+            myPageGrid.Visibility = Visibility.Visible;
+            myTidingsGrid.Visibility = Visibility.Collapsed;
         }
     }
 }
