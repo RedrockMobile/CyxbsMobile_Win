@@ -41,7 +41,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
             <RowDefinition />
-            <RowDefinition />
         </Grid.RowDefinitions>
         <!--header-->
         <Grid Background="#068cfd" Grid.Row="0">
@@ -62,7 +61,7 @@
         </Grid>
 
         <!--实体-->
-        <Grid x:Name="myPageGrid" Grid.Row="1" Grid.RowSpan="3">
+        <Grid x:Name="myPageGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
