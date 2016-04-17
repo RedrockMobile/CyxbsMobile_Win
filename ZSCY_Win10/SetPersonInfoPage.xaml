@@ -6,6 +6,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
+        <Style TargetType="TextBox" x:Key="SetPersonInfoPageTextBoxStyle">
+            <Setter Property="MaxWidth" Value="720" />
+            <Setter Property="MinWidth" Value="330" />
+            <Setter Property="Margin" Value="15,5,15,5" />
+        </Style>
+        <Style TargetType="TextBlock" x:Key="SetPersonInfoPageTextBlock">
+            <Setter Property="Foreground" Value="#999999" />
+            <Setter Property="FontSize" Value="8" />
+            <Setter Property="Margin" Value="15,0,0,0" />
+        </Style>
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -28,50 +40,63 @@
             </Grid>
         </Grid>
         <Grid Background="White" Grid.Row="1" >
-            <StackPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel >
                 <TextBox x:Name="nameTextBox" 
+                     Style="{StaticResource SetPersonInfoPageTextBoxStyle}"  
                      Header="昵称：" 
-                     Margin="15,5,15,5"
+                     PlaceholderText="输入一个萌萌哒的昵称吧"
                      InputScope="ChineseFullWidth"
                      TextChanged="nameTextBox_TextChanged"
                      />
                 <TextBox x:Name="abstractTextBox" 
+                     Style="{StaticResource SetPersonInfoPageTextBoxStyle}" 
                      Header="简介：" 
-                     Margin="15,5,15,5"
+                     PlaceholderText="告诉我们你有多可爱吧"
                      AcceptsReturn="True"
                      TextWrapping="Wrap"    
                      MinHeight="100"
                      InputScope="ChineseFullWidth"
-                     MaxLength="30"
+                     MaxLength="30"                     
                      TextChanged="abstractTextBox_TextChanged"
                      />
-                <TextBlock x:Name="abstractTextBlock" Text="" FontSize="8" Margin="15,0,0,0"  Foreground="Red"/>
+                <RelativePanel>
+                    <TextBlock x:Name="abstractTextBlock" 
+                           Style="{StaticResource SetPersonInfoPageTextBlock}"
+                               RelativePanel.AlignLeftWithPanel="True"/>
+                    <TextBlock x:Name="abstractNumTextBlock" 
+                               Text="0/30"
+                               Foreground="#999999"
+                               RelativePanel.AlignRightWithPanel="True"
+                               Margin="0,0,15,0"/>
+                </RelativePanel>
                 <TextBox x:Name="phoneTextBox" 
+                     Style="{StaticResource SetPersonInfoPageTextBoxStyle}"  
                      Header="手机："
-                     Margin="15,5,15,0"
+                     PlaceholderText="可爱的人肯定要留电话的呀"
                      InputScope="TelephoneNumber"
                      TextChanged="phoneTextBox_TextChanged"
                      />
-                <TextBlock x:Name="phoneTextBlock" Text="" FontSize="8" Margin="15,0,0,0"  Foreground="Red"/>
+                <TextBlock x:Name="phoneTextBlock" 
+                           Style="{StaticResource SetPersonInfoPageTextBlock}"/>
                 <TextBox x:Name="qqTextBox" 
+                     Style="{StaticResource SetPersonInfoPageTextBoxStyle}"  
                      Header="QQ：" 
-                     Margin="15,5,15,5"
+                     PlaceholderText="这句没有想到卖萌的话，放着"
                      InputScope="Number"
                      TextChanged="qqTextBox_TextChanged"
                      />
-                <TextBlock x:Name="qqTextBlock" Text="" FontSize="8" Margin="15,0,0,0"  Foreground="Red"/>
-
-                <Button Name="SetPersonInfoButton" 
-                    Content="完成" 
-                    Margin="15,20,15,5" 
-                    HorizontalAlignment="Right"
-                    IsEnabled="False"
-                    Click="SetPersonInfoButton_Click"/>
+                <TextBlock x:Name="qqTextBlock" 
+                           Style="{StaticResource SetPersonInfoPageTextBlock}"/>
 
                 <!--信息展示-->
-                <TextBlock x:Name="textBlockone" Text="输入信息：" FontSize="12" Margin="15"/>
-                <TextBlock x:Name="textBlocktwo" TextWrapping="Wrap" FontSize="12"/>
-            </StackPanel>
+                    <StackPanel Margin="15">
+                        <TextBlock x:Name="textBlockone" Text="信息：" FontSize="12" />
+                        <TextBlock x:Name="textBlocktwo" TextWrapping="Wrap" FontSize="12" />
+                    </StackPanel>
+                    
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Page>

@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -37,8 +38,8 @@ namespace ZSCY_Win10
         string phonetext ;
         //QQ
         string qqtext ;
-        bool completeness1;
-        bool completeness2;
+        bool completeness1=true;
+        bool completeness2=true;
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -81,7 +82,16 @@ namespace ZSCY_Win10
         private void abstractTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             abstracttext = abstractTextBox.Text;
-            abstractTextBlock.Text = abstracttext.Length + "/30";
+            abstractNumTextBlock.Text = abstracttext.Length + "/30";
+            Color abstractChangeNumcolor = Color.FromArgb(255, 255, 155, 155);
+            Color abstractOriginalNumcolor = Color.FromArgb(255, 153, 153, 153);
+            if (abstracttext.Length>=25)
+            {            
+            abstractNumTextBlock.Foreground = new SolidColorBrush(abstractChangeNumcolor);
+            }
+            else
+                abstractNumTextBlock.Foreground=new SolidColorBrush(abstractOriginalNumcolor);
+
             Completeness();
         }
 
@@ -89,23 +99,13 @@ namespace ZSCY_Win10
         private void phoneTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             phonetext = phoneTextBox.Text;
-            string phonemessage = phoneTextBox.Text.Trim();
-            isNumeric(phonemessage);
-        }
-        public void isNumeric(string phonemessage)
-        {
-            if (phonemessage != "" && Regex.IsMatch(phonemessage, @"^1\d{10}$")) //判断是否为以 1 开头的 11 位数字
+            if ((phonetext == null) || (Regex.IsMatch(phonetext, @"^1\d{10}$")))
             {
-                //成功
-                phoneTextBlock.Text = "T";
                 completeness1 = true;
             }
             else
-            {
-                //失败
-                phoneTextBlock.Text = "F";
-                completeness1 = false;
-            }
+                completeness1 = false;   
+                 
             Completeness();
         }
 
@@ -113,40 +113,27 @@ namespace ZSCY_Win10
         private void qqTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             qqtext = qqTextBox.Text;
-
-            Regex rex =
-            new Regex(@"^\d{5,10}$");
-
-            if (rex.IsMatch(qqtext))
+            if ((qqtext == null)||(Regex.IsMatch(qqtext, @"^\d{5,10}$")))
             {
-                qqTextBlock.Text = "T";
                 completeness2 = true;
             }
             else
-            {
-                qqTextBlock.Text = "F";
-                completeness2 = false;
-            }
+                completeness2 = false;      
+
             Completeness();
         }
 
         //判定是否可以提交
         private void Completeness()
         {
-            if (nametext != null && abstracttext != null && phonetext != null && qqtext != null && completeness1 == true && completeness2 == true)
+            if (nametext != null && abstracttext != null && completeness1== true && completeness2== true)
             {
-                SetPersonInfoButton.IsEnabled = true;
+                SetPersonInfoOKAppBarButton.IsEnabled = true;
             }
             else
-                SetPersonInfoButton.IsEnabled = false;
+                SetPersonInfoOKAppBarButton.IsEnabled = false;
             //信息展示
             textBlocktwo.Text = "昵称：" + nametext + "简介：" + abstracttext + "手机：" + phonetext + "QQ：" + qqtext;
-        }
-
-        //完成按钮
-        private void SetPersonInfoButton_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
