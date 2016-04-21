@@ -224,8 +224,12 @@
     <Compile Include="Data\ClassList.cs" />
     <Compile Include="Data\ClassListLight.cs" />
     <Compile Include="Data\CommunityImageList.cs" />
+    <Compile Include="Data\Community\BBDDFeed.cs" />
     <Compile Include="Data\Community\Feeds.cs" />
+    <Compile Include="Data\Community\HotFeed.cs" />
+    <Compile Include="Data\Community\IFeeds.cs" />
     <Compile Include="Data\Community\Img.cs" />
+    <Compile Include="Data\Community\JWZXFeed.cs" />
     <Compile Include="Data\DataSource.cs" />
     <Compile Include="Data\EmptyClassDayLesson.cs" />
     <Compile Include="Data\EmptyRoomList.cs" />
