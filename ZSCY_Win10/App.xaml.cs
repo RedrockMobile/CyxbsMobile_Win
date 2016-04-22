@@ -1,15 +1,18 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using UmengSDK;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking.PushNotifications;
 using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.StartScreen;
@@ -21,6 +24,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
+using ZSCY_Win10.Data;
 using ZSCY_Win10.Pages.CommunityPages;
 using ZSCY_Win10.Util;
 
@@ -36,6 +40,10 @@ namespace ZSCY_Win10
         public static ObservableCollection<JWList> JWListCache = new ObservableCollection<JWList>();
         public static ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>();
         public static bool showpane = true;
+        public static MobileServiceClient MobileService = new MobileServiceClient("https://cqupt.azurewebsites.net");
+
+
+        private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。
@@ -101,12 +109,12 @@ namespace ZSCY_Win10
         protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
 
-//#if DEBUG
-//            if (System.Diagnostics.Debugger.IsAttached)
-//            {
-//                this.DebugSettings.EnableFrameRateCounter = true;
-//            }
-//#endif
+            //#if DEBUG
+            //            if (System.Diagnostics.Debugger.IsAttached)
+            //            {
+            //                this.DebugSettings.EnableFrameRateCounter = true;
+            //            }
+            //#endif
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -181,6 +189,7 @@ namespace ZSCY_Win10
             }
             // 确保当前窗口处于活动状态
             await UmengAnalytics.StartTrackAsync("55cd8c8be0f55a20ba00440d", "Marketplace_Win10");
+           //await InitNotificationsAsync();
 
         }
 
@@ -214,7 +223,24 @@ namespace ZSCY_Win10
             await UmengAnalytics.EndTrackAsync();
             deferral.Complete();
         }
+        private async Task InitNotificationsAsync()
+        {
+            try
+            {
+                // Get a channel URI from WNS.
+                var channel = await PushNotificationChannelManager
+                    .CreatePushNotificationChannelForApplicationAsync();
 
+                // Register the channel URI with Notification Hubs.
+                await App.MobileService.GetPush().RegisterAsync(channel.Uri);
+                Debug.WriteLine(channel.Uri);
+               
+            }
+            catch (Exception channel)
+            {
+                Debug.WriteLine(channel.Message);
+            }
+        }
 
     }
 }
