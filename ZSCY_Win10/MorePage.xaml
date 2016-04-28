@@ -8,7 +8,8 @@
     xmlns:data="using:ZSCY_Win10.Data"
     DataContext="{Binding Morepageclass,RelativeSource={RelativeSource Self}}"
     d:DataContext="{Binding Source={d:DesignData Source=Data/moreitems.json, Type=data:DataSource}}"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Background="White">
 
     <Grid x:Name="grid">
         <VisualStateManager.VisualStateGroups>
