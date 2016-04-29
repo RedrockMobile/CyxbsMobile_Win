@@ -75,6 +75,8 @@ namespace ZSCY_Win10
                 cutoffLine.Y2 = e.NewSize.Height;
             };
             ViewModel = new CommunityViewModel();
+            CommunityFrame.Visibility = Visibility.Visible;
+            CommunityFrame.Navigate(typeof(CommunityContentPage));
         }
 
         public Frame CommunityFrame { get { return this.cframe; } }

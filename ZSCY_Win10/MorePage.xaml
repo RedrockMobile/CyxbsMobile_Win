@@ -11,7 +11,7 @@
     mc:Ignorable="d"
     Background="White">
 
-    <Grid x:Name="grid">
+    <Grid x:Name="grid" Background="White">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualState000">

@@ -230,6 +230,7 @@
     <Compile Include="Data\Community\IFeeds.cs" />
     <Compile Include="Data\Community\Img.cs" />
     <Compile Include="Data\Community\JWZXFeed.cs" />
+    <Compile Include="Data\Community\Mark.cs" />
     <Compile Include="Data\DataSource.cs" />
     <Compile Include="Data\EmptyClassDayLesson.cs" />
     <Compile Include="Data\EmptyRoomList.cs" />
@@ -422,9 +423,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\SplashScreen.scale-100.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\SplashScreen.scale-240.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Square71x71Logo.scale-240.png">

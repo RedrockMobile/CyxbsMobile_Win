@@ -195,9 +195,10 @@ namespace ZSCY_Win10.Pages.CommunityPages
                         return;
                     }
                 }
+                imgPhoto_src = imgPhoto_src.Substring(1);
+                imgThumbnail_src = imgThumbnail_src.Substring(1);
             }
-            imgPhoto_src = imgPhoto_src.Substring(1);
-            imgThumbnail_src = imgThumbnail_src.Substring(1);
+            
 
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("type_id", "5")); //现在只有哔哔叨叨
@@ -216,6 +217,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 if (Int32.Parse(obj["state"].ToString()) == 200)
                 {
                     Utils.Toast("发表成功");
+                    Frame.GoBack();
                 }
             }
 

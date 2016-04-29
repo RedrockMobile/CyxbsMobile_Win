@@ -15,7 +15,7 @@
         <converter:NewsConverter x:Key="NewsConverter" x:Name="NewsConverter"/>
     </Page.Resources>
 
-    <Grid Name="newsGrid">
+    <Grid Name="newsGrid" Background="White">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualState000">
