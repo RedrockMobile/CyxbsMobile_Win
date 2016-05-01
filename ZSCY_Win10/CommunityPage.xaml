@@ -90,6 +90,100 @@
                 </DataTemplate>
             </util:ImgDataTemplateSelector.MorePhotoTemplate>
         </util:ImgDataTemplateSelector>
+        
+        <!--根据热门类型动态选择数据模板-->
+        <util:HotFeedsDataTemplateSelector x:Key="HotFeedsDataTemplateSelector">
+            <util:HotFeedsDataTemplateSelector.BBDDTemplate>
+                <DataTemplate x:DataType="models:HotFeed">
+                    <StackPanel Orientation="Vertical" Padding="10" Background="White" Margin="0,3">
+                        <StackPanel Orientation="Horizontal" Margin="0,10">
+                            <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
+                                <Rectangle.Fill>
+                                    <ImageBrush ImageSource="{x:Bind user_head}"></ImageBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="{x:Bind nick_name}" Style="{StaticResource UsernameTextBlock}"></TextBlock>
+                                <TextBlock Text="{x:Bind time}" Style="{StaticResource TimeTextBlock}"></TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="{x:Bind content.content}" TextWrapping="Wrap"></TextBlock>
+                        </StackPanel>
+                        <GridView Name="PhotoGrid" Margin="0,10,0,0" MinHeight="0" ItemsSource="{x:Bind img}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                        </GridView>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button Style="{StaticResource LikeCommentButton}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" Margin="10,5">
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="{x:Bind is_my_Like,Converter={StaticResource LikeValueConverter}}" />
+                                        <TextBlock Text="{x:Bind like_num}" Foreground="{x:Bind is_my_Like,Converter={StaticResource LikeValueConverter}}" Margin="5,0,5,2"></TextBlock>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                            <Button Style="{StaticResource LikeCommentButton}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" Margin="10,5">
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
+                                        <TextBlock Text="{x:Bind remark_num}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </util:HotFeedsDataTemplateSelector.BBDDTemplate>
+            <util:HotFeedsDataTemplateSelector.nBBDDTemplate>
+                <DataTemplate x:DataType="models:HotFeed">
+                    <StackPanel Orientation="Vertical" Padding="10" Background="White" Margin="0,3">
+                        <StackPanel Orientation="Horizontal" Margin="0,10">
+                            <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
+                                <Rectangle.Fill>
+                                    <ImageBrush ImageSource="{x:Bind user_head}"></ImageBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="{x:Bind content.contentbase.title}" Style="{StaticResource UsernameTextBlock}"></TextBlock>
+                                <TextBlock Text="{x:Bind time}" Style="{StaticResource TimeTextBlock}"></TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="{x:Bind content.contentbase.content}" TextWrapping="Wrap"></TextBlock>
+                        </StackPanel>
+                        <GridView Name="PhotoGrid" Margin="0,10,0,0" MinHeight="0" ItemsSource="{x:Bind img}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                        </GridView>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button Style="{StaticResource LikeCommentButton}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" Margin="10,5">
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="{x:Bind is_my_Like,Converter={StaticResource LikeValueConverter}}" />
+                                        <TextBlock Text="{x:Bind like_num}" Foreground="{x:Bind is_my_Like,Converter={StaticResource LikeValueConverter}}" Margin="5,0,5,2"></TextBlock>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                            <Button Style="{StaticResource LikeCommentButton}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" Margin="10,5">
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
+                                        <TextBlock Text="{x:Bind remark_num}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </util:HotFeedsDataTemplateSelector.nBBDDTemplate>
+        </util:HotFeedsDataTemplateSelector>
         <!--动态数据模板-->
         <DataTemplate x:DataType="models:BBDDFeed" x:Key="ListDataTemplate">
             <StackPanel Orientation="Vertical" Padding="10" Background="White" Margin="0,3">
@@ -134,6 +228,10 @@
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
+
+
+
+
         <Style x:Name="ItemContainerStyle" x:Key="ItemContainerStyle" TargetType="ListViewItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
         </Style>
@@ -144,6 +242,14 @@
             <Setter Property="IsItemClickEnabled" Value="True"/>
             <Setter Property="SelectionMode" Value="None"/>
             <Setter Property="ItemTemplate" Value="{StaticResource ListDataTemplate}"/>
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ItemContainerStyle}"/>
+        </Style>
+        <Style x:Name="HotFeedsListView" x:Key="HotFeedsListView" TargetType="ListView">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="IsItemClickEnabled" Value="True"/>
+            <Setter Property="SelectionMode" Value="None"/>
+            <Setter Property="ItemTemplateSelector" Value="{StaticResource HotFeedsDataTemplateSelector}"/>
             <Setter Property="ItemContainerStyle" Value="{StaticResource ItemContainerStyle}"/>
         </Style>
     </Page.Resources>
@@ -224,7 +330,7 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <!--热门动态的ListView-->
-                                    <ListView Name="RMDTListView" Style="{StaticResource FeedsListView}" ItemsSource="{x:Bind ViewModel.BBDD}"/>
+                                    <ListView Name="RMDTListView" Style="{StaticResource HotFeedsListView}" ItemsSource="{x:Bind ViewModel.HotFeeds}"/>
                                     <StackPanel Grid.Row="1">
                                         <!--列表的加载条-->
                                         <StackPanel Name="RMDTListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">

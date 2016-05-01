@@ -16,7 +16,6 @@ namespace ZSCY_Win10.Data.Community
         public string article_id { get; set; }
         public string user_id { get; set; }
         public string nick_name { get; set; }
-        public string user_name { get; set; }
         public string user_head { get; set; }
         public string time { get; set; }
         public HotFeedsContentBase content { get; set; }
@@ -31,7 +30,7 @@ namespace ZSCY_Win10.Data.Community
             type = feedsJObject["type"].ToString();
             if (type!="bbdd")
             {
-                user_name = feedsJObject["user_name"].ToString();
+                nick_name = feedsJObject["user_name"].ToString();
             }
             else
             {
@@ -40,7 +39,7 @@ namespace ZSCY_Win10.Data.Community
             type_id = feedsJObject["type_id"].ToString();
             article_id = feedsJObject["article_id"].ToString();
             user_id = feedsJObject["user_id"].ToString();
-            user_head = feedsJObject["user_head"].ToString();
+            user_head = feedsJObject["user_head"].ToString()==""? "ms-appx:///Assets/Boy-100.png" : feedsJObject["user_head"].ToString();
             time = feedsJObject["time"].ToString();
             like_num = feedsJObject["like_num"].ToString();
             remark_num = feedsJObject["remark_num"].ToString();

@@ -9,7 +9,7 @@ namespace ZSCY_Win10.Data.Community
 {
     public class HotFeedsContentBase : IFeeds
     {
-        public HotFeedsContentBase contentbase { get; set; }
+        public JWZXFeeds contentbase { get; set; }
         public string content { get; set; }
         public void GetAttributes(JObject feedsJObject)
         {
