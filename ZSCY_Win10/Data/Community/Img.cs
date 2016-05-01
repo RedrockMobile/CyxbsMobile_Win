@@ -8,22 +8,24 @@ using Newtonsoft.Json.Linq;
 
 namespace ZSCY_Win10.Data.Community
 {
-    public class Img
+    public class Img:IFeeds
     {
         public string ImgSrc { get; set; }
         public string ImgSmallSrc { get; set; }
 
         public void GetAttributes(JObject imgJObjcet)
         {
-            ImgSrc = imgJObjcet["img_src"].ToString();
-            ImgSmallSrc = imgJObjcet["img_small_src"].ToString();
-            if (ImgSmallSrc == "")
+            string img = imgJObjcet["img_src"].ToString();
+            string imgsmall = imgJObjcet["img_small_src"].ToString();
+            if (img == "")
             {
-                ImgSmallSrc = "ms-appx:///Assets/StoreLogo.scale-400.png";
+                ImgSrc = ImgSmallSrc ="ms-appx:///Assets/StoreLogo.scale-400.png";
                 Debug.WriteLine("没有图片");
             }
             else
             {
+                ImgSrc = img;
+                ImgSmallSrc = imgsmall;
                 Debug.WriteLine(ImgSmallSrc);
             }
         }

@@ -7,26 +7,27 @@ using Newtonsoft.Json.Linq;
 
 namespace ZSCY_Win10.Data.Community
 {
-    class JWZXFeed:IFeeds
+
+
+    public class JWZXFeeds : HotFeedsContentBase, IFeeds
     {
         public string id { get; set; }
-        public string articletype_id { get; set; }
-        public string title { get; set; }
-        public string date { get; set; }
-        public string content { get; set; }
-        public string like_num { get; set; }
-        public string unit { get; set; }
-        public string remark_num { get; set; }
-        public string name { get; set; }
-        public string address { get; set; }
         public string articleid { get; set; }
-        public string read { get; set; }
         public string head { get; set; }
-        public bool is_my_like { get; set; }
-
+        public string date { get; set; }
+        public string read { get; set; }
+        public string title { get; set; }
+        public string content { get; set; }
         public void GetAttributes(JObject feedsJObject)
         {
-            throw new NotImplementedException();
+            id = feedsJObject["id"].ToString();
+            articleid = feedsJObject["articleid"].ToString();
+            head = feedsJObject["head"].ToString();
+            date = feedsJObject["date"].ToString();
+            read = feedsJObject["read"].ToString();
+            title = feedsJObject["title"].ToString();
+            content = feedsJObject["content"].ToString();
         }
     }
+
 }

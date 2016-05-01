@@ -225,7 +225,6 @@
     <Compile Include="Data\ClassListLight.cs" />
     <Compile Include="Data\CommunityImageList.cs" />
     <Compile Include="Data\Community\BBDDFeed.cs" />
-    <Compile Include="Data\Community\Feeds.cs" />
     <Compile Include="Data\Community\HotFeed.cs" />
     <Compile Include="Data\Community\IFeeds.cs" />
     <Compile Include="Data\Community\Img.cs" />
@@ -236,6 +235,7 @@
     <Compile Include="Data\EmptyRoomList.cs" />
     <Compile Include="Data\EmptyTable.cs" />
     <Compile Include="Data\ExamList.cs" />
+    <Compile Include="Data\Community\HotFeedsContentBase.cs" />
     <Compile Include="Data\IdList.cs" />
     <Compile Include="Data\NewsContentList.cs" />
     <Compile Include="Data\NewsList.cs" />
