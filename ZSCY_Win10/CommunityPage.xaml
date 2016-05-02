@@ -110,7 +110,7 @@
                             </StackPanel>
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock Text="{x:Bind content.content}" TextWrapping="Wrap"></TextBlock>
+                            <TextBlock Text="{x:Bind content.content}" TextWrapping="Wrap" MaxLines="5" TextTrimming="WordEllipsis"></TextBlock>
                         </StackPanel>
                         <GridView Name="PhotoGrid" Margin="0,10,0,0" MinHeight="0" ItemsSource="{x:Bind img}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                             <GridView.ItemsPanel>
@@ -155,7 +155,7 @@
                             </StackPanel>
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock Text="{x:Bind content.contentbase.content}" TextWrapping="Wrap"></TextBlock>
+                            <TextBlock Text="{x:Bind content.contentbase.content}" TextWrapping="Wrap" MaxLines="5" TextTrimming="WordEllipsis"></TextBlock>
                         </StackPanel>
                         <GridView Name="PhotoGrid" Margin="0,10,0,0" MinHeight="0" ItemsSource="{x:Bind img}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                             <GridView.ItemsPanel>
@@ -165,7 +165,7 @@
                             </GridView.ItemsPanel>
                         </GridView>
                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                            <Button Style="{StaticResource LikeCommentButton}" TabIndex="{x:Bind id}" Click="liskButton_Click">
+                            <Button Style="{StaticResource LikeCommentButton}" TabIndex="{x:Bind num_id}" Click="liskButton_Click">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Margin="10,5">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="{x:Bind is_my_Like,Converter={StaticResource LikeValueConverter}}" />
@@ -201,7 +201,7 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel>
-                    <TextBlock Text="{x:Bind content}" TextWrapping="Wrap"></TextBlock>
+                    <TextBlock Text="{x:Bind content}" TextWrapping="Wrap" MaxLines="5" TextTrimming="WordEllipsis"></TextBlock>
                 </StackPanel>
                 <GridView Name="PhotoGrid" Margin="0,10,0,0" MinHeight="0" ItemsSource="{x:Bind article_photo_src}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                     <GridView.ItemsPanel>
@@ -211,7 +211,7 @@
                     </GridView.ItemsPanel>
                 </GridView>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button Style="{StaticResource LikeCommentButton}" TabIndex="{x:Bind id}" Click="liskButton_Click">
+                    <Button Style="{StaticResource LikeCommentButton}" TabIndex="{x:Bind num_id}" Click="liskButton_Click">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Margin="10,5">
                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="{x:Bind is_my_like,Converter={StaticResource LikeValueConverter}}" />

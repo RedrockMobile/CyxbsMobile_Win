@@ -30,7 +30,7 @@ namespace ZSCY_Win10.Data.Community
         {
             title = feedsJObject["title"].ToString();
             id = feedsJObject["id"].ToString();
-            num_id ="2"+ feedsJObject["type_id"].ToString() + feedsJObject["id"].ToString();
+            num_id ="5"+ feedsJObject["type_id"].ToString() + feedsJObject["id"].ToString();
             type_id = feedsJObject["type_id"].ToString();
             content = feedsJObject["content"].ToString();
             updated_time = feedsJObject["updated_time"].ToString();
