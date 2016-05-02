@@ -236,6 +236,7 @@
 
         <Style x:Name="ItemContainerStyle" x:Key="ItemContainerStyle" TargetType="ListViewItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+            <Setter Property="Margin"  Value="-12,0"></Setter>
         </Style>
         <!--动态的列表样式-->
         <Style x:Name="FeedsListView" x:Key="FeedsListView" TargetType="ListView">
