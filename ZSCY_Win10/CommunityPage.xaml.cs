@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -15,8 +16,10 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Pages;
 using ZSCY_Win10.Pages.CommunityPages;
+using ZSCY_Win10.Service;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
 
@@ -77,8 +80,8 @@ namespace ZSCY_Win10
                 cutoffLine.Y2 = e.NewSize.Height;
             };
             ViewModel = new CommunityViewModel();
-            CommunityFrame.Visibility = Visibility.Visible;
-            CommunityFrame.Navigate(typeof(CommunityContentPage));
+            //CommunityFrame.Visibility = Visibility.Visible;
+            //CommunityFrame.Navigate(typeof(CommunityContentPage));
         }
 
         public Frame CommunityFrame { get { return this.cframe; } }
@@ -246,12 +249,68 @@ namespace ZSCY_Win10
         private void BBDDListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             this.cframe.Navigate(typeof(CommunityContentPage), e.ClickedItem, new DrillInNavigationTransitionInfo());
+            CommunityFrame.Visibility = Visibility.Visible;
         }
 
         private void RMDTListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             this.cframe.Navigate(typeof(CommunityContentPage), e.ClickedItem, new DrillInNavigationTransitionInfo());
+            CommunityFrame.Visibility = Visibility.Visible;
+        }
 
+        private async void liskButton_Click(object sender, RoutedEventArgs e)
+        {
+            var b = sender as Button;
+            string num_id = b.TabIndex.ToString();
+            Debug.WriteLine(num_id);
+            Debug.WriteLine("id " + num_id.Substring(2));
+
+            string like_num = "";
+            if (num_id[0] == '1') //hot
+            {
+                HotFeed hotfeed = ViewModel.HotFeeds.First(p => p.article_id.Equals(num_id.Substring(2)));
+                if (hotfeed.is_my_Like == "true" || hotfeed.is_my_Like == "True")
+                {
+                    like_num = await CommunityFeedsService.setPraise(hotfeed.type_id, num_id.Substring(2), false);
+                    if (like_num != "")
+                    {
+                        hotfeed.like_num = like_num;
+                        hotfeed.is_my_Like = "false";
+                    }
+                }
+                else
+                {
+                    like_num = await CommunityFeedsService.setPraise(hotfeed.type_id, num_id.Substring(2), true);
+                    if (like_num != "")
+                    {
+                        hotfeed.like_num = like_num;
+                        hotfeed.is_my_Like = "true";
+                    }
+                }
+            }
+            else if (num_id[0] == '2') //bbdd
+            {
+                BBDDFeed bbddfeed = ViewModel.BBDD.First(p => p.id.Equals(num_id.Substring(2)));
+                if (bbddfeed.is_my_like == "true" || bbddfeed.is_my_like == "True")
+                {
+                    like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), false);
+                    if (like_num != "")
+                    {
+                        bbddfeed.like_num = like_num;
+                        bbddfeed.like_num = "false";
+                    }
+                }
+                else
+                {
+                    like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), true);
+                    if (like_num != "")
+                    {
+                        bbddfeed.like_num = like_num;
+                        bbddfeed.like_num = "true";
+                        //OnPropertyChanged("Vis");
+                    }
+                }
+            }
         }
         //private void ConmunityMyAppBarButton_Click(object sender, RoutedEventArgs e)
         //{

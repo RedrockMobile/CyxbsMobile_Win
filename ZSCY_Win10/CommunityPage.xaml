@@ -120,11 +120,11 @@
                             </GridView.ItemsPanel>
                         </GridView>
                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                            <Button Style="{StaticResource LikeCommentButton}">
+                            <Button Style="{StaticResource LikeCommentButton}" TabIndex="{x:Bind num_id}" Click="liskButton_Click">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Margin="10,5">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="{x:Bind is_my_Like,Converter={StaticResource LikeValueConverter}}" />
-                                        <TextBlock Text="{x:Bind like_num}" Foreground="{x:Bind is_my_Like,Converter={StaticResource LikeValueConverter}}" Margin="5,0,5,2"></TextBlock>
+                                        <TextBlock Text="{x:Bind like_num,Mode=TwoWay}" Foreground="{x:Bind is_my_Like,Converter={StaticResource LikeValueConverter},Mode=OneWay}" Margin="5,0,5,2"></TextBlock>
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
@@ -165,11 +165,11 @@
                             </GridView.ItemsPanel>
                         </GridView>
                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                            <Button Style="{StaticResource LikeCommentButton}">
+                            <Button Style="{StaticResource LikeCommentButton}" TabIndex="{x:Bind id}" Click="liskButton_Click">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Margin="10,5">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="{x:Bind is_my_Like,Converter={StaticResource LikeValueConverter}}" />
-                                        <TextBlock Text="{x:Bind like_num}" Foreground="{x:Bind is_my_Like,Converter={StaticResource LikeValueConverter}}" Margin="5,0,5,2"></TextBlock>
+                                        <TextBlock Text="{x:Bind like_num,Mode=TwoWay}" Foreground="{x:Bind is_my_Like,Converter={StaticResource LikeValueConverter},Mode=OneWay}" Margin="5,0,5,2"></TextBlock>
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
@@ -211,11 +211,11 @@
                     </GridView.ItemsPanel>
                 </GridView>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button Style="{StaticResource LikeCommentButton}">
+                    <Button Style="{StaticResource LikeCommentButton}" TabIndex="{x:Bind id}" Click="liskButton_Click">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Margin="10,5">
                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="{x:Bind is_my_like,Converter={StaticResource LikeValueConverter}}" />
-                                <TextBlock Text="{x:Bind like_num}" Foreground="{x:Bind is_my_like,Converter={StaticResource LikeValueConverter}}" Margin="5,0,5,2"></TextBlock>
+                                <TextBlock Text="{x:Bind like_num,Mode=TwoWay}" Foreground="{x:Bind is_my_like,Converter={StaticResource LikeValueConverter},Mode=OneWay}" Margin="5,0,5,2"></TextBlock>
                             </StackPanel>
                         </Button.Content>
                     </Button>

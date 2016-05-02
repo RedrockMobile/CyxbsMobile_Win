@@ -28,13 +28,13 @@ namespace ZSCY_Win10.ViewModels.Community
         {
             List<BBDDFeed> bbddlist;
 
-            bbddlist = await CommunityFeedsService.GetBBDD(1, 1, 1, 5);
+            bbddlist = await CommunityFeedsService.GetBBDD(1, 0, 15, 5);
             for (int j = 0; j < bbddlist.Count; j++)
             {
                 BBDD.Add(bbddlist[j]);
             }
             List<HotFeed> hotlist;
-            hotlist = await CommunityFeedsService.GetHot(0, 1, 1, 5);
+            hotlist = await CommunityFeedsService.GetHot(0, 0, 15, 5);
             for (int i = 0; i < hotlist.Count; i++)
             {
                 HotFeeds.Add(hotlist[i]);

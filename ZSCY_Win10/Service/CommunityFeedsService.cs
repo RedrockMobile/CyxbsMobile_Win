@@ -26,7 +26,7 @@ namespace ZSCY_Win10.Service
         /// </summary>
         /// <param name="type">动态参数，重邮新闻cyxw=>1,教务咨询jwzx=>2,xsjz=>3,xwgg=>4,bbdd=>5</param>
         /// <returns>返回参数对应的列表数据</returns>
-        public static async Task<List<BBDDFeed>> GetBBDD(int type = 1, int page = 1, int size = 1, int typeid = 5)
+        public static async Task<List<BBDDFeed>> GetBBDD(int type = 1, int page = 1, int size = 15, int typeid = 5)
         {
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
@@ -96,11 +96,11 @@ namespace ZSCY_Win10.Service
             return null;
         }
 
-        public static async Task<List<HotFeed>> GetHot(int type = 0, int page = 1, int size = 1, int typeid = 5)
+        public static async Task<List<HotFeed>> GetHot(int type = 0, int page = 1, int size = 15, int typeid = 5)
         {
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("stuNum", "2013211429"));
-            paramList.Add(new KeyValuePair<string, string>("idNum", "252617"));
+            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
             paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
             if (typeid != 0)
@@ -111,16 +111,47 @@ namespace ZSCY_Win10.Service
             JArray hotfeed = JArray.Parse(response);
             for (int i = 0; i < hotfeed.Count; i++)
             {
-                JObject hot = (JObject) hotfeed[i];
+                JObject hot = (JObject)hotfeed[i];
                 if (hot["status"].ToString() == "200")
                 {
-                    JObject data = (JObject) hot["data"];
+                    JObject data = (JObject)hot["data"];
                     HotFeed f = new HotFeed();
                     f.GetAttributes(data);
                     feeds.Add(f);
                 }
             }
             return feeds;
-          }
+        }
+
+        public static async Task<string> setPraise(string type_id, string article_id, bool addORcancel)
+        {
+            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
+            paramList.Add(new KeyValuePair<string, string>("article_id", article_id));
+            string praise = "";
+            if (addORcancel)
+            {
+                praise = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Praise/addone", paramList);
+            }
+            else
+            {
+                praise = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Praise/cancel", paramList);
+            }
+            Debug.WriteLine(praise);
+            if (praise != "")
+            {
+                JObject obj = JObject.Parse(praise);
+                if (obj["state"].ToString() == "200")
+                {
+                    return obj["like_num"].ToString();
+                }
+                else
+                    return "";
+            }
+            else
+                return "";
+        }
     }
 }
