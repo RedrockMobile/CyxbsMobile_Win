@@ -261,14 +261,15 @@ namespace ZSCY_Win10
         private async void liskButton_Click(object sender, RoutedEventArgs e)
         {
             var b = sender as Button;
+            
             string num_id = b.TabIndex.ToString();
             Debug.WriteLine(num_id);
             Debug.WriteLine("id " + num_id.Substring(2));
-
             string like_num = "";
             if (int.Parse(num_id[0].ToString()) < 5) //hot
             {
                 HotFeed hotfeed = ViewModel.HotFeeds.First(p => p.article_id.Equals(num_id.Substring(2)));
+                BBDDFeed s = ViewModel.BBDD.First(p => p.id.Equals(num_id.Substring(2)));
                 if (hotfeed.is_my_Like == "true" || hotfeed.is_my_Like == "True")
                 {
                     like_num = await CommunityFeedsService.setPraise(hotfeed.type_id, num_id.Substring(2), false);
@@ -276,6 +277,11 @@ namespace ZSCY_Win10
                     {
                         hotfeed.like_num = like_num;
                         hotfeed.is_my_Like = "false";
+                        if (s != null)
+                        {
+                            s.like_num = like_num;
+                            s.is_my_like = "false";
+                        }
                     }
                 }
                 else
@@ -285,19 +291,30 @@ namespace ZSCY_Win10
                     {
                         hotfeed.like_num = like_num;
                         hotfeed.is_my_Like = "true";
+                        if (s != null)
+                        {
+                            s.like_num = like_num;
+                            s.is_my_like = "true";
+                        }
                     }
                 }
             }
             else if (num_id[0] == '5') //bbdd
             {
                 BBDDFeed bbddfeed = ViewModel.BBDD.First(p => p.id.Equals(num_id.Substring(2)));
+                HotFeed h = ViewModel.HotFeeds.First(p => p.article_id.Equals(num_id.Substring(2)));
                 if (bbddfeed.is_my_like == "true" || bbddfeed.is_my_like == "True")
                 {
                     like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), false);
                     if (like_num != "")
                     {
                         bbddfeed.like_num = like_num;
-                        bbddfeed.like_num = "false";
+                        bbddfeed.is_my_like = "false";
+                        if (h != null)
+                        {
+                            h.like_num = like_num;
+                            h.is_my_Like = "false";
+                        }
                     }
                 }
                 else
@@ -306,8 +323,12 @@ namespace ZSCY_Win10
                     if (like_num != "")
                     {
                         bbddfeed.like_num = like_num;
-                        bbddfeed.like_num = "true";
-                        //OnPropertyChanged("Vis");
+                        bbddfeed.is_my_like = "true";
+                        if (h != null)
+                        {
+                            h.like_num = like_num;
+                            h.is_my_Like = "true";
+                        }
                     }
                 }
             }

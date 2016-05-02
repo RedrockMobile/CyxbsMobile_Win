@@ -5,11 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using ZSCY_Win10.Common;
 
 namespace ZSCY_Win10.Data.Community
 {
-    public class BBDDFeed : IFeeds
+    public class BBDDFeed :ViewModelBase, IFeeds
     {
+        private string is_my_likes;
+        private string like_nums;
+        private string remarknum;
         public string title { get; set; }
         public string id { get; set; }
         public string num_id { get; set; }
@@ -19,12 +23,46 @@ namespace ZSCY_Win10.Data.Community
         public string content { get; set; }
         public string updated_time { get; set; }
         public string created_time { get; set; }
-        public string like_num { get; set; }
-        public string remark_num { get; set; }
         public string nickname { get; set; }
         public string photo_src { get; set; }//头像
         public string photo_thumbnail_src { get; set; }
-        public string is_my_like { get; set; }
+        public string like_num
+        {
+            get
+            {
+                return like_nums;
+            }
+            set
+            {
+                like_nums = value;
+                OnPropertyChanged(nameof(like_num));
+            }
+        }
+        public string remark_num
+        {
+            get
+            {
+                return remarknum;
+            }
+            set
+            {
+                remarknum = value;
+                OnPropertyChanged(nameof(remark_num));
+            }
+        }
+
+        public string is_my_like
+        {
+            get
+            {
+                return is_my_likes;
+            }
+            set
+            {
+                is_my_likes = value;
+                OnPropertyChanged(nameof(is_my_like));
+            }
+        }
 
         public void GetAttributes(JObject feedsJObject)
         {

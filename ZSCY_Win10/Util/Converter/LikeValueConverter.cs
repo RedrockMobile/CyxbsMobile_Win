@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace ZSCY_Win10.Util.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+            Debug.WriteLine(value as string);
             bool ismylike = Boolean.Parse(value as string);
             if (ismylike)
             {
