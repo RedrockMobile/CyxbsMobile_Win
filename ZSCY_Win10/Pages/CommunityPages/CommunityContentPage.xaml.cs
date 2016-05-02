@@ -51,7 +51,25 @@ namespace ZSCY_Win10.Pages.CommunityPages
             if (item is HotFeed)
             {
                 HotFeed h = item as HotFeed;
-
+                BBDDFeed b = new BBDDFeed();
+                if (h.img != null)
+                {
+                    b.article_photo_src = new Img[h.img.Length];
+                    for (int i = 0; i < h.img.Length; i++)
+                    {
+                        b.article_photo_src[i] = h.img[i];
+                    }
+                }
+                b.id = h.article_id;
+                b.type_id = h.type_id;
+                b.remark_num = h.remark_num;
+                b.is_my_like = h.is_my_Like;
+                b.created_time = h.time;
+                b.content = h.content.contentbase == null ? h.content.content : h.content.contentbase.content;
+                b.nickname = h.nick_name;
+                b.photo_src = h.user_head;
+                ViewModel.BBDD = b;
+                getMark();
             }
 
         }
