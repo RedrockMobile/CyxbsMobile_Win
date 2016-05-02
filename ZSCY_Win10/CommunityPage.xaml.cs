@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -240,7 +241,6 @@ namespace ZSCY_Win10
             CommunityFrame.Navigate(typeof(CommunityAddPage));
 
         }
-
         //private void ConmunityMyAppBarButton_Click(object sender, RoutedEventArgs e)
         //{
         //    Myframe.Visibility = Visibility.Visible;

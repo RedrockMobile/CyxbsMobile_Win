@@ -37,26 +37,6 @@ namespace ZSCY_Win10.ViewModels.Community
             {
                 HotFeeds.Add(hotlist[i]);
             }
-            //获取动态
-            //if (i == 0)
-            //{
-            //    list = await CommunityFeedsService.GetDatas(0, 1, 1, 0);
-            //    if (list != null)
-            //        foreach (var item in list)
-            //        {
-            //            HotFeeds.Add(item);
-            //        }
-            //}
-            //if (i == 1)
-            //{
-            //    list = await CommunityFeedsService.GetDatas(1, 1, 1, 5);
-            //    if (list != null)
-            //        foreach (var item in list)
-            //        {
-            //            Bbdd.Add(item);
-            //        }
-            //}
-
         }
     }
 }
