@@ -328,6 +328,7 @@
     <Compile Include="Util\ImgDataTemplateSelector.cs" />
     <Compile Include="Util\NetWork.cs" />
     <Compile Include="Util\Utils.cs" />
+    <Compile Include="ViewModels\Community\CommunityContentViewModel.cs" />
     <Compile Include="ViewModels\Community\CommunityViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

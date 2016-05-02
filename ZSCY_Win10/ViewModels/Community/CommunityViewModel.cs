@@ -17,6 +17,8 @@ namespace ZSCY_Win10.ViewModels.Community
         public ObservableCollection<BBDDFeed> BBDD { get; set; } = new ObservableCollection<BBDDFeed>();
         public ObservableCollection<BBDDFeed> OfficalFeeds { get; set; } = new ObservableCollection<BBDDFeed>();
 
+        //public RelayCommand BBDDitemCommand { get; set; }
+
         public CommunityViewModel()
         {
             Get();

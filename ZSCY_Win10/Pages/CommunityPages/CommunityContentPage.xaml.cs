@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Util;
+using ZSCY_Win10.ViewModels.Community;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -28,30 +29,38 @@ namespace ZSCY_Win10.Pages.CommunityPages
     /// </summary>
     public sealed partial class CommunityContentPage : Page
     {
-        string article_id = ""; //OnNavigatedTo参数获取
-        string type_id = ""; //OnNavigatedTo参数获取
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         ObservableCollection<Mark> markList = new ObservableCollection<Mark>();
         bool isMark2Peo = false;//是否有回复某人
-
+        CommunityContentViewModel ViewModel;
         public CommunityContentPage()
         {
             this.InitializeComponent();
+            ViewModel = new CommunityContentViewModel();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             markListView.ItemsSource = markList;
-            article_id = "185";
-            type_id = "5";
-            getMark();
+            var item = e.Parameter;
+            if (item is BBDDFeed)
+            {
+                ViewModel.BBDD = item as BBDDFeed;
+                getMark();
+            }
+            if (item is HotFeed)
+            {
+                HotFeed h = item as HotFeed;
+
+            }
+
         }
 
         private async void getMark()
         {
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("article_id", article_id));
-            paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
+            paramList.Add(new KeyValuePair<string, string>("article_id", ViewModel.BBDD.id));
+            paramList.Add(new KeyValuePair<string, string>("type_id", ViewModel.BBDD.type_id));
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
             string mark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/getremark", paramList);
@@ -101,8 +110,8 @@ namespace ZSCY_Win10.Pages.CommunityPages
             sendMarkButton.IsEnabled = false;
             sendMarkProgressRing.Visibility = Visibility.Visible;
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("article_id", article_id));
-            paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
+            paramList.Add(new KeyValuePair<string, string>("article_id", ViewModel.BBDD.id));
+            paramList.Add(new KeyValuePair<string, string>("type_id", ViewModel.BBDD.type_id));
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("content", sendMarkTextBox.Text));
@@ -139,6 +148,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             }
             else
             {
+                //@yyx这里有异常，回复一个回复
                 sendMarkTextBox.Text = sendMarkTextBox.Text.Substring(sendMarkTextBox.Text.IndexOf(":") + 2);
             }
             sendMarkTextBox.Text = "回复 " + clickMarkItem.nickname + " : " + sendMarkTextBox.Text;

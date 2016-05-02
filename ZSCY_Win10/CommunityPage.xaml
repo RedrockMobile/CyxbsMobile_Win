@@ -10,6 +10,8 @@
     xmlns:converters="using:ZSCY_Win10.Util.Converter"
     xmlns:util="using:ZSCY_Win10.Util"
     xmlns:models="using:ZSCY_Win10.Data.Community"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     Background="White"
     >
     <Page.Resources>
@@ -330,7 +332,7 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <!--热门动态的ListView-->
-                                    <ListView Name="RMDTListView" Style="{StaticResource HotFeedsListView}" ItemsSource="{x:Bind ViewModel.HotFeeds}"/>
+                                    <ListView Name="RMDTListView" Style="{StaticResource HotFeedsListView}" ItemsSource="{x:Bind ViewModel.HotFeeds}" ItemClick="RMDTListView_ItemClick"/>
                                     <StackPanel Grid.Row="1">
                                         <!--列表的加载条-->
                                         <StackPanel Name="RMDTListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
@@ -364,7 +366,13 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <!--哔哔叨叨的ListView-->
-                                    <ListView Name="BBDDListView"  Style="{StaticResource FeedsListView}" ItemsSource="{x:Bind ViewModel.BBDD}"/>
+                                    <ListView Name="BBDDListView"  Style="{StaticResource FeedsListView}" ItemsSource="{x:Bind ViewModel.BBDD}" ItemClick="BBDDListView_ItemClick">
+                                        <!--<Interactivity:Interaction.Behaviors>
+                                            <Core:EventTriggerBehavior EventName="ItemClick">
+                                                <Core:InvokeCommandAction Command="{x:Bind BBDDitemCommand}"></Core:InvokeCommandAction>
+                                            </Core:EventTriggerBehavior>
+                                        </Interactivity:Interaction.Behaviors>-->
+                                    </ListView>
                                     <StackPanel Grid.Row="1" Visibility="Collapsed">
                                         <!--列表的加载条-->
                                         <StackPanel Name="BBDDListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">

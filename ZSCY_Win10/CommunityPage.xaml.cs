@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Pages;
 using ZSCY_Win10.Pages.CommunityPages;
@@ -239,6 +240,17 @@ namespace ZSCY_Win10
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             CommunityFrame.Navigate(typeof(CommunityAddPage));
+
+        }
+
+        private void BBDDListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            this.cframe.Navigate(typeof(CommunityContentPage), e.ClickedItem, new DrillInNavigationTransitionInfo());
+        }
+
+        private void RMDTListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            this.cframe.Navigate(typeof(CommunityContentPage), e.ClickedItem, new DrillInNavigationTransitionInfo());
 
         }
         //private void ConmunityMyAppBarButton_Click(object sender, RoutedEventArgs e)

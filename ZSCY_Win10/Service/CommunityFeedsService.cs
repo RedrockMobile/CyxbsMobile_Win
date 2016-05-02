@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Util;
 using System.Collections.ObjectModel;
+using Windows.Storage;
 
 namespace ZSCY_Win10.Service
 {
@@ -18,6 +19,8 @@ namespace ZSCY_Win10.Service
         const string hotFeeds = @"cyxbsMobile/index.php/Home/Article/searchHotArticle";
         const string bbddfeeds = @"cyxbsMobile/index.php/Home/Article/listArticle";
         public static string[] feedsapi = { hotFeeds, bbddfeeds };
+        public static ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+
         /// <summary>
         /// 获取动态列表
         /// </summary>
@@ -26,8 +29,8 @@ namespace ZSCY_Win10.Service
         public static async Task<List<BBDDFeed>> GetBBDD(int type = 1, int page = 1, int size = 1, int typeid = 5)
         {
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("stuNum", "2013211429"));
-            paramList.Add(new KeyValuePair<string, string>("idNum", "252617"));
+            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
             paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
             if (typeid != 0)
