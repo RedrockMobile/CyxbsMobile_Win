@@ -14,6 +14,7 @@ namespace ZSCY_Win10.Data.Community
         public string type { get; set; }
         public string type_id { get; set; }
         public string article_id { get; set; }
+        public string num_id { get; set; }
         public string user_id { get; set; }
         public string nick_name { get; set; }
         public string user_head { get; set; }
@@ -28,7 +29,7 @@ namespace ZSCY_Win10.Data.Community
         {
             id = feedsJObject["id"].ToString();
             type = feedsJObject["type"].ToString();
-            if (type!="bbdd")
+            if (type != "bbdd")
             {
                 nick_name = feedsJObject["user_name"].ToString();
             }
@@ -38,8 +39,9 @@ namespace ZSCY_Win10.Data.Community
             }
             type_id = feedsJObject["type_id"].ToString();
             article_id = feedsJObject["article_id"].ToString();
+            num_id = "1" + feedsJObject["type_id"].ToString() + feedsJObject["article_id"].ToString();
             user_id = feedsJObject["user_id"].ToString();
-            user_head = feedsJObject["user_head"].ToString()==""? "ms-appx:///Assets/Boy-100.png" : feedsJObject["user_head"].ToString();
+            user_head = feedsJObject["user_head"].ToString() == "" ? "ms-appx:///Assets/Boy-100.png" : feedsJObject["user_head"].ToString();
             time = feedsJObject["time"].ToString();
             like_num = feedsJObject["like_num"].ToString();
             remark_num = feedsJObject["remark_num"].ToString();

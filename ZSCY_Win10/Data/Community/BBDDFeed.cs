@@ -12,6 +12,7 @@ namespace ZSCY_Win10.Data.Community
     {
         public string title { get; set; }
         public string id { get; set; }
+        public string num_id { get; set; }
         public Img[] article_photo_src { get; set; }//动态配图
         public string article_thumbnail_src { get; set; }
         public string type_id { get; set; }
@@ -29,6 +30,7 @@ namespace ZSCY_Win10.Data.Community
         {
             title = feedsJObject["title"].ToString();
             id = feedsJObject["id"].ToString();
+            num_id ="2"+ feedsJObject["type_id"].ToString() + feedsJObject["id"].ToString();
             type_id = feedsJObject["type_id"].ToString();
             content = feedsJObject["content"].ToString();
             updated_time = feedsJObject["updated_time"].ToString();
@@ -36,7 +38,7 @@ namespace ZSCY_Win10.Data.Community
             like_num = feedsJObject["like_num"].ToString();
             remark_num = feedsJObject["remark_num"].ToString();
             nickname = feedsJObject["nickname"].ToString();
-            photo_src =feedsJObject["photo_src"].ToString()==""? "ms-appx:///Assets/Boy-100.png": feedsJObject["photo_src"].ToString();
+            photo_src = feedsJObject["photo_src"].ToString() == "" ? "ms-appx:///Assets/Boy-100.png" : feedsJObject["photo_src"].ToString();
             photo_thumbnail_src = feedsJObject["photo_thumbnail_src"].ToString();
             is_my_like = feedsJObject["is_my_like"].ToString();
             string articlephotos = feedsJObject["article_photo_src"].ToString();
@@ -45,7 +47,7 @@ namespace ZSCY_Win10.Data.Community
             {
                 try
                 {
-                    string[] i = articlephotos.Split(new char[] {','}, 9);
+                    string[] i = articlephotos.Split(new char[] { ',' }, 9);
                     if (i.Length > 1)
                         article_photo_src = new Img[i.Length - 1];
                     else
