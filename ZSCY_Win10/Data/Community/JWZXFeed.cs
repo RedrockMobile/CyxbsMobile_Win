@@ -18,6 +18,7 @@ namespace ZSCY_Win10.Data.Community
         public string read { get; set; }
         public string title { get; set; }
         public string content { get; set; }
+        public string content_short { get; set; }
         public void GetAttributes(JObject feedsJObject)
         {
             id = feedsJObject["id"].ToString();
@@ -27,6 +28,23 @@ namespace ZSCY_Win10.Data.Community
             read = feedsJObject["read"].ToString();
             title = feedsJObject["title"].ToString();
             content = feedsJObject["content"].ToString();
+            try
+            {
+                while (content.IndexOf("<") != -1)
+                {
+                    content = content.Remove(content.IndexOf("<"), content.IndexOf(">") - content.IndexOf("<") + 1);
+                }
+            }
+            catch (Exception) { }
+            //content_short = feedsJObject["content"].ToString();
+            content = content.Replace("\r", "");
+            content = content.Replace("\t", "");
+            content = content.Replace("\n", "");
+            content = content.Replace("&nbsp;", "");
+            content = content.Replace(" ", "");
+            content = content.Replace("（见附件）", "见附件");
+            content = content.Replace("MicrosoftInternetExplorer4", "");
+            content = content.Replace("Normal07.8磅02falsefalsefalse", "");
         }
     }
 

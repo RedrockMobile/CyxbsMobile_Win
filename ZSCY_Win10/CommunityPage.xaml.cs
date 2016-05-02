@@ -266,7 +266,7 @@ namespace ZSCY_Win10
             Debug.WriteLine("id " + num_id.Substring(2));
 
             string like_num = "";
-            if (num_id[0] == '1') //hot
+            if (int.Parse(num_id[0].ToString()) < 5) //hot
             {
                 HotFeed hotfeed = ViewModel.HotFeeds.First(p => p.article_id.Equals(num_id.Substring(2)));
                 if (hotfeed.is_my_Like == "true" || hotfeed.is_my_Like == "True")
@@ -288,7 +288,7 @@ namespace ZSCY_Win10
                     }
                 }
             }
-            else if (num_id[0] == '2') //bbdd
+            else if (num_id[0] == '5') //bbdd
             {
                 BBDDFeed bbddfeed = ViewModel.BBDD.First(p => p.id.Equals(num_id.Substring(2)));
                 if (bbddfeed.is_my_like == "true" || bbddfeed.is_my_like == "True")
