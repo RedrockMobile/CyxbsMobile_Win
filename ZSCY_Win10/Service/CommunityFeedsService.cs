@@ -119,6 +119,7 @@ namespace ZSCY_Win10.Service
                    JObject hot = (JObject)hotfeed[i];
                    if (hot["status"].ToString() == "200")
                    {
+                       //TODO:超出页码范围
                        JObject data = (JObject)hot["data"];
                        HotFeed f = new HotFeed();
                        f.GetAttributes(data);
