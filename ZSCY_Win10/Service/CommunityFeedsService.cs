@@ -28,28 +28,31 @@ namespace ZSCY_Win10.Service
         /// <returns>返回参数对应的列表数据</returns>
         public static async Task<List<BBDDFeed>> GetBBDD(int type = 1, int page = 0, int size = 15, int typeid = 5)
         {
-            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
-            paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
-            if (typeid != 0)
-                paramList.Add(new KeyValuePair<string, string>("type_id", typeid.ToString()));
-            string response = await NetWork.getHttpWebRequest(feedsapi[type], paramList);
-            response = Utils.ConvertUnicodeStringToChinese(response);
-            JObject bbddfeeds = JObject.Parse(response);
-            if (bbddfeeds["status"].ToString() == "200")
+            return await Task.Run(async () =>
             {
+                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+                paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
+                paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
+                if (typeid != 0)
+                    paramList.Add(new KeyValuePair<string, string>("type_id", typeid.ToString()));
+                string response = await NetWork.getHttpWebRequest(feedsapi[type], paramList);
+                //response = Utils.ConvertUnicodeStringToChinese(response);
                 List<BBDDFeed> feeds = new List<BBDDFeed>();
-                JArray bbddarray = JArray.Parse(bbddfeeds["data"].ToString());
-                for (int i = 0; i < bbddarray.Count; i++)
+                JObject bbddfeeds = JObject.Parse(response);
+                if (bbddfeeds["status"].ToString() == "200")
                 {
-                    BBDDFeed f = new BBDDFeed();
-                    f.GetAttributes((JObject)bbddarray[i]);
-                    feeds.Add(f);
+                    JArray bbddarray = JArray.Parse(bbddfeeds["data"].ToString());
+                    for (int i = 0; i < bbddarray.Count; i++)
+                    {
+                        BBDDFeed f = new BBDDFeed();
+                        f.GetAttributes((JObject)bbddarray[i]);
+                        feeds.Add(f);
+                    }
                 }
                 return feeds;
-            }
+            });
             /*    try
                 {
                     JArray jsonstr = JArray.Parse(response);
@@ -98,29 +101,32 @@ namespace ZSCY_Win10.Service
 
         public static async Task<List<HotFeed>> GetHot(int type = 0, int page = 0, int size = 15, int typeid = 5)
         {
-            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
-            paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
-            if (typeid != 0)
-                paramList.Add(new KeyValuePair<string, string>("type_id", typeid.ToString()));
-            string response = await NetWork.getHttpWebRequest(feedsapi[type], paramList);
-            response = Utils.ConvertUnicodeStringToChinese(response);
-            List<HotFeed> feeds = new List<HotFeed>();
-            JArray hotfeed = JArray.Parse(response);
-            for (int i = 0; i < hotfeed.Count; i++)
-            {
-                JObject hot = (JObject)hotfeed[i];
-                if (hot["status"].ToString() == "200")
-                {
-                    JObject data = (JObject)hot["data"];
-                    HotFeed f = new HotFeed();
-                    f.GetAttributes(data);
-                    feeds.Add(f);
-                }
-            }
-            return feeds;
+            return await Task.Run(async () =>
+           {
+               List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+               paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+               paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+               paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
+               paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
+               if (typeid != 0)
+                   paramList.Add(new KeyValuePair<string, string>("type_id", typeid.ToString()));
+               string response = await NetWork.getHttpWebRequest(feedsapi[type], paramList);
+               //response = Utils.ConvertUnicodeStringToChinese(response);
+               List<HotFeed> feeds = new List<HotFeed>();
+               JArray hotfeed = JArray.Parse(response);
+               for (int i = 0; i < hotfeed.Count; i++)
+               {
+                   JObject hot = (JObject)hotfeed[i];
+                   if (hot["status"].ToString() == "200")
+                   {
+                       JObject data = (JObject)hot["data"];
+                       HotFeed f = new HotFeed();
+                       f.GetAttributes(data);
+                       feeds.Add(f);
+                   }
+               }
+               return feeds;
+           });
         }
 
         public static async Task<string> setPraise(string type_id, string article_id, bool addORcancel)

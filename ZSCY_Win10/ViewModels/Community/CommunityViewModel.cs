@@ -42,7 +42,7 @@ namespace ZSCY_Win10.ViewModels.Community
             }
         }
 
-        public async void gethot(int type = 1, int size = 15, int typeid = 5)
+        public async void gethot(int type = 0, int size = 15, int typeid = 0)
         {
             List<HotFeed> hotlist;
             hotlist =await CommunityFeedsService.GetHot(type, hotpage++, size, typeid);

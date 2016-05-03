@@ -37,6 +37,7 @@ namespace ZSCY_Win10
         int[] pagestatus = new int[] { 0, 0, 0, 0 };
         CommunityViewModel ViewModel { get; set; }
         double hotOldScrollableHeight = 0;
+        double BBDDOldScrollableHeight = 0;
 
         public CommunityPage()
         {
@@ -394,10 +395,20 @@ namespace ZSCY_Win10
             if (RMDTScrollViewer.VerticalOffset > (RMDTScrollViewer.ScrollableHeight - 500) && RMDTScrollViewer.ScrollableHeight != hotOldScrollableHeight)
             {
                 hotOldScrollableHeight = RMDTScrollViewer.ScrollableHeight;
-                Debug.WriteLine("继续加载");
+                Debug.WriteLine("RMDT继续加载");
                 ViewModel.gethot(0, 15, 5);
             }
             //Debug.WriteLine(RMDTScrollViewer.VerticalOffset);
+        }
+
+        private void BBDDScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if (BBDDScrollViewer.VerticalOffset > (BBDDScrollViewer.ScrollableHeight - 500) && BBDDScrollViewer.ScrollableHeight != BBDDOldScrollableHeight)
+            {
+                BBDDOldScrollableHeight = BBDDScrollViewer.ScrollableHeight;
+                Debug.WriteLine("BBDD继续加载");
+                ViewModel.getbbdd(1, 15, 5);
+            }
         }
         //private void ConmunityMyAppBarButton_Click(object sender, RoutedEventArgs e)
         //{
