@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Data.Community;
+using ZSCY_Win10.Service;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
 
@@ -30,6 +31,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
     /// </summary>
     public sealed partial class CommunityContentPage : Page
     {
+        object args;
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         ObservableCollection<Mark> markList = new ObservableCollection<Mark>();
         bool isMark2Peo = false;//是否有回复某人
@@ -45,7 +47,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             markListView.ItemsSource = markList;
-            var item = e.Parameter;
+            var item =args= e.Parameter;
             if (item is BBDDFeed)
             {
                 ViewModel.BBDD = item as BBDDFeed;
@@ -65,7 +67,9 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 }
                 b.id = h.article_id;
                 b.type_id = h.type_id;
+                b.num_id = h.num_id;
                 b.remark_num = h.remark_num;
+                b.like_num = h.like_num;
                 b.is_my_like = h.is_my_Like;
                 b.created_time = h.time;
                 b.content = h.content.contentbase == null ? h.content.content : h.content.contentbase.content;
@@ -98,6 +102,12 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     if (markListArray.Count != 0)
                     {
                         NoMarkGrid.Visibility = Visibility.Collapsed;
+                        ViewModel.BBDD.remark_num = markListArray.Count.ToString();
+                        if (args is HotFeed)
+                        {
+                            HotFeed h = args as HotFeed;
+                            h.remark_num = ViewModel.BBDD.remark_num;
+                        }
                         for (int i = 0; i < markListArray.Count; i++)
                         {
                             Mark Markitem = new Mark();
@@ -175,6 +185,47 @@ namespace ZSCY_Win10.Pages.CommunityPages
             sendMarkTextBox.Text = "回复 " + clickMarkItem.nickname + " : " + sendMarkTextBox.Text;
             sendMarkTextBox.Focus(FocusState.Keyboard);
             sendMarkTextBox.SelectionStart = sendMarkTextBox.Text.Length;
+        }
+
+        private async void LikeButton_Click(object sender, RoutedEventArgs e)
+        {
+            var b = sender as Button;
+            string num_id = b.TabIndex.ToString();
+            Debug.WriteLine(num_id);
+            Debug.WriteLine("id " + num_id.Substring(2));
+            string like_num = "";
+
+            BBDDFeed bbddfeed = ViewModel.BBDD;
+            if (bbddfeed.is_my_like == "true" || bbddfeed.is_my_like == "True")
+            {
+                like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), false);
+                if (like_num != "")
+                {
+                    bbddfeed.like_num = like_num;
+                    bbddfeed.is_my_like = "false";
+                    if (args is HotFeed)
+                    {
+                        HotFeed h = args as HotFeed;
+                        h.like_num = like_num;
+                        h.is_my_Like = "false";
+                    }
+                }
+            }
+            else
+            {
+                like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), true);
+                if (like_num != "")
+                {
+                    bbddfeed.like_num = like_num;
+                    bbddfeed.is_my_like = "true";
+                    if (args is HotFeed)
+                    {
+                        HotFeed h = args as HotFeed;
+                        h.like_num = like_num;
+                        h.is_my_Like = "true";
+                    }
+                }
+            }
         }
 
         private void PhotoGrid_ItemClick(object sender, ItemClickEventArgs e)

@@ -121,11 +121,11 @@
                             </GridView.ItemsPanel>
                         </GridView>
                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                            <Button Style="{StaticResource LikeCommentButton}">
+                            <Button Style="{StaticResource LikeCommentButton}" TabIndex="{x:Bind ViewModel.BBDD.num_id}" Click="LikeButton_Click">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Margin="10,5">
-                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="{x:Bind ViewModel.BBDD.is_my_like,Converter={StaticResource LikeValueConverter}}" />
-                                        <TextBlock Text="{x:Bind ViewModel.BBDD.like_num}" Foreground="{x:Bind ViewModel.BBDD.is_my_like,Converter={StaticResource LikeValueConverter}}" Margin="5,0,5,2"></TextBlock>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="{x:Bind ViewModel.BBDD.is_my_like,Converter={StaticResource LikeValueConverter},Mode=OneWay}" />
+                                        <TextBlock Text="{x:Bind ViewModel.BBDD.like_num,Mode=OneWay}" Foreground="{x:Bind ViewModel.BBDD.is_my_like,Converter={StaticResource LikeValueConverter},Mode=OneWay}" Margin="5,0,5,2"></TextBlock>
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
@@ -133,7 +133,7 @@
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Margin="10,5">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
-                                        <TextBlock Text="{x:Bind ViewModel.BBDD.remark_num}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
+                                        <TextBlock Text="{x:Bind ViewModel.BBDD.remark_num,Mode=OneWay}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
