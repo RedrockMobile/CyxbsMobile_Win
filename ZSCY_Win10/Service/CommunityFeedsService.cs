@@ -26,7 +26,7 @@ namespace ZSCY_Win10.Service
         /// </summary>
         /// <param name="type">动态参数，重邮新闻cyxw=>1,教务咨询jwzx=>2,xsjz=>3,xwgg=>4,bbdd=>5</param>
         /// <returns>返回参数对应的列表数据</returns>
-        public static async Task<List<BBDDFeed>> GetBBDD(int type = 1, int page = 1, int size = 15, int typeid = 5)
+        public static async Task<List<BBDDFeed>> GetBBDD(int type = 1, int page = 0, int size = 15, int typeid = 5)
         {
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
@@ -96,7 +96,7 @@ namespace ZSCY_Win10.Service
             return null;
         }
 
-        public static async Task<List<HotFeed>> GetHot(int type = 0, int page = 1, int size = 15, int typeid = 5)
+        public static async Task<List<HotFeed>> GetHot(int type = 0, int page = 0, int size = 15, int typeid = 5)
         {
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));

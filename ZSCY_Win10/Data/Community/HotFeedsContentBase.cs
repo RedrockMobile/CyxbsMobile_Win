@@ -13,17 +13,25 @@ namespace ZSCY_Win10.Data.Community
         public string content { get; set; }
         public void GetAttributes(JObject feedsJObject)
         {
-
-            try
+            if (feedsJObject["id"] != null)
             {
                 JWZXFeeds j = new JWZXFeeds();
                 j.GetAttributes(feedsJObject);
                 contentbase = j;
             }
-            catch (Exception)
-            {
+            else
                 content = feedsJObject["content"].ToString();
-            }
+
+            //try
+            //{
+            //    JWZXFeeds j = new JWZXFeeds();
+            //    j.GetAttributes(feedsJObject);
+            //    contentbase = j;
+            //}
+            //catch (Exception)
+            //{
+            //    content = feedsJObject["content"].ToString();
+            //}
         }
     }
 }

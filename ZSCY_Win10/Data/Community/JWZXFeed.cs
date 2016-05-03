@@ -25,7 +25,7 @@ namespace ZSCY_Win10.Data.Community
             articleid = feedsJObject["articleid"].ToString();
             head = feedsJObject["head"].ToString();
             date = feedsJObject["date"].ToString();
-            read = feedsJObject["read"].ToString();
+            read = feedsJObject["read"] != null ? feedsJObject["read"].ToString():"0";
             title = feedsJObject["title"].ToString();
             content = feedsJObject["content"].ToString();
             try

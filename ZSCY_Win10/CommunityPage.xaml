@@ -326,7 +326,7 @@
                             <TextBlock Text="热门动态" FontSize="15"></TextBlock>
                         </PivotItem.Header>
                         <pr:PullToRefreshBox x:Name="RMDTListpr" RefreshInvoked="CommunityListpr_RefreshInvoked"  VerticalAlignment="Stretch"  Margin="-12,0" >
-                            <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                            <ScrollViewer Name="RMDTScrollViewer" ViewChanged="RMDTScrollViewer_ViewChanged" VerticalScrollBarVisibility="Hidden">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>

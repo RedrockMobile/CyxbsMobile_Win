@@ -16,6 +16,8 @@ namespace ZSCY_Win10.ViewModels.Community
         public ObservableCollection<HotFeed> HotFeeds { get; set; } = new ObservableCollection<HotFeed>();
         public ObservableCollection<BBDDFeed> BBDD { get; set; } = new ObservableCollection<BBDDFeed>();
         public ObservableCollection<BBDDFeed> OfficalFeeds { get; set; } = new ObservableCollection<BBDDFeed>();
+        private int hotpage = 0;
+        private int bbddpage = 0;
 
         //public RelayCommand BBDDitemCommand { get; set; }
 
@@ -26,15 +28,24 @@ namespace ZSCY_Win10.ViewModels.Community
 
         private async void Get()
         {
-            List<BBDDFeed> bbddlist;
+            getbbdd(1, 15, 5);
+            gethot(0, 15, 5);
+        }
 
-            bbddlist = await CommunityFeedsService.GetBBDD(1, 0, 15, 5);
+        public async void getbbdd(int type = 1, int size = 15, int typeid = 5)
+        {
+            List<BBDDFeed> bbddlist;
+            bbddlist = await CommunityFeedsService.GetBBDD(type, bbddpage++, size, typeid);
             for (int j = 0; j < bbddlist.Count; j++)
             {
                 BBDD.Add(bbddlist[j]);
             }
+        }
+
+        public async void gethot(int type = 1, int size = 15, int typeid = 5)
+        {
             List<HotFeed> hotlist;
-            hotlist = await CommunityFeedsService.GetHot(0, 0, 15, 5);
+            hotlist =await CommunityFeedsService.GetHot(type, hotpage++, size, typeid);
             for (int i = 0; i < hotlist.Count; i++)
             {
                 HotFeeds.Add(hotlist[i]);

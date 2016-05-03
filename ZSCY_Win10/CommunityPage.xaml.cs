@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
@@ -35,6 +36,8 @@ namespace ZSCY_Win10
         private int page = 0;
         int[] pagestatus = new int[] { 0, 0, 0, 0 };
         CommunityViewModel ViewModel { get; set; }
+        double hotOldScrollableHeight = 0;
+
         public CommunityPage()
         {
             this.InitializeComponent();
@@ -82,7 +85,45 @@ namespace ZSCY_Win10
             ViewModel = new CommunityViewModel();
             //CommunityFrame.Visibility = Visibility.Visible;
             //CommunityFrame.Navigate(typeof(CommunityContentPage));
+            //RMDTListView.ContainerContentChanging += RMDTListView_ContainerContentChanging;
         }
+
+        //private void RMDTListView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+        //{
+        //    lock (o)
+        //    {
+        //        if (!IsOver)
+        //        {
+        //            if (!IsLoading)
+        //            {
+        //                if (args.ItemIndex == RMDTListView.Items.Count - 1)
+        //                {
+        //                    IsLoading = true;
+        //                    Task.Factory.StartNew(async () =>
+        //                    {
+        //                        await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+        //                        {
+        //                            try
+        //                            {
+        //                                //AddDateListProgressProgressBar.Visibility = Visibility.Visible;
+        //                                //AddDateListProgressTextBlock.Text = "疯狂加载中...";
+        //                                //dateStackPanel.Children.Add(AddDateListProgressStackPanel);
+        //                                Debug.WriteLine("继续加载");
+        //                            }
+        //                            catch (Exception)
+        //                            {
+        //                                Debug.WriteLine("主页，列表瀑布流加载控件异常");
+        //                            }
+        //                            //getDatelist(date_type, ++page, order, false);
+
+        //                        });
+        //                        IsLoading = false;
+        //                    });
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
 
         public Frame CommunityFrame { get { return this.cframe; } }
         //public Frame MyFrame { get { return this.Myframe; } }
@@ -261,7 +302,7 @@ namespace ZSCY_Win10
         private async void liskButton_Click(object sender, RoutedEventArgs e)
         {
             var b = sender as Button;
-            
+
             string num_id = b.TabIndex.ToString();
             Debug.WriteLine(num_id);
             Debug.WriteLine("id " + num_id.Substring(2));
@@ -269,7 +310,6 @@ namespace ZSCY_Win10
             if (int.Parse(num_id[0].ToString()) < 5) //hot
             {
                 HotFeed hotfeed = ViewModel.HotFeeds.First(p => p.article_id.Equals(num_id.Substring(2)));
-                BBDDFeed s = ViewModel.BBDD.First(p => p.id.Equals(num_id.Substring(2)));
                 if (hotfeed.is_my_Like == "true" || hotfeed.is_my_Like == "True")
                 {
                     like_num = await CommunityFeedsService.setPraise(hotfeed.type_id, num_id.Substring(2), false);
@@ -277,10 +317,14 @@ namespace ZSCY_Win10
                     {
                         hotfeed.like_num = like_num;
                         hotfeed.is_my_Like = "false";
-                        if (s != null)
+                        if (ViewModel.BBDD.Count(p => p.id.Equals(num_id.Substring(2))) != 0)
                         {
-                            s.like_num = like_num;
-                            s.is_my_like = "false";
+                            BBDDFeed s = ViewModel.BBDD.First(p => p.id.Equals(num_id.Substring(2)));
+                            if (s != null)
+                            {
+                                s.like_num = like_num;
+                                s.is_my_like = "false";
+                            }
                         }
                     }
                 }
@@ -291,10 +335,14 @@ namespace ZSCY_Win10
                     {
                         hotfeed.like_num = like_num;
                         hotfeed.is_my_Like = "true";
-                        if (s != null)
+                        if (ViewModel.BBDD.Count(p => p.id.Equals(num_id.Substring(2))) != 0)
                         {
-                            s.like_num = like_num;
-                            s.is_my_like = "true";
+                            BBDDFeed s = ViewModel.BBDD.First(p => p.id.Equals(num_id.Substring(2)));
+                            if (s != null)
+                            {
+                                s.like_num = like_num;
+                                s.is_my_like = "true";
+                            }
                         }
                     }
                 }
@@ -302,7 +350,6 @@ namespace ZSCY_Win10
             else if (num_id[0] == '5') //bbdd
             {
                 BBDDFeed bbddfeed = ViewModel.BBDD.First(p => p.id.Equals(num_id.Substring(2)));
-                HotFeed h = ViewModel.HotFeeds.First(p => p.article_id.Equals(num_id.Substring(2)));
                 if (bbddfeed.is_my_like == "true" || bbddfeed.is_my_like == "True")
                 {
                     like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), false);
@@ -310,10 +357,14 @@ namespace ZSCY_Win10
                     {
                         bbddfeed.like_num = like_num;
                         bbddfeed.is_my_like = "false";
-                        if (h != null)
+                        if (ViewModel.HotFeeds.Count(p => p.article_id.Equals(num_id.Substring(2))) != 0)
                         {
-                            h.like_num = like_num;
-                            h.is_my_Like = "false";
+                            HotFeed h = ViewModel.HotFeeds.First(p => p.article_id.Equals(num_id.Substring(2)));
+                            if (h != null)
+                            {
+                                h.like_num = like_num;
+                                h.is_my_Like = "false";
+                            }
                         }
                     }
                 }
@@ -324,14 +375,29 @@ namespace ZSCY_Win10
                     {
                         bbddfeed.like_num = like_num;
                         bbddfeed.is_my_like = "true";
-                        if (h != null)
+                        if (ViewModel.HotFeeds.Count(p => p.article_id.Equals(num_id.Substring(2))) != 0)
                         {
-                            h.like_num = like_num;
-                            h.is_my_Like = "true";
+                            HotFeed h = ViewModel.HotFeeds.First(p => p.article_id.Equals(num_id.Substring(2)));
+                            if (h != null)
+                            {
+                                h.like_num = like_num;
+                                h.is_my_Like = "true";
+                            }
                         }
                     }
                 }
             }
+        }
+
+        private async void RMDTScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if (RMDTScrollViewer.VerticalOffset > (RMDTScrollViewer.ScrollableHeight - 500) && RMDTScrollViewer.ScrollableHeight != hotOldScrollableHeight)
+            {
+                hotOldScrollableHeight = RMDTScrollViewer.ScrollableHeight;
+                Debug.WriteLine("继续加载");
+                ViewModel.gethot(0, 15, 5);
+            }
+            //Debug.WriteLine(RMDTScrollViewer.VerticalOffset);
         }
         //private void ConmunityMyAppBarButton_Click(object sender, RoutedEventArgs e)
         //{
