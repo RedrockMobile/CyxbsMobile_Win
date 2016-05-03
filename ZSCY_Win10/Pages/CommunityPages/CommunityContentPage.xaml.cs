@@ -100,6 +100,11 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     {
                         NoMarkGrid.Visibility = Visibility.Collapsed;
                         ViewModel.BBDD.remark_num = markListArray.Count.ToString();
+                        if (args is HotFeed)
+                        {
+                            HotFeed h = args as HotFeed;
+                            h.remark_num = ViewModel.BBDD.remark_num;
+                        }
                         for (int i = 0; i < markListArray.Count; i++)
                         {
                             Mark Markitem = new Mark();
@@ -195,6 +200,12 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 {
                     bbddfeed.like_num = like_num;
                     bbddfeed.is_my_like = "false";
+                    if (args is HotFeed)
+                    {
+                        HotFeed h = args as HotFeed;
+                        h.like_num = like_num;
+                        h.is_my_Like = "false";
+                    }
                 }
             }
             else
@@ -204,6 +215,12 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 {
                     bbddfeed.like_num = like_num;
                     bbddfeed.is_my_like = "true";
+                    if (args is HotFeed)
+                    {
+                        HotFeed h = args as HotFeed;
+                        h.like_num = like_num;
+                        h.is_my_Like = "true";
+                    }
                 }
             }
         }
