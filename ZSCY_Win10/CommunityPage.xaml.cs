@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Pages;
@@ -37,14 +38,16 @@ namespace ZSCY_Win10
         int[] pagestatus = new int[] { 0, 0, 0, 0 };
         CommunityViewModel ViewModel { get; set; }
         double hotOldScrollableHeight = 0;
-
+        double BBDDOldScrollableHeight = 0;
+        List<Img> clickImgList = new List<Img>();
+        int clickImfIndex = 0;
         public CommunityPage()
         {
             this.InitializeComponent();
             this.SizeChanged += (s, e) =>
             {
                 var state = "VisualState000";
-                if (CommunityFrame.Visibility == Visibility.Visible)
+                if (CommunityFrame.Visibility == Visibility.Visible && e.NewSize.Width <= 800)
                 {
                     //JWBackAppBarButton.Visibility = Visibility.Visible;
                     SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
@@ -88,42 +91,6 @@ namespace ZSCY_Win10
             //RMDTListView.ContainerContentChanging += RMDTListView_ContainerContentChanging;
         }
 
-        //private void RMDTListView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
-        //{
-        //    lock (o)
-        //    {
-        //        if (!IsOver)
-        //        {
-        //            if (!IsLoading)
-        //            {
-        //                if (args.ItemIndex == RMDTListView.Items.Count - 1)
-        //                {
-        //                    IsLoading = true;
-        //                    Task.Factory.StartNew(async () =>
-        //                    {
-        //                        await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-        //                        {
-        //                            try
-        //                            {
-        //                                //AddDateListProgressProgressBar.Visibility = Visibility.Visible;
-        //                                //AddDateListProgressTextBlock.Text = "疯狂加载中...";
-        //                                //dateStackPanel.Children.Add(AddDateListProgressStackPanel);
-        //                                Debug.WriteLine("继续加载");
-        //                            }
-        //                            catch (Exception)
-        //                            {
-        //                                Debug.WriteLine("主页，列表瀑布流加载控件异常");
-        //                            }
-        //                            //getDatelist(date_type, ++page, order, false);
-
-        //                        });
-        //                        IsLoading = false;
-        //                    });
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
 
         public Frame CommunityFrame { get { return this.cframe; } }
         //public Frame MyFrame { get { return this.Myframe; } }
@@ -132,11 +99,20 @@ namespace ZSCY_Win10
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
-            SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            CommunityFrame.Visibility = Visibility.Collapsed;
-            CommunityRefreshAppBarButton.Visibility = Visibility.Visible;
-            //ConmunityMyAppBarButton.Visibility = Visibility.Visible;
+            if (CommunityItemPhotoGrid.Visibility == Visibility.Visible)
+            {
+                CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
+                SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            }
+            else
+            {
+                SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                CommunityFrame.Visibility = Visibility.Collapsed;
+                CommunityRefreshAppBarButton.Visibility = Visibility.Visible;
+                //ConmunityMyAppBarButton.Visibility = Visibility.Visible;
+            }
         }
 
         /// <summary>
@@ -153,18 +129,20 @@ namespace ZSCY_Win10
             {
                 case 0:
                     type = "RMDT";
+                    ViewModel.gethot(0, 15, 5, true);
                     //RMDTList.Clear();
-                    continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 1:
                     type = "BBDD";
+                    ViewModel.getbbdd(1, 15, 5, true);
                     //BBDDList.Clear();
-                    continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 2:
                     type = "GFZX ";
                     //GFZXList.Clear();
-                    continueCommunityGFZXGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityGFZXGrid.Visibility = Visibility.Collapsed;
                     break;
             }
             //init
@@ -184,18 +162,20 @@ namespace ZSCY_Win10
             {
                 case 0:
                     type = "RMDT";
+                    ViewModel.gethot(0, 15, 5, true);
                     //RMDTList.Clear();
-                    continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 1:
                     type = "BBDD";
+                    ViewModel.getbbdd(1, 15, 5, true);
                     //BBDDList.Clear();
-                    continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 2:
                     type = "GFZX ";
                     //GFZXList.Clear();
-                    continueCommunityGFZXGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityGFZXGrid.Visibility = Visibility.Collapsed;
                     break;
             }
             //init
@@ -214,15 +194,15 @@ namespace ZSCY_Win10
             {
                 case 0:
                     type = "RMDT";
-                    continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 1:
                     type = "BBDD";
-                    continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 2:
                     type = "GFZX ";
-                    continueCommunityGFZXGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityGFZXGrid.Visibility = Visibility.Collapsed;
                     break;
             }
             //init
@@ -291,12 +271,22 @@ namespace ZSCY_Win10
         {
             this.cframe.Navigate(typeof(CommunityContentPage), e.ClickedItem, new DrillInNavigationTransitionInfo());
             CommunityFrame.Visibility = Visibility.Visible;
+            if (CommunityTitleGrid.Width != 400)
+            {
+                SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            }
         }
 
         private void RMDTListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             this.cframe.Navigate(typeof(CommunityContentPage), e.ClickedItem, new DrillInNavigationTransitionInfo());
             CommunityFrame.Visibility = Visibility.Visible;
+            if (CommunityTitleGrid.Width != 400)
+            {
+                SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            }
         }
 
         private async void liskButton_Click(object sender, RoutedEventArgs e)
@@ -394,17 +384,53 @@ namespace ZSCY_Win10
             if (RMDTScrollViewer.VerticalOffset > (RMDTScrollViewer.ScrollableHeight - 500) && RMDTScrollViewer.ScrollableHeight != hotOldScrollableHeight)
             {
                 hotOldScrollableHeight = RMDTScrollViewer.ScrollableHeight;
-                Debug.WriteLine("继续加载");
+                Debug.WriteLine("RMDT继续加载");
                 ViewModel.gethot(0, 15, 5);
             }
             //Debug.WriteLine(RMDTScrollViewer.VerticalOffset);
         }
-        //private void ConmunityMyAppBarButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Myframe.Visibility = Visibility.Visible;
-        //    SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
-        //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-        //    Myframe.Navigate(typeof(CommunityMyPage));
-        //}
+
+        private void BBDDScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if (BBDDScrollViewer.VerticalOffset > (BBDDScrollViewer.ScrollableHeight - 500) && BBDDScrollViewer.ScrollableHeight != BBDDOldScrollableHeight)
+            {
+                BBDDOldScrollableHeight = BBDDScrollViewer.ScrollableHeight;
+                Debug.WriteLine("BBDD继续加载");
+                ViewModel.getbbdd(1, 15, 5);
+            }
+        }
+
+        private void PhotoGrid_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Img img = e.ClickedItem as Img;
+            GridView gridView = sender as GridView;
+            clickImgList = ((Img[])gridView.ItemsSource).ToList();
+            clickImfIndex = clickImgList.IndexOf(img);
+            //if (clickImgList.Count > 0 && clickImfIndex < clickImgList.Count - 1)
+            //{
+            //    nextImgButton.Visibility = Visibility.Visible;
+            //}
+            //if (clickImgList.Count > 0 && clickImfIndex > 0)
+            //{
+            //    backImgButton.Visibility = Visibility.Visible;
+            //}
+            CommunityItemPhotoFlipView.ItemsSource = clickImgList;
+            CommunityItemPhotoFlipView.SelectedIndex = clickImfIndex;
+            //CommunityItemPhotoImage.Source = new BitmapImage(new Uri(img.ImgSrc));
+            CommunityItemPhotoGrid.Visibility = Visibility.Visible;
+            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+        }
+
+        private void CommunityItemPhoto_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
+            SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            //backImgButton.Visibility = Visibility.Collapsed;
+            //nextImgButton.Visibility = Visibility.Collapsed;
+        }
+
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,7 +15,9 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using ZSCY_Win10.Util;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -25,6 +28,7 @@ namespace ZSCY_Win10
     /// </summary>
     public sealed partial class MyPage : Page
     {
+        ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         public MyPage()
         {
             this.InitializeComponent();
@@ -32,7 +36,7 @@ namespace ZSCY_Win10
             {
                 var state = "VisualState000";
                 if (e.NewSize.Width > 000 && e.NewSize.Width < 850)
-                {  
+                {
                     //if (CommunityListView.SelectedIndex != -1)
                     //{
                     //    SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
@@ -67,7 +71,10 @@ namespace ZSCY_Win10
                 VisualStateManager.GoToState(this, state, true);
                 cutoffLine.Y2 = e.NewSize.Height;
             };
-            ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+            initInformation();
+
+
             if (appSetting.Values["gender"].ToString().IndexOf("男") != (-1))
             {
                 stuSexText.Text = "♂";
@@ -80,6 +87,31 @@ namespace ZSCY_Win10
             phoneNumText.Text = "13800000000";
             qqNumText.Text = "1000000000";
         }
+
+        private async void initInformation()
+        {
+            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("stunum", appSetting.Values["stuNum"].ToString()));
+            string info = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/search", paramList);
+            if (info != "")
+            {
+                JObject obj = JObject.Parse(info);
+                if (Int32.Parse(obj["status"].ToString()) == 200)
+                {
+                    JObject objdata = JObject.Parse(obj["data"].ToString());
+                    appSetting.Values["Conmunity_people_id"] = objdata["id"].ToString();
+                    stuNumText.Text = appSetting.Values["stuNum"].ToString();
+                    nickNameText.Text = objdata["nickname"].ToString();
+                    stuIntText.Text = objdata["introduction"].ToString();
+                    phoneNumText.Text = objdata["phone"].ToString();
+                    qqNumText.Text = objdata["qq"].ToString();
+                    mpgImageBrush.ImageSource = new BitmapImage(new Uri(objdata["photo_src"].ToString()));
+                }
+            }
+        }
+
         public Frame MyFrame { get { return this.frame; } }
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
@@ -92,7 +124,7 @@ namespace ZSCY_Win10
             //ConmunityMyAppBarButton.Visibility = Visibility.Visible;
         }
 
-      
+
 
         private void aboutMe_Click(object sender, RoutedEventArgs e)
         {

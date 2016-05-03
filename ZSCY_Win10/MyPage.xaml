@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="grid">
+    <Grid x:Name="grid" Background="White">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualState000">
@@ -22,7 +22,7 @@
                             </Setter.Value>
                         </Setter>
                         <Setter Target="grid.(FrameworkElement.MinHeight)" Value="0"/>
-                        <Setter Target="grid1.(FrameworkElement.MinHeight)" Value="0"/>
+                        <!--<Setter Target="grid1.(FrameworkElement.MinHeight)" Value="0"/>-->
                         <Setter Target="MyListGrid.(FrameworkElement.MinHeight)" Value="0"/>
                         <Setter Target="MyContentGrid.(FrameworkElement.MinHeight)" Value="0"/>
                         <Setter Target="frame.(FrameworkElement.MinHeight)" Value="0"/>
@@ -85,7 +85,7 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle x:Name="mpgRectangle" HorizontalAlignment="Left" VerticalAlignment="Center" RadiusX="100" RadiusY="100"  Width="125" Height="125" Stroke="DarkGray" Margin="30,0,0,0">
                                 <Rectangle.Fill>
-                                    <ImageBrush x:Name="mpgImageBrush" ImageSource="ms-appdata:///Local/headimg.png" Stretch="Fill"/>
+                                    <ImageBrush x:Name="mpgImageBrush"  Stretch="Fill"/>
                                 </Rectangle.Fill>
                             </Rectangle>
                             <Grid Grid.Column="2" VerticalAlignment="Center">
@@ -100,7 +100,7 @@
                                         <ColumnDefinition Width="10"/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Name="nickNameText" FontSize="24" TextWrapping="Wrap" Foreground="#999" VerticalAlignment="Bottom" Text="nickname"></TextBlock>
+                                    <TextBlock Name="nickNameText" FontSize="24" TextWrapping="Wrap" Foreground="#999" VerticalAlignment="Bottom" ></TextBlock>
                                     <TextBlock Name="stuSexText" Grid.Column="2" FontSize="24" Foreground="#EF8F9F"/>
                                 </Grid>
                                 <TextBlock Name="stuNumText" Grid.Row="2" FontSize="24" Foreground="#999"/>

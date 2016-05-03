@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -145,8 +146,7 @@ namespace ZSCY_Win10
                 //this.BackButton.Visibility = Visibility.Collapsed;
             }
             NavMenuList.ItemsSource = navlist;
-            Window.Current.Activate();
-
+            ActivateWindow();
             //NavMenuList.SelectedIndex = 0;
             var a = DateTime.Now;
             if (DateTimeOffset.Now < DateTimeOffset.Parse("2016/3/15 00:00:00"))
@@ -154,7 +154,12 @@ namespace ZSCY_Win10
             else
                 appSetting.Values.Remove("showNotice");
             initHeadImage();
+        }
 
+        private async void ActivateWindow()
+        {
+            await Task.Delay(100);
+            Window.Current.Activate();
         }
 
         private async void initHeadImage()

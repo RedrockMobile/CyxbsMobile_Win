@@ -14,7 +14,7 @@ namespace ZSCY_Win10.Util.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            Debug.WriteLine("是否点赞的Converter   " + value as string);
+            //Debug.WriteLine("是否点赞的Converter   " + value as string);
             bool ismylike = Boolean.Parse(value as string);
             if (ismylike)
             {

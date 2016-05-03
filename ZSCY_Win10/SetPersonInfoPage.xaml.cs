@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -15,6 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using ZSCY_Win10.Util;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -25,26 +29,26 @@ namespace ZSCY_Win10
     /// </summary>
     public sealed partial class SetPersonInfoPage : Page
     {
+        ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         public SetPersonInfoPage()
         {
             this.InitializeComponent();
         }
 
         //昵称
-        string nametext ;
+        string nametext;
         //简介
-        string abstracttext ;
+        string abstracttext;
         //手机
-        string phonetext ;
+        string phonetext;
         //QQ
-        string qqtext ;
-        bool completeness1=true;
-        bool completeness2=true;
-
+        string qqtext;
+        bool completeness1 = true;
+        bool completeness2 = true;
+        NavigationEventArgs ee;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var navPage = e.Parameter;
-            
+            ee = e;
             if (this.Frame.CanGoBack)
             {
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
@@ -66,9 +70,33 @@ namespace ZSCY_Win10
             }
         }
 
-        private void SetPersonInfoOKAppBarButton_Click(object sender, RoutedEventArgs e)
+        private async void SetPersonInfoOKAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-
+            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("nickname", nameTextBox.Text));
+            paramList.Add(new KeyValuePair<string, string>("introduction", abstractTextBox.Text));
+            paramList.Add(new KeyValuePair<string, string>("qq", qqTextBox.Text));
+            paramList.Add(new KeyValuePair<string, string>("phone", phoneTextBox.Text));
+            string setinfo = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/setInfo", paramList);
+            if (setinfo != "")
+            {
+                JObject obj = JObject.Parse(setinfo);
+                if (Int32.Parse(obj["status"].ToString()) == 200)
+                {
+                    Utils.Toast("新建个人信息成功~~，尽情享用吧");
+                    var navPage = ee.Parameter;
+                    if (navPage == typeof(CommunityPage))
+                    {
+                        this.Frame.Navigate(typeof(CommunityPage));
+                    }
+                    else if (navPage == typeof(MyPage))
+                    {
+                        this.Frame.Navigate(typeof(MyPage));
+                    }
+                }
+            }
         }
 
         //昵称
@@ -85,12 +113,12 @@ namespace ZSCY_Win10
             abstractNumTextBlock.Text = abstracttext.Length + "/30";
             Color abstractChangeNumcolor = Color.FromArgb(255, 255, 155, 155);
             Color abstractOriginalNumcolor = Color.FromArgb(255, 153, 153, 153);
-            if (abstracttext.Length>=25)
-            {            
-            abstractNumTextBlock.Foreground = new SolidColorBrush(abstractChangeNumcolor);
+            if (abstracttext.Length >= 25)
+            {
+                abstractNumTextBlock.Foreground = new SolidColorBrush(abstractChangeNumcolor);
             }
             else
-                abstractNumTextBlock.Foreground=new SolidColorBrush(abstractOriginalNumcolor);
+                abstractNumTextBlock.Foreground = new SolidColorBrush(abstractOriginalNumcolor);
 
             Completeness();
         }
@@ -104,8 +132,8 @@ namespace ZSCY_Win10
                 completeness1 = true;
             }
             else
-                completeness1 = false;   
-                 
+                completeness1 = false;
+
             Completeness();
         }
 
@@ -113,12 +141,12 @@ namespace ZSCY_Win10
         private void qqTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             qqtext = qqTextBox.Text;
-            if ((qqtext == null)||(Regex.IsMatch(qqtext, @"^\d{5,10}$")))
+            if ((qqtext == null) || (Regex.IsMatch(qqtext, @"^\d{5,10}$")))
             {
                 completeness2 = true;
             }
             else
-                completeness2 = false;      
+                completeness2 = false;
 
             Completeness();
         }
@@ -126,14 +154,14 @@ namespace ZSCY_Win10
         //判定是否可以提交
         private void Completeness()
         {
-            if (nametext != null && abstracttext != null && completeness1== true && completeness2== true)
+            if (nametext != null && abstracttext != null && completeness1 == true && completeness2 == true)
             {
                 SetPersonInfoOKAppBarButton.IsEnabled = true;
             }
             else
                 SetPersonInfoOKAppBarButton.IsEnabled = false;
             //信息展示
-            textBlocktwo.Text = "昵称：" + nametext + "简介：" + abstracttext + "手机：" + phonetext + "QQ：" + qqtext;
+            //textBlocktwo.Text = "昵称：" + nametext + "简介：" + abstracttext + "手机：" + phonetext + "QQ：" + qqtext;
         }
     }
 }
