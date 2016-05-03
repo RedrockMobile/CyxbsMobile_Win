@@ -9,6 +9,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -33,6 +34,8 @@ namespace ZSCY_Win10.Pages.CommunityPages
         ObservableCollection<Mark> markList = new ObservableCollection<Mark>();
         bool isMark2Peo = false;//是否有回复某人
         CommunityContentViewModel ViewModel;
+        List<Img> clickImgList = new List<Img>();
+        int clickImfIndex = 0;
         public CommunityContentPage()
         {
             this.InitializeComponent();
@@ -173,5 +176,45 @@ namespace ZSCY_Win10.Pages.CommunityPages
             sendMarkTextBox.Focus(FocusState.Keyboard);
             sendMarkTextBox.SelectionStart = sendMarkTextBox.Text.Length;
         }
+
+        private void PhotoGrid_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Img img = e.ClickedItem as Img;
+            GridView gridView = sender as GridView;
+            clickImgList = ((Img[])gridView.ItemsSource).ToList();
+            clickImfIndex = clickImgList.IndexOf(img);
+            CommunityItemPhotoFlipView.ItemsSource = clickImgList;
+            CommunityItemPhotoFlipView.SelectedIndex = clickImfIndex;
+            if (Utils.getPhoneWidth() > 800)
+            {
+                CommunityItemPhotoGrid.Margin = new Thickness(-400, 0, 0, 0);
+            }
+            CommunityItemPhotoGrid.Visibility = Visibility.Visible;
+            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+        }
+
+        private void App_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            e.Handled = true;
+            if (CommunityItemPhotoGrid.Visibility == Visibility.Visible)
+            {
+                CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
+                if (Utils.getPhoneWidth() > 800)
+                {
+                    SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                }
+                //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            }
+        }
+
+        private void CommunityItemPhoto_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
+            SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+        }
+
     }
 }

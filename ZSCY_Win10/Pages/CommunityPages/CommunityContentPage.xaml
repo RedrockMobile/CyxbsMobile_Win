@@ -113,7 +113,7 @@
                         <StackPanel>
                             <TextBlock Text="{x:Bind ViewModel.BBDD.content}" TextWrapping="Wrap"></TextBlock>
                         </StackPanel>
-                        <GridView Name="PhotoGrid" Margin="0,10,0,0" MinHeight="0" ItemsSource="{x:Bind ViewModel.BBDD.article_photo_src}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
+                        <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind ViewModel.BBDD.article_photo_src}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                             <GridView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
@@ -190,7 +190,7 @@
             </Grid>
         </ScrollViewer>
 
-        <Grid Name="sendMarkGrid" Margin="5" Grid.Row="1" VerticalAlignment="Bottom">
+        <Grid Name="sendMarkGrid" Margin="5" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="auto"/>
@@ -200,6 +200,18 @@
                 <Button Name="sendMarkButton" Margin="5,0,0,0" Content="发表" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Right" IsEnabled="False" Click="sendMarkButton_Click"></Button>
                 <ProgressRing Name="sendMarkProgressRing" IsActive="True" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center"></ProgressRing>
             </Grid>
+        </Grid>
+
+        <!--图像-->
+        <Grid Name="CommunityItemPhotoGrid" Visibility="Collapsed" >
+            <Grid Background="Black" Name="CommunityItemPhotoBackGrid" Opacity="0.5" Tapped="CommunityItemPhoto_Tapped"/>
+            <FlipView Name="CommunityItemPhotoFlipView">
+                <FlipView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Name="CommunityItemPhotoImage" Stretch="Uniform" Source="{Binding ImgSrc}" Tapped="CommunityItemPhoto_Tapped"></Image>
+                    </DataTemplate>
+                </FlipView.ItemTemplate>
+            </FlipView>
         </Grid>
     </Grid>
 
