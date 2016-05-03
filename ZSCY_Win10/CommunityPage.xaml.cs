@@ -111,7 +111,7 @@ namespace ZSCY_Win10
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                 CommunityFrame.Visibility = Visibility.Collapsed;
                 CommunityRefreshAppBarButton.Visibility = Visibility.Visible;
-                //ConmunityMyAppBarButton.Visibility = Visibility.Visible;}
+                //ConmunityMyAppBarButton.Visibility = Visibility.Visible;
             }
         }
 
@@ -129,18 +129,20 @@ namespace ZSCY_Win10
             {
                 case 0:
                     type = "RMDT";
+                    ViewModel.gethot(0, 15, 5, true);
                     //RMDTList.Clear();
-                    continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 1:
                     type = "BBDD";
+                    ViewModel.getbbdd(1, 15, 5, true);
                     //BBDDList.Clear();
-                    continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 2:
                     type = "GFZX ";
                     //GFZXList.Clear();
-                    continueCommunityGFZXGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityGFZXGrid.Visibility = Visibility.Collapsed;
                     break;
             }
             //init
@@ -160,18 +162,20 @@ namespace ZSCY_Win10
             {
                 case 0:
                     type = "RMDT";
+                    ViewModel.gethot(0, 15, 5, true);
                     //RMDTList.Clear();
-                    continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 1:
                     type = "BBDD";
+                    ViewModel.getbbdd(1, 15, 5, true);
                     //BBDDList.Clear();
-                    continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 2:
                     type = "GFZX ";
                     //GFZXList.Clear();
-                    continueCommunityGFZXGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityGFZXGrid.Visibility = Visibility.Collapsed;
                     break;
             }
             //init
@@ -190,15 +194,15 @@ namespace ZSCY_Win10
             {
                 case 0:
                     type = "RMDT";
-                    continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 1:
                     type = "BBDD";
-                    continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
                     break;
                 case 2:
                     type = "GFZX ";
-                    continueCommunityGFZXGrid.Visibility = Visibility.Collapsed;
+                    //continueCommunityGFZXGrid.Visibility = Visibility.Collapsed;
                     break;
             }
             //init

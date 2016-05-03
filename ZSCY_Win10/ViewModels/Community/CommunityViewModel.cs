@@ -32,9 +32,14 @@ namespace ZSCY_Win10.ViewModels.Community
             gethot(0, 15, 5);
         }
 
-        public async void getbbdd(int type = 1, int size = 15, int typeid = 5)
+        public async void getbbdd(int type = 1, int size = 15, int typeid = 5, bool isReflush = false)
         {
             List<BBDDFeed> bbddlist;
+            if (isReflush)
+            {
+                BBDD.Clear();
+                bbddpage = 0;
+            }
             bbddlist = await CommunityFeedsService.GetBBDD(type, bbddpage++, size, typeid);
             for (int j = 0; j < bbddlist.Count; j++)
             {
@@ -42,10 +47,15 @@ namespace ZSCY_Win10.ViewModels.Community
             }
         }
 
-        public async void gethot(int type = 0, int size = 15, int typeid = 0)
+        public async void gethot(int type = 0, int size = 15, int typeid = 0, bool isReflush = false)
         {
             List<HotFeed> hotlist;
-            hotlist =await CommunityFeedsService.GetHot(type, hotpage++, size, typeid);
+            if (isReflush)
+            {
+                HotFeeds.Clear();
+                hotpage = 0;
+            }
+            hotlist = await CommunityFeedsService.GetHot(type, hotpage++, size, typeid);
             for (int i = 0; i < hotlist.Count; i++)
             {
                 HotFeeds.Add(hotlist[i]);

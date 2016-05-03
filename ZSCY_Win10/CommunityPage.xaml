@@ -326,7 +326,7 @@
                             <TextBlock Text="热门动态" FontSize="15"></TextBlock>
                         </PivotItem.Header>
                         <pr:PullToRefreshBox x:Name="RMDTListpr" RefreshInvoked="CommunityListpr_RefreshInvoked"  VerticalAlignment="Stretch"  Margin="-12,0" >
-                            <ScrollViewer Name="RMDTScrollViewer" ViewChanged="RMDTScrollViewer_ViewChanged" VerticalScrollBarVisibility="Hidden">
+                            <ScrollViewer Name="RMDTScrollViewer" ViewChanged="RMDTScrollViewer_ViewChanged" VerticalScrollBarVisibility="Auto">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>
@@ -346,9 +346,9 @@
                                             <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
                                         </StackPanel>
                                         <!--继续加载-->
-                                        <Grid Name="continueCommunityRMDTGrid" Height="50" Tapped="continueCommunityGrid_Tapped" Visibility="Collapsed">
+                                        <!--<Grid Name="continueCommunityRMDTGrid" Height="50" Tapped="continueCommunityGrid_Tapped" Visibility="Collapsed">
                                             <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
-                                        </Grid>
+                                        </Grid>-->
                                     </StackPanel>
                                 </Grid>
                             </ScrollViewer>
@@ -360,7 +360,7 @@
                             <TextBlock Text="哔哔叨叨" FontSize="15"></TextBlock>
                         </PivotItem.Header>
                         <pr:PullToRefreshBox x:Name="BBDDListpr" RefreshInvoked="CommunityListpr_RefreshInvoked"  VerticalAlignment="Stretch"  Margin="-12,0" >
-                            <ScrollViewer Name="BBDDScrollViewer" ViewChanged="BBDDScrollViewer_ViewChanged" VerticalScrollBarVisibility="Hidden">
+                            <ScrollViewer Name="BBDDScrollViewer" ViewChanged="BBDDScrollViewer_ViewChanged" VerticalScrollBarVisibility="Auto">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
@@ -386,9 +386,9 @@
                                             <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
                                         </StackPanel>
                                         <!--继续加载-->
-                                        <Grid Name="continueCommunityBBDDGrid" Height="50" Tapped="continueCommunityGrid_Tapped" Visibility="Collapsed">
+                                        <!--<Grid Name="continueCommunityBBDDGrid" Height="50" Tapped="continueCommunityGrid_Tapped" Visibility="Collapsed">
                                             <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
-                                        </Grid>
+                                        </Grid>-->
                                     </StackPanel>
                                 </Grid>
                             </ScrollViewer>
@@ -420,9 +420,9 @@
                                             <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
                                         </StackPanel>
                                         <!--继续加载-->
-                                        <Grid Name="continueCommunityGFZXGrid" Height="50" Tapped="continueCommunityGrid_Tapped" Visibility="Collapsed">
+                                        <!--<Grid Name="continueCommunityGFZXGrid" Height="50" Tapped="continueCommunityGrid_Tapped" Visibility="Collapsed">
                                             <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
-                                        </Grid>
+                                        </Grid>-->
                                     </StackPanel>
                                 </Grid>
                             </ScrollViewer>
