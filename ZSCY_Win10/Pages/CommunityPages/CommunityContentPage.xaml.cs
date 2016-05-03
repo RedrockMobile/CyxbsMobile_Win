@@ -99,6 +99,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     if (markListArray.Count != 0)
                     {
                         NoMarkGrid.Visibility = Visibility.Collapsed;
+                        ViewModel.BBDD.remark_num = markListArray.Count.ToString();
                         for (int i = 0; i < markListArray.Count; i++)
                         {
                             Mark Markitem = new Mark();
