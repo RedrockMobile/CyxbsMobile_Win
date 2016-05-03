@@ -84,7 +84,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             string mark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/getremark", paramList);
             Debug.WriteLine(mark);
 
-            if (mark != "")
+            if (mark != "") 
             {
                 JObject obj = JObject.Parse(mark);
                 if (Int32.Parse(obj["state"].ToString()) == 200)
