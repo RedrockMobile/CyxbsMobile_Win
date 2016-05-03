@@ -31,7 +31,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
     /// </summary>
     public sealed partial class CommunityContentPage : Page
     {
-        object args;
+        //object args;
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         ObservableCollection<Mark> markList = new ObservableCollection<Mark>();
         bool isMark2Peo = false;//是否有回复某人
@@ -47,7 +47,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             markListView.ItemsSource = markList;
-            var item =args= e.Parameter;
+            var item  = e.Parameter;
             if (item is BBDDFeed)
             {
                 ViewModel.BBDD = item as BBDDFeed;
@@ -55,27 +55,28 @@ namespace ZSCY_Win10.Pages.CommunityPages
             }
             if (item is HotFeed)
             {
-                HotFeed h = item as HotFeed;
-                BBDDFeed b = new BBDDFeed();
-                if (h.img != null)
-                {
-                    b.article_photo_src = new Img[h.img.Length];
-                    for (int i = 0; i < h.img.Length; i++)
-                    {
-                        b.article_photo_src[i] = h.img[i];
-                    }
-                }
-                b.id = h.article_id;
-                b.type_id = h.type_id;
-                b.num_id = h.num_id;
-                b.remark_num = h.remark_num;
-                b.like_num = h.like_num;
-                b.is_my_like = h.is_my_Like;
-                b.created_time = h.time;
-                b.content = h.content.contentbase == null ? h.content.content : h.content.contentbase.content;
-                b.nickname = h.nick_name;
-                b.photo_src = h.user_head;
-                ViewModel.BBDD = b;
+                ViewModel.hotfeed = item as HotFeed;
+
+                //BBDDFeed b = new BBDDFeed();
+                //if (h.img != null)
+                //{
+                //    b.article_photo_src = new Img[h.img.Length];
+                //    for (int i = 0; i < h.img.Length; i++)
+                //    {
+                //        b.article_photo_src[i] = h.img[i];
+                //    }
+                //}
+                //b.id = h.article_id;
+                //b.type_id = h.type_id;
+                //b.num_id = h.num_id;
+                //b.remark_num = h.remark_num;
+                //b.like_num = h.like_num;
+                //b.is_my_like = h.is_my_Like;
+                //b.created_time = h.time;
+                //b.content = h.content.contentbase == null ? h.content.content : h.content.contentbase.content;
+                //b.nickname = h.nick_name;
+                //b.photo_src = h.user_head;
+                //ViewModel.BBDD = b;
                 getMark();
             }
 
@@ -83,15 +84,28 @@ namespace ZSCY_Win10.Pages.CommunityPages
 
         private async void getMark()
         {
+            string id = "";
+            string type_id = "";
+
+            if (ViewModel.BBDD != null)
+            {
+                id = ViewModel.BBDD.id;
+                type_id = ViewModel.BBDD.type_id;
+            }
+            else
+            {
+                id = ViewModel.hotfeed.article_id;
+                type_id = ViewModel.hotfeed.type_id;
+            }
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("article_id", ViewModel.BBDD.id));
-            paramList.Add(new KeyValuePair<string, string>("type_id", ViewModel.BBDD.type_id));
+            paramList.Add(new KeyValuePair<string, string>("article_id", id));
+            paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-            string mark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/getremark", paramList);
+            string mark =await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/getremark", paramList);
             Debug.WriteLine(mark);
 
-            if (mark != "") 
+            if (mark != "")
             {
                 JObject obj = JObject.Parse(mark);
                 if (Int32.Parse(obj["state"].ToString()) == 200)
@@ -102,12 +116,15 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     if (markListArray.Count != 0)
                     {
                         NoMarkGrid.Visibility = Visibility.Collapsed;
-                        ViewModel.BBDD.remark_num = markListArray.Count.ToString();
-                        if (args is HotFeed)
-                        {
-                            HotFeed h = args as HotFeed;
-                            h.remark_num = ViewModel.BBDD.remark_num;
-                        }
+                        if (ViewModel.BBDD != null)
+                            ViewModel.BBDD.remark_num = markListArray.Count.ToString();
+                        else
+                            ViewModel.hotfeed.remark_num = markListArray.Count.ToString();
+                        //if (args is HotFeed)
+                        //{
+                        //    HotFeed h = args as HotFeed;
+                        //    h.remark_num = ViewModel.BBDD.remark_num;
+                        //}
                         for (int i = 0; i < markListArray.Count; i++)
                         {
                             Mark Markitem = new Mark();
@@ -194,38 +211,76 @@ namespace ZSCY_Win10.Pages.CommunityPages
             Debug.WriteLine(num_id);
             Debug.WriteLine("id " + num_id.Substring(2));
             string like_num = "";
+            if (ViewModel.BBDD != null)
+            {
+                BBDDFeed bbddfeed = ViewModel.BBDD;
+                if (bbddfeed.is_my_like == "true" || bbddfeed.is_my_like == "True")
+                {
+                    like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), false);
+                    if (like_num != "")
+                    {
+                        bbddfeed.like_num = like_num;
+                        bbddfeed.is_my_like = "false";
+                        //if (args is HotFeed)
+                        //{
+                        //    HotFeed h = args as HotFeed;
+                        //    h.like_num = like_num;
+                        //    h.is_my_Like = "false";
+                        //}
+                    }
+                }
+                else
+                {
+                    like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), true);
+                    if (like_num != "")
+                    {
+                        bbddfeed.like_num = like_num;
+                        bbddfeed.is_my_like = "true";
+                        //if (args is HotFeed)
+                        //{
+                        //    HotFeed h = args as HotFeed;
+                        //    h.like_num = like_num;
+                        //    h.is_my_Like = "true";
+                        //}
+                    }
+                }
+            }
 
-            BBDDFeed bbddfeed = ViewModel.BBDD;
-            if (bbddfeed.is_my_like == "true" || bbddfeed.is_my_like == "True")
+            if (ViewModel.hotfeed != null)
             {
-                like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), false);
-                if (like_num != "")
+                HotFeed hotfeed = ViewModel.hotfeed;
+                if (hotfeed.is_my_Like == "true" || hotfeed.is_my_Like == "True")
                 {
-                    bbddfeed.like_num = like_num;
-                    bbddfeed.is_my_like = "false";
-                    if (args is HotFeed)
+                    like_num = await CommunityFeedsService.setPraise(hotfeed.type_id, num_id.Substring(2), false);
+                    if (like_num != "")
                     {
-                        HotFeed h = args as HotFeed;
-                        h.like_num = like_num;
-                        h.is_my_Like = "false";
+                        hotfeed.like_num = like_num;
+                        hotfeed.is_my_Like = "false";
+                        //if (args is HotFeed)
+                        //{
+                        //    HotFeed h = args as HotFeed;
+                        //    h.like_num = like_num;
+                        //    h.is_my_Like = "false";
+                        //}
+                    }
+                }
+                else
+                {
+                    like_num = await CommunityFeedsService.setPraise(hotfeed.type_id, num_id.Substring(2), true);
+                    if (like_num != "")
+                    {
+                        hotfeed.like_num = like_num;
+                        hotfeed.is_my_Like = "true";
+                        //if (args is HotFeed)
+                        //{
+                        //    HotFeed h = args as HotFeed;
+                        //    h.like_num = like_num;
+                        //    h.is_my_Like = "true";
+                        //}
                     }
                 }
             }
-            else
-            {
-                like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), true);
-                if (like_num != "")
-                {
-                    bbddfeed.like_num = like_num;
-                    bbddfeed.is_my_like = "true";
-                    if (args is HotFeed)
-                    {
-                        HotFeed h = args as HotFeed;
-                        h.like_num = like_num;
-                        h.is_my_Like = "true";
-                    }
-                }
-            }
+
         }
 
         private void PhotoGrid_ItemClick(object sender, ItemClickEventArgs e)

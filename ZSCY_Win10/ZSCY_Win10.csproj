@@ -326,6 +326,7 @@
     <Compile Include="Util\Converter\StarFillConverter.cs" />
     <Compile Include="Util\EmptyClass.cs" />
     <Compile Include="Util\HotFeedsDataTemplateSelector.cs" />
+    <Compile Include="Util\HotOrBBDDSelector.cs" />
     <Compile Include="Util\ImgDataTemplateSelector.cs" />
     <Compile Include="Util\NetWork.cs" />
     <Compile Include="Util\Utils.cs" />

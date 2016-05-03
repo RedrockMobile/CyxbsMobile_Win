@@ -9,7 +9,7 @@ using ZSCY_Win10.Data.Community;
 
 namespace ZSCY_Win10.Util
 {
-    public class HotFeedsDataTemplateSelector : DataTemplateSelector
+    public class HotOrBBDDSelector: DataTemplateSelector
     {
         public DataTemplate BBDDTemplate { get; set; }
         public DataTemplate nBBDDTemplate { get; set; }
@@ -20,13 +20,17 @@ namespace ZSCY_Win10.Util
             if (element != null && item != null)
             {
                 HotFeed h = item as HotFeed;
-                if (h!=null&&h.content.contentbase != null)
+                if (h != null)
+                {
+                    if (h.content.content != null)
+                    {
+                        h.content.contentbase = new JWZXFeeds { content = h.content.content };
+                    }
                     return nBBDDTemplate;
+                }
                 else return BBDDTemplate;
             }
             return null;
         }
-
-
     }
 }
