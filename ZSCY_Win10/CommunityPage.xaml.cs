@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using ZSCY_Win10.Common;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Pages;
 using ZSCY_Win10.Pages.CommunityPages;
@@ -41,6 +42,7 @@ namespace ZSCY_Win10
         double BBDDOldScrollableHeight = 0;
         List<Img> clickImgList = new List<Img>();
         int clickImfIndex = 0;
+
         public CommunityPage()
         {
             this.InitializeComponent();
@@ -114,6 +116,7 @@ namespace ZSCY_Win10
                 //ConmunityMyAppBarButton.Visibility = Visibility.Visible;
             }
         }
+
 
         /// <summary>
         /// 下拉刷新

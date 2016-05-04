@@ -58,7 +58,7 @@
             <StackPanel Name="AboutRedStackPanel" Margin="0,0,0,20" VerticalAlignment="Bottom" >
                 <TextBlock Text="重庆邮电大学红岩网校工作站" FontSize="18" Foreground="#333" HorizontalAlignment="Center"></TextBlock>
                 <HyperlinkButton Margin="0,0,0,20" Content="http://hongyan.cqupt.edu.cn" NavigateUri="http://hongyan.cqupt.edu.cn" FontSize="18" Foreground="#333" HorizontalAlignment="Center"></HyperlinkButton>
-                <TextBlock Text="Copyright © 2014 - 2015 All Right Reserved" FontSize="15" Foreground="#777" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock Text="Copyright © 2014 - 2016 All Right Reserved" FontSize="15" Foreground="#777" HorizontalAlignment="Center"></TextBlock>
             </StackPanel>
         </Grid>
     </Grid>

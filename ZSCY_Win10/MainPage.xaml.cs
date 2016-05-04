@@ -357,6 +357,8 @@ namespace ZSCY_Win10
                             else
                             {
                                 appSetting.Values["CommunityPerInfo"] = true;
+                                appSetting.Values["Conmunity_people_id"] = jPerInfo["data"]["id"].ToString();
+                                Debug.WriteLine(jPerInfo["data"]["id"].ToString());
                                 BackOpacityGrid.Visibility = Visibility.Collapsed;
                                 loadingStackPanel.Visibility = Visibility.Collapsed;
                                 this.AppFrame.Navigate(item.DestPage, item.Arguments);

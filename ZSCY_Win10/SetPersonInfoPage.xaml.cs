@@ -75,6 +75,7 @@ namespace ZSCY_Win10
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("stuuum", appSetting.Values["stuNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("nickname", nameTextBox.Text));
             paramList.Add(new KeyValuePair<string, string>("introduction", abstractTextBox.Text));
             paramList.Add(new KeyValuePair<string, string>("qq", qqTextBox.Text));
@@ -86,6 +87,13 @@ namespace ZSCY_Win10
                 if (Int32.Parse(obj["status"].ToString()) == 200)
                 {
                     Utils.Toast("新建个人信息成功~~，尽情享用吧");
+                    string perInfo = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/search", paramList);
+                    if (perInfo != "")
+                    {
+                        JObject jPerInfo = JObject.Parse(perInfo);
+                        appSetting.Values["Conmunity_people_id"] = jPerInfo["data"]["id"].ToString();
+                        Debug.WriteLine(jPerInfo["data"]["id"].ToString());
+                    }
                     var navPage = ee.Parameter;
                     if (navPage == typeof(CommunityPage))
                     {

@@ -74,7 +74,6 @@ namespace ZSCY_Win10
 
             initInformation();
 
-
             if (appSetting.Values["gender"].ToString().IndexOf("男") != (-1))
             {
                 stuSexText.Text = "♂";
@@ -82,10 +81,6 @@ namespace ZSCY_Win10
             }
             else
                 stuSexText.Text = "♀";
-            stuNumText.Text = appSetting.Values["stuNum"].ToString();
-            stuIntText.Text = "这是简介啦啦啦啦（凑字数用凑字数用凑字数用凑字数用凑字数用）";
-            phoneNumText.Text = "13800000000";
-            qqNumText.Text = "1000000000";
         }
 
         private async void initInformation()

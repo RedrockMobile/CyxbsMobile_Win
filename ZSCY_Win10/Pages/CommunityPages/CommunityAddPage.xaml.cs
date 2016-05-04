@@ -38,7 +38,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
         ObservableCollection<CommunityImageList> imageList = new ObservableCollection<CommunityImageList>();
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
 
-
         public CommunityAddPage()
         {
             this.InitializeComponent();
@@ -198,12 +197,12 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 imgPhoto_src = imgPhoto_src.Substring(1);
                 imgThumbnail_src = imgThumbnail_src.Substring(1);
             }
-            
+
 
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("type_id", "5")); //现在只有哔哔叨叨
             paramList.Add(new KeyValuePair<string, string>("title", addTitleTextBox.Text));
-            paramList.Add(new KeyValuePair<string, string>("user_id", "8")); //记得改了
+            paramList.Add(new KeyValuePair<string, string>("user_id", appSetting.Values["Conmunity_people_id"].ToString())); //记得改了
             paramList.Add(new KeyValuePair<string, string>("content", addContentTextBox.Text));
             paramList.Add(new KeyValuePair<string, string>("photo_src", imgPhoto_src));
             paramList.Add(new KeyValuePair<string, string>("thumbnail_src", imgThumbnail_src));
@@ -217,7 +216,12 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 if (Int32.Parse(obj["state"].ToString()) == 200)
                 {
                     Utils.Toast("发表成功");
-                    Frame.GoBack();
+                    Frame rootFrame = Window.Current.Content as Frame;
+                    addTitleTextBox.Text = "";
+                    addContentTextBox.Text = "";
+                    imageList.Clear();
+                    //ee.Handled = false;
+                    //Frame.GoBack();
                 }
             }
 
