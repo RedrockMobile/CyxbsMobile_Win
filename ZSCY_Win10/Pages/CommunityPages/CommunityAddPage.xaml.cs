@@ -179,7 +179,8 @@ namespace ZSCY_Win10.Pages.CommunityPages
 
                                 imgPhoto_src += ("," + objdata["photosrc"].ToString());
                                 imgThumbnail_src += ("," + objdata["thumbnail_src"].ToString());
-
+                                imgPhoto_src = imgPhoto_src.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", "");
+                                imgThumbnail_src = imgThumbnail_src.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/thumbnail/", "");
                             }
                         }
                         catch (Exception)
@@ -219,7 +220,14 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     Frame rootFrame = Window.Current.Content as Frame;
                     addTitleTextBox.Text = "";
                     addContentTextBox.Text = "";
-                    imageList.Clear();
+                    if (imageList.Count>1)
+                    {
+                        for (int i = 0; i < imageList.Count-1; i++)
+                        {
+                            imageList.RemoveAt(i );
+                        }
+                    }
+                    
                     //ee.Handled = false;
                     //Frame.GoBack();
                 }
