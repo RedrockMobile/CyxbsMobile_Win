@@ -107,7 +107,14 @@ namespace ZSCY_Win10
                     stuIntText.Text = objdata["introduction"].ToString();
                     phoneNumText.Text = objdata["phone"].ToString();
                     qqNumText.Text = objdata["qq"].ToString();
-                    mpgImageBrush.ImageSource = new BitmapImage(new Uri(objdata["photo_src"].ToString()));
+                    if (objdata["photo_src"].ToString() == "")
+                    {
+                        mpgImageBrush.ImageSource = new BitmapImage(new Uri("ms-appdata:///Local/headimg.png"));
+                    }
+                    else
+                    {
+                        mpgImageBrush.ImageSource = new BitmapImage(new Uri(objdata["photo_src"].ToString()));
+                    }
                 }
             }
         }
