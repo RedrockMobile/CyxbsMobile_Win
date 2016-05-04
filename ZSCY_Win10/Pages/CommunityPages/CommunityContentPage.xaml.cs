@@ -157,9 +157,22 @@ namespace ZSCY_Win10.Pages.CommunityPages
         {
             sendMarkButton.IsEnabled = false;
             sendMarkProgressRing.Visibility = Visibility.Visible;
+            string id = "";
+            string type_id = "";
+
+            if (ViewModel.BBDD != null)
+            {
+                id = ViewModel.BBDD.id;
+                type_id = ViewModel.BBDD.type_id;
+            }
+            else
+            {
+                id = ViewModel.hotfeed.article_id;
+                type_id = ViewModel.hotfeed.type_id;
+            }
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("article_id", ViewModel.BBDD.id));
-            paramList.Add(new KeyValuePair<string, string>("type_id", ViewModel.BBDD.type_id));
+            paramList.Add(new KeyValuePair<string, string>("article_id", id));
+            paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("content", sendMarkTextBox.Text));

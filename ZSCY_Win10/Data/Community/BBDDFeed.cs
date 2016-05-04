@@ -86,7 +86,7 @@ namespace ZSCY_Win10.Data.Community
                 try
                 {
                     string[] i = articlephotos.Split(new char[] { ',' }, 9);
-                    if (i.Length > 1)
+                    if (articlephotos.EndsWith(","))
                         article_photo_src = new Img[i.Length - 1];
                     else
                         article_photo_src = new Img[i.Length];
