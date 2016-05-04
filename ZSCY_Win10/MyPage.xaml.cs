@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Util;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
@@ -152,5 +153,13 @@ namespace ZSCY_Win10
             myPageGrid.Visibility = Visibility.Visible;
             myTidingsGrid.Visibility = Visibility.Collapsed;
         }
+
+        private void EditAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            PeoInfo peoinfo = new PeoInfo(nickNameText.Text, stuIntText.Text, phoneNumText.Text, qqNumText.Text);
+            Frame.Navigate(typeof(SetPersonInfoPage), peoinfo);
+        }
     }
+
+
 }

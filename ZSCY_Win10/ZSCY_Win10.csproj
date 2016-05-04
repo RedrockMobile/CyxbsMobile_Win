@@ -231,6 +231,7 @@
     <Compile Include="Data\Community\JWZXFeed.cs" />
     <Compile Include="Data\Community\Mark.cs" />
     <Compile Include="Data\Community\MyNotification.cs" />
+    <Compile Include="Data\Community\PeoInfo.cs" />
     <Compile Include="Data\DataSource.cs" />
     <Compile Include="Data\EmptyClassDayLesson.cs" />
     <Compile Include="Data\EmptyRoomList.cs" />

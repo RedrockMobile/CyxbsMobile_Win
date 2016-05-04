@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Util;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
@@ -49,6 +50,17 @@ namespace ZSCY_Win10
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ee = e;
+            try
+            {
+                PeoInfo peoinfo = (PeoInfo)ee.Parameter;
+                nameTextBox.Text = peoinfo.nickname;
+                abstractTextBox.Text = peoinfo.introduction;
+                qqTextBox.Text = peoinfo.qq;
+                phoneTextBox.Text = peoinfo.phone;
+                SetPersonInfoOKAppBarButton.IsEnabled = true;
+            }
+            catch (Exception) { }
+
             if (this.Frame.CanGoBack)
             {
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
@@ -86,7 +98,6 @@ namespace ZSCY_Win10
                 JObject obj = JObject.Parse(setinfo);
                 if (Int32.Parse(obj["status"].ToString()) == 200)
                 {
-                    Utils.Toast("新建个人信息成功~~，尽情享用吧");
                     string perInfo = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/search", paramList);
                     if (perInfo != "")
                     {
@@ -97,11 +108,17 @@ namespace ZSCY_Win10
                     var navPage = ee.Parameter;
                     if (navPage == typeof(CommunityPage))
                     {
+                        Utils.Toast("新建个人信息成功~~，尽情享用吧");
                         this.Frame.Navigate(typeof(CommunityPage));
                     }
                     else if (navPage == typeof(MyPage))
                     {
+                        Utils.Toast("新建个人信息成功~~，尽情享用吧");
                         this.Frame.Navigate(typeof(MyPage));
+                    }
+                    else
+                    {
+                        Frame.GoBack();
                     }
                 }
             }
@@ -110,7 +127,7 @@ namespace ZSCY_Win10
         //昵称
         private void nameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            nametext = nameTextBox.Text;
+            //nametext = nameTextBox.Text;
             Completeness();
         }
 
@@ -162,7 +179,7 @@ namespace ZSCY_Win10
         //判定是否可以提交
         private void Completeness()
         {
-            if (nametext != null && abstracttext != null && completeness1 == true && completeness2 == true)
+            if (nameTextBox.Text != "" && abstractTextBox.Text != "" && completeness1 == true && completeness2 == true)
             {
                 SetPersonInfoOKAppBarButton.IsEnabled = true;
             }
