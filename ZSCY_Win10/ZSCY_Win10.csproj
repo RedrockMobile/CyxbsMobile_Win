@@ -235,6 +235,7 @@
     <Compile Include="Data\Community\Img.cs" />
     <Compile Include="Data\Community\JWZXFeed.cs" />
     <Compile Include="Data\Community\Mark.cs" />
+    <Compile Include="Data\Community\MyFeed.cs" />
     <Compile Include="Data\Community\MyNotification.cs" />
     <Compile Include="Data\Community\PeoInfo.cs" />
     <Compile Include="Data\DataSource.cs" />
