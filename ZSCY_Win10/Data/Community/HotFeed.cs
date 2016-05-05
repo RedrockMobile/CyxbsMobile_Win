@@ -78,7 +78,26 @@ namespace ZSCY_Win10.Data.Community
             article_id = feedsJObject["article_id"].ToString();
             num_id = "1" + feedsJObject["type_id"].ToString() + feedsJObject["article_id"].ToString();
             user_id = feedsJObject["user_id"].ToString();
-            user_head = feedsJObject["user_head"].ToString() == "" ? "ms-appx:///Assets/Boy-100.png" : feedsJObject["user_head"].ToString();
+            if (type == "jwzx")
+            {
+                user_head = "ms-appx:///Assets/Community_JWZX.png";
+            }
+            else if (type == "cyxw")
+            {
+                user_head = "ms-appx:///Assets/Community_CYXW.png";
+            }
+            else if (type == "xsjz")
+            {
+                user_head = "ms-appx:///Assets/Community_XSJZ.png";
+            }
+            else if (type == "xwgg")
+            {
+                user_head = "ms-appx:///Assets/Community_XWGG.png";
+            }
+            else
+            {
+                user_head = feedsJObject["user_head"].ToString() == "" ? "ms-appx:///Assets/Community_nohead.png" : feedsJObject["user_head"].ToString();
+            }
             time = feedsJObject["time"].ToString();
             like_num = feedsJObject["like_num"].ToString();
             remark_num = feedsJObject["remark_num"].ToString();

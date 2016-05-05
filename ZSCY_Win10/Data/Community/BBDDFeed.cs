@@ -76,7 +76,7 @@ namespace ZSCY_Win10.Data.Community
             like_num = feedsJObject["like_num"].ToString();
             remark_num = feedsJObject["remark_num"].ToString();
             nickname = feedsJObject["nickname"].ToString();
-            photo_src = feedsJObject["photo_src"].ToString() == "" ? "ms-appx:///Assets/Boy-100.png" : feedsJObject["photo_src"].ToString();
+            photo_src = feedsJObject["photo_src"].ToString() == "" ? "ms-appx:///Assets/Community_nohead.png" : feedsJObject["photo_src"].ToString();
             photo_thumbnail_src = feedsJObject["photo_thumbnail_src"].ToString();
             is_my_like = feedsJObject["is_my_like"].ToString();
             string articlephotos = feedsJObject["article_photo_src"].ToString();
