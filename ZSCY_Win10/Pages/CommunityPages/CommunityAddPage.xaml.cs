@@ -90,22 +90,34 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 openPicker.FileTypeFilter.Add(".jpg");
                 openPicker.FileTypeFilter.Add(".bmp");
                 openPicker.ContinuationData["Operation"] = "img";
-                StorageFile file = await openPicker.PickSingleFileAsync();
-                if (file != null)
+                IReadOnlyList<StorageFile> files = await openPicker.PickMultipleFilesAsync();
+                if (files.Count + imageList.Count > 10)
                 {
-                    foreach (var item in imageList)
+                    Utils.Message("哦吼~最多只能上传9张图哦");
+                }
+                else
+                {
+                    if (files != null)
                     {
-                        if (item.imgPath == file.Path)
+                        foreach (var item in imageList)
                         {
-                            Utils.Message("此图片已添加，换一张吧 ^_^");
-                            return;
+                            foreach (var file in files)
+                            {
+                                if (item.imgPath == file.Path)
+                                {
+                                    Utils.Message("此图片已添加，换一张吧 ^_^");
+                                    return;
+                                }
+                            }
                         }
-
-                    }
-                    file2SoftwareBitmapSource(file, imageList.Count - 1);
-                    if (imageList.Count == 10)
-                    {
-                        imageList.RemoveAt(9);
+                        foreach (var file in files)
+                        {
+                            file2SoftwareBitmapSource(file, imageList.Count - 1);
+                        }
+                        if (files.Count + imageList.Count >= 10)
+                        {
+                            imageList.RemoveAt(imageList.Count - 1);
+                        }
                     }
                 }
             }
@@ -120,7 +132,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 if (null != result && result.Label == "是的，不要了")
                 {
                     imageList.Remove((CommunityImageList)e.ClickedItem);
-                    if (imageList.Count == 9)
+                    if (imageList.Count == 8)
                     {
                         StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///../Assets/CommunityAddImg.png"));
                         if (file != null)
@@ -161,7 +173,16 @@ namespace ZSCY_Win10.Pages.CommunityPages
             string imgThumbnail_src = "";
             if (imageList.Count > 1)
             {
-                for (int i = 0; i < imageList.Count - 1; i++)
+                int count = 0;
+                if (imageList.Count == 9)
+                {
+                    count = 9;
+                }
+                else
+                {
+                    count = imageList.Count - 1;
+                }
+                for (int i = 0; i < count; i++)
                 {
                     string imgUp = await NetWork.headUpload(appSetting.Values["stuNum"].ToString(), imageList[i].imgAppPath, "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Photo/uploadArticle", false);
                     if (imgUp != "")
