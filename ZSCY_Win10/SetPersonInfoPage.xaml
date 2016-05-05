@@ -28,7 +28,7 @@
             <Grid Name="SetPersonInfoTitleGrid"  HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <!--<AppBarButton Name="SetPersonInfoBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="SetPersonInfoBackAppBarButton_Click"/>-->
-                    <TextBlock Name="HubSectionKBTitle" Text="初始化个人信息" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                    <TextBlock Name="HubSectionKBTitle" Text="新增/修改个人信息" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <AppBarButton Name="SetPersonInfoOKAppBarButton" Icon="Accept" Foreground="White" IsEnabled="False" Click="SetPersonInfoOKAppBarButton_Click"/>

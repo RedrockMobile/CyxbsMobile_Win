@@ -138,6 +138,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\CommunityAddImg.png" />
+    <Content Include="Assets\Community_CYXW.png" />
+    <Content Include="Assets\Community_JWZX.png" />
+    <Content Include="Assets\Community_nohead.png" />
+    <Content Include="Assets\Community_XSJZ.png" />
+    <Content Include="Assets\Community_XWGG.png" />
     <Content Include="Assets\dialog_course_add_white.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -232,6 +237,7 @@
     <Compile Include="Data\Community\Mark.cs" />
     <Compile Include="Data\Community\MyFeed.cs" />
     <Compile Include="Data\Community\MyNotification.cs" />
+    <Compile Include="Data\Community\PeoInfo.cs" />
     <Compile Include="Data\DataSource.cs" />
     <Compile Include="Data\EmptyClassDayLesson.cs" />
     <Compile Include="Data\EmptyRoomList.cs" />

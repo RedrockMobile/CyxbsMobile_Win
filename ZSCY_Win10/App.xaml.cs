@@ -190,7 +190,7 @@ namespace ZSCY_Win10
             }
             // 确保当前窗口处于活动状态
             await UmengAnalytics.StartTrackAsync("55cd8c8be0f55a20ba00440d", "Marketplace_Win10");
-           //await InitNotificationsAsync();
+            //await InitNotificationsAsync();
 
         }
 
@@ -235,7 +235,7 @@ namespace ZSCY_Win10
                 // Register the channel URI with Notification Hubs.
                 await App.MobileService.GetPush().RegisterAsync(channel.Uri);
                 Debug.WriteLine(channel.Uri);
-               
+
             }
             catch (Exception channel)
             {

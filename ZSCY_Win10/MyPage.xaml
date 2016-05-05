@@ -51,7 +51,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <!--<AppBarButton Name="ConmunityMyAppBarButton" Icon="Contact" Foreground="White" Click="ConmunityMyAppBarButton_Click"></AppBarButton>-->
-                    <!--<AppBarButton Name="MyRefreshAppBarButton" Icon="Refresh" Foreground="White" Click="MyRefreshAppBarButton_Click"/>-->
+                    <AppBarButton Name="EditAppBarButton" Icon="Edit" Foreground="White" Click="EditAppBarButton_Click"/>
                 </StackPanel>
             </Grid>
             <Grid Name="TitlecutoffLineGrid" Visibility="Collapsed" Margin="400,0,0,0" HorizontalAlignment="Left">

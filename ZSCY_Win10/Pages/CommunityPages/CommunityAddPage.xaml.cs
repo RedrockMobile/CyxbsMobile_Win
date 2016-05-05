@@ -211,28 +211,32 @@ namespace ZSCY_Win10.Pages.CommunityPages
             paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
             string ArticleUp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Article/addArticle", paramList);
             Debug.WriteLine(ArticleUp);
-            if (ArticleUp != "")
+            try
             {
-                JObject obj = JObject.Parse(ArticleUp);
-                if (Int32.Parse(obj["state"].ToString()) == 200)
+                if (ArticleUp != "")
                 {
-                    Utils.Toast("发表成功");
-                    Frame rootFrame = Window.Current.Content as Frame;
-                    addTitleTextBox.Text = "";
-                    addContentTextBox.Text = "";
-                    if (imageList.Count>1)
+                    JObject obj = JObject.Parse(ArticleUp);
+                    if (Int32.Parse(obj["state"].ToString()) == 200)
                     {
-                        for (int i = 0; i < imageList.Count-1; i++)
+                        Utils.Toast("发表成功");
+                        Frame rootFrame = Window.Current.Content as Frame;
+                        addTitleTextBox.Text = "";
+                        addContentTextBox.Text = "";
+                        if (imageList.Count > 1)
                         {
-                            imageList.RemoveAt(i );
+                            for (int i = 0; i < imageList.Count - 1; i++)
+                            {
+                                imageList.RemoveAt(i);
+                            }
                         }
+                        page.Visibility = Visibility.Collapsed;
+                        commandbar.Visibility = Visibility.Collapsed;
+                        //ee.Handled = false;
+                        //Frame.GoBack();
                     }
-                    
-                    //ee.Handled = false;
-                    //Frame.GoBack();
                 }
             }
-
+            catch (Exception) { }
 
         }
 
