@@ -9,6 +9,7 @@ namespace ZSCY_Win10.Data.Community
     class PeoInfo
     {
 
+        public PeoInfo() { }
         public PeoInfo(string nickname, string introduction, string phone, string qq)
         {
             this.nickname = nickname;

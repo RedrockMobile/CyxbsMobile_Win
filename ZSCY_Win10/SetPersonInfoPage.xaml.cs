@@ -50,7 +50,7 @@ namespace ZSCY_Win10
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ee = e;
-            try
+            if (ee.Parameter.GetType() == (new PeoInfo()).GetType())
             {
                 PeoInfo peoinfo = (PeoInfo)ee.Parameter;
                 nameTextBox.Text = peoinfo.nickname;
@@ -59,7 +59,6 @@ namespace ZSCY_Win10
                 phoneTextBox.Text = peoinfo.phone;
                 SetPersonInfoOKAppBarButton.IsEnabled = true;
             }
-            catch (Exception) { }
 
             if (this.Frame.CanGoBack)
             {
