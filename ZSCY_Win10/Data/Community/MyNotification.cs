@@ -32,7 +32,7 @@ namespace ZSCY_Win10.Data.Community
             article_id = feedsJObject["article_id"].ToString();
             stunum = feedsJObject["stunum"].ToString();
             nickname = feedsJObject["nickname"].ToString();
-            photo_src = feedsJObject["photo_src"].ToString();
+            photo_src = feedsJObject["photo_src"].ToString()==""? "ms-appx:///Assets/Boy-100.png" : feedsJObject["photo_src"].ToString();
             string articlephotos = feedsJObject["article_photo_src"].ToString();
             string picstart = "http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/";
             if (articlephotos != "")
@@ -40,7 +40,7 @@ namespace ZSCY_Win10.Data.Community
                 try
                 {
                     string[] i = articlephotos.Split(new char[] { ',' }, 9);
-                    if (i.Length > 1)
+                    if (articlephotos.EndsWith(","))
                         article_photo_src = new Img[i.Length - 1];
                     else
                         article_photo_src = new Img[i.Length];
