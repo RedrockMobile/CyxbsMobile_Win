@@ -66,7 +66,7 @@ namespace ZSCY_Win10.Data.Community
         {
             id = feedsJObject["id"].ToString();
             type = feedsJObject["type"].ToString();
-            if (type != "bbdd")
+            if (type != "bbdd"&&type!="notice")
             {
                 nick_name = feedsJObject["user_name"].ToString();
             }
