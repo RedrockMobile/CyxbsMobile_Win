@@ -40,20 +40,24 @@ namespace ZSCY_Win10.Service
                 string response = await NetWork.getHttpWebRequest(feedsapi[type], paramList);
                 //response = Utils.ConvertUnicodeStringToChinese(response);
                 List<BBDDFeed> feeds = new List<BBDDFeed>();
-                if (response != "" || response != "[]")
+                try
                 {
-                    JObject bbddfeeds = JObject.Parse(response);
-                    if (bbddfeeds["status"].ToString() == "200")
+                    if (response != "" || response != "[]")
                     {
-                        JArray bbddarray = JArray.Parse(bbddfeeds["data"].ToString());
-                        for (int i = 0; i < bbddarray.Count; i++)
+                        JObject bbddfeeds = JObject.Parse(response);
+                        if (bbddfeeds["status"].ToString() == "200")
                         {
-                            BBDDFeed f = new BBDDFeed();
-                            f.GetAttributes((JObject)bbddarray[i]);
-                            feeds.Add(f);
+                            JArray bbddarray = JArray.Parse(bbddfeeds["data"].ToString());
+                            for (int i = 0; i < bbddarray.Count; i++)
+                            {
+                                BBDDFeed f = new BBDDFeed();
+                                f.GetAttributes((JObject)bbddarray[i]);
+                                feeds.Add(f);
+                            }
                         }
                     }
                 }
+                catch (Exception) { }
                 return feeds;
             });
             /*    try
@@ -116,22 +120,26 @@ namespace ZSCY_Win10.Service
                string response = await NetWork.getHttpWebRequest(feedsapi[type], paramList);
                //response = Utils.ConvertUnicodeStringToChinese(response);
                List<HotFeed> feeds = new List<HotFeed>();
-               if (response != "" || response != "[]")
+               try
                {
-                   JArray hotfeed = JArray.Parse(response);
-                   for (int i = 0; i < hotfeed.Count; i++)
+                   if (response != "" || response != "[]")
                    {
-                       JObject hot = (JObject)hotfeed[i];
-                       if (hot["status"].ToString() == "200")
+                       JArray hotfeed = JArray.Parse(response);
+                       for (int i = 0; i < hotfeed.Count; i++)
                        {
-                           //TODO:超出页码范围
-                           JObject data = (JObject)hot["data"];
-                           HotFeed f = new HotFeed();
-                           f.GetAttributes(data);
-                           feeds.Add(f);
+                           JObject hot = (JObject)hotfeed[i];
+                           if (hot["status"].ToString() == "200")
+                           {
+                               //TODO:超出页码范围
+                               JObject data = (JObject)hot["data"];
+                               HotFeed f = new HotFeed();
+                               f.GetAttributes(data);
+                               feeds.Add(f);
+                           }
                        }
                    }
                }
+               catch (Exception) { }
                return feeds;
            });
         }

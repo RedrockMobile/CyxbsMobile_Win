@@ -178,6 +178,7 @@ namespace ZSCY_Win10
                         JObject objdata = JObject.Parse(obj["data"].ToString());
                         appSetting.Values["headimgdate"] = objdata["date"].ToString();
                         headimgImageBrush.ImageSource = new BitmapImage(new Uri(objdata["photosrc"].ToString()));
+                        appSetting.Values["Conmunity_headimg_src"] = objdata["photosrc"].ToString();
 
                         Size downloadSize = new Size(48, 48);
                         await Utils.DownloadAndScale("headimg.png", objdata["photosrc"].ToString(), new Size(100, 100));
@@ -358,6 +359,10 @@ namespace ZSCY_Win10
                             {
                                 appSetting.Values["CommunityPerInfo"] = true;
                                 appSetting.Values["Conmunity_people_id"] = jPerInfo["data"]["id"].ToString();
+                                appSetting.Values["Conmunity_nickname"] = jPerInfo["data"]["nickname"].ToString();
+                                appSetting.Values["Conmunity_headimg_src"] = jPerInfo["data"]["photo_src"].ToString();
+                                Debug.WriteLine(appSetting.Values["Conmunity_headimg_src"].ToString());
+
                                 Debug.WriteLine(jPerInfo["data"]["id"].ToString());
                                 BackOpacityGrid.Visibility = Visibility.Collapsed;
                                 loadingStackPanel.Visibility = Visibility.Collapsed;

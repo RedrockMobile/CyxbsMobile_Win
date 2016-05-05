@@ -83,6 +83,8 @@ namespace ZSCY_Win10
 
         private async void SetPersonInfoOKAppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            appSetting.Values["Conmunity_nickname"] = nameTextBox.Text;
+
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));

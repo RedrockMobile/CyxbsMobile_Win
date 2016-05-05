@@ -103,6 +103,7 @@ namespace ZSCY_Win10
                     stuIntText.Text = objdata["introduction"].ToString();
                     phoneNumText.Text = objdata["phone"].ToString();
                     qqNumText.Text = objdata["qq"].ToString();
+                    appSetting.Values["Conmunity_nickname"] = objdata["nickname"].ToString();
                     if (objdata["photo_src"].ToString() == "")
                     {
                         mpgImageBrush.ImageSource = new BitmapImage(new Uri("ms-appdata:///Local/headimg.png"));
@@ -110,6 +111,7 @@ namespace ZSCY_Win10
                     else
                     {
                         mpgImageBrush.ImageSource = new BitmapImage(new Uri(objdata["photo_src"].ToString()));
+                        appSetting.Values["Conmunity_headimg_src"] = objdata["photo_src"].ToString();
                     }
                 }
             }
