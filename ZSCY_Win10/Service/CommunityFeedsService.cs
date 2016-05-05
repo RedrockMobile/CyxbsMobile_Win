@@ -40,7 +40,7 @@ namespace ZSCY_Win10.Service
                 string response = await NetWork.getHttpWebRequest(feedsapi[type], paramList);
                 //response = Utils.ConvertUnicodeStringToChinese(response);
                 List<BBDDFeed> feeds = new List<BBDDFeed>();
-                if (response != "")
+                if (response != "" || response != "[]")
                 {
                     JObject bbddfeeds = JObject.Parse(response);
                     if (bbddfeeds["status"].ToString() == "200")
@@ -116,7 +116,7 @@ namespace ZSCY_Win10.Service
                string response = await NetWork.getHttpWebRequest(feedsapi[type], paramList);
                //response = Utils.ConvertUnicodeStringToChinese(response);
                List<HotFeed> feeds = new List<HotFeed>();
-               if (response != "")
+               if (response != "" || response != "[]")
                {
                    JArray hotfeed = JArray.Parse(response);
                    for (int i = 0; i < hotfeed.Count; i++)
