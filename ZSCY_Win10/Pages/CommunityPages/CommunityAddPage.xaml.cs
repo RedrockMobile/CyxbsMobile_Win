@@ -220,14 +220,15 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     Frame rootFrame = Window.Current.Content as Frame;
                     addTitleTextBox.Text = "";
                     addContentTextBox.Text = "";
-                    if (imageList.Count>1)
+                    if (imageList.Count > 1)
                     {
-                        for (int i = 0; i < imageList.Count-1; i++)
+                        for (int i = 0; i < imageList.Count - 1; i++)
                         {
-                            imageList.RemoveAt(i );
+                            imageList.RemoveAt(i);
                         }
                     }
-                    
+                    page.Visibility = Visibility.Collapsed;
+                    commandbar.Visibility = Visibility.Collapsed;
                     //ee.Handled = false;
                     //Frame.GoBack();
                 }
