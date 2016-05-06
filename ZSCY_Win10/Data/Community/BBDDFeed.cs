@@ -9,7 +9,7 @@ using ZSCY_Win10.Common;
 
 namespace ZSCY_Win10.Data.Community
 {
-    public class BBDDFeed :ViewModelBase, IFeeds
+    public class BBDDFeed : ViewModelBase, IFeeds
     {
         private string is_my_likes;
         private string like_nums;
@@ -68,7 +68,7 @@ namespace ZSCY_Win10.Data.Community
         {
             title = feedsJObject["title"].ToString();
             id = feedsJObject["id"].ToString();
-            num_id ="5"+ feedsJObject["type_id"].ToString() + feedsJObject["id"].ToString();
+            num_id = "5" + feedsJObject["type_id"].ToString() + feedsJObject["id"].ToString();
             type_id = feedsJObject["type_id"].ToString();
             content = feedsJObject["content"].ToString();
             updated_time = feedsJObject["updated_time"].ToString();
@@ -77,10 +77,9 @@ namespace ZSCY_Win10.Data.Community
             remark_num = feedsJObject["remark_num"].ToString();
             nickname = feedsJObject["nickname"].ToString();
             photo_src = feedsJObject["photo_src"].ToString() == "" ? "ms-appx:///Assets/Community_nohead.png" : feedsJObject["photo_src"].ToString();
-            photo_thumbnail_src = feedsJObject["photo_thumbnail_src"].ToString();
+            photo_thumbnail_src = feedsJObject["photo_thumbnail_src"].ToString() == "" ? "ms-appx:///Assets/Community_nohead.png" : feedsJObject["photo_thumbnail_src"].ToString();
             is_my_like = feedsJObject["is_my_like"].ToString();
             string articlephotos = feedsJObject["article_photo_src"].ToString();
-            string picstart = "http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/";
             if (articlephotos != "")
             {
                 try
@@ -94,11 +93,18 @@ namespace ZSCY_Win10.Data.Community
                     {
                         if (i[j] != "")
                         {
-                            if (!i[j].StartsWith(picstart))
-                                i[j] = picstart + i[j];
-                            article_photo_src[j] = new Img();
-                            article_photo_src[j].ImgSrc = i[j];
-                            article_photo_src[j].ImgSmallSrc = i[j];
+                            if (!i[j].StartsWith(App.picstart))
+                            {
+                                article_photo_src[j] = new Img();
+                                article_photo_src[j].ImgSrc = App.picstart + i[j];
+                                article_photo_src[j].ImgSmallSrc = App.picstartsmall + i[j];
+                            }
+                            else
+                            {
+                                article_photo_src[j] = new Img();
+                                article_photo_src[j].ImgSrc = i[j];
+                                article_photo_src[j].ImgSmallSrc = i[j];
+                            }
                         }
                         else
                         {

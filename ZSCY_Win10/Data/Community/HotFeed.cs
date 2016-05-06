@@ -66,7 +66,7 @@ namespace ZSCY_Win10.Data.Community
         {
             id = feedsJObject["id"].ToString();
             type = feedsJObject["type"].ToString();
-            if (type != "bbdd"&&type!="notice")
+            if (type != "bbdd" && type != "notice")
             {
                 nick_name = feedsJObject["user_name"].ToString();
             }
@@ -107,7 +107,6 @@ namespace ZSCY_Win10.Data.Community
             content = h;
             JObject imgs = (JObject)feedsJObject["img"];
             string imgsurls = imgs["img_src"].ToString();
-            string picstart = "http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/";
             if (imgsurls != "")
             {
                 try
@@ -121,11 +120,18 @@ namespace ZSCY_Win10.Data.Community
                     {
                         if (i[j] != "")
                         {
-                            if (!i[j].StartsWith(picstart))
-                                i[j] = picstart + i[j];
-                            img[j] = new Img();
-                            img[j].ImgSrc = i[j];
-                            img[j].ImgSmallSrc = i[j];
+                            if (!i[j].StartsWith(App.picstart))
+                            {
+                                img[j] = new Img();
+                                img[j].ImgSrc = App.picstart + i[j];
+                                img[j].ImgSmallSrc = App.picstartsmall + i[j];
+                            }
+                            else
+                            {
+                                img[j] = new Img();
+                                img[j].ImgSrc =  i[j];
+                                img[j].ImgSmallSrc =  i[j];
+                            }
                         }
                         else
                         {

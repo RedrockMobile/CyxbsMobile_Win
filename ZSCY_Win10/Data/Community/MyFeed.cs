@@ -9,7 +9,7 @@ using Windows.Storage;
 
 namespace ZSCY_Win10.Data.Community
 {
-    public class MyFeed:IFeeds
+    public class MyFeed : IFeeds
     {
         public string id { get; set; }
         public Img[] photo_src { get; set; }
@@ -35,17 +35,15 @@ namespace ZSCY_Win10.Data.Community
             remark_num = feedsJObject["remark_num"].ToString();
             string articlephotos = feedsJObject["photo_src"].ToString();
             string smallphotos = feedsJObject["thumbnail_src"].ToString();
-            string picstart = "http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/";
+
             if (articlephotos != "")
             {
                 try
                 {
                     string[] i = articlephotos.Split(new char[] { ',' }, 9);
-                    string[] k = articlephotos.Split(new char[] { ',' }, 9);
                     if (articlephotos.EndsWith(","))
                     {
                         photo_src = new Img[i.Length - 1];
-                        thumbnail_src = new Img[i.Length - 1];
                     }
                     else
                     {
@@ -56,23 +54,23 @@ namespace ZSCY_Win10.Data.Community
                     {
                         if (i[j] != "")
                         {
-                            if (!i[j].StartsWith(picstart))
+                            if (!i[j].StartsWith(App.picstart))
                             {
-                                i[j] = picstart + i[j];
-
+                                photo_src[j] = new Img();
+                                photo_src[j].ImgSrc = App.picstart + i[j];
+                                photo_src[j].ImgSmallSrc = App.picstartsmall + i[j];
                             }
-                            photo_src[j] = new Img();
-                            photo_src[j].ImgSrc = i[j];
-                            thumbnail_src[j] = new Img();
-                            thumbnail_src[j].ImgSrc = k[j];
-
-                            //photo_src[j].ImgSmallSrc = i[j];
+                            else
+                            {
+                                photo_src[j] = new Img();
+                                photo_src[j].ImgSrc = i[j];
+                                photo_src[j].ImgSmallSrc = i[j];
+                            }
                         }
                         else
                         {
                             photo_src[j] = new Img();
                             photo_src[j].ImgSrc = photo_src[j].ImgSmallSrc = "";
-
                         }
                     }
                 }
