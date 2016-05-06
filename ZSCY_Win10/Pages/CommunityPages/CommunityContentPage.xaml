@@ -12,53 +12,7 @@
     mc:Ignorable="d"
     Background="#ececec">
     <Page.Resources>
-        <converters:LikeValueConverter x:Key="LikeValueConverter"></converters:LikeValueConverter>
-        <!--时间用户名文本块样式-->
-        <Style x:Name="TimeTextBlock" x:Key="TimeTextBlock" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="10"></Setter>
-        </Style>
-        <Style x:Name="UsernameTextBlock" x:Key="UsernameTextBlock" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="16"></Setter>
-        </Style>
-        <!--重写点赞按钮控件模板-->
-        <Style x:Name="LikeCommentButton" x:Key="LikeCommentButton" TargetType="Button">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Grid x:Name="Grid">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#FFFFFF"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="PointerOver">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#FFFFFF"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Pressed">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#D5D5D5"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Grid x:Name="Border" BorderThickness="0">
-                                <ContentPresenter x:Name="ContentPresenter" Foreground="{TemplateBinding Foreground}"  AutomationProperties.AccessibilityView="Raw" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Grid>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+
         <!--根据图片数量动态选择数据模板-->
         <util:ImgDataTemplateSelector x:Key="ImgDataTemplateSelector">
             <util:ImgDataTemplateSelector.NoPhotoTemplate>

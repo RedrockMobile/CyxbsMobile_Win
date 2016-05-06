@@ -26,7 +26,7 @@ namespace ZSCY_Win10.ViewModels.Community
             Get();
         }
 
-        private async void Get()
+        private void Get()
         {
             getbbdd(1, 15, 5);
             gethot(0, 15, 5);

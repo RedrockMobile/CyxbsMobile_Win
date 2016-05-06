@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Util;
+using ZSCY_Win10.ViewModels.Community;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -30,9 +31,11 @@ namespace ZSCY_Win10
     public sealed partial class MyPage : Page
     {
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+        MyViewModel ViewModel;
         public MyPage()
         {
             this.InitializeComponent();
+            ViewModel = new MyViewModel();
             this.SizeChanged += (s, e) =>
             {
                 var state = "VisualState000";
@@ -160,6 +163,16 @@ namespace ZSCY_Win10
         {
             PeoInfo peoinfo = new PeoInfo(nickNameText.Text, stuIntText.Text, phoneNumText.Text, qqNumText.Text);
             Frame.Navigate(typeof(SetPersonInfoPage), peoinfo);
+        }
+
+        private void PhotoGrid_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void LikeButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 

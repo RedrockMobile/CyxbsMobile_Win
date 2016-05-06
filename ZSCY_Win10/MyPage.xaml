@@ -5,8 +5,145 @@
     xmlns:local="using:ZSCY_Win10"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:util="using:ZSCY_Win10.Util"
+    xmlns:model="using:ZSCY_Win10.Data.Community"
     mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Name="LikedTextBlock" x:Key="LikedTextBlock" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"></Setter>
+            <Setter Property="Foreground" Value="Gray"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+        <util:ImgDataTemplateSelector x:Key="ImgDataTemplateSelector">
+            <util:ImgDataTemplateSelector.OnePhotoTemplate>
+                <DataTemplate  x:DataType="model:Img">
+                    <Grid MaxWidth="280">
+                        <Image  Source="{x:Bind ImgSrc}" Stretch="UniformToFill"/>
+                    </Grid>
+                </DataTemplate>
+            </util:ImgDataTemplateSelector.OnePhotoTemplate>
+            <util:ImgDataTemplateSelector.TwoPhotoTemplate>
+                <DataTemplate x:DataType="model:Img">
+                    <Grid MinWidth="150" MaxWidth="160">
+                        <Image Source="{x:Bind ImgSrc}" Stretch="UniformToFill"/>
+                    </Grid>
+                </DataTemplate>
 
+            </util:ImgDataTemplateSelector.TwoPhotoTemplate>
+            <util:ImgDataTemplateSelector.MorePhotoTemplate>
+                <DataTemplate x:DataType="model:Img">
+                    <Grid Height="100" Width="100">
+                        <Image Source="{Binding ImgSrc}" Stretch="UniformToFill"/>
+                    </Grid>
+                </DataTemplate>
+            </util:ImgDataTemplateSelector.MorePhotoTemplate>
+        </util:ImgDataTemplateSelector>
+        <util:NotifyContentTemplateSelector x:Key="NotifyContentTemplateSelector">
+            <util:NotifyContentTemplateSelector.RemarkTemplate>
+                <DataTemplate x:DataType="model:MyNotification">
+                    <StackPanel Orientation="Vertical" Padding="10"  Margin="0,3" Background="White">
+                        <StackPanel Orientation="Horizontal" Margin="0,10">
+                            <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
+                                <Rectangle.Fill>
+                                    <ImageBrush ImageSource="{x:Bind photo_src}"></ImageBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{x:Bind nickname}" Style="{StaticResource UsernameTextBlock}" Margin="0,0,15,0"></TextBlock>
+                                    <TextBlock Text="{x:Bind type,Converter={StaticResource NotifyTypeValueConverter}}" Style="{StaticResource LikedTextBlock}"></TextBlock>
+                                </StackPanel>
+                                <TextBlock Text="{x:Bind created_time}" Style="{StaticResource TimeTextBlock}"></TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="{x:Bind content}" TextWrapping="Wrap"></TextBlock>
+                        </StackPanel>
+                        <Grid Margin="0,5" Background="#FFF8F8F8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="{Binding article_photo_src,Converter={StaticResource GetOneorNonePicValueConverter}}" MinHeight="0" MinWidth="0" MaxWidth="60" MaxHeight="60" Stretch="UniformToFill" Margin=" 5"></Image>
+                            <TextBlock Grid.Column="1" Margin="10" Text="{x:Bind article_content}" TextWrapping="Wrap"></TextBlock>
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </util:NotifyContentTemplateSelector.RemarkTemplate>
+            <util:NotifyContentTemplateSelector.PraiseTemplate>
+                <DataTemplate x:DataType="model:MyNotification">
+                    <StackPanel Orientation="Vertical" Padding="10"  Margin="0,3" Background="White">
+                        <StackPanel Orientation="Horizontal" Margin="0,10">
+                            <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
+                                <Rectangle.Fill>
+                                    <ImageBrush ImageSource="{x:Bind photo_src}"></ImageBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{x:Bind nickname}" Style="{StaticResource UsernameTextBlock}" Margin="0,0,15,0"></TextBlock>
+                                    <TextBlock Text="{x:Bind type,Converter={StaticResource NotifyTypeValueConverter}}" Style="{StaticResource LikedTextBlock}"></TextBlock>
+                                </StackPanel>
+                                <TextBlock Text="{x:Bind created_time}" Style="{StaticResource TimeTextBlock}"></TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                        <Grid Margin="0,5" Background="#FFF8F8F8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!--<Image Grid.Column="0" Source="{x:Bind photo_src}" Height="60" Width="60" Stretch="UniformToFill"></Image>-->
+                            <Image Grid.Column="0" Source="{Binding article_photo_src,Converter={StaticResource GetOneorNonePicValueConverter}}" MinHeight="0" MinWidth="0" MaxWidth="60" MaxHeight="60" Stretch="UniformToFill" Margin=" 5"></Image>
+                            <TextBlock Grid.Column="1" Margin="10" Text="{x:Bind article_content}" TextWrapping="Wrap"></TextBlock>
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </util:NotifyContentTemplateSelector.PraiseTemplate>
+        </util:NotifyContentTemplateSelector>
+        <DataTemplate x:DataType="model:MyFeed" x:Key="MyFeedDataTemplate">
+            <StackPanel Orientation="Vertical" Padding="10" Background="White" Margin="0,3">
+                <StackPanel Orientation="Horizontal" Margin="0,10">
+                    <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="{x:Bind headimg}"></ImageBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <TextBlock Text="{x:Bind nickname}" Style="{StaticResource UsernameTextBlock}"></TextBlock>
+                        <TextBlock Text="{x:Bind created_time}" Style="{StaticResource TimeTextBlock}"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="{x:Bind content}" TextWrapping="Wrap"></TextBlock>
+                </StackPanel>
+                <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind photo_src}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                </GridView>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Style="{StaticResource LikeCommentButton}"  Click="LikeButton_Click">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" Margin="10,5">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" />
+                                <TextBlock Text="{x:Bind like_num,Mode=OneWay}" Margin="5,0,5,2"></TextBlock>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button Style="{StaticResource LikeCommentButton}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" Margin="10,5">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
+                                <TextBlock Text="{x:Bind remark_num,Mode=OneWay}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
     <Grid x:Name="grid" Background="White">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
@@ -173,17 +310,23 @@
         </Grid>
 
         <!--与我相关-->
-        <Grid Name="aboutMeGrid" Grid.Row="1" Visibility="Collapsed" Grid.Column="1">
+        <Grid Name="aboutMeGrid" Grid.Row="1" Visibility="Collapsed" Grid.Column="1" Background="#FFECECEC">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Button Click="aboutMe_Back_Click" Height="25" >
+            <Button Grid.Row="0" Click="aboutMe_Back_Click" Height="25" >
                 <Button.Background>
                     <ImageBrush Stretch="Fill" ImageSource="Assets/back.png"/>
                 </Button.Background>
             </Button>
-
+            <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.MyNotify}" ItemTemplateSelector="{StaticResource NotifyContentTemplateSelector}" SelectionMode="None">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
         </Grid>
         <!--个人动态-->
         <Grid Name="myTidingsGrid" Grid.Row="1" Visibility="Collapsed" Grid.Column="1">
@@ -191,11 +334,18 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Button Click="myTidings_Back_Click" Height="25" >
+            <Button Grid.Row="0" Click="myTidings_Back_Click" Height="25" >
                 <Button.Background>
                     <ImageBrush Stretch="Fill" ImageSource="Assets/back.png"/>
                 </Button.Background>
             </Button>
+            <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.MyFeedlist}" ItemTemplate="{StaticResource MyFeedDataTemplate}" SelectionMode="None">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
         </Grid>
     </Grid>
 </Page>
