@@ -151,7 +151,7 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
-                    <ListView ItemTemplateSelector="{StaticResource HotFeedsDataTemplateSelector}" ItemsSource="{x:Bind ViewModel.feeds}" ItemContainerStyle="{StaticResource ItemContainerStyle}">
+                    <ListView ItemTemplateSelector="{StaticResource HotFeedsDataTemplateSelector}" ItemsSource="{x:Bind ViewModel.feeds}" ItemContainerStyle="{StaticResource ItemContainerStyle}" SelectionMode="None" IsItemClickEnabled="False">
 
                     </ListView>
                
