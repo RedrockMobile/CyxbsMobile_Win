@@ -27,7 +27,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
         public CommunityMyContentPage()
         {
             this.InitializeComponent();
-            ViewModel = new CommunityMyContentViewModel();
         }
 
         private void PhotoGrid_ItemClick(object sender, ItemClickEventArgs e)
@@ -38,6 +37,11 @@ namespace ZSCY_Win10.Pages.CommunityPages
         private void LikeButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ViewModel = new CommunityMyContentViewModel(e.Parameter);
+            base.OnNavigatedTo(e);
         }
     }
 }

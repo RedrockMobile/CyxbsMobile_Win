@@ -174,6 +174,28 @@ namespace ZSCY_Win10
         {
 
         }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void ListView_ItemClick_1(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void Aboutme_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var x = e.ClickedItem;
+            frame.Navigate(typeof(CommunityMyContentViewModel), e.ClickedItem);
+        }
+
+        private void Myfeed_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var x = e.ClickedItem;
+            frame.Navigate(typeof(CommunityMyContentViewModel), e.ClickedItem);
+        }
     }
 
 
