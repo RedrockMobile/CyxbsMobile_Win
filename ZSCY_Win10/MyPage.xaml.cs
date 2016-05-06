@@ -114,7 +114,7 @@ namespace ZSCY_Win10
                     else
                     {
                         mpgImageBrush.ImageSource = new BitmapImage(new Uri(objdata["photo_src"].ToString()));
-                        appSetting.Values["Conmunity_headimg_src"] = objdata["photo_src"].ToString();
+                        appSetting.Values["Community_headimg_src"] = objdata["photo_src"].ToString();
                     }
                 }
             }

@@ -22,10 +22,7 @@ namespace ZSCY_Win10.Data.Community
         public string remark_num { get; set; }
         public string nickname { get; set; } = Windows.Storage.ApplicationData.Current.LocalSettings.Values["Conmunity_nickname"].ToString();
         public string headimg { get; set; } = Windows.Storage.ApplicationData.Current.LocalSettings.Values["Community_headimg_src"].ToString();
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="feedsJObject"></param>
+
 
         public void GetAttributes(JObject feedsJObject)
         {
