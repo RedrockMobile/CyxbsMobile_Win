@@ -84,46 +84,122 @@
         </DataTemplate>-->
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Orientation="Vertical" Padding="10" Background="White" Margin="0,3">
-            <StackPanel Orientation="Horizontal" Margin="0,10">
-                <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
-                    <Rectangle.Fill>
-                        <ImageBrush ImageSource="{x:Bind ViewModel.Item.headimg,Mode=OneWay}"></ImageBrush>
-                    </Rectangle.Fill>
-                </Rectangle>
-                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                    <TextBlock Text="{x:Bind ViewModel.Item.nickname,Mode=OneWay}" Style="{StaticResource UsernameTextBlock}"></TextBlock>
-                    <TextBlock Text="{x:Bind ViewModel.Item.created_time,Mode=OneWay}" Style="{StaticResource TimeTextBlock}"></TextBlock>
+        <ScrollViewer Grid.Row="0" Margin="0,0,0,50">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Vertical" Padding="10" Background="White" Margin="0,3">
+                    <StackPanel Orientation="Horizontal" Margin="0,10">
+                        <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
+                            <Rectangle.Fill>
+                                <ImageBrush ImageSource="{x:Bind ViewModel.Item.headimg,Mode=OneWay}"></ImageBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                            <TextBlock Text="{x:Bind ViewModel.Item.nickname,Mode=OneWay}" Style="{StaticResource UsernameTextBlock}"></TextBlock>
+                            <TextBlock Text="{x:Bind ViewModel.Item.created_time,Mode=OneWay}" Style="{StaticResource TimeTextBlock}"></TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Text="{x:Bind ViewModel.Item.content,Mode=OneWay}" TextWrapping="Wrap"></TextBlock>
+                    </StackPanel>
+                    <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind ViewModel.Item.photo_src,Mode=OneWay}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                    </GridView>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Button Style="{StaticResource LikeCommentButton}"  Click="LikeButton_Click">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal" Margin="10,5">
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="Gray"/>
+                                    <TextBlock Text="{x:Bind ViewModel.Item.like_num,Mode=OneWay}" Foreground="Gray" Margin="5,0,5,2"></TextBlock>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                        <Button Style="{StaticResource LikeCommentButton}">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal" Margin="10,5">
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
+                                    <TextBlock Text="{x:Bind ViewModel.Item.remark_num,Mode=OneWay}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
-            <StackPanel>
-                <TextBlock Text="{x:Bind ViewModel.Item.content,Mode=OneWay}" TextWrapping="Wrap"></TextBlock>
-            </StackPanel>
-            <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind ViewModel.Item.photo_src,Mode=OneWay}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
-                <GridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
-                    </ItemsPanelTemplate>
-                </GridView.ItemsPanel>
-            </GridView>
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button Style="{StaticResource LikeCommentButton}"  Click="LikeButton_Click">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal" Margin="10,5">
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="Gray"/>
-                            <TextBlock Text="{x:Bind ViewModel.Item.like_num,Mode=OneWay}" Foreground="Gray" Margin="5,0,5,2"></TextBlock>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Button Style="{StaticResource LikeCommentButton}">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal" Margin="10,5">
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
-                            <TextBlock Text="{x:Bind ViewModel.Item.remark_num,Mode=OneWay}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-            </StackPanel>
-        </StackPanel>
+                <Grid Grid.Row="1" Margin="0,5,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid Background="White">
+                        <TextBlock Text="评论" VerticalAlignment="Center" Margin="5"/>
+                    </Grid>
+                    <ListView Name="markListView"  Margin="-12,0" IsItemClickEnabled="True" ItemClick="markListView_ItemClick" SelectionMode="None" Grid.Row="1">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Background="#fafafa">
+                                    <Grid Margin="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Rectangle Grid.Column="0" HorizontalAlignment="Left" Grid.Row="0" RadiusX="15" RadiusY="15" Height="30" Width="30">
+                                            <Rectangle.Fill>
+                                                <ImageBrush ImageSource="{Binding photo_src}"></ImageBrush>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                        <StackPanel Margin="10,0,0,0" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="0" Orientation="Vertical" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding nickname}" FontSize="10" Foreground="#555"></TextBlock>
+                                            <TextBlock Text="{Binding created_time}" FontSize="10" Foreground="#777"></TextBlock>
+                                        </StackPanel>
+                                        <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="1" Text="{Binding content}" Foreground="#555" TextWrapping="WrapWholeWords"></TextBlock>
+                                    </Grid>
+                                    <Line Stroke="#e7e7e7" StrokeThickness="1" X1="0" X2="{Binding ActualWidth, ElementName=page, Mode=OneWay}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Grid Name="NoMarkGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Visibility="Collapsed">
+                        <TextBlock Text="快来发表第一条评论吧~" Foreground="#888" Margin="0,20" HorizontalAlignment="Center"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+        <Grid Name="sendMarkGrid" Margin="5" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Name="sendMarkTextBox" Grid.Column="0" PlaceholderText="输入你的评论" MaxHeight="50" TextWrapping="Wrap" TextChanged="sendMarkTextBox_TextChanged"></TextBox>
+            <Grid Grid.Column="1" Margin="5,0,0,0">
+                <Button Name="sendMarkButton" Margin="5,0,0,0" Content="发表" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Right" IsEnabled="False" Click="sendMarkButton_Click"></Button>
+                <ProgressRing Name="sendMarkProgressRing" IsActive="True" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center"></ProgressRing>
+            </Grid>
+        </Grid>
+        <!--图像-->
+        <Grid Name="CommunityItemPhotoGrid" Visibility="Collapsed" >
+            <Grid Background="Black" Name="CommunityItemPhotoBackGrid" Opacity="0.5" Tapped="CommunityItemPhoto_Tapped"/>
+            <FlipView Name="CommunityItemPhotoFlipView">
+                <FlipView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Name="CommunityItemPhotoImage" Stretch="Uniform" Source="{Binding ImgSrc}" Tapped="CommunityItemPhoto_Tapped"></Image>
+                    </DataTemplate>
+                </FlipView.ItemTemplate>
+            </FlipView>
+        </Grid>
     </Grid>
 </Page>

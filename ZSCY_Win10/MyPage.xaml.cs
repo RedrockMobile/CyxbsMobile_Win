@@ -56,7 +56,7 @@ namespace ZSCY_Win10
                     if (MyFrame.Visibility == Visibility.Visible || aboutMeGrid.Visibility == Visibility.Visible || myTidingsGrid.Visibility == Visibility.Visible)
                     {
                         //JWBackAppBarButton.Visibility = Visibility.Visible;
-                        SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+                        //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
                         SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                         //MyRefreshAppBarButton.Visibility = Visibility.Collapsed;
                     }
@@ -136,7 +136,13 @@ namespace ZSCY_Win10
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
-            if (CommunityItemPhotoGrid.Visibility == Visibility.Visible)
+            if (MyFrame.Visibility == Visibility.Visible)
+            {
+                MyFrame.Visibility = Visibility.Collapsed;
+                //SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            }
+            else if (CommunityItemPhotoGrid.Visibility == Visibility.Visible)
             {
                 CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
                 //SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
@@ -154,14 +160,14 @@ namespace ZSCY_Win10
                 SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             }
-            else
-            {
-                SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-                MyFrame.Visibility = Visibility.Collapsed;
-                //MyRefreshAppBarButton.Visibility = Visibility.Visible;
-                //CommunityMyAppBarButton.Visibility = Visibility.Visible;
-            }
+            //else
+            //{
+            //    SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+            //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            //    MyFrame.Visibility = Visibility.Collapsed;
+            //    //MyRefreshAppBarButton.Visibility = Visibility.Visible;
+            //    //CommunityMyAppBarButton.Visibility = Visibility.Visible;
+            //}
         }
 
 
@@ -202,7 +208,7 @@ namespace ZSCY_Win10
             CommunityItemPhotoFlipView.ItemsSource = clickImgList;
             CommunityItemPhotoFlipView.SelectedIndex = clickImfIndex;
             CommunityItemPhotoGrid.Visibility = Visibility.Visible;
-            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
 
@@ -242,12 +248,14 @@ namespace ZSCY_Win10
 
         private void Aboutme_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(CommunityMyContentPage),e.ClickedItem);
+            MyFrame.Visibility = Visibility.Visible;
+            MyFrame.Navigate(typeof(CommunityMyContentPage), e.ClickedItem);
         }
 
         private void Myfeed_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(CommunityMyContentPage), e.ClickedItem);
+            MyFrame.Visibility = Visibility.Visible;
+            MyFrame.Navigate(typeof(CommunityMyContentPage), e.ClickedItem);
         }
     }
 

@@ -42,12 +42,23 @@ namespace ZSCY_Win10.Pages.CommunityPages
         {
             this.InitializeComponent();
             ViewModel = new CommunityContentViewModel();
+            this.SizeChanged += (s, e) =>
+            {
+                if (Utils.getPhoneWidth() > 800)
+                {
+                    CommunityItemPhotoGrid.Margin = new Thickness(-400, 0, 0, 0);
+                }
+                else
+                {
+                    CommunityItemPhotoGrid.Margin = new Thickness(0);
+                }
+            };
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             markListView.ItemsSource = markList;
-            var item  = e.Parameter;
+            var item = e.Parameter;
             if (item is BBDDFeed)
             {
                 ViewModel.BBDD = item as BBDDFeed;
@@ -102,7 +113,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-            string mark =await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/getremark", paramList);
+            string mark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/getremark", paramList);
             Debug.WriteLine(mark);
 
             if (mark != "")

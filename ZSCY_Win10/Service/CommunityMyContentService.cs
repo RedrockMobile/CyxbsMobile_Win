@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace ZSCY_Win10.Service
             paramList.Add(new KeyValuePair<string, string>("type_id", type_id.ToString()));
             paramList.Add(new KeyValuePair<string, string>("article_id", article_id.ToString()));
             string response = await NetWork.getHttpWebRequest(api, paramList);
+            Debug.WriteLine(response);
             try
             {
                 if (response != "" || response != "[]")
@@ -30,7 +32,7 @@ namespace ZSCY_Win10.Service
                     JObject bbddfeeds = JObject.Parse(response);
                     if (bbddfeeds["status"].ToString() == "200")
                     {
-                        JObject feed =(JObject)bbddfeeds["data"][0];
+                        JObject feed = (JObject)bbddfeeds["data"][0];
                         MyFeed f = new MyFeed();
                         f.GetAttributes(feed);
                         return f;
