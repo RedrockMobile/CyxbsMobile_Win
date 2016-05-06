@@ -298,7 +298,7 @@
             <!--与我相关-->
             <Grid Name="aboutMeGrid" Visibility="Collapsed" Grid.Column="0" Background="#FFECECEC">
                 <ScrollViewer Name="aboutMeScrollViewer" ViewChanged="aboutMeScrollViewer_ViewChanged">
-                    <ListView ItemsSource="{x:Bind ViewModel.MyNotify}" ItemTemplateSelector="{StaticResource NotifyContentTemplateSelector}" SelectionMode="None">
+                    <ListView ItemsSource="{x:Bind ViewModel.MyNotify}" ItemTemplateSelector="{StaticResource NotifyContentTemplateSelector}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="Aboutme_ItemClick">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
@@ -310,7 +310,7 @@
             <!--个人动态-->
             <Grid Name="myTidingsGrid"  Visibility="Collapsed" Grid.Column="0" Background="#FFECECEC">
                 <ScrollViewer Name="myTidingsScrollViewer" ViewChanged="myTidingsScrollViewer_ViewChanged">
-                    <ListView ItemsSource="{x:Bind ViewModel.MyFeedlist}" ItemTemplate="{StaticResource MyFeedDataTemplate}" SelectionMode="None">
+                    <ListView ItemsSource="{x:Bind ViewModel.MyFeedlist}" ItemTemplate="{StaticResource MyFeedDataTemplate}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="Myfeed_ItemClick">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>

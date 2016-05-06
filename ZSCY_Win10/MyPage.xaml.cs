@@ -238,6 +238,17 @@ namespace ZSCY_Win10
                 ViewModel.getNotifications();
             }
         }
+
+        private void Aboutme_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            this.frame.Navigate(typeof(CommunityMyContentViewModel),e.ClickedItem);
+        }
+
+        private void Myfeed_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var x = e.ClickedItem;
+            Frame.Navigate(typeof(CommunityMyContentViewModel), x);
+        }
     }
 
 
