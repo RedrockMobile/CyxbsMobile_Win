@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -32,6 +33,10 @@ namespace ZSCY_Win10
     {
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         MyViewModel ViewModel;
+        List<Img> clickImgList = new List<Img>();
+        double myTidingsOldScrollableHeight = 0;
+        double aboutMeOldScrollableHeight = 0;
+        int clickImfIndex = 0;
         public MyPage()
         {
             this.InitializeComponent();
@@ -47,7 +52,7 @@ namespace ZSCY_Win10
                     //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     //    HubSectionKBTitle.Text = CommunityContentTitleTextBlock.Text;
                     //}
-                    if (MyFrame.Visibility == Visibility.Visible)
+                    if (MyFrame.Visibility == Visibility.Visible || aboutMeGrid.Visibility == Visibility.Visible || myTidingsGrid.Visibility == Visibility.Visible)
                     {
                         //JWBackAppBarButton.Visibility = Visibility.Visible;
                         SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
@@ -63,13 +68,18 @@ namespace ZSCY_Win10
                 {
                     MyTitleGrid.Margin = new Thickness(0);
                 }
-                if (e.NewSize.Width > 800)
+                if (e.NewSize.Width > 800 && aboutMeGrid.Visibility == Visibility.Collapsed && myTidingsGrid.Visibility == Visibility.Collapsed)
                 {
                     SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                     HubSectionKBTitle.Text = "个人中心";
                     //MyRefreshAppBarButton.Visibility = Visibility.Visible;
                     //CommunityMyAppBarButton.Visibility = Visibility.Visible;
+                    state = "VisualState800";
+                }
+                else if (e.NewSize.Width > 800)
+                {
+                    HubSectionKBTitle.Text = "个人中心";
                     state = "VisualState800";
                 }
                 VisualStateManager.GoToState(this, state, true);
@@ -125,39 +135,56 @@ namespace ZSCY_Win10
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
-            SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            MyFrame.Visibility = Visibility.Collapsed;
-            //MyRefreshAppBarButton.Visibility = Visibility.Visible;
-            //CommunityMyAppBarButton.Visibility = Visibility.Visible;
+            if (CommunityItemPhotoGrid.Visibility == Visibility.Visible)
+            {
+                CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
+                //SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            }
+            else if (myTidingsGrid.Visibility == Visibility.Visible)
+            {
+                myTidingsGrid.Visibility = Visibility.Collapsed;
+                SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            }
+            else if (aboutMeGrid.Visibility == Visibility.Visible)
+            {
+                aboutMeGrid.Visibility = Visibility.Collapsed;
+                SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            }
+            else
+            {
+                SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                MyFrame.Visibility = Visibility.Collapsed;
+                //MyRefreshAppBarButton.Visibility = Visibility.Visible;
+                //CommunityMyAppBarButton.Visibility = Visibility.Visible;
+            }
         }
 
 
 
         private void aboutMe_Click(object sender, RoutedEventArgs e)
         {
-            myPageGrid.Visibility = Visibility.Collapsed;
             aboutMeGrid.Visibility = Visibility.Visible;
-
+            ViewModel.notificationspage = 0;
+            ViewModel.getNotifications();
+            ViewModel.MyNotify.Clear();
+            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
 
         private void myTidings_Click(object sender, RoutedEventArgs e)
         {
-            myPageGrid.Visibility = Visibility.Collapsed;
             myTidingsGrid.Visibility = Visibility.Visible;
+            ViewModel.feedspage = 0;
+            ViewModel.getFeeds();
+            ViewModel.MyFeedlist.Clear();
+            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
 
-        private void aboutMe_Back_Click(object sender, RoutedEventArgs e)
-        {
-            myPageGrid.Visibility = Visibility.Visible;
-            aboutMeGrid.Visibility = Visibility.Collapsed;
-        }
-
-        private void myTidings_Back_Click(object sender, RoutedEventArgs e)
-        {
-            myPageGrid.Visibility = Visibility.Visible;
-            myTidingsGrid.Visibility = Visibility.Collapsed;
-        }
 
         private void EditAppBarButton_Click(object sender, RoutedEventArgs e)
         {
@@ -167,12 +194,49 @@ namespace ZSCY_Win10
 
         private void PhotoGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            Img img = e.ClickedItem as Img;
+            GridView gridView = sender as GridView;
+            clickImgList = ((Img[])gridView.ItemsSource).ToList();
+            clickImfIndex = clickImgList.IndexOf(img);
+            CommunityItemPhotoFlipView.ItemsSource = clickImgList;
+            CommunityItemPhotoFlipView.SelectedIndex = clickImfIndex;
+            CommunityItemPhotoGrid.Visibility = Visibility.Visible;
+            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
 
         private void LikeButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void CommunityItemPhoto_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
+            //SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            //backImgButton.Visibility = Visibility.Collapsed;
+            //nextImgButton.Visibility = Visibility.Collapsed;
+        }
+
+        private void myTidingsScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if (myTidingsScrollViewer.VerticalOffset > (myTidingsScrollViewer.ScrollableHeight - 500) && myTidingsScrollViewer.ScrollableHeight != myTidingsOldScrollableHeight)
+            {
+                myTidingsOldScrollableHeight = myTidingsScrollViewer.ScrollableHeight;
+                Debug.WriteLine("Feeds继续加载");
+                ViewModel.getFeeds();
+            }
+        }
+
+        private void aboutMeScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if (aboutMeScrollViewer.VerticalOffset > (aboutMeScrollViewer.ScrollableHeight - 500) && aboutMeScrollViewer.ScrollableHeight != aboutMeOldScrollableHeight)
+            {
+                aboutMeOldScrollableHeight = aboutMeScrollViewer.ScrollableHeight;
+                Debug.WriteLine("Notifications继续加载");
+                ViewModel.getNotifications();
+            }
         }
     }
 

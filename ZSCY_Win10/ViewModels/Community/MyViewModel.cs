@@ -13,22 +13,35 @@ namespace ZSCY_Win10.ViewModels.Community
     {
         public ObservableCollection<MyNotification> MyNotify { get; private set; } = new ObservableCollection<MyNotification>();
         public ObservableCollection<MyFeed> MyFeedlist { get; private set; } = new ObservableCollection<MyFeed>();
-        public  MyViewModel()
+        public int notificationspage = 0;
+        public int feedspage = 0;
+        public MyViewModel()
         {
             Get();
         }
         private async Task Get()
         {
-            List<MyNotification> s = await MyService.GetNotifications(0, 15);
+            getNotifications();
+            getFeeds();
+        }
+
+        public async void getNotifications(int size = 15)
+        {
+            List<MyNotification> s = await MyService.GetNotifications(notificationspage++, 15);
             for (int i = 0; i < s.Count; i++)
             {
                 MyNotify.Add(s[i]);
             }
-            List<MyFeed> f = await MyService.GetMyFeeds(0, 15);
+        }
+
+        public async void getFeeds(int size = 15)
+        {
+            List<MyFeed> f = await MyService.GetMyFeeds(feedspage++, 15);
             for (int i = 0; i < f.Count; i++)
             {
                 MyFeedlist.Add(f[i]);
             }
         }
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ namespace ZSCY_Win10.Service
                 paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
                 string response = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Article/aboutme", paramList);
                 //response = Utils.ConvertUnicodeStringToChinese(response);
+                Debug.WriteLine(response);
                 List<MyNotification> feeds = new List<MyNotification>();
                 try
                 {
@@ -49,7 +51,7 @@ namespace ZSCY_Win10.Service
 
             return null;
         }
-        public static async Task<List<MyFeed>> GetMyFeeds(int page=0,int size = 15)
+        public static async Task<List<MyFeed>> GetMyFeeds(int page = 0, int size = 15)
         {
             return await Task.Run(async () =>
             {
@@ -59,6 +61,7 @@ namespace ZSCY_Win10.Service
                 paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
                 paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
                 string response = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Article/searchtrends", paramList);
+                Debug.WriteLine(response);
                 //response = Utils.ConvertUnicodeStringToChinese(response);
                 List<MyFeed> feeds = new List<MyFeed>();
                 try

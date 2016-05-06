@@ -252,6 +252,8 @@ namespace ZSCY_Win10.Pages.CommunityPages
                         }
                         page.Visibility = Visibility.Collapsed;
                         commandbar.Visibility = Visibility.Collapsed;
+                        SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                         //ee.Handled = false;
                         //Frame.GoBack();
                     }
