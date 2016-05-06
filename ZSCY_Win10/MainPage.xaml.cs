@@ -178,7 +178,7 @@ namespace ZSCY_Win10
                         JObject objdata = JObject.Parse(obj["data"].ToString());
                         appSetting.Values["headimgdate"] = objdata["date"].ToString();
                         headimgImageBrush.ImageSource = new BitmapImage(new Uri(objdata["photosrc"].ToString()));
-                        appSetting.Values["Conmunity_headimg_src"] = objdata["photosrc"].ToString();
+                        appSetting.Values["Community_headimg_src"] = objdata["photosrc"].ToString();
 
                         Size downloadSize = new Size(48, 48);
                         await Utils.DownloadAndScale("headimg.png", objdata["photosrc"].ToString(), new Size(100, 100));
@@ -193,6 +193,7 @@ namespace ZSCY_Win10
             {
                 try
                 {
+                    appSetting.Values["Community_headimg_src"] = "";
                     IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
                     IStorageFile storageFileRE = await applicationFolder.GetFileAsync("headimg.png");
                     headimgImageBrush.ImageSource = new BitmapImage(new Uri(storageFileRE.Path));
@@ -358,10 +359,10 @@ namespace ZSCY_Win10
                             else
                             {
                                 appSetting.Values["CommunityPerInfo"] = true;
-                                appSetting.Values["Conmunity_people_id"] = jPerInfo["data"]["id"].ToString();
-                                appSetting.Values["Conmunity_nickname"] = jPerInfo["data"]["nickname"].ToString();
-                                appSetting.Values["Conmunity_headimg_src"] = jPerInfo["data"]["photo_src"].ToString();
-                                Debug.WriteLine(appSetting.Values["Conmunity_headimg_src"].ToString());
+                                appSetting.Values["Community_people_id"] = jPerInfo["data"]["id"].ToString();
+                                appSetting.Values["Community_nickname"] = jPerInfo["data"]["nickname"].ToString();
+                                appSetting.Values["Community_headimg_src"] = jPerInfo["data"]["photo_src"].ToString();
+                                Debug.WriteLine(appSetting.Values["Community_headimg_src"].ToString());
 
                                 Debug.WriteLine(jPerInfo["data"]["id"].ToString());
                                 BackOpacityGrid.Visibility = Visibility.Collapsed;

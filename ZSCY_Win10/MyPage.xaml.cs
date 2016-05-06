@@ -66,7 +66,7 @@ namespace ZSCY_Win10
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                     HubSectionKBTitle.Text = "个人中心";
                     //MyRefreshAppBarButton.Visibility = Visibility.Visible;
-                    //ConmunityMyAppBarButton.Visibility = Visibility.Visible;
+                    //CommunityMyAppBarButton.Visibility = Visibility.Visible;
                     state = "VisualState800";
                 }
                 VisualStateManager.GoToState(this, state, true);
@@ -97,13 +97,13 @@ namespace ZSCY_Win10
                 if (Int32.Parse(obj["status"].ToString()) == 200)
                 {
                     JObject objdata = JObject.Parse(obj["data"].ToString());
-                    appSetting.Values["Conmunity_people_id"] = objdata["id"].ToString();
+                    appSetting.Values["Community_people_id"] = objdata["id"].ToString();
                     stuNumText.Text = appSetting.Values["stuNum"].ToString();
                     nickNameText.Text = objdata["nickname"].ToString();
                     stuIntText.Text = objdata["introduction"].ToString();
                     phoneNumText.Text = objdata["phone"].ToString();
                     qqNumText.Text = objdata["qq"].ToString();
-                    appSetting.Values["Conmunity_nickname"] = objdata["nickname"].ToString();
+                    appSetting.Values["Community_nickname"] = objdata["nickname"].ToString();
                     if (objdata["photo_src"].ToString() == "")
                     {
                         mpgImageBrush.ImageSource = new BitmapImage(new Uri("ms-appdata:///Local/headimg.png"));
@@ -111,7 +111,7 @@ namespace ZSCY_Win10
                     else
                     {
                         mpgImageBrush.ImageSource = new BitmapImage(new Uri(objdata["photo_src"].ToString()));
-                        appSetting.Values["Conmunity_headimg_src"] = objdata["photo_src"].ToString();
+                        appSetting.Values["Community_headimg_src"] = objdata["photo_src"].ToString();
                     }
                 }
             }
@@ -126,7 +126,7 @@ namespace ZSCY_Win10
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             MyFrame.Visibility = Visibility.Collapsed;
             //MyRefreshAppBarButton.Visibility = Visibility.Visible;
-            //ConmunityMyAppBarButton.Visibility = Visibility.Visible;
+            //CommunityMyAppBarButton.Visibility = Visibility.Visible;
         }
 
 

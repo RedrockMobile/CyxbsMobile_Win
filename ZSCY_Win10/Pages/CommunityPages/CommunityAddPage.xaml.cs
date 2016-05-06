@@ -194,7 +194,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                             {
                                 string a = obj["data"].ToString();
                                 JObject objdata = JObject.Parse(obj["data"].ToString());
-                                appSetting.Values["headimgdate"] = objdata["date"].ToString();
+                                //appSetting.Values["headimgdate"] = objdata["date"].ToString();
                                 imageList[i].imgPhoto_src = objdata["photosrc"].ToString();
                                 imageList[i].imgThumbnail_src = objdata["thumbnail_src"].ToString();
 
@@ -224,7 +224,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("type_id", "5")); //现在只有哔哔叨叨
             paramList.Add(new KeyValuePair<string, string>("title", addTitleTextBox.Text));
-            paramList.Add(new KeyValuePair<string, string>("user_id", appSetting.Values["Conmunity_people_id"].ToString())); //记得改了
+            paramList.Add(new KeyValuePair<string, string>("user_id", appSetting.Values["Community_people_id"].ToString())); //记得改了
             paramList.Add(new KeyValuePair<string, string>("content", addContentTextBox.Text));
             paramList.Add(new KeyValuePair<string, string>("photo_src", imgPhoto_src));
             paramList.Add(new KeyValuePair<string, string>("thumbnail_src", imgThumbnail_src));
