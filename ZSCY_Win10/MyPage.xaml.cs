@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Data.Community;
+using ZSCY_Win10.Pages.CommunityPages;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
 
@@ -241,13 +242,12 @@ namespace ZSCY_Win10
 
         private void Aboutme_ItemClick(object sender, ItemClickEventArgs e)
         {
-            this.frame.Navigate(typeof(CommunityMyContentViewModel),e.ClickedItem);
+            Frame.Navigate(typeof(CommunityMyContentPage),e.ClickedItem);
         }
 
         private void Myfeed_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var x = e.ClickedItem;
-            Frame.Navigate(typeof(CommunityMyContentViewModel), x);
+            Frame.Navigate(typeof(CommunityMyContentPage), e.ClickedItem);
         }
     }
 

@@ -88,18 +88,18 @@
             <StackPanel Orientation="Horizontal" Margin="0,10">
                 <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
                     <Rectangle.Fill>
-                        <ImageBrush ImageSource="{x:Bind ViewModel.Item.headimg}"></ImageBrush>
+                        <ImageBrush ImageSource="{x:Bind ViewModel.Item.headimg,Mode=OneWay}"></ImageBrush>
                     </Rectangle.Fill>
                 </Rectangle>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                    <TextBlock Text="{x:Bind ViewModel.Item.nickname}" Style="{StaticResource UsernameTextBlock}"></TextBlock>
-                    <TextBlock Text="{x:Bind ViewModel.Item.created_time}" Style="{StaticResource TimeTextBlock}"></TextBlock>
+                    <TextBlock Text="{x:Bind ViewModel.Item.nickname,Mode=OneWay}" Style="{StaticResource UsernameTextBlock}"></TextBlock>
+                    <TextBlock Text="{x:Bind ViewModel.Item.created_time,Mode=OneWay}" Style="{StaticResource TimeTextBlock}"></TextBlock>
                 </StackPanel>
             </StackPanel>
             <StackPanel>
-                <TextBlock Text="{x:Bind ViewModel.Item.content}" TextWrapping="Wrap"></TextBlock>
+                <TextBlock Text="{x:Bind ViewModel.Item.content,Mode=OneWay}" TextWrapping="Wrap"></TextBlock>
             </StackPanel>
-            <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind ViewModel.Item.photo_src}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
+            <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind ViewModel.Item.photo_src,Mode=OneWay}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
@@ -110,8 +110,8 @@
                 <Button Style="{StaticResource LikeCommentButton}"  Click="LikeButton_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" Margin="10,5">
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" />
-                            <TextBlock Text="{x:Bind ViewModel.Item.like_num,Mode=OneWay}" Margin="5,0,5,2"></TextBlock>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="Gray"/>
+                            <TextBlock Text="{x:Bind ViewModel.Item.like_num,Mode=OneWay}" Foreground="Gray" Margin="5,0,5,2"></TextBlock>
                         </StackPanel>
                     </Button.Content>
                 </Button>

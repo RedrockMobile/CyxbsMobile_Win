@@ -21,8 +21,8 @@ namespace ZSCY_Win10.Service
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("type_id", type_id.ToString()));
+            paramList.Add(new KeyValuePair<string, string>("article_id", article_id.ToString()));
             string response = await NetWork.getHttpWebRequest(api, paramList);
-            //response = Utils.ConvertUnicodeStringToChinese(response);
             try
             {
                 if (response != "" || response != "[]")
@@ -30,7 +30,7 @@ namespace ZSCY_Win10.Service
                     JObject bbddfeeds = JObject.Parse(response);
                     if (bbddfeeds["status"].ToString() == "200")
                     {
-                        JObject feed = (JObject)bbddfeeds["data"];
+                        JObject feed =(JObject)bbddfeeds["data"][0];
                         MyFeed f = new MyFeed();
                         f.GetAttributes(feed);
                         return f;
