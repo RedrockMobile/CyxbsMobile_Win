@@ -23,7 +23,7 @@ namespace ZSCY_Win10.Util.Converter
             }
             else if (src.Length > 1)
             {
-                return src[0].ImgSrc;
+                return src[0].ImgSmallSrc;
             }
             else
             {
