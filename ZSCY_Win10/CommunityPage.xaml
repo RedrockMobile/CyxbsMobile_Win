@@ -252,7 +252,7 @@
                     <TextBlock Name="HubSectionKBTitle" Text="社区" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <!--<AppBarButton Name="ConmunityMyAppBarButton" Icon="Contact" Foreground="White" Click="ConmunityMyAppBarButton_Click"></AppBarButton>-->
+                    <!--<AppBarButton Name="CommunityMyAppBarButton" Icon="Contact" Foreground="White" Click="CommunityMyAppBarButton_Click"></AppBarButton>-->
                     <AppBarButton Name="CommunityAddAppBarButton" Icon="Add" Foreground="White" Click="CommunityAddAppBarButton_Click"/>
                     <AppBarButton Name="CommunityRefreshAppBarButton" Icon="Refresh" Foreground="White" Click="CommunityRefreshAppBarButton_Click"/>
                 </StackPanel>

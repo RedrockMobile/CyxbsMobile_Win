@@ -83,7 +83,7 @@ namespace ZSCY_Win10
 
         private async void SetPersonInfoOKAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            appSetting.Values["Conmunity_nickname"] = nameTextBox.Text;
+            appSetting.Values["Community_nickname"] = nameTextBox.Text;
 
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
@@ -103,7 +103,7 @@ namespace ZSCY_Win10
                     if (perInfo != "")
                     {
                         JObject jPerInfo = JObject.Parse(perInfo);
-                        appSetting.Values["Conmunity_people_id"] = jPerInfo["data"]["id"].ToString();
+                        appSetting.Values["Community_people_id"] = jPerInfo["data"]["id"].ToString();
                         Debug.WriteLine(jPerInfo["data"]["id"].ToString());
                     }
                     var navPage = ee.Parameter;
