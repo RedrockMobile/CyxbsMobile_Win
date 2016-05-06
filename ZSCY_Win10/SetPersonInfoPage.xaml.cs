@@ -122,6 +122,10 @@ namespace ZSCY_Win10
                         Frame.GoBack();
                     }
                 }
+                else if (Int32.Parse(obj["status"].ToString()) == 801)
+                {
+                    Utils.Toast("更新资料失败，请检查是否包含特殊词");
+                }
             }
         }
 
