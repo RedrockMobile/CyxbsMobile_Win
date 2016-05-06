@@ -164,6 +164,16 @@ namespace ZSCY_Win10
             PeoInfo peoinfo = new PeoInfo(nickNameText.Text, stuIntText.Text, phoneNumText.Text, qqNumText.Text);
             Frame.Navigate(typeof(SetPersonInfoPage), peoinfo);
         }
+
+        private void PhotoGrid_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void LikeButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
 
