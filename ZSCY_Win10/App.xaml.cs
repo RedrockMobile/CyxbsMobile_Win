@@ -71,6 +71,11 @@ namespace ZSCY_Win10
             {
                 appSetting.Values["CommunityPerInfo"] = false;
             }
+
+            if (!appSetting.Values.ContainsKey("Community_headimg_src"))
+            {
+                appSetting.Values["Community_headimg_src"] = "ms-appx:///Assets/Community_nohead.png";
+            }
         }
 
 

@@ -81,7 +81,7 @@
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
-                            <Button Style="{StaticResource LikeCommentButton}">
+                            <Button Style="{StaticResource LikeCommentButton}" IsEnabled="False">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Margin="10,5">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
@@ -126,7 +126,7 @@
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
-                            <Button Style="{StaticResource LikeCommentButton}">
+                            <Button Style="{StaticResource LikeCommentButton}" IsEnabled="False">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Margin="10,5">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
@@ -172,7 +172,7 @@
                             </StackPanel>
                         </Button.Content>
                     </Button>
-                    <Button Style="{StaticResource LikeCommentButton}">
+                    <Button Style="{StaticResource LikeCommentButton}" IsEnabled="False">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Margin="10,5">
                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
