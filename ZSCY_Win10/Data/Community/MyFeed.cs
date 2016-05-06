@@ -33,7 +33,7 @@ namespace ZSCY_Win10.Data.Community
             updated_time = feedsJObject["updated_time"].ToString();
             like_num = feedsJObject["like_num"].ToString();
             remark_num = feedsJObject["remark_num"].ToString();
-            string articlephotos = feedsJObject["article_photo_src"].ToString();
+            string articlephotos = feedsJObject["photo_src"].ToString();
             string smallphotos = feedsJObject["thumbnail_src"].ToString();
             string picstart = "http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/";
             if (articlephotos != "")

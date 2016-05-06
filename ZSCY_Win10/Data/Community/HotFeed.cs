@@ -113,7 +113,7 @@ namespace ZSCY_Win10.Data.Community
                 try
                 {
                     string[] i = imgsurls.Split(new char[] { ',' }, 9);
-                    if (i.Length > 1)
+                    if (imgsurls.EndsWith(","))
                         img = new Img[i.Length - 1];
                     else
                         img = new Img[i.Length];

@@ -127,8 +127,8 @@
                     <Button Style="{StaticResource LikeCommentButton}"  Click="LikeButton_Click">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Margin="10,5">
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" />
-                                <TextBlock Text="{x:Bind like_num,Mode=OneWay}" Margin="5,0,5,2"></TextBlock>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="Gray"/>
+                                <TextBlock Text="{x:Bind like_num,Mode=OneWay}" Foreground="Gray" Margin="5,0,5,2"></TextBlock>
                             </StackPanel>
                         </Button.Content>
                     </Button>
@@ -329,7 +329,7 @@
             </ListView>
         </Grid>
         <!--个人动态-->
-        <Grid Name="myTidingsGrid" Grid.Row="1" Visibility="Collapsed" Grid.Column="1">
+        <Grid Name="myTidingsGrid" Grid.Row="1" Visibility="Collapsed" Grid.Column="1" Background="#FFECECEC">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition/>
