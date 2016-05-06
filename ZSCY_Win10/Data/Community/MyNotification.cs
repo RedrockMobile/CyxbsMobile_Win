@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ZSCY_Win10.Data.Community
 {
-    public class MyNotification:IFeeds
+    public class MyNotification : IFeeds
     {
 
 
@@ -32,9 +32,9 @@ namespace ZSCY_Win10.Data.Community
             article_id = feedsJObject["article_id"].ToString();
             stunum = feedsJObject["stunum"].ToString();
             nickname = feedsJObject["nickname"].ToString();
-            photo_src = feedsJObject["photo_src"].ToString()==""? "ms-appx:///Assets/Boy-100.png" : feedsJObject["photo_src"].ToString();
+            photo_src = feedsJObject["photo_src"].ToString() == "" ? "ms-appx:///Assets/Boy-100.png" : feedsJObject["photo_src"].ToString();
             string articlephotos = feedsJObject["article_photo_src"].ToString();
-            string picstart = "http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/";
+            //string picstart = "http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/";
             if (articlephotos != "")
             {
                 try
@@ -48,11 +48,18 @@ namespace ZSCY_Win10.Data.Community
                     {
                         if (i[j] != "")
                         {
-                            if (!i[j].StartsWith(picstart))
-                                i[j] = picstart + i[j];
-                            article_photo_src[j] = new Img();
-                            article_photo_src[j].ImgSrc = i[j];
-                            article_photo_src[j].ImgSmallSrc = i[j];
+                            if (!i[j].StartsWith(App.picstart))
+                            {
+                                article_photo_src[j] = new Img();
+                                article_photo_src[j].ImgSrc = App.picstart + i[j];
+                                article_photo_src[j].ImgSmallSrc = App.picstartsmall + i[j];
+                            }
+                            else
+                            {
+                                article_photo_src[j] = new Img();
+                                article_photo_src[j].ImgSrc = i[j];
+                                article_photo_src[j].ImgSmallSrc = i[j];
+                            }
                         }
                         else
                         {

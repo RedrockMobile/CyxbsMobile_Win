@@ -41,7 +41,8 @@ namespace ZSCY_Win10
         public static ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>();
         public static bool showpane = true;
         public static MobileServiceClient MobileService = new MobileServiceClient("https://cqupt.azurewebsites.net");
-
+        public static string picstart = "http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/";
+        public static string picstartsmall = "http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/thumbnail/";
 
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
         /// <summary>

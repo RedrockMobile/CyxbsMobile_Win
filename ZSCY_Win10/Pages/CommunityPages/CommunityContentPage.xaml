@@ -30,14 +30,14 @@
             <util:ImgDataTemplateSelector.TwoPhotoTemplate>
                 <DataTemplate x:DataType="models:Img">
                     <Grid MinWidth="150" MaxWidth="160">
-                        <Image Source="{x:Bind ImgSrc}" Stretch="UniformToFill"/>
+                        <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill"/>
                     </Grid>
                 </DataTemplate>
             </util:ImgDataTemplateSelector.TwoPhotoTemplate>
             <util:ImgDataTemplateSelector.MorePhotoTemplate>
                 <DataTemplate x:DataType="models:Img">
                     <Grid Height="100" Width="100">
-                        <Image Source="{Binding ImgSrc}" Stretch="UniformToFill"/>
+                        <Image Source="{Binding ImgSmallSrc}" Stretch="UniformToFill"/>
                     </Grid>
                 </DataTemplate>
             </util:ImgDataTemplateSelector.MorePhotoTemplate>
