@@ -39,49 +39,6 @@
                 </DataTemplate>
             </util:ImgDataTemplateSelector.MorePhotoTemplate>
         </util:ImgDataTemplateSelector>
-        <!--<DataTemplate x:DataType="models:MyFeed" x:Key="MyFeedDataTemplate">
-            <StackPanel Orientation="Vertical" Padding="10" Background="White" Margin="0,3">
-                <StackPanel Orientation="Horizontal" Margin="0,10">
-                    <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
-                        <Rectangle.Fill>
-                            <ImageBrush ImageSource="{x:Bind headimg}"></ImageBrush>
-                        </Rectangle.Fill>
-                    </Rectangle>
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                        <TextBlock Text="{x:Bind nickname}" Style="{StaticResource UsernameTextBlock}"></TextBlock>
-                        <TextBlock Text="{x:Bind created_time}" Style="{StaticResource TimeTextBlock}"></TextBlock>
-                    </StackPanel>
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock Text="{x:Bind content}" TextWrapping="Wrap"></TextBlock>
-                </StackPanel>
-                <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind photo_src}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
-                    <GridView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
-                        </ItemsPanelTemplate>
-                    </GridView.ItemsPanel>
-                </GridView>
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button Style="{StaticResource LikeCommentButton}"  Click="LikeButton_Click">
-                        <Button.Content>
-                            <StackPanel Orientation="Horizontal" Margin="10,5">
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" />
-                                <TextBlock Text="{x:Bind like_num,Mode=OneWay}" Margin="5,0,5,2"></TextBlock>
-                            </StackPanel>
-                        </Button.Content>
-                    </Button>
-                    <Button Style="{StaticResource LikeCommentButton}">
-                        <Button.Content>
-                            <StackPanel Orientation="Horizontal" Margin="10,5">
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
-                                <TextBlock Text="{x:Bind remark_num,Mode=OneWay}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
-                            </StackPanel>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
-            </StackPanel>
-        </DataTemplate>-->
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <ScrollViewer Grid.Row="0" Margin="0,0,0,50">
@@ -113,7 +70,7 @@
                         </GridView.ItemsPanel>
                     </GridView>
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                        <Button Style="{StaticResource LikeCommentButton}"  Click="LikeButton_Click">
+                        <Button Style="{StaticResource LikeCommentButton}"  Click="LikeButton_Click" IsEnabled="False">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal" Margin="10,5">
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="Gray"/>
@@ -121,7 +78,7 @@
                                 </StackPanel>
                             </Button.Content>
                         </Button>
-                        <Button Style="{StaticResource LikeCommentButton}">
+                        <Button Style="{StaticResource LikeCommentButton}" IsEnabled="False">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal" Margin="10,5">
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>

@@ -98,10 +98,10 @@ namespace ZSCY_Win10.Pages.CommunityPages
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            markListView.ItemsSource = markList;
             ee = e;
             ViewModel = new CommunityMyContentViewModel(e.Parameter);
             base.OnNavigatedTo(e);
+            markListView.ItemsSource = markList;
             getMark();
         }
 
