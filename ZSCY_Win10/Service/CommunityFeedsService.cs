@@ -161,18 +161,22 @@ namespace ZSCY_Win10.Service
                 praise = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Praise/cancel", paramList);
             }
             Debug.WriteLine(praise);
-            if (praise != "")
+            try
             {
-                JObject obj = JObject.Parse(praise);
-                if (obj["state"].ToString() == "200")
+                if (praise != "")
                 {
-                    return obj["like_num"].ToString();
+                    JObject obj = JObject.Parse(praise);
+                    if (obj["state"].ToString() == "200")
+                    {
+                        return obj["like_num"].ToString();
+                    }
+                    else
+                        return "";
                 }
                 else
                     return "";
             }
-            else
-                return "";
+            catch (Exception) { }
         }
     }
 }

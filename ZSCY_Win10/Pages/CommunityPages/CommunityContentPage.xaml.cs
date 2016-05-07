@@ -115,41 +115,44 @@ namespace ZSCY_Win10.Pages.CommunityPages
             paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
             string mark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/getremark", paramList);
             Debug.WriteLine(mark);
-
-            if (mark != "")
+            try
             {
-                JObject obj = JObject.Parse(mark);
-                if (Int32.Parse(obj["state"].ToString()) == 200)
+                if (mark != "")
                 {
-                    markList.Clear();
-                    JArray markListArray = Utils.ReadJso(mark);
-
-                    if (markListArray.Count != 0)
+                    JObject obj = JObject.Parse(mark);
+                    if (Int32.Parse(obj["state"].ToString()) == 200)
                     {
-                        NoMarkGrid.Visibility = Visibility.Collapsed;
-                        if (ViewModel.BBDD != null)
-                            ViewModel.BBDD.remark_num = markListArray.Count.ToString();
-                        else
-                            ViewModel.hotfeed.remark_num = markListArray.Count.ToString();
-                        //if (args is HotFeed)
-                        //{
-                        //    HotFeed h = args as HotFeed;
-                        //    h.remark_num = ViewModel.BBDD.remark_num;
-                        //}
-                        for (int i = 0; i < markListArray.Count; i++)
+                        markList.Clear();
+                        JArray markListArray = Utils.ReadJso(mark);
+
+                        if (markListArray.Count != 0)
                         {
-                            Mark Markitem = new Mark();
-                            Markitem.GetListAttribute((JObject)markListArray[i]);
-                            markList.Add(Markitem);
+                            NoMarkGrid.Visibility = Visibility.Collapsed;
+                            if (ViewModel.BBDD != null)
+                                ViewModel.BBDD.remark_num = markListArray.Count.ToString();
+                            else
+                                ViewModel.hotfeed.remark_num = markListArray.Count.ToString();
+                            //if (args is HotFeed)
+                            //{
+                            //    HotFeed h = args as HotFeed;
+                            //    h.remark_num = ViewModel.BBDD.remark_num;
+                            //}
+                            for (int i = 0; i < markListArray.Count; i++)
+                            {
+                                Mark Markitem = new Mark();
+                                Markitem.GetListAttribute((JObject)markListArray[i]);
+                                markList.Add(Markitem);
+                            }
                         }
-                    }
-                    else
-                    {
-                        NoMarkGrid.Visibility = Visibility.Visible;
-                    }
+                        else
+                        {
+                            NoMarkGrid.Visibility = Visibility.Visible;
+                        }
 
+                    }
                 }
             }
+            catch (Exception) { }
         }
 
         private void sendMarkTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -189,26 +192,29 @@ namespace ZSCY_Win10.Pages.CommunityPages
             paramList.Add(new KeyValuePair<string, string>("content", sendMarkTextBox.Text));
             string sendMark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/postremarks", paramList);
             Debug.WriteLine(sendMark);
-
-            if (sendMark != "")
+            try
             {
-                JObject obj = JObject.Parse(sendMark);
-                if (Int32.Parse(obj["state"].ToString()) == 200)
+                if (sendMark != "")
                 {
-                    Utils.Toast("评论成功");
-                    sendMarkTextBox.Text = "";
-                    getMark();
+                    JObject obj = JObject.Parse(sendMark);
+                    if (Int32.Parse(obj["state"].ToString()) == 200)
+                    {
+                        Utils.Toast("评论成功");
+                        sendMarkTextBox.Text = "";
+                        getMark();
+                    }
+                    else
+                    {
+                        Utils.Toast("评论失败");
+                    }
                 }
                 else
                 {
                     Utils.Toast("评论失败");
                 }
+                sendMarkProgressRing.Visibility = Visibility.Collapsed;
             }
-            else
-            {
-                Utils.Toast("评论失败");
-            }
-            sendMarkProgressRing.Visibility = Visibility.Collapsed;
+            catch (Exception) { }
         }
 
         private void markListView_ItemClick(object sender, ItemClickEventArgs e)

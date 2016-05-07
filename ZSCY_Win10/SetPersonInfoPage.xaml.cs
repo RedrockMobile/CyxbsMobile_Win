@@ -89,39 +89,43 @@ namespace ZSCY_Win10
             paramList.Add(new KeyValuePair<string, string>("qq", qqTextBox.Text));
             paramList.Add(new KeyValuePair<string, string>("phone", phoneTextBox.Text));
             string setinfo = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/setInfo", paramList);
-            if (setinfo != "")
+            try
             {
-                JObject obj = JObject.Parse(setinfo);
-                if (Int32.Parse(obj["status"].ToString()) == 200)
+                if (setinfo != "")
                 {
-                    string perInfo = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/search", paramList);
-                    if (perInfo != "")
+                    JObject obj = JObject.Parse(setinfo);
+                    if (Int32.Parse(obj["status"].ToString()) == 200)
                     {
-                        JObject jPerInfo = JObject.Parse(perInfo);
-                        appSetting.Values["Community_people_id"] = jPerInfo["data"]["id"].ToString();
-                        Debug.WriteLine(jPerInfo["data"]["id"].ToString());
+                        string perInfo = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/search", paramList);
+                        if (perInfo != "")
+                        {
+                            JObject jPerInfo = JObject.Parse(perInfo);
+                            appSetting.Values["Community_people_id"] = jPerInfo["data"]["id"].ToString();
+                            Debug.WriteLine(jPerInfo["data"]["id"].ToString());
+                        }
+                        var navPage = ee.Parameter;
+                        if (navPage == typeof(CommunityPage))
+                        {
+                            Utils.Toast("新建个人信息成功~~，尽情享用吧");
+                            this.Frame.Navigate(typeof(CommunityPage));
+                        }
+                        else if (navPage == typeof(MyPage))
+                        {
+                            Utils.Toast("新建个人信息成功~~，尽情享用吧");
+                            this.Frame.Navigate(typeof(MyPage));
+                        }
+                        else
+                        {
+                            Frame.GoBack();
+                        }
                     }
-                    var navPage = ee.Parameter;
-                    if (navPage == typeof(CommunityPage))
+                    else if (Int32.Parse(obj["status"].ToString()) == 801)
                     {
-                        Utils.Toast("新建个人信息成功~~，尽情享用吧");
-                        this.Frame.Navigate(typeof(CommunityPage));
+                        Utils.Toast("更新资料失败，请检查是否包含特殊词");
                     }
-                    else if (navPage == typeof(MyPage))
-                    {
-                        Utils.Toast("新建个人信息成功~~，尽情享用吧");
-                        this.Frame.Navigate(typeof(MyPage));
-                    }
-                    else
-                    {
-                        Frame.GoBack();
-                    }
-                }
-                else if (Int32.Parse(obj["status"].ToString()) == 801)
-                {
-                    Utils.Toast("更新资料失败，请检查是否包含特殊词");
                 }
             }
+            catch (Exception) { }
         }
 
         //昵称
