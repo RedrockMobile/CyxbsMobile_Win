@@ -1,0 +1,109 @@
+﻿<Page
+    x:Class="ZSCY_Win10.Pages.CommunityPages.CommunityPersonInfo"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY_Win10.Pages.CommunityPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:ZSCY_Win10.Data.Community"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Key="NickNamestyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="Intro" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Foreground" Value="Gray"></Setter>
+            <Setter Property="Margin" Value="0"></Setter>
+        </Style>
+        <DataTemplate x:DataType="model:MyFeed" x:Key="MyFeedDataTemplate">
+            <StackPanel Orientation="Vertical" Padding="10" Background="White" Margin="-12,3">
+                <StackPanel Orientation="Horizontal" Margin="0,10">
+                    <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="{x:Bind headimg}"></ImageBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <TextBlock Text="{x:Bind nickname}" Style="{StaticResource UsernameTextBlock}"></TextBlock>
+                        <TextBlock Text="{x:Bind created_time}" Style="{StaticResource TimeTextBlock}"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="{x:Bind content}" TextWrapping="Wrap"></TextBlock>
+                </StackPanel>
+                <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind photo_src}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                </GridView>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Style="{StaticResource LikeCommentButton}"  Click="LikeButton_Click" IsEnabled="False">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" Margin="10,5">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="Gray"/>
+                                <TextBlock Text="{x:Bind like_num,Mode=OneWay}" Foreground="Gray" Margin="5,0,5,2"></TextBlock>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button Style="{StaticResource LikeCommentButton}" IsEnabled="False">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" Margin="10,5">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
+                                <TextBlock Text="{x:Bind remark_num,Mode=OneWay}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid Background="#FFEFEFF4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Background="#068cfd" Grid.Row="0">
+            <Grid Name="MyTitleGrid"  HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <!--<AppBarButton Name="MyBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="MyBackAppBarButton_Click"/>-->
+                    <TextBlock Name="HubSectionKBTitle" Text="详细资料" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel Orientation="Horizontal">
+                <Ellipse Width="40" Height="40" HorizontalAlignment="Left" Margin="30,20,20,20" VerticalAlignment="Center">
+                    <Ellipse.Fill>
+                        <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/Community_nohead.png"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="天堂迈舞" Style="{StaticResource NickNamestyle}"></TextBlock>
+                        <FontIcon Margin="10,0" FontFamily="Segoe UI Emoji" Glyph="&#x2640;" Foreground="#FFEF8F9F"   />
+                        <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x2642;" Foreground="#FF3F90E8"/>
+                    </StackPanel>
+                    <TextBlock Text="Hello From Seattle" Style="{StaticResource Intro}" Foreground="#FFB0B0B0"></TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2" Margin="10,30,10,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" VerticalAlignment="Center" Background="White" Height="48">
+                <TextBlock Text="近期动态" TextAlignment="Left" VerticalAlignment="Center" Foreground="#FF868686" Margin="10"></TextBlock>
+            </Grid>
+            <ListView Grid.Row="1" Margin="0,2" ItemTemplate="{StaticResource MyFeedDataTemplate}">
+
+            </ListView>
+        </Grid>
+    </Grid>
+</Page>
