@@ -86,51 +86,7 @@ namespace ZSCY_Win10
                 VisualStateManager.GoToState(this, state, true);
                 cutoffLine.Y2 = e.NewSize.Height;
             };
-
-            initInformation();
-
-            if (appSetting.Values["gender"].ToString().IndexOf("男") != (-1))
-            {
-                stuSexText.Text = "♂";
-                stuSexText.Foreground = new SolidColorBrush(Color.FromArgb(255, 6, 140, 253));
-            }
-            else
-                stuSexText.Text = "♀";
         }
-
-        private async void initInformation()
-        {
-            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("stunum", appSetting.Values["stuNum"].ToString()));
-            string info = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/search", paramList);
-            if (info != "")
-            {
-                JObject obj = JObject.Parse(info);
-                if (Int32.Parse(obj["status"].ToString()) == 200)
-                {
-                    JObject objdata = JObject.Parse(obj["data"].ToString());
-                    appSetting.Values["Community_people_id"] = objdata["id"].ToString();
-                    stuNumText.Text = appSetting.Values["stuNum"].ToString();
-                    nickNameText.Text = objdata["nickname"].ToString();
-                    stuIntText.Text = objdata["introduction"].ToString();
-                    phoneNumText.Text = objdata["phone"].ToString();
-                    qqNumText.Text = objdata["qq"].ToString();
-                    appSetting.Values["Community_nickname"] = objdata["nickname"].ToString();
-                    if (objdata["photo_src"].ToString() == "")
-                    {
-                        mpgImageBrush.ImageSource = new BitmapImage(new Uri("ms-appdata:///Local/headimg.png"));
-                    }
-                    else
-                    {
-                        mpgImageBrush.ImageSource = new BitmapImage(new Uri(objdata["photo_src"].ToString()));
-                        appSetting.Values["Community_headimg_src"] = objdata["photo_src"].ToString();
-                    }
-                }
-            }
-        }
-
         public Frame MyFrame { get { return this.frame; } }
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
@@ -195,7 +151,7 @@ namespace ZSCY_Win10
 
         private void EditAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            PeoInfo peoinfo = new PeoInfo(nickNameText.Text, stuIntText.Text, phoneNumText.Text, qqNumText.Text);
+            PeoInfo peoinfo = new PeoInfo(ViewModel.Info.nickname, ViewModel.Info.introduction, ViewModel.Info.phone, ViewModel.Info.qq);
             Frame.Navigate(typeof(SetPersonInfoPage), peoinfo);
         }
 

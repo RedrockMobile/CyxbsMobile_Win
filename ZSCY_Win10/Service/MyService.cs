@@ -87,5 +87,31 @@ namespace ZSCY_Win10.Service
 
             return null;
         }
+
+
+        const string api = "cyxbsMobile/index.php/Home/Person/search";
+        public static async Task<PeoInfo> GetPerson()
+        {
+            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            string response = await NetWork.getHttpWebRequest(api, paramList);
+            try
+            {
+                if (response != "" && response != "[]")
+                {
+                    JObject bbddfeeds = JObject.Parse(response);
+                    if (bbddfeeds["status"].ToString() == "200")
+                    {
+                        JObject feed = (JObject)bbddfeeds["data"];
+                        PeoInfo f = new PeoInfo();
+                        f.GetAttributes(feed);
+                        return f;
+                    }
+                }
+            }
+            catch (Exception) { }
+            return null;
+        }
     }
 }
