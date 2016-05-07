@@ -49,6 +49,7 @@ namespace ZSCY_Win10
                 abstractTextBox.Text = peoinfo.introduction;
                 qqTextBox.Text = peoinfo.qq;
                 phoneTextBox.Text = peoinfo.phone;
+                abstractNumTextBlock.Text = abstractTextBox.Text.Length + "/30";
                 SetPersonInfoOKAppBarButton.IsEnabled = true;
             }
 
@@ -60,6 +61,7 @@ namespace ZSCY_Win10
             else
             {
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
             }
         }
 
@@ -70,6 +72,7 @@ namespace ZSCY_Win10
                 e.Handled = true;
                 this.Frame.GoBack();
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
             }
         }
 
