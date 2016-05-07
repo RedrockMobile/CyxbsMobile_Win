@@ -26,6 +26,7 @@ namespace ZSCY_Win10.Data.Community
         public string nickname { get; set; }
         public string photo_src { get; set; }//头像
         public string photo_thumbnail_src { get; set; }
+        public string stunum { get; set; }
         public string like_num
         {
             get
@@ -76,6 +77,7 @@ namespace ZSCY_Win10.Data.Community
             like_num = feedsJObject["like_num"].ToString();
             remark_num = feedsJObject["remark_num"].ToString();
             nickname = feedsJObject["nickname"].ToString();
+            stunum = feedsJObject["stunum"].ToString();
             photo_src = feedsJObject["photo_src"].ToString() == "" ? "ms-appx:///Assets/Community_nohead.png" : feedsJObject["photo_src"].ToString();
             photo_thumbnail_src = feedsJObject["photo_thumbnail_src"].ToString() == "" ? "ms-appx:///Assets/Community_nohead.png" : feedsJObject["photo_thumbnail_src"].ToString();
             is_my_like = feedsJObject["is_my_like"].ToString();

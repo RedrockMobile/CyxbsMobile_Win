@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace ZSCY_Win10.Data.Community
 {
-    class PeoInfo
+    public class PeoInfo:IFeeds
     {
 
         public PeoInfo() { }
@@ -29,5 +30,21 @@ namespace ZSCY_Win10.Data.Community
         public string updated_time { get; set; }
         public string phone { get; set; }
         public string qq { get; set; }
+
+        public void GetAttributes(JObject feedsJObject)
+        {
+            id = feedsJObject["id"].ToString();
+            stunum = feedsJObject["stunum"].ToString();
+            introduction = feedsJObject["introduction"].ToString();
+            username = feedsJObject["username"].ToString();
+            nickname = feedsJObject["nickname"].ToString();
+            gender = feedsJObject["gender"].ToString();
+            photo_thumbnail_src = feedsJObject["photo_thumbnail_src"].ToString();
+            photo_src = feedsJObject["photo_src"].ToString();
+            updated_time = feedsJObject["updated_time"].ToString();
+            phone = feedsJObject["phone"].ToString();
+            qq = feedsJObject["qq"].ToString();
+
+        }
     }
 }

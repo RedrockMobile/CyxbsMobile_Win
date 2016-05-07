@@ -80,16 +80,16 @@
             <StackPanel Orientation="Horizontal">
                 <Ellipse Width="40" Height="40" HorizontalAlignment="Left" Margin="30,20,20,20" VerticalAlignment="Center">
                     <Ellipse.Fill>
-                        <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/Community_nohead.png"/>
+                        <ImageBrush Stretch="Fill" ImageSource="{x:Bind ViewModel.Info.photo_thumbnail_src}"/>
                     </Ellipse.Fill>
                 </Ellipse>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="天堂迈舞" Style="{StaticResource NickNamestyle}"></TextBlock>
+                        <TextBlock Text="{x:Bind ViewModel.Info.nickname}" Style="{StaticResource NickNamestyle}"></TextBlock>
                         <FontIcon Margin="10,0" FontFamily="Segoe UI Emoji" Glyph="&#x2640;" Foreground="#FFEF8F9F"   />
                         <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x2642;" Foreground="#FF3F90E8"/>
                     </StackPanel>
-                    <TextBlock Text="Hello From Seattle" Style="{StaticResource Intro}" Foreground="#FFB0B0B0"></TextBlock>
+                    <TextBlock Text="{x:Bind ViewModel.Info.introduction}" Style="{StaticResource Intro}" Foreground="#FFB0B0B0"></TextBlock>
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -101,7 +101,7 @@
             <Grid Grid.Row="0" VerticalAlignment="Center" Background="White" Height="48">
                 <TextBlock Text="近期动态" TextAlignment="Left" VerticalAlignment="Center" Foreground="#FF868686" Margin="10"></TextBlock>
             </Grid>
-            <ListView Grid.Row="1" Margin="0,2" ItemTemplate="{StaticResource MyFeedDataTemplate}">
+            <ListView Grid.Row="1" Margin="0,2" ItemTemplate="{StaticResource MyFeedDataTemplate}" ItemsSource="{x:Bind ViewModel.MyFeedlist}">
 
             </ListView>
         </Grid>

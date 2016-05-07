@@ -142,7 +142,7 @@
         <!--bbdd动态数据模板-->
         <DataTemplate x:DataType="models:BBDDFeed" x:Key="ListDataTemplate">
             <StackPanel Orientation="Vertical" Padding="10" Background="White" Margin="0,3">
-                <StackPanel Orientation="Horizontal" Margin="0,10">
+                <StackPanel Orientation="Horizontal" Margin="0,10" Tapped="StackPanel_Tapped">
                     <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
                         <Rectangle.Fill>
                             <ImageBrush ImageSource="{x:Bind photo_thumbnail_src}"></ImageBrush>

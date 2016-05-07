@@ -441,5 +441,12 @@ namespace ZSCY_Win10
             //nextImgButton.Visibility = Visibility.Collapsed;
         }
 
+
+
+        private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            BBDDFeed b = ((StackPanel)sender).DataContext as BBDDFeed;
+            Frame.Navigate(typeof(CommunityPersonInfo), b.stunum);
+        }
     }
 }

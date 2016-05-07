@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using ZSCY_Win10.ViewModels.Community;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -22,6 +23,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
     /// </summary>
     public sealed partial class CommunityPersonInfo : Page
     {
+        CommunityPersonInfoViewModel ViewModel;
         public CommunityPersonInfo()
         {
             this.InitializeComponent();
@@ -35,6 +37,12 @@ namespace ZSCY_Win10.Pages.CommunityPages
         private void LikeButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+
+            ViewModel = new CommunityPersonInfoViewModel();
+            ViewModel.Get(e.Parameter.ToString());
         }
     }
 }
