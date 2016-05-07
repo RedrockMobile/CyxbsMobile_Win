@@ -185,7 +185,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 for (int i = 0; i < count; i++)
                 {
                     string imgUp = await NetWork.headUpload(appSetting.Values["stuNum"].ToString(), imageList[i].imgAppPath, "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Photo/uploadArticle", false);
-                    if (imgUp != "")
+                    if (imgUp != "" && imgUp.IndexOf("Request Entity Too Large") == -1)
                     {
                         try
                         {
@@ -207,7 +207,14 @@ namespace ZSCY_Win10.Pages.CommunityPages
                         catch (Exception)
                         {
                             Debug.WriteLine("图片上传失败");
+                            return;
                         }
+                    }
+                    else if (imgUp.IndexOf("Request Entity Too Large") != -1)
+                    {
+                        Debug.WriteLine("第" + (int)(i + 1) + "张图片太大");
+                        Utils.Toast("第" + (int)(i + 1) + "张图片超出4M限制");
+                        return;
                     }
                     else
                     {
@@ -216,14 +223,20 @@ namespace ZSCY_Win10.Pages.CommunityPages
                         return;
                     }
                 }
-                imgPhoto_src = imgPhoto_src.Substring(1);
-                imgThumbnail_src = imgThumbnail_src.Substring(1);
+                if (imgPhoto_src != "")
+                {
+                    imgPhoto_src = imgPhoto_src.Substring(1);
+                }
+                if (imgThumbnail_src != "")
+                {
+                    imgThumbnail_src = imgThumbnail_src.Substring(1);
+                }
             }
 
 
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("type_id", "5")); //现在只有哔哔叨叨
-            paramList.Add(new KeyValuePair<string, string>("title", addTitleTextBox.Text));
+            paramList.Add(new KeyValuePair<string, string>("title", addContentTextBox.Text));
             paramList.Add(new KeyValuePair<string, string>("user_id", appSetting.Values["Community_people_id"].ToString())); //记得改了
             paramList.Add(new KeyValuePair<string, string>("content", addContentTextBox.Text));
             paramList.Add(new KeyValuePair<string, string>("photo_src", imgPhoto_src));
@@ -241,7 +254,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     {
                         Utils.Toast("发表成功");
                         Frame rootFrame = Window.Current.Content as Frame;
-                        addTitleTextBox.Text = "";
+                        //addTitleTextBox.Text = "";
                         addContentTextBox.Text = "";
                         if (imageList.Count > 1)
                         {
@@ -266,7 +279,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
 
         private void addTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (addContentTextBox.Text != "" && addTitleTextBox.Text != "")
+            if (addContentTextBox.Text != "" )
                 addArticleAppBarButton.IsEnabled = true;
             else
                 addArticleAppBarButton.IsEnabled = false;
