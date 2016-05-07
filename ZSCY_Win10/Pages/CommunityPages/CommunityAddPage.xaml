@@ -26,6 +26,7 @@
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>
+            <ProgressBar Name="addProgressBar" Margin="20,0" IsIndeterminate="False" Visibility="Collapsed" Grid.RowSpan="3"></ProgressBar>
         </Grid>
     </ScrollViewer>
     <Page.BottomAppBar>

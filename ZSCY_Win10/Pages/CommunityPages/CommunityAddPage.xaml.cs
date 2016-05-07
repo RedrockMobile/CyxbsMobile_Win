@@ -171,6 +171,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
         {
             string imgPhoto_src = "";
             string imgThumbnail_src = "";
+            addProgressBar.Visibility = Visibility.Visible;
             if (imageList.Count > 1)
             {
                 int count = 0;
@@ -182,6 +183,9 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 {
                     count = imageList.Count - 1;
                 }
+                addProgressBar.IsIndeterminate = false;
+                addProgressBar.Maximum = count;
+                addProgressBar.Value = 0;
                 for (int i = 0; i < count; i++)
                 {
                     string imgUp = await NetWork.headUpload(appSetting.Values["stuNum"].ToString(), imageList[i].imgAppPath, "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Photo/uploadArticle", false);
@@ -207,6 +211,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                         catch (Exception)
                         {
                             Debug.WriteLine("图片上传失败");
+                            addProgressBar.Visibility = Visibility.Collapsed;
                             return;
                         }
                     }
@@ -214,14 +219,17 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     {
                         Debug.WriteLine("第" + (int)(i + 1) + "张图片太大");
                         Utils.Toast("第" + (int)(i + 1) + "张图片超出4M限制");
+                        addProgressBar.Visibility = Visibility.Collapsed;
                         return;
                     }
                     else
                     {
                         Debug.WriteLine("图片上传失败");
                         Utils.Toast("发表失败");
+                        addProgressBar.Visibility = Visibility.Collapsed;
                         return;
                     }
+                    addProgressBar.Value += 1;
                 }
                 if (imgPhoto_src != "")
                 {
@@ -232,7 +240,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     imgThumbnail_src = imgThumbnail_src.Substring(1);
                 }
             }
-
+            addProgressBar.IsIndeterminate = true;
 
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("type_id", "5")); //现在只有哔哔叨叨
@@ -273,13 +281,14 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 }
             }
             catch (Exception) { }
+            addProgressBar.Visibility = Visibility.Collapsed;
 
         }
 
 
         private void addTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (addContentTextBox.Text != "" )
+            if (addContentTextBox.Text != "")
                 addArticleAppBarButton.IsEnabled = true;
             else
                 addArticleAppBarButton.IsEnabled = false;
