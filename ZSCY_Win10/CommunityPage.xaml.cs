@@ -442,6 +442,8 @@ namespace ZSCY_Win10
             //nextImgButton.Visibility = Visibility.Collapsed;
         }
 
-
+        private void CommunityItemPhotoImage_ImageOpened(object sender, RoutedEventArgs e)
+        {
+        }
     }
 }
