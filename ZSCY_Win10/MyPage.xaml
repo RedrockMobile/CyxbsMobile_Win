@@ -25,7 +25,7 @@
             <util:ImgDataTemplateSelector.TwoPhotoTemplate>
                 <DataTemplate x:DataType="model:Img">
                     <Grid MinWidth="150" MaxWidth="160">
-                        <Image Source="{x:Bind ImgSrc}" Stretch="UniformToFill"/>
+                        <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill"/>
                     </Grid>
                 </DataTemplate>
 
@@ -33,7 +33,7 @@
             <util:ImgDataTemplateSelector.MorePhotoTemplate>
                 <DataTemplate x:DataType="model:Img">
                     <Grid Height="100" Width="100">
-                        <Image Source="{Binding ImgSrc}" Stretch="UniformToFill"/>
+                        <Image Source="{Binding ImgSmallSrc}" Stretch="UniformToFill"/>
                     </Grid>
                 </DataTemplate>
             </util:ImgDataTemplateSelector.MorePhotoTemplate>
@@ -124,7 +124,7 @@
                     </GridView.ItemsPanel>
                 </GridView>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button Style="{StaticResource LikeCommentButton}"  Click="LikeButton_Click">
+                    <Button Style="{StaticResource LikeCommentButton}"  Click="LikeButton_Click" IsEnabled="False">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Margin="10,5">
                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="Gray"/>
@@ -132,7 +132,7 @@
                             </StackPanel>
                         </Button.Content>
                     </Button>
-                    <Button Style="{StaticResource LikeCommentButton}">
+                    <Button Style="{StaticResource LikeCommentButton}" IsEnabled="False">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Margin="10,5">
                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
