@@ -169,6 +169,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
 
         private async void addArticleAppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            addArticleAppBarButton.IsEnabled = false;
             string imgPhoto_src = "";
             string imgThumbnail_src = "";
             addProgressBar.Visibility = Visibility.Visible;
@@ -177,7 +178,14 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 int count = 0;
                 if (imageList.Count == 9)
                 {
-                    count = 9;
+                    if (imageList[8].imgName != "CommunityAddImg.png")
+                    {
+                        count = 9;
+                    }
+                    else
+                    {
+                        count = 8;
+                    }
                 }
                 else
                 {
@@ -189,6 +197,8 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 for (int i = 0; i < count; i++)
                 {
                     string imgUp = await NetWork.headUpload(appSetting.Values["stuNum"].ToString(), imageList[i].imgAppPath, "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Photo/uploadArticle", false);
+                    StorageFile imgfile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(imageList[i].imgAppPath));
+                    imgfile.DeleteAsync();
                     if (imgUp != "" && imgUp.IndexOf("Request Entity Too Large") == -1)
                     {
                         try
@@ -281,6 +291,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 }
             }
             catch (Exception) { }
+            addArticleAppBarButton.IsEnabled = true;
             addProgressBar.Visibility = Visibility.Collapsed;
 
         }

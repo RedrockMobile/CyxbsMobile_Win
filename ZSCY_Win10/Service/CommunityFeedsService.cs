@@ -176,7 +176,10 @@ namespace ZSCY_Win10.Service
                 else
                     return "";
             }
-            catch (Exception) { }
+            catch (Exception)
+            {
+                return "";
+            }
         }
     }
 }
