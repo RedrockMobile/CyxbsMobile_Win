@@ -288,6 +288,9 @@
     <Compile Include="Pages\CommunityPages\CommunityMyContentPage.xaml.cs">
       <DependentUpon>CommunityMyContentPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\CommunityPages\CommunityPersonInfo.xaml.cs">
+      <DependentUpon>CommunityPersonInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\EmptyRoomsPage.xaml.cs">
       <DependentUpon>EmptyRoomsPage.xaml</DependentUpon>
     </Compile>
@@ -537,6 +540,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\CommunityPages\CommunityMyContentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CommunityPages\CommunityPersonInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
