@@ -197,8 +197,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 for (int i = 0; i < count; i++)
                 {
                     string imgUp = await NetWork.headUpload(appSetting.Values["stuNum"].ToString(), imageList[i].imgAppPath, "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Photo/uploadArticle", false);
-                    StorageFile imgfile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(imageList[i].imgAppPath));
-                    imgfile.DeleteAsync();
                     if (imgUp != "" && imgUp.IndexOf("Request Entity Too Large") == -1)
                     {
                         try
@@ -221,6 +219,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                         catch (Exception)
                         {
                             Debug.WriteLine("图片上传失败");
+                            addArticleAppBarButton.IsEnabled = true;
                             addProgressBar.Visibility = Visibility.Collapsed;
                             return;
                         }
@@ -229,6 +228,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     {
                         Debug.WriteLine("第" + (int)(i + 1) + "张图片太大");
                         Utils.Toast("第" + (int)(i + 1) + "张图片超出4M限制");
+                        addArticleAppBarButton.IsEnabled = true;
                         addProgressBar.Visibility = Visibility.Collapsed;
                         return;
                     }
@@ -236,10 +236,16 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     {
                         Debug.WriteLine("图片上传失败");
                         Utils.Toast("发表失败");
+                        addArticleAppBarButton.IsEnabled = true;
                         addProgressBar.Visibility = Visibility.Collapsed;
                         return;
                     }
                     addProgressBar.Value += 1;
+                }
+                for (int i = 0; i < count; i++)
+                {
+                    StorageFile imgfile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(imageList[i].imgAppPath));
+                    imgfile.DeleteAsync();
                 }
                 if (imgPhoto_src != "")
                 {
