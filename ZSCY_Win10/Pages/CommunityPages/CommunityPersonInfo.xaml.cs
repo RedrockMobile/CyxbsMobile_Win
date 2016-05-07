@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -38,11 +39,9 @@ namespace ZSCY_Win10.Pages.CommunityPages
         {
 
         }
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-
-            ViewModel = new CommunityPersonInfoViewModel();
-            ViewModel.Get(e.Parameter.ToString());
+            ViewModel = new CommunityPersonInfoViewModel(e.Parameter.ToString());
         }
     }
 }

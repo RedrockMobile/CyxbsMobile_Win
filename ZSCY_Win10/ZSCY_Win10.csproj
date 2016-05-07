@@ -332,7 +332,9 @@
     <Compile Include="Util\Converter\ExamDateConverter.cs" />
     <Compile Include="Util\Converter\ExamTimeConverter.cs" />
     <Compile Include="Util\Converter\FreeConverter.cs" />
+    <Compile Include="Util\Converter\GenderColorConverter.cs" />
     <Compile Include="Util\Converter\GenderConverter.cs" />
+    <Compile Include="Util\Converter\GenderNameConverter.cs" />
     <Compile Include="Util\Converter\GetOneorNonePicValueConverter.cs" />
     <Compile Include="Util\Converter\itemPageConverter.cs" />
     <Compile Include="Util\Converter\KBGridConverter.cs" />

@@ -22,24 +22,27 @@ namespace ZSCY_Win10.ViewModels.Community
             set
             {
                 this.info = value;
+
                 OnPropertyChanged(nameof(Info));
             }
         }
         public ObservableCollection<MyFeed> MyFeedlist { get; private set; } = new ObservableCollection<MyFeed>();
 
-        public CommunityPersonInfoViewModel()
+        public CommunityPersonInfoViewModel(string stunum)
         {
-
+            Get(stunum);
         }
-        public  async void Get(string stunum)
+        public async void Get(string stunum)
         {
             Info = await CommunityPersonInfoService.GetPerson(stunum);
-             List<MyFeed> list = await CommunityPersonInfoService.GetMyFeeds(stunum, 0, 15);
-            if(list!=null)
-            for (int i = 0; i < list.Count; i++)
-            {
-                MyFeedlist.Add(list[i]);
-            }
+            List<MyFeed> list = await CommunityPersonInfoService.GetMyFeeds(stunum, 0, 15);
+            if (list != null)
+                for (int i = 0; i < list.Count; i++)
+                {
+                    list[i].headimg = Info.photo_thumbnail_src;
+                    list[i].nickname = info.nickname;
+                    MyFeedlist.Add(list[i]);
+                }
         }
     }
 }
