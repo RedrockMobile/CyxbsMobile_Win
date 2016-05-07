@@ -97,7 +97,6 @@ namespace ZSCY_Win10
         public Frame CommunityFrame { get { return this.cframe; } }
         //public Frame MyFrame { get { return this.Myframe; } }
 
-
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
