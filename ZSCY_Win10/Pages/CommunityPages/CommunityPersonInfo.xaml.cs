@@ -112,6 +112,12 @@ namespace ZSCY_Win10.Pages.CommunityPages
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
 
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+        }
+
         private void infoListScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             if (infoListScrollViewer.VerticalOffset > (infoListScrollViewer.ScrollableHeight - 500) && infoListScrollViewer.ScrollableHeight != infoListScrollableHeight)
