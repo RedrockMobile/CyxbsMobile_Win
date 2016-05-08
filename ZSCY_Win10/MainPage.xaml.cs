@@ -229,7 +229,7 @@ namespace ZSCY_Win10
 
         private void SystemNavigationManager_BackRequseted(object sender, BackRequestedEventArgs e)
         {
-            //e.Handled =true ;
+            //e.Handled = true;
             //Application.Current.Exit();
         }
 

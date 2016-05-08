@@ -124,11 +124,15 @@ namespace ZSCY_Win10
                 }
                 else if (!isPersonInfo)
                 {
-                    SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
-                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-                    CommunityFrame.Visibility = Visibility.Collapsed;
-                    CommunityRefreshAppBarButton.Visibility = Visibility.Visible;
-                    //CommunityMyAppBarButton.Visibility = Visibility.Visible;
+                    if (!App.isPerInfoContentImgShow && CommunityFrame.Visibility == Visibility.Visible)
+                    {
+                        SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                        CommunityFrame.Visibility = Visibility.Collapsed;
+                        CommunityRefreshAppBarButton.Visibility = Visibility.Visible;
+                        //CommunityMyAppBarButton.Visibility = Visibility.Visible;
+                        e.Handled = true;
+                    }
                 }
             }
         }
@@ -301,11 +305,11 @@ namespace ZSCY_Win10
         {
             this.cframe.Navigate(typeof(CommunityContentPage), e.ClickedItem, new DrillInNavigationTransitionInfo());
             CommunityFrame.Visibility = Visibility.Visible;
-            if (CommunityTitleGrid.Width != 400)
-            {
-                SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            }
+            //if (CommunityTitleGrid.Width != 400 )
+            //{
+            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            //}
         }
 
         private async void liskButton_Click(object sender, RoutedEventArgs e)

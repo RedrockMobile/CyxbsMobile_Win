@@ -215,6 +215,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 sendMarkProgressRing.Visibility = Visibility.Collapsed;
             }
             catch (Exception) { }
+            isMark2Peo = false;
         }
 
         private void markListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -232,7 +233,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
             sendMarkTextBox.Text = "回复 " + clickMarkItem.nickname + " : " + sendMarkTextBox.Text;
             sendMarkTextBox.Focus(FocusState.Keyboard);
             sendMarkTextBox.SelectionStart = sendMarkTextBox.Text.Length;
-            isMark2Peo = false;
             //TODO:吃完饭记得睡觉
         }
 
@@ -328,6 +328,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 CommunityItemPhotoGrid.Margin = new Thickness(-400, 0, 0, 0);
             }
             CommunityItemPhotoGrid.Visibility = Visibility.Visible;
+            App.isPerInfoContentImgShow = true;
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
@@ -338,18 +339,21 @@ namespace ZSCY_Win10.Pages.CommunityPages
             if (CommunityItemPhotoGrid.Visibility == Visibility.Visible)
             {
                 CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
-                if (Utils.getPhoneWidth() > 800)
-                {
-                    SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
-                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-                }
+                App.isPerInfoContentImgShow = false;
+                //if (Utils.getPhoneWidth() > 800)
+                //{
+                //    SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                //}
                 //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             }
+            SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
         }
 
         private void CommunityItemPhoto_Tapped(object sender, TappedRoutedEventArgs e)
         {
             CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
+            App.isPerInfoContentImgShow = false;
             SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
             //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }

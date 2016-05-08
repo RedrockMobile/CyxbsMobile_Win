@@ -180,6 +180,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 }
             }
             catch (Exception) { }
+            isMark2Peo = false;
         }
 
         private void sendMarkTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -257,7 +258,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
             sendMarkTextBox.Text = "回复 " + clickMarkItem.nickname + " : " + sendMarkTextBox.Text;
             sendMarkTextBox.Focus(FocusState.Keyboard);
             sendMarkTextBox.SelectionStart = sendMarkTextBox.Text.Length;
-            isMark2Peo = false;
         }
 
     }
