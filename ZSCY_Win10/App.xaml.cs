@@ -27,6 +27,7 @@ using ZSCY.Data;
 using ZSCY_Win10.Data;
 using ZSCY_Win10.Pages.CommunityPages;
 using ZSCY_Win10.Util;
+using ZSCY_Win10.ViewModels.Community;
 
 namespace ZSCY_Win10
 {
@@ -43,6 +44,9 @@ namespace ZSCY_Win10
         public static MobileServiceClient MobileService = new MobileServiceClient("https://cqupt.azurewebsites.net");
         public static string picstart = "http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/";
         public static string picstartsmall = "http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/thumbnail/";
+        public static CommunityViewModel ViewModel { get; set; }
+        public static int CommunityPivotState;
+        public static double CommunityScrollViewerOffset;
 
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
         /// <summary>

@@ -87,32 +87,48 @@ namespace ZSCY_Win10
                 VisualStateManager.GoToState(this, state, true);
                 cutoffLine.Y2 = e.NewSize.Height;
             };
-            ViewModel = new CommunityViewModel();
             //CommunityFrame.Visibility = Visibility.Visible;
             //CommunityFrame.Navigate(typeof(CommunityContentPage));
             //RMDTListView.ContainerContentChanging += RMDTListView_ContainerContentChanging;
         }
-
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            this.NavigationCacheMode = NavigationCacheMode.Required;
+            if (e.NavigationMode == NavigationMode.New)
+            {
+                ViewModel = new CommunityViewModel();
+            }
+            else
+            {
+                ViewModel = App.ViewModel;
+                CommunityPivot.SelectedIndex = App.CommunityPivotState;
+                await Task.Delay(1);
+                BBDDScrollViewer.ChangeView(0, App.CommunityScrollViewerOffset, 1);
+            }
+        }
 
         public Frame CommunityFrame { get { return this.cframe; } }
         //public Frame MyFrame { get { return this.Myframe; } }
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
-            e.Handled = true;
-            if (CommunityItemPhotoGrid.Visibility == Visibility.Visible)
+            if (!e.Handled)
             {
-                CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
-                SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            }
-            else
-            {
-                SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-                CommunityFrame.Visibility = Visibility.Collapsed;
-                CommunityRefreshAppBarButton.Visibility = Visibility.Visible;
-                //CommunityMyAppBarButton.Visibility = Visibility.Visible;
+                if (CommunityItemPhotoGrid.Visibility == Visibility.Visible)
+                {
+                    CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
+                    SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                    e.Handled = true;
+                }
+                else
+                {
+                    SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                    CommunityFrame.Visibility = Visibility.Collapsed;
+                    CommunityRefreshAppBarButton.Visibility = Visibility.Visible;
+                    //CommunityMyAppBarButton.Visibility = Visibility.Visible;
+                }
             }
         }
 
@@ -446,6 +462,9 @@ namespace ZSCY_Win10
         private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
             BBDDFeed b = ((StackPanel)sender).DataContext as BBDDFeed;
+            App.ViewModel = ViewModel;
+            App.CommunityPivotState = CommunityPivot.SelectedIndex;
+            App.CommunityScrollViewerOffset = BBDDScrollViewer.VerticalOffset;
             Frame.Navigate(typeof(CommunityPersonInfo), b.stunum);
         }
     }
