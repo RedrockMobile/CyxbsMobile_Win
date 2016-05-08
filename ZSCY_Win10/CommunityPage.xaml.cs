@@ -94,7 +94,7 @@ namespace ZSCY_Win10
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.NavigationCacheMode = NavigationCacheMode.Required;
-            if (e.NavigationMode == NavigationMode.New)
+            if (e.NavigationMode == NavigationMode.New || e.NavigationMode == NavigationMode.Refresh)
             {
                 ViewModel = new CommunityViewModel();
             }
