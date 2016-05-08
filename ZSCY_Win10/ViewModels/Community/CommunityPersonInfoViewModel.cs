@@ -12,6 +12,8 @@ namespace ZSCY_Win10.ViewModels.Community
 {
     public class CommunityPersonInfoViewModel : ViewModelBase
     {
+        int page = 0;
+        string stunum = "";
         private PeoInfo info;
         public PeoInfo Info
         {
@@ -30,12 +32,13 @@ namespace ZSCY_Win10.ViewModels.Community
 
         public CommunityPersonInfoViewModel(string stunum)
         {
-            Get(stunum);
+            this.stunum = stunum;
+            Get();
         }
-        public async void Get(string stunum)
+        public async void Get()
         {
             Info = await CommunityPersonInfoService.GetPerson(stunum);
-            List<MyFeed> list = await CommunityPersonInfoService.GetMyFeeds(stunum, 0, 15);
+            List<MyFeed> list = await CommunityPersonInfoService.GetMyFeeds(stunum, page++, 15);
             if (list != null)
                 for (int i = 0; i < list.Count; i++)
                 {

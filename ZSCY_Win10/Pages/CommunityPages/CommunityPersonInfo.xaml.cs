@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -27,6 +28,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
     public sealed partial class CommunityPersonInfo : Page
     {
         CommunityPersonInfoViewModel ViewModel;
+        double infoListScrollableHeight = 0;
         List<Img> clickImgList = new List<Img>();
         int clickImfIndex = 0;
         public CommunityPersonInfo()
@@ -108,6 +110,16 @@ namespace ZSCY_Win10.Pages.CommunityPages
             ViewModel = new CommunityPersonInfoViewModel(e.Parameter.ToString());
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+        }
+
+        private void infoListScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if (infoListScrollViewer.VerticalOffset > (infoListScrollViewer.ScrollableHeight - 500) && infoListScrollViewer.ScrollableHeight != infoListScrollableHeight)
+            {
+                infoListScrollableHeight = infoListScrollViewer.ScrollableHeight;
+                Debug.WriteLine("infoList继续加载");
+                ViewModel.Get();
+            }
         }
     }
 }

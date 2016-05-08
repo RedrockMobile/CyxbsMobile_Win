@@ -99,7 +99,7 @@
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualState000">
                     <VisualState.Setters>
-                        <Setter Target="InfoListGrid.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="infoListGrid.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="MyContentGrid.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="cutoffLine.(UIElement.Visibility)" Value="Collapsed"/>
                         <Setter Target="frame.(FrameworkElement.Margin)">
@@ -111,7 +111,7 @@
                 </VisualState>
                 <VisualState x:Name="VisualState800">
                     <VisualState.Setters>
-                        <Setter Target="InfoListGrid.(FrameworkElement.Width)" Value="400"/>
+                        <Setter Target="infoListGrid.(FrameworkElement.Width)" Value="400"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -132,7 +132,7 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Grid Name="InfoListGrid" Grid.Column="0">
+            <Grid Name="infoListGrid" Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
@@ -161,14 +161,16 @@
                     <Grid Grid.Row="0" VerticalAlignment="Center" Background="White" Height="48">
                         <TextBlock Text="近期动态" TextAlignment="Left" VerticalAlignment="Center" Foreground="#FF868686" Margin="10"></TextBlock>
                     </Grid>
-                    <ListView Grid.Row="1" Margin="0,2" ItemTemplate="{StaticResource MyFeedDataTemplate}" ItemsSource="{x:Bind ViewModel.MyFeedlist}" SelectionMode="None" IsItemClickEnabled="True">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                <Setter Property="Margin" Value="-12,0"></Setter>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                    </ListView>
+                    <ScrollViewer Name="infoListScrollViewer" Grid.Row="1" ViewChanged="infoListScrollViewer_ViewChanged">
+                        <ListView Margin="0,2" ItemTemplate="{StaticResource MyFeedDataTemplate}" ItemsSource="{x:Bind ViewModel.MyFeedlist}" SelectionMode="None" IsItemClickEnabled="True">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                    <Setter Property="Margin" Value="-12,0"></Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </ScrollViewer>
                     <!--<ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.MyFeedlist}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -194,7 +196,7 @@
                     </Frame.ContentTransitions>
                 </Frame>
             </Grid>
-            
+
             <!--图像-->
             <Grid Name="CommunityItemPhotoGrid"  Grid.ColumnSpan="2" Visibility="Collapsed" >
                 <Grid Background="Black" Name="CommunityItemPhotoBackGrid" Opacity="0.5" Tapped="CommunityItemPhoto_Tapped"/>
