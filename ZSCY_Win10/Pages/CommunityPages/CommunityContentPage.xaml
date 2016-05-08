@@ -211,7 +211,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox Name="sendMarkTextBox" Grid.Column="0" PlaceholderText="输入你的评论" MaxHeight="50" TextWrapping="Wrap" TextChanged="sendMarkTextBox_TextChanged"></TextBox>
+            <TextBox Name="sendMarkTextBox" Grid.Column="0"  PlaceholderText="输入你的评论" MaxHeight="50" TextWrapping="Wrap" TextChanged="sendMarkTextBox_TextChanged"></TextBox>
             <Grid Grid.Column="1" Margin="5,0,0,0">
                 <Button Name="sendMarkButton" Margin="5,0,0,0" Content="发表" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Right" IsEnabled="False" Click="sendMarkButton_Click"></Button>
                 <ProgressRing Name="sendMarkProgressRing" IsActive="True" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center"></ProgressRing>

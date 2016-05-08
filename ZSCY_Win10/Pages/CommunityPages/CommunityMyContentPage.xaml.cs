@@ -249,12 +249,12 @@ namespace ZSCY_Win10.Pages.CommunityPages
             }
             else
             {
-                //@yyx这里有异常，回复一个回复
                 sendMarkTextBox.Text = sendMarkTextBox.Text.Substring(sendMarkTextBox.Text.IndexOf(":") + 2);
             }
             sendMarkTextBox.Text = "回复 " + clickMarkItem.nickname + " : " + sendMarkTextBox.Text;
             sendMarkTextBox.Focus(FocusState.Keyboard);
             sendMarkTextBox.SelectionStart = sendMarkTextBox.Text.Length;
+            isMark2Peo = false;
         }
 
     }
