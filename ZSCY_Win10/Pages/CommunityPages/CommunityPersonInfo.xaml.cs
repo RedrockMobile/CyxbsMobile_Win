@@ -65,8 +65,8 @@ namespace ZSCY_Win10.Pages.CommunityPages
         private void CommunityItemPhoto_Tapped(object sender, TappedRoutedEventArgs e)
         {
             CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
-            SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            //SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)

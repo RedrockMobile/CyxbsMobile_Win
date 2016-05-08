@@ -42,6 +42,7 @@ namespace ZSCY_Win10
         double BBDDOldScrollableHeight = 0;
         List<Img> clickImgList = new List<Img>();
         int clickImfIndex = 0;
+        bool isPersonInfo = false;
 
         public CommunityPage()
         {
@@ -121,7 +122,7 @@ namespace ZSCY_Win10
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                     e.Handled = true;
                 }
-                else
+                else if (!isPersonInfo)
                 {
                     SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
@@ -465,6 +466,7 @@ namespace ZSCY_Win10
             App.ViewModel = ViewModel;
             App.CommunityPivotState = CommunityPivot.SelectedIndex;
             App.CommunityScrollViewerOffset = BBDDScrollViewer.VerticalOffset;
+            isPersonInfo = true;
             Frame.Navigate(typeof(CommunityPersonInfo), b.stunum);
         }
     }
