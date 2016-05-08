@@ -162,7 +162,7 @@
                         <TextBlock Text="近期动态" TextAlignment="Left" VerticalAlignment="Center" Foreground="#FF868686" Margin="10"></TextBlock>
                     </Grid>
                     <ScrollViewer Name="infoListScrollViewer" Grid.Row="1" ViewChanged="infoListScrollViewer_ViewChanged">
-                        <ListView Margin="0,2" ItemTemplate="{StaticResource MyFeedDataTemplate}" ItemsSource="{x:Bind ViewModel.MyFeedlist}" SelectionMode="None" IsItemClickEnabled="True">
+                        <ListView Margin="0,2" ItemTemplate="{StaticResource MyFeedDataTemplate}" ItemsSource="{x:Bind ViewModel.MyFeedlist}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
