@@ -47,6 +47,7 @@ namespace ZSCY_Win10
         public static CommunityViewModel ViewModel { get; set; }
         public static int CommunityPivotState;
         public static double CommunityScrollViewerOffset;
+        public static bool isPerInfoContentImgShow = false;
 
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
         /// <summary>

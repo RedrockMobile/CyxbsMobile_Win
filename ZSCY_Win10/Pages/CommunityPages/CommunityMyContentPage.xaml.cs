@@ -66,6 +66,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 CommunityItemPhotoGrid.Margin = new Thickness(-400, 0, 0, 0);
             }
             CommunityItemPhotoGrid.Visibility = Visibility.Visible;
+            App.isPerInfoContentImgShow = true;
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
@@ -79,15 +80,17 @@ namespace ZSCY_Win10.Pages.CommunityPages
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
-            e.Handled = true;
             if (CommunityItemPhotoGrid.Visibility == Visibility.Visible)
             {
+                e.Handled = true;
                 CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
-                if (Utils.getPhoneWidth() > 800)
-                {
-                    SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
-                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-                }
+                SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                App.isPerInfoContentImgShow = false;
+                //if (Utils.getPhoneWidth() > 800)
+                //{
+
+                //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                //}
                 //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             }
         }

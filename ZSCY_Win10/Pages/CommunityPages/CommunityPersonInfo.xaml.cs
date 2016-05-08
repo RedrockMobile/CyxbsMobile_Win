@@ -83,13 +83,16 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 }
                 else if (ContentFrame.Visibility == Visibility.Visible)
                 {
-                    SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
-                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-                    ContentFrame.Visibility = Visibility.Collapsed;
-                    //CommunityMyAppBarButton.Visibility = Visibility.Visible;
+                    if (!App.isPerInfoContentImgShow)
+                    {   //SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                        //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                        ContentFrame.Visibility = Visibility.Collapsed;
+                        //CommunityMyAppBarButton.Visibility = Visibility.Visible;
+                    }
                 }
                 else
                 {
+
                     if (Frame.CanGoBack)
                     {
                         Frame.GoBack();
@@ -131,7 +134,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             this.ContentFrame.Visibility = Visibility.Visible;
-            this.ContentFrame.Navigate(typeof (CommunityMyContentPage), e.ClickedItem);
+            this.ContentFrame.Navigate(typeof(CommunityMyContentPage), e.ClickedItem);
         }
     }
 }

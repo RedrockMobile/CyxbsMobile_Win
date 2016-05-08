@@ -94,9 +94,12 @@ namespace ZSCY_Win10
             e.Handled = true;
             if (MyFrame.Visibility == Visibility.Visible)
             {
-                MyFrame.Visibility = Visibility.Collapsed;
-                //SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
-                //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                if (!App.isPerInfoContentImgShow)
+                {
+                    MyFrame.Visibility = Visibility.Collapsed;
+                    //SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                    //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                }
             }
             else if (CommunityItemPhotoGrid.Visibility == Visibility.Visible)
             {
