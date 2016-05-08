@@ -243,7 +243,7 @@
                                         <TextBlock Text="{x:Bind ViewModel.Info.nickname,Mode=OneWay}" Style="{StaticResource NickNamestyle}" FontSize="19"></TextBlock>
                                         <FontIcon Name="font" Margin="10,0" FontSize="20" FontFamily="Segoe UI Emoji" VerticalAlignment="Center" Glyph="{x:Bind ViewModel.Info.gender,Mode=OneWay,Converter={StaticResource GenderNameConverter}}" Foreground="{x:Bind ViewModel.Info.gender,Mode=OneWay,Converter={StaticResource GenderColorConverter}}"/>
                                     </StackPanel>
-                                    <TextBlock Text="{x:Bind ViewModel.Info.introduction,Mode=OneWay}" Style="{StaticResource Intro}" Foreground="#FFB0B0B0" FontSize="13"></TextBlock>
+                                    <TextBlock Text="{x:Bind ViewModel.Info.introduction,Mode=OneWay}" Style="{StaticResource Intro}" Foreground="#FFB0B0B0" TextWrapping="WrapWholeWords" FontSize="13"></TextBlock>
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
