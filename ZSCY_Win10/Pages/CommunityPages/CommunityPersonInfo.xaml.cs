@@ -127,5 +127,11 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 ViewModel.Get();
             }
         }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            this.ContentFrame.Visibility = Visibility.Visible;
+            this.ContentFrame.Navigate(typeof (CommunityMyContentPage), e.ClickedItem);
+        }
     }
 }
