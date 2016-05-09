@@ -80,6 +80,8 @@ namespace ZSCY_Win10.Data.Community
             stunum = feedsJObject["stunum"].ToString();
             photo_src = feedsJObject["photo_src"].ToString() == "" ? "ms-appx:///Assets/Community_nohead.png" : feedsJObject["photo_src"].ToString();
             photo_thumbnail_src = feedsJObject["photo_thumbnail_src"].ToString() == "" ? "ms-appx:///Assets/Community_nohead.png" : feedsJObject["photo_thumbnail_src"].ToString();
+            //photo_src = "ms-appx:///Assets/Community_nohead.png";
+            //photo_thumbnail_src = "ms-appx:///Assets/Community_nohead.png";
             is_my_like = feedsJObject["is_my_like"].ToString();
             string articlephotos = feedsJObject["article_photo_src"].ToString();
             if (articlephotos != "")
