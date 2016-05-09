@@ -344,12 +344,14 @@
     <Compile Include="Util\Converter\NewsConverter.cs" />
     <Compile Include="Util\Converter\NotifyTypeValueConverter.cs" />
     <Compile Include="Util\Converter\StarFillConverter.cs" />
+    <Compile Include="Util\Converter\TextBlockInlineConverter.cs" />
     <Compile Include="Util\EmptyClass.cs" />
     <Compile Include="Util\HotFeedsDataTemplateSelector.cs" />
     <Compile Include="Util\HotOrBBDDSelector.cs" />
     <Compile Include="Util\ImgDataTemplateSelector.cs" />
     <Compile Include="Util\NetWork.cs" />
     <Compile Include="Util\NotifyContentTemplateSelector.cs" />
+    <Compile Include="Util\TextBlockFormatter.cs" />
     <Compile Include="Util\Utils.cs" />
     <Compile Include="ViewModels\Community\CommunityContentViewModel.cs" />
     <Compile Include="ViewModels\Community\CommunityMyContentViewModel.cs" />

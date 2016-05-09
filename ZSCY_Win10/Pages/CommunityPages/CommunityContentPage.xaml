@@ -61,7 +61,7 @@
                             </StackPanel>
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock Text="{x:Bind content}" TextWrapping="Wrap"></TextBlock>
+                            <TextBlock util:TextBlockFormatter.FormattedText="{x:Bind content,Converter={StaticResource TextBlockInlineConverter}}" TextWrapping="Wrap"></TextBlock>
                         </StackPanel>
                         <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind article_photo_src}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                             <GridView.ItemsPanel>
@@ -106,7 +106,7 @@
                             </StackPanel>
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock Text="{x:Bind content.contentbase.content}" TextWrapping="Wrap" MaxLines="5" TextTrimming="WordEllipsis"></TextBlock>
+                            <TextBlock util:TextBlockFormatter.FormattedText="{x:Bind content.contentbase.content,Converter={StaticResource TextBlockInlineConverter}}" TextWrapping="Wrap" MaxLines="5" TextTrimming="WordEllipsis"></TextBlock>
                         </StackPanel>
                         <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind img}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                             <GridView.ItemsPanel>
