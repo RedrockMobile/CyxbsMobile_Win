@@ -196,11 +196,12 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 addProgressBar.Value = 0;
                 for (int i = 0; i < count; i++)
                 {
-                    string imgUp = await NetWork.headUpload(appSetting.Values["stuNum"].ToString(), imageList[i].imgAppPath, "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Photo/uploadArticle", false);
-                    if (imgUp != "" && imgUp.IndexOf("Request Entity Too Large") == -1)
+                    try
                     {
-                        try
+                        string imgUp = await NetWork.headUpload(appSetting.Values["stuNum"].ToString(), imageList[i].imgAppPath, "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Photo/uploadArticle", false);
+                        if (imgUp != "" && imgUp.IndexOf("Request Entity Too Large") == -1)
                         {
+
                             JObject obj = JObject.Parse(imgUp);
                             if (Int32.Parse(obj["state"].ToString()) == 200)
                             {
@@ -215,32 +216,33 @@ namespace ZSCY_Win10.Pages.CommunityPages
                                 imgPhoto_src = imgPhoto_src.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", "");
                                 imgThumbnail_src = imgThumbnail_src.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/thumbnail/", "");
                             }
+
                         }
-                        catch (Exception)
+                        else if (imgUp.IndexOf("Request Entity Too Large") != -1)
                         {
-                            Debug.WriteLine("图片上传失败");
+                            Debug.WriteLine("第" + (int)(i + 1) + "张图片太大");
+                            Utils.Toast("第" + (int)(i + 1) + "张图片超出4M限制");
                             addArticleAppBarButton.IsEnabled = true;
                             addProgressBar.Visibility = Visibility.Collapsed;
                             return;
                         }
+                        else
+                        {
+                            Debug.WriteLine("图片上传失败");
+                            Utils.Toast("发表失败");
+                            addArticleAppBarButton.IsEnabled = true;
+                            addProgressBar.Visibility = Visibility.Collapsed;
+                            return;
+                        }
+                        addProgressBar.Value += 1;
                     }
-                    else if (imgUp.IndexOf("Request Entity Too Large") != -1)
-                    {
-                        Debug.WriteLine("第" + (int)(i + 1) + "张图片太大");
-                        Utils.Toast("第" + (int)(i + 1) + "张图片超出4M限制");
-                        addArticleAppBarButton.IsEnabled = true;
-                        addProgressBar.Visibility = Visibility.Collapsed;
-                        return;
-                    }
-                    else
+                    catch (Exception)
                     {
                         Debug.WriteLine("图片上传失败");
-                        Utils.Toast("发表失败");
                         addArticleAppBarButton.IsEnabled = true;
                         addProgressBar.Visibility = Visibility.Collapsed;
                         return;
                     }
-                    addProgressBar.Value += 1;
                 }
                 try
                 {
