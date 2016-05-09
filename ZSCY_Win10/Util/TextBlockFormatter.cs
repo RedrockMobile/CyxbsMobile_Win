@@ -42,6 +42,7 @@ namespace ZSCY_Win10.Util
             }
             else
             {
+                textBlock.Inlines.Clear();
                 textBlock.Inlines.Add(inline);
             }
         }
