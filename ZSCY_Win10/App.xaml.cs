@@ -36,6 +36,7 @@ namespace ZSCY_Win10
     /// </summary>
     sealed partial class App : Application
     {
+
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         //public static JWList[] jwlistCache;
         public static ObservableCollection<JWList> JWListCache = new ObservableCollection<JWList>();
