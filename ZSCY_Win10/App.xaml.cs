@@ -16,6 +16,7 @@ using Windows.Networking.PushNotifications;
 using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.StartScreen;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -203,6 +204,7 @@ namespace ZSCY_Win10
             // 确保当前窗口处于活动状态
             await UmengAnalytics.StartTrackAsync("55cd8c8be0f55a20ba00440d", "Marketplace_Win10");
             //await InitNotificationsAsync();
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size { Width = 400, Height = 480 });
 
         }
 
