@@ -143,7 +143,7 @@
         </Style>
     </Page.Resources>
     <Grid Background="#ececec">
-        <ScrollViewer Grid.Row="0" Margin="0,0,0,50">
+        <ScrollViewer Name="contentScrollViewer" ViewChanged="contentScrollViewer_ViewChanged" Grid.Row="0" Margin="0,0,0,50" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -165,40 +165,40 @@
                     <Grid Background="White">
                         <TextBlock Text="评论" VerticalAlignment="Center" Margin="5"/>
                     </Grid>
-                    <ListView Name="markListView" Margin="-12,0" IsItemClickEnabled="True" ItemClick="markListView_ItemClick" SelectionMode="None" Grid.Row="1">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Background="#fafafa">
-                                    <Grid Margin="10">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="30"/>
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition />
-                                            <RowDefinition />
-                                        </Grid.RowDefinitions>
-                                        <Rectangle Grid.Column="0" HorizontalAlignment="Left" Grid.Row="0" RadiusX="15" RadiusY="15" Height="30" Width="30">
-                                            <Rectangle.Fill>
-                                                <ImageBrush ImageSource="{Binding photo_src}"></ImageBrush>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                        <StackPanel Margin="10,0,0,0" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="0" Orientation="Vertical" VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding nickname}" FontSize="10" Foreground="#555"></TextBlock>
-                                            <TextBlock Text="{Binding created_time}" FontSize="10" Foreground="#777"></TextBlock>
-                                        </StackPanel>
-                                        <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="1" Text="{Binding content}" Foreground="#555" TextWrapping="WrapWholeWords"></TextBlock>
+                        <ListView Name="markListView" Margin="-12,0" IsItemClickEnabled="True" ItemClick="markListView_ItemClick" SelectionMode="None" Grid.Row="1">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Background="#fafafa">
+                                        <Grid Margin="10">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="30"/>
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Rectangle Grid.Column="0" HorizontalAlignment="Left" Grid.Row="0" RadiusX="15" RadiusY="15" Height="30" Width="30">
+                                                <Rectangle.Fill>
+                                                    <ImageBrush ImageSource="{Binding photo_src}"></ImageBrush>
+                                                </Rectangle.Fill>
+                                            </Rectangle>
+                                            <StackPanel Margin="10,0,0,0" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="0" Orientation="Vertical" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding nickname}" FontSize="10" Foreground="#555"></TextBlock>
+                                                <TextBlock Text="{Binding created_time}" FontSize="10" Foreground="#777"></TextBlock>
+                                            </StackPanel>
+                                            <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="1" Text="{Binding content}" Foreground="#555" TextWrapping="WrapWholeWords"></TextBlock>
+                                        </Grid>
+                                        <Line Stroke="#e7e7e7" StrokeThickness="1" X1="0" X2="{Binding ActualWidth, ElementName=page, Mode=OneWay}"/>
                                     </Grid>
-                                    <Line Stroke="#e7e7e7" StrokeThickness="1" X1="0" X2="{Binding ActualWidth, ElementName=page, Mode=OneWay}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     <Grid Name="NoMarkGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Visibility="Collapsed">
                         <TextBlock Text="快来发表第一条评论吧~" Foreground="#888" Margin="0,20" HorizontalAlignment="Center"/>
                     </Grid>

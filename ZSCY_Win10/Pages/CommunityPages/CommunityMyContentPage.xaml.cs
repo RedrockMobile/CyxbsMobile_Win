@@ -37,6 +37,9 @@ namespace ZSCY_Win10.Pages.CommunityPages
         ObservableCollection<Mark> markList = new ObservableCollection<Mark>();
         NavigationEventArgs ee;
         int clickImfIndex = 0;
+        int remarkPage = 0;
+        double oldmarkScrollViewerOffset = 0;
+
         public CommunityMyContentPage()
         {
             this.InitializeComponent();
@@ -140,6 +143,8 @@ namespace ZSCY_Win10.Pages.CommunityPages
             paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("size", "15"));
+            paramList.Add(new KeyValuePair<string, string>("page", remarkPage.ToString()));
             string mark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/getremark", paramList);
             Debug.WriteLine(mark);
             try
@@ -149,7 +154,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     JObject obj = JObject.Parse(mark);
                     if (Int32.Parse(obj["state"].ToString()) == 200)
                     {
-                        markList.Clear();
+                        //markList.Clear();
                         JArray markListArray = Utils.ReadJso(mark);
 
                         if (markListArray.Count != 0)
@@ -170,6 +175,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                                 Markitem.GetListAttribute((JObject)markListArray[i]);
                                 markList.Add(Markitem);
                             }
+                            remarkPage++;
                         }
                         else
                         {
@@ -227,6 +233,8 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     if (Int32.Parse(obj["state"].ToString()) == 200)
                     {
                         Utils.Toast("评论成功");
+                        markList.Clear();
+                        remarkPage = 0;
                         sendMarkTextBox.Text = "";
                         getMark();
                     }
@@ -260,5 +268,14 @@ namespace ZSCY_Win10.Pages.CommunityPages
             sendMarkTextBox.SelectionStart = sendMarkTextBox.Text.Length;
         }
 
+        private void contentScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if (contentScrollViewer.VerticalOffset > (contentScrollViewer.ScrollableHeight - 200) && contentScrollViewer.ScrollableHeight != oldmarkScrollViewerOffset)
+            {
+                oldmarkScrollViewerOffset = contentScrollViewer.ScrollableHeight;
+                Debug.WriteLine("mark继续加载");
+                getMark();
+            }
+        }
     }
 }

@@ -41,7 +41,7 @@
         </util:ImgDataTemplateSelector>
     </Page.Resources>
     <Grid Background="#ececec">
-        <ScrollViewer Grid.Row="0" Margin="0,0,0,50">
+        <ScrollViewer Name="contentScrollViewer" ViewChanged="contentScrollViewer_ViewChanged" Grid.Row="0" Margin="0,0,0,50">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
