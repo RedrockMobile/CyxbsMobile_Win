@@ -242,11 +242,16 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     }
                     addProgressBar.Value += 1;
                 }
-                for (int i = 0; i < count; i++)
+                try
                 {
-                    StorageFile imgfile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(imageList[i].imgAppPath));
-                    imgfile.DeleteAsync();
+                    for (int i = 0; i < count; i++)
+                    {
+                        StorageFile imgfile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(imageList[i].imgAppPath));
+                        imgfile.DeleteAsync();
+                    }
+
                 }
+                catch (Exception) { }
                 if (imgPhoto_src != "")
                 {
                     imgPhoto_src = imgPhoto_src.Substring(1);
