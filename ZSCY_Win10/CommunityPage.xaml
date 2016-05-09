@@ -15,7 +15,6 @@
     Background="White"
     >
     <Page.Resources>
-
         <!--根据图片数量动态选择数据模板-->
         <util:ImgDataTemplateSelector x:Key="ImgDataTemplateSelector">
             <util:ImgDataTemplateSelector.NoPhotoTemplate>
@@ -45,7 +44,6 @@
                 </DataTemplate>
             </util:ImgDataTemplateSelector.MorePhotoTemplate>
         </util:ImgDataTemplateSelector>
-
         <!--根据热门类型动态选择数据模板-->
         <util:HotFeedsDataTemplateSelector x:Key="HotFeedsDataTemplateSelector">
             <util:HotFeedsDataTemplateSelector.BBDDTemplate>
@@ -63,7 +61,7 @@
                             </StackPanel>
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock Text="{x:Bind content.content}" TextWrapping="Wrap" MaxLines="5" TextTrimming="WordEllipsis"></TextBlock>
+                            <TextBlock util:TextBlockFormatter.FormattedText="{x:Bind content.content,Converter={StaticResource TextBlockInlineConverter}}" TextWrapping="Wrap" MaxLines="5" TextTrimming="WordEllipsis"></TextBlock>
                         </StackPanel>
                         <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind img}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                             <GridView.ItemsPanel>
@@ -103,12 +101,12 @@
                                 </Rectangle.Fill>
                             </Rectangle>
                             <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                                <TextBlock Text="{x:Bind content.contentbase.title}" Style="{StaticResource UsernameTextBlock}"></TextBlock>
+                                <TextBlock  Text="{x:Bind content.contentbase.title}" Style="{StaticResource UsernameTextBlock}"></TextBlock>
                                 <TextBlock Text="{x:Bind time}" Style="{StaticResource TimeTextBlock}"></TextBlock>
                             </StackPanel>
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock Text="{x:Bind content.contentbase.content}" TextWrapping="Wrap" MaxLines="5" TextTrimming="WordEllipsis"></TextBlock>
+                            <TextBlock util:TextBlockFormatter.FormattedText="{x:Bind content.contentbase.content,Converter={StaticResource TextBlockInlineConverter}}" TextWrapping="Wrap" MaxLines="5" TextTrimming="WordEllipsis"></TextBlock>
                         </StackPanel>
                         <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind img}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                             <GridView.ItemsPanel>
@@ -154,7 +152,7 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel>
-                    <TextBlock Text="{x:Bind content}" TextWrapping="Wrap" MaxLines="5" TextTrimming="WordEllipsis"></TextBlock>
+                    <TextBlock util:TextBlockFormatter.FormattedText="{x:Bind content,Converter={StaticResource TextBlockInlineConverter}}" TextWrapping="Wrap" MaxLines="5" TextTrimming="WordEllipsis"></TextBlock>
                 </StackPanel>
                 <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind article_photo_src}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                     <GridView.ItemsPanel>
@@ -183,10 +181,6 @@
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
-
-
-
-
         <Style x:Name="ItemContainerStyle" x:Key="ItemContainerStyle" TargetType="ListViewItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
             <Setter Property="Margin"  Value="-12,0"></Setter>

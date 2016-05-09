@@ -225,7 +225,8 @@
     </Style>
     <converters:NotifyTypeValueConverter x:Key="NotifyTypeValueConverter"></converters:NotifyTypeValueConverter>
     <converters:GetOneorNonePicValueConverter x:Key="GetOneorNonePicValueConverter"></converters:GetOneorNonePicValueConverter>
-
+    <!--话题Tag值转换器-->
+    <converters:TextBlockInlineConverter x:Key="TextBlockInlineConverter"/>
     <converters:LikeValueConverter x:Key="LikeValueConverter"></converters:LikeValueConverter>
     <!--时间用户名文本块样式-->
     <Style x:Name="TimeTextBlock" x:Key="TimeTextBlock" TargetType="TextBlock">
