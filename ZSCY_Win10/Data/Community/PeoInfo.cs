@@ -38,12 +38,8 @@ namespace ZSCY_Win10.Data.Community
             stunum = feedsJObject["stunum"].ToString();
             introduction = feedsJObject["introduction"].ToString();
             username = feedsJObject["username"].ToString();
-
             nickname = feedsJObject["nickname"].ToString();
-            //}
             gender = feedsJObject["gender"].ToString();
-            //photo_thumbnail_src = feedsJObject["photo_thumbnail_src"].ToString();
-            //photo_src = feedsJObject["photo_src"].ToString();
             photo_thumbnail_src = feedsJObject["photo_thumbnail_src"].ToString() == "" ? "ms-appx:///Assets/Community_nohead.png" : feedsJObject["photo_thumbnail_src"].ToString();
             photo_src = feedsJObject["photo_src"].ToString() == "" ? "ms-appx:///Assets/Community_nohead.png" : feedsJObject["photo_src"].ToString();
             updated_time = feedsJObject["updated_time"].ToString();
