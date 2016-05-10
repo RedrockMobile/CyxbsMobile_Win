@@ -43,5 +43,34 @@ namespace ZSCY_Win10.Service
             return null;
 
         }
+
+        public static async Task<HotFeed> GetHotFeed(int type_id, string article_id)
+        {
+
+            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("type_id", type_id.ToString()));
+            paramList.Add(new KeyValuePair<string, string>("article_id", article_id.ToString()));
+            string response = await NetWork.getHttpWebRequest(api, paramList);
+            Debug.WriteLine(response);
+            try
+            {
+                if (response != "" || response != "[]")
+                {
+                    JObject bbddfeeds = JObject.Parse(response);
+                    if (bbddfeeds["status"].ToString() == "200")
+                    {
+                        JObject feed = (JObject)bbddfeeds["data"][0];
+                        HotFeed f = new HotFeed();
+                        f.GetAttributes(feed);
+                        return f;
+                    }
+                }
+            }
+            catch (Exception) { }
+            return null;
+
+        }
     }
 }

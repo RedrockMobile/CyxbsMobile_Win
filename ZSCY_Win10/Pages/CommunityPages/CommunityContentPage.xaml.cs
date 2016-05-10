@@ -135,9 +135,24 @@ namespace ZSCY_Win10.Pages.CommunityPages
                             isfirst = false;
                             NoMarkGrid.Visibility = Visibility.Collapsed;
                             if (ViewModel.BBDD != null)
-                                ViewModel.BBDD.remark_num = markListArray.Count.ToString();
+                            {
+
+                                //ViewModel.BBDD.remark_num = markListArray.Count.ToString();
+                                if (type_id == "5")
+                                {
+                                    MyFeed x = await CommunityMyContentService.GetFeed(int.Parse(type_id), id);
+                                    ViewModel.BBDD.remark_num = x.remark_num;
+                                }
+                            }
                             else
-                                ViewModel.hotfeed.remark_num = markListArray.Count.ToString();
+                            {
+                                if (type_id == "6")
+                                {
+                                    //HotFeed x = await CommunityMyContentService.GetHotFeed(int.Parse(type_id), id);
+                                    //ViewModel.hotfeed.remark_num+=1;
+                                }
+                                //ViewModel.hotfeed.remark_num = markListArray.Count.ToString();
+                            }
                             //if (args is HotFeed)
                             //{
                             //    HotFeed h = args as HotFeed;
@@ -211,6 +226,8 @@ namespace ZSCY_Win10.Pages.CommunityPages
                         markList.Clear();
                         remarkPage = 0;
                         getMark();
+                        if (type_id == "6")
+                            ViewModel.hotfeed.remark_num = (int.Parse(ViewModel.hotfeed.remark_num) + 1).ToString();
                     }
                     else
                     {

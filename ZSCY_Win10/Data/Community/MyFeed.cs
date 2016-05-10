@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using Windows.Storage;
+using ZSCY_Win10.Common;
 
 namespace ZSCY_Win10.Data.Community
 {
-    public class MyFeed : IFeeds
+    public class MyFeed : ViewModelBase, IFeeds
     {
+        private string remarknum { get; set; }
         public string id { get; set; }
         public Img[] photo_src { get; set; }
         public Img[] thumbnail_src { get; set; }
@@ -19,7 +21,18 @@ namespace ZSCY_Win10.Data.Community
         public string created_time { get; set; }
         public string updated_time { get; set; }
         public string like_num { get; set; }
-        public string remark_num { get; set; }
+        public string remark_num
+        {
+            get
+            {
+                return remarknum;
+            }
+            set
+            {
+                this.remarknum = value;
+                OnPropertyChanged(nameof(remark_num));
+            }
+        }
         public string nickname { get; set; } = Windows.Storage.ApplicationData.Current.LocalSettings.Values["Community_nickname"].ToString();
         public string headimg { get; set; } = Windows.Storage.ApplicationData.Current.LocalSettings.Values["Community_headimg_src"].ToString();
 

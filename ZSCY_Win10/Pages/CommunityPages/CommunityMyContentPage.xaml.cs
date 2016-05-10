@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Data.Community;
+using ZSCY_Win10.Service;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
 
@@ -164,7 +165,13 @@ namespace ZSCY_Win10.Pages.CommunityPages
                             NoMarkGrid.Visibility = Visibility.Collapsed;
                             if (ViewModel.Item != null)
                             {
-                                ViewModel.Item.remark_num = markListArray.Count.ToString();
+                                //ViewModel.Item.remark_num = markListArray.Count.ToString();
+                                if (type_id == "5")
+                                {
+                                    MyFeed x = await CommunityMyContentService.GetFeed(int.Parse(type_id), id);
+                                    MyFeed y=ee.Parameter as MyFeed;
+                                    y.remark_num = x.remark_num;
+                                }
                             }
                             //if (args is HotFeed)
                             //{
