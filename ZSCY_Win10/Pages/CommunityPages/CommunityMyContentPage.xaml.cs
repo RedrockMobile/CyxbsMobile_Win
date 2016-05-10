@@ -169,9 +169,10 @@ namespace ZSCY_Win10.Pages.CommunityPages
                                 if (type_id == "5")
                                 {
                                     MyFeed x = await CommunityMyContentService.GetFeed(int.Parse(type_id), id);
-                                    MyFeed y=ee.Parameter as MyFeed;
-                                    y.remark_num = x.remark_num;
-                                    var z = ViewModel.Item.remark_num;
+                                    //MyFeed y = ee.Parameter as MyFeed;
+                                    //y.remark_num = x.remark_num;
+                                    //var z = ViewModel.Item.remark_num;
+                                    ViewModel.Item.remark_num = x.remark_num;
                                 }
                             }
                             //if (args is HotFeed)
@@ -243,10 +244,14 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     if (Int32.Parse(obj["state"].ToString()) == 200)
                     {
                         Utils.Toast("评论成功");
+                        int tempCount = markList.Count;
                         markList.Clear();
                         remarkPage = 0;
                         sendMarkTextBox.Text = "";
-                        getMark();
+                        if (tempCount == 0)
+                        {
+                            getMark();
+                        }
                     }
                     else
                     {

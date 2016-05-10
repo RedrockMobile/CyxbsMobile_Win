@@ -12,16 +12,27 @@ namespace ZSCY_Win10.Util.Converter
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             string r = value as string;
-            if (r == "praise")
+            try
             {
-                return "赞了我";
+                if (r == "praise")
+                {
+                    return "赞了我";
+                }
+                else if (r == "remark")
+                {
+                    return "评论了我";
+                }
+                else if (int.Parse(r) >= 0)
+                {
+                    return r;
+                }
+                else
+                    return "";
             }
-            else if (int.Parse(r) >= 0)
+            catch (Exception)
             {
-                return r;
-            }
-            else
                 return "";
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

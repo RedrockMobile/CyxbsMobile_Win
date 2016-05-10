@@ -222,10 +222,14 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     if (Int32.Parse(obj["state"].ToString()) == 200)
                     {
                         Utils.Toast("评论成功");
+                        int tempCount = markList.Count;
                         sendMarkTextBox.Text = "";
                         markList.Clear();
                         remarkPage = 0;
-                        getMark();
+                        if (tempCount == 0)
+                        {
+                            getMark();
+                        }
                         if (type_id == "6")
                             ViewModel.hotfeed.remark_num = (int.Parse(ViewModel.hotfeed.remark_num) + 1).ToString();
                     }
