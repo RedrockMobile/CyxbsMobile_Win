@@ -406,46 +406,16 @@
             <!--图像-->
             <Grid Name="CommunityItemPhotoGrid" Grid.ColumnSpan="2" Visibility="Collapsed" >
                 <Grid Background="Black" Name="CommunityItemPhotoBackGrid" Grid.ColumnSpan="2" Opacity="0.5" Tapped="CommunityItemPhoto_Tapped"/>
-                <!--<ScrollViewer VerticalScrollMode="Disabled" HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden">-->
-                <!--<ListView Name="CommunityItemPhotoListView"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Image Name="CommunityItemPhotoImage" Stretch="Uniform" HorizontalAlignment="Stretch" Source="{Binding ImgSrc}"  Tapped="CommunityItemPhoto_Tapped"></Image>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>-->
                 <FlipView Name="CommunityItemPhotoFlipView">
                     <FlipView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
                                 <ProgressRing Name="progressRing" Visibility="Visible" IsActive="True"/>
-                                <Image Name="CommunityItemPhotoImage" Stretch="Uniform" Source="{Binding ImgSrc}"  Tapped="CommunityItemPhoto_Tapped"></Image>
+                                <Image Name="CommunityItemPhotoImage" Stretch="Uniform" Source="{Binding ImgSrc}"  Tapped="CommunityItemPhoto_Tapped" Holding="CommunityItemPhotoImage_Holding" RightTapped="CommunityItemPhotoImage_RightTapped"></Image>
                             </Grid>
                         </DataTemplate>
                     </FlipView.ItemTemplate>
                 </FlipView>
-                <!--</ScrollViewer>-->
-                <!--<Image Name="CommunityItemPhotoImage" Grid.ColumnSpan="2"  Tapped="CommunityItemPhoto_Tapped"></Image>-->
-                <!--<Button Name="backImgButton" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Center" Click="backImgButton_Click">
-                    <Button.Content>
-                        <FontIcon FontFamily="Segoe UI" Glyph="&#x003C;" Foreground="Gray"/>
-                    </Button.Content>
-                </Button>
-                <Button Name="nextImgButton" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Center" Click="nextImgButton_Click">
-                    <Button.Content>
-                        <FontIcon FontFamily="Segoe UI" Glyph="&#x003E;" Foreground="Gray" />
-                    </Button.Content>
-                </Button>-->
             </Grid>
         </Grid>
     </Grid>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -64,7 +65,7 @@ namespace ZSCY_Win10.Util
             });
         }
 
-        public static async Task<string> headUpload(string stunum, string fileUri, string uri = "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/home/Photo/upload",bool isPath = false)
+        public static async Task<string> headUpload(string stunum, string fileUri, string uri = "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/home/Photo/upload", bool isPath = false)
         {
             Windows.Web.Http.HttpClient _httpClient = new Windows.Web.Http.HttpClient();
             CancellationTokenSource _cts = new CancellationTokenSource();
@@ -73,7 +74,7 @@ namespace ZSCY_Win10.Util
             //IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
             IStorageFile saveFile;
             if (isPath)
-                 saveFile = await StorageFile.GetFileFromPathAsync(fileUri);
+                saveFile = await StorageFile.GetFileFromPathAsync(fileUri);
             else
                 saveFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(fileUri));
 
@@ -100,8 +101,58 @@ namespace ZSCY_Win10.Util
                 Debug.WriteLine("上传头像失败,编辑页面");
                 return "";
             }
+        }
 
+        public static async Task<bool> downloadFile(string uri, string saveUri, string filename)
+        {
+            System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient();
+            System.Net.Http.HttpResponseMessage response = new System.Net.Http.HttpResponseMessage();
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+                    {
+                        response = httpClient.GetAsync(new Uri(uri)).Result;
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            Stream stream = response.Content.ReadAsStreamAsync().Result;
+                            byte[] bytes = new byte[stream.Length];
+                            stream.Read(bytes, 0, bytes.Length);
+                            StorageFolder downFolder = null;
+                            if (saveUri == "picture")
+                            {
+                                downFolder = KnownFolders.SavedPictures;
+                            }
+                            else
+                            {
+                                downFolder = await StorageFolder.GetFolderFromPathAsync(saveUri);
+                            }
+                            var saveFile = await downFolder.CreateFileAsync(filename, CreationCollisionOption.GenerateUniqueName);
+                            using (Stream streamSave = await saveFile.OpenStreamForWriteAsync())
+                            {
+                                await streamSave.WriteAsync(bytes, 0, bytes.Length);
+                            }
+                            return true;
 
+                        }
+                        else
+                        {
+                            return false;
+
+                        }
+                    }
+                    else
+                    {
+                        return false;
+
+                    }
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            });
         }
 
     }

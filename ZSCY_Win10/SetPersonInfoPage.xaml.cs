@@ -67,7 +67,7 @@ namespace ZSCY_Win10
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
-            if (this.Frame.CanGoBack && e.Handled == false)
+            if (this.Frame.CanGoBack)
             {
                 e.Handled = true;
                 this.Frame.GoBack();

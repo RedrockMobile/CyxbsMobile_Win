@@ -479,5 +479,44 @@ namespace ZSCY_Win10
             isPersonInfo = true;
             Frame.Navigate(typeof(CommunityPersonInfo), b.stunum);
         }
+
+        private void CommunityItemPhotoImage_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            Debug.WriteLine("Holding");
+            savePic();
+        }
+
+        private void CommunityItemPhotoImage_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            Debug.WriteLine("RightTapped");
+            savePic();
+        }
+
+        private async void savePic()
+        {
+            var dig = new MessageDialog("是否保存此图片");
+            var btnOk = new UICommand("是");
+            dig.Commands.Add(btnOk);
+            var btnCancel = new UICommand("否");
+            dig.Commands.Add(btnCancel);
+            var result = await dig.ShowAsync();
+            if (null != result && result.Label == "是")
+            {
+                Debug.WriteLine("保存图片");
+                bool saveImg = await NetWork.downloadFile(((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc, "picture",((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", ""));
+                if (saveImg)
+                {
+                    Utils.Toast("图片已保存到 \"保存的图片\"");
+                }
+                else
+                {
+                    Utils.Toast("图片保存遇到了麻烦");
+                }
+            }
+            else if (null != result && result.Label == "否")
+            {
+            }
+        }
+
     }
 }

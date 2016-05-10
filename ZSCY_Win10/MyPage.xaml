@@ -338,7 +338,7 @@
                         <DataTemplate>
                             <Grid>
                                 <ProgressRing Name="progressRing" Visibility="Visible" IsActive="True"/>
-                                <Image Name="CommunityItemPhotoImage" Stretch="Uniform" Source="{Binding ImgSrc}"  Tapped="CommunityItemPhoto_Tapped"></Image>
+                                <Image Name="CommunityItemPhotoImage" Stretch="Uniform" Source="{Binding ImgSrc}"  Tapped="CommunityItemPhoto_Tapped" Holding="CommunityItemPhotoImage_Holding" RightTapped="CommunityItemPhotoImage_RightTapped"></Image>
                             </Grid>
                         </DataTemplate>
                     </FlipView.ItemTemplate>

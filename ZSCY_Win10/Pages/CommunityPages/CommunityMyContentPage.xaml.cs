@@ -10,6 +10,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -80,6 +81,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
         private void CommunityItemPhoto_Tapped(object sender, TappedRoutedEventArgs e)
         {
             CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
+            App.isPerInfoContentImgShow = false;
             SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
             //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
@@ -290,6 +292,44 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 oldmarkScrollViewerOffset = contentScrollViewer.ScrollableHeight;
                 Debug.WriteLine("mark继续加载");
                 getMark();
+            }
+        }
+
+        private void CommunityItemPhotoImage_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            Debug.WriteLine("Holding");
+            savePic();
+        }
+
+        private void CommunityItemPhotoImage_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            Debug.WriteLine("RightTapped");
+            savePic();
+        }
+
+        private async void savePic()
+        {
+            var dig = new MessageDialog("是否保存此图片");
+            var btnOk = new UICommand("是");
+            dig.Commands.Add(btnOk);
+            var btnCancel = new UICommand("否");
+            dig.Commands.Add(btnCancel);
+            var result = await dig.ShowAsync();
+            if (null != result && result.Label == "是")
+            {
+                Debug.WriteLine("保存图片");
+                bool saveImg = await NetWork.downloadFile(((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc, "picture", ((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", ""));
+                if (saveImg)
+                {
+                    Utils.Toast("图片已保存到 \"保存的图片\"");
+                }
+                else
+                {
+                    Utils.Toast("图片保存遇到了麻烦");
+                }
+            }
+            else if (null != result && result.Label == "否")
+            {
             }
         }
     }
