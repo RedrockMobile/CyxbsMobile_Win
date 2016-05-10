@@ -86,7 +86,7 @@
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Margin="10,5">
                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
-                                <TextBlock Text="{x:Bind remark_num,Mode=OneWay}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
+                                <TextBlock Text="{x:Bind remark_num,Mode=OneWay,Converter={StaticResource NotifyTypeValueConverter}}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
                             </StackPanel>
                         </Button.Content>
                     </Button>

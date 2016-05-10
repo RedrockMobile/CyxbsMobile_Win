@@ -16,10 +16,12 @@ namespace ZSCY_Win10.Util.Converter
             {
                 return "赞了我";
             }
-            else
+            else if (int.Parse(r) >= 0)
             {
-                return "";
+                return r;
             }
+            else
+                return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

@@ -171,6 +171,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                                     MyFeed x = await CommunityMyContentService.GetFeed(int.Parse(type_id), id);
                                     MyFeed y=ee.Parameter as MyFeed;
                                     y.remark_num = x.remark_num;
+                                    var z = ViewModel.Item.remark_num;
                                 }
                             }
                             //if (args is HotFeed)
