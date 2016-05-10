@@ -39,6 +39,8 @@ namespace ZSCY_Win10.Pages.CommunityPages
         int clickImfIndex = 0;
         int remarkPage = 0;
         double oldmarkScrollViewerOffset = 0;
+        bool isfirst = true;
+
 
         public CommunityMyContentPage()
         {
@@ -156,9 +158,9 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     {
                         //markList.Clear();
                         JArray markListArray = Utils.ReadJso(mark);
-
                         if (markListArray.Count != 0)
                         {
+                            isfirst = false;
                             NoMarkGrid.Visibility = Visibility.Collapsed;
                             if (ViewModel.Item != null)
                             {
@@ -177,7 +179,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                             }
                             remarkPage++;
                         }
-                        else
+                        else if (isfirst)
                         {
                             NoMarkGrid.Visibility = Visibility.Visible;
                         }
