@@ -48,7 +48,7 @@
                         <!--<Image Source="Assets/grzx_black.png" Width="30"></Image>-->
                         <Rectangle x:Name="headimgRectangle" HorizontalAlignment="Center" Grid.Column="0" VerticalAlignment="Center" RadiusX="35" RadiusY="35"  Width="35" Height="35" Stroke="DarkGray" Tapped="headimgRectangle_Tapped">
                             <Rectangle.Fill>
-                                <ImageBrush x:Name="headimgImageBrush" ImageSource="Assets/dialog_course_peo.png" Stretch="Fill"/>
+                                <ImageBrush x:Name="headimgImageBrush" ImageSource="Assets/Community_nohead.png" Stretch="Fill"/>
                             </Rectangle.Fill>
                         </Rectangle>
                         <TextBlock Name="stuNameTextBlock" VerticalAlignment="Center" Grid.Column="1"></TextBlock>
