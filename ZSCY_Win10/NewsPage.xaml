@@ -127,8 +127,8 @@
                                                             <TextBlock Text="{Binding Date}" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
                                                         </StackPanel>
                                                     </Grid>
-                                                    <Line X1="0" X2="750" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                                    <Line X1="0" X2="750" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                                    <Line X1="0" X2="900" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                                    <Line X1="0" X2="900" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
@@ -187,8 +187,8 @@
                                                             <TextBlock Text="{Binding Date}" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
                                                         </StackPanel>
                                                     </Grid>
-                                                    <Line X1="0" X2="750" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                                    <Line X1="0" X2="750" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                                    <Line X1="0" X2="900" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                                    <Line X1="0" X2="900" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
@@ -254,8 +254,8 @@
                                                             <TextBlock Text="{Binding Date}" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
                                                         </StackPanel>
                                                     </Grid>
-                                                    <Line X1="0" X2="750" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                                    <Line X1="0" X2="750" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                                    <Line X1="0" X2="900" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                                    <Line X1="0" X2="900" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
@@ -320,8 +320,8 @@
                                                             <TextBlock Text="{Binding Date}" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
                                                         </StackPanel>
                                                     </Grid>
-                                                    <Line X1="0" X2="750" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                                    <Line X1="0" X2="750" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                                    <Line X1="0" X2="900" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                                    <Line X1="0" X2="900" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
