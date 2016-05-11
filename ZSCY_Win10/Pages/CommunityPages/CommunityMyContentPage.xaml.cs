@@ -9,6 +9,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -42,6 +43,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
         int remarkPage = 0;
         double oldmarkScrollViewerOffset = 0;
         bool isfirst = true;
+        bool issend = false;
 
 
         public CommunityMyContentPage()
@@ -194,7 +196,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                         {
                             NoMarkGrid.Visibility = Visibility.Visible;
                         }
-
+                        issend = false;
                     }
                 }
             }
@@ -246,14 +248,11 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     if (Int32.Parse(obj["state"].ToString()) == 200)
                     {
                         Utils.Toast("评论成功");
-                        int tempCount = markList.Count;
+                        issend = true;
                         markList.Clear();
                         remarkPage = 0;
                         sendMarkTextBox.Text = "";
-                        if (tempCount == 0)
-                        {
-                            getMark();
-                        }
+                        getMark();
                     }
                     else
                     {
@@ -287,11 +286,14 @@ namespace ZSCY_Win10.Pages.CommunityPages
 
         private void contentScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
-            if (contentScrollViewer.VerticalOffset > (contentScrollViewer.ScrollableHeight - 200) && contentScrollViewer.ScrollableHeight != oldmarkScrollViewerOffset)
+            if (!issend)
             {
-                oldmarkScrollViewerOffset = contentScrollViewer.ScrollableHeight;
-                Debug.WriteLine("mark继续加载");
-                getMark();
+                if (contentScrollViewer.VerticalOffset > (contentScrollViewer.ScrollableHeight - 200) && contentScrollViewer.ScrollableHeight != oldmarkScrollViewerOffset)
+                {
+                    oldmarkScrollViewerOffset = contentScrollViewer.ScrollableHeight;
+                    Debug.WriteLine("mark继续加载");
+                    getMark();
+                }
             }
         }
 
@@ -321,7 +323,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 bool saveImg = await NetWork.downloadFile(((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc, "picture", ((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", ""));
                 if (saveImg)
                 {
-                    Utils.Toast("图片已保存到 \"保存的图片\"");
+                    Utils.Toast("图片已保存到 \"保存的图片\"", "SavedPictures");
                 }
                 else
                 {

@@ -13,6 +13,7 @@ using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
@@ -28,22 +29,38 @@ namespace ZSCY_Win10.Util
         /// Toast
         /// </summary>
         /// <param name="text"></param>
-        public static async void Toast(string text)
+        public static async void Toast(string text, string mode = "")
         {
             XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText01);
             XmlNodeList elements = toastXml.GetElementsByTagName("text");
             elements[0].AppendChild(toastXml.CreateTextNode(text));
             ToastNotification toast = new ToastNotification(toastXml);
-            //toast.Activated += toast_Activated;//点击
+            switch (mode)
+            {
+                case "SavedPictures":
+                    toast.Activated += toast_Activated;//点击
+                    break;
+            }
             //toast.Dismissed += toast_Dismissed;//消失
             //toast.Failed += toast_Failed;//消除
             ToastNotificationManager.CreateToastNotifier().Show(toast);
-
 
             //从通知中心删除
             await Task.Delay(3000);
             ToastNotificationManager.History.Clear();
 
+        }
+
+        private async static void toast_Activated(ToastNotification sender, object args)
+        {
+            try
+            {
+                bool success = await Launcher.LaunchFolderAsync(KnownFolders.SavedPictures);
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("打开SavedPictures文件夹失败");
+            }
         }
 
         /// <summary>

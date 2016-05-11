@@ -506,7 +506,7 @@ namespace ZSCY_Win10
                 bool saveImg = await NetWork.downloadFile(((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc, "picture",((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", ""));
                 if (saveImg)
                 {
-                    Utils.Toast("图片已保存到 \"保存的图片\"");
+                    Utils.Toast("图片已保存到 \"保存的图片\"", "SavedPictures");
                 }
                 else
                 {
