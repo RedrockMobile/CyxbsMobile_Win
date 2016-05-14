@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSCY", "ZSCY\ZSCY.csproj", "{E6B12879-C824-45A0-9D63-ACB402B3524D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSCY_Win10", "ZSCY_Win10\ZSCY_Win10.csproj", "{C808DFFD-689B-4140-A920-24D9067CE3D2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EA70B47F-1DB5-4A92-805D-9F144EFA396F} = {EA70B47F-1DB5-4A92-805D-9F144EFA396F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyMessageBackgroundTask", "MyMessageBackgroundTask\MyMessageBackgroundTask.csproj", "{EA70B47F-1DB5-4A92-805D-9F144EFA396F}"
 EndProject

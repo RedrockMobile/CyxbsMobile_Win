@@ -21,19 +21,20 @@ namespace MyMessageBackgroundTask
             if (bool.Parse(appSetting.Values["isUseingBackgroundTask"].ToString()))
             {
                 Debug.WriteLine("开始后台任务");
-                string letterstatus = "";
-                BackgroundTaskDeferral deferral = taskInstance.GetDeferral();  //获取 BackgroundTaskDeferral 对象，表示后台任务延期
-
-                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-                paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("page", "0"));
-                paramList.Add(new KeyValuePair<string, string>("size", "15"));
-                letterstatus = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Article/aboutme", paramList);
-
-                Debug.WriteLine("letterstatus" + letterstatus);
                 try
                 {
+                    string letterstatus = "";
+                    BackgroundTaskDeferral deferral = taskInstance.GetDeferral();  //获取 BackgroundTaskDeferral 对象，表示后台任务延期
+
+                    List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+                    paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+                    paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                    paramList.Add(new KeyValuePair<string, string>("page", "0"));
+                    paramList.Add(new KeyValuePair<string, string>("size", "15"));
+                    letterstatus = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Article/aboutme", paramList);
+
+                    Debug.WriteLine("letterstatus" + letterstatus);
+
                     if (letterstatus != "")
                     {
                         string aboutme = "";
@@ -84,13 +85,12 @@ namespace MyMessageBackgroundTask
                             await FileIO.WriteTextAsync(storageFileWR, letterstatus);
                         }
 
-                       
-                    }
 
+                    }
+                    deferral.Complete(); //所有的异步调用完成之后，释放延期，表示后台任务的完成
                 }
                 catch (Exception) { Debug.WriteLine("后台任务网络异常"); }
 
-                deferral.Complete(); //所有的异步调用完成之后，释放延期，表示后台任务的完成
             }
         }
     }
