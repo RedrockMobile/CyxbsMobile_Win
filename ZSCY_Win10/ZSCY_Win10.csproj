@@ -610,7 +610,12 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\MyMessageBackgroundTask\MyMessageBackgroundTask.csproj">
+      <Project>{ea70b47f-1db5-4a92-805d-9f144efa396f}</Project>
+      <Name>MyMessageBackgroundTask</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

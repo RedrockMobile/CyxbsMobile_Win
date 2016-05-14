@@ -46,6 +46,18 @@ namespace ZSCY_Win10
                 OpacityToggleSwitch.IsOn = false;
                 appSetting.Values["OpacityTile"] = false;
             }
+
+            if (appSetting.Values.ContainsKey("isUseingBackgroundTask"))
+            {
+                Debug.WriteLine(appSetting.Values["isUseingBackgroundTask"].ToString());
+                backGroundToastToggleSwitch.IsOn = bool.Parse(appSetting.Values["isUseingBackgroundTask"].ToString());
+            }
+            else
+            {
+                backGroundToastToggleSwitch.IsOn = false;
+                appSetting.Values["isUseingBackgroundTask"] = false;
+            }
+
             //AllKBGrayToggleSwitch.IsOn = bool.Parse(appSetting.Values["AllKBGray"].ToString());
 
             this.SizeChanged += (s, e) =>
@@ -175,6 +187,7 @@ namespace ZSCY_Win10
         {
             appSetting.Values.Remove("idNum");
             appSetting.Values["CommunityPerInfo"] = false;
+            appSetting.Values["isUseingBackgroundTask"] = false;
             IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
             IStorageFile storageFileWR = await applicationFolder.CreateFileAsync("kb", CreationCollisionOption.OpenIfExists);
             try
@@ -359,6 +372,12 @@ namespace ZSCY_Win10
         {
             //appSetting.Values["AllKBGray"] = !AllKBGrayToggleSwitch.IsOn;          
             appSetting.Values["AllKBGray"] = true;
+        }
+
+        private void backGroundToastToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            appSetting.Values["isUseingBackgroundTask"] = backGroundToastToggleSwitch.IsOn;
+            Debug.WriteLine(appSetting.Values["isUseingBackgroundTask"].ToString());
         }
     }
 }

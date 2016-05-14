@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using UmengSDK;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Networking.PushNotifications;
@@ -50,7 +51,7 @@ using ZSCY_Win10.ViewModels.Community;
 ======`-.____`-.___\_____/___.-`____.-'======
                    `=---='
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-         佛祖保佑       永无BUG
+         佛祖保佑  永无BUG  UWP专供
 */
 
 namespace ZSCY_Win10
@@ -73,6 +74,7 @@ namespace ZSCY_Win10
         public static int CommunityPivotState;
         public static double CommunityScrollViewerOffset;
         public static bool isPerInfoContentImgShow = false;
+        private string exampleTaskName = "MessageBackgroundTask";
 
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
         /// <summary>
@@ -107,8 +109,55 @@ namespace ZSCY_Win10
             {
                 appSetting.Values["Community_headimg_src"] = "ms-appx:///Assets/Community_nohead.png";
             }
+
+            if (!appSetting.Values.ContainsKey("isUseingBackgroundTask"))
+            {
+                appSetting.Values["isUseingBackgroundTask"] = true;
+                addBackgroundTask();
+            }
+            if (bool.Parse(appSetting.Values["isUseingBackgroundTask"].ToString()))
+            {
+                addBackgroundTask();
+            }
         }
 
+        private async void addBackgroundTask()
+        {
+            bool taskRegistered = false;
+            try
+            {
+                ////判断是否已经注册过了
+                //taskRegistered = BackgroundTaskRegistration.AllTasks.Any(x => x.Value.Name == exampleTaskName);
+                foreach (var cur in BackgroundTaskRegistration.AllTasks)
+                {
+                    if (cur.Value.Name == exampleTaskName)
+                    {
+                        cur.Value.Unregister(true);
+                    }
+                }
+                //if (!taskRegistered)
+                //{
+                BackgroundAccessStatus status = await BackgroundExecutionManager.RequestAccessAsync();
+                var builder = new BackgroundTaskBuilder();
+                builder.Name = exampleTaskName;
+                builder.TaskEntryPoint = "MyMessageBackgroundTask.MessageBackgroundTask";
+                //后台触发器，可多个
+                //builder.SetTrigger(new SystemTrigger(SystemTriggerType.NetworkStateChange, false));
+                //builder.SetTrigger(new SystemTrigger(SystemTriggerType.InternetAvailable, false));
+                builder.SetTrigger(new TimeTrigger(15, false)); //定时后台任务
+                //builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
+
+                BackgroundTaskRegistration task = builder.Register();
+                //}
+                //    else
+                //    {
+                //    var cur = BackgroundTaskRegistration.AllTasks.FirstOrDefault(x => x.Value.Name == exampleTaskName);
+                //    BackgroundTaskRegistration task = (BackgroundTaskRegistration)(cur.Value);
+                //}
+            }
+            catch (Exception) { }
+
+        }
 
         private async void DisableSystemJumpListAsync()
         {
@@ -227,7 +276,7 @@ namespace ZSCY_Win10
             // 确保当前窗口处于活动状态
             //await UmengAnalytics.StartTrackAsync("55cd8c8be0f55a20ba00440d", "Marketplace_Win10"); //私有
             await UmengAnalytics.StartTrackAsync("57317d07e0f55a28fe002bec", "Marketplace_Win10"); //公共
-            //await InitNotificationsAsync();
+                                                                                                   //await InitNotificationsAsync();
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size { Width = 400, Height = 480 });
 
         }

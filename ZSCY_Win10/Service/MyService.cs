@@ -43,6 +43,12 @@ namespace ZSCY_Win10.Service
                                 feeds.Add(f);
                             }
                         }
+                        if (page == 0) //将第一面的数据存入文件，用于后台任务
+                        {
+                            IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
+                            IStorageFile storageFileWR = await applicationFolder.CreateFileAsync("aboutme.txt", CreationCollisionOption.ReplaceExisting);
+                            await FileIO.WriteTextAsync(storageFileWR, response);
+                        }
                     }
                 }
                 catch (Exception) { }

@@ -159,23 +159,26 @@ namespace ZSCY_Win10
         private async void initHeadImage()
         {
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("stunum", appSetting.Values["stuNum"].ToString()));
-            string headimg = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/Photo/search", paramList);
+            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            string headimg = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/search", paramList);
             if (headimg != "")
             {
                 try
                 {
                     JObject obj = JObject.Parse(headimg);
-                    if (Int32.Parse(obj["state"].ToString()) == 200)
+                    if (Int32.Parse(obj["status"].ToString()) == 200)
                     {
-                        string a = obj["data"].ToString();
-                        JObject objdata = JObject.Parse(obj["data"].ToString());
-                        appSetting.Values["headimgdate"] = objdata["date"].ToString();
-                        headimgImageBrush.ImageSource = new BitmapImage(new Uri(objdata["photosrc"].ToString()));
-                        appSetting.Values["Community_headimg_src"] = objdata["photosrc"].ToString();
+                        if (obj["data"].ToString() != "")
+                        {
+                            string a = obj["data"].ToString();
+                            JObject objdata = JObject.Parse(obj["data"].ToString());
+                            headimgImageBrush.ImageSource = new BitmapImage(new Uri(objdata["photo_src"].ToString()));
+                            appSetting.Values["Community_headimg_src"] = objdata["photo_src"].ToString();
 
-                        Size downloadSize = new Size(48, 48);
-                        await Utils.DownloadAndScale("headimg.png", objdata["photosrc"].ToString(), new Size(100, 100));
+                            Size downloadSize = new Size(48, 48);
+                            await Utils.DownloadAndScale("headimg.png", objdata["photo_src"].ToString(), new Size(100, 100));
+                        }
                     }
                 }
                 catch (Exception)
@@ -323,7 +326,6 @@ namespace ZSCY_Win10
                         List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
                         paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
                         paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-                        paramList.Add(new KeyValuePair<string, string>("stuuum", appSetting.Values["stuNum"].ToString()));
                         string perInfo = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/search", paramList);
                         if (perInfo != "")
                         {

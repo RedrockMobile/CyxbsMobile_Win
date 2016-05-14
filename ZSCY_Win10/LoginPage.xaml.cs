@@ -95,6 +95,7 @@ namespace ZSCY_Win10
                             else if (JumpList.IsSupported())
                                 DisableSystemJumpListAsync();
                         }
+                        appSetting.Values["isUseingBackgroundTask"] = true;
                         Frame.Navigate(typeof(MainPage), "/kb");
                     }
                     else if (Int32.Parse(obj["status"].ToString()) == -100)
