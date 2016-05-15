@@ -431,10 +431,16 @@ namespace ZSCY_Win10
                         this.AppFrame.Navigate(navlist[2].DestPage, navlist[2].Arguments);
                         break;
                     default:
+                        NavMenuList.SelectedItem = 0;
+                        this.AppFrame.Navigate(navlist[0].DestPage, navlist[0].Arguments);
                         break;
                 }
             }
-            catch (Exception) { }
+            catch (Exception)
+            {
+                NavMenuList.SelectedItem = 0;
+                this.AppFrame.Navigate(navlist[0].DestPage, navlist[0].Arguments);
+            }
         }
         private void OnNavigatedToPage(object sender, NavigationEventArgs e)
         {

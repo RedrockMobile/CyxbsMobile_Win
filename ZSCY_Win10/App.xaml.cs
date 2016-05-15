@@ -11,6 +11,7 @@ using UmengSDK;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Background;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Networking.PushNotifications;
@@ -123,20 +124,15 @@ namespace ZSCY_Win10
 
         private async void addBackgroundTask()
         {
-            bool taskRegistered = false;
             try
             {
-                ////判断是否已经注册过了
-                //taskRegistered = BackgroundTaskRegistration.AllTasks.Any(x => x.Value.Name == exampleTaskName);
                 foreach (var cur in BackgroundTaskRegistration.AllTasks)
                 {
-                    if (cur.Value.Name == exampleTaskName)
+                    if (cur.Value.Name == exampleTaskName || cur.Value.Name == "Toastbuilder")
                     {
                         cur.Value.Unregister(true);
                     }
                 }
-                //if (!taskRegistered)
-                //{
                 BackgroundAccessStatus status = await BackgroundExecutionManager.RequestAccessAsync();
                 var builder = new BackgroundTaskBuilder();
                 builder.Name = exampleTaskName;
@@ -146,14 +142,15 @@ namespace ZSCY_Win10
                 //builder.SetTrigger(new SystemTrigger(SystemTriggerType.InternetAvailable, false));
                 builder.SetTrigger(new TimeTrigger(15, false)); //定时后台任务
                 //builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
-
                 BackgroundTaskRegistration task = builder.Register();
-                //}
-                //    else
-                //    {
-                //    var cur = BackgroundTaskRegistration.AllTasks.FirstOrDefault(x => x.Value.Name == exampleTaskName);
-                //    BackgroundTaskRegistration task = (BackgroundTaskRegistration)(cur.Value);
-                //}
+
+
+                var Toastbuilder = new BackgroundTaskBuilder();
+                Toastbuilder.Name = "Toastbuilder";
+                Toastbuilder.TaskEntryPoint = "MyMessageBackgroundTask.ToastBackgroundTask";
+                Toastbuilder.SetTrigger(new ToastNotificationActionTrigger());
+                //Toastbuilder.SetTrigger(new TimeTrigger(15, false)); //定时后台任务
+                BackgroundTaskRegistration Toasttask = Toastbuilder.Register();
             }
             catch (Exception) { }
 
@@ -329,6 +326,23 @@ namespace ZSCY_Win10
             {
                 Debug.WriteLine(channel.Message);
             }
+        }
+
+        protected async override void OnActivated(IActivatedEventArgs args)
+        {
+            //判断是否为Toast所激活
+            if (args.Kind == ActivationKind.ToastNotification)
+            {
+                Frame rootFrame = Window.Current.Content as Frame;
+                if (rootFrame == null)
+                {
+                    rootFrame = new Frame();
+                    rootFrame.NavigationFailed += OnNavigationFailed;
+                    Window.Current.Content = rootFrame;
+                }
+                rootFrame.Navigate(typeof(MainPage));
+            }
+            //Window.Current.Activate();
         }
 
     }

@@ -26,6 +26,11 @@
             <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="MyMessageBackgroundTask.ToastBackgroundTask">
+          <BackgroundTasks>
+            <Task Type="general" />
+          </BackgroundTasks>
+        </Extension>
       </Extensions>
     </Application>
   </Applications>

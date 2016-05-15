@@ -201,8 +201,8 @@ namespace ZSCY_Win10
 
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
-            if (isRefresh)
-                paramList.Add(new KeyValuePair<string, string>("forceFetch", "true"));
+            //if (isRefresh)
+            //    paramList.Add(new KeyValuePair<string, string>("forceFetch", "true"));
 
 
             string kbtemp = await NetWork.getHttpWebRequest("redapi2/api/kebiao", paramList); //新
@@ -541,12 +541,14 @@ namespace ZSCY_Win10
                 for (int i = 0; i < temp.Length; i++)
                     tempnew[i] = temp[i];
                 tempnew[temp.Length] = item._Id;
+                Debug.WriteLine("if~id->" + item._Id);
                 classtime[item.Hash_day, item.Hash_lesson] = tempnew;
             }
             else
             {
                 string[] tempnew = new string[1];
                 tempnew[0] = item._Id;
+                Debug.WriteLine("else~id->" + item._Id);
                 classtime[item.Hash_day, item.Hash_lesson] = tempnew;
             }
 

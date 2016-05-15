@@ -29,18 +29,12 @@ namespace MyMessageBackgroundTask
         /// Toast
         /// </summary>
         /// <param name="text"></param>
-        public static async void Toast(string text, string mode = "")
+        public static async void Toast(string text)
         {
             XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText01);
             XmlNodeList elements = toastXml.GetElementsByTagName("text");
             elements[0].AppendChild(toastXml.CreateTextNode(text));
             ToastNotification toast = new ToastNotification(toastXml);
-            switch (mode)
-            {
-                case "SavedPictures":
-                    toast.Activated += toast_Activated;//点击
-                    break;
-            }
             //toast.Dismissed += toast_Dismissed;//消失
             //toast.Failed += toast_Failed;//消除
             ToastNotificationManager.CreateToastNotifier().Show(toast);
@@ -48,20 +42,40 @@ namespace MyMessageBackgroundTask
             //从通知中心删除
             await Task.Delay(3000);
             ToastNotificationManager.History.Clear();
-
         }
 
-        private async static void toast_Activated(ToastNotification sender, object args)
+        public static async void actionsToast(string title, string content, string id)
         {
-            try
-            {
-                bool success = await Launcher.LaunchFolderAsync(KnownFolders.SavedPictures);
-            }
-            catch (Exception)
-            {
-                Debug.WriteLine("打开SavedPictures文件夹失败");
-            }
+            string xml = "<toast>" +
+                            "<visual>" +
+                                "<binding template=\"ToastGeneric\">" +
+                                    "<text></text>" +
+                                    "<text></text>" +
+                                "</binding>" +
+                            "</visual>" +
+                            "<actions>" +
+                                "<input id=\"content\" type=\"text\" placeHolderContent=\"请输入评论\" />" +
+                                "<action content = \"确定\" arguments = \"ok" + id + "\" activationType=\"background\" />" +
+                                "<action content = \"取消\" arguments = \"cancel\" activationType=\"background\"/>" +
+                            "</actions >" +
+                         "</toast>";
+            // 创建并加载XML文档
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+            XmlNodeList elements = doc.GetElementsByTagName("text");
+            elements[0].AppendChild(doc.CreateTextNode(title));
+            elements[1].AppendChild(doc.CreateTextNode(content));
+            // 创建通知实例
+            ToastNotification notification = new ToastNotification(doc);
+            //// 显示通知
+            //DateTime statTime = DateTime.Now.AddSeconds(10);  //指定应传递 Toast 通知的时间
+            //ScheduledToastNotification recurringToast = new ScheduledToastNotification(doc, statTime);  //创建计划的 Toast 通知对象
+            //ToastNotificationManager.CreateToastNotifier().AddToSchedule(recurringToast); //向计划中添加 Toast 通知
+            ToastNotifier nt = ToastNotificationManager.CreateToastNotifier();
+            nt.Show(notification);
         }
+
+
 
         /// <summary>
         /// 获取当前日期是今年的第几周
