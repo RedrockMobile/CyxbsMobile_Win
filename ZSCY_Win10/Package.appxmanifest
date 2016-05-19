@@ -21,14 +21,14 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#058BFE" />
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="MyMessageBackgroundTask.MessageBackgroundTask">
-          <BackgroundTasks>
-            <Task Type="timer" />
-          </BackgroundTasks>
-        </Extension>
         <Extension Category="windows.backgroundTasks" EntryPoint="MyMessageBackgroundTask.ToastBackgroundTask">
           <BackgroundTasks>
             <Task Type="general" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="MyMessageBackgroundTask.MessageBackgroundTask">
+          <BackgroundTasks>
+            <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
       </Extensions>
