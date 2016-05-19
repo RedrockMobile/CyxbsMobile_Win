@@ -482,8 +482,8 @@ namespace ZSCY_Win10
 
         private void CommunityItemPhotoImage_Holding(object sender, HoldingRoutedEventArgs e)
         {
-            Debug.WriteLine("Holding");
-            savePic();
+            //Debug.WriteLine("Holding");
+            //savePic();
         }
 
         private void CommunityItemPhotoImage_RightTapped(object sender, RightTappedRoutedEventArgs e)
@@ -526,5 +526,6 @@ namespace ZSCY_Win10
             ProgressRing p = z as ProgressRing;
             p.IsActive = false;
         }
+
     }
 }

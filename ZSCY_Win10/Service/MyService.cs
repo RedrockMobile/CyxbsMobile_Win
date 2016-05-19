@@ -66,6 +66,7 @@ namespace ZSCY_Win10.Service
                 paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
                 paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
                 paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
+                
                 string response = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Article/searchtrends", paramList);
                 Debug.WriteLine(response);
                 //response = Utils.ConvertUnicodeStringToChinese(response);

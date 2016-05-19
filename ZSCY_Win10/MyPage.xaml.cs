@@ -220,8 +220,8 @@ namespace ZSCY_Win10
 
         private void CommunityItemPhotoImage_Holding(object sender, HoldingRoutedEventArgs e)
         {
-            Debug.WriteLine("Holding");
-            savePic();
+            //Debug.WriteLine("Holding");
+            //savePic();
         }
 
         private void CommunityItemPhotoImage_RightTapped(object sender, RightTappedRoutedEventArgs e)
@@ -255,6 +255,15 @@ namespace ZSCY_Win10
             {
             }
         }
+        private void CommunityItemPhotoImage_ImageOpened(object sender, RoutedEventArgs e)
+        {
+            DependencyObject x = VisualTreeHelper.GetParent(sender as Image);
+            Grid g = x as Grid;
+            var z = g.Children[0];
+            ProgressRing p = z as ProgressRing;
+            p.IsActive = false;
+        }
+
     }
 
 

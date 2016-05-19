@@ -1,5 +1,5 @@
 ﻿<Page
-    Name="page"
+    Name="mpage"
     x:Class="ZSCY_Win10.Pages.CommunityPages.CommunityContentPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -12,7 +12,7 @@
     mc:Ignorable="d"
     Background="#ececec">
     <Page.Resources>
-
+        <converters:CommunityItemPhotoFlipViewHeighConverter x:Key="CommunityItemPhotoFlipViewHeighConverter"/>
         <!--根据图片数量动态选择数据模板-->
         <util:ImgDataTemplateSelector x:Key="ImgDataTemplateSelector">
             <util:ImgDataTemplateSelector.NoPhotoTemplate>
@@ -224,10 +224,12 @@
             <FlipView Name="CommunityItemPhotoFlipView">
                 <FlipView.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
-                            <ProgressRing Name="progressRing" Visibility="Visible" IsActive="True"/>
-                            <Image Name="CommunityItemPhotoImage" Stretch="Uniform" Source="{Binding ImgSrc}"  Tapped="CommunityItemPhoto_Tapped" Holding="CommunityItemPhotoImage_Holding" RightTapped="CommunityItemPhotoImage_RightTapped"></Image>
-                        </Grid>
+                        <ScrollViewer Name="scrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" ZoomMode="Enabled" MaxZoomFactor="4" MinZoomFactor="0.8">
+                            <Grid Name="grid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <ProgressRing Name="progressRing" Visibility="Visible" IsActive="True"/>
+                                <Image Name="CommunityItemPhotoImage" Stretch="Uniform" Source="{Binding ImgSrc}" Tapped="CommunityItemPhoto_Tapped" Holding="CommunityItemPhotoImage_Holding" RightTapped="CommunityItemPhotoImage_RightTapped" ImageOpened="CommunityItemPhotoImage_ImageOpened" Width="{Binding ActualWidth, ElementName=mpage, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=mpage,Converter={StaticResource CommunityItemPhotoFlipViewHeighConverter}, Mode=OneWay}"></Image>
+                            </Grid>
+                        </ScrollViewer>
                     </DataTemplate>
                 </FlipView.ItemTemplate>
             </FlipView>

@@ -341,6 +341,7 @@
     <Compile Include="Util\Converter\GenderConverter.cs" />
     <Compile Include="Util\Converter\GenderNameConverter.cs" />
     <Compile Include="Util\Converter\GetOneorNonePicValueConverter.cs" />
+    <Compile Include="Util\Converter\CommunityItemPhotoFlipViewHeighConverter.cs" />
     <Compile Include="Util\Converter\itemPageConverter.cs" />
     <Compile Include="Util\Converter\KBGridConverter.cs" />
     <Compile Include="Util\Converter\KBPageConverter.cs" />
