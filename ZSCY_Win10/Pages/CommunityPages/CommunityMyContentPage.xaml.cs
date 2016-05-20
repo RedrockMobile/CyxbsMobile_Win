@@ -36,6 +36,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
         CommunityMyContentViewModel ViewModel;
         List<Img> clickImgList = new List<Img>();
         bool isMark2Peo = false;//是否有回复某人
+        string Mark2PeoNum = "0";
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         ObservableCollection<Mark> markList = new ObservableCollection<Mark>();
         NavigationEventArgs ee;
@@ -238,6 +239,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("content", sendMarkTextBox.Text));
+            paramList.Add(new KeyValuePair<string, string>("answer_user_id",Mark2PeoNum));
             string sendMark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/postremarks", paramList);
             Debug.WriteLine(sendMark);
             try
@@ -279,7 +281,16 @@ namespace ZSCY_Win10.Pages.CommunityPages
             {
                 sendMarkTextBox.Text = sendMarkTextBox.Text.Substring(sendMarkTextBox.Text.IndexOf(":") + 2);
             }
-            sendMarkTextBox.Text = "回复 " + clickMarkItem.nickname + " : " + sendMarkTextBox.Text;
+            if (clickMarkItem.stunum != appSetting.Values["stuNum"].ToString())
+            {
+                sendMarkTextBox.Text = "回复 " + clickMarkItem.nickname + " : " + sendMarkTextBox.Text;
+                Mark2PeoNum = clickMarkItem.stunum;
+            }
+            else
+            {
+                isMark2Peo = false;
+                Mark2PeoNum = "0";
+            }
             sendMarkTextBox.Focus(FocusState.Keyboard);
             sendMarkTextBox.SelectionStart = sendMarkTextBox.Text.Length;
         }

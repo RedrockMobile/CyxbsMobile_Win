@@ -36,6 +36,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         ObservableCollection<Mark> markList = new ObservableCollection<Mark>();
         bool isMark2Peo = false;//是否有回复某人
+        string Mark2PeoNum = "0";
         CommunityContentViewModel ViewModel;
         List<Img> clickImgList = new List<Img>();
         int clickImfIndex = 0;
@@ -214,6 +215,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("content", sendMarkTextBox.Text));
+            paramList.Add(new KeyValuePair<string, string>("answer_user_id",Mark2PeoNum));
             string sendMark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/postremarks", paramList);
             Debug.WriteLine(sendMark);
             try
@@ -259,10 +261,18 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 //@lj 好了·
                 sendMarkTextBox.Text = sendMarkTextBox.Text.Substring(sendMarkTextBox.Text.IndexOf(":") + 2);
             }
-            sendMarkTextBox.Text = "回复 " + clickMarkItem.nickname + " : " + sendMarkTextBox.Text;
+            if (clickMarkItem.stunum != appSetting.Values["stuNum"].ToString())
+            {
+                sendMarkTextBox.Text = "回复 " + clickMarkItem.nickname + " : " + sendMarkTextBox.Text;
+                Mark2PeoNum = clickMarkItem.stunum;
+            }
+            else
+            {
+                isMark2Peo = false;
+                Mark2PeoNum ="0";
+            }
             sendMarkTextBox.Focus(FocusState.Keyboard);
             sendMarkTextBox.SelectionStart = sendMarkTextBox.Text.Length;
-            //TODO:吃完饭记得睡觉
         }
 
         private async void LikeButton_Click(object sender, RoutedEventArgs e)
