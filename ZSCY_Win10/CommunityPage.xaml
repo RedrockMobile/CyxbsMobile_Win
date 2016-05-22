@@ -49,7 +49,7 @@
         <util:HotFeedsDataTemplateSelector x:Key="HotFeedsDataTemplateSelector">
             <util:HotFeedsDataTemplateSelector.BBDDTemplate>
                 <DataTemplate x:DataType="models:HotFeed">
-                    <StackPanel Orientation="Vertical" Padding="10" Background="White" Margin="0,3">
+                    <StackPanel Orientation="Vertical" Padding="10" Background="White" Margin="0">
                         <StackPanel Orientation="Horizontal" Margin="0,10">
                             <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
                                 <Rectangle.Fill>
@@ -140,7 +140,7 @@
         </util:HotFeedsDataTemplateSelector>
         <!--bbdd动态数据模板-->
         <DataTemplate x:DataType="models:BBDDFeed" x:Key="ListDataTemplate">
-            <StackPanel Orientation="Vertical" Padding="10" Background="White" Margin="0,3">
+            <StackPanel Orientation="Vertical" Padding="10" Background="White" Margin="0">
                 <StackPanel Orientation="Horizontal" Margin="0,10" Tapped="StackPanel_Tapped">
                     <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
                         <Rectangle.Fill>
@@ -184,7 +184,7 @@
         </DataTemplate>
         <Style x:Name="ItemContainerStyle" x:Key="ItemContainerStyle" TargetType="ListViewItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-            <Setter Property="Margin"  Value="-12,0"></Setter>
+            <Setter Property="Margin"  Value="-12,5"></Setter>
         </Style>
         <!--动态的列表样式-->
         <Style x:Name="FeedsListView" x:Key="FeedsListView" TargetType="ListView">
