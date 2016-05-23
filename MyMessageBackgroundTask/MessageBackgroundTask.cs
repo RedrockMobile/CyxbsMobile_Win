@@ -60,7 +60,7 @@ namespace MyMessageBackgroundTask
                                     }
                                     else if (jArray[0]["type"].ToString() == "remark")
                                     {
-                                        Utils.actionsToast(jArray[0]["nickname"].ToString() + " 评论了 " + "\""+ jArray[0]["article_content"].ToString() + "\"", "\"" + jArray[0]["content"].ToString() + "\"", jArray[0]["article_id"].ToString());
+                                        Utils.actionsToast(jArray[0]["nickname"].ToString() + " 评论了 " + "\"" + jArray[0]["article_content"].ToString() + "\"", "\"" + jArray[0]["content"].ToString() + "\"", jArray[0]["article_id"].ToString() + "+" + jArray[0]["stunum"] + "+" + jArray[0]["nickname"]);
                                         //if (jArray[0]["content"].ToString().Length > 20)
                                         //{
                                         //    Utils.Toast(jArray[0]["nickname"].ToString() + "评论了你~\n" + "\"" + jArray[0]["content"].ToString().Substring(0, 20) + "\"" + "\n你可能还有有新的消息，快来看看吧");

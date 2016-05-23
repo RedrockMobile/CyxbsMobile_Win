@@ -27,7 +27,7 @@ namespace MyMessageBackgroundTask
                 {
                     // 是否选择“确定”
                     string arg = details.Argument;
-                    if (arg.Substring(0, 2) == "ok")
+                    if ((arg.Split('+'))[0].Substring(0, 2) == "ok")
                     {
                         // 获取数据
                         string value = details.UserInput["content"] as string;
@@ -39,7 +39,8 @@ namespace MyMessageBackgroundTask
                             paramList.Add(new KeyValuePair<string, string>("type_id", "5"));
                             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
                             paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-                            paramList.Add(new KeyValuePair<string, string>("content", value));
+                            paramList.Add(new KeyValuePair<string, string>("content", "回复 " + arg.Split('+')[2] + " : " + value));
+                            paramList.Add(new KeyValuePair<string, string>("answer_user_id", arg.Split('+')[1]));
                             string sendMark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/postremarks", paramList);
                             Debug.WriteLine(sendMark);
                             try
