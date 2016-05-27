@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -110,7 +111,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
         {
 
         }
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             ee = e;
             ViewModel = new CommunityMyContentViewModel(e.Parameter);
@@ -239,7 +240,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("content", sendMarkTextBox.Text));
-            paramList.Add(new KeyValuePair<string, string>("answer_user_id",Mark2PeoNum));
+            paramList.Add(new KeyValuePair<string, string>("answer_user_id", Mark2PeoNum));
             string sendMark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/postremarks", paramList);
             Debug.WriteLine(sendMark);
             try

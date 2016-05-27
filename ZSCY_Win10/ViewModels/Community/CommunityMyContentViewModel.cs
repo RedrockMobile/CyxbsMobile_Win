@@ -20,19 +20,23 @@ namespace ZSCY_Win10.ViewModels.Community
         }
         public CommunityMyContentViewModel(object e)
         {
+            getItem(e);
+
+        }
+
+        private async void getItem(object e)
+        {
             if (e is MyFeed)
             {
                 Item = e as MyFeed;
             }
             else if (e is MyNotification)
             {
-                Get(e as MyNotification);
+                Item = new MyFeed();
+                Item.content = (e as MyNotification).article_content;
+                Item = await CommunityMyContentService.GetFeed(5, (e as MyNotification).article_id);
             }
         }
-        private async void Get(MyNotification m)
-        {
-            Item = await CommunityMyContentService.GetFeed(5, m.article_id);
 
-        }
     }
 }
