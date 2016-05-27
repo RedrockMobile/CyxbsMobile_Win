@@ -34,6 +34,8 @@ namespace ZSCY_Win10.ViewModels.Community
             {
                 Item = new MyFeed();
                 Item.content = (e as MyNotification).article_content;
+                Item.type_id = "5";
+                Item.id = (e as MyNotification).article_id;
                 Item = await CommunityMyContentService.GetFeed(5, (e as MyNotification).article_id);
             }
         }
