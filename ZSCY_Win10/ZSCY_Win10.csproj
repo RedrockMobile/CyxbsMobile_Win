@@ -116,6 +116,15 @@
     <Content Include="Assets\AlphaLogo\StoreLogo.scale-200.png" />
     <Content Include="Assets\AlphaLogo\StoreLogo.scale-240.png" />
     <Content Include="Assets\AlphaLogo\StoreLogo.scale-400.png" />
+    <Content Include="Assets\AlphaLogo\Wide310x150Logo.scale-100.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\AlphaLogo\Wide310x150Logo.scale-200.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\AlphaLogo\Wide310x150Logo.scale-400.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\anInterestingCircle.png" />
     <Content Include="Assets\Annex_img\Annex_apk.png" />
     <Content Include="Assets\Annex_img\Annex_doc.png" />
@@ -488,9 +497,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Wide310x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

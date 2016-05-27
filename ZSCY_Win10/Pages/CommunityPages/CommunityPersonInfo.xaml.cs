@@ -43,6 +43,14 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 {
                     state = "VisualState800";
                 }
+                if (!App.showpane)
+                {
+                    MyTitleGrid.Margin = new Thickness(48, 0, 0, 0);
+                }
+                else
+                {
+                    MyTitleGrid.Margin = new Thickness(0);
+                }
                 VisualStateManager.GoToState(this, state, true);
                 cutoffLine.Y2 = e.NewSize.Height;
             };
