@@ -26,6 +26,17 @@ namespace ZSCY_Win10
         public SetPersonInfoPage()
         {
             this.InitializeComponent();
+            this.SizeChanged += (s, e) =>
+            {
+                if (!App.showpane)
+                {
+                    SetPersonInfoTitleGrid.Margin = new Thickness(48, 0, 0, 0);
+                }
+                else
+                {
+                    SetPersonInfoTitleGrid.Margin = new Thickness(0);
+                }
+            };
         }
 
         //昵称
