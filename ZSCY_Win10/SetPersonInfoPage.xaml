@@ -70,7 +70,7 @@
                     </RelativePanel>
                     <TextBox x:Name="phoneTextBox" 
                      Style="{StaticResource SetPersonInfoPageTextBoxStyle}"  
-                     Header="手机："
+                     Header="手机(可选)："
                      PlaceholderText="可爱的人肯定要留电话的呀"
                      InputScope="TelephoneNumber"
                      TextChanged="phoneTextBox_TextChanged"
@@ -79,7 +79,7 @@
                            Style="{StaticResource SetPersonInfoPageTextBlock}"/>
                     <TextBox x:Name="qqTextBox" 
                      Style="{StaticResource SetPersonInfoPageTextBoxStyle}"  
-                     Header="QQ：" 
+                     Header="QQ(可选)：" 
                      PlaceholderText="这句没有想到卖萌的话，放着"
                      InputScope="Number"
                      TextChanged="qqTextBox_TextChanged"

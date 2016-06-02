@@ -20,6 +20,15 @@ namespace ZSCY_Win10.Data.Community
             this.qq = qq;
         }
 
+        public PeoInfo(string nickname, string introduction, string gender, string phone, string qq)
+        {
+            this.nickname = nickname;
+            this.introduction = introduction;
+            this.gender = gender;
+            this.phone = phone;
+            this.qq = qq;
+        }
+
         public string id { get; set; }
         public string stunum { get; set; }
         public string introduction { get; set; }

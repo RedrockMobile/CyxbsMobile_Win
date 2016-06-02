@@ -358,6 +358,9 @@ namespace ZSCY_Win10
                                 appSetting.Values["Community_people_id"] = jPerInfo["data"]["id"].ToString();
                                 appSetting.Values["Community_nickname"] = jPerInfo["data"]["nickname"].ToString();
                                 appSetting.Values["Community_headimg_src"] = jPerInfo["data"]["photo_src"].ToString();
+                                appSetting.Values["Community_introduction"] = jPerInfo["data"]["introduction"].ToString();
+                                appSetting.Values["Community_phone"] = jPerInfo["data"]["phone"].ToString();
+                                appSetting.Values["Community_qq"] = jPerInfo["data"]["qq"].ToString();
                                 Debug.WriteLine(appSetting.Values["Community_headimg_src"].ToString());
 
                                 Debug.WriteLine(jPerInfo["data"]["id"].ToString());

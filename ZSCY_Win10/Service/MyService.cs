@@ -111,6 +111,12 @@ namespace ZSCY_Win10.Service
                     if (bbddfeeds["status"].ToString() == "200")
                     {
                         JObject feed = (JObject)bbddfeeds["data"];
+                        appSetting.Values["Community_people_id"] = feed["id"].ToString();
+                        appSetting.Values["Community_nickname"] = feed["nickname"].ToString();
+                        appSetting.Values["Community_headimg_src"] = feed["photo_src"].ToString();
+                        appSetting.Values["Community_introduction"] = feed["introduction"].ToString();
+                        appSetting.Values["Community_phone"] = feed["phone"].ToString();
+                        appSetting.Values["Community_qq"] = feed["qq"].ToString();
                         PeoInfo f = new PeoInfo();
                         f.GetAttributes(feed);
                         return f;

@@ -11,7 +11,7 @@ using ZSCY_Win10.Service;
 
 namespace ZSCY_Win10.ViewModels.Community
 {
-    public class MyViewModel:ViewModelBase
+    public class MyViewModel : ViewModelBase
     {
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
 
@@ -41,7 +41,20 @@ namespace ZSCY_Win10.ViewModels.Community
         {
             getNotifications();
             getFeeds();
-            Info = await MyService.GetPerson();
+            try
+            {
+                Info = new PeoInfo(appSetting.Values["Community_nickname"].ToString(), appSetting.Values["Community_introduction"].ToString(), appSetting.Values["gender"].ToString(), appSetting.Values["Community_phone"].ToString(), appSetting.Values["Community_qq"].ToString());
+                Info.photo_src = appSetting.Values["Community_headimg_src"].ToString() == "" ? "ms-appdata:///local/headimg.png" : appSetting.Values["Community_headimg_src"].ToString();
+                Info.photo_thumbnail_src = appSetting.Values["Community_headimg_src"].ToString() == "" ? "ms-appdata:///local/headimg.png" : appSetting.Values["Community_headimg_src"].ToString();
+            }
+            catch (Exception)
+            {
+            }
+            PeoInfo infotemp = await MyService.GetPerson();
+            if (infotemp != null)
+            {
+                Info = infotemp;
+            }
         }
 
         public async void getNotifications(int size = 15)
