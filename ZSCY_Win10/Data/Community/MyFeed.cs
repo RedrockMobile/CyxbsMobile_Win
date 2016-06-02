@@ -48,6 +48,8 @@ namespace ZSCY_Win10.Data.Community
             remark_num = feedsJObject["remark_num"].ToString();
             string articlephotos = feedsJObject["photo_src"].ToString();
             string smallphotos = feedsJObject["thumbnail_src"].ToString();
+            nickname = feedsJObject["nickname"].ToString();
+            headimg = feedsJObject["user_photo"].ToString();
 
             if (articlephotos != "")
             {
