@@ -13,6 +13,8 @@ namespace ZSCY_Win10.Data.Community
     public class MyFeed : ViewModelBase, IFeeds
     {
         private string remarknum { get; set; }
+        private string nick_name;
+        private string head_img;
         public string id { get; set; }
         public Img[] photo_src { get; set; }
         public Img[] thumbnail_src { get; set; }
@@ -33,8 +35,30 @@ namespace ZSCY_Win10.Data.Community
                 OnPropertyChanged(nameof(remark_num));
             }
         }
-        public string nickname { get; set; } = Windows.Storage.ApplicationData.Current.LocalSettings.Values["Community_nickname"].ToString();
-        public string headimg { get; set; } = Windows.Storage.ApplicationData.Current.LocalSettings.Values["Community_headimg_src"].ToString();
+        public string nickname
+        {
+            get
+            {
+                return nick_name;
+            }
+            set
+            {
+                this.nick_name = value;
+                OnPropertyChanged();
+            }
+        }
+        public string headimg
+        {
+            get
+            {
+                return head_img;
+            }
+            set
+            {
+                this.head_img = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         public void GetAttributes(JObject feedsJObject)
