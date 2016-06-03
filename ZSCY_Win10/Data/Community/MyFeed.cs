@@ -14,7 +14,7 @@ namespace ZSCY_Win10.Data.Community
     {
         private string remarknum { get; set; }
         private string nick_name;
-        private string head_img;
+        private string head_img= "ms-appx:///Community_nohead.png";
         public string id { get; set; }
         public Img[] photo_src { get; set; }
         public Img[] thumbnail_src { get; set; }
