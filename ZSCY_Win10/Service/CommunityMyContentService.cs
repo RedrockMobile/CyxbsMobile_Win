@@ -34,7 +34,7 @@ namespace ZSCY_Win10.Service
                     {
                         JObject feed = (JObject)bbddfeeds["data"][0];
                         MyFeed f = new MyFeed();
-                        f.GetAttributes(feed);
+                        f.GetAttributes(feed,true);
                         return f;
                     }
                 }

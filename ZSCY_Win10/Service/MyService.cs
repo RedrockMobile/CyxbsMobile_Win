@@ -82,7 +82,7 @@ namespace ZSCY_Win10.Service
                             for (int i = 0; i < bbddarray.Count; i++)
                             {
                                 MyFeed f = new MyFeed();
-                                f.GetAttributes((JObject)bbddarray[i]);
+                                f.GetAttributes((JObject)bbddarray[i],false);
                                 feeds.Add(f);
                             }
                         }

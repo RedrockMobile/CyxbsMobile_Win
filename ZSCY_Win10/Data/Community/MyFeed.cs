@@ -10,11 +10,13 @@ using ZSCY_Win10.Common;
 
 namespace ZSCY_Win10.Data.Community
 {
-    public class MyFeed : ViewModelBase, IFeeds
+    public class MyFeed : ViewModelBase
     {
+        public static ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+
         private string remarknum { get; set; }
         private string nick_name;
-        private string head_img= "ms-appx:///Community_nohead.png";
+        private string head_img = "ms-appx:///Community_nohead.png";
         public string id { get; set; }
         public Img[] photo_src { get; set; }
         public Img[] thumbnail_src { get; set; }
@@ -61,7 +63,7 @@ namespace ZSCY_Win10.Data.Community
         }
 
 
-        public void GetAttributes(JObject feedsJObject)
+        public void GetAttributes(JObject feedsJObject, bool myfeed = false)
         {
             id = feedsJObject["id"].ToString();
             content = feedsJObject["content"].ToString();
@@ -72,8 +74,16 @@ namespace ZSCY_Win10.Data.Community
             remark_num = feedsJObject["remark_num"].ToString();
             string articlephotos = feedsJObject["photo_src"].ToString();
             string smallphotos = feedsJObject["thumbnail_src"].ToString();
-            nickname = feedsJObject["nickname"].ToString();
-            headimg = feedsJObject["user_photo"].ToString();
+            if (myfeed)
+            {
+                nickname = feedsJObject["nickname"].ToString();
+                headimg = feedsJObject["user_photo"].ToString();
+            }
+            else
+            {
+                nickname = appSetting.Values["Community_nickname"].ToString();
+                headimg = appSetting.Values["Community_headimg_src"].ToString();
+            }
 
             if (articlephotos != "")
             {
