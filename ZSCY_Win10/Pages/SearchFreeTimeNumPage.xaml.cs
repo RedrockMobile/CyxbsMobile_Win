@@ -47,8 +47,8 @@ namespace ZSCY.Pages
             };
             //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             //TODO:未登陆时 不能自动添加自己的信息
-            if (App.muIdList.Count == 0)
-                App.muIdList.Add(new uIdList { uId = appSetting.Values["stuNum"].ToString(), uName = appSetting.Values["name"].ToString() });
+            if (App.muIdList.Count == 0&&appSetting.Values.ContainsKey("idNum"))
+                    App.muIdList.Add(new uIdList { uId = appSetting.Values["stuNum"].ToString(), uName = appSetting.Values["name"].ToString() });
         }
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)

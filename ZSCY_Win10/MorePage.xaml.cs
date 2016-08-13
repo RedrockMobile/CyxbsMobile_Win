@@ -7,8 +7,10 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -28,8 +30,10 @@ namespace ZSCY_Win10
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
+    /// 
     public sealed partial class MorePage : Page
     {
+        ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         ObservableDictionary morepageclass = new ObservableDictionary();
         public static int isFreeRe = 0;
         public MorePage()
@@ -178,21 +182,54 @@ namespace ZSCY_Win10
             {
                 switch (item.UniqueID)
                 {
-                    case "ReExam":
-                        MoreFrame.Navigate(typeof(ExamPage), 3); ;
-                        MoreFrame.Visibility = Visibility.Visible;
-                        isFreeRe = 0;
-                        break;
+                    case "ReExam":                       
+                        if (appSetting.Values.ContainsKey("idNum"))
+                        {
+                            MoreFrame.Navigate(typeof(ExamPage), 3); ;
+                            MoreFrame.Visibility = Visibility.Visible;
+                            isFreeRe = 0;
+                            break;
+                        }
+                        else
+                        {
+                            var msgPopup = new Data.loginControl("您还没有登录 无法查看补考信息~");
+                            msgPopup.LeftClick += (s, c) => { Frame.Navigate(typeof(LoginPage)); };
+                            msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
+                            msgPopup.ShowWIndow();
+                            break;
+                        }
                     case "Exam":
-                        MoreFrame.Navigate(typeof(ExamPage), 2);
-                        MoreFrame.Visibility = Visibility.Visible;
-                        isFreeRe = 0;
-                        break;
+                        if (appSetting.Values.ContainsKey("idNum"))
+                        {
+                            MoreFrame.Navigate(typeof(ExamPage), 2);
+                            MoreFrame.Visibility = Visibility.Visible;
+                            isFreeRe = 0;
+                            break;
+                        }
+                        else
+                        {
+                            var msgPopup = new Data.loginControl("您还没有登录 无法查看考试信息~");
+                            msgPopup.LeftClick += (s, c) => { Frame.Navigate(typeof(LoginPage)); };
+                            msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
+                            msgPopup.ShowWIndow();
+                            break;
+                        }
                     case "Socre":
-                        MoreFrame.Navigate(typeof(ScorePage));
-                        MoreFrame.Visibility = Visibility.Visible;
-                        isFreeRe = 0;
-                        break;
+                        if (appSetting.Values.ContainsKey("idNum"))
+                        {
+                            MoreFrame.Navigate(typeof(ScorePage));
+                            MoreFrame.Visibility = Visibility.Visible;
+                            isFreeRe = 0;
+                            break;
+                        }
+                        else
+                        {
+                            var msgPopup = new Data.loginControl("您还没有登录 无法查看成绩~");
+                            msgPopup.LeftClick += (s, c) => { Frame.Navigate(typeof(LoginPage)); };
+                            msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
+                            msgPopup.ShowWIndow();
+                            break;
+                        }
                     case "ClassRoom":
                         MoreFrame.Navigate(typeof(EmptyRoomsPage));
                         MoreFrame.Visibility = Visibility.Visible;

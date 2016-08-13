@@ -186,5 +186,10 @@ namespace ZSCY_Win10
         {
             UmengSDK.UmengAnalytics.TrackPageEnd("LoginPage");
         }
+
+        private void noLoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage), "/kb");
+        }
     }
 }

@@ -143,7 +143,11 @@
                 </Grid>
                 <Grid Margin="0,20,0,0" Width="200">
                     <Grid  Width="200">
+                        <StackPanel>
+                            
                         <Button Name="LoginButton" Content="登 录" Style="{StaticResource RoundButton}"  IsEnabled="False" HorizontalAlignment="Stretch" Click="LoginButton_Click" Foreground="White" Background="#FF2884F3"/>
+                        <Button Name="noLoginButton" Content="随便看看" Style="{StaticResource RoundButton}"  IsEnabled="True" HorizontalAlignment="Stretch" Click="noLoginButton_Click" Foreground="White" Background="LightGray"/>
+                        </StackPanel>
                         <ProgressRing VerticalAlignment="Center" Name="LoginProgressBar" IsActive="False" Width="50" Height="50" Margin="0,5,0,0"  Foreground="White"/>
                     </Grid>
                 </Grid>

@@ -16,8 +16,11 @@ namespace ZSCY_Win10.Service
     public class CommunityFeedsService
     {
 
-        const string hotFeeds = @"cyxbsMobile/index.php/Home/Article/searchHotArticle";
-        const string bbddfeeds = @"cyxbsMobile/index.php/Home/Article/listArticle";
+        //const string hotFeeds = @"cyxbsMobile/index.php/Home/Article/searchHotArticle";
+        //const string bbddfeeds = @"cyxbsMobile/index.php/Home/Article/listArticle";
+        //TODO:新的api 可不传参数stuNum和idNum
+        const string hotFeeds = @"cyxbsMobile/index.php/Home/NewArticle/searchHotArticle";
+        const string bbddfeeds = @"cyxbsMobile/index.php/Home/NewArticle/listArticle";
         public static string[] feedsapi = { hotFeeds, bbddfeeds };
         public static ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
 
@@ -32,8 +35,11 @@ namespace ZSCY_Win10.Service
             return await Task.Run(async () =>
             {
                 List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-                paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                if (appSetting.Values.ContainsKey("idNum"))
+                {
+                    paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+                    paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                }
                 paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
                 paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
                 if (typeid != 0)
@@ -113,8 +119,11 @@ namespace ZSCY_Win10.Service
             return await Task.Run(async () =>
            {
                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-               paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-               paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+               if (appSetting.Values.ContainsKey("idNum"))
+               {
+                   paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+                   paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+               }
                paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
                paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
                if (typeid != 0)

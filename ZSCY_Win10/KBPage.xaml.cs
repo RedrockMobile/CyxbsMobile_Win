@@ -102,11 +102,23 @@ namespace ZSCY_Win10
         {
             //TODO:未登陆时 没有课表
             Debug.WriteLine("OnNavigatedTo");
-            stuNum = appSetting.Values["stuNum"].ToString();
-            initKB();
-            this.progress.IsActive = false;
-            initToday();
-            UmengSDK.UmengAnalytics.TrackPageStart("KBPage");
+            if (appSetting.Values.ContainsKey("stuNum"))
+            {
+                stuNum = appSetting.Values["stuNum"].ToString();
+                initKB();
+                this.progress.IsActive = false;
+                initToday();
+                UmengSDK.UmengAnalytics.TrackPageStart("KBPage");
+            }
+            else
+            {
+                HubSectionKBTitle.Text = "您未登陆 暂无课表信息";
+                baseInfoStackPanel.IsTapEnabled = false;
+                HubSectionKBNum.IsTapEnabled = false;
+                KBRefreshAppBarButton.IsEnabled = false;
+                KBCalendarAppBarButton.IsEnabled = false;
+                KBZoomAppBarButton.IsEnabled = false;
+            }
         }
 
 
@@ -173,26 +185,27 @@ namespace ZSCY_Win10
         //TODO:未登陆时 没有课表
         private async void initKB(bool isRefresh = false)
         {
-            if (stuNum == appSetting.Values["stuNum"].ToString() && !isRefresh)
-            {
-                try
+            
+                if (stuNum == appSetting.Values["stuNum"].ToString() && !isRefresh)
                 {
-                    IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
-                    IStorageFile storageFileRE = await applicationFolder.GetFileAsync("kb");
-                    IRandomAccessStream accessStream = await storageFileRE.OpenReadAsync();
-                    using (StreamReader streamReader = new StreamReader(accessStream.AsStreamForRead((int)accessStream.Size)))
+                    try
                     {
-                        kb = streamReader.ReadToEnd();
-                    }
-                    HubSectionKBNum.Text = " | 第" + appSetting.Values["nowWeek"].ToString() + "周";
+                        IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
+                        IStorageFile storageFileRE = await applicationFolder.GetFileAsync("kb");
+                        IRandomAccessStream accessStream = await storageFileRE.OpenReadAsync();
+                        using (StreamReader streamReader = new StreamReader(accessStream.AsStreamForRead((int)accessStream.Size)))
+                        {
+                            kb = streamReader.ReadToEnd();
+                        }
+                        HubSectionKBNum.Text = " | 第" + appSetting.Values["nowWeek"].ToString() + "周";
 #if DEBUG
-                    showKB(2, 5);
+                        showKB(2, 5);
 #else
                     showKB(2);
 #endif
+                    }
+                    catch (Exception) { Debug.WriteLine("主页->课表数据缓存异常"); }
                 }
-                catch (Exception) { Debug.WriteLine("主页->课表数据缓存异常"); }
-            }
             if (stuNum == appSetting.Values["stuNum"].ToString())
             {
                 HubSectionKBTitle.Text = "我的课表";
@@ -386,17 +399,17 @@ namespace ZSCY_Win10
             {
                 ClassList classitem = new ClassList();
                 classitem.GetAttribute((JObject)ClassListArray[i]);
-//#if DEBUG
-//                if (Array.IndexOf(classitem.Week, 5) != -1 && classitem.Hash_day == 2)
-//                {
-//                    SetClassDay(classitem);
-//                }
-//#else
+                //#if DEBUG
+                //                if (Array.IndexOf(classitem.Week, 5) != -1 && classitem.Hash_day == 2)
+                //                {
+                //                    SetClassDay(classitem);
+                //                }
+                //#else
                 if (Array.IndexOf(classitem.Week, Int32.Parse(appSetting.Values["nowWeek"].ToString())) != -1 && classitem.Hash_day == (Int16.Parse(Utils.GetWeek()) + 6) % 7)
                 {
                     SetClassDay(classitem);
                 }
-//#endif
+                //#endif
             }
             colorlist.Clear();
 

@@ -71,7 +71,7 @@
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Name="HubSectionKBTitle" Text="我的课表 | " Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="5,0" Tapped="HubSectionKBNum_Tapped">
+                    <StackPanel Name="baseInfoStackPanel" Grid.Column="1" VerticalAlignment="Center" Margin="5,0" Tapped="HubSectionKBNum_Tapped">
                         <TextBlock Grid.Column="1"  Name="HubSectionKBNum" Text=" 第  周"  Foreground="White"  FontSize="13"  VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
                         <TextBlock Grid.Column="2" Visibility="Collapsed" Name="HubSectionKBDate"  Text=""  Foreground="White"  FontSize="13"  VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
                     </StackPanel>

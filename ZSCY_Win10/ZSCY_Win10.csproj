@@ -256,6 +256,9 @@
     <Compile Include="Data\ExamList.cs" />
     <Compile Include="Data\Community\HotFeedsContentBase.cs" />
     <Compile Include="Data\IdList.cs" />
+    <Compile Include="Data\loginControl.xaml.cs">
+      <DependentUpon>loginControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\NewsContentList.cs" />
     <Compile Include="Data\NewsList.cs" />
     <Compile Include="Data\JWList.cs" />
@@ -504,6 +507,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CommunityPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Data\loginControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -37,6 +37,7 @@ namespace ZSCY_Win10.ViewModels.Community
         }
         public async void Get()
         {
+            //TODO:暂时没找出毛病 白天问问部长杰哥
             Info = await CommunityPersonInfoService.GetPerson(stunum);
             List<MyFeed> list = await CommunityPersonInfoService.GetMyFeeds(stunum, page++, 15);
             if (list != null)
