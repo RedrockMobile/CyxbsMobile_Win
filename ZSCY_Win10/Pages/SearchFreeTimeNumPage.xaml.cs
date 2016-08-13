@@ -46,6 +46,7 @@ namespace ZSCY.Pages
                 //uIdListView.Height = e.NewSize.Height - 20 - 40;
             };
             //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            //TODO:未登陆时 不能自动添加自己的信息
             if (App.muIdList.Count == 0)
                 App.muIdList.Add(new uIdList { uId = appSetting.Values["stuNum"].ToString(), uName = appSetting.Values["name"].ToString() });
         }

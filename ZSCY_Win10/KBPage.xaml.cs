@@ -100,6 +100,7 @@ namespace ZSCY_Win10
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            //TODO:未登陆时 没有课表
             Debug.WriteLine("OnNavigatedTo");
             stuNum = appSetting.Values["stuNum"].ToString();
             initKB();
@@ -169,7 +170,7 @@ namespace ZSCY_Win10
 
 
         }
-
+        //TODO:未登陆时 没有课表
         private async void initKB(bool isRefresh = false)
         {
             if (stuNum == appSetting.Values["stuNum"].ToString() && !isRefresh)
@@ -597,6 +598,7 @@ namespace ZSCY_Win10
         /// <param name="e"></param>
         private void KBRefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            //TODO:未登陆时 无法刷新
             this.progress.IsActive = true;
             stuNum = appSetting.Values["stuNum"].ToString();
             wOa = 1;
@@ -678,6 +680,7 @@ namespace ZSCY_Win10
 
         private void KBNumSearch()
         {
+            //TODO:未登陆不能选择周次
             //KBNumSearchButton.IsChecked = false;
             if (KBNumFlyoutTextBox.Text != "" && KBNumFlyoutTextBox.Text.IndexOf(".") == -1)
             {

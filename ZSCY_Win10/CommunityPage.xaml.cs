@@ -289,6 +289,7 @@ namespace ZSCY_Win10
 
         private void CommunityAddAppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            //TODO:未登陆时 无法发表新帖
             CommunityFrame.Visibility = Visibility.Visible;
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
@@ -320,6 +321,7 @@ namespace ZSCY_Win10
 
         private async void liskButton_Click(object sender, RoutedEventArgs e)
         {
+            //TODO:未登陆时 不能点赞
             var b = sender as Button;
 
             string num_id = b.TabIndex.ToString();

@@ -147,6 +147,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             //    id = ViewModel.hotfeed.article_id;
             //    type_id = ViewModel.hotfeed.type_id;
             //}
+            //TODO:未登陆时 不添加参数stuNum和idNum
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("article_id", id));
             paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
@@ -220,6 +221,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
 
         private async void sendMarkButton_Click(object sender, RoutedEventArgs e)
         {
+            //TODO:未登陆时 不能发表评论
             sendMarkButton.IsEnabled = false;
             sendMarkProgressRing.Visibility = Visibility.Visible;
             string id = "";

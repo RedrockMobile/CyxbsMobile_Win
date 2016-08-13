@@ -173,6 +173,7 @@ namespace ZSCY_Win10
             }
             //MoreFrame.Visibility = Visibility.Visible;
             MoreContentTitleTextBlock.Text = item.Itemname;
+            //TODO:未登陆时 没有 补考/考试/分数信息 可查询空闲 无法自动添加自己的信息
             Debug.WriteLine(item.UniqueID);
             {
                 switch (item.UniqueID)

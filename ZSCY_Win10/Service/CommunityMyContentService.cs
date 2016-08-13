@@ -17,7 +17,7 @@ namespace ZSCY_Win10.Service
         const string api = "cyxbsMobile/index.php/Home/Article/searchContent";
         public static async Task<MyFeed> GetFeed(int type_id, string article_id)
         {
-
+            //TODO:未登陆时 不添加参数stuNum和idNum
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
@@ -34,7 +34,7 @@ namespace ZSCY_Win10.Service
                     {
                         JObject feed = (JObject)bbddfeeds["data"][0];
                         MyFeed f = new MyFeed();
-                        f.GetAttributes(feed,true);
+                        f.GetAttributes(feed, true);
                         return f;
                     }
                 }

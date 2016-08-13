@@ -28,6 +28,7 @@ namespace ZSCY_Win10.Service
         /// <returns>返回参数对应的列表数据</returns>
         public static async Task<List<BBDDFeed>> GetBBDD(int type = 1, int page = 0, int size = 15, int typeid = 5)
         {
+            //TODO:未登陆时 不添加参数stuNum和idNum
             return await Task.Run(async () =>
             {
                 List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
@@ -108,6 +109,7 @@ namespace ZSCY_Win10.Service
 
         public static async Task<List<HotFeed>> GetHot(int type = 0, int page = 0, int size = 15, int typeid = 5)
         {
+            //TODO:未登陆时 不添加参数stuNum和idNum
             return await Task.Run(async () =>
            {
                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();

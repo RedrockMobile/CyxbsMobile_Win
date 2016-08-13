@@ -66,6 +66,7 @@ namespace ZSCY.Pages
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
 
             //await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 2, 140, 253), Colors.White, text: "正在紧张安排考试...", isIndeterminate: true);
+            //TODO:未登陆时 没有考试/补考信息
             if (IsExamOrRe == 2)
             {
                 paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));

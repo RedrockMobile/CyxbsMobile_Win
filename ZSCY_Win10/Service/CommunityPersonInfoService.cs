@@ -41,6 +41,7 @@ namespace ZSCY_Win10.Service
         }
         public static async Task<List<MyFeed>> GetMyFeeds(string stunum_other,int page = 0, int size = 15)
         {
+            //TODO:未登陆时 不传入参数stuNum和idNum
             return await Task.Run(async () =>
             {
                 List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();

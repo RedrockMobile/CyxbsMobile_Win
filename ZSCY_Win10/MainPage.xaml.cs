@@ -130,7 +130,8 @@ namespace ZSCY_Win10
                 {
                     NavMenuList.Margin = new Thickness(0, 48, 0, 0);
                 }
-            };
+            }; 
+            //TODO:未登录时 没有名字    
             stuNameTextBlock.Text = appSetting.Values["name"].ToString();
 
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequseted;
@@ -147,6 +148,7 @@ namespace ZSCY_Win10
                 showNotice();
             else
                 appSetting.Values.Remove("showNotice");
+            //TODO:未登录时采用默认头像
             initHeadImage();
         }
 
@@ -319,6 +321,7 @@ namespace ZSCY_Win10
                     item.DestPage != this.AppFrame.CurrentSourcePageType)
                 {
                     //appSetting.Values["CommunityPerInfo"] = false;
+                    //TODO:未登录时 不能传入社区个人信息和个人信息页信息 谨慎处理
                     if (!bool.Parse(appSetting.Values["CommunityPerInfo"].ToString()) && (item.DestPage == typeof(MyPage) || item.DestPage == typeof(CommunityPage)))
                     {
                         BackOpacityGrid.Visibility = Visibility.Visible;
@@ -559,7 +562,7 @@ namespace ZSCY_Win10
         {
 
         }
-
+        //TODO:未登录时不能选择上传头像
         private async void headimgRectangle_Tapped(object sender, TappedRoutedEventArgs e)
         {
             FileOpenPicker openPicker = new FileOpenPicker();
