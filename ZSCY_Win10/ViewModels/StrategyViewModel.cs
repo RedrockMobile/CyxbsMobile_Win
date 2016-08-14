@@ -230,7 +230,37 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Xueshengshouce));
             }
         }
+        private string lXQ_All;
 
+        public string LXQ_All
+        {
+            get
+            {
+                return lXQ_All;
+            }
+
+            set
+            {
+                lXQ_All = value;
+                RaisePropertyChanged(nameof(LXQ_All));
+            }
+        }
+
+        public string XYQ_All
+        {
+            get
+            {
+                return xYQ_All;
+            }
+
+            set
+            {
+                xYQ_All = value;
+                RaisePropertyChanged(nameof(XYQ_All));
+            }
+        }
+
+        private string xYQ_All;
     }
 
 }

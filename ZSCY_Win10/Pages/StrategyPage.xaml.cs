@@ -104,7 +104,7 @@ namespace ZSCY.Pages
                 //await Task.Delay(100);
             }
         }
-        private void SPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void SPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
@@ -121,15 +121,17 @@ namespace ZSCY.Pages
             catch (Exception)
             {
                 return;
-            } 
+            }
 
             if (SPivot.SelectedIndex == 4 && !App.isLoading[4])
             {
-                XSQ_qqGroup();
-                viewmodel.AllQQInfo.XYQ_All = XSQString;
+                //XSQ_qqGroup();
+                //viewmodel.AllQQInfo.XYQ_All = XSQString;
 
-                LXQ_qqGroup();
-                viewmodel.AllQQInfo.LXQ_All = LXQString;
+                //LXQ_qqGroup();
+                //viewmodel.AllQQInfo.LXQ_All = LXQString;
+                viewmodel.XYQ_All = await XSQ_qqGet();
+                viewmodel.LXQ_All = await LXQ_qqGet();
                 App.isLoading[4] = true;
             }
             else if (SPivot.SelectedIndex == 3 && !App.isLoading[3])
