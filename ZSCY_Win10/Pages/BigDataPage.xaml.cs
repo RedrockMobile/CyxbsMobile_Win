@@ -46,12 +46,6 @@ namespace ZSCY.Pages
             this.DataContext = viewmodel;
             bigdatacaipage = this;
             this.SizeChanged += BigDataPage_SizeChanged;
-
-            //手机物理返回键订阅事件
-            if(Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
-            {
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed += OnBackPressed;
-            }
         }
 
         //获取当前Page的高度和宽度
@@ -163,11 +157,6 @@ namespace ZSCY.Pages
             FirstPage.firstpage.Second_Page_Back();
         }
 
-        private void OnBackPressed(object sender, BackPressedEventArgs e)
-        {
-            FirstPage.firstpage.Second_Page_Back();
-        }
-
         private void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -190,7 +179,7 @@ namespace ZSCY.Pages
 
         private async void MaleAndFemale_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (comboBox1.SelectedItem != null)
+            if (comboBox0.SelectedItem != null)
             {
                 //MessageDialog msg = new MessageDialog(
                 //      "男生人数:" + Switch.SexRatioSwitch(comboBox1.SelectedItem.ToString()).Male.ToString() + "   " + "男生比例:" + Switch.SexRatioSwitch(comboBox1.SelectedItem.ToString()).MaleRatio.ToString() + "\n"
@@ -210,7 +199,7 @@ namespace ZSCY.Pages
                 //await new MessageDialog("你都还没有选点我干嘛~").ShowAsync();
 
                 detail_title.Text = "男女比例:";
-                detail_content.Text = "先点左边的框框再看呀 →_→";
+                detail_content.Text = "记得先点左边的框框再来看我 \\(≧▽≦)/";
                 black_background.Visibility = Visibility.Visible;
                 black_background_sb.Begin();
                 detail_popup.IsOpen = true;
@@ -274,7 +263,7 @@ namespace ZSCY.Pages
                 //await new MessageDialog("你都还没有选点我干嘛~").ShowAsync();
 
                 detail_title.Text = "毕业去向:";
-                detail_content.Text = "你要先点左边萌萌哒的框框 →_→";
+                detail_content.Text = "你要先点左边那个萌萌哒的框框 \\(^o^)/";
                 black_background.Visibility = Visibility.Visible;
                 black_background_sb.Begin();
                 detail_popup.IsOpen = true;

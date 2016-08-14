@@ -51,12 +51,6 @@ namespace ZSCY.Pages
             this.DataContext = viewmodel;
             fengcaipage = this;
             this.SizeChanged += FengCaiPage_SizeChanged;
-
-            //手机物理返回键订阅事件
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
-            {
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed += OnBackPressed;
-            }
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -378,11 +372,6 @@ namespace ZSCY.Pages
         }
 
         private void back_but_Click(object sender, RoutedEventArgs e)
-        {
-            FirstPage.firstpage.Second_Page_Back();
-        }
-
-        private void OnBackPressed(object sender, BackPressedEventArgs e)
         {
             FirstPage.firstpage.Second_Page_Back();
         }
