@@ -231,10 +231,21 @@ namespace ZSCY_Win10
                             break;
                         }
                     case "ClassRoom":
-                        MoreFrame.Navigate(typeof(EmptyRoomsPage));
-                        MoreFrame.Visibility = Visibility.Visible;
-                        isFreeRe = 0;
-                        break;
+                        if (appSetting.Values.ContainsKey("idNum"))
+                        {
+                            MoreFrame.Navigate(typeof(EmptyRoomsPage));
+                            MoreFrame.Visibility = Visibility.Visible;
+                            isFreeRe = 0;
+                            break;
+                        }
+                        else
+                        {
+                            var msgPopup = new Data.loginControl("您还没有登录 无法查询空教室~");
+                            msgPopup.LeftClick += (s, c) => { Frame.Navigate(typeof(LoginPage)); };
+                            msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
+                            msgPopup.ShowWIndow();
+                            break;
+                        }
                     case "Calendar":
                         MoreFrame.Navigate(typeof(CalendarPage));
                         MoreFrame.Visibility = Visibility.Visible;
