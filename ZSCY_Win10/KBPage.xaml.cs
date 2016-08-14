@@ -102,8 +102,9 @@ namespace ZSCY_Win10
         {
             //TODO:未登陆时 没有课表
             Debug.WriteLine("OnNavigatedTo");
-            if (appSetting.Values.ContainsKey("stuNum"))
+            if (appSetting.Values.ContainsKey("idNum"))
             {
+                progress.Visibility = Visibility.Visible;
                 stuNum = appSetting.Values["stuNum"].ToString();
                 initKB();
                 this.progress.IsActive = false;
@@ -112,7 +113,6 @@ namespace ZSCY_Win10
             }
             else
             {
-                this.progress.IsActive = false;
                 HubSectionKBTitle.Text = "您未登陆 暂无课表信息";
                 baseInfoStackPanel.IsTapEnabled = false;
                 HubSectionKBNum.IsTapEnabled = false;
@@ -720,7 +720,7 @@ namespace ZSCY_Win10
             }
             catch (Exception)
             {
-                todayNumofstuTextBlock.Text = "开学第 天";
+                todayNumofstuTextBlock.Text = "开学第    天";
             }
         }
 
