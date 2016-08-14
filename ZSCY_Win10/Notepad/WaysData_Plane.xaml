@@ -1,0 +1,108 @@
+﻿<UserControl
+    x:Class="ZSCY_Win10.Notepad.WaysData_Plane"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY_Win10.Notepad"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+ >
+    <StackPanel >
+        <Grid >
+        
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="路线一:" Grid.Column="0" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush }"
+                        FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"/>
+            <TextBlock Grid.Column="1" x:Name="wTextBlock" LineHeight="26" TextWrapping="Wrap">
+              <Run   Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
+                  FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">  
+                  可乘机场大巴至上清寺后转乘
+               </Run>
+              <Run Foreground="{Binding Source={StaticResource APPTheme},Path=Font_Blue }"
+                         FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
+                        108
+               </Run>
+        <Run Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
+                  FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
+            路公交车至南坪，再转乘
+        </Run>
+        <Run Foreground="{Binding Source={StaticResource APPTheme},Path=Font_Blue }"
+                         FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
+            346
+        </Run>
+        <Run Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
+                  FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
+            或
+        </Run>
+            <Run Foreground="{Binding Source={StaticResource APPTheme},Path=Font_Blue }"
+                         FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
+            347
+        </Run>
+        <Run Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
+                  FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
+            路公交车到学校
+        </Run>
+            </TextBlock>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0">
+                <Run Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
+                  FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
+                     路线二:
+                 </Run>
+            </TextBlock>
+            <TextBlock Grid.Column="1" LineHeight="26" TextWrapping="Wrap">
+                <Run Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
+                  FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
+                    乘轻轨
+                </Run>
+                <Run  Foreground="{Binding Source={StaticResource APPTheme},Path=Font_Blue }"
+                         FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
+                    三号线
+                </Run>
+                <Run Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
+                  FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
+                    到南坪，再转乘
+                </Run>
+                <Run Foreground="{Binding Source={StaticResource APPTheme},Path=Font_Blue }"
+                         FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
+                    346
+                </Run>
+                <Run Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
+                  FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
+                    或
+                </Run>
+                <Run Foreground="{Binding Source={StaticResource APPTheme},Path=Font_Blue }"
+                         FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
+                    347
+                </Run>
+                <Run Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
+                  FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
+                    路公交车到学校
+                </Run>
+            </TextBlock>
+
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="路线三:" Grid.Column="0" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
+                  FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"/>
+            <TextBlock Grid.Column="1" LineHeight="26" TextWrapping="Wrap">
+                <Run Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
+                  FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
+                    直接打车到校费用约为70元
+                </Run>
+            </TextBlock>
+        </Grid>
+    </StackPanel>
+</UserControl>
