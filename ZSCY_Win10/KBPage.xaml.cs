@@ -104,6 +104,7 @@ namespace ZSCY_Win10
             Debug.WriteLine("OnNavigatedTo");
             if (appSetting.Values.ContainsKey("idNum"))
             {
+                progress.Visibility = Visibility.Visible;
                 stuNum = appSetting.Values["stuNum"].ToString();
                 initKB();
                 this.progress.IsActive = false;
@@ -112,6 +113,7 @@ namespace ZSCY_Win10
             }
             else
             {
+                progress.Visibility = Visibility.Collapsed;
                 HubSectionKBTitle.Text = "未登陆 暂无";
                 initToday();
                 baseInfoStackPanel.IsTapEnabled = false;
