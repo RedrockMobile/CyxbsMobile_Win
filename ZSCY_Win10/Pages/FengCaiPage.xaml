@@ -372,7 +372,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="48"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Padding="10,15,10,15" Background="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}">
