@@ -459,7 +459,8 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.6*"/>
+                            <ColumnDefinition Width="1.9*"/>
+                            <ColumnDefinition Width="0.1*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Row="0" Grid.Column="0" Margin="10 0 0 0">
@@ -484,7 +485,7 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                         </StackPanel>
-                        <StackPanel Grid.Row="0" Grid.Column="1" Margin="0 0 10 0">
+                        <StackPanel Grid.Row="0" Grid.Column="2" Margin="0 0 10 0">
                             <StackPanel Margin="0 0 0 -10">
                                 <TextBlock Text="男生:" Grid.Column="1"/>
                                 <TextBlock Foreground="#b9e6fc" x:Name="Male" Text="人数及比例" Margin="0 5 0 0" 
@@ -493,13 +494,13 @@
                             <StackPanel Margin="0 20 0 0" BorderThickness="0 0.5 0 0" BorderBrush="#FFB4A2A2">
                                 <TextBlock Text="女生:" Grid.Column="1" Margin="0 9 0 0"/>
                                 <TextBlock Foreground="#cfcdfc" x:Name="Female" Text="人数及比例" Margin="0 5 0 0" 
-                                           TextTrimming="CharacterEllipsis" FontSize="18"  Tapped="MaleAndFemale_Tapped"/>
+                                           TextTrimming="CharacterEllipsis" FontSize="18" Tapped="MaleAndFemale_Tapped"/>
                             </StackPanel>
                         </StackPanel>
-                        <TextBlock x:Name="TextBlock1" Grid.Row="1" Grid.ColumnSpan="2"
+                        <TextBlock x:Name="TextBlock1" Grid.Row="1" Grid.ColumnSpan="3"
                                    FontSize="15" Foreground="#007ACC" 
                                    Margin="0 10 0 10" HorizontalAlignment="Center"/>
-                        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2"
+                        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3"
                                       BorderBrush="#FF877676" BorderThickness="0 0.5 0 0">
                             <usercontrols:PiePlotter x:Name="piePlotter0" Width="330" Height="330"                                
                                    PieWidth="330" HoleSize="0.15" Margin="0 20 0 0"/>
@@ -525,7 +526,8 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.6*"/>
+                            <ColumnDefinition Width="1.9*"/>
+                            <ColumnDefinition Width="0.1*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Row="0" Grid.Column="0" Margin="10 0 0 0">
@@ -539,16 +541,16 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                         </StackPanel>
-                        <StackPanel Grid.Row="0" Grid.Column="1" Margin="0 0 10 0">
+                        <StackPanel Grid.Row="0" Grid.Column="2" Margin="0 0 10 0">
                             <TextBlock Text="科目难度排行："/>
-                            <TextBlock x:Name="Sub1" Foreground="#cfcdfc" TextTrimming="CharacterEllipsis" Tapped="Subjects_Tapped"/>
-                            <TextBlock x:Name="Sub2" Foreground="#b9e6fe" TextTrimming="CharacterEllipsis" Tapped="Subjects_Tapped"/>
-                            <TextBlock x:Name="Sub3" Foreground="#fec7e3" TextTrimming="CharacterEllipsis" Tapped="Subjects_Tapped"/>
+                            <TextBlock x:Name="Sub1" Foreground="#cfcdfc" FontSize="18" TextTrimming="CharacterEllipsis" Tapped="Subjects_Tapped" Text="认真学习~" Margin="0 10 0 0"/>
+                            <TextBlock x:Name="Sub2" Foreground="#b9e6fe" FontSize="18" TextTrimming="CharacterEllipsis" Tapped="Subjects_Tapped"/>
+                            <TextBlock x:Name="Sub3" Foreground="#fec7e3" FontSize="18" TextTrimming="CharacterEllipsis" Tapped="Subjects_Tapped"/>
                         </StackPanel>
-                        <TextBlock x:Name="TextBlock2" Grid.Row="1" Grid.ColumnSpan="2"
+                        <TextBlock x:Name="TextBlock2" Grid.Row="1" Grid.ColumnSpan="3"
                                    FontSize="15" Foreground="#007ACC" 
-                                   Margin="0 30 0 10" HorizontalAlignment="Center"/>
-                        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2"
+                                   Margin="0 20 0 10" HorizontalAlignment="Center"/>
+                        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3"
                                       BorderBrush="#FF877676" BorderThickness="0 0.5 0 0">
                             <usercontrols:PiePlotter x:Name="piePlotter1" Width="330" Height="330"
                                               PieWidth="330" HoleSize="0.15" Margin="0 20 0 0"/>
@@ -574,7 +576,8 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.6*"/>
+                            <ColumnDefinition Width="1.9*"/>
+                            <ColumnDefinition Width="0.1*"/>                            
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Row="0" Grid.Column="0" Margin="10 0 0 0">
@@ -588,18 +591,18 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                         </StackPanel>
-                        <StackPanel Grid.Row="0" Grid.Column="1" Margin="0 0 10 0">
+                        <StackPanel Grid.Row="0" Grid.Column="2" Margin="0 0 10 0">
                             <TextBlock Text="毕业走向："/>
-                            <TextBlock x:Name="Road1" Text="就业: " Foreground="#cfcdfc" TextTrimming="CharacterEllipsis" Tapped="Road_Tapped"/>
-                            <TextBlock x:Name="Road2" Text="出国留学: " Foreground="#fec7e3" TextTrimming="CharacterEllipsis" Tapped="Road_Tapped"/>
-                            <TextBlock x:Name="Road3" Text="待业: " Foreground="#9efcee" TextTrimming="CharacterEllipsis" Tapped="Road_Tapped"/>
-                            <TextBlock x:Name="Road4" Text="自由职业: " Foreground="#b9e6fe" TextTrimming="CharacterEllipsis" Tapped="Road_Tapped"/>
+                            <TextBlock x:Name="Road1" Text="就业: " Foreground="#cfcdfc" TextTrimming="CharacterEllipsis" Tapped="Road_Tapped" Margin="0 10 0 0" FontSize="18"/>
+                            <TextBlock x:Name="Road2" Text="出国留学: " Foreground="#fec7e3" TextTrimming="CharacterEllipsis" Tapped="Road_Tapped" FontSize="18"/>
+                            <TextBlock x:Name="Road3" Text="待业: " Foreground="#9efcee" TextTrimming="CharacterEllipsis" Tapped="Road_Tapped" FontSize="18"/>
+                            <TextBlock x:Name="Road4" Text="自由职业: " Foreground="#b9e6fe" TextTrimming="CharacterEllipsis" Tapped="Road_Tapped" FontSize="18"/>
                         </StackPanel>
-                        <TextBlock x:Name="TextBlock3" Grid.Row="1" Grid.ColumnSpan="2"
+                        <TextBlock x:Name="TextBlock3" Grid.Row="1" Grid.ColumnSpan="3"
                                    FontSize="15" Foreground="#FF007ACC" 
-                                   Margin="0 30 0 10" HorizontalAlignment="Center"/>
+                                   Margin="0 20 0 10" HorizontalAlignment="Center"/>
                         <ScrollViewer VerticalScrollBarVisibility="Auto" BorderBrush="#FF877676" Tapped="Road_Tapped"
-                                      BorderThickness="0 0.5 0 0" Grid.ColumnSpan="2" Grid.Row="2">
+                                      BorderThickness="0 0.5 0 0" Grid.ColumnSpan="3" Grid.Row="2">
                             <usercontrols:PiePlotter x:Name="piePlotter2" Width="330" Height="330"
                                               PieWidth="330" HoleSize="0.15" Margin="0 20 0 0"/>
                         </ScrollViewer>
