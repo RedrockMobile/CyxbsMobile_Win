@@ -112,7 +112,7 @@ namespace ZSCY_Win10
             }
             else
             {
-                HubSectionKBTitle.Text = "您未登陆 暂无课表信息";
+                HubSectionKBTitle.Text = "未登陆 暂无";
                 initToday();
                 baseInfoStackPanel.IsTapEnabled = false;
                 HubSectionKBNum.IsTapEnabled = false;
