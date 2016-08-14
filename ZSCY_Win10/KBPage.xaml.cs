@@ -102,7 +102,7 @@ namespace ZSCY_Win10
         {
             //TODO:未登陆时 没有课表
             Debug.WriteLine("OnNavigatedTo");
-            if (appSetting.Values.ContainsKey("stuNum"))
+            if (appSetting.Values.ContainsKey("idNum"))
             {
                 stuNum = appSetting.Values["stuNum"].ToString();
                 initKB();
