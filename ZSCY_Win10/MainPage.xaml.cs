@@ -26,6 +26,7 @@ using ZSCY_Win10.Controls;
 using ZSCY.Pages;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.Data;
+using Windows.Phone.UI.Input;
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
 namespace ZSCY_Win10
@@ -102,6 +103,10 @@ namespace ZSCY_Win10
             {
                 Utils.ShowSystemTrayAsync(Color.FromArgb(255, 6, 140, 253), Colors.White);
             }
+            else if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+            {
+                Windows.Phone.UI.Input.HardwareButtons.BackPressed += OnBackPressed;
+            }
             else
             {
                 var view = ApplicationView.GetForCurrentView();
@@ -160,6 +165,51 @@ namespace ZSCY_Win10
             //TODO:未登录时采用默认头像
             if (appSetting.Values.ContainsKey("idNum"))
                 initHeadImage();
+        }
+
+        bool isExit = false;
+        private void OnBackPressed(object sender, BackPressedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame == null)
+            {
+                return;
+            }//Frame内无内容
+            if (rootFrame.CurrentSourcePageType.Name != "MainPage")
+            {
+                if (rootFrame.CanGoBack && e.Handled == false)
+                {
+                    e.Handled = true;
+                    rootFrame.GoBack();
+                }
+            }//Frame不在MainPage页面并且可以返回则返回上一个页面并且事件未处理
+            else if (e.Handled == false)
+            {
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.ShowAsync();
+                statusBar.ProgressIndicator.Text = "再按一次返回键即将退出程序 ~\\(≧▽≦)/~"; // 状态栏显示文本
+                statusBar.ProgressIndicator.ShowAsync();
+
+                if (isExit)
+                {
+                    App.Current.Exit();
+                }
+                else
+                {
+                    isExit = true;
+                    Task.Run(async () =>
+                    {
+                        await Task.Delay(1500);
+                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                        {
+                            await statusBar.ProgressIndicator.HideAsync();
+                            await statusBar.ShowAsync(); //此处不隐藏状态栏
+                        });
+                        isExit = false;
+                    });
+                    e.Handled = true;
+                }//Frame在其他页面并且事件未处理
+            }
         }
 
         private async void ActivateWindow()
