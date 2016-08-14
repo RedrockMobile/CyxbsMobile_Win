@@ -42,7 +42,8 @@
                         Click="LeftButton_Click"
                         Background="LightBlue"
                         Foreground="White"
-                        MaxWidth="150"/>
+                        MaxWidth="150"
+                        MinWidth="100"/>
                 <Button 
                     Grid.Column="2" 
                     x:Name="btnRight" 
@@ -55,7 +56,8 @@
                     BorderThickness="0"
                     Background="LightGray"
                     Foreground="White"
-                    MaxWidth="150"/>
+                    MaxWidth="150"
+                    MinWidth="100"/>
             </Grid>
         </StackPanel>
     </Grid>
