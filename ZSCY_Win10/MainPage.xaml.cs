@@ -23,6 +23,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Controls;
+using ZSCY.Pages;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.Data;
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
@@ -34,7 +35,6 @@ namespace ZSCY_Win10
     /// </summary>
     public sealed partial class MainPage : Page
     {
-
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         private Point currentPoint; //最新的，当前的点
         private Point oldPoint;//上一个点
@@ -47,6 +47,12 @@ namespace ZSCY_Win10
                     Image = "ms-appx:///Assets/iconfont-table.png",
                     Label = "我的课表",
                     DestPage = typeof(KBPage)
+                },
+                new NavMenuItem()
+                {
+                    Image = "ms-appx:///Assets/iconfont-newstudent.png",
+                    Label = "新生专题",
+                    DestPage = typeof(FirstPage)
                 },
                 new NavMenuItem()
                 {
@@ -306,9 +312,6 @@ namespace ZSCY_Win10
             this.BackRequested(ref ignored);
         }
 
-
-
-
         #region Navigation
 
         /// <summary>
@@ -491,6 +494,7 @@ namespace ZSCY_Win10
         }
 
         #endregion
+
         public Rect TogglePaneButtonRect
         {
             get;
@@ -741,7 +745,5 @@ namespace ZSCY_Win10
             ClipHeadGrid.Visibility = Visibility.Collapsed;
             BackOpacityGrid.Visibility = Visibility.Collapsed;
         }
-
-
     }
 }

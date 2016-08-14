@@ -223,18 +223,25 @@
         <Setter Property="Height" Value="48"/>
         <Setter Property="Padding" Value="0"/>
     </Style>
+    
     <converters:NotifyTypeValueConverter x:Key="NotifyTypeValueConverter"></converters:NotifyTypeValueConverter>
+    
     <converters:GetOneorNonePicValueConverter x:Key="GetOneorNonePicValueConverter"></converters:GetOneorNonePicValueConverter>
+    
     <!--话题Tag值转换器-->
     <converters:TextBlockInlineConverter x:Key="TextBlockInlineConverter"/>
+    
     <converters:LikeValueConverter x:Key="LikeValueConverter"></converters:LikeValueConverter>
+    
     <!--时间用户名文本块样式-->
     <Style x:Name="TimeTextBlock" x:Key="TimeTextBlock" TargetType="TextBlock">
         <Setter Property="FontSize" Value="10"></Setter>
     </Style>
+    
     <Style x:Name="UsernameTextBlock" x:Key="UsernameTextBlock" TargetType="TextBlock">
         <Setter Property="FontSize" Value="16"></Setter>
     </Style>
+    
     <!--重写点赞按钮控件模板-->
     <Style x:Name="LikeCommentButton" x:Key="LikeCommentButton" TargetType="Button">
         <Setter Property="Template">
