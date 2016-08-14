@@ -481,7 +481,7 @@
                 <!--今日信息-->
                 <Grid Name="KBtoDayGrid" Grid.Column="2">
                     <Line x:Name="cutoffLine2" Y1="0" Y2="0" Stroke="Gray" StrokeThickness="1"/>
-                    <StackPanel  Margin="15,25,15,0">
+                    <StackPanel Name="todaydateStp" Margin="15,25,15,0">
                         <Grid Background="#58b3ff" VerticalAlignment="Top" HorizontalAlignment="Stretch">
                             <TextBlock Name="todaydateTextBlock" Foreground="White" Margin="10"/>
                         </Grid>

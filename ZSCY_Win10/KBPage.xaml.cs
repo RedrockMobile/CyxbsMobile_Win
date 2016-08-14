@@ -113,6 +113,7 @@ namespace ZSCY_Win10
             else
             {
                 HubSectionKBTitle.Text = "您未登陆 暂无课表信息";
+                initToday();
                 baseInfoStackPanel.IsTapEnabled = false;
                 HubSectionKBNum.IsTapEnabled = false;
                 KBRefreshAppBarButton.IsEnabled = false;
@@ -719,7 +720,7 @@ namespace ZSCY_Win10
             }
             catch (Exception)
             {
-                todayNumofstuTextBlock.Text = "开学第 天";
+                todayNumofstuTextBlock.Text = "开学第    天";
             }
         }
 
