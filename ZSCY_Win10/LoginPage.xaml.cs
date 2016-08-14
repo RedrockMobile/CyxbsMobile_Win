@@ -67,6 +67,7 @@ namespace ZSCY_Win10
             LoginProgressBar.IsActive = true;
             this.Focus(FocusState.Pointer);
             LoginButton.Visibility = Visibility.Collapsed;
+            noLoginButton.Visibility = Visibility.Collapsed;
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", StuNumTextBox.Text));
             paramList.Add(new KeyValuePair<string, string>("idNum", IdNumPasswordBox.Password));
