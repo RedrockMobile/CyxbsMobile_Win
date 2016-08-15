@@ -25,6 +25,7 @@
             </Grid>
         </DataTemplate>
     </Page.Resources>
+    
     <Grid>
         <SplitView x:Name="RootSplitView" OpenPaneLength="250" CompactPaneLength="0"  DisplayMode="CompactOverlay" IsPaneOpen="False" LayoutUpdated="RootSplitView_LayoutUpdated">
             <SplitView.Pane>
@@ -51,7 +52,7 @@
                                 <ImageBrush x:Name="headimgImageBrush" ImageSource="Assets/Community_nohead.png" Stretch="Fill"/>
                             </Rectangle.Fill>
                         </Rectangle>
-                        <TextBlock Name="stuNameTextBlock" VerticalAlignment="Center" Grid.Column="1"></TextBlock>
+                        <TextBlock Name="stuNameTextBlock" VerticalAlignment="Center" Grid.Column="1"/>
                     </Grid>
                 </Grid>
             </SplitView.Pane>
