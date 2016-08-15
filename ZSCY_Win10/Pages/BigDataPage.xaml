@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ZSCY.Pages"
-    xmlns:usercontrols="using:ZSCY_Win10.UserControls"
+    xmlns:controls="using:ZSCY_Win10.Controls"
     xmlns:converter="using:ZSCY_Win10.Util.Converter"
     xmlns:viewmodel="using:ZSCY_Win10.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -502,7 +502,7 @@
                                    Margin="0 10 0 10" HorizontalAlignment="Center"/>
                         <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3"
                                       BorderBrush="#FF877676" BorderThickness="0 0.5 0 0">
-                            <usercontrols:PiePlotter x:Name="piePlotter0" Width="330" Height="330"                                
+                            <controls:PiePlotter x:Name="piePlotter0" Width="330" Height="330"                                
                                    PieWidth="330" HoleSize="0.15" Margin="0 20 0 0"/>
                         </ScrollViewer>
                     </Grid>
@@ -552,7 +552,7 @@
                                    Margin="0 20 0 10" HorizontalAlignment="Center"/>
                         <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3"
                                       BorderBrush="#FF877676" BorderThickness="0 0.5 0 0">
-                            <usercontrols:PiePlotter x:Name="piePlotter1" Width="330" Height="330"
+                            <controls:PiePlotter x:Name="piePlotter1" Width="330" Height="330"
                                               PieWidth="330" HoleSize="0.15" Margin="0 20 0 0"/>
                         </ScrollViewer>
                     </Grid>
@@ -603,7 +603,7 @@
                                    Margin="0 20 0 10" HorizontalAlignment="Center"/>
                         <ScrollViewer VerticalScrollBarVisibility="Auto" BorderBrush="#FF877676" Tapped="Road_Tapped"
                                       BorderThickness="0 0.5 0 0" Grid.ColumnSpan="3" Grid.Row="2">
-                            <usercontrols:PiePlotter x:Name="piePlotter2" Width="330" Height="330"
+                            <controls:PiePlotter x:Name="piePlotter2" Width="330" Height="330"
                                               PieWidth="330" HoleSize="0.15" Margin="0 20 0 0"/>
                         </ScrollViewer>
                     </Grid>
