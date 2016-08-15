@@ -92,7 +92,7 @@
 
     <Grid x:Name="root_grid" Background="{Binding Source={StaticResource APPTheme},Path=Backgorund_Color_Brush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="48"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
