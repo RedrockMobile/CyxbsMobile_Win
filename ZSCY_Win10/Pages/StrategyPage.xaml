@@ -347,15 +347,15 @@
                     <!--入学须知-->
                     <ScrollViewer  Name="SViewer" VerticalScrollBarVisibility="Auto">
                         <StackPanel >
-                            <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                            <Grid BorderThickness="0,0,0,0" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="安全须知" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>
-                                <TextBlock Name="anquan" Margin="15,0,15,14" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"
-                                      Grid.Row="1" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Anquan,Converter={StaticResource expandingConverter0},Mode=OneWay}" TextWrapping="Wrap"/>
-                                <Button Name="anquanButton" Margin="0,0,15,14" HorizontalAlignment="Right"  Foreground="LightBlue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Grid.Row="1" VerticalAlignment="Bottom" Click="anquanButton_Click" Style="{StaticResource ExpandingButton}">
+                                <!--<TextBlock Grid.Row="0" Text="安全须知" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>-->
+                                <TextBlock Name="anquan" Margin="15,15,15,14" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"
+                                      Grid.Row="1" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Anquan,Mode=OneWay}" TextWrapping="Wrap"/>
+                                <!--<Button Name="anquanButton" Margin="0,0,15,14" HorizontalAlignment="Right"  Foreground="LightBlue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Grid.Row="1" VerticalAlignment="Bottom" Click="anquanButton_Click" Style="{StaticResource ExpandingButton}">
                                     <Button.Content>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding Text[0]}"/>
@@ -363,10 +363,10 @@
                                             </FontIcon>
                                         </StackPanel>
                                     </Button.Content>
-                                </Button>
+                                </Button>-->
                             </Grid>
 
-                            <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                            <!--<Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition/>
@@ -425,7 +425,7 @@
                                         </StackPanel>
                                     </Button.Content>
                                 </Button>
-                            </Grid>
+                            </Grid>-->
                         </StackPanel>
                     </ScrollViewer>
                 </PivotItem>
