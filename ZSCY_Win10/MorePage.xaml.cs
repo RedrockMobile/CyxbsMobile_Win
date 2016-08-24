@@ -193,7 +193,7 @@ namespace ZSCY_Win10
                         else
                         {
                             var msgPopup = new Data.loginControl("您还没有登录 无法查看补考信息~");
-                            msgPopup.LeftClick += (s, c) => { Frame.Navigate(typeof(LoginPage)); };
+                            msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
                             msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
                             msgPopup.ShowWIndow();
                             break;
@@ -209,7 +209,7 @@ namespace ZSCY_Win10
                         else
                         {
                             var msgPopup = new Data.loginControl("您还没有登录 无法查看考试信息~");
-                            msgPopup.LeftClick += (s, c) => { Frame.Navigate(typeof(LoginPage)); };
+                            msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
                             msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
                             msgPopup.ShowWIndow();
                             break;
@@ -225,7 +225,7 @@ namespace ZSCY_Win10
                         else
                         {
                             var msgPopup = new Data.loginControl("您还没有登录 无法查看成绩~");
-                            msgPopup.LeftClick += (s, c) => { Frame.Navigate(typeof(LoginPage)); };
+                            msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
                             msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
                             msgPopup.ShowWIndow();
                             break;
@@ -241,7 +241,7 @@ namespace ZSCY_Win10
                         else
                         {
                             var msgPopup = new Data.loginControl("您还没有登录 无法查询空教室~");
-                            msgPopup.LeftClick += (s, c) => { Frame.Navigate(typeof(LoginPage)); };
+                            msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
                             msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
                             msgPopup.ShowWIndow();
                             break;

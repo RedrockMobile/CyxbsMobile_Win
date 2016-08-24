@@ -441,13 +441,13 @@ namespace ZSCY_Win10
                             {
                                 this.AppFrame.Navigate(item.DestPage, item.Arguments);
                                 var msgPopup = new Data.loginControl("您还没有登录 不能访问个人中心~");
-                                msgPopup.LeftClick += (s, c) => { Frame.Navigate(typeof(LoginPage)); };
+                                msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
                                 msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
                                 msgPopup.ShowWIndow();
                             }
                             else {
                                 var msgPopup = new Data.loginControl("您还没有登录 不能访问个人中心~");
-                                msgPopup.LeftClick += (s, c) => { Frame.Navigate(typeof(LoginPage)); };
+                                msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
                                 msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
                                 msgPopup.ShowWIndow();
                             }
@@ -676,7 +676,7 @@ namespace ZSCY_Win10
             else
             {
                 var msgPopup = new Data.loginControl("您还没有登录 不能上传头像哦~");
-                msgPopup.LeftClick += (s, c) => { Frame.Navigate(typeof(LoginPage)); };
+                msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
                 msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
                 msgPopup.ShowWIndow();
             }

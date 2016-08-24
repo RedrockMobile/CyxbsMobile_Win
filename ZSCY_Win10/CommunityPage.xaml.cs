@@ -300,7 +300,7 @@ namespace ZSCY_Win10
             else
             {
                 var msgPopup = new Data.loginControl("您还没有登录 无法发布新帖~");
-                msgPopup.LeftClick += (s, c) => { CommunityFrame.Navigate(typeof(LoginPage)); };
+                msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
                 msgPopup.RightClick += (s, c) => { Debug.WriteLine("您可以先去社区逛一逛~"); };
                 msgPopup.ShowWIndow();
             }
@@ -430,7 +430,7 @@ namespace ZSCY_Win10
             else
             {
                 var msgPopup = new Data.loginControl("您还没有登录 无法点赞~");
-                msgPopup.LeftClick += (s, c) => { CommunityFrame.Navigate(typeof(LoginPage)); };
+                msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
                 msgPopup.RightClick += (s, c) => { Debug.WriteLine("您可以先去社区逛一逛~"); };
                 msgPopup.ShowWIndow();
             }
@@ -504,7 +504,7 @@ namespace ZSCY_Win10
             else
             {
                 var msgPopup = new Data.loginControl("登录即可查看他人动态~");
-                msgPopup.LeftClick += (s, c) => { Frame.Navigate(typeof(LoginPage)); };
+                msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
                 msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先四处逛一逛~"); };
                 msgPopup.ShowWIndow();
             }
