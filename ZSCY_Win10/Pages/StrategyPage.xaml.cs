@@ -142,22 +142,22 @@ namespace ZSCY.Pages
             else if (SPivot.SelectedIndex == 2 && !App.isLoading[2])
             {
                 qinshi_Get();
-                //App.isLoading[2] = true;
+                App.isLoading[2] = true;
             }
             else if (SPivot.SelectedIndex == 5 && !App.isLoading[5])
             {
                 richang_Get();
-                //App.isLoading[5] = true;
+                App.isLoading[5] = true;
             }
             else if (SPivot.SelectedIndex == 6 && !App.isLoading[6])
             {
                 meishi_Get();
-                //App.isLoading[6] = true;
+                App.isLoading[6] = true;
             }
             else if (SPivot.SelectedIndex == 7 && !App.isLoading[7])
             {
                 meijing_Get();
-                //App.isLoading[7] = true;
+                App.isLoading[7] = true;
             }
         }
         private async Task PivotItem1_First_Step()
