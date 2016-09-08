@@ -54,8 +54,18 @@ namespace ZSCY.Pages
             {
                 Windows.Phone.UI.Input.HardwareButtons.BackPressed += OnBackPressed;
             }
+            else
+            {
+                Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Visible;
+                Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += PC_BackRequested;
+            }
         }
+        private void PC_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e)
+        {
+            FirstPage.firstpage.Second_Page_Back();
+            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
 
+        }
         //获取当前Page的高度和宽度
         private void BigDataPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
