@@ -70,8 +70,9 @@ namespace ZSCY_Win10
             noLoginButton.Visibility = Visibility.Collapsed;
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", StuNumTextBox.Text));
-            paramList.Add(new KeyValuePair<string, string>("idNum", IdNumPasswordBox.Password));
-            string login = await NetWork.getHttpWebRequest("api/verify", paramList);
+            paramList.Add(new KeyValuePair<string, string>("idNum", System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(IdNumPasswordBox.Password))));
+            //paramList.Add(new KeyValuePair<string, string>("idNum", IdNumPasswordBox.Password));
+            string login = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Verify/verifyLogin", paramList);
             Debug.WriteLine("login->" + login);
             if (login != "")
             {
@@ -100,11 +101,20 @@ namespace ZSCY_Win10
                         Frame.Navigate(typeof(MainPage), "/kb");
                     }
                     else if (Int32.Parse(obj["status"].ToString()) == -100)
+                    {
                         Utils.Message("学号不存在");
+                        noLoginButton.Visibility = Visibility.Visible;
+                    }
                     else if (Int32.Parse(obj["status"].ToString()) == 201)
+                    {
                         Utils.Message("学号或密码错误");
+                        noLoginButton.Visibility = Visibility.Visible;
+                    }
                     else
+                    {
                         Utils.Message(obj["info"].ToString());
+                        noLoginButton.Visibility = Visibility.Visible;
+                    }
                 }
                 catch (Exception)
                 {
