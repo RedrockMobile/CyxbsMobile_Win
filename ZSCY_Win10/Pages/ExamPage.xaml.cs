@@ -65,14 +65,14 @@ namespace ZSCY.Pages
         {
             string exam = "";
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
 
             //await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 2, 140, 253), Colors.White, text: "正在紧张安排考试...", isIndeterminate: true);
             //TODO:未登陆时 没有考试/补考信息
             if (IsExamOrRe == 2)
             {
-                var vault = new Windows.Security.Credentials.PasswordVault();
-                var credentialList = vault.FindAllByResource(resourceName);
-                credentialList[0].RetrievePassword();
                 //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
                 //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
                 paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
@@ -85,7 +85,7 @@ namespace ZSCY.Pages
                 paramList.Add(new KeyValuePair<string, string>("stu", "2014214136"));
 #else   
                 //paramList.Add(new KeyValuePair<string, string>("stu", appSetting.Values["stuNum"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("stu", credentialList[0].UserName.ToString()));
+                paramList.Add(new KeyValuePair<string, string>("stu", credentialList[0].UserName));
 #endif
                 exam = await NetWork.getHttpWebRequest("examapi/index.php", paramList);
             }
