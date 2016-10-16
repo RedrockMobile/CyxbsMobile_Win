@@ -15,11 +15,17 @@ namespace ZSCY_Win10.Service
     {
         public static ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         const string api = "cyxbsMobile/index.php/Home/Person/search";
+        private static string resourceName = "ZSCY";
         public static async Task<PeoInfo> GetPerson(string stunum_other)
         {
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+            //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+            paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
             paramList.Add(new KeyValuePair<string, string>("stunum_other", stunum_other));
             string response = await NetWork.getHttpWebRequest(api, paramList);
             try
@@ -45,11 +51,20 @@ namespace ZSCY_Win10.Service
             return await Task.Run(async () =>
             {
                 List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-                if (appSetting.Values.ContainsKey("idNum"))
+                try
                 {
-                    paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-                    paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                    var vault = new Windows.Security.Credentials.PasswordVault();
+                    var credentialList = vault.FindAllByResource(resourceName);
+                    credentialList[0].RetrievePassword();
+                    if (credentialList.Count > 0)
+                    {
+                        //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+                        //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                        paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+                        paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
+                    }
                 }
+                catch { }
                 paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
                 paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
                 paramList.Add(new KeyValuePair<string, string>("stunum_other", stunum_other.ToString()));

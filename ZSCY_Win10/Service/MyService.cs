@@ -14,14 +14,20 @@ namespace ZSCY_Win10.Service
     public class MyService
     {
         public static ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private static string resourceName = "ZSCY";
 
         public static async Task<List<MyNotification>> GetNotifications(int page = 0, int size = 15)
         {
             return await Task.Run(async () =>
             {
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
                 List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-                paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+                //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+                paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
                 paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
                 paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
                 string response = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Article/aboutme", paramList);
@@ -61,9 +67,14 @@ namespace ZSCY_Win10.Service
         {
             return await Task.Run(async () =>
             {
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
                 List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-                paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+                //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+                paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
                 paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
                 paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
                 
@@ -99,9 +110,14 @@ namespace ZSCY_Win10.Service
         const string api = "cyxbsMobile/index.php/Home/Person/search";
         public static async Task<PeoInfo> GetPerson()
         {
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+            //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+            paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
             string response = await NetWork.getHttpWebRequest(api, paramList);
             try
             {

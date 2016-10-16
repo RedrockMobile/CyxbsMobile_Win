@@ -30,6 +30,7 @@ namespace ZSCY_Win10
     public sealed partial class LoginPage : Page
     {
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private static string resourceName = "ZSCY";
         public LoginPage()
         {
             this.InitializeComponent();
@@ -62,6 +63,7 @@ namespace ZSCY_Win10
 
         private async void mlogin()
         {
+            var vault = new Windows.Security.Credentials.PasswordVault();
             StuNumTextBox.IsEnabled = false;
             IdNumPasswordBox.IsEnabled = false;
             LoginProgressBar.IsActive = true;
@@ -81,8 +83,9 @@ namespace ZSCY_Win10
                     JObject obj = JObject.Parse(login);
                     if (Int32.Parse(obj["status"].ToString()) == 200)
                     {
-                        appSetting.Values["stuNum"] = StuNumTextBox.Text;
-                        appSetting.Values["idNum"] = IdNumPasswordBox.Password;
+                        vault.Add(new Windows.Security.Credentials.PasswordCredential(resourceName, StuNumTextBox.Text, IdNumPasswordBox.Password));
+                        //appSetting.Values["stuNum"] = StuNumTextBox.Text;
+                        //appSetting.Values["idNum"] = IdNumPasswordBox.Password;
                         JObject dataobj = JObject.Parse(obj["data"].ToString());
                         appSetting.Values["name"] = dataobj["name"].ToString();
                         appSetting.Values["classNum"] = dataobj["classNum"].ToString();

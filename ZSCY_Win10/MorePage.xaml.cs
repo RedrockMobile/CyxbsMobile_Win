@@ -36,6 +36,7 @@ namespace ZSCY_Win10
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         ObservableDictionary morepageclass = new ObservableDictionary();
         public static int isFreeRe = 0;
+        private static string resourceName = "ZSCY";
         public MorePage()
         {
             this.InitializeComponent();
@@ -180,10 +181,22 @@ namespace ZSCY_Win10
             //TODO:未登陆时 没有 补考/考试/分数信息 可查询空闲 无法自动添加自己的信息
             Debug.WriteLine(item.UniqueID);
             {
+                int count;
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                try
+                {
+                    var credentialList = vault.FindAllByResource(resourceName);
+                    count = credentialList.Count;
+                }
+                catch
+                {
+                    count = 0;
+                }
                 switch (item.UniqueID)
                 {
-                    case "ReExam":                       
-                        if (appSetting.Values.ContainsKey("idNum"))
+                    case "ReExam":
+                        //if (appSetting.Values.ContainsKey("idNum"))
+                        if (count > 0)
                         {
                             MoreFrame.Navigate(typeof(ExamPage), 3); ;
                             MoreFrame.Visibility = Visibility.Visible;
@@ -199,7 +212,8 @@ namespace ZSCY_Win10
                             break;
                         }
                     case "Exam":
-                        if (appSetting.Values.ContainsKey("idNum"))
+                        //if (appSetting.Values.ContainsKey("idNum"))
+                        if (count > 0)
                         {
                             MoreFrame.Navigate(typeof(ExamPage), 2);
                             MoreFrame.Visibility = Visibility.Visible;
@@ -215,7 +229,8 @@ namespace ZSCY_Win10
                             break;
                         }
                     case "Socre":
-                        if (appSetting.Values.ContainsKey("idNum"))
+                        //if (appSetting.Values.ContainsKey("idNum"))
+                        if (count > 0)
                         {
                             MoreFrame.Navigate(typeof(ScorePage));
                             MoreFrame.Visibility = Visibility.Visible;
@@ -231,7 +246,8 @@ namespace ZSCY_Win10
                             break;
                         }
                     case "ClassRoom":
-                        if (appSetting.Values.ContainsKey("idNum"))
+                        //if (appSetting.Values.ContainsKey("idNum"))
+                        if (count > 0)
                         {
                             MoreFrame.Navigate(typeof(EmptyRoomsPage));
                             MoreFrame.Visibility = Visibility.Visible;
@@ -252,10 +268,21 @@ namespace ZSCY_Win10
                         isFreeRe = 0;
                         break;
                     case "FreeTime":
-                        MoreFrame.Navigate(typeof(SearchFreeTimeNumPage));
-                        MoreFrame.Visibility = Visibility.Visible;
-                        isFreeRe = 0;
-                        break;
+                        if (count > 0)
+                        {
+                            MoreFrame.Navigate(typeof(SearchFreeTimeNumPage));
+                            MoreFrame.Visibility = Visibility.Visible;
+                            isFreeRe = 0;
+                            break;
+                        }
+                        else
+                        {
+                            var msgPopup = new Data.loginControl("您还没有登录 无法查询空闲~");
+                            msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
+                            msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
+                            msgPopup.ShowWIndow();
+                            break;
+                        }
                     case "Card":
                         var a = await Launcher.LaunchUriAsync(new Uri("cquptcard:"));
                         MoreFrame.Visibility = Visibility.Collapsed;
@@ -265,7 +292,7 @@ namespace ZSCY_Win10
                 }
             }
         }
-
-
     }
+
+
 }

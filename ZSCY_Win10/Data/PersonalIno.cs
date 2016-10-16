@@ -21,11 +21,16 @@ namespace ZSCY.Data
         private string depart;
         private string grade;
         private ApplicationDataContainer appSetting;
+        private static string resourceName = "ZSCY";
 
         public PersonalIno()
         {
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
-            this.Stunum = appSetting.Values["stuNum"].ToString();
+            //this.Stunum = appSetting.Values["stuNum"].ToString();
+            this.Stunum = credentialList[0].UserName;
             this.Name = appSetting.Values["name"].ToString();
             this.Classnum = appSetting.Values["classNum"].ToString();
             this.Major = appSetting.Values["major"].ToString();

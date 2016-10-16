@@ -37,6 +37,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
     {
         ObservableCollection<CommunityImageList> imageList = new ObservableCollection<CommunityImageList>();
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private static string resourceName = "ZSCY";
 
         public CommunityAddPage()
         {
@@ -173,6 +174,9 @@ namespace ZSCY_Win10.Pages.CommunityPages
             string imgPhoto_src = "";
             string imgThumbnail_src = "";
             addProgressBar.Visibility = Visibility.Visible;
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
             if (imageList.Count > 1)
             {
                 int count = 0;
@@ -198,7 +202,8 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 {
                     try
                     {
-                        string imgUp = await NetWork.headUpload(appSetting.Values["stuNum"].ToString(), imageList[i].imgAppPath, "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Photo/uploadArticle", false);
+                        //string imgUp = await NetWork.headUpload(appSetting.Values["stuNum"].ToString(), imageList[i].imgAppPath, "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Photo/uploadArticle", false);
+                        string imgUp = await NetWork.headUpload(credentialList[0].UserName, imageList[i].imgAppPath, "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Photo/uploadArticle", false);
                         if (imgUp != "" && imgUp.IndexOf("Request Entity Too Large") == -1)
                         {
 
@@ -265,6 +270,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             }
             addProgressBar.IsIndeterminate = true;
 
+
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("type_id", "5")); //现在只有哔哔叨叨
             paramList.Add(new KeyValuePair<string, string>("title", addContentTextBox.Text));
@@ -272,8 +278,10 @@ namespace ZSCY_Win10.Pages.CommunityPages
             paramList.Add(new KeyValuePair<string, string>("content", addContentTextBox.Text));
             paramList.Add(new KeyValuePair<string, string>("photo_src", imgPhoto_src));
             paramList.Add(new KeyValuePair<string, string>("thumbnail_src", imgThumbnail_src));
-            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+            //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+            paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
             string ArticleUp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Article/addArticle", paramList);
             Debug.WriteLine(ArticleUp);
             try

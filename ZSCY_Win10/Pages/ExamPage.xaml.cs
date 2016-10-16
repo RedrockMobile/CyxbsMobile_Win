@@ -35,6 +35,7 @@ namespace ZSCY.Pages
     {
         private ApplicationDataContainer appSetting;
         int IsExamOrRe;
+        private static string resourceName = "ZSCY";
         public ExamPage()
         {
             this.InitializeComponent();
@@ -69,8 +70,13 @@ namespace ZSCY.Pages
             //TODO:未登陆时 没有考试/补考信息
             if (IsExamOrRe == 2)
             {
-                paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+                //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+                paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
                 exam = await NetWork.getHttpWebRequest("api/examSchedule", paramList);
             }
             else if (IsExamOrRe == 3)
@@ -78,7 +84,8 @@ namespace ZSCY.Pages
 #if DEBUG
                 paramList.Add(new KeyValuePair<string, string>("stu", "2014214136"));
 #else   
-                paramList.Add(new KeyValuePair<string, string>("stu", appSetting.Values["stuNum"].ToString()));
+                //paramList.Add(new KeyValuePair<string, string>("stu", appSetting.Values["stuNum"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("stu", credentialList[0].UserName.ToString()));
 #endif
                 exam = await NetWork.getHttpWebRequest("examapi/index.php", paramList);
             }

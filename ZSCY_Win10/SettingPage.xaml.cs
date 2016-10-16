@@ -33,6 +33,7 @@ namespace ZSCY_Win10
     public sealed partial class SettingPage : Page
     {
         private ApplicationDataContainer appSetting;
+        private static string resourceName = "ZSCY";
 
         public SettingPage()
         {
@@ -185,7 +186,17 @@ namespace ZSCY_Win10
 
         private async void SwitchAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            appSetting.Values.Remove("idNum");
+            //appSetting.Values.Remove("idNum");
+            try
+            {
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                foreach (var item in credentialList)
+                {
+                    vault.Remove(item);
+                }
+            }
+            catch { }
             appSetting.Values["CommunityPerInfo"] = false;
             appSetting.Values["isUseingBackgroundTask"] = false;
             IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;

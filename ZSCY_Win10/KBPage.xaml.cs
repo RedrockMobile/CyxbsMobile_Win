@@ -35,6 +35,7 @@ namespace ZSCY_Win10
         private string stuNum = "";
         private string kb = "";
         private int wOa = 1;
+        private static string resourceName = "ZSCY";
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
         Grid backweekgrid = new Grid();
@@ -101,17 +102,36 @@ namespace ZSCY_Win10
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             //TODO:未登陆时 没有课表
-            Debug.WriteLine("OnNavigatedTo");
-            if (appSetting.Values.ContainsKey("idNum"))
+            try
             {
-                progress.Visibility = Visibility.Visible;
-                stuNum = appSetting.Values["stuNum"].ToString();
-                initKB();
-                this.progress.IsActive = false;
-                initToday();
-                UmengSDK.UmengAnalytics.TrackPageStart("KBPage");
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                Debug.WriteLine("OnNavigatedTo");
+                //if (appSetting.Values.ContainsKey("idNum"))
+                if (credentialList.Count > 0)
+                {
+                    progress.Visibility = Visibility.Visible;
+                    //stuNum = appSetting.Values["stuNum"].ToString();
+                    stuNum = credentialList[0].UserName;
+                    initKB();
+                    this.progress.IsActive = false;
+                    initToday();
+                    UmengSDK.UmengAnalytics.TrackPageStart("KBPage");
+                }
+                else
+                {
+                    progress.Visibility = Visibility.Collapsed;
+                    HubSectionKBTitle.Text = "未登陆 暂无";
+                    initToday();
+                    baseInfoStackPanel.IsTapEnabled = false;
+                    HubSectionKBNum.IsTapEnabled = false;
+                    KBRefreshAppBarButton.IsEnabled = false;
+                    KBCalendarAppBarButton.IsEnabled = false;
+                    KBZoomAppBarButton.IsEnabled = false;
+                }
             }
-            else
+            catch
             {
                 progress.Visibility = Visibility.Collapsed;
                 HubSectionKBTitle.Text = "未登陆 暂无";
@@ -122,6 +142,7 @@ namespace ZSCY_Win10
                 KBCalendarAppBarButton.IsEnabled = false;
                 KBZoomAppBarButton.IsEnabled = false;
             }
+
         }
 
 
@@ -188,8 +209,13 @@ namespace ZSCY_Win10
         //TODO:未登陆时 没有课表
         private async void initKB(bool isRefresh = false)
         {
-            
-                if (stuNum == appSetting.Values["stuNum"].ToString() && !isRefresh)
+            try
+            {
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                //if (stuNum == appSetting.Values["stuNum"].ToString() && !isRefresh)
+                if (stuNum == credentialList[0].UserName && !isRefresh)
                 {
                     try
                     {
@@ -209,12 +235,16 @@ namespace ZSCY_Win10
                     }
                     catch (Exception) { Debug.WriteLine("主页->课表数据缓存异常"); }
                 }
-            if (stuNum == appSetting.Values["stuNum"].ToString())
-            {
-                HubSectionKBTitle.Text = "我的课表";
-                HubSectionKBTitle.FontSize = 18;
+                //if (stuNum == appSetting.Values["stuNum"].ToString())
+                if (stuNum == credentialList[0].UserName)
+                {
+                    HubSectionKBTitle.Text = "我的课表";
+                    HubSectionKBTitle.FontSize = 18;
+
+                }
 
             }
+            catch { }
 
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
@@ -615,8 +645,12 @@ namespace ZSCY_Win10
         private void KBRefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO:未登陆时 无法刷新
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
             this.progress.IsActive = true;
-            stuNum = appSetting.Values["stuNum"].ToString();
+            //stuNum = appSetting.Values["stuNum"].ToString();
+            stuNum = credentialList[0].UserName;
             wOa = 1;
             initKB(true);
             this.progress.IsActive = false;
@@ -761,8 +795,12 @@ namespace ZSCY_Win10
 
         private void KebiaoAllpr_RefreshInvoked(DependencyObject sender, object args)
         {
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
             this.progress.IsActive = true;
-            stuNum = appSetting.Values["stuNum"].ToString();
+            //stuNum = appSetting.Values["stuNum"].ToString();
+            stuNum = credentialList[0].UserName;
             wOa = 1;
             initKB(true);
             this.progress.IsActive = false;

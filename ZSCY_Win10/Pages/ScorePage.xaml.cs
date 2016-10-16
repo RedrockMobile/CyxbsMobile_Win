@@ -32,6 +32,7 @@ namespace ZSCY.Pages
     public sealed partial class ScorePage : Page
     {
         private ApplicationDataContainer appSetting;
+        private static string resourceName = "ZSCY";
         public ScorePage()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
@@ -68,9 +69,14 @@ namespace ZSCY.Pages
         private async void initScore()
         {
             //await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 2, 140, 253), Colors.White, text: "正在紧张批改试卷...", isIndeterminate: true);
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+            //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+            paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
             string score = await NetWork.getHttpWebRequest("api/examGrade", paramList);
             Debug.WriteLine("score->" + score);
 #if DEBUG
