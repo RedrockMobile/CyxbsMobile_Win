@@ -146,8 +146,33 @@ namespace ZSCY_Win10
             if (null != result && result.Label == "是")
             {
                 appSetting.Values.Clear();
+                try
+                {
+                    var vault = new Windows.Security.Credentials.PasswordVault();
+                    var credentialList = vault.FindAllByResource(resourceName);
+                    foreach (var item in credentialList)
+                    {
+                        vault.Remove(item);
+                    }
+                }
+                catch { }
+                appSetting.Values["CommunityPerInfo"] = false;
+                appSetting.Values["isUseingBackgroundTask"] = false;
                 IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
                 IStorageFile storageFileWR = await applicationFolder.CreateFileAsync("kb", CreationCollisionOption.OpenIfExists);
+                try
+                {
+                    await storageFileWR.DeleteAsync();
+                    if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.StartScreen.JumpList"))
+                    {
+                        if (JumpList.IsSupported())
+                            DisableSystemJumpListAsync();
+                    }
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("个人 -> 切换账号删除课表数据异常");
+                }
                 try
                 {
                     await storageFileWR.DeleteAsync();
