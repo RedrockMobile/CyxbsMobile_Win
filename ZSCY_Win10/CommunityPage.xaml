@@ -1,4 +1,4 @@
-﻿<Page x:Name="mpage"
+﻿ <Page x:Name="mpage"
     x:Class="ZSCY_Win10.CommunityPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -410,7 +410,8 @@
                 <FlipView Name="CommunityItemPhotoFlipView">
                     <FlipView.ItemTemplate>
                         <DataTemplate>
-                            <ScrollViewer Name="scrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" ZoomMode="Enabled" MaxZoomFactor="4" MinZoomFactor="0.8">
+                           <!--ToDo 图片发大后的移动-->
+                                <ScrollViewer Name="scrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" ZoomMode="Enabled"  MaxZoomFactor="4" MinZoomFactor="0.8">
                                 <Grid Name="grid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                     <ProgressRing Name="progressRing" Visibility="Visible" IsActive="True"/>
                                     <Image Name="CommunityItemPhotoImage" Stretch="Uniform" Source="{Binding ImgSrc}" Tapped="CommunityItemPhoto_Tapped" Holding="CommunityItemPhotoImage_Holding" RightTapped="CommunityItemPhotoImage_RightTapped" ImageOpened="CommunityItemPhotoImage_ImageOpened" Width="{Binding ActualWidth, ElementName=mpage, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=mpage,Converter={StaticResource CommunityItemPhotoFlipViewHeighConverter}, Mode=OneWay}"></Image>
