@@ -805,5 +805,10 @@ namespace ZSCY_Win10
             initKB(true);
             this.progress.IsActive = false;
         }
+
+        private void AddRemind_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(AddRemind));
+        }
     }
 }

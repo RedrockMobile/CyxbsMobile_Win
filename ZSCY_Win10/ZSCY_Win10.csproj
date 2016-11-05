@@ -237,6 +237,9 @@
     <Compile Include="AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddRemind.xaml.cs">
+      <DependentUpon>AddRemind.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -289,6 +292,7 @@
     <Compile Include="Models\qindan_content.cs" />
     <Compile Include="Models\qinshiIntroduce.cs" />
     <Compile Include="Models\QQGroup_DB.cs" />
+    <Compile Include="Models\RemindPage\CourseList.cs" />
     <Compile Include="Models\richangshenghuo.cs" />
     <Compile Include="Models\ruxue_page.cs" />
     <Compile Include="Models\SexRatio.cs" />
@@ -375,6 +379,8 @@
     <Compile Include="Pages\JWContentPage.xaml.cs">
       <DependentUpon>JWContentPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\RemindPage\BeforeTimeSel.cs" />
+    <Compile Include="Models\RemindPage\CourseTable.cs" />
     <Compile Include="Pages\ScorePage.xaml.cs">
       <DependentUpon>ScorePage.xaml</DependentUpon>
     </Compile>
@@ -582,6 +588,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddRemind.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
