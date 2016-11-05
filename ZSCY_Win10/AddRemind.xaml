@@ -6,16 +6,21 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:remindpage="using:ZSCY_Win10.Models.RemindPage"
+    xmlns:converter="using:ZSCY_Win10.Util.Converter"
     mc:Ignorable="d">
-
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" MinWidth="800">
+    <Page.Resources>
+        <converter:ClassNumConvert x:Key="ClassNumConvert"/>
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid Background="#068cfd" Grid.Row="0" HorizontalAlignment="Stretch">
             <TextBlock Name="YourRemindTitle" Text="你的提醒" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
-            <AppBarButton Name="AddRemindAppBarButton" Icon="Add" HorizontalAlignment="Right" VerticalAlignment="Center" Click="AddRemindAppBarButton_Click"/>
+            <AppBarButton Name="EditRemind"  Icon="Edit" Foreground="White" HorizontalAlignment="Right" Click="EditRemind_Click" Visibility="Visible"/>
+            <AppBarButton Name="SaveCourseTime" Icon="Save" Foreground="White" Click="SaveCourseTime_Click" HorizontalAlignment="Right" Visibility="Visible"/>
+            <AppBarButton Name="SaveRemind" Icon="Save" Foreground="White" Click="SaveRemind_Click" HorizontalAlignment="Right" Visibility="Visible"/>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -23,11 +28,32 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-
-            <Line x:Name="SplitLine2" Y1="0" Y2="0" Stroke="Gray" StrokeThickness="1"/>
-            <Grid Name="RemindGrid" Grid.Column="1" Margin="400,0,0,0" BorderThickness="1,0" BorderBrush="Gray" >
-
-                <ScrollViewer IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Hidden">
+            <!--列表-->
+            <Grid Name="RemindListGrid" Grid.Column="0" MaxWidth="400">
+                <ListView Name="RemindListView">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="标题:" Grid.Row="0" Grid.Column="0"/>
+                                <TextBlock Text="" Grid.Row="0" Grid.Column="1"/>
+                                <TextBlock Text="提醒时间" Grid.Row="1" Grid.Column="0"/>
+                                <TextBlock Text="" Grid.Row="1" Grid.Column="1"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+            <Grid Name="RemindGrid" Grid.Column="1" Margin="400,0,0,0">
+                <Line x:Name="SplitLine2" Y1="0" Y2="500" Stroke="Gray" StrokeThickness="1"/>
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
                     <Grid Margin="10,0,10,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
@@ -84,9 +110,9 @@
                                                 <ListBox.ItemTemplate>
                                                     <DataTemplate >
                                                         <!--<StackPanel BorderThickness="1" BorderBrush="#333" Margin="0,0,1,0">
-                                                        <TextBlock Name="week" Text="{Binding WeekNum}"/>
-                                                        <TextBlock Name="class" Text="{Binding ClassNum}"/>
-                                                    </StackPanel>-->
+                                                            <TextBlock Name="week" Text="{Binding WeekNum}"/>
+                                                            <TextBlock Name="class" Text="{Binding ClassNum}"/>
+                                                        </StackPanel>-->
                                                         <Grid>
                                                             <Grid.RowDefinitions>
                                                                 <RowDefinition Height="auto"/>
@@ -98,7 +124,7 @@
                                                                     <ColumnDefinition/>
                                                                 </Grid.ColumnDefinitions>
                                                                 <TextBlock Text="时间:" Grid.Column="0"/>
-                                                                <!--<TextBlock Name="class" Text="{Binding ClassNum ,Converter={StaticResource ConvertClassNum}}" Grid.Column="1"/>-->
+                                                                <TextBlock Name="class" Text="{Binding ClassNum ,Converter={StaticResource ClassNumConvert}}" Grid.Column="1"/>
                                                             </Grid>
                                                             <TextBlock Name="week" Text="{Binding WeekNum}" HorizontalAlignment="Center" Grid.Row="0"/>
                                                         </Grid>
@@ -184,7 +210,7 @@
                     </Grid>
                 </Grid>
 
-                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" Grid.Row="1" >
+                <ScrollViewer  VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled" Grid.Row="1" >
                     <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2 *"/>
@@ -304,29 +330,8 @@
             <Line x:Name="SplitLine1"  Y1="0" Y2="48" Stroke="#58b3ff" StrokeThickness="1"/>
             <TextBlock Name="AddRemindTitle" Text="添加提醒" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
         </StackPanel>
-        <Grid Name="RemindListGrid" Grid.Column="0">
-            <ListView Name="RemindListView">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="标题:" Grid.Row="0" Grid.Column="0"/>
-                            <TextBlock Text="" Grid.Row="0" Grid.Column="1"/>
-                            <TextBlock Text="提醒时间" Grid.Row="1" Grid.Column="0"/>
-                            <TextBlock Text="" Grid.Row="1" Grid.Column="1"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+
     </Grid>
-   
+
 </Page>
 

@@ -34,23 +34,118 @@ namespace ZSCY_Win10
 
         ObservableCollection<CourseList> courseList = new ObservableCollection<CourseList>();
 
+        private bool isFristInto = true;//为什么都未做
+        private bool isEdit = false;
+        private bool isEditing = false;//编写提醒
+        private bool isSaving = false;//选择时间
+
         public AddRemind()
         {
             this.InitializeComponent();
-
+            selCourseList.ItemsSource = courseList;
+            //RemindListGrid.Visibility = Visibility.Collapsed;//测试使用
+            //RemindGrid.Margin = new Thickness(0);
+            //CourseTableGrid.Margin = new Thickness(0);
             beforeTime.Add(new BeforeTimeSel { BeforeString = "提前5分钟", BeforeTime = new TimeSpan(0, 5, 0) });
             beforeTime.Add(new BeforeTimeSel { BeforeString = "提前1小时", BeforeTime = new TimeSpan(1, 0, 0) });
             beforeTime.Add(new BeforeTimeSel { BeforeString = "提前1天", BeforeTime = new TimeSpan(1, 0, 0, 0) });
             beforeTime.Add(new BeforeTimeSel { BeforeString = "提前1星期", BeforeTime = new TimeSpan(7, 0, 0, 0, 0) });
             CreateCourseTable();
-           CreateCourseWeek();
-            this.SizeChanged += (s,e)=>
+            CreateCourseWeek();
+            this.SizeChanged += (s, e) =>
             {
-                SplitLine2.Y2 =e.NewSize.Height - 48;
+                CourseTableGrid.Height = e.NewSize.Height - 50;
+                RemindGrid.Height = e.NewSize.Height - 50;
+                if (e.NewSize.Width < 650)
+                {
+
+                    //RemindGrid.Visibility = Visibility.Collapsed;
+
+                    RemindGrid.Margin = new Thickness(0);
+                    CourseTableGrid.Margin = new Thickness(0);
+                    if (!App.showpane)
+                    {
+                        YourRemindTitle.Margin = new Thickness(48, 0, 0, 0);
+                        AddRemindTitle.Margin = new Thickness(48, 0, 0, 0);
+                    }
+                    else
+                    {
+                        YourRemindTitle.Margin = new Thickness(0);
+                        AddRemindTitle.Margin = new Thickness(0);
+                    }
+                    if (!isEdit)
+                    {
+                        CourseTableGrid.Visibility = Visibility.Collapsed;
+                        RemindGrid.Visibility = Visibility.Collapsed;
+                    }
+                    if (isEditing)
+                    {
+                        SaveRemind.Visibility = Visibility.Visible;
+                        EditRemind.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        EditRemind.Visibility = Visibility.Visible;
+                        SaveRemind.Visibility = Visibility.Collapsed;
+                    }
+                    if (isSaving)
+                    {
+                        SaveRemind.Visibility = Visibility.Collapsed;
+                        SaveCourseTime.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        SaveCourseTime.Visibility = Visibility.Collapsed;
+
+                    }
+                    AddRemindTitle.Visibility = Visibility.Collapsed;
+                    SplitLine1.Visibility = Visibility.Collapsed;
+                    SplitLine2.Visibility = Visibility.Collapsed;
+
+
+                }
+                else
+                {
+                    SplitLine2.Y2 = e.NewSize.Height - 48;
+                    SaveRemind.Visibility = Visibility.Visible;
+                    if (!isSaving)
+                        RemindGrid.Visibility = Visibility.Visible;
+                    else
+                    {
+                        SaveRemind.Visibility = Visibility.Collapsed;
+                        SaveCourseTime.Visibility = Visibility.Visible;
+
+                    }
+                    if (isEditing)
+                    {
+                        SaveRemind.Visibility = Visibility.Visible;
+                        EditRemind.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        EditRemind.Visibility = Visibility.Visible;
+                        SaveRemind.Visibility = Visibility.Collapsed;
+                    }
+
+                    //TODO:页面逻辑
+                    if (isFristInto)
+                    {
+                        isFristInto = false;
+                        SaveRemind.Visibility = Visibility.Visible;
+                        EditRemind.Visibility = Visibility.Collapsed;
+                    }
+                    RemindGrid.Margin = new Thickness(400, 0, 0, 0);
+                    CourseTableGrid.Margin = new Thickness(400, 0, 0, 0);
+                    AddRemindTitle.Visibility = Visibility.Visible;
+                    SplitLine1.Visibility = Visibility.Visible;
+                    SplitLine2.Visibility = Visibility.Visible;
+
+                }
+
             };
         }
 
-    
+
 
         private void CreateCourseWeek()
         {
@@ -85,11 +180,11 @@ namespace ZSCY_Win10
                 Grid.SetColumn(weekList[i].Grid, column);
                 Grid.SetRow(weekList[i].Grid, row);
                 weekList[i].Rect.Tapped += Rect_Tapped;
-                weekList[i].Textblock.Tapped += Textblock_Tapped; 
+                weekList[i].Textblock.Tapped += Textblock_Tapped;
 
             }
         }
-        private void Rect_Tapped(object sender ,TappedRoutedEventArgs e)
+        private void Rect_Tapped(object sender, TappedRoutedEventArgs e)
         {
             int row = Grid.GetRow((sender as Rectangle).Parent as Grid);
             int column = Grid.GetColumn((sender as Rectangle).Parent as Grid);
@@ -112,7 +207,7 @@ namespace ZSCY_Win10
             int column = Grid.GetColumn((sender as TextBlock).Parent as Grid);
             row *= 5;
 
-            if (!weekList[row + column].IsCheck )
+            if (!weekList[row + column].IsCheck)
             {
                 weekList[row + column].IsCheck = true;
                 weekList[row + column].Rect.Fill = new SolidColorBrush(Colors.CadetBlue);
@@ -123,7 +218,7 @@ namespace ZSCY_Win10
                 weekList[row + column].Rect.Fill = new SolidColorBrush(Colors.Azure);
             }
         }
-  
+
         private void CreateCourseTable()
         {
             for (int i = 0, k = 0; i < kebiaoGrid.RowDefinitions.Count; i += 2, k++)
@@ -213,13 +308,67 @@ namespace ZSCY_Win10
 
         private void CourseSel_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            isSaving = true;
             CourseTableGrid.Visibility = Visibility.Visible;
+            SaveCourseTime.Visibility = Visibility.Visible;
             RemindGrid.Visibility = Visibility.Collapsed;
+            EditRemind.Visibility = Visibility.Collapsed;
+            SaveRemind.Visibility = Visibility.Collapsed;
+            CreateCourseTable();
         }
 
         private void AddRemindAppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            SaveCourseTime.Visibility = Visibility.Collapsed;
+        }
 
+        private void SaveCourseTime_Click(object sender, RoutedEventArgs e)
+        {
+            isEditing = true;
+            isSaving = false;
+
+            SaveCourseTime.Visibility = Visibility.Collapsed;
+            CourseTableGrid.Visibility = Visibility.Collapsed;
+            RemindGrid.Visibility = Visibility.Visible;
+            SaveRemind.Visibility = Visibility.Visible;
+            for (int i = 0; i < 6; i++)
+                for (int j = 0; j < 7; j++)
+                {
+                    if (timeSet[i, j].IsCheck)
+                        courseList.Add(new CourseList(i, j, timeSet[i, j].IsCheck));
+                }
+        }
+
+        private void Initial()//初始化
+        {
+            CreateCourseWeek();
+            CreateCourseTable();
+            courseList.Clear();
+            SelBeforeTime.SelectedIndex = -1;
+        }
+        private void EditRemind_Click(object sender, RoutedEventArgs e)
+        {
+            isEdit = true;
+            isEditing = true;
+            SaveRemind.Visibility = Visibility.Visible;
+            EditRemind.Visibility = Visibility.Collapsed;
+            RemindGrid.Visibility = Visibility.Visible;
+            RemindListGrid.Visibility = Visibility.Collapsed;
+            SplitLine1.Visibility = Visibility.Visible;
+            AddRemindTitle.Visibility = Visibility.Visible;
+            Initial();
+        }
+
+        private void SaveRemind_Click(object sender, RoutedEventArgs e)
+        {
+            isEditing = false;
+            isFristInto = true;
+            RemindListGrid.Visibility = Visibility.Visible;
+            RemindGrid.Visibility = Visibility.Collapsed;
+            SaveRemind.Visibility = Visibility.Collapsed;
+            EditRemind.Visibility = Visibility.Visible;
+            SplitLine1.Visibility = Visibility.Collapsed;
+            AddRemindTitle.Visibility = Visibility.Collapsed;
         }
     }
 }

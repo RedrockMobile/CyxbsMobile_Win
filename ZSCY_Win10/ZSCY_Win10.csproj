@@ -413,6 +413,7 @@
     <Compile Include="Controls\PiePlotter.xaml.cs">
       <DependentUpon>PiePlotter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\Converter\ClassNumConvert.cs" />
     <Compile Include="Util\Converter\DetailMarginConverter.cs" />
     <Compile Include="Util\Converter\ExamDateConverter.cs" />
     <Compile Include="Util\Converter\ExamTimeConverter.cs" />
