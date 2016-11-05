@@ -8,30 +8,33 @@
     xmlns:remindpage="using:ZSCY_Win10.Models.RemindPage"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" MinWidth="800">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid Background="#068cfd" Grid.Row="0" HorizontalAlignment="Stretch">
-            <TextBlock  Text="你的提醒" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+            <TextBlock Name="YourRemindTitle" Text="你的提醒" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+            <AppBarButton Name="AddRemindAppBarButton" Icon="Add" HorizontalAlignment="Right" VerticalAlignment="Center" Click="AddRemindAppBarButton_Click"/>
         </Grid>
+
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Grid Name="RemindGrid" Grid.Column="1" Margin="400,0,0,0" BorderThickness="1" BorderBrush="Gray">
-                <Line x:Name="SplitLine2" Y1="0" Y2="0" Stroke="Gray" StrokeThickness="1"/>
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
-                    <Grid Grid.Row="1" Margin="10,0,10,0">
+
+            <Line x:Name="SplitLine2" Y1="0" Y2="0" Stroke="Gray" StrokeThickness="1"/>
+            <Grid Name="RemindGrid" Grid.Column="1" Margin="400,0,0,0" BorderThickness="1,0" BorderBrush="Gray" >
+
+                <ScrollViewer IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Hidden">
+                    <Grid Margin="10,0,10,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0">
-
                             <TextBox Name="title" PlaceholderText="提醒标题"
                      Header="提醒"/>
                             <TextBox Name="content" PlaceholderText="提醒内容"
@@ -63,7 +66,6 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <Grid Grid.Row="0" BorderThickness="1" BorderBrush="#333" PointerPressed="CourseAddPressed_PointerPressed" PointerExited="CourseAddExited_PointerPressed">
-
                                         <TextBlock Text="提醒课程" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"
                                   Margin="10,0,0,0"/>
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe109;" HorizontalAlignment="Right"
@@ -108,12 +110,12 @@
                                 </Grid>
                             </Grid>
                         </Grid >
-                        <Grid Grid.Row="2" >
+                        <Grid Grid.Row="2" BorderBrush="Gray" BorderThickness="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <Grid Grid.Row="1" Name="SelWeekNum">
+                            <Grid Grid.Row="1" Name="SelWeekNumTable" >
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
@@ -130,17 +132,201 @@
                             </Grid>
                             <!--<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe109;" HorizontalAlignment="Right"  Margin="0,0,5,0" Grid.Row="0"/>-->
                             <TextBlock Text="选择周数" Grid.Row="0" HorizontalAlignment="Left" Margin="5,0,0,0"/>
-                            <Rectangle Opacity="0" Grid.Row="0" Fill="White"/>
+
                         </Grid>
                     </Grid>
                 </ScrollViewer>
             </Grid>
-            <Grid Name="CourseTableGrid" Grid.Column="1" Margin="400,0,0,0" BorderBrush="Gray" BorderThickness="1" Visibility="Collapsed">
+
+            <Grid Name="CourseTableGrid" Grid.Column="1" Margin="400,0,0,0" BorderBrush="Gray" BorderThickness="1,0" Visibility="Collapsed">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!--日期星期-->
+                <Grid x:Name="KebiaoWeekGrid" Height="50" Grid.Row="0" Margin="0,0,20,0">
+                    <Grid.ColumnDefinitions>
+                        <!--列-->
+                        <ColumnDefinition Width="2 *"/>
+                        <ColumnDefinition Width="3 *"/>
+                        <ColumnDefinition Width="3 *"/>
+                        <ColumnDefinition Width="3 *"/>
+                        <ColumnDefinition Width="3 *"/>
+                        <ColumnDefinition Width="3 *"/>
+                        <ColumnDefinition Width="3 *"/>
+                        <ColumnDefinition Width="3 *"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="3,0,0,0" Name="MonthTextBlock" Text="" FontSize="16" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                    <Grid Name="KebiaoWeekTitleGrid" Grid.ColumnSpan="7" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1 *"/>
+                            <ColumnDefinition Width="1 *"/>
+                            <ColumnDefinition Width="1 *"/>
+                            <ColumnDefinition Width="1 *"/>
+                            <ColumnDefinition Width="1 *"/>
+                            <ColumnDefinition Width="1 *"/>
+                            <ColumnDefinition Width="1 *"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="一" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        <TextBlock Text="二" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        <TextBlock Text="三" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        <TextBlock Text="四" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        <TextBlock Text="五" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        <TextBlock Text="六" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                        <TextBlock Text="日" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+
+                    </Grid>
+                </Grid>
+
+                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" Grid.Row="1" >
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2 *"/>
+                            <ColumnDefinition Width="21 *"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0" >
+                            <Grid.RowDefinitions>
+                                <!--行-->
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                            </Grid.RowDefinitions>
+                            <Grid Name="KBAllnum1Grid" Grid.Row="0" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="1"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="1" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="2"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="2" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="3"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="3" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="4"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="4" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="5"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="5" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="6"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="6" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="7"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="7" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="8"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="8" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="9"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="9" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="10"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="10" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="11"/>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="11" Grid.Column="0" Height="65" >
+                                <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="12"/>
+                                </TextBlock>
+                            </Grid>
+                        </Grid>
+                        <Grid VerticalAlignment="Stretch" x:Name="kebiaoGrid" Grid.Column="1" Margin="0,0,20,0">
+                            <Grid.ColumnDefinitions>
+                                <!--列-->
+                                <ColumnDefinition Width="3 *"/>
+                                <ColumnDefinition Width="3 *"/>
+                                <ColumnDefinition Width="3 *"/>
+                                <ColumnDefinition Width="3 *"/>
+                                <ColumnDefinition Width="3 *"/>
+                                <ColumnDefinition Width="3 *"/>
+                                <ColumnDefinition Width="3 *"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <!--行-->
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                                <RowDefinition Height="1 *"/>
+                            </Grid.RowDefinitions>
+                        </Grid>
+                    </Grid>
+                </ScrollViewer>
             </Grid>
         </Grid>
+
         <StackPanel Grid.Row="0" Name="ShowRemindStackPanel" Orientation="Horizontal" Margin="400,0,0,0" >
             <Line x:Name="SplitLine1"  Y1="0" Y2="48" Stroke="#58b3ff" StrokeThickness="1"/>
-            <TextBlock Text="添加提醒" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+            <TextBlock Name="AddRemindTitle" Text="添加提醒" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
         </StackPanel>
+        <Grid Name="RemindListGrid" Grid.Column="0">
+            <ListView Name="RemindListView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="标题:" Grid.Row="0" Grid.Column="0"/>
+                            <TextBlock Text="" Grid.Row="0" Grid.Column="1"/>
+                            <TextBlock Text="提醒时间" Grid.Row="1" Grid.Column="0"/>
+                            <TextBlock Text="" Grid.Row="1" Grid.Column="1"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
+   
 </Page>
+

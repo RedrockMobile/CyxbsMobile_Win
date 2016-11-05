@@ -60,7 +60,6 @@ namespace ZSCY_Win10.Models.RemindPage
                 case 5:
                     classNum = "11-12";
                     break;
-                    ;
             }
             this.isCheck = isCheck;
         }
