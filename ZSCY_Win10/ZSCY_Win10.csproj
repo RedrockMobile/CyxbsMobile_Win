@@ -293,6 +293,8 @@
     <Compile Include="Models\qinshiIntroduce.cs" />
     <Compile Include="Models\QQGroup_DB.cs" />
     <Compile Include="Models\RemindPage\CourseList.cs" />
+    <Compile Include="Models\RemindPage\MyRemind.cs" />
+    <Compile Include="Models\RemindPage\RemindHelp.cs" />
     <Compile Include="Models\RemindPage\WeekList.cs" />
     <Compile Include="Models\richangshenghuo.cs" />
     <Compile Include="Models\ruxue_page.cs" />
@@ -340,6 +342,15 @@
     </Compile>
     <Compile Include="Notepad\WaysData_Plane.xaml.cs">
       <DependentUpon>WaysData_Plane.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddRemindPage\CourseTablePage.xaml.cs">
+      <DependentUpon>CourseTablePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddRemindPage\EditRemindPage.xaml.cs">
+      <DependentUpon>EditRemindPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddRemindPage\RemindListPage.xaml.cs">
+      <DependentUpon>RemindListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\BigDataPage.xaml.cs">
       <DependentUpon>BigDataPage.xaml</DependentUpon>
@@ -648,6 +659,18 @@
     <Page Include="Notepad\WaysData_Plane.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\AddRemindPage\CourseTablePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddRemindPage\EditRemindPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddRemindPage\RemindListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\BigDataPage.xaml">
       <Generator>MSBuild:Compile</Generator>

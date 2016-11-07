@@ -28,6 +28,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Data;
+using ZSCY_Win10.Models.RemindPage;
 using ZSCY_Win10.Pages.CommunityPages;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
@@ -81,7 +82,10 @@ namespace ZSCY_Win10
         public static bool[] isLoading = { false, false, false, false, false, false, false, false };
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
         private static string resourceName = "ZSCY";
-
+        #region 事件提醒
+       public static TimeSet[,] timeSet = new TimeSet[6, 7];
+       public static ObservableCollection<CourseList> courseList = new ObservableCollection<CourseList>();
+        #endregion
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。
