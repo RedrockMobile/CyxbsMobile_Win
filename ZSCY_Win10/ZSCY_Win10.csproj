@@ -255,6 +255,9 @@
       <DependentUpon>CommunityPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NavMenuListView.cs" />
+    <Compile Include="Controls\RemindPage\ErrorNotification.xaml.cs">
+      <DependentUpon>ErrorNotification.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\ClassList.cs" />
     <Compile Include="Data\ClassListLight.cs" />
     <Compile Include="Data\CommunityImageList.cs" />
@@ -292,9 +295,11 @@
     <Compile Include="Models\qindan_content.cs" />
     <Compile Include="Models\qinshiIntroduce.cs" />
     <Compile Include="Models\QQGroup_DB.cs" />
+    <Compile Include="Models\RemindPage\BaseModel.cs" />
     <Compile Include="Models\RemindPage\CourseList.cs" />
     <Compile Include="Models\RemindPage\MyRemind.cs" />
     <Compile Include="Models\RemindPage\RemindHelp.cs" />
+    <Compile Include="Models\RemindPage\RemindListDB.cs" />
     <Compile Include="Models\RemindPage\WeekList.cs" />
     <Compile Include="Models\richangshenghuo.cs" />
     <Compile Include="Models\ruxue_page.cs" />
@@ -349,8 +354,14 @@
     <Compile Include="Pages\AddRemindPage\EditRemindPage.xaml.cs">
       <DependentUpon>EditRemindPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AddRemindPage\FristPage.xaml.cs">
+      <DependentUpon>FristPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AddRemindPage\RemindListPage.xaml.cs">
       <DependentUpon>RemindListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddRemindPage\SelWeekNumPage.xaml.cs">
+      <DependentUpon>SelWeekNumPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\BigDataPage.xaml.cs">
       <DependentUpon>BigDataPage.xaml</DependentUpon>
@@ -424,6 +435,7 @@
     <Compile Include="Controls\PiePlotter.xaml.cs">
       <DependentUpon>PiePlotter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\Converter\AddRemind.cs" />
     <Compile Include="Util\Converter\ClassNumConvert.cs" />
     <Compile Include="Util\Converter\DetailMarginConverter.cs" />
     <Compile Include="Util\Converter\ExamDateConverter.cs" />
@@ -466,6 +478,8 @@
     <Compile Include="ViewModels\Community\MyViewModel.cs" />
     <Compile Include="ViewModels\FengCaiViewModel.cs" />
     <Compile Include="ViewModels\FirstPageViewModel.cs" />
+    <Compile Include="ViewModels\Remind\BaseViewModel.cs" />
+    <Compile Include="ViewModels\Remind\SelTimeStringViewModel.cs" />
     <Compile Include="ViewModels\StrategyViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -612,6 +626,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\RemindPage\ErrorNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Data\loginControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -668,7 +686,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\AddRemindPage\FristPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AddRemindPage\RemindListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddRemindPage\SelWeekNumPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -776,6 +802,7 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

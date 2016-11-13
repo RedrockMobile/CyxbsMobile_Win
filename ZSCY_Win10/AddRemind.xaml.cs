@@ -29,107 +29,72 @@ namespace ZSCY_Win10
     public sealed partial class AddRemind : Page
     {
         ObservableCollection<BeforeTimeSel> beforeTime = new ObservableCollection<BeforeTimeSel>();
-        ExcalContent[,] excal = new ExcalContent[6, 7];//界面显示
-        WeekList[] weekList = new WeekList[20];
 
-       
-
+        private static SolidColorBrush UnselectedFontColor = new SolidColorBrush(Color.FromArgb(255, 70, 70, 70));
+        private static SolidColorBrush SelectedFontColor = new SolidColorBrush(Color.FromArgb(255, 233, 243, 253));
         private bool OneStatus = true;//为什么都未做或都做完了
         private bool TwoStatus = true;//编写提醒中
         private bool ThreeStatus = true;//选择课程中
-
         public AddRemind()
         {
             this.InitializeComponent();
-            Frame1.Navigate(typeof(RemindListPage));
+            SelRemindListView.ItemsSource = beforeTime;
+            SelectedTimeTextBlock.DataContext = App.SelectedTime;
+            SelectedWeekNumTextBlock.DataContext = App.selectedWeek;
+            beforeTime.Add(new BeforeTimeSel { BeforeString = "不提醒", isRemind = false, IconVisibility = Visibility.Collapsed });
+            beforeTime.Add(new BeforeTimeSel { BeforeString = "提前五分钟", isRemind = true, BeforeTime = new TimeSpan(0, 5, 0), IconVisibility = Visibility.Collapsed });
+            beforeTime.Add(new BeforeTimeSel { BeforeString = "提前十分钟", isRemind = true, BeforeTime = new TimeSpan(0, 10, 0), IconVisibility = Visibility.Collapsed });
+            beforeTime.Add(new BeforeTimeSel { BeforeString = "提前二十分钟", isRemind = true, BeforeTime = new TimeSpan(0, 20, 0), IconVisibility = Visibility.Collapsed });
+            beforeTime.Add(new BeforeTimeSel { BeforeString = "提前一个小时", isRemind = true, BeforeTime = new TimeSpan(1, 0, 0), IconVisibility = Visibility.Collapsed });
+            Frame2.Navigate(typeof(FristPage));
             this.SizeChanged += (s, e) =>
             {
-                //SplitLine2.Y2 = e.NewSize.Height - 48;
-
-                Frame1.Height = e.NewSize.Height;
+          
                 Frame2.Height = e.NewSize.Height;
                 RemindGrid1.Width = 400;
 
             };
-            //selCourseList.ItemsSource = courseList;
-            ////RemindListGrid.Visibility = Visibility.Collapsed;//测试使用
-            ////RemindGrid.Margin = new Thickness(0);
-            ////CourseTableGrid.Margin = new Thickness(0);
-
-            //beforeTime.Add(new BeforeTimeSel { BeforeString = "提前5分钟", BeforeTime = new TimeSpan(0, 5, 0) });
-            //beforeTime.Add(new BeforeTimeSel { BeforeString = "提前1小时", BeforeTime = new TimeSpan(1, 0, 0) });
-            //beforeTime.Add(new BeforeTimeSel { BeforeString = "提前1天", BeforeTime = new TimeSpan(1, 0, 0, 0) });
-            //beforeTime.Add(new BeforeTimeSel { BeforeString = "提前1星期", BeforeTime = new TimeSpan(7, 0, 0, 0, 0) });
-            //CreateCourseTable();
-            //CreateCourseWeek();
-            //this.SizeChanged += (s, e) =>
-            //{
-            //    CourseTableGrid.Height = e.NewSize.Height - 50;
-            //    RemindGrid.Height = e.NewSize.Height - 50;
-            //    if (e.NewSize.Width < 650)
-            //    {
-
-            //        //RemindGrid.Visibility = Visibility.Collapsed;
-
-            //        RemindGrid.Margin = new Thickness(0);
-            //        CourseTableGrid.Margin = new Thickness(0);
-            //        if (!App.showpane)
-            //        {
-            //            YourRemindTitle.Margin = new Thickness(48, 0, 0, 0);
-            //            AddRemindTitle.Margin = new Thickness(48, 0, 0, 0);
-            //        }
-            //        else
-            //        {
-            //            YourRemindTitle.Margin = new Thickness(0);
-            //            AddRemindTitle.Margin = new Thickness(0);
-            //        }
-            //        if (OneStatus)
-            //        {
-            //            EditRemind.Visibility = Visibility.Visible;
-            //            SaveCourseTime.Visibility = Visibility.Collapsed;
-            //            SaveRemind.Visibility = Visibility.Collapsed;
-            //        }
-            //        else if(TwoStatus)
-            //        {
-            //            EditRemind.Visibility = Visibility.Collapsed;
-            //            SaveRemind.Visibility = Visibility.Visible;
-            //            SaveCourseTime.Visibility = Visibility.Collapsed;
-            //        }
-            //        else if(ThreeStatus)
-            //        {
-            //            SaveCourseTime.Visibility = Visibility.Visible;
-            //            SaveRemind.Visibility = Visibility.Collapsed;
-            //            EditRemind.Visibility = Visibility.Collapsed;
-            //        }
-
-            //        AddRemindTitle.Visibility = Visibility.Collapsed;
-            //        SplitLine1.Visibility = Visibility.Collapsed;
-            //        SplitLine2.Visibility = Visibility.Collapsed;
-
-
-            //    }
-            //    else
-            //    {
-                
-            //        RemindGrid.Margin = new Thickness(400, 0, 0, 0);
-            //        CourseTableGrid.Margin = new Thickness(400, 0, 0, 0);
-            //        AddRemindTitle.Visibility = Visibility.Visible;
-            //        SplitLine1.Visibility = Visibility.Visible;
-            //        SplitLine2.Visibility = Visibility.Visible;
-
-            //    }
-
-            //};
+  
         }
 
-        private void AddRemindGrid_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            Frame2.Navigate(typeof(EditRemindPage));
-        }
+   
         private void SaveEdit_Tapped(object sender,TappedRoutedEventArgs e)
         {
         }
 
+        private void RemindGridButon_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            SelRemindGrid.Visibility = Visibility.Visible;
+        }
+
+        private void SelRemindBackgroupGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            SelRemindGrid.Visibility = Visibility.Collapsed;
+        }
+        private int indexBefore = 0;
+        private void SelRemindListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            beforeTime[indexBefore].IconVisibility = Visibility.Collapsed;
+            int temp = indexBefore = (sender as ListView).SelectedIndex;
+            beforeTime[temp].IconVisibility = Visibility.Visible;
+
+            SelectedRemindTextBlock.Text = beforeTime[temp].BeforeString;
+            SelRemindGrid.Visibility = Visibility.Collapsed;
+        }
+        private void SaveEditRemind_Tapped(object sender,TappedRoutedEventArgs e)
+        {
+
+        }
+
+        private void TimeGridButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame2.Navigate(typeof(CourseTablePage));
+        }
+
+        private void WeekNumGridButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame2.Navigate(typeof(SelWeekNumPage));
+        }
 
         //private void CreateCourseWeek()
         //{
@@ -354,3 +319,4 @@ namespace ZSCY_Win10
         //}
     }
 }
+ 

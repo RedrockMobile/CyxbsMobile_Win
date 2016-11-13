@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
 namespace ZSCY_Win10.Models.RemindPage
@@ -17,7 +19,7 @@ namespace ZSCY_Win10.Models.RemindPage
         private TextBlock textblock;
         private bool isCheck;
         private DateTime weekNumOfMonday;
-       private static DateTime oneWeekTime = new DateTime(2016, 9, 5, 0, 0, 0);
+        private static DateTime oneWeekTime = new DateTime(2016, 9, 5, 0, 0, 0);
 
         public void SetWeekName(int i)
         {
@@ -100,6 +102,72 @@ namespace ZSCY_Win10.Models.RemindPage
             set
             {
                 weekNumOfMonday = value;
+            }
+        }
+    }
+    public class SelectedWeekNum
+    {
+        private int weekNum;
+
+        public int WeekNum
+        {
+            get
+            {
+                return weekNum;
+            }
+
+            set
+            {
+                weekNum = value;
+            }
+        }
+
+    }
+
+    public class SelWeekNum:BaseModel
+    {
+        private SolidColorBrush itemFillColor;
+        private string itemContent;
+     
+        public bool isSelected { get; set; }
+        public string ItemContent
+        {
+            get
+            {
+                return itemContent;
+            }
+            set
+            {
+                itemContent = $"第{value}周";
+            }
+        }
+        private SolidColorBrush itemContentColor;
+
+        public SolidColorBrush ItemFillColor
+        {
+            get
+            {
+                return itemFillColor;
+            }
+
+            set
+            {
+                itemFillColor = value;
+                RaisePropertyChanged(nameof(ItemFillColor));
+            }
+        }
+
+        public SolidColorBrush ItemContentColor
+        {
+            get
+            {
+                return itemContentColor;
+            }
+
+            set
+            {
+                itemContentColor = value;
+                RaisePropertyChanged(nameof(ItemContentColor));
             }
         }
     }

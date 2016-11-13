@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="#f6f6f6">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
             <RowDefinition/>
@@ -16,7 +16,7 @@
             <TextBlock Name="YourRemindTitle" Text="选择提醒时间" Foreground="White"  FontSize="18" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
             <!--<AppBarButton Name="EditRemind"  Icon="Edit" Foreground="White" HorizontalAlignment="Right" Visibility="Visible"/>-->
             <!--<AppBarButton Name="SaveCourseTime" Icon="Save" Foreground="White" HorizontalAlignment="Right" Visibility="Visible"/>-->
-            <AppBarButton Name="SaveRemind" Icon="Save" Foreground="White"  HorizontalAlignment="Right" Tapped="SaveRemind_Tapped"/>
+            <AppBarButton Name="SaveRemind" Icon="Accept" Foreground="White"  HorizontalAlignment="Right" Tapped="SaveRemind_Tapped"/>
         </Grid>
         <Line x:Name="SplitLine" Grid.Row="1" Y1="0" Y2="0" Stroke="Gray" StrokeThickness="1"/>
 

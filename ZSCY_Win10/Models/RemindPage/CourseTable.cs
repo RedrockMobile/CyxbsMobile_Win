@@ -7,6 +7,9 @@ using Windows.UI.Xaml.Controls;
 
 namespace ZSCY_Win10.Models.RemindPage
 {
+    /// <summary>
+    /// 打印课表表格
+    /// </summary>
     public class ExcalContent
     {
         private Grid grid;

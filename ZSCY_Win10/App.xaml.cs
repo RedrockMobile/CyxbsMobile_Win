@@ -16,6 +16,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Networking.PushNotifications;
 using Windows.Storage;
+using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.StartScreen;
 using Windows.UI.ViewManagement;
@@ -32,6 +33,7 @@ using ZSCY_Win10.Models.RemindPage;
 using ZSCY_Win10.Pages.CommunityPages;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
+using ZSCY_Win10.ViewModels.Remind;
 
 /*
                    _ooOoo_
@@ -83,8 +85,13 @@ namespace ZSCY_Win10
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
         private static string resourceName = "ZSCY";
         #region 事件提醒
-       public static TimeSet[,] timeSet = new TimeSet[6, 7];
-       public static ObservableCollection<CourseList> courseList = new ObservableCollection<CourseList>();
+        public static TimeSet[,] timeSet = new TimeSet[6, 7];
+        public static ObservableCollection<CourseList> courseList = new ObservableCollection<CourseList>();
+        public static SelTimeStringViewModel SelectedTime = new SelTimeStringViewModel();
+        public static ObservableCollection< SelectedWeekNum> selectedWeekNumList =new ObservableCollection<SelectedWeekNum>();
+        public static SelWeekNumStringViewModel selectedWeek = new SelWeekNumStringViewModel();
+        public static string RemindListDBPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db");
+
         #endregion
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，

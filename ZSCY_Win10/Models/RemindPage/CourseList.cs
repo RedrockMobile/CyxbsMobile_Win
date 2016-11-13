@@ -9,12 +9,12 @@ namespace ZSCY_Win10.Models.RemindPage
     /// <summary>
     /// 已选择的课列表
     /// </summary>
-    public class CourseList
+    public  class CourseList
     {
-        private string weekNum;
-        private string classNum;
-        private bool isCheck;
-        public CourseList(int row, int column, bool isCheck)
+        private  string weekNum;
+        private  string classNum;
+        private  bool isCheck;
+        public  CourseList(int row, int column)
         {
             switch (column)
             {
@@ -43,25 +43,24 @@ namespace ZSCY_Win10.Models.RemindPage
             switch (row)
             {
                 case 0:
-                    classNum = "1-2";
+                    classNum = "12";
                     break;
                 case 1:
-                    classNum = "3-4";
+                    classNum = "34";
                     break;
                 case 2:
-                    classNum = "5-6";
+                    classNum = "56";
                     break;
                 case 3:
-                    classNum = "7-8";
+                    classNum = "78";
                     break;
                 case 4:
-                    classNum = "9 - 10";
+                    classNum = "910";
                     break;
-                case 5:
-                    classNum = "11-12";
+                case 5:            
+                    classNum = "1112";
                     break;
             }
-            this.isCheck = isCheck;
         }
        
 
