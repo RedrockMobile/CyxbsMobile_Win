@@ -12,7 +12,10 @@ namespace ZSCY_Win10.Models.RemindPage
     {
         private string beforeString;
         private TimeSpan beforeTime;
-        //private SolidColorBrush fontColor;
+        public int getBeforeTime()
+        {
+           return (int)BeforeTime.TotalMinutes;
+        }
         private Visibility iconVisibility;
         public bool isRemind { get; set; }
         public string BeforeString
@@ -41,20 +44,7 @@ namespace ZSCY_Win10.Models.RemindPage
             }
         }
 
-        //public SolidColorBrush FontColor
-        //{
-        //    get
-        //    {
-        //        return fontColor;
-        //    }
-
-        //    set
-        //    {
-        //        fontColor = value;
-        //        RaisePropertyChanged(nameof(FontColor));
-        //    }
-        //}
-
+      
         public Visibility IconVisibility
         {
             get

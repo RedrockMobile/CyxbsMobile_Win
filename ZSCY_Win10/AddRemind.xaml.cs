@@ -1,12 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Security.Credentials;
 using Windows.UI;
+using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -16,8 +20,10 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
+using ZSCY_Win10.Controls.RemindPage;
 using ZSCY_Win10.Models.RemindPage;
 using ZSCY_Win10.Pages.AddRemindPage;
+using ZSCY_Win10.Util;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -49,17 +55,19 @@ namespace ZSCY_Win10
             Frame2.Navigate(typeof(FristPage));
             this.SizeChanged += (s, e) =>
             {
-          
+
                 Frame2.Height = e.NewSize.Height;
                 RemindGrid1.Width = 400;
 
             };
-  
+
         }
 
-   
-        private void SaveEdit_Tapped(object sender,TappedRoutedEventArgs e)
+
+        private void SaveEdit_Tapped(object sender, TappedRoutedEventArgs e)
         {
+
+
         }
 
         private void RemindGridButon_Tapped(object sender, TappedRoutedEventArgs e)
@@ -74,18 +82,135 @@ namespace ZSCY_Win10
         private int indexBefore = 0;
         private void SelRemindListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            beforeTime[indexBefore].IconVisibility = Visibility.Collapsed;
-            int temp = indexBefore = (sender as ListView).SelectedIndex;
-            beforeTime[temp].IconVisibility = Visibility.Visible;
+            if (SelRemindListView.SelectedIndex == -1)
+            {
 
-            SelectedRemindTextBlock.Text = beforeTime[temp].BeforeString;
-            SelRemindGrid.Visibility = Visibility.Collapsed;
+                beforeTime[indexBefore].IconVisibility = Visibility.Collapsed;
+                indexBefore = 0;
+            }
+            else
+            {
+
+                int temp = indexBefore = (sender as ListView).SelectedIndex;
+                beforeTime[temp].IconVisibility = Visibility.Visible;
+
+                SelectedRemindTextBlock.Text = beforeTime[temp].BeforeString;
+                SelRemindGrid.Visibility = Visibility.Collapsed;
+            }
+
         }
-        private void SaveEditRemind_Tapped(object sender,TappedRoutedEventArgs e)
+        private async void SaveEditRemind_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            if (TitleTextBox.Text == "")
+            {
+                new ErrorNotification("标题不能为空").Show();
+                return;
+
+            }
+            else
+            {
+                if (SelectedTimeTextBlock.Text == "")
+                {
+                    new ErrorNotification("请选择提醒时间").Show();
+                    return;
+                }
+                else
+                {
+                    if (SelectedWeekNumTextBlock.Text == "")
+                    {
+                        new ErrorNotification("请选择提醒周数").Show();
+                        return;
+                    }
+                    else
+                    {
+                        if (SelectedRemindTextBlock.Text == "")
+                        {
+                            new ErrorNotification("请选择提前时间").Show();
+                            return;
+                        }
+                        else
+                        {
+                            string resource = "ZSCY";
+                            PasswordCredential userCredential = GetCredential.getCredential(resource);
+                            string stuNum, idNum;
+                            stuNum = userCredential.UserName;
+                            idNum = userCredential.Password;
+                            Debug.WriteLine("{0},{1}", stuNum, idNum);
+                            MyRemind myRemind = new MyRemind();
+                            myRemind.DateItems = new List<DateItemModel>();
+                            for (int i = 0; i < 7; i++)
+                            {
+                                for (int j = 0; j < 6; j++)
+                                    if (App.timeSet[j, i].IsCheck)
+                                    {
+                                        //dateItem.Class += j.ToString() + ",";
+                                        //dateItem.Day += i.ToString() + ",";
+                                        DateItemModel dateItem = new DateItemModel();
+
+                                        dateItem.Class = j.ToString();
+                                        dateItem.Day = i.ToString();
+                                        for (int k = 0; k < App.selectedWeekNumList.Count; k++)
+                                        {
+                                            dateItem.Week += App.selectedWeekNumList[k].WeekNum + ",";
+                                        }
+                                        dateItem.Week = dateItem.Week.Remove(dateItem.Week.Length - 1);
+                                        myRemind.DateItems.Add(dateItem);
+                                    }
+                            }
+                            myRemind.Time = beforeTime[SelRemindListView.SelectedIndex].BeforeTime.TotalMinutes.ToString();
+                            myRemind.Title = TitleTextBox.Text;
+                            myRemind.Content = ContentTextBox.Text;
+                            string databaseJson = JsonConvert.SerializeObject(myRemind);
+                            myRemind.IdNum = idNum;
+                            myRemind.StuNum = stuNum;
+                            try
+                            {
+                                AddRemindReturn returnStatus = new AddRemindReturn();
+
+                                string content = await NetWork.httpRequest(ApiUri.addRemindApi, myRemind);
+                                returnStatus = JsonConvert.DeserializeObject<AddRemindReturn>(content);
+                                myRemind.Id = returnStatus.Id;
+                            }
+                            catch
+                            {
+
+                            }
+                            string id_system = "";
+                            if (beforeTime[SelRemindListView.SelectedIndex].isRemind)
+                            {
+                                TimeSpan time = beforeTime[SelRemindListView.SelectedIndex].BeforeTime;
+                                //设置通知
+                                id_system = await RemindHelp.AddAllRemind(myRemind, time);
+                            }
+                            else
+                            {
+
+                            }
+                            DatabaseMethod.ToDatabase(myRemind.Id, databaseJson, id_system);
+                        }
+                    }
+                }
+            }
+
+            Initialization();
+        }
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        private void Initialization()
+        {
+            TitleTextBox.Text = "";
+            ContentTextBox.Text = "";
+            App.SelectedTime.SelTimeString = "";
+            App.selectedWeek.WeekNumString = "";
+            App.selectedWeekNumList.Clear();
+            for (int i = 0; i < 6; i++)
+                for (int j = 0; j < 7; j++)
+                    App.timeSet[i, j] = null;
+            SelectedRemindTextBlock.Text = "";
+            SelRemindListView.SelectedIndex = -1;
 
         }
-
         private void TimeGridButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Frame2.Navigate(typeof(CourseTablePage));
@@ -94,6 +219,11 @@ namespace ZSCY_Win10
         private void WeekNumGridButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Frame2.Navigate(typeof(SelWeekNumPage));
+        }
+
+        private void showHis_Click(object sender, RoutedEventArgs e)
+        {
+            Frame2.Navigate(typeof(RemindListPage));
         }
 
         //private void CreateCourseWeek()
@@ -319,4 +449,3 @@ namespace ZSCY_Win10
         //}
     }
 }
- 

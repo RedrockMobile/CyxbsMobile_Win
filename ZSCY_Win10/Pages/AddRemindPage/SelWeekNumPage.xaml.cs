@@ -41,13 +41,16 @@ namespace ZSCY_Win10.Pages.AddRemindPage
         private void InitializeWeekList()
         {
             for (int i = 0; i < 20; i++)
-                SelWeekList.Add(new SelWeekNum
+            {
+              
+                SelWeekList.Add(new SelWeekNum()
                 {
-                    ItemContent = (i+1).ToString(),
+                    ItemContent = (i + 1).ToString(),
                     ItemContentColor = UnselectedFontColor,
                     ItemFillColor = UnselectedFillColor,
                     isSelected = false
                 });
+            }
         }
 
 
@@ -78,10 +81,13 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             {
                 if(SelWeekList[i].isSelected)
                 {
-                    App.selectedWeekNumList.Add(new SelectedWeekNum { WeekNum = i + 1 });
+                    SelectedWeekNum temp = new SelectedWeekNum() { WeekNum = i + 1 };
+                    temp.SetWeekTime(i);
+                    App.selectedWeekNumList.Add(temp);
                     App.selectedWeek.WeekNumString += (i + 1).ToString() + "、";
                 }
             }
+            Frame.Navigate(typeof(FristPage));
             Debug.WriteLine(App.selectedWeek.WeekNumString);
         }
     }

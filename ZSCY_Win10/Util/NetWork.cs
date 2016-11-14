@@ -1,14 +1,17 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using ZSCY_Win10.Models.RemindPage;
 
 namespace ZSCY_Win10.Util
 {
@@ -154,6 +157,50 @@ namespace ZSCY_Win10.Util
                 }
             });
         }
+        public static async Task<string> httpRequest(string api, MyRemind myRemind)
+        {
+            List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
+            paramList.Add(new KeyValuePair<string, string>("stuNum", myRemind.StuNum));
+            paramList.Add(new KeyValuePair<string, string>("idNum", myRemind.IdNum));
+            string date = "[";
 
+            for (int i = 0; i < myRemind.DateItems.Count; i++)
+            {
+                string dateJson = JsonConvert.SerializeObject(myRemind.DateItems[i]);
+                date +=$"{dateJson},";
+            }
+            date = date.Remove(date.Length - 1)+"]";
+
+            paramList.Add(new KeyValuePair<string, string>("date", date));
+            paramList.Add(new KeyValuePair<string, string>("title", myRemind.Title));
+            paramList.Add(new KeyValuePair<string, string>("time", myRemind.Time));
+            paramList.Add(new KeyValuePair<string, string>("content", myRemind.Content));
+            string content = "";
+            await Task.Run(() =>
+            {
+                HttpClient httpClient = new HttpClient();
+
+                HttpResponseMessage response = httpClient.PostAsync(new Uri(api), new FormUrlEncodedContent(paramList)).Result;
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    content = response.Content.ReadAsStringAsync().Result;
+                    Debug.WriteLine(content);
+                }
+            });
+            return content;
+            //return await Task.Run(async () =>
+            //{
+            //HttpClient httpClient = new HttpClient();
+
+            //    HttpResponseMessage response = await httpClient.PostAsync(new Uri(api), new FormUrlEncodedContent(paramList))).Result;
+            //    if (response.StatusCode == HttpStatusCode.OK)
+            //    {
+            //        content = response.Content.ReadAsStringAsync().Result;
+
+            //    }
+            //});
+            //            return content;
+
+        }
     }
 }

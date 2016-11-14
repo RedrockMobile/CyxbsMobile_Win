@@ -67,7 +67,6 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                     {
                         if (App.timeSet[k, j].IsCheck)
                         {
-                            App.courseList.Clear();
                             rect.Fill = SelectedColor;
                             CourseTable[k, j].IsCheck = true;
                         }

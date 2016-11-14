@@ -18,5 +18,28 @@
         <Line x:Name="SplitLine" Y1="0" Y2="0" Stroke="Gray" StrokeThickness="1" Grid.Row="1"/>
         <FontIcon Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
           FontFamily="Segoe MDL2 Assets" Glyph="&#xe787;" FontSize="200" Opacity="0.1"/>
+        <ListView Grid.Row="1"
+            x:Name="ListViewToasts">
+            <ListView.Header>
+                <TextBlock
+                    Text="Scheduled Toasts"
+                    Style="{ThemeResource TitleTextBlockStyle}"
+                    Margin="20"/>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <RichTextBlock>
+                        <Paragraph>
+                            <Run Text="Tag: "/>
+                            <Run Text="{Binding Tag}"/>
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="DeliveryTime: "/>
+                            <Run Text="{Binding DeliveryTime}"/>
+                        </Paragraph>
+                    </RichTextBlock>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

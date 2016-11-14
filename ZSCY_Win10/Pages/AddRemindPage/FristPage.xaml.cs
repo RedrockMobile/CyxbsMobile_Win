@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,6 +27,8 @@ namespace ZSCY_Win10.Pages.AddRemindPage
         public FristPage()
         {
             this.InitializeComponent();
+            ListViewToasts.ItemsSource = ToastNotificationManager.CreateToastNotifier().GetScheduledToastNotifications();
+
             this.SizeChanged += (s, e) =>
             {
                 SplitLine.Y2 = e.NewSize.Height - 48;

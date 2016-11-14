@@ -108,7 +108,25 @@ namespace ZSCY_Win10.Models.RemindPage
     public class SelectedWeekNum
     {
         private int weekNum;
+        private static DateTime oneWeekTime = new DateTime(2016, 9, 5, 0, 0, 0);
+        private DateTime weekNumOfMonday;
+        public void SetWeekTime(int i)
+        {
+            weekNumOfMonday = oneWeekTime.AddDays(i * 7);
+            Debug.WriteLine(weekNumOfMonday);
+        }
+        public DateTime WeekNumOfMonday
+        {
+            get
+            {
+                return weekNumOfMonday;
+            }
 
+            set
+            {
+                weekNumOfMonday = value;
+            }
+        }
         public int WeekNum
         {
             get
@@ -128,7 +146,8 @@ namespace ZSCY_Win10.Models.RemindPage
     {
         private SolidColorBrush itemFillColor;
         private string itemContent;
-     
+        
+       
         public bool isSelected { get; set; }
         public string ItemContent
         {
@@ -170,5 +189,7 @@ namespace ZSCY_Win10.Models.RemindPage
                 RaisePropertyChanged(nameof(ItemContentColor));
             }
         }
+
+     
     }
 }

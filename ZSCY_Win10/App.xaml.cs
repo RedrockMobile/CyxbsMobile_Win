@@ -86,7 +86,6 @@ namespace ZSCY_Win10
         private static string resourceName = "ZSCY";
         #region 事件提醒
         public static TimeSet[,] timeSet = new TimeSet[6, 7];
-        public static ObservableCollection<CourseList> courseList = new ObservableCollection<CourseList>();
         public static SelTimeStringViewModel SelectedTime = new SelTimeStringViewModel();
         public static ObservableCollection< SelectedWeekNum> selectedWeekNumList =new ObservableCollection<SelectedWeekNum>();
         public static SelWeekNumStringViewModel selectedWeek = new SelWeekNumStringViewModel();

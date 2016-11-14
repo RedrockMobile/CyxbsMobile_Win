@@ -9,8 +9,9 @@
     xmlns:remindpage="using:ZSCY_Win10.Models.RemindPage"
     mc:Ignorable="d">
     <Page.Resources>
-        <converter:RemindListDay x:Key="RemindListDay"/>
-        <converter:RemindListClass x:Key="RemindListClass"/>
+        <converter:RemindListWeek x:Key="RemindListWeek"/>
+        <converter:BeforeTimeRemind x:Key="BeforeTimeRemind"/>
+        <converter:BeforeTimeIconColor x:Key="BeforeTimeIconColor"/>
     </Page.Resources>
     <!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
       
@@ -126,23 +127,19 @@
                                             <ColumnDefinition Width="auto"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="{x:Bind Title}" Foreground="#343434" Grid.Column="0" Margin="5,0"/>
-                                        <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                            <TextBlock Text="{x:Bind DateItems[0].Day,Converter={StaticResource RemindListDay}}" Foreground="#5393FF"/>
-                                            <TextBlock Text="{x:Bind DateItems[0].Class,Converter={StaticResource RemindListClass}}" Foreground="#5393FF" />
-                                        </StackPanel>
+                                        <TextBlock Text="{x:Bind ClassDay}" Grid.Column="1" Foreground="#5393FF" />
                                     </Grid>
                                     <TextBlock Text="{x:Bind Content}" Grid.Row="1" Foreground="#878787" TextWrapping="Wrap" Margin="5,0,0,50"/>
                                     <Grid Grid.Row="2" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,1,0,0" BorderBrush="Gray">
-                                        <TextBlock Text="{x:Bind DateItems[0].Week}" Foreground="#5393FF" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{x:Bind DateItems[0].Week,Converter={StaticResource RemindListWeek}}" Foreground="#5393FF" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE916;" Foreground="#A6A6A6" VerticalAlignment="Center" Margin="5,0"/>
-                                            <TextBlock Text="{x:Bind Time}" Foreground="#A6A6A6" VerticalAlignment="Center"/>
+                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE916;" VerticalAlignment="Center" Margin="5,0"/>
+                                            <TextBlock Name="BeforeTimeTextBlock" Text="" Foreground="#A6A6A6" VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Grid>
                                 </Grid>
                                 <Polygon Grid.Column="0" Points="10,0,0,10,10,20" Fill="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             </Grid>
-
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

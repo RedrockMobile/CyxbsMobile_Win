@@ -295,8 +295,12 @@
     <Compile Include="Models\qindan_content.cs" />
     <Compile Include="Models\qinshiIntroduce.cs" />
     <Compile Include="Models\QQGroup_DB.cs" />
+    <Compile Include="Models\RemindPage\ApiUri.cs" />
+    <Compile Include="Models\RemindPage\await.cs" />
     <Compile Include="Models\RemindPage\BaseModel.cs" />
     <Compile Include="Models\RemindPage\CourseList.cs" />
+    <Compile Include="Models\RemindPage\DatabaseMethod.cs" />
+    <Compile Include="Models\RemindPage\JsonMethod.cs" />
     <Compile Include="Models\RemindPage\MyRemind.cs" />
     <Compile Include="Models\RemindPage\RemindHelp.cs" />
     <Compile Include="Models\RemindPage\RemindListDB.cs" />
@@ -461,6 +465,7 @@
     <Compile Include="Util\Converter\StarFillConverter.cs" />
     <Compile Include="Util\Converter\TextBlockInlineConverter.cs" />
     <Compile Include="Util\EmptyClass.cs" />
+    <Compile Include="Util\GetCredential.cs" />
     <Compile Include="Util\HotFeedsDataTemplateSelector.cs" />
     <Compile Include="Util\HotOrBBDDSelector.cs" />
     <Compile Include="Util\ImgDataTemplateSelector.cs" />
