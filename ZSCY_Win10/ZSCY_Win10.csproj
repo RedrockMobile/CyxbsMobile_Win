@@ -238,6 +238,9 @@
     <Compile Include="AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddRemind.xaml.cs">
+      <DependentUpon>AddRemind.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -253,6 +256,9 @@
       <DependentUpon>CommunityPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NavMenuListView.cs" />
+    <Compile Include="Controls\RemindPage\ErrorNotification.xaml.cs">
+      <DependentUpon>ErrorNotification.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\ClassList.cs" />
     <Compile Include="Data\ClassListLight.cs" />
     <Compile Include="Data\CommunityImageList.cs" />
@@ -291,6 +297,16 @@
     <Compile Include="Models\qindan_content.cs" />
     <Compile Include="Models\qinshiIntroduce.cs" />
     <Compile Include="Models\QQGroup_DB.cs" />
+    <Compile Include="Models\RemindPage\ApiUri.cs" />
+    <Compile Include="Models\RemindPage\await.cs" />
+    <Compile Include="Models\RemindPage\BaseModel.cs" />
+    <Compile Include="Models\RemindPage\CourseList.cs" />
+    <Compile Include="Models\RemindPage\DatabaseMethod.cs" />
+    <Compile Include="Models\RemindPage\JsonMethod.cs" />
+    <Compile Include="Models\RemindPage\MyRemind.cs" />
+    <Compile Include="Models\RemindPage\RemindHelp.cs" />
+    <Compile Include="Models\RemindPage\RemindListDB.cs" />
+    <Compile Include="Models\RemindPage\WeekList.cs" />
     <Compile Include="Models\richangshenghuo.cs" />
     <Compile Include="Models\ruxue_page.cs" />
     <Compile Include="Models\SexRatio.cs" />
@@ -338,6 +354,21 @@
     <Compile Include="Notepad\WaysData_Plane.xaml.cs">
       <DependentUpon>WaysData_Plane.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AddRemindPage\CourseTablePage.xaml.cs">
+      <DependentUpon>CourseTablePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddRemindPage\EditRemindPage.xaml.cs">
+      <DependentUpon>EditRemindPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddRemindPage\FristPage.xaml.cs">
+      <DependentUpon>FristPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddRemindPage\RemindListPage.xaml.cs">
+      <DependentUpon>RemindListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddRemindPage\SelWeekNumPage.xaml.cs">
+      <DependentUpon>SelWeekNumPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\BigDataPage.xaml.cs">
       <DependentUpon>BigDataPage.xaml</DependentUpon>
     </Compile>
@@ -377,6 +408,8 @@
     <Compile Include="Pages\JWContentPage.xaml.cs">
       <DependentUpon>JWContentPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\RemindPage\BeforeTimeSel.cs" />
+    <Compile Include="Models\RemindPage\CourseTable.cs" />
     <Compile Include="Pages\ScorePage.xaml.cs">
       <DependentUpon>ScorePage.xaml</DependentUpon>
     </Compile>
@@ -408,6 +441,8 @@
     <Compile Include="Controls\PiePlotter.xaml.cs">
       <DependentUpon>PiePlotter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\Converter\AddRemind.cs" />
+    <Compile Include="Util\Converter\ClassNumConvert.cs" />
     <Compile Include="Util\Converter\DetailMarginConverter.cs" />
     <Compile Include="Util\Converter\ExamDateConverter.cs" />
     <Compile Include="Util\Converter\ExamTimeConverter.cs" />
@@ -432,6 +467,7 @@
     <Compile Include="Util\Converter\StarFillConverter.cs" />
     <Compile Include="Util\Converter\TextBlockInlineConverter.cs" />
     <Compile Include="Util\EmptyClass.cs" />
+    <Compile Include="Util\GetCredential.cs" />
     <Compile Include="Util\HotFeedsDataTemplateSelector.cs" />
     <Compile Include="Util\HotOrBBDDSelector.cs" />
     <Compile Include="Util\ImgDataTemplateSelector.cs" />
@@ -449,6 +485,8 @@
     <Compile Include="ViewModels\Community\MyViewModel.cs" />
     <Compile Include="ViewModels\FengCaiViewModel.cs" />
     <Compile Include="ViewModels\FirstPageViewModel.cs" />
+    <Compile Include="ViewModels\Remind\BaseViewModel.cs" />
+    <Compile Include="ViewModels\Remind\SelTimeStringViewModel.cs" />
     <Compile Include="ViewModels\StrategyViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -587,9 +625,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="AddRemind.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CommunityPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RemindPage\ErrorNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Data\loginControl.xaml">
       <SubType>Designer</SubType>
@@ -638,6 +684,26 @@
     <Page Include="Notepad\WaysData_Plane.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\AddRemindPage\CourseTablePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddRemindPage\EditRemindPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddRemindPage\FristPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddRemindPage\RemindListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddRemindPage\SelWeekNumPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\BigDataPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -736,19 +802,14 @@
     <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
       <Name>Behaviors SDK %28XAML%29</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.14.2">
-      <Name>SQLite for Universal Windows Platform</Name>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.15.1">
+      <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.15.1%29</Name>
     </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.14393.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MyMessageBackgroundTask\MyMessageBackgroundTask.csproj">
-      <Project>{ea70b47f-1db5-4a92-805d-9f144efa396f}</Project>
-      <Name>MyMessageBackgroundTask</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
