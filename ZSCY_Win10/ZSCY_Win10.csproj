@@ -201,6 +201,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Plane-8.png" />
+    <Content Include="Assets\shape _1.png" />
     <Content Include="Assets\Square150x150Logo.scale-400.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -223,12 +224,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DataBase\qq_Group.db" />
-    <Content Include="Json\fengcai_header_lists.json" />
-    <Content Include="Json\fengcai_zuimei.json" />
-    <Content Include="Json\fengcai_zuzhi_intro.json" />
-    <Content Include="Json\fengcai_zuzhi_lists.json" />
-    <Content Include="Json\strategy_header_lists.json" />
-    <Content Include="Json\必备清单.json" />
+    <Content Include="DataBase\Json\fengcai_header_lists.json" />
+    <Content Include="DataBase\Json\fengcai_zuimei.json" />
+    <Content Include="DataBase\Json\fengcai_zuzhi_intro.json" />
+    <Content Include="DataBase\Json\fengcai_zuzhi_lists.json" />
+    <Content Include="DataBase\Json\strategy_header_lists.json" />
+    <Content Include="DataBase\Json\必备清单.json" />
     <None Include="project.json" />
     <None Include="ZSCY_Win10_StoreKey.pfx" />
     <None Include="ZSCY_Win10_TemporaryKey.pfx" />
@@ -280,6 +281,7 @@
     <Compile Include="Data\PersonalIno.cs" />
     <Compile Include="Data\ScoreList.cs" />
     <Compile Include="Data\TodoItem.cs" />
+    <Compile Include="Data\Transaction.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\CareerRatio.cs" />
     <Compile Include="Models\fengcaiheaders.cs" />
