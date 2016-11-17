@@ -27,6 +27,7 @@ using ZSCY.Pages;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.Data;
 using Windows.Phone.UI.Input;
+using Windows.ApplicationModel.Background;
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
 namespace ZSCY_Win10

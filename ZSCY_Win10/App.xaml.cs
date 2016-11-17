@@ -87,7 +87,7 @@ namespace ZSCY_Win10
         #region 事件提醒
         public static TimeSet[,] timeSet = new TimeSet[6, 7];
         public static SelTimeStringViewModel SelectedTime = new SelTimeStringViewModel();
-        public static ObservableCollection< SelectedWeekNum> selectedWeekNumList =new ObservableCollection<SelectedWeekNum>();
+        public static ObservableCollection<SelectedWeekNum> selectedWeekNumList = new ObservableCollection<SelectedWeekNum>();
         public static SelWeekNumStringViewModel selectedWeek = new SelWeekNumStringViewModel();
         public static string RemindListDBPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db");
 
@@ -154,32 +154,29 @@ namespace ZSCY_Win10
             {
                 foreach (var cur in BackgroundTaskRegistration.AllTasks)
                 {
-                    if (cur.Value.Name == exampleTaskName || cur.Value.Name == "Toastbuilder")
+                    if (cur.Value.Name == exampleTaskName || cur.Value.Name == "Toastbuilder"||cur.Value.Name== "LiveTileBackgroundTask")
                     {
                         cur.Value.Unregister(true);
                     }
                 }
                 BackgroundAccessStatus status = await BackgroundExecutionManager.RequestAccessAsync();
-                var builder = new BackgroundTaskBuilder();
-                builder.Name = exampleTaskName;
-                builder.TaskEntryPoint = "MyMessageBackgroundTask.MessageBackgroundTask";
-                //后台触发器，可多个
-                //builder.SetTrigger(new SystemTrigger(SystemTriggerType.NetworkStateChange, false));
-                //builder.SetTrigger(new SystemTrigger(SystemTriggerType.InternetAvailable, false));
-                builder.SetTrigger(new TimeTrigger(15, false)); //定时后台任务
-                //builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
-                BackgroundTaskRegistration task = builder.Register();
-
-
-                var Toastbuilder = new BackgroundTaskBuilder();
+                BackgroundTaskBuilder builder1 = new BackgroundTaskBuilder();
+                builder1.Name = exampleTaskName;
+                builder1.TaskEntryPoint = "MyMessageBackgroundTask.MessageBackgroundTask";
+                builder1.SetTrigger(new TimeTrigger(15, false)); //定时后台任务
+                BackgroundTaskRegistration task = builder1.Register();
+                BackgroundTaskBuilder Toastbuilder = new BackgroundTaskBuilder();
                 Toastbuilder.Name = "Toastbuilder";
                 Toastbuilder.TaskEntryPoint = "MyMessageBackgroundTask.ToastBackgroundTask";
                 Toastbuilder.SetTrigger(new ToastNotificationActionTrigger());
-                //Toastbuilder.SetTrigger(new TimeTrigger(15, false)); //定时后台任务
                 BackgroundTaskRegistration Toasttask = Toastbuilder.Register();
+                BackgroundTaskBuilder builder2 = new BackgroundTaskBuilder();
+                builder2.Name = "LiveTileBackgroundTask";
+                builder2.TaskEntryPoint = "LiveTileBackgroundTask.LiveTileBackgroundTask";
+                builder2.SetTrigger(new TimeTrigger(15, false));
+                BackgroundTaskRegistration registration = builder2.Register();
             }
             catch (Exception) { }
-
         }
 
         private async void DisableSystemJumpListAsync()

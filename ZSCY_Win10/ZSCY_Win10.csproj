@@ -136,6 +136,7 @@
     <Content Include="Assets\Annex_img\Annex_xls.png" />
     <Content Include="Assets\Annex_img\Annex_zip.png" />
     <Content Include="Assets\back.png" />
+    <Content Include="Assets\BadgeLogo.scale-100.png" />
     <Content Include="Assets\BlueLogo\Square150x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -807,7 +808,16 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\LiveTileBackgroundTask\LiveTileBackgroundTask.csproj">
+      <Project>{2896bbf7-5113-482e-b827-166c0c1429e5}</Project>
+      <Name>LiveTileBackgroundTask</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyMessageBackgroundTask\MyMessageBackgroundTask.csproj">
+      <Project>{ea70b47f-1db5-4a92-805d-9f144efa396f}</Project>
+      <Name>MyMessageBackgroundTask</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

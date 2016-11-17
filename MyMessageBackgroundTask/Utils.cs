@@ -38,7 +38,6 @@ namespace MyMessageBackgroundTask
             //toast.Dismissed += toast_Dismissed;//消失
             //toast.Failed += toast_Failed;//消除
             ToastNotificationManager.CreateToastNotifier().Show(toast);
-
             //从通知中心删除
             await Task.Delay(3000);
             ToastNotificationManager.History.Clear();
@@ -310,6 +309,5 @@ namespace MyMessageBackgroundTask
             }
             catch (Exception) { Debug.WriteLine("工具，图片异常"); }
         }
-
     }
 }
