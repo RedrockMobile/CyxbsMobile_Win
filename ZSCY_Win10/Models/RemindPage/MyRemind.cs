@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace ZSCY_Win10.Models.RemindPage
 {
@@ -16,7 +17,6 @@ namespace ZSCY_Win10.Models.RemindPage
         /// </summary>
         [DataMember(Name = "week")]
         public string Week { get; set; }
-
         ///<summary>
         /// 
         /// </summary>
@@ -40,9 +40,54 @@ namespace ZSCY_Win10.Models.RemindPage
         public DateTimeOffset time { get; set; }
         private string classDay;
         private string totalWeek;
-        
-        
-        
+        private Visibility dot;
+        private Visibility rewrite;
+        private Visibility deleteIcon;
+        public string Tag { get; set; }
+
+        public Visibility Rewrite
+        {
+            get
+            {
+                return rewrite;
+            }
+
+            set
+            {
+                rewrite = value;
+                RaisePropertyChanged(nameof(Rewrite));
+            }
+        }
+
+        public Visibility DeleteIcon
+        {
+            get
+            {
+                return deleteIcon;
+            }
+
+            set
+            {
+                deleteIcon = value;
+                RaisePropertyChanged(nameof(DeleteIcon));
+            }
+        }
+
+        public Visibility Dot
+        {
+            get
+            {
+                return dot;
+            }
+
+            set
+            {
+                dot = value;
+                RaisePropertyChanged(nameof(Dot));
+            }
+        }
+
+
         ///<summary>
         /// timestamp+4位随机
         /// </summary>

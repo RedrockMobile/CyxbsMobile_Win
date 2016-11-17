@@ -17,12 +17,13 @@ namespace ZSCY_Win10.Util.Converter
             if(i==0)
             {
                 Color gray = Color.FromArgb(255, 167, 167, 167);
-                return gray;
+
+                return new SolidColorBrush(gray);
             }
             else
             {
                 Color blue = Color.FromArgb(255, 64, 164, 255);
-                return blue;
+                return new SolidColorBrush(blue);
             }
         }
 

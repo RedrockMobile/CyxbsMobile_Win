@@ -157,7 +157,7 @@ namespace ZSCY_Win10.Util
                 }
             });
         }
-        public static async Task<string> httpRequest(string api, MyRemind myRemind)
+        public static List<KeyValuePair<string, string>> addRemind(MyRemind myRemind)
         {
             List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", myRemind.StuNum));
@@ -167,14 +167,54 @@ namespace ZSCY_Win10.Util
             for (int i = 0; i < myRemind.DateItems.Count; i++)
             {
                 string dateJson = JsonConvert.SerializeObject(myRemind.DateItems[i]);
-                date +=$"{dateJson},";
+                date += $"{dateJson},";
             }
-            date = date.Remove(date.Length - 1)+"]";
+            date = date.Remove(date.Length - 1) + "]";
 
             paramList.Add(new KeyValuePair<string, string>("date", date));
             paramList.Add(new KeyValuePair<string, string>("title", myRemind.Title));
             paramList.Add(new KeyValuePair<string, string>("time", myRemind.Time));
             paramList.Add(new KeyValuePair<string, string>("content", myRemind.Content));
+            return paramList;
+        }
+        public static List<KeyValuePair<string, string>> editRemind(MyRemind myRemind)
+        {
+            List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
+            paramList.Add(new KeyValuePair<string, string>("stuNum", myRemind.StuNum));
+            paramList.Add(new KeyValuePair<string, string>("idNum", myRemind.IdNum));
+            paramList.Add(new KeyValuePair<string, string>("id", myRemind.Id));
+            string date = "[";
+            string _class = "";
+            string day = "";
+            for (int i = 0; i < myRemind.DateItems.Count; i++)
+            {
+                //string dateJson = JsonConvert.SerializeObject(myRemind.DateItems[i]);
+                //date += $"{dateJson},";
+                day = myRemind.DateItems[i].Day + ",";
+                _class = myRemind.DateItems[i].Class + ",";
+            }
+            day=day.Remove(day.Length - 1);
+            _class=_class.Remove(_class.Length - 1);
+            date = date.Remove(date.Length - 1) + "]";
+            paramList.Add(new KeyValuePair<string, string>("week", myRemind.DateItems[0].Week));
+            paramList.Add(new KeyValuePair<string, string>("class", _class));
+            paramList.Add(new KeyValuePair<string, string>("day", day));
+            paramList.Add(new KeyValuePair<string, string>("title", myRemind.Title));
+            paramList.Add(new KeyValuePair<string, string>("time", myRemind.Time));
+            paramList.Add(new KeyValuePair<string, string>("content", myRemind.Content));
+            return paramList;
+        }
+        public static List<KeyValuePair<string, string>> deleteRemind(MyRemind myRemind)
+        {
+            List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
+            paramList.Add(new KeyValuePair<string, string>("stuNum", myRemind.StuNum));
+            paramList.Add(new KeyValuePair<string, string>("idNum", myRemind.IdNum));
+            paramList.Add(new KeyValuePair<string, string>("id", myRemind.Id));
+            return paramList;
+        }
+        public static async Task<string> httpRequest(string api, List<KeyValuePair<string, string>> paramList)
+        {
+
             string content = "";
             await Task.Run(() =>
             {

@@ -42,18 +42,30 @@ namespace ZSCY_Win10.Pages.AddRemindPage
         {
             for (int i = 0; i < 20; i++)
             {
-              
-                SelWeekList.Add(new SelWeekNum()
+
+                SelWeekNum temp = new SelWeekNum()
                 {
                     ItemContent = (i + 1).ToString(),
                     ItemContentColor = UnselectedFontColor,
                     ItemFillColor = UnselectedFillColor,
                     isSelected = false
-                });
+                };
+                var item = App.selectedWeekNumList.Where(x => x.WeekNum == i + 1);
+                if (item.Count() > 0)
+                {
+                    temp.isSelected = true;
+                    temp.ItemContentColor = SelectedFontColor;
+                    temp.ItemFillColor = SelectedFillColor;
+                }
+                SelWeekList.Add(temp);
             }
         }
-
-
+        Type page;
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            page = e.Parameter as Type;
+        }
         private void SelWeek_Tapped(object sender, TappedRoutedEventArgs e)
         {
             int temp = (sender as GridView).SelectedIndex;
@@ -77,9 +89,10 @@ namespace ZSCY_Win10.Pages.AddRemindPage
         private void SaveSelected_Tapped(object sender, TappedRoutedEventArgs e)
         {
             App.selectedWeek.WeekNumString = "";
+            App.selectedWeekNumList.Clear();
             for (int i = 0; i < SelWeekList.Count; i++)
             {
-                if(SelWeekList[i].isSelected)
+                if (SelWeekList[i].isSelected)
                 {
                     SelectedWeekNum temp = new SelectedWeekNum() { WeekNum = i + 1 };
                     temp.SetWeekTime(i);
@@ -87,7 +100,12 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                     App.selectedWeek.WeekNumString += (i + 1).ToString() + "、";
                 }
             }
-            Frame.Navigate(typeof(FristPage));
+            if (page == typeof(EditRemindPage))
+                Frame.GoBack();
+            else
+            {
+                Frame.Navigate(typeof(FristPage));
+            }
             Debug.WriteLine(App.selectedWeek.WeekNumString);
         }
     }

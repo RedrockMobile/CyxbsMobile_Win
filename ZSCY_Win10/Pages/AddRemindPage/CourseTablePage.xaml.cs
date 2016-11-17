@@ -37,9 +37,14 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                 SplitLine.Y2 = e.NewSize.Height - 48;
             };
             CreateCourseTable();
-            
-        }
 
+        }
+        Type page;
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            page = e.Parameter as Type;
+        }
         private void CreateCourseTable()
         {
             for (int i = 0, k = 0; i < kebiaoGrid.RowDefinitions.Count; i += 2, k++)
@@ -126,7 +131,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                     {
                         App.timeSet[i, j].IsCheck = true;
                         App.timeSet[i, j].Set(i);
-                        App.SelectedTime.SelTimeString += CourseList(i, j)+" ";
+                        App.SelectedTime.SelTimeString += CourseList(i, j) + " ";
                     }
                     else
                     {
@@ -135,7 +140,14 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                     }
                 }
             Debug.WriteLine(App.SelectedTime.SelTimeString);
-            Frame.Navigate(typeof(FristPage));
+            if (page == typeof(EditRemindPage))
+            {
+                Frame.GoBack();
+            }
+            else
+            {
+                Frame.Navigate(typeof(FristPage));
+            }
         }
         public string CourseList(int row, int column)
         {
@@ -169,14 +181,14 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             {
                 case 0:
                     classNum = "12节";
-                    break;        
-                case 1:           
+                    break;
+                case 1:
                     classNum = "34节";
-                    break;        
-                case 2:           
+                    break;
+                case 2:
                     classNum = "56节";
-                    break;        
-                case 3:           
+                    break;
+                case 3:
                     classNum = "78节";
                     break;
                 case 4:

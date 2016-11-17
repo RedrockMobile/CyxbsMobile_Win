@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Security.Credentials;
 using Windows.UI;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
@@ -19,6 +21,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using ZSCY_Win10.Controls.RemindPage;
 using ZSCY_Win10.Models.RemindPage;
+using ZSCY_Win10.Util;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -27,24 +30,28 @@ namespace ZSCY_Win10.Pages.AddRemindPage
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    /// 
     public sealed partial class EditRemindPage : Page
     {
         private static SolidColorBrush UnselectedFontColor = new SolidColorBrush(Color.FromArgb(255, 70, 70, 70));
         private static SolidColorBrush SelectedFontColor = new SolidColorBrush(Color.FromArgb(255, 233, 243, 253));
         ObservableCollection<BeforeTimeSel> beforeTime = new ObservableCollection<BeforeTimeSel>();
         WeekList[] weekList = new WeekList[20];
-
+        string tempID = "";
         public EditRemindPage()
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Required;
+
+            SelectedTimeTextBlock.DataContext = App.SelectedTime;
+            SelectedWeekNumTextBlock.DataContext = App.selectedWeek;
             //selCourseList.ItemsSource = App.courseList;
             SelRemindListView.ItemsSource = beforeTime;
-            beforeTime.Add(new BeforeTimeSel { BeforeString = "不提醒", isRemind = false,IconVisibility=Visibility.Collapsed });
-            beforeTime.Add(new BeforeTimeSel { BeforeString = "提前五分钟", isRemind = true, BeforeTime = new TimeSpan(0, 5, 0),  IconVisibility = Visibility.Collapsed });
-            beforeTime.Add(new BeforeTimeSel { BeforeString = "提前十分钟", isRemind = true, BeforeTime = new TimeSpan(0, 10, 0),IconVisibility = Visibility.Collapsed });
-            beforeTime.Add(new BeforeTimeSel { BeforeString = "提前二十分钟", isRemind = true, BeforeTime = new TimeSpan(0, 20, 0),  IconVisibility = Visibility.Collapsed });
-            beforeTime.Add(new BeforeTimeSel { BeforeString = "提前一个小时", isRemind = true, BeforeTime = new TimeSpan(1, 0, 0),IconVisibility = Visibility.Collapsed });
+            beforeTime.Add(new BeforeTimeSel { BeforeString = "不提醒", isRemind = false, IconVisibility = Visibility.Collapsed });
+            beforeTime.Add(new BeforeTimeSel { BeforeString = "提前五分钟", isRemind = true, BeforeTime = new TimeSpan(0, 5, 0), IconVisibility = Visibility.Collapsed });
+            beforeTime.Add(new BeforeTimeSel { BeforeString = "提前十分钟", isRemind = true, BeforeTime = new TimeSpan(0, 10, 0), IconVisibility = Visibility.Collapsed });
+            beforeTime.Add(new BeforeTimeSel { BeforeString = "提前二十分钟", isRemind = true, BeforeTime = new TimeSpan(0, 20, 0), IconVisibility = Visibility.Collapsed });
+            beforeTime.Add(new BeforeTimeSel { BeforeString = "提前一个小时", isRemind = true, BeforeTime = new TimeSpan(1, 0, 0), IconVisibility = Visibility.Collapsed });
             //App.courseList.Clear();
             //CreateCourseWeek();
             this.SizeChanged += (s, e) =>
@@ -54,192 +61,114 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             };
             //this.Initial();
         }
-        private void Initial()//初始化
-        {
-            CreateCourseWeek();
-            //SelBeforeTime.SelectedIndex = -1;
-        }
-        private void CourseAddPressed_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            (sender as Grid).Background = new SolidColorBrush(Colors.Gray);
 
-        }
-
-        private void CourseAddExited_PointerPressed(object sender, PointerRoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            (sender as Grid).Background = new SolidColorBrush(Colors.White);
-        }
-
-        private void CreateCourseWeek()
-        {
-
-            for (int i = 0; i < weekList.Count(); i++)
+            base.OnNavigatedTo(e);
+            if (e.Parameter != null && !App.isLoad)
             {
-                weekList[i] = new WeekList();//初始化
-                weekList[i].Grid = new Grid();
-                weekList[i].Grid.Margin = new Thickness(3);
+                App.isLoad = true;
 
-                weekList[i].SetWeekName(i + 1);
+                MyRemind temp = new MyRemind();
+                temp = e.Parameter as MyRemind;
+                tempID = temp.Id;
+                int x = 0;
+                for (int i = 0; i < beforeTime.Count; i++)
+                {
+                    if (beforeTime[i].getBeforeTime() == int.Parse(temp.Time))
+                    {
+                        x = i;
+                        break;
+                    }
+                }
+                SelRemindListView.SelectedIndex = indexBefore = x;
+                TitleTextBox.Text = temp.Title;
 
-
-                weekList[i].Textblock = new TextBlock();
-                weekList[i].Textblock.Text = weekList[i].WeekName;
-                weekList[i].Textblock.Foreground = new SolidColorBrush(Colors.Black);
-                weekList[i].Textblock.HorizontalAlignment = HorizontalAlignment.Center;
-                weekList[i].Textblock.VerticalAlignment = VerticalAlignment.Center;
-
-                weekList[i].Rect = new Rectangle();
-                weekList[i].Rect.Fill = new SolidColorBrush(Colors.Azure);
-
-
-                weekList[i].IsCheck = false;
-
-
-                int column = i % 5;
-                int row = i / 5;
-                weekList[i].Grid.Children.Add(weekList[i].Rect);
-                weekList[i].Grid.Children.Add(weekList[i].Textblock);
-                //SelWeekNumTable.Children.Add(weekList[i].Grid);
-                Grid.SetColumn(weekList[i].Grid, column);
-                Grid.SetRow(weekList[i].Grid, row);
-                weekList[i].Rect.Tapped += Rect_Tapped;
-                weekList[i].Textblock.Tapped += Textblock_Tapped;
-
+                ContentTextBox.Text = temp.Content;
+                string s = temp.DateItems[0].Week;
+                App.selectedWeek.WeekNumString = s + ",";
+                string[] weekArray = s.Split(',');
+                for (int i = 0; i < weekArray.Count(); i++)
+                {
+                    SelectedWeekNum wNum = new SelectedWeekNum()
+                    {
+                        WeekNum = int.Parse(weekArray[i])
+                    };
+                    wNum.SetWeekTime(int.Parse(weekArray[i]));
+                    App.selectedWeekNumList.Add(wNum);
+                }
+                for (int i = 0; i < 6; i++)
+                {
+                    for (int j = 0; j < 7; j++)
+                    {
+                        App.timeSet[i, j] = new TimeSet();
+                    }
+                }
+                foreach (var item in temp.DateItems)
+                {
+                    App.timeSet[int.Parse(item.Day), int.Parse(item.Class)].IsCheck = true;
+                    App.SelectedTime.SelTimeString += CourseList(int.Parse(item.Day), int.Parse(item.Class)) + " ";
+                }
             }
+
         }
-
-        private void Rect_Tapped(object sender, TappedRoutedEventArgs e)
+        private string CourseList(int row, int column)
         {
-            int row = Grid.GetRow((sender as Rectangle).Parent as Grid);
-            int column = Grid.GetColumn((sender as Rectangle).Parent as Grid);
-            row *= 5;
-
-            if (!weekList[row + column].IsCheck)
+            string weekNum = "";
+            string classNum = "";
+            switch (column)
             {
-                weekList[row + column].IsCheck = true;
-                weekList[row + column].Rect.Fill = new SolidColorBrush(Colors.CadetBlue);
+                case 0:
+                    weekNum = "周一";
+                    break;
+                case 1:
+                    weekNum = "周二";
+                    break;
+                case 2:
+                    weekNum = "周三";
+                    break;
+                case 3:
+                    weekNum = "周四";
+                    break;
+                case 4:
+                    weekNum = "周五";
+                    break;
+                case 5:
+                    weekNum = "周六";
+                    break;
+                case 6:
+                    weekNum = "周末";
+                    break;
             }
-            else
+            switch (row)
             {
-                weekList[row + column].IsCheck = false;
-                weekList[row + column].Rect.Fill = new SolidColorBrush(Colors.Azure);
+                case 0:
+                    classNum = "12节";
+                    break;
+                case 1:
+                    classNum = "34节";
+                    break;
+                case 2:
+                    classNum = "56节";
+                    break;
+                case 3:
+                    classNum = "78节";
+                    break;
+                case 4:
+                    classNum = "910节";
+                    break;
+                case 5:
+                    classNum = "1112节";
+                    break;
             }
-        }
-        private void Textblock_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            int row = Grid.GetRow((sender as TextBlock).Parent as Grid);
-            int column = Grid.GetColumn((sender as TextBlock).Parent as Grid);
-            row *= 5;
-
-            if (!weekList[row + column].IsCheck)
-            {
-                weekList[row + column].IsCheck = true;
-                weekList[row + column].Rect.Fill = new SolidColorBrush(Colors.CadetBlue);
-            }
-            else
-            {
-                weekList[row + column].IsCheck = false;
-                weekList[row + column].Rect.Fill = new SolidColorBrush(Colors.Azure);
-            }
+            string temp = string.Concat(weekNum, classNum);
+            return temp;
         }
 
-
-        private void CourseSel_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(CourseTablePage));
-        }
-
-        private async void SaveEditRemind_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            //string tempTitle, tempContent;
-            //TimeSpan tempTime;
-            //tempTitle = title.Text;
-            //tempContent = content.Text;
-            //if (SelBeforeTime.SelectedIndex == -1)
-            //{
-            //    new ErrorNotification("请选择提前时间").Show();
-            //    return;
-            //}
-            //else
-            //{
-            //    tempTime = beforeTime[SelBeforeTime.SelectedIndex].BeforeTime;
-            //    bool isSelCourse = false;
-            //    foreach (CourseList oc in App.courseList)
-            //    {
-            //        if (oc.IsCheck == true)
-            //        {
-            //            isSelCourse = true;
-            //            break;
-            //        }
-            //    }
-
-            //    if (!isSelCourse)
-            //    {
-            //        new ErrorNotification("请选择在哪节课提醒").Show();
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        bool isSelWeek = false;
-            //        foreach (WeekList wl in weekList)
-            //        {
-            //            if (wl.IsCheck == true)
-            //            {
-            //                isSelWeek = true;
-            //                break;
-            //            }
-            //        }
-            //        if (!isSelWeek)
-            //        {
-            //            new ErrorNotification("请选择在哪周提醒").Show();
-            //            return;
-            //        }
-            //        else//添加通知
-            //        {
-            //            IReadOnlyList<ScheduledToastNotification> toasts;
-            //            for (int wNum = 0; wNum < weekList.Count(); wNum++)
-            //            {
-            //                if (weekList[wNum].IsCheck)
-            //                {
-
-            //                    for (int cNum = 0; cNum < App.timeSet.Length; cNum++)
-            //                    {
-            //                        int row = cNum / (App.timeSet.GetLength(0) + 1);
-            //                        int column = cNum % (App.timeSet.GetLength(0) + 1);
-            //                        if (App.timeSet[row, column].IsCheck)
-            //                        {
-            //                            DateTime temp = weekList[wNum].WeekNumOfMonday.Add(App.timeSet[row, column].Time).Add(new TimeSpan(column, 0, 0, 0));
-            //                            Debug.WriteLine("{0}->{1}", temp, (temp.ToUniversalTime().Ticks - 621355968000000000) / 10000000);
-            //                            temp = temp.Add(-beforeTime[SelBeforeTime.SelectedIndex].BeforeTime);
-            //                            //DateTime temp =DateTime.Now.AddSeconds(500);
-
-            //                            var alarm = new MyRemind()
-            //                            {
-            //                                RemindTitle = tempTitle,
-            //                                RemindContent = tempContent,
-            //                                RemindTime = temp,
-
-            //                            };
-            //                            if (alarm.RemindTime.ToUniversalTime().Ticks < DateTime.Now.ToUniversalTime().Ticks)
-            //                                continue;
-            //                            await RemindHelp.AddRemind(alarm);
-
-            //                        }
-
-            //                    }
-            //                }
-            //            }
-            //        }
-            //        App.RemindList = ToastNotificationManager.CreateToastNotifier().GetScheduledToastNotifications();
-            //        this.Frame.GoBack();
-            //    }
-            //}
-        }
-
-        private void RemindGridButon_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            SelRemindGrid.Visibility = Visibility.Visible;
-        }
+        //private void RemindGridButon_Tapped(object sender, TappedRoutedEventArgs e)
+        //{
+        //    SelRemindGrid.Visibility = Visibility.Visible;
+        //}
 
         private void SelRemindBackgroupGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -248,17 +177,162 @@ namespace ZSCY_Win10.Pages.AddRemindPage
         private int indexBefore = 0;
         private void SelRemindListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            beforeTime[indexBefore].IconVisibility = Visibility.Collapsed;
-            int temp = indexBefore = (sender as ListView).SelectedIndex;
-            beforeTime[temp].IconVisibility = Visibility.Visible;
+            if (SelRemindListView.SelectedIndex == -1)
+            {
 
-            SelectedRemindTextBlock.Text = beforeTime[temp].BeforeString;
-            SelRemindGrid.Visibility = Visibility.Collapsed;
+                beforeTime[indexBefore].IconVisibility = Visibility.Collapsed;
+                indexBefore = 0;
+            }
+            else
+            {
+                beforeTime[indexBefore].IconVisibility = Visibility.Collapsed;
+                int temp = indexBefore = (sender as ListView).SelectedIndex;
+                beforeTime[temp].IconVisibility = Visibility.Visible;
+
+                SelectedRemindTextBlock.Text = beforeTime[temp].BeforeString;
+                SelRemindGrid.Visibility = Visibility.Collapsed;
+            }
+
+        }
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        private void Initialization()
+        {
+            TitleTextBox.Text = "";
+            ContentTextBox.Text = "";
+            App.SelectedTime.SelTimeString = "";
+            App.selectedWeek.WeekNumString = "";
+            App.selectedWeekNumList.Clear();
+            for (int i = 0; i < 6; i++)
+                for (int j = 0; j < 7; j++)
+                    App.timeSet[i, j] = null;
+            SelectedRemindTextBlock.Text = "";
+            SelRemindListView.SelectedIndex = -1;
+
+        }
+
+        private async void SaveEditRemind_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (TitleTextBox.Text == "")
+            {
+                new ErrorNotification("标题不能为空").Show();
+                return;
+
+            }
+            else
+            {
+                if (SelectedTimeTextBlock.Text == "")
+                {
+                    new ErrorNotification("请选择提醒时间").Show();
+                    return;
+                }
+                else
+                {
+                    if (SelectedWeekNumTextBlock.Text == "")
+                    {
+                        new ErrorNotification("请选择提醒周数").Show();
+                        return;
+                    }
+                    else
+                    {
+                        if (SelectedRemindTextBlock.Text == "")
+                        {
+                            new ErrorNotification("请选择提前时间").Show();
+                            return;
+                        }
+                        else
+                        {
+                            string resource = "ZSCY";
+                            PasswordCredential userCredential = GetCredential.getCredential(resource);
+                            string stuNum, idNum;
+                            stuNum = userCredential.UserName;
+                            idNum = userCredential.Password;
+                            Debug.WriteLine("{0},{1}", stuNum, idNum);
+                            MyRemind myRemind = new MyRemind();
+                            myRemind.DateItems = new List<DateItemModel>();
+                            myRemind.Id = tempID;
+                            for (int i = 0; i < 7; i++)
+                            {
+                                for (int j = 0; j < 6; j++)
+                                    if (App.timeSet[j, i].IsCheck)
+                                    {
+                                        //dateItem.Class += j.ToString() + ",";
+                                        //dateItem.Day += i.ToString() + ",";
+                                        DateItemModel dateItem = new DateItemModel();
+
+                                        dateItem.Class = j.ToString();
+                                        dateItem.Day = i.ToString();
+                                        for (int k = 0; k < App.selectedWeekNumList.Count; k++)
+                                        {
+                                            dateItem.Week += App.selectedWeekNumList[k].WeekNum + ",";
+                                        }
+                                        dateItem.Week = dateItem.Week.Remove(dateItem.Week.Length - 1);
+                                        myRemind.DateItems.Add(dateItem);
+                                    }
+                            }
+                            myRemind.Time = beforeTime[SelRemindListView.SelectedIndex].BeforeTime.TotalMinutes.ToString();
+                            myRemind.Title = TitleTextBox.Text;
+                            myRemind.Content = ContentTextBox.Text;
+                            string databaseJson = JsonConvert.SerializeObject(myRemind);
+                            myRemind.IdNum = idNum;
+                            myRemind.StuNum = stuNum;
+
+                            try
+                            {
+                                string content = await NetWork.httpRequest(ApiUri.editRemindApi, NetWork.editRemind(myRemind));
+                            }
+                            catch
+                            {
+                                Debug.WriteLine("网络问题请求失败");
+                            }
+                            string id_system = "";
+                            if (beforeTime[SelRemindListView.SelectedIndex].isRemind)
+                            {
+                                TimeSpan time = beforeTime[SelRemindListView.SelectedIndex].BeforeTime;
+                                //设置通知
+                                RemindListDB temp = DatabaseMethod.ToModel(myRemind.Id);
+                                string[] TagArray = temp.Id_system.Split(',');
+                                var notifier = ToastNotificationManager.CreateToastNotifier();
+
+                                for (int i = 0; i < TagArray.Count(); i++)
+                                {
+                                    var scheduledNotifs = notifier.GetScheduledToastNotifications()
+                                  .Where(n => n.Tag.Equals(TagArray[i]));
+
+                                    // Remove all of those from the schedule
+                                    foreach (var n in scheduledNotifs)
+                                    {
+                                        notifier.RemoveFromSchedule(n);
+                                    }
+                                }
+                                //重新添加
+                                id_system = await RemindHelp.AddAllRemind(myRemind, time);
+                            }
+                            else
+                            {
+
+                            }
+                            DatabaseMethod.EditDatabase(myRemind.Id, databaseJson, id_system);
+                            App.isLoad = false;
+                        }
+                    }
+                }
+            }
+        }
+        private void RemindGridButon_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            SelRemindGrid.Visibility = Visibility.Visible;
         }
 
         private void TimeGridButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            Frame.Navigate(typeof(CourseTablePage), typeof(EditRemindPage));
+        }
 
+        private void WeekNumGridButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SelWeekNumPage), typeof(EditRemindPage));
         }
     }
 }
