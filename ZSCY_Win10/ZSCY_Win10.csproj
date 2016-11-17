@@ -296,7 +296,6 @@
     <Compile Include="Models\qinshiIntroduce.cs" />
     <Compile Include="Models\QQGroup_DB.cs" />
     <Compile Include="Models\RemindPage\ApiUri.cs" />
-    <Compile Include="Models\RemindPage\await.cs" />
     <Compile Include="Models\RemindPage\BaseModel.cs" />
     <Compile Include="Models\RemindPage\CourseList.cs" />
     <Compile Include="Models\RemindPage\DatabaseMethod.cs" />

@@ -181,7 +181,7 @@
         </Grid.RowDefinitions>-->
 
 
-        <Grid Grid.Row="1">
+        <Grid >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition/>
@@ -196,7 +196,6 @@
                     <TextBlock Text="编辑提醒" Foreground="White" HorizontalAlignment="Center" FontWeight="Light" VerticalAlignment="Center" FontSize="18"
                        FontFamily="Microsoft YaHei UI"/>
                     <AppBarButton Name="SaveEditRemind" Icon="Save" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Center" Tapped="SaveEditRemind_Tapped"/>
-                    <AppBarButton Name="showHis" Icon="Font" Click="showHis_Click" HorizontalAlignment="Left"/>
                 </Grid>
                 <Line x:Name="SplitLine" Y1="0" Y2="0" Stroke="Gray" StrokeThickness="1" Grid.Row="1"/>
        
@@ -341,7 +340,7 @@
             </Grid>
 
 
-            <Grid Name="RemindGrid2" Grid.Column="1">
+            <Grid Name="RemindGrid2" Grid.Column="1" >
 
                 <Frame Name="Frame2" >
 

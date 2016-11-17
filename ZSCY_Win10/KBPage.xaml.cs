@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
+using ZSCY_Win10.Pages.AddRemindPage;
 using ZSCY_Win10.Util;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
@@ -809,6 +810,11 @@ namespace ZSCY_Win10
         private void AddRemind_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(AddRemind));
+        }
+
+        private void RemindList_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(RemindListPage));
         }
     }
 }
