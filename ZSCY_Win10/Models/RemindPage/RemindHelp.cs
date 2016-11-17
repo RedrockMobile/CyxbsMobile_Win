@@ -70,6 +70,7 @@ namespace ZSCY_Win10.Models.RemindPage
             // Tag needs to be 16 chars or less, so hash the Id
             return temp;
         }
+
         public static async Task<string> AddAllRemind(MyRemind remind, TimeSpan beforeTime)
         {
             id = "";

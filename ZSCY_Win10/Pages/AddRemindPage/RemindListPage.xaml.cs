@@ -19,6 +19,9 @@ using SQLite.Net;
 using SQLite.Net.Platform.WinRT;
 using Newtonsoft.Json;
 using Windows.Storage;
+using System.ComponentModel;
+using System.Diagnostics;
+using Windows.UI.Popups;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,30 +33,81 @@ namespace ZSCY_Win10.Pages.AddRemindPage
     public sealed partial class RemindListPage : Page
     {
         ObservableCollection<MyRemind> remindList = new ObservableCollection<MyRemind>();
-
+        List<string> DeleteList = new List<string>();
+        private bool isSave;
         public RemindListPage()
         {
             this.InitializeComponent();
             ReadDatabase();
             RemindListView.ItemsSource = remindList;
+            isSave = true;
+            this.SizeChanged += (s, e) =>
+              {
+                  ListGrid1.Width = 400;
+              };
         }
-        private void ReadDatabase()
+        protected override async void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
+            base.OnNavigatingFrom(e);
+            Debug.WriteLine(e.SourcePageType);
+            if (!isSave)//e.parameter 是否放弃
             {
-                
-                remindList.Clear();
-                var list = conn.Table<RemindListDB>();
-                foreach (var item in list)
+                if (e.Parameter == null)
                 {
-                    MyRemind temp = JsonConvert.DeserializeObject<MyRemind>(item.json);
-                    //getDetailClass(ref temp);
-                    temp.ClassDay = ClassMixDay(ref temp);
-               
-                    remindList.Add(temp);
+                    e.Cancel = true;
+                    MessageDialog dialog = new MessageDialog("你尚未保存更改，是否放弃");
+                    dialog.Commands.Add(new UICommand("放弃") { Id = true });
+                    dialog.Commands.Add(new UICommand("继续编辑") { Id = false });
+                    var result = await dialog.ShowAsync();
+                    if ((bool)result.Id)
+                    {
+                        e.Cancel = false;
+                        Frame.Navigate(e.SourcePageType, true);
+                    }
+                    else
+                    {
+                        e.Cancel = true;
+
+                    }
                 }
             }
-     }
+            else
+            {
+
+            }
+        }
+
+
+
+        private void ReadDatabase()
+        {
+            try
+            {
+
+                using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
+                {
+
+                    remindList.Clear();
+                    var list = conn.Table<RemindListDB>();
+                    foreach (var item in list)
+                    {
+                        MyRemind temp = JsonConvert.DeserializeObject<MyRemind>(item.json);
+                        //getDetailClass(ref temp);
+                        temp.Tag = item.Id_system;
+                        temp.ClassDay = ClassMixDay(ref temp);
+                        temp.Dot = Visibility.Visible;
+                        temp.Rewrite = Visibility.Collapsed;
+                        temp.DeleteIcon = Visibility.Collapsed;
+                        remindList.Add(temp);
+                    }
+                }
+            }
+            catch
+            {
+                var conn=new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath);
+                conn.CreateTable<RemindListDB>();
+            }
+        }
         //private void getDetailClass(ref MyRemind myRemind)
         //{
         //    string[] dayArray = myRemind.DateItems[0].Day.Split(',');
@@ -71,11 +125,11 @@ namespace ZSCY_Win10.Pages.AddRemindPage
         private string ClassMixDay(ref MyRemind remind)
         {
             string temp = "";
-            for(int i=0;i< remind.DateItems.Count;i++)
+            for (int i = 0; i < remind.DateItems.Count; i++)
             {
                 temp += ConvertDay(int.Parse(remind.DateItems[i].Day)) + ConvertClass(int.Parse(remind.DateItems[i].Class)) + "节、";
             }
-          
+
             temp = temp.Remove(temp.Length - 1);
             return temp;
         }
@@ -124,5 +178,48 @@ namespace ZSCY_Win10.Pages.AddRemindPage
 
         }
 
+        private void EditRemindList_Click(object sender, RoutedEventArgs e)
+        {
+            isSave = false;
+            EditRemind_Icon.Glyph = "";
+            EditRemindList.Click += SaveRemindList_Click;
+            foreach (var item in remindList)
+            {
+                item.Dot = Visibility.Collapsed;
+                item.Rewrite = Visibility.Visible;
+                item.DeleteIcon = Visibility.Visible;
+            }
+        }
+        private void SaveRemindList_Click(object sender, RoutedEventArgs e)
+        {
+            isSave = true;
+            EditRemind_Icon.Glyph = "";
+            EditRemindList.Click += EditRemindList_Click;
+            foreach (var item in remindList)
+            {
+                item.Dot = Visibility.Visible;
+                item.Rewrite = Visibility.Collapsed;
+                item.DeleteIcon = Visibility.Collapsed;
+            }
+            for (int i = 0; i < DeleteList.Count; i++)
+                DatabaseMethod.DeleteRemindItem(DeleteList[i]);
+        }
+        private void DeleteRemindGridButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            int i = RemindListView.SelectedIndex;
+            DeleteList.Add(remindList[i].Tag);
+            remindList.RemoveAt(i);
+        }
+
+        private void RewriteRemindGridButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            int i = RemindListView.SelectedIndex;
+            isSave = true;
+            MyRemind remind = new MyRemind();
+            remind = remindList[i];
+            App.isLoad = false;
+            Frame2.Navigate(typeof(EditRemindPage), remind);
+        }
     }
+
 }

@@ -22,6 +22,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using ZSCY.Data;
+using ZSCY_Win10.Pages.AddRemindPage;
 using ZSCY_Win10.Data;
 using ZSCY_Win10.Util;
 
@@ -876,6 +877,11 @@ namespace ZSCY_Win10
         private void AddRemind_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(AddRemind));
+        }
+
+        private void RemindList_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(RemindListPage));
         }
     }
 }

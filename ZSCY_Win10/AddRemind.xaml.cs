@@ -47,6 +47,8 @@ namespace ZSCY_Win10
             SelRemindListView.ItemsSource = beforeTime;
             SelectedTimeTextBlock.DataContext = App.SelectedTime;
             SelectedWeekNumTextBlock.DataContext = App.selectedWeek;
+            App.selectedWeek.WeekNumString = "";
+            App.SelectedTime.SelTimeString = "";
             beforeTime.Add(new BeforeTimeSel { BeforeString = "不提醒", isRemind = false, IconVisibility = Visibility.Collapsed });
             beforeTime.Add(new BeforeTimeSel { BeforeString = "提前五分钟", isRemind = true, BeforeTime = new TimeSpan(0, 5, 0), IconVisibility = Visibility.Collapsed });
             beforeTime.Add(new BeforeTimeSel { BeforeString = "提前十分钟", isRemind = true, BeforeTime = new TimeSpan(0, 10, 0), IconVisibility = Visibility.Collapsed });
@@ -60,9 +62,76 @@ namespace ZSCY_Win10
                 RemindGrid1.Width = 400;
 
             };
-
+            Initialize();
         }
-
+       private void Initialize()
+        {
+            App.selectedWeek.WeekNumString = "";
+            App.SelectedTime.SelTimeString = "";
+            for(int i=0;i<6;i++)
+            {
+                for(int j=0;j<7;j++)
+                {
+                    App.timeSet[i, j] = null;
+                }
+            }           
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+        }
+        private string CourseList(int row, int column)
+        {
+            string weekNum = "";
+            string classNum = "";
+            switch (column)
+            {
+                case 0:
+                    weekNum = "周一";
+                    break;
+                case 1:
+                    weekNum = "周二";
+                    break;
+                case 2:
+                    weekNum = "周三";
+                    break;
+                case 3:
+                    weekNum = "周四";
+                    break;
+                case 4:
+                    weekNum = "周五";
+                    break;
+                case 5:
+                    weekNum = "周六";
+                    break;
+                case 6:
+                    weekNum = "周末";
+                    break;
+            }
+            switch (row)
+            {
+                case 0:
+                    classNum = "12节";
+                    break;
+                case 1:
+                    classNum = "34节";
+                    break;
+                case 2:
+                    classNum = "56节";
+                    break;
+                case 3:
+                    classNum = "78节";
+                    break;
+                case 4:
+                    classNum = "910节";
+                    break;
+                case 5:
+                    classNum = "1112节";
+                    break;
+            }
+            string temp = string.Concat(weekNum, classNum);
+            return temp;
+        }
 
         private void SaveEdit_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -90,6 +159,7 @@ namespace ZSCY_Win10
             }
             else
             {
+                beforeTime[indexBefore].IconVisibility = Visibility.Collapsed;
 
                 int temp = indexBefore = (sender as ListView).SelectedIndex;
                 beforeTime[temp].IconVisibility = Visibility.Visible;
@@ -160,14 +230,14 @@ namespace ZSCY_Win10
                             myRemind.Time = beforeTime[SelRemindListView.SelectedIndex].BeforeTime.TotalMinutes.ToString();
                             myRemind.Title = TitleTextBox.Text;
                             myRemind.Content = ContentTextBox.Text;
-                            string databaseJson = JsonConvert.SerializeObject(myRemind);
+                           
                             myRemind.IdNum = idNum;
                             myRemind.StuNum = stuNum;
                             try
                             {
                                 AddRemindReturn returnStatus = new AddRemindReturn();
-
-                                string content = await NetWork.httpRequest(ApiUri.addRemindApi, myRemind);
+                                //TODO 由于不提醒上传的time是一个null无法返回404错误
+                                string content = await NetWork.httpRequest(ApiUri.addRemindApi, NetWork.addRemind(myRemind));
                                 returnStatus = JsonConvert.DeserializeObject<AddRemindReturn>(content);
                                 myRemind.Id = returnStatus.Id;
                             }
@@ -186,6 +256,9 @@ namespace ZSCY_Win10
                             {
 
                             }
+                            myRemind.IdNum = "";
+                            myRemind.StuNum = "";
+                            string databaseJson = JsonConvert.SerializeObject(myRemind);
                             DatabaseMethod.ToDatabase(myRemind.Id, databaseJson, id_system);
                         }
                     }
@@ -219,11 +292,6 @@ namespace ZSCY_Win10
         private void WeekNumGridButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Frame2.Navigate(typeof(SelWeekNumPage));
-        }
-
-        private void showHis_Click(object sender, RoutedEventArgs e)
-        {
-            Frame2.Navigate(typeof(RemindListPage));
         }
 
         //private void CreateCourseWeek()

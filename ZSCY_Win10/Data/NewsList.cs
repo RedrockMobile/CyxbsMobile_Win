@@ -27,7 +27,6 @@ namespace ZSCY.Data
             Content_all = all;
         }
 
-
         public string ID { get; set; }
         public string Articleid { get; set; }
         public string Title { get; set; }
