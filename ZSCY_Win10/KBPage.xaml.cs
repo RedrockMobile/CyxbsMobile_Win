@@ -20,8 +20,10 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Shapes;
 using ZSCY.Data;
 using ZSCY_Win10.Pages.AddRemindPage;
+using ZSCY_Win10.Data;
 using ZSCY_Win10.Util;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
@@ -42,6 +44,7 @@ namespace ZSCY_Win10
         Grid backweekgrid = new Grid();
         TextBlock[] DateOnKBTextBlock = new TextBlock[7] { new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock() };
         List<ClassList> classList = new List<ClassList>();
+        List<Transaction> transationList = new List<Transaction>();
         string[,][] classtime = new string[7, 6][];
         private Dictionary<string, int> colorlist = new Dictionary<string, int>(); //课表格子颜色
         public KBPage()
@@ -172,6 +175,7 @@ namespace ZSCY_Win10
             if (week == 0)
             {
                 Grid backgrid = new Grid();
+                //TODO:改动 当日空课表的背景色 
                 backgrid.Background = new SolidColorBrush(Color.FromArgb(255, 254, 245, 207));
                 backgrid.SetValue(Grid.RowProperty, 0);
                 backgrid.SetValue(Grid.ColumnProperty, (Int16.Parse(Utils.GetWeek()) + 6) % 7);
@@ -318,7 +322,7 @@ namespace ZSCY_Win10
             DateTime weekend = GetWeekLastDaySun(now);
             this.HubSectionKBDate.Text = weekstart.Month + "." + weekstart.Day + "--" + weekend.Month + "." + weekend.Day;
             ShowWeekOnKB(weekstart);
-
+            GetTransaction();
         }
         public DateTime GetWeekFirstDayMon(DateTime datetime)
         {
@@ -529,6 +533,31 @@ namespace ZSCY_Win10
             KebiaoDayGrid.Children.Add(BackGrid);
         }
 
+        //新增:获取事项信息
+        private async void GetTransaction()
+        {
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
+            if (credentialList[0] != null)
+            {
+                List<KeyValuePair<String, String>> TransactionparamList = new List<KeyValuePair<String, String>>();
+                TransactionparamList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+                TransactionparamList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
+                string Transactiontemp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/getTransaction", TransactionparamList);
+                JObject Tobj = JObject.Parse(Transactiontemp);
+                if (Int32.Parse(Tobj["status"].ToString()) == 200)
+                {
+                    JArray TransactionArray = Utils.ReadJso(Transactiontemp);
+                    for (int i = 0; i < TransactionArray.Count; i++)
+                    {
+                        Transaction transactionItem = new Transaction();
+                        transactionItem.GetAttribute((JObject)TransactionArray[i]);
+                        transationList.Add(transactionItem);
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// 周视图课程格子的填充
@@ -537,6 +566,13 @@ namespace ZSCY_Win10
         /// <param name="ClassColor">颜色数组，0~9</param>
         private void SetClassAll(ClassList item, int ClassColor)
         {
+            //有事项的画个角- -
+            //foreach (var transactionItem in transationList) {
+            //    if (item.Week == transactionItem.week && item.Lesson == transactionItem.classToLesson)
+            //    {
+
+            //    }
+            //}
 
             Color[] colors = new Color[]{
                    //Color.FromArgb(255,132, 191, 19),
@@ -555,6 +591,13 @@ namespace ZSCY_Win10
                    Color.FromArgb(255,159, 213, 27),
                    Color.FromArgb(255,200, 200, 200), //灰色
                 };
+
+            //折叠角的颜色数组
+            Color[] _color = new Color[] {
+                Color.FromArgb(255,255,219,178),
+                Color.FromArgb(255,162,229,255),
+                Color.FromArgb(255,155,244,244),
+            };
 
             TextBlock ClassTextBlock = new TextBlock();
 
@@ -575,6 +618,11 @@ namespace ZSCY_Win10
             BackGrid.Margin = new Thickness(0.5);
             BackGrid.Children.Add(ClassTextBlock);
 
+            //新增:有课的时间有事项
+            //读取学号密码
+            
+
+            //TODO:新增 折叠三角
             if (classtime[item.Hash_day, item.Hash_lesson] != null)
             {
                 Image img = new Image();
@@ -582,6 +630,25 @@ namespace ZSCY_Win10
                 img.VerticalAlignment = VerticalAlignment.Bottom;
                 img.HorizontalAlignment = HorizontalAlignment.Right;
                 img.Width = 10;
+
+                //他要折叠..我画一个三角好了..
+                Grid _grid = new Grid();
+                Polygon pl = new Polygon();
+                PointCollection collection = new PointCollection();
+                collection.Add(new Point(0, 0));
+                collection.Add(new Point(10, 0));
+                collection.Add(new Point(0, 10));
+                pl.Points = collection;
+                pl.Stroke = new SolidColorBrush(Colors.Black);
+                pl.StrokeThickness = 0;
+                _grid.Children.Add(pl);
+                _grid.Background = new SolidColorBrush(_color[ClassColor]);
+                _grid.Width = 10;
+                _grid.Height = 10;
+                _grid.VerticalAlignment = VerticalAlignment.Bottom;
+                _grid.HorizontalAlignment = HorizontalAlignment.Right;
+                BackGrid.Children.Add(_grid);
+
                 BackGrid.Children.Add(img);
 
                 string[] temp = classtime[item.Hash_day, item.Hash_lesson];
