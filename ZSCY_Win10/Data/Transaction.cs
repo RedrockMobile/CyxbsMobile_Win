@@ -12,34 +12,48 @@ namespace ZSCY_Win10.Data
 {
     class DateInTransaction
     {
+        //字段class 很强势
+        [JsonProperty(PropertyName = "class")]
         public int _class { get; set; }
         public int day { get; set; }
         public int[] week { get; set; }
+        public int weekLength { get; set; }
     }
 
     class Transaction
     {
         public long id { get; set; }
-        public int time { get; set; } 
+        //这个高级用法并没有卵用
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string time { get; set; }
         public string title { get; set; }
         public string content { get; set; }
         public List<DateInTransaction> date { get; set; }
         public string classToLesson { get; set; }
-         
+
         public void GetAttribute(JObject TransationDetailJObject)
         {
-            //接口改了 现在事项在哪节课/周数/星期存在date集合里 因为课表改动还没确定 其他转换先搁置 2016年11月17日23:07:23
+
+            //接口改了 现在事项在哪节课/周数/星期存在date集合里 2016年11月17日23:07:23
             id = (long)TransationDetailJObject["id"];
-            //_class = (int)TransationDetailJObject["class"];
-            //day = (int)TransationDetailJObject["day"];
-            time = (int)TransationDetailJObject["time"];
+
+            //time可以为空了 额
+            if (TransationDetailJObject["time"] != null)
+                time =TransationDetailJObject["time"].ToString();
+            else time = "";
             title = TransationDetailJObject["title"].ToString();
             content = TransationDetailJObject["content"].ToString();
 
-            classToLesson= TransationDetailJObject["date"].ToString();
+            classToLesson = TransationDetailJObject["date"].ToString();
 
             date = JsonConvert.DeserializeObject<List<DateInTransaction>>(classToLesson);
 
+            List<int> _templist = new List<int>();
+            for (int i = 0; i < date.Count; i++)
+            {
+                _templist = date[i].week.ToList<int>();
+                date[i].weekLength = _templist.Count;
+            }
             //var gradelimit = JArray.Parse(TransationDetailJObject["date"].ToString());
             // JObject tempJobject = JObject.Parse(gradelimit.ToString());
             //string[] temp = new string[gradelimit.Count];

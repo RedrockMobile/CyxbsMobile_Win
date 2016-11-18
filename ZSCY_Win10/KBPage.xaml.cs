@@ -322,7 +322,7 @@ namespace ZSCY_Win10
             DateTime weekend = GetWeekLastDaySun(now);
             this.HubSectionKBDate.Text = weekstart.Month + "." + weekstart.Day + "--" + weekend.Month + "." + weekend.Day;
             ShowWeekOnKB(weekstart);
-            GetTransaction();
+
         }
         public DateTime GetWeekFirstDayMon(DateTime datetime)
         {
@@ -374,6 +374,7 @@ namespace ZSCY_Win10
                 for (int j = 0; j < 6; j++)
                     classtime[i, j] = null;
 
+            GetTransaction();
 
             kebiaoGrid.Children.Clear();
             SetKebiaoGridBorder(week);
@@ -430,7 +431,7 @@ namespace ZSCY_Win10
                     }
                 }
             }
-
+            
             //当日课表显示
             KebiaoDayGrid.Children.Clear();
             for (int i = 0; i < ClassListArray.Count; i++)
@@ -449,8 +450,97 @@ namespace ZSCY_Win10
                 }
                 //#endif
             }
-            colorlist.Clear();
+            
+            if (transationList.Count != 0)
+                SetTransactionDay(transationList, classList);
 
+            colorlist.Clear();
+        }
+
+        /// <summary>
+        /// 当日事项填充
+        /// </summary>
+        private void SetTransactionDay(List<Transaction> transationList, List<ClassList> classlist)
+        {
+            bool isInClassGrid = false;
+            foreach (var transactionitem in transationList)
+            {
+                for (int i = 0; i < transactionitem.date.Count; i++)
+                {
+                    if (Array.IndexOf(transactionitem.date[i].week, Int32.Parse(appSetting.Values["nowWeek"].ToString())) != -1)
+                    {
+                        foreach (var classitem in classlist)
+                        {
+                            if (Array.IndexOf(classitem.Week, Int32.Parse(appSetting.Values["nowWeek"].ToString())) != -1)
+                            {
+                                //当前课与当前时段的事件在同一周
+                                //如果本周任意一节课与事件事件冲突 
+                                if (transactionitem.date[i].day == classitem.Hash_day && transactionitem.date[i]._class == classitem.Hash_lesson)
+                                { isInClassGrid = true; break; }
+                            }
+                        }
+                        if (isInClassGrid)
+                        {
+                            //事件与课程冲突
+                            Grid transactionGrid = new Grid();
+                            transactionGrid.SetValue(Grid.RowProperty, System.Int32.Parse(transactionitem.date[i]._class * 2 + ""));
+                            transactionGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(transactionitem.date[i].day + ""));
+                            transactionGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(2 + ""));
+
+                            transactionGrid.Margin = new Thickness(2);
+
+                            transactionGrid.HorizontalAlignment = HorizontalAlignment.Right;
+                            transactionGrid.VerticalAlignment = VerticalAlignment.Top;
+                            transactionGrid.Width = 8;
+                            transactionGrid.Height = 8;
+                            transactionGrid.BorderThickness =new Thickness(0);
+                            transactionGrid.Background = new SolidColorBrush(Colors.Transparent);
+                            Polygon pl = new Polygon();
+                            PointCollection collection = new PointCollection();
+                            collection.Add(new Point(0, 0));
+                            collection.Add(new Point(10, 10));
+                            collection.Add(new Point(10, 0));
+                            pl.Points = collection;
+                            pl.StrokeThickness = 0;
+                            pl.Fill = new SolidColorBrush(Colors.White);
+                            transactionGrid.Children.Add(pl);
+                            isInClassGrid = false;
+                            kebiaoGrid.Children.Add(transactionGrid);                       
+                        }
+                        else
+                        {
+                            Grid transactionGrid = new Grid();
+                            transactionGrid.SetValue(Grid.RowProperty, System.Int32.Parse(transactionitem.date[i]._class*2  + ""));
+                            transactionGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(transactionitem.date[i].day + ""));
+                            transactionGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(2 + ""));
+
+                            transactionGrid.Background = new SolidColorBrush(Color.FromArgb(255,232,245,254));
+
+                            Grid polygonGrid = new Grid();
+                            polygonGrid.HorizontalAlignment = HorizontalAlignment.Right;
+                            polygonGrid.VerticalAlignment = VerticalAlignment.Top;
+                            polygonGrid.Height = 8;
+                            polygonGrid.Width = 8;
+                            polygonGrid.Background = new SolidColorBrush(Colors.Transparent);
+                            polygonGrid.Margin = new Thickness(2);
+                            Polygon pl = new Polygon();
+                            PointCollection collection = new PointCollection();
+                            collection.Add(new Point(0, 0));
+                            collection.Add(new Point(10, 10));
+                            collection.Add(new Point(10, 0));
+                            pl.Points = collection;
+                            pl.Fill = new SolidColorBrush(Colors.White);
+                            pl.StrokeThickness = 0;
+                            polygonGrid.Children.Add(pl);
+                            transactionGrid.Children.Add(polygonGrid);
+
+                            isInClassGrid = false;
+                            transactionGrid.Margin = new Thickness(0.5);
+                            kebiaoGrid.Children.Add(transactionGrid);
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
