@@ -30,6 +30,8 @@ namespace ZSCY.Data
         public int[] Week { get; set; }
         public string Classtime { get; set; }
 
+        public int weekLength { get; set; }
+
         public void GetAttribute(JObject classDetailJObject)
         {
             Hash_day = (int)classDetailJObject["hash_day"];
@@ -51,6 +53,7 @@ namespace ZSCY.Data
             _Id = classDetailJObject["_id"] != null ? classDetailJObject["_id"].ToString() : "";
             var gradelimit = JArray.Parse(classDetailJObject["week"].ToString());
             int[] temp = new int[gradelimit.Count];
+            weekLength = gradelimit.Count;
             for (int i = 0; i < gradelimit.Count; ++i)
             {
                 temp[i] = Int32.Parse(gradelimit[i].ToString());
