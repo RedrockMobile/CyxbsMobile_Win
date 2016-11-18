@@ -15,26 +15,31 @@ namespace MyMessageBackgroundTask
 {
     public sealed class MessageBackgroundTask : IBackgroundTask
     {
+        private static string stuNum = "";
+        private static string idNum = "";
+        private static string resourceName = "ZSCY";
         private ApplicationDataContainer appSetting = ApplicationData.Current.LocalSettings; //本地存储
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             if (bool.Parse(appSetting.Values["isUseingBackgroundTask"].ToString()))
             {
-                Debug.WriteLine("开始后台任务");
+                Debug.WriteLine("开始吐司通知后台任务");
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                stuNum = credentialList[0].UserName;
+                idNum = credentialList[0].Password;
                 try
                 {
                     string letterstatus = "";
                     BackgroundTaskDeferral deferral = taskInstance.GetDeferral();  //获取 BackgroundTaskDeferral 对象，表示后台任务延期
-
                     List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-                    paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-                    paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                    paramList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
+                    paramList.Add(new KeyValuePair<string, string>("idNum", idNum));
                     paramList.Add(new KeyValuePair<string, string>("page", "0"));
                     paramList.Add(new KeyValuePair<string, string>("size", "15"));
                     letterstatus = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Article/aboutme", paramList);
-
                     Debug.WriteLine("letterstatus" + letterstatus);
-
                     if (letterstatus != "")
                     {
                         string aboutme = "";
@@ -75,7 +80,6 @@ namespace MyMessageBackgroundTask
                                         Utils.Toast("你可能有新的消息，快来看看吧");
                                     }
                                 }
-
                                 IStorageFile storageFileWR = await applicationFolder.CreateFileAsync("aboutme.txt", CreationCollisionOption.ReplaceExisting);
                                 await FileIO.WriteTextAsync(storageFileWR, letterstatus);
                             }
@@ -85,13 +89,14 @@ namespace MyMessageBackgroundTask
                             IStorageFile storageFileWR = await applicationFolder.CreateFileAsync("aboutme.txt", CreationCollisionOption.ReplaceExisting);
                             await FileIO.WriteTextAsync(storageFileWR, letterstatus);
                         }
-
-
                     }
                     deferral.Complete(); //所有的异步调用完成之后，释放延期，表示后台任务的完成
+                    Debug.WriteLine("吐司通知后台任务结束");
                 }
-                catch (Exception) { Debug.WriteLine("后台任务网络异常"); }
-
+                catch (Exception)
+                {
+                    Debug.WriteLine("吐司通知后台任务异常");
+                }
             }
         }
     }

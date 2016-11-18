@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZSCY.Data
+namespace LiveTileBackgroundTask
 {
     class ClassList
     {
@@ -45,7 +45,7 @@ namespace ZSCY.Data
             WeekBegin = (int)classDetailJObject["weekBegin"];
             WeekEnd = (int)classDetailJObject["weekEnd"];
             Type = classDetailJObject["type"] != null ? classDetailJObject["type"].ToString() : "";
-            if (classDetailJObject["status"]!= null)
+            if (classDetailJObject["status"] != null)
                 Status = classDetailJObject["status"].ToString();
             Period = (int)classDetailJObject["period"];
             _Id = classDetailJObject["_id"] != null ? classDetailJObject["_id"].ToString() : "";

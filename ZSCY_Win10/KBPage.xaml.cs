@@ -104,7 +104,6 @@ namespace ZSCY_Win10
             }
         }
 
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             //TODO:未登陆时 没有课表
@@ -150,7 +149,6 @@ namespace ZSCY_Win10
             }
 
         }
-
 
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)

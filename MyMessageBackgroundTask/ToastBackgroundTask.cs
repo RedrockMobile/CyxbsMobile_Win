@@ -16,12 +16,20 @@ namespace MyMessageBackgroundTask
 {
     public sealed class ToastBackgroundTask : IBackgroundTask
     {
+        private static string stuNum = "";
+        private static string idNum = "";
+        private static string resourceName = "ZSCY";
         private ApplicationDataContainer appSetting = ApplicationData.Current.LocalSettings; //本地存储
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             var deferral = taskInstance.GetDeferral();
             if (bool.Parse(appSetting.Values["isUseingBackgroundTask"].ToString()))
             {
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                stuNum = credentialList[0].UserName;
+                idNum = credentialList[0].Password;
                 ToastNotificationActionTriggerDetail details = taskInstance.TriggerDetails as ToastNotificationActionTriggerDetail;
                 if (details != null)
                 {
@@ -37,8 +45,8 @@ namespace MyMessageBackgroundTask
                             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
                             paramList.Add(new KeyValuePair<string, string>("article_id", arg.Substring(2)));
                             paramList.Add(new KeyValuePair<string, string>("type_id", "5"));
-                            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-                            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                            paramList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
+                            paramList.Add(new KeyValuePair<string, string>("idNum", idNum));
                             paramList.Add(new KeyValuePair<string, string>("content", "回复 " + arg.Split('+')[2] + " : " + value));
                             paramList.Add(new KeyValuePair<string, string>("answer_user_id", arg.Split('+')[1]));
                             string sendMark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/postremarks", paramList);
