@@ -19,16 +19,15 @@
         <uap:LockScreen Notification="badgeAndTileText" BadgeLogo="Assets\BadgeLogo.png" />
         <uap:DefaultTile Square71x71Logo="Assets\AlphaLogo\Square71x71Logo.png" Wide310x150Logo="Assets\AlphaLogo\Wide310x150Logo.png" ShortName="掌上重邮">
           <uap:ShowNameOnTiles>
-            <uap:ShowOn Tile="square150x150Logo" />
             <uap:ShowOn Tile="wide310x150Logo" />
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#058BFE" />
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="LiveTileBackgroundTask.LiveTileBackgroundTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="MyMessageBackgroundTask.ToastBackgroundTask">
           <BackgroundTasks>
-            <Task Type="timer" />
+            <Task Type="general" />
           </BackgroundTasks>
         </Extension>
         <Extension Category="windows.backgroundTasks" EntryPoint="MyMessageBackgroundTask.MessageBackgroundTask">
@@ -36,9 +35,9 @@
             <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="MyMessageBackgroundTask.ToastBackgroundTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="LiveTileBackgroundTask.LiveTileBackgroundTask">
           <BackgroundTasks>
-            <Task Type="general" />
+            <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
       </Extensions>
