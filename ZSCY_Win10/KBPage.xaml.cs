@@ -25,6 +25,8 @@ using ZSCY.Data;
 using ZSCY_Win10.Pages.AddRemindPage;
 using ZSCY_Win10.Data;
 using ZSCY_Win10.Util;
+using Windows.UI.Popups;
+using ZSCY_Win10.Controls;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
@@ -541,20 +543,28 @@ namespace ZSCY_Win10
             credentialList[0].RetrievePassword();
             if (credentialList[0] != null)
             {
-                List<KeyValuePair<String, String>> TransactionparamList = new List<KeyValuePair<String, String>>();
-                TransactionparamList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-                TransactionparamList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
-                string Transactiontemp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/getTransaction", TransactionparamList);
-                JObject Tobj = JObject.Parse(Transactiontemp);
-                if (Int32.Parse(Tobj["status"].ToString()) == 200)
+                try
                 {
-                    JArray TransactionArray = Utils.ReadJso(Transactiontemp);
-                    for (int i = 0; i < TransactionArray.Count; i++)
+                    List<KeyValuePair<String, String>> TransactionparamList = new List<KeyValuePair<String, String>>();
+                    TransactionparamList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+                    TransactionparamList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
+                    string Transactiontemp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/getTransaction", TransactionparamList);
+                    JObject Tobj = JObject.Parse(Transactiontemp);
+                    if (Int32.Parse(Tobj["status"].ToString()) == 200)
                     {
-                        Transaction transactionItem = new Transaction();
-                        transactionItem.GetAttribute((JObject)TransactionArray[i]);
-                        transationList.Add(transactionItem);
+                        JArray TransactionArray = Utils.ReadJso(Transactiontemp);
+                        for (int i = 0; i < TransactionArray.Count; i++)
+                        {
+                            Transaction transactionItem = new Transaction();
+                            transactionItem.GetAttribute((JObject)TransactionArray[i]);
+                            transationList.Add(transactionItem);
+                        }
                     }
+                }
+                catch
+                {
+                    NotifyPopup notifyPopup = new NotifyPopup("网络异常 无法读取事项~");
+                    notifyPopup.Show();
                 }
             }
         }
@@ -620,7 +630,7 @@ namespace ZSCY_Win10
 
             //新增:有课的时间有事项
             //读取学号密码
-            
+
 
             //TODO:新增 折叠三角
             if (classtime[item.Hash_day, item.Hash_lesson] != null)

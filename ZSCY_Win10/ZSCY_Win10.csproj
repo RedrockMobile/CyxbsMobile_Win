@@ -256,6 +256,9 @@
       <DependentUpon>CommunityPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NavMenuListView.cs" />
+    <Compile Include="Controls\NotifyPopup.xaml.cs">
+      <DependentUpon>NotifyPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RemindPage\ErrorNotification.xaml.cs">
       <DependentUpon>ErrorNotification.xaml</DependentUpon>
     </Compile>
@@ -629,6 +632,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CommunityPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NotifyPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
