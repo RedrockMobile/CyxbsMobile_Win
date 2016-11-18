@@ -42,9 +42,23 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             RemindListView.ItemsSource = remindList;
             isSave = true;
             this.SizeChanged += (s, e) =>
-              {
-                  ListGrid1.Width = 400;
-              };
+            {
+                ListGrid1.Width = 400;
+                var state = "VisualState000";
+                if (e.NewSize.Width > 000)
+                {
+                    ListGrid1.Width = e.NewSize.Width;
+                    Frame2.Width = e.NewSize.Width;
+                    state = "VisualState000";
+                }
+                 if (e.NewSize.Width > 800)
+                {
+                    ListGrid1.Width = 400;
+                    Frame2.Width = e.NewSize.Width - 400;
+                    state = "VisualState800";
+                }
+                VisualStateManager.GoToState(this, state, true);
+            };
         }
         protected override async void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
@@ -104,7 +118,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             }
             catch
             {
-                var conn=new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath);
+                var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath);
                 conn.CreateTable<RemindListDB>();
             }
         }
@@ -218,6 +232,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             MyRemind remind = new MyRemind();
             remind = remindList[i];
             App.isLoad = false;
+            ListGrid2.Visibility = Visibility.Visible;
             Frame2.Navigate(typeof(EditRemindPage), remind);
         }
     }

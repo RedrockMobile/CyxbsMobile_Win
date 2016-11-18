@@ -20,7 +20,7 @@ namespace ZSCY_Win10.Data
     class Transaction
     {
         public long id { get; set; }
-        public int time { get; set; }
+        public int time { get; set; } 
         public string title { get; set; }
         public string content { get; set; }
         public List<DateInTransaction> date { get; set; }

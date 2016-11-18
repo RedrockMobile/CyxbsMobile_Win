@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -37,6 +38,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             WeekListGridView.ItemsSource = SelWeekList;
             InitializeWeekList();
         }
+
 
         private void InitializeWeekList()
         {
@@ -104,7 +106,10 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                 Frame.GoBack();
             else
             {
-                Frame.Navigate(typeof(FristPage));
+                Frame rootFrame = Window.Current.Content as Frame;
+                //rootFrame.Visibility = Visibility.Collapsed;
+                this.Visibility = Visibility.Collapsed;
+                //Frame.GoBack();
             }
             Debug.WriteLine(App.selectedWeek.WeekNumString);
         }

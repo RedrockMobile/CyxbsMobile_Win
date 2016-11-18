@@ -556,6 +556,7 @@ namespace ZSCY_Win10
                             Transaction transactionItem = new Transaction();
                             transactionItem.GetAttribute((JObject)TransactionArray[i]);
                             transationList.Add(transactionItem);
+                            Debug.WriteLine(i);
                         }
                     }
                 }

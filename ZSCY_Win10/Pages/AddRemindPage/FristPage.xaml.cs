@@ -27,7 +27,6 @@ namespace ZSCY_Win10.Pages.AddRemindPage
         public FristPage()
         {
             this.InitializeComponent();
-            ListViewToasts.ItemsSource = ToastNotificationManager.CreateToastNotifier().GetScheduledToastNotifications();
 
             this.SizeChanged += (s, e) =>
             {

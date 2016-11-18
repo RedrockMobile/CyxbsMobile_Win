@@ -13,12 +13,13 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="#068cfd">
-            
+
         </Grid>
         <Line x:Name="SplitLine" Y1="0" Y2="0" Stroke="Gray" StrokeThickness="1" Grid.Row="1"/>
         <FontIcon Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
           FontFamily="Segoe MDL2 Assets" Glyph="&#xe787;" FontSize="200" Opacity="0.1"/>
-        <ListView Grid.Row="1"
+        <!--查看通知是否添加使用-->
+        <!--<ListView Grid.Row="1"
             x:Name="ListViewToasts">
             <ListView.Header>
                 <TextBlock
@@ -40,6 +41,6 @@
                     </RichTextBlock>
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>
+        </ListView>-->
     </Grid>
 </Page>
