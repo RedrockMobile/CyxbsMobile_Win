@@ -18,8 +18,8 @@ namespace LiveTileBackgroundTask
         List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
-            //try
-            //{
+            try
+            {
                 Debug.WriteLine("开始动态磁贴后台任务");
                 //获取stuNum
                 var vault = new Windows.Security.Credentials.PasswordVault();
@@ -37,14 +37,14 @@ namespace LiveTileBackgroundTask
                 List<ClassList> tempList = JsonConvert.DeserializeObject<List<ClassList>>(jArray.ToString());
                 string weekDay = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek);
                 //更新动态磁贴
-                Util.UpdateTile(tempList, nowWeek, "星期二");
+                Util.UpdateTile(tempList, nowWeek, weekDay);
                 deferral.Complete();
                 Debug.WriteLine("结束动态磁贴后台任务");
-            //}
-            //catch (Exception)
-            //{
+            }
+            catch (Exception)
+            {
                 Debug.WriteLine("动态磁贴后台任务出现异常");
-            //}
+            }
         }
     }
 }
