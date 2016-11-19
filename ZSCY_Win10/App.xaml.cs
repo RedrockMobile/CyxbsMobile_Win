@@ -89,6 +89,11 @@ namespace ZSCY_Win10
         public static SelTimeStringViewModel SelectedTime = new SelTimeStringViewModel();
         public static ObservableCollection<SelectedWeekNum> selectedWeekNumList = new ObservableCollection<SelectedWeekNum>();
         public static SelWeekNumStringViewModel selectedWeek = new SelWeekNumStringViewModel();
+        /// <summary>
+        ///提醒列表的数据源
+        /// </summary>
+        public static  ObservableCollection<MyRemind> remindList = new ObservableCollection<MyRemind>();
+
         public static string RemindListDBPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db");
         /// <summary>
         /// 防止改写事件内容是触发导航加载

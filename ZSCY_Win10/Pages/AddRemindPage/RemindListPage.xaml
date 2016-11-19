@@ -207,6 +207,7 @@
             </ListView>
         </Grid>
         <Grid x:Name="ListGrid2" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+            <TextBlock Text="5" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Frame x:Name="Frame2">
                 <Frame.ContentTransitions>
                     <TransitionCollection>

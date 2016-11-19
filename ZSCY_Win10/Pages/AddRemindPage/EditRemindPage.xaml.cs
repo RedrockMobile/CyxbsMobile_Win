@@ -316,12 +316,13 @@ namespace ZSCY_Win10.Pages.AddRemindPage
 
                             }
                             DatabaseMethod.EditDatabase(myRemind.Id, databaseJson, id_system);
-                            App.isLoad = false;
+                            DatabaseMethod.ReadDatabase(Visibility.Visible);
+                           
                         }
                     }
                 }
             }
-        this.Frame .Visibility = Visibility.Collapsed;
+        this.Visibility = Visibility.Collapsed;
         }
         private void RemindGridButon_Tapped(object sender, TappedRoutedEventArgs e)
         {

@@ -64,8 +64,7 @@ namespace ZSCY_Win10
             {
 
                 Frame2.Height = e.NewSize.Height;
-                Frame2.Width = e.NewSize.Width - 400;
-                RemindGrid1.Width = 400;
+                RemindGrid1.Width = 400;                 
                 var state = "VisualState000";
                 if (e.NewSize.Width > 000)
                 {

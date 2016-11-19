@@ -71,17 +71,20 @@ namespace ZSCY_Win10.Pages.AddRemindPage
         private void SelWeek_Tapped(object sender, TappedRoutedEventArgs e)
         {
             int temp = (sender as GridView).SelectedIndex;
-            if (!SelWeekList[temp].isSelected)
+            if (temp>-1)
             {
-                SelWeekList[temp].ItemContentColor = SelectedFontColor;
-                SelWeekList[temp].ItemFillColor = SelectedFillColor;
-                SelWeekList[temp].isSelected = true;
-            }
-            else
-            {
-                SelWeekList[temp].ItemContentColor = UnselectedFontColor;
-                SelWeekList[temp].ItemFillColor = UnselectedFillColor;
-                SelWeekList[temp].isSelected = false;
+                if (!SelWeekList[temp].isSelected)
+                {
+                    SelWeekList[temp].ItemContentColor = SelectedFontColor;
+                    SelWeekList[temp].ItemFillColor = SelectedFillColor;
+                    SelWeekList[temp].isSelected = true;
+                }
+                else
+                {
+                    SelWeekList[temp].ItemContentColor = UnselectedFontColor;
+                    SelWeekList[temp].ItemFillColor = UnselectedFillColor;
+                    SelWeekList[temp].isSelected = false;
+                }
             }
 
         }

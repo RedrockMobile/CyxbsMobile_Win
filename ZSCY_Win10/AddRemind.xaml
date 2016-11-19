@@ -355,7 +355,7 @@
                 </Grid>
             </Grid>
 
-            <Grid Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="48" Background="#068cfd"></Grid>
+            <Grid Name="grid" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="48" Background="#068cfd"></Grid>
             <Grid x:Name="RemindGrid2" Grid.Column="1" >
                
                 <Frame x:Name="Frame2" Grid.Row="0" Grid.RowSpan="2" >

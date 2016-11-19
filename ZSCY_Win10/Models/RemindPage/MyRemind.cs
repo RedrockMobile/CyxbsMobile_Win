@@ -34,7 +34,7 @@ namespace ZSCY_Win10.Models.RemindPage
 
 
     [DataContract]
-    public class MyRemind:BaseModel
+    public class MyRemind : BaseModel
     {
         public Guid Id_system { get; set; }
         public DateTimeOffset time { get; set; }
@@ -111,7 +111,8 @@ namespace ZSCY_Win10.Models.RemindPage
         /// </summary>
         [DataMember(Name = "date")]
         public List<DateItemModel> DateItems { get; set; }
-
+        private string _title;
+        private string _content;
         ///<summary>
         /// 相对上课的时间，单位分钟，如1-2课上课，7.45提醒，time应为15，如果设置为8.05提醒，则设置为-5
         /// </summary>
@@ -122,20 +123,42 @@ namespace ZSCY_Win10.Models.RemindPage
         /// 事项的标题，不能为空
         /// </summary>
         [DataMember(Name = "title")]
-        public string Title { get; set; }
+        public string Title
+        {
+            get
+            {
+                return _title;
+            }
+            set
+            {
+                _title = value;
+                RaisePropertyChanged(nameof(Title));
+            }
+        }
 
         ///<summary>
         /// 事项的具体内容,可为空
         /// </summary>
         [DataMember(Name = "content")]
-        public string Content { get; set; }
+        public string Content
+        {
+            get
+            {
+                return _content;
+            }
+            set
+            {
+                _content = value;
+                RaisePropertyChanged(nameof(Content));
+            }
+        }
 
         ///<summary>
         /// 当前学期，不传默认本学期 格式 本学期为201620171 下学期为201620172 
         /// </summary>
         [DataMember(Name = "term")]
         public string Term { get; set; }
-     
+
         public string ClassDay
         {
             get
