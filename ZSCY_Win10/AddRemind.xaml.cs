@@ -99,12 +99,7 @@ namespace ZSCY_Win10
 
         private void AddRemind_BackRequested(object sender, BackRequestedEventArgs e)
         {
-            if (RemindGrid2.Visibility == Visibility.Visible)
-            {
-                RemindGrid2.Visibility = Visibility.Collapsed;
-
-            }
-            else if(SelRemindGrid.Visibility==Visibility.Visible)
+            if (SelRemindGrid.Visibility==Visibility.Visible)
             {
                 SelRemindGrid.Visibility = Visibility.Collapsed;
             }

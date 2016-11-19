@@ -38,10 +38,28 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                 SplitLine.Y2 = e.NewSize.Height - 48;
             };
             CreateCourseTable();
-
+            //SystemNavigationManager.GetForCurrentView().BackRequested += CourseTablePage_BackRequested; ;
+            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
 
-     
+        //private void CourseTablePage_BackRequested(object sender, BackRequestedEventArgs e)
+        //{
+
+        //    if (page == typeof(EditRemindPage))
+        //    {
+        //        Frame.GoBack();
+        //        SystemNavigationManager.GetForCurrentView().BackRequested -= CourseTablePage_BackRequested;
+        //        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+        //    }
+        //    else
+        //    {
+        //        this.Visibility = Visibility.Collapsed;
+        //        //Frame.GoBack();
+        //        SystemNavigationManager.GetForCurrentView().BackRequested -= CourseTablePage_BackRequested;
+        //        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+        //    }
+        //}
+
         Type page;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

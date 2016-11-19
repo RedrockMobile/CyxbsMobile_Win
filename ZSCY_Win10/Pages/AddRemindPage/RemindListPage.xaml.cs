@@ -22,6 +22,7 @@ using Windows.Storage;
 using System.ComponentModel;
 using System.Diagnostics;
 using Windows.UI.Popups;
+using Windows.UI.Core;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -51,7 +52,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                     state = "VisualState000";
                     ListGrid2.Visibility = Visibility.Visible;
                 }
-                 if (e.NewSize.Width > 800)
+                if (e.NewSize.Width > 800)
                 {
                     ListGrid1.Width = 400;
                     Frame2.Width = e.NewSize.Width - 400;
@@ -59,7 +60,21 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                 }
                 VisualStateManager.GoToState(this, state, true);
             };
+            SystemNavigationManager.GetForCurrentView().BackRequested += RemindListPage_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
         }
+
+        private void RemindListPage_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+
+
+            Frame.GoBack();
+            SystemNavigationManager.GetForCurrentView().BackRequested -= RemindListPage_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+
+        }
+
         protected override async void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             base.OnNavigatingFrom(e);
@@ -107,7 +122,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
 
         //}
 
-    
+
 
         private void EditRemindList_Click(object sender, RoutedEventArgs e)
         {

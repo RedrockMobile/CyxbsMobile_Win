@@ -37,8 +37,26 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             this.InitializeComponent();
             WeekListGridView.ItemsSource = SelWeekList;
             InitializeWeekList();
+            //SystemNavigationManager.GetForCurrentView().BackRequested += SelWeekNumPage_BackRequested; ; ;
+            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
 
+        //private void SelWeekNumPage_BackRequested(object sender, BackRequestedEventArgs e)
+        //{
+        //    if (page == typeof(EditRemindPage))
+        //    {
+        //        Frame.GoBack();
+        //        SystemNavigationManager.GetForCurrentView().BackRequested -= SelWeekNumPage_BackRequested;
+        //        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+        //    }
+        //    else
+        //    {
+        //        this.Visibility = Visibility.Collapsed;
+        //        //Frame.GoBack();
+        //        SystemNavigationManager.GetForCurrentView().BackRequested -= SelWeekNumPage_BackRequested;
+        //        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+        //    }
+        //}
 
         private void InitializeWeekList()
         {
