@@ -64,7 +64,6 @@
                     <VisualState.Setters>
                         <Setter Target="ListGrid1.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="grid1.(UIElement.Visibility)" Value="Collapsed"/>
-                        <Setter Target="ListGrid2.(UIElement.Visibility)" Value="Collapsed"/>
                         <Setter Target="ListGrid2.(Grid.Column)" Value="0"/>
                         <Setter Target="ListGrid2.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="ShowRemindStackPanel.(UIElement.Visibility)" Value="Collapsed"/>
@@ -207,7 +206,6 @@
             </ListView>
         </Grid>
         <Grid x:Name="ListGrid2" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
-            <TextBlock Text="5" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Frame x:Name="Frame2">
                 <Frame.ContentTransitions>
                     <TransitionCollection>

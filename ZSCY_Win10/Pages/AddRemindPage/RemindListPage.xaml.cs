@@ -49,6 +49,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                     ListGrid1.Width = e.NewSize.Width;
                     Frame2.Width = e.NewSize.Width;
                     state = "VisualState000";
+                    ListGrid2.Visibility = Visibility.Visible;
                 }
                  if (e.NewSize.Width > 800)
                 {
@@ -147,7 +148,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             isSave = true;
             MyRemind remind = new MyRemind();
             remind = App.remindList[i];
-         
+            App.isLoad = false;
             ListGrid2.Visibility = Visibility.Visible;
             Frame2.Navigate(typeof(EditRemindPage), remind);
         }
