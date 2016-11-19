@@ -65,11 +65,11 @@ namespace ZSCY_Win10.Pages.AddRemindPage
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            App.SelectedTime.SelTimeString = "";
-            App.selectedWeek.WeekNumString = "";
             if (e.Parameter != null && !App.isLoad)
             {
                 App.isLoad = true;
+                App.SelectedTime.SelTimeString = "";
+                App.selectedWeek.WeekNumString = "";
 
                 MyRemind temp = new MyRemind();
                 temp = e.Parameter as MyRemind;
@@ -108,7 +108,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                 }
                 foreach (var item in temp.DateItems)
                 {
-                    App.timeSet[int.Parse(item.Class),int.Parse(item.Day) ].IsCheck = true;
+                    App.timeSet[int.Parse(item.Class), int.Parse(item.Day)].IsCheck = true;
                     App.SelectedTime.SelTimeString += CourseList(int.Parse(item.Class), int.Parse(item.Day)) + " ";
                 }
             }
@@ -322,7 +322,8 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                     }
                 }
             }
-        this.Visibility = Visibility.Collapsed;
+            this.NavigationCacheMode = NavigationCacheMode.Disabled;
+            this.Visibility = Visibility.Collapsed;
         }
         private void RemindGridButon_Tapped(object sender, TappedRoutedEventArgs e)
         {
