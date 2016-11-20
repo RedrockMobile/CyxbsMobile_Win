@@ -408,6 +408,7 @@ namespace ZSCY_Win10
                     //        SetClassAll(classitem, 3);
                     //else
                     SetClassAll(classitem, ClassColor);
+                    SetTransactionAll(transationList, classList);
                     HubSectionKBNum.Visibility = Visibility.Collapsed;
                 }
                 else
@@ -418,6 +419,8 @@ namespace ZSCY_Win10
                         if (Array.IndexOf(classitem.Week, Int32.Parse(appSetting.Values["nowWeek"].ToString())) != -1)
                         {
                             SetClassAll(classitem, ClassColor);
+                            if (transationList.Count != 0)
+                                SetTransactionDay(transationList, classList);
                             HubSectionKBNum.Text = " | 第" + appSetting.Values["nowWeek"].ToString() + "周";
                         }
                     }
@@ -428,12 +431,17 @@ namespace ZSCY_Win10
                             SetClassAll(classitem, ClassColor);
                             HubSectionKBNum.Text = " | 第" + week.ToString() + "周";
                         }
+                        SetTransactionDay(transationList,classList,week);
                     }
                 }
             }
-            
-            //当日课表显示
+
             KebiaoDayGrid.Children.Clear();
+            //这特么在逗我
+            //if (transationList.Count != 0)
+            //   SetTransactionDay(transationList, classList);
+
+            //当日课表显示
             for (int i = 0; i < ClassListArray.Count; i++)
             {
                 ClassList classitem = new ClassList();
@@ -450,9 +458,6 @@ namespace ZSCY_Win10
                 }
                 //#endif
             }
-            
-            if (transationList.Count != 0)
-                SetTransactionDay(transationList, classList);
 
             colorlist.Clear();
         }
@@ -460,24 +465,52 @@ namespace ZSCY_Win10
         /// <summary>
         /// 当日事项填充
         /// </summary>
-        private void SetTransactionDay(List<Transaction> transationList, List<ClassList> classlist)
+        private void SetTransactionDay(List<Transaction> transationList, List<ClassList> classlist, int week = 0 ,int weekOrAll = 0)
         {
+            int nowWEEK;
+            if (week == 0)
+                nowWEEK = Int32.Parse(appSetting.Values["nowWeek"].ToString());
+            else
+                nowWEEK = week;
+            //事项的背景颜色 略淡
+            Color[] Tcolor = new Color[]{
+                   Color.FromArgb(255,232,245,254),
+                   Color.FromArgb(255,255,245,233),
+                   Color.FromArgb(255,230,255,251)
+                };
+            //通过在某某节确定背景颜色
+            int RightC = 0;
             bool isInClassGrid = false;
             foreach (var transactionitem in transationList)
             {
                 for (int i = 0; i < transactionitem.date.Count; i++)
                 {
-                    if (Array.IndexOf(transactionitem.date[i].week, Int32.Parse(appSetting.Values["nowWeek"].ToString())) != -1)
+                    if (Array.IndexOf(transactionitem.date[i].week, nowWEEK) != -1)
                     {
                         foreach (var classitem in classlist)
                         {
-                            if (Array.IndexOf(classitem.Week, Int32.Parse(appSetting.Values["nowWeek"].ToString())) != -1)
+                            if (Array.IndexOf(classitem.Week, nowWEEK) != -1)
                             {
                                 //当前课与当前时段的事件在同一周
                                 //如果本周任意一节课与事件事件冲突 
                                 if (transactionitem.date[i].day == classitem.Hash_day && transactionitem.date[i]._class == classitem.Hash_lesson)
                                 { isInClassGrid = true; break; }
                             }
+                        }
+                        switch (transactionitem.date[i]._class)
+                        {
+                            case 0:
+                            case 1:
+                                RightC = 0;
+                                break;
+                            case 2:
+                            case 3:
+                                RightC = 1;
+                                break;
+                            case 4:
+                            case 5:
+                                RightC = 2;
+                                break;
                         }
                         if (isInClassGrid)
                         {
@@ -493,7 +526,7 @@ namespace ZSCY_Win10
                             transactionGrid.VerticalAlignment = VerticalAlignment.Top;
                             transactionGrid.Width = 8;
                             transactionGrid.Height = 8;
-                            transactionGrid.BorderThickness =new Thickness(0);
+                            transactionGrid.BorderThickness = new Thickness(0);
                             transactionGrid.Background = new SolidColorBrush(Colors.Transparent);
                             Polygon pl = new Polygon();
                             PointCollection collection = new PointCollection();
@@ -505,16 +538,16 @@ namespace ZSCY_Win10
                             pl.Fill = new SolidColorBrush(Colors.White);
                             transactionGrid.Children.Add(pl);
                             isInClassGrid = false;
-                            kebiaoGrid.Children.Add(transactionGrid);                       
+                            kebiaoGrid.Children.Add(transactionGrid);
                         }
                         else
                         {
                             Grid transactionGrid = new Grid();
-                            transactionGrid.SetValue(Grid.RowProperty, System.Int32.Parse(transactionitem.date[i]._class*2  + ""));
+                            transactionGrid.SetValue(Grid.RowProperty, System.Int32.Parse(transactionitem.date[i]._class * 2 + ""));
                             transactionGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(transactionitem.date[i].day + ""));
                             transactionGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(2 + ""));
 
-                            transactionGrid.Background = new SolidColorBrush(Color.FromArgb(255,232,245,254));
+                            transactionGrid.Background = new SolidColorBrush(Tcolor[RightC]);
 
                             Grid polygonGrid = new Grid();
                             polygonGrid.HorizontalAlignment = HorizontalAlignment.Right;
@@ -536,8 +569,109 @@ namespace ZSCY_Win10
 
                             isInClassGrid = false;
                             transactionGrid.Margin = new Thickness(0.5);
+
                             kebiaoGrid.Children.Add(transactionGrid);
                         }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 学期事项填充
+        /// </summary>
+        /// 跟当日事件填充除了判断条件基本一致 但是不太好合/头有点晕 有空再做优化
+        private void SetTransactionAll(List<Transaction> transationList, List<ClassList> classlist)
+        {
+            Color[] Tcolor = new Color[]{
+                   Color.FromArgb(255,232,245,254),
+                   Color.FromArgb(255,255,245,233),
+                   Color.FromArgb(255,230,255,251)
+                };
+            int RightC = 0;
+            bool IsInClass = false;
+            foreach (var transactionitem in transationList)
+            {
+                for (int i = 0; i < transactionitem.date.Count; i++)
+                {
+                    foreach (var classitem in classlist)
+                    {
+                        if (transactionitem.date[i]._class == classitem.Hash_lesson)
+                        { IsInClass = true; break; }
+                    }
+                    switch (transactionitem.date[i]._class)
+                    {
+                        case 0:
+                        case 1:
+                            RightC = 0;
+                            break;
+                        case 2:
+                        case 3:
+                            RightC = 1;
+                            break;
+                        case 4:
+                        case 5:
+                            RightC = 2;
+                            break;
+                    }
+                    if (IsInClass)
+                    {
+                        Grid transactionGrid = new Grid();
+                        transactionGrid.SetValue(Grid.RowProperty, System.Int32.Parse(transactionitem.date[i]._class * 2 + ""));
+                        transactionGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(transactionitem.date[i].day + ""));
+                        transactionGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(2 + ""));
+
+                        transactionGrid.Margin = new Thickness(2);
+
+                        transactionGrid.HorizontalAlignment = HorizontalAlignment.Right;
+                        transactionGrid.VerticalAlignment = VerticalAlignment.Top;
+                        transactionGrid.Width = 8;
+                        transactionGrid.Height = 8;
+                        transactionGrid.BorderThickness = new Thickness(0);
+                        transactionGrid.Background = new SolidColorBrush(Colors.Transparent);
+                        Polygon pl = new Polygon();
+                        PointCollection collection = new PointCollection();
+                        collection.Add(new Point(0, 0));
+                        collection.Add(new Point(10, 10));
+                        collection.Add(new Point(10, 0));
+                        pl.Points = collection;
+                        pl.StrokeThickness = 0;
+                        pl.Fill = new SolidColorBrush(Colors.White);
+                        transactionGrid.Children.Add(pl);
+                        IsInClass = false;
+                        kebiaoGrid.Children.Add(transactionGrid);
+                    }
+                    else
+                    {
+                        Grid transactionGrid = new Grid();
+                        transactionGrid.SetValue(Grid.RowProperty, System.Int32.Parse(transactionitem.date[i]._class * 2 + ""));
+                        transactionGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(transactionitem.date[i].day + ""));
+                        transactionGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(2 + ""));
+
+                        transactionGrid.Background = new SolidColorBrush(Tcolor[RightC]);
+
+                        Grid polygonGrid = new Grid();
+                        polygonGrid.HorizontalAlignment = HorizontalAlignment.Right;
+                        polygonGrid.VerticalAlignment = VerticalAlignment.Top;
+                        polygonGrid.Height = 8;
+                        polygonGrid.Width = 8;
+                        polygonGrid.Background = new SolidColorBrush(Colors.Transparent);
+                        polygonGrid.Margin = new Thickness(2);
+                        Polygon pl = new Polygon();
+                        PointCollection collection = new PointCollection();
+                        collection.Add(new Point(0, 0));
+                        collection.Add(new Point(10, 10));
+                        collection.Add(new Point(10, 0));
+                        pl.Points = collection;
+                        pl.Fill = new SolidColorBrush(Colors.White);
+                        pl.StrokeThickness = 0;
+                        polygonGrid.Children.Add(pl);
+                        transactionGrid.Children.Add(polygonGrid);
+
+                        IsInClass = false;
+                        transactionGrid.Margin = new Thickness(0.5);
+
+                        kebiaoGrid.Children.Add(transactionGrid);
                     }
                 }
             }
@@ -626,6 +760,8 @@ namespace ZSCY_Win10
         //新增:获取事项信息
         private async void GetTransaction()
         {
+            //clear出了无法理解的问题..暂时用一个判断吧 聊胜于无
+            bool secondTimeAdd = false;
             var vault = new Windows.Security.Credentials.PasswordVault();
             var credentialList = vault.FindAllByResource(resourceName);
             credentialList[0].RetrievePassword();
@@ -645,7 +781,13 @@ namespace ZSCY_Win10
                         {
                             Transaction transactionItem = new Transaction();
                             transactionItem.GetAttribute((JObject)TransactionArray[i]);
-                            transationList.Add(transactionItem);
+                            foreach (var existItem in transationList)
+                            {
+                                if (transactionItem.id == existItem.id)
+                                { secondTimeAdd = true; break; }
+                            }
+                            if (!secondTimeAdd)
+                                transationList.Add(transactionItem);
                             Debug.WriteLine(i);
                         }
                     }
@@ -716,10 +858,6 @@ namespace ZSCY_Win10
             BackGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(item.Period + ""));
             BackGrid.Margin = new Thickness(0.5);
             BackGrid.Children.Add(ClassTextBlock);
-
-            //新增:有课的时间有事项
-            //读取学号密码
-
 
             //TODO:新增 折叠三角
             if (classtime[item.Hash_day, item.Hash_lesson] != null)
@@ -841,6 +979,8 @@ namespace ZSCY_Win10
         /// <param name="e"></param>
         private void KBCalendarAppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            //transationList.Clear();
+
             showKB(wOa);
             DateTime now = DateTime.Now;
             DateTime weekstart = GetWeekFirstDayMon(now);
