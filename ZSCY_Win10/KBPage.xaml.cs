@@ -1004,8 +1004,8 @@ namespace ZSCY_Win10
 
         private void KBSearchButton_Click(object sender, RoutedEventArgs e)
         {
+            transationList.Clear();
             KBSearch();
-
         }
 
         private void KBSearch()
