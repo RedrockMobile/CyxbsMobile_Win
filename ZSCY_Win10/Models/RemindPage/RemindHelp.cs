@@ -8,6 +8,14 @@ using Windows.UI.Notifications;
 using System.Threading.Tasks;
 using System;
 using ZSCY_Win10.Models.RemindPage;
+using ZSCY_Win10.Util;
+using System.Diagnostics;
+using System.Collections.Generic;
+using System.Collections;
+using Windows.Security.Credentials;
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
+using System.Collections.ObjectModel;
 
 namespace ZSCY_Win10.Models.RemindPage
 {
@@ -76,7 +84,7 @@ namespace ZSCY_Win10.Models.RemindPage
             id = "";
             for (int i = 0; i < App.selectedWeekNumList.Count; i++)
             {
-                //TODO 崩溃点
+
                 for (int r = 0; r < 6; r++)
                 {
                     for (int c = 0; c < 7; c++)
@@ -99,57 +107,142 @@ namespace ZSCY_Win10.Models.RemindPage
             }
             return id;
         }
+        public static async Task<string> SyncAllRemind(MyRemind remind)
+        {
+
+            id = "";
+            if (remind.Time != null)
+            {
+                int min = int.Parse(remind.Time) % 60;
+                int hour = int.Parse(remind.Time) / 60;
+                int day = hour / 24;
+                TimeSpan beforeTime = new TimeSpan(day, hour, min);
+
+
+                List<SelectedWeekNum> weeklist = new List<SelectedWeekNum>();
+                foreach (var item in remind.DateItems)
+                {
+                    var itemWeekList = item.Week.Split(',');
+                    var itemClassList = int.Parse(item.Class);
+                    var itemDayList = int.Parse(item.Day);
+                    TimeSet classTime = new TimeSet();
+                    classTime.Set(itemClassList);
+                    for (int i = 0; i < itemWeekList.Count(); i++)
+                    {
+                        SelectedWeekNum swn = new SelectedWeekNum();
+                        swn.SetWeekTime(int.Parse(itemWeekList[i]));
+
+                        remind.time = swn.WeekNumOfMonday.AddDays(itemDayList) + classTime.Time - beforeTime;
+                        if (remind.time.Ticks < DateTime.Now.Ticks)
+                        {
+
+                        }
+                        else
+                        {
+                            await AddRemind(remind);
+                        }
+                    }
+                }
+            }
+            return id;
+        }
+        public static async void SyncRemind()
+        {
+            List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
+            PasswordCredential user = GetCredential.getCredential("ZSCY");
+            paramList.Add(new KeyValuePair<string, string>("stuNum", user.UserName));
+            paramList.Add(new KeyValuePair<string, string>("idNum", user.Password));
+            string content = "";
+            try
+            {
+                content = await NetWork.httpRequest(ApiUri.getRemindApi, paramList);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            //相当于MyRemind
+            GetRemindModel getRemid = JsonConvert.DeserializeObject<GetRemindModel>(content);
+            try
+            {
+                content = await NetWork.httpRequest(ApiUri.getRemindApi, paramList);
+            }
+            catch
+            {
+
+                Debug.WriteLine("网络问题请求失败");
+            }
+            try
+            {
+
+                getRemid = await JsonConvert.DeserializeObjectAsync<GetRemindModel>(content);
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e);
+            }
+            List<string> getRemindList_json = new List<string>();
+            List<MyRemind> remindList = new List<MyRemind>();
+            #region 返回的json格式和添加的风格不一样，转换
+            foreach (var item in getRemid.DataItems)
+            {
+                //getRemindList_json.Add(getRemid.DataItems[0].Id.ToString());
+                MyRemind mr = new MyRemind();
+                List<DateItemModel> dim = new List<DateItemModel>();
+                //每个MyRemind的date
+                foreach (var itemData in item.DateItems)
+                {
+                    DateItemModel dateitme = new DateItemModel();
+                    string week = "";
+                    foreach (var itemWeek in itemData.WeekItems)
+                    {
+                        week += itemWeek + ",";
+                    }
+                    week = week.Remove(week.Length - 1);
+                    dateitme.Class = itemData.Class.ToString();
+                    dateitme.Day = itemData.Day.ToString();
+                    dateitme.Week = week;
+                    dim.Add(dateitme);
+                }
+                mr.Title = item.Title;
+                mr.Content = item.Content;
+                mr.DateItems = dim;
+                mr.Time = item.Time;
+                mr.Id = item.Id.ToString();
+                remindList.Add(mr);
+
+            }
+            #endregion
+            List<string> RemindTagList = new List<string>();
+            RemindTagList = DatabaseMethod.ClearRemindItem() as List<string>;
+            var notifier = ToastNotificationManager.CreateToastNotifier();
+            if (RemindTagList != null)
+            {
+
+                for (int i = 0; i < RemindTagList.Count(); i++)
+                {
+                    var scheduledNotifs = notifier.GetScheduledToastNotifications()
+                  .Where(n => n.Tag.Equals(RemindTagList[i]));
+
+                    // Remove all of those from the schedule
+                    foreach (var n in scheduledNotifs)
+                    {
+                        notifier.RemoveFromSchedule(n);
+                    }
+                }
+            }
+
+            foreach (var remindItem in remindList)
+            {
+                string id = await SyncAllRemind(remindItem);
+                DatabaseMethod.ToDatabase(remindItem.Id, JsonConvert.SerializeObject(remindItem), id);
+            }
+            DatabaseMethod.ReadDatabase(Windows.UI.Xaml.Visibility.Collapsed);
+        }
     }
 
+
+
+
 }
-//        private static ScheduledToastNotification GenerateAlarmNotification(MyRemind remind)
-//        {
-//            // Using NuGet package Microsoft.Toolkit.Uwp.Notifications
-//            ToastContent content = new ToastContent()
-//            {
-//                Scenario = ToastScenario.Alarm,
-
-//                Visual = new ToastVisual()
-//                {
-//                    BindingGeneric = new ToastBindingGeneric()
-//                    {
-//                        Children =
-//                                {
-//                                    new AdaptiveText()
-//                                    {
-//                                        Text = $"提醒: {remind.Title}"
-//                                    },
-
-//                                    new AdaptiveText()
-//                                    {
-//                                        Text = remind.Content
-//                                    }
-//                                }
-//                    }
-//                },
-
-//                Actions = new ToastActionsSnoozeAndDismiss()//自动创建一个自动本地化的有延迟提醒时间间隔，贪睡和取消的按钮，贪睡时间由系统自动处理
-//            };
-//            // We can easily enable Universal Dismiss by generating a RemoteId for the alarm that will be
-//            // the same on both devices. We'll just use the alarm delivery time. If an alarm on one device
-//            // has the same delivery time as an alarm on another device, it'll be dismissed when one of the
-//            // alarms is dismissed.
-//            //string remoteId = (remindTime.Ticks / 10000000 / 60).ToString(); // Minutes
-
-//            return new ScheduledToastNotification(content.GetXml(), remind.)
-//            {
-//                Tag = GetTag(remind),
-
-//                // RemoteId is a 1607 feature, if you support older systems, use ApiInformation to check if property is present
-
-//                //RemoteId = remoteId
-//            };
-//        }
-//        //private static DateTime remindTime(MyRemind remind)
-//        //{
-//        //    int time = int.Parse(remind.Time); 
-//        //    TimeSpan beforeTime= 
-//        //}
-
-//    }
-//}

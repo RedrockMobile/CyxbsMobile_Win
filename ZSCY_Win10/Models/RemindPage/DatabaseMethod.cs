@@ -16,6 +16,18 @@ namespace ZSCY_Win10.Models.RemindPage
 {
     public static class DatabaseMethod
     {
+        public static IEnumerable<string> ClearRemindItem()
+        {
+            IEnumerable<string> TagList;
+            using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
+            {
+                var list = conn.Table<RemindListDB>();
+               TagList = from x in list where x.Id_system.Equals("") select x.Id_system;
+                conn.DropTable<RemindListDB>();
+                conn.CreateTable<RemindListDB>();
+            }
+            return TagList;
+        }
         public static async void DeleteRemindItem(string tag)
         {
             using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
@@ -80,7 +92,7 @@ namespace ZSCY_Win10.Models.RemindPage
             //机智的我，删除和插入替换了update
 
             up.Delete(x => x.Id == id || x.Id_system == id_system);
-                RemindListDB temp = new RemindListDB() { Id = id, Id_system = id_system, json = json };
+            RemindListDB temp = new RemindListDB() { Id = id, Id_system = id_system, json = json };
             conn.Insert(temp);
 
 

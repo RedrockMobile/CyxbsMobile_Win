@@ -305,6 +305,7 @@
     <Compile Include="Models\RemindPage\BaseModel.cs" />
     <Compile Include="Models\RemindPage\CourseList.cs" />
     <Compile Include="Models\RemindPage\DatabaseMethod.cs" />
+    <Compile Include="Models\RemindPage\getRemindModel.cs" />
     <Compile Include="Models\RemindPage\JsonMethod.cs" />
     <Compile Include="Models\RemindPage\MyRemind.cs" />
     <Compile Include="Models\RemindPage\RemindHelp.cs" />

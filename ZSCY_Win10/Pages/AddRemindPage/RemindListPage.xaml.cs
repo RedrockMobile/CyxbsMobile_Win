@@ -23,6 +23,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using Windows.UI.Popups;
 using Windows.UI.Core;
+using ZSCY_Win10.Util;
+using Windows.Security.Credentials;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -40,6 +42,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             this.InitializeComponent();
             DatabaseMethod.ReadDatabase(Visibility.Collapsed);
             RemindListView.ItemsSource = App.remindList;
+        
             isSave = true;
             this.SizeChanged += (s, e) =>
             {
@@ -62,7 +65,10 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             };
             SystemNavigationManager.GetForCurrentView().BackRequested += RemindListPage_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar") && Utils.getPhoneWidth() < 400)
+            {
+                RefreshAppBarButton.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void RemindListPage_BackRequested(object sender, BackRequestedEventArgs e)
@@ -166,6 +172,21 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             App.isLoad = false;
             ListGrid2.Visibility = Visibility.Visible;
             Frame2.Navigate(typeof(EditRemindPage), remind);
+        }
+
+        private void RefreshListView_RefreshInvoked(DependencyObject sender, object args)
+        {
+            RemindHelp.SyncRemind();
+        }
+
+        private void RefreshAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            RemindHelp.SyncRemind();
+        }
+
+        private void RemindListSV_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+
         }
     }
 
