@@ -68,7 +68,7 @@ namespace ZSCY_Win10.Models.RemindPage
                     time = new TimeSpan(19, 0, 0);
                     break;
                 case 5:
-                    time = new TimeSpan(21, 5, 0);
+                    time = new TimeSpan(20, 50, 0);
                     break;
                 default:
                     time = new TimeSpan(0, 0, 0);
