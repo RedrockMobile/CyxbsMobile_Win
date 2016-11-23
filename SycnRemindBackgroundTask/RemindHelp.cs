@@ -85,7 +85,7 @@ namespace SycnRemindBackgroundTask
                 int min = int.Parse(remind.Time) % 60;
                 int hour = int.Parse(remind.Time) / 60;
                 int day = hour / 24;
-                TimeSpan beforeTime = new TimeSpan(day, hour, min);
+                TimeSpan beforeTime = new TimeSpan(day, hour, min,0);
 
 
                 List<SelectedWeekNum> weeklist = new List<SelectedWeekNum>();
