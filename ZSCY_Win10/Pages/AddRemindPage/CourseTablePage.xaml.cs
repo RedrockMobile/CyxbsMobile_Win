@@ -39,7 +39,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             };
             CreateCourseTable();
             //SystemNavigationManager.GetForCurrentView().BackRequested += CourseTablePage_BackRequested; ;
-            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
 
         //private void CourseTablePage_BackRequested(object sender, BackRequestedEventArgs e)
@@ -171,10 +171,14 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             if (page == typeof(EditRemindPage) )
             {
                 Frame.GoBack();
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
             }
             else
             {
                 this.Visibility = Visibility.Collapsed;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
                 //Frame.GoBack();
             }
         }

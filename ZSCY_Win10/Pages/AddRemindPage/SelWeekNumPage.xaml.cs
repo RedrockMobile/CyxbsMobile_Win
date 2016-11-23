@@ -38,7 +38,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             WeekListGridView.ItemsSource = SelWeekList;
             InitializeWeekList();
             //SystemNavigationManager.GetForCurrentView().BackRequested += SelWeekNumPage_BackRequested; ; ;
-            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
 
         //private void SelWeekNumPage_BackRequested(object sender, BackRequestedEventArgs e)
@@ -124,12 +124,19 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                 }
             }
             if (page == typeof(EditRemindPage))
+            {
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                 Frame.GoBack();
+            }
             else
             {
                 Frame rootFrame = Window.Current.Content as Frame;
                 //rootFrame.Visibility = Visibility.Collapsed;
                 this.Visibility = Visibility.Collapsed;
+
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
+
                 //Frame.GoBack();
             }
             Debug.WriteLine(App.selectedWeek.WeekNumString);
