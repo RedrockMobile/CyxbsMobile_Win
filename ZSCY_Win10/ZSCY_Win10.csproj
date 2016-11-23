@@ -370,6 +370,9 @@
     <Compile Include="Pages\AddRemindPage\RemindListPage.xaml.cs">
       <DependentUpon>RemindListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AddRemindPage\RemindTest.xaml.cs">
+      <DependentUpon>RemindTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AddRemindPage\SelWeekNumPage.xaml.cs">
       <DependentUpon>SelWeekNumPage.xaml</DependentUpon>
     </Compile>
@@ -706,6 +709,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\AddRemindPage\RemindListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddRemindPage\RemindTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

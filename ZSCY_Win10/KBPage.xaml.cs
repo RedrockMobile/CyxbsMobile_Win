@@ -1122,5 +1122,10 @@ namespace ZSCY_Win10
         {
             Frame.Navigate(typeof(RemindListPage));
         }
+
+        private void TestButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(RemindTest));
+        }
     }
 }

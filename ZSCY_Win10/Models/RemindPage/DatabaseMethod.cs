@@ -16,16 +16,23 @@ namespace ZSCY_Win10.Models.RemindPage
 {
     public static class DatabaseMethod
     {
-        public static IEnumerable<string> ClearRemindItem()
+        public static List<string> ClearRemindItem()
         {
-            IEnumerable<string> TagList;
-            using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
+            var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath);
+            var list = conn.Table<RemindListDB>();
+            List<string> TagList = new List<string>();
+            foreach (var item in list)
             {
-                var list = conn.Table<RemindListDB>();
-               TagList = from x in list where x.Id_system.Equals("") select x.Id_system;
-                conn.DropTable<RemindListDB>();
-                conn.CreateTable<RemindListDB>();
+                var itemList = item.Id_system.Split(',');
+                for (int i = 0; i < itemList.Count(); i++)
+                {
+                    TagList.Add(itemList[i]);
+                }
             }
+            //var TagList = from x in list where x.Id_system.Equals("") select x.Id_system;
+
+            conn.DropTable<RemindListDB>();
+            conn.CreateTable<RemindListDB>();
             return TagList;
         }
         public static async void DeleteRemindItem(string tag)

@@ -19,16 +19,40 @@ namespace SycnRemindBackgroundTask
 {
     internal sealed class DatabaseMethod
     {
-        public static IEnumerable<string> ClearRemindItem()
+        public static List<string> ClearRemindItem()
         {
-            IEnumerable<string> TagList;
-            using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db")))
+
+            var conn = new SQLiteConnection(new SQLitePlatformWinRT(), Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db"));
+
+            //foreach (var item in list)
+            //{
+            //    MyRemind temp = JsonConvert.DeserializeObject<MyRemind>(item.json);
+            //    //getDetailClass(ref temp);
+            //    temp.Tag = item.Id_system;
+            //    temp.ClassDay = ClassMixDay(ref temp);
+            //    if (visibility == Visibility.Visible)
+            //        temp.Dot = Visibility.Collapsed;
+            //    else
+            //        temp.Dot = Visibility.Visible;
+            //    temp.Rewrite = visibility;
+            //    temp.DeleteIcon = visibility;
+            //    App.remindList.Add(temp);
+            //}
+            var list = conn.Table<RemindListDB>();
+            List<string> TagList = new List<string>();
+           foreach(var item in list)
             {
-                var list = conn.Table<RemindListDB>();
-                TagList = from x in list where x.Id_system.Equals("") select x.Id_system;
-                conn.DropTable<RemindListDB>();
-                conn.CreateTable<RemindListDB>();
+                var itemList = item.Id_system.Split(',');
+                for(int i=0;i<itemList.Count();i++)
+                {
+                    TagList.Add(itemList[i]);
+                }
             }
+            //var TagList = from x in list where x.Id_system.Equals("") select x.Id_system;
+          
+            conn.DropTable<RemindListDB>();
+            conn.CreateTable<RemindListDB>();
+
             return TagList;
         }
         //public static async void DeleteRemindItem(string tag)
