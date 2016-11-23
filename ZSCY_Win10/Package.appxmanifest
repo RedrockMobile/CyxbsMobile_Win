@@ -40,7 +40,7 @@
             <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="RemindBackgroundTask.RemindBackgroundTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="SycnRemindBackgroundTask.RemindBackgroundTask">
           <BackgroundTasks>
             <Task Type="systemEvent" />
             <Task Type="timer" />

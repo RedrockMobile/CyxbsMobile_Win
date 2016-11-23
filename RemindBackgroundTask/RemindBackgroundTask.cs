@@ -5,26 +5,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
-using ZSCY_Win10.Models.RemindPage;
-using ZSCY_Win10.Service;
 
-namespace RemindBackgroundTask
+
+namespace RemindBackgroundTask3
 {
     public sealed class RemindBackgroundTask : IBackgroundTask
     {
         public void Run(IBackgroundTaskInstance taskInstance)
         {
-            BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
             try
             {
+                BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
 
                 RemindHelp.SyncRemind();
+                deferral.Complete();
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
             }
-            deferral.Complete();
         }
 
     }

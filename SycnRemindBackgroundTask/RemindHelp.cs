@@ -1,33 +1,29 @@
-﻿//using System;
-//using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Toolkit.Uwp.Notifications;
 using Windows.UI.Notifications;
-using System.Threading.Tasks;
-using System;
-using ZSCY_Win10.Models.RemindPage;
-using ZSCY_Win10.Util;
 using System.Diagnostics;
-using System.Collections.Generic;
 using System.Collections;
 using Windows.Security.Credentials;
 using Newtonsoft.Json;
-using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using System.Collections.ObjectModel;
 
-namespace ZSCY_Win10.Models.RemindPage
+
+namespace SycnRemindBackgroundTask
 {
-    public static class RemindHelp
+    internal sealed class RemindHelp
     {
-        public static async Task AddRemind(MyRemind remind)
+        public static  void AddRemind(MyRemind remind)
         {
             remind.Id_system = Guid.NewGuid();
-            await Task.Run(delegate
-            {
+            //await Task.Run(delegate
+            //{
                 addNotification(remind);
-            });
+            //});
         }
         private static void addNotification(MyRemind remind)
         {
@@ -79,34 +75,7 @@ namespace ZSCY_Win10.Models.RemindPage
             return temp;
         }
 
-        public static async Task<string> AddAllRemind(MyRemind remind, TimeSpan beforeTime)
-        {
-            id = "";
-            for (int i = 0; i < App.selectedWeekNumList.Count; i++)
-            {
 
-                for (int r = 0; r < 6; r++)
-                {
-                    for (int c = 0; c < 7; c++)
-                    {
-                        if (App.timeSet[r, c].IsCheck)
-                        {
-                            remind.time = App.selectedWeekNumList[i].WeekNumOfMonday.AddDays(c) + App.timeSet[r, c].Time - beforeTime;
-                            if (remind.time < DateTime.Now.ToUniversalTime())
-                            {
-
-                            }
-                            else
-                            {
-                                await AddRemind(remind);
-                            }
-
-                        }
-                    }
-                }
-            }
-            return id;
-        }
         public static async Task<string> SyncAllRemind(MyRemind remind)
         {
 
@@ -139,7 +108,7 @@ namespace ZSCY_Win10.Models.RemindPage
                         }
                         else
                         {
-                            await AddRemind(remind);
+                             AddRemind(remind);
                         }
                     }
                 }
@@ -149,26 +118,33 @@ namespace ZSCY_Win10.Models.RemindPage
         public static async void SyncRemind()
         {
             List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
-            PasswordCredential user = GetCredential.getCredential("ZSCY");
+            PasswordCredential user = null;
+            var vault = new PasswordVault();
+            var credentialList = vault.FindAllByResource("ZSCY");
+            if (credentialList.Count == 1)
+            {
+                credentialList[0].RetrievePassword();
+                user = credentialList[0];
+            }
             paramList.Add(new KeyValuePair<string, string>("stuNum", user.UserName));
             paramList.Add(new KeyValuePair<string, string>("idNum", user.Password));
             string content = "";
             try
             {
-                content = await NetWork.httpRequest(ApiUri.getRemindApi, paramList);
+                content = await NetWork.httpRequest(@"http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Person/getTransaction", paramList);
             }
-            catch
+            catch (Exception)
             {
 
-                Debug.WriteLine("网络问题请求失败");
+                throw;
             }
             //相当于MyRemind
-            GetRemindModel getRemid = JsonConvert.DeserializeObject<GetRemindModel>(content);
-       
+            GetRemindModel getRemid = new GetRemindModel();
+
+
             try
             {
-
-                getRemid = await JsonConvert.DeserializeObjectAsync<GetRemindModel>(content);
+                getRemid = JsonConvert.DeserializeObject<GetRemindModel>(content);
             }
             catch (Exception e)
             {
@@ -230,7 +206,7 @@ namespace ZSCY_Win10.Models.RemindPage
                 string id = await SyncAllRemind(remindItem);
                 DatabaseMethod.ToDatabase(remindItem.Id, JsonConvert.SerializeObject(remindItem), id);
             }
-            DatabaseMethod.ReadDatabase(Windows.UI.Xaml.Visibility.Collapsed);
+
         }
     }
 

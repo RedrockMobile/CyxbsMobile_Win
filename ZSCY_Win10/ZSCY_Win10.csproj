@@ -826,6 +826,10 @@
       <Project>{ea70b47f-1db5-4a92-805d-9f144efa396f}</Project>
       <Name>MyMessageBackgroundTask</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SycnRemindBackgroundTask\SycnRemindBackgroundTask.csproj">
+      <Project>{38a8cd9d-386d-408d-ba00-be6bf45ecb00}</Project>
+      <Name>SycnRemindBackgroundTask</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

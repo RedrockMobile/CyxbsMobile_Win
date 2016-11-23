@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{191009B2-1C3B-43E4-B915-73868BBA146D}</ProjectGuid>
+    <ProjectGuid>{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}</ProjectGuid>
     <OutputType>winmdobj</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RemindBackgroundTask</RootNamespace>
-    <AssemblyName>RemindBackgroundTask</AssemblyName>
+    <RootNamespace>SycnRemindBackgroundTask</RootNamespace>
+    <AssemblyName>SycnRemindBackgroundTask</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
@@ -109,13 +109,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RemindBackgroundTask.cs" />
+    <Compile Include="CourseTable.cs" />
+    <Compile Include="DatabaseMethod.cs" />
+    <Compile Include="getRemindModel.cs" />
+    <Compile Include="MyRemind.cs" />
+    <Compile Include="NetWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ZSCY_Win10\ZSCY_Win10.csproj">
-      <Project>{C808DFFD-689B-4140-A920-24D9067CE3D2}</Project>
-      <Name>ZSCY_Win10</Name>
-    </ProjectReference>
+    <Compile Include="RemindHelp.cs" />
+    <Compile Include="RemindListDB.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

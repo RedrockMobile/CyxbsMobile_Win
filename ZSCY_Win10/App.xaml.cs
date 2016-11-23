@@ -203,7 +203,7 @@ namespace ZSCY_Win10
 
                 BackgroundTaskBuilder builder3 = new BackgroundTaskBuilder();
                 builder3.Name = "RemindBackgroundTask";
-                builder3.TaskEntryPoint = "RemindBackgroundTask.RemindBackgroundTask";
+                builder3.TaskEntryPoint = "SycnRemindBackgroundTask.RemindBackgroundTask";
                 builder3.SetTrigger(new TimeTrigger(15, false));
                 BackgroundTaskRegistration sycnRemind = builder3.Register();
             }
