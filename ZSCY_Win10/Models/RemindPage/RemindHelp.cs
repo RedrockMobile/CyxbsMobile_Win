@@ -116,7 +116,7 @@ namespace ZSCY_Win10.Models.RemindPage
                 int min = int.Parse(remind.Time) % 60;
                 int hour = int.Parse(remind.Time) / 60;
                 int day = hour / 24;
-                TimeSpan beforeTime = new TimeSpan(day, hour, min,0);
+                TimeSpan beforeTime = new TimeSpan(day, hour, min, 0);
 
 
                 List<SelectedWeekNum> weeklist = new List<SelectedWeekNum>();
@@ -130,8 +130,8 @@ namespace ZSCY_Win10.Models.RemindPage
                     for (int i = 0; i < itemWeekList.Count(); i++)
                     {
                         SelectedWeekNum swn = new SelectedWeekNum();
-                        swn.SetWeekTime(int.Parse(itemWeekList[i]));
-
+                        //TODO 周数是是从第一周开始所以week设置要减一
+                        swn.SetWeekTime(int.Parse(itemWeekList[i])-1);
                         remind.time = swn.WeekNumOfMonday.AddDays(itemDayList) + classTime.Time - beforeTime;
                         if (remind.time.Ticks < DateTime.Now.Ticks)
                         {
@@ -164,7 +164,7 @@ namespace ZSCY_Win10.Models.RemindPage
             }
             //相当于MyRemind
             GetRemindModel getRemid = JsonConvert.DeserializeObject<GetRemindModel>(content);
-       
+
             try
             {
 

@@ -338,6 +338,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                             DatabaseMethod.EditDatabase(myRemind.Id, databaseJson, id_system);
                             DatabaseMethod.ReadDatabase(Visibility.Visible);
                             App.isLoad = false;
+                            App.selectedWeekNumList.Clear();
                         }
                     }
                 }

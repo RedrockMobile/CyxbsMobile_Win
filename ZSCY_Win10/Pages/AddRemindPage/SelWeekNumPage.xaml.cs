@@ -119,6 +119,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                 {
                     SelectedWeekNum temp = new SelectedWeekNum() { WeekNum = i + 1 };
                     temp.SetWeekTime(i);
+                    temp.WeekNumOfMonday.AddDays(-7);
                     App.selectedWeekNumList.Add(temp);
                     App.selectedWeek.WeekNumString += (i + 1).ToString() + "、";
                 }

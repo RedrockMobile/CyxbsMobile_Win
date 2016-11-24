@@ -99,7 +99,7 @@ namespace SycnRemindBackgroundTask
                     for (int i = 0; i < itemWeekList.Count(); i++)
                     {
                         SelectedWeekNum swn = new SelectedWeekNum();
-                        swn.SetWeekTime(int.Parse(itemWeekList[i]));
+                        swn.SetWeekTime(int.Parse(itemWeekList[i])-1);
 
                         remind.time = swn.WeekNumOfMonday.AddDays(itemDayList) + classTime.Time - beforeTime;
                         if (remind.time.Ticks < DateTime.Now.Ticks)
