@@ -7,6 +7,7 @@
     xmlns:converter="using:ZSCY_Win10.Util.Converter"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:remindpage="using:ZSCY_Win10.Models.RemindPage"
+     xmlns:pr="using:PullToRefresh.UWP"
     mc:Ignorable="d">
     <Page.Resources>
         <converter:RemindListWeek x:Key="RemindListWeek"/>
@@ -46,7 +47,33 @@
             </Grid>
         </Popup>
     </Grid>-->
+    <!--
+           
+            </ListView>
+
+        <Popup Name="AddRemindPopup"   HorizontalAlignment="Right" VerticalAlignment="Bottom" IsOpen="True">
+            <Grid Name="AddRemindGrid" Tapped="AddRemindGrid_Tapped">
+                <Ellipse Width="50" Height="50" Fill="#068cfd"/>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe104;" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </Popup>
+    </Grid>-->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="VisualState000">
+                    <VisualState.Setters>
+                        <Setter Target="ListGrid1.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="grid1.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="ListGrid2.(Grid.Column)" Value="0"/>
+                        <Setter Target="ListGrid2.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="ShowRemindStackPanel.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="grid.(Grid.ColumnSpan)" Value="2"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualState800"/>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -57,34 +84,37 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid Background="#068cfd" Grid.Row="0" HorizontalAlignment="Stretch" Grid.Column="0">
-            <TextBlock Name="YourRemindTitle" Text="你的提醒" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
-            <AppBarButton Name="EditRemindList"  HorizontalAlignment="Right" VerticalAlignment="Center" Click="EditRemindList_Click">
-                <FontIcon Name="EditRemind_Icon" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" Foreground="White" />
-            </AppBarButton>
+        <Grid x:Name="grid" Background="#068cfd" Grid.Row="0" HorizontalAlignment="Stretch" Grid.Column="0">
+            <TextBlock x:Name="YourRemindTitle" Text="你的提醒" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" >
+                <AppBarButton Name="RefreshAppBarButton" Click="RefreshAppBarButton_Click" Icon="Refresh" Foreground="White"/>
+                <AppBarButton x:Name="EditRemindList"  Click="EditRemindList_Click">
+                    <FontIcon x:Name="EditRemind_Icon" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" Foreground="White" />
+                </AppBarButton>
+            </StackPanel>
         </Grid>
-        <Grid  Background="#068cfd" Grid.Row="0" HorizontalAlignment="Stretch" Grid.Column="1">
-            
-        </Grid>
-        <Grid  Name="ListGrid1"  Background="#F5F5F5" Grid.Row="1" Grid.Column="0">
-            <ListView Name="RemindListView" Grid.Column="0">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-                        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
-                        <Setter Property="TabNavigation" Value="Local"/>
-                        <Setter Property="IsHoldingEnabled" Value="True"/>
-                        <Setter Property="Padding" Value="12,0,12,0"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-                        <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}"/>
-                        <Setter Property="MinHeight" Value="{ThemeResource ListViewItemMinHeight}"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ListViewItem">
-                                    <ListViewItemPresenter
+        <Grid x:Name="grid1"  Background="#068cfd" Grid.Row="0" HorizontalAlignment="Stretch" Grid.Column="1"/>
+        <Grid  x:Name="ListGrid1"  Background="#F5F5F5" Grid.Row="1" Grid.Column="0">
+            <pr:PullToRefreshBox Name="RefreshListView" RefreshInvoked="RefreshListView_RefreshInvoked" VerticalAlignment="Stretch">
+                    <Grid>
+                        <ListView x:Name="RemindListView" Grid.Column="0" >
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                                    <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                                    <Setter Property="TabNavigation" Value="Local"/>
+                                    <Setter Property="IsHoldingEnabled" Value="True"/>
+                                    <Setter Property="Padding" Value="12,0,12,0"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}"/>
+                                    <Setter Property="MinHeight" Value="{ThemeResource ListViewItemMinHeight}"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListViewItem">
+                                                <ListViewItemPresenter
           ContentTransitions="{TemplateBinding ContentTransitions}"
           SelectionCheckMarkVisualEnabled="True"
           CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
@@ -108,104 +138,93 @@
           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
           ContentMargin="{TemplateBinding Padding}"
           CheckMode="Inline"/>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate >
-                    <DataTemplate x:DataType="remindpage:MyRemind">
-                        <Grid >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Line Margin="14,0" Y1="0" Grid.Column="0" Y2="{Binding ElementName=RemindContent,Path=ActualHeight,Mode=OneWay}" StrokeThickness="3" Stroke="White"/>
-                            <Ellipse Width="12" Grid.Column="0" Fill="#9ACEFF" Height="12" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind Dot,Mode=OneWay}"/>
-                            <!--<FoKntIcon Width="12" Grid.Column="0" Foreground="#F66868" FontFamily="Segoe MDL2 Assets" Glyph="&#xEB90;"  Height="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
-                            <Grid Name="DeleteRemindGridButton" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind DeleteIcon,Mode=OneWay}" Tapped="DeleteRemindGridButton_Tapped">
-                                <!--<Ellipse Width="15"  Fill="#F66868"  Height="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <FontIcon Glyph="&#xE9AE;" Foreground="White" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
-                                <FontIcon Glyph="&#xEB90;" Foreground="#F66868" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Grid>
-
-                            <!--<Grid Grid.Column="1">-->
-
-                            <Grid Grid.Column="1"  Name="RemindContent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Grid Margin="0,10" Grid.Column="1"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="White">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate >
+                                <DataTemplate x:DataType="remindpage:MyRemind">
+                                    <Grid >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{x:Bind Title}" Foreground="#343434" Grid.Column="0" Margin="5,0"/>
-                                        <TextBlock Text="{x:Bind ClassDay}" Grid.Column="1" Foreground="#5393FF" />
-                                    </Grid>
-                                    <TextBlock Text="{x:Bind Content}" Grid.Row="1" Foreground="#878787" TextWrapping="Wrap" Margin="5,0,0,50"/>
-                                    <Grid Grid.Row="2" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,1,0,0" BorderBrush="Gray">
-                                        <TextBlock Text="{x:Bind DateItems[0].Week,Converter={StaticResource RemindListWeek}}" Foreground="#5393FF" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE916;" Foreground="{x:Bind Time,Converter={StaticResource BeforeTimeIconColor}}" VerticalAlignment="Center" Margin="5,0"/>
-                                            <TextBlock Name="BeforeTimeTextBlock" Text="{x:Bind Time, Converter={StaticResource BeforeTimeRemind}}" Foreground="#A6A6A6" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Grid>
-                                    <Grid Grid.Row="0" Grid.RowSpan="3" Visibility="{x:Bind Rewrite ,Mode=OneWay}">
+                                        <Line Margin="14,0" Y1="0" Grid.Column="0" Y2="{Binding ActualHeight, ElementName=RemindContent, Mode=OneWay}" StrokeThickness="3" Stroke="White"/>
+                                        <Ellipse Width="12" Grid.Column="0" Fill="#9ACEFF" Height="12" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind Dot, Mode=OneWay}"/>
+                                        <!--<FoKntIcon Width="12" Grid.Column="0" Foreground="#F66868" FontFamily="Segoe MDL2 Assets" Glyph="&#xEB90;"  Height="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                                        <Grid x:Name="DeleteRemindGridButton" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind DeleteIcon, Mode=OneWay}" Tapped="DeleteRemindGridButton_Tapped">
+                                            <!--<Ellipse Width="15"  Fill="#F66868"  Height="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <FontIcon Glyph="&#xE9AE;" Foreground="White" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                                            <FontIcon Glyph="&#xEB90;" Foreground="#F66868" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                        <Grid Grid.Column="1"  x:Name="RemindContent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Margin="0,10" Grid.Column="1"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="White">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{x:Bind Title}" Foreground="#343434" Grid.Column="0" Margin="5,0"/>
+                                                    <TextBlock Text="{x:Bind ClassDay}" Grid.Column="1" Foreground="#5393FF" />
+                                                </Grid>
+                                                <TextBlock Text="{x:Bind Content}" Grid.Row="1" Foreground="#878787" TextWrapping="Wrap" Margin="5,0,0,50"/>
+                                                <Grid Grid.Row="2" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,1,0,0" BorderBrush="Gray">
+                                                    <TextBlock Text="{x:Bind DateItems[0].Week, Converter={StaticResource RemindListWeek}}" Foreground="#5393FF" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE916;" Foreground="{x:Bind Time, Converter={StaticResource BeforeTimeIconColor}}" VerticalAlignment="Center" Margin="5,0"/>
+                                                        <TextBlock x:Name="BeforeTimeTextBlock" Text="{x:Bind Time, Converter={StaticResource BeforeTimeRemind}}" Foreground="#A6A6A6" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                                <Grid Grid.Row="0" Grid.RowSpan="3" Visibility="{x:Bind Rewrite, Mode=OneWay}">
 
-                                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                            <Rectangle.Fill >
-                                                <LinearGradientBrush StartPoint="0,0">
-                                                    <GradientStop Color="#33FFFFFF" Offset="0.20"/>
-                                                    <GradientStop Color="#66FFFFFF" Offset="0.40"/>
-                                                    <GradientStop Color="#99FFFFFF" Offset="0.60"/>
-                                                    <GradientStop Color="#CCFFFFFF" Offset="0.80"/>
-                                                    <GradientStop Color="#D8FFFFFF" Offset="1.00"/>
-                                                </LinearGradientBrush>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                        <Grid Grid.Column="1" Name="RewriteRemindGridButton" HorizontalAlignment="Right" VerticalAlignment="Center" Tapped="RewriteRemindGridButton_Tapped">
-                                            <Ellipse Width="40"  Fill="#41A2FF"  Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                            <FontIcon Glyph="&#xE76C;" Foreground="White" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                        <Rectangle.Fill >
+                                                            <LinearGradientBrush StartPoint="0,0">
+                                                                <GradientStop Color="#33FFFFFF" Offset="0.20"/>
+                                                                <GradientStop Color="#66FFFFFF" Offset="0.40"/>
+                                                                <GradientStop Color="#99FFFFFF" Offset="0.60"/>
+                                                                <GradientStop Color="#CCFFFFFF" Offset="0.80"/>
+                                                                <GradientStop Color="#D8FFFFFF" Offset="1.00"/>
+                                                            </LinearGradientBrush>
+                                                        </Rectangle.Fill>
+                                                    </Rectangle>
+                                                    <Grid Grid.Column="1" x:Name="RewriteRemindGridButton" HorizontalAlignment="Right" VerticalAlignment="Center" Tapped="RewriteRemindGridButton_Tapped">
+                                                        <Ellipse Width="40"  Fill="#41A2FF"  Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <FontIcon Glyph="&#xE76C;" Foreground="White" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                            <Polygon Grid.Column="0" Points="10,0 0,10 10,20" Fill="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                         </Grid>
                                     </Grid>
-                                </Grid>
-                                <Polygon Grid.Column="0" Points="10,0,0,10,10,20" Fill="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            </Grid>
-
-                            <!--<Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <Rectangle.Fill >
-                                        <LinearGradientBrush StartPoint="0,0">
-                                            <GradientStop Color="#26FFFFFF" Offset="0.25"/>
-                                            <GradientStop Color="#4CFFFFFF" Offset="0.25"/>
-                                            <GradientStop Color="#72FFFFFF" Offset="0.25"/>
-                                            <GradientStop Color="#99FFFFFF" Offset="0.25"/>
-                                        </LinearGradientBrush>
-                                    </Rectangle.Fill>
-                                </Rectangle>-->
-
-
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+            </pr:PullToRefreshBox>
         </Grid>
-        <Grid Name="ListGrid2" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
-         
-
-     
-            <Frame Name="Frame2">
+        <Grid x:Name="ListGrid2" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+            <Frame x:Name="Frame2">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition>
+                            <EntranceNavigationTransitionInfo/>
+                        </NavigationThemeTransition>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
             </Frame>
-
         </Grid>
-        <StackPanel Grid.Row="0"  Name="ShowRemindStackPanel" Orientation="Horizontal" Margin="400,0,0,0" >
+        <StackPanel Grid.Row="0"  x:Name="ShowRemindStackPanel" Orientation="Horizontal" Margin="400,0,0,0" >
             <Line x:Name="SplitLine1"  Y1="0" Y2="48" Stroke="#58b3ff" StrokeThickness="1"/>
             <!--<TextBlock Name="AddRemindTitle" Text="添加提醒" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>-->
         </StackPanel>

@@ -9,11 +9,32 @@ using System.Collections.ObjectModel;
 using Windows.UI.Notifications;
 using ZSCY_Win10.Util;
 using Windows.Security.Credentials;
+using Newtonsoft.Json;
+using Windows.UI.Xaml;
 
 namespace ZSCY_Win10.Models.RemindPage
 {
     public static class DatabaseMethod
     {
+        public static List<string> ClearRemindItem()
+        {
+            var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath);
+            var list = conn.Table<RemindListDB>();
+            List<string> TagList = new List<string>();
+            foreach (var item in list)
+            {
+                var itemList = item.Id_system.Split(',');
+                for (int i = 0; i < itemList.Count(); i++)
+                {
+                    TagList.Add(itemList[i]);
+                }
+            }
+            //var TagList = from x in list where x.Id_system.Equals("") select x.Id_system;
+
+            conn.DropTable<RemindListDB>();
+            conn.CreateTable<RemindListDB>();
+            return TagList;
+        }
         public static async void DeleteRemindItem(string tag)
         {
             using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
@@ -78,9 +99,97 @@ namespace ZSCY_Win10.Models.RemindPage
             //机智的我，删除和插入替换了update
 
             up.Delete(x => x.Id == id || x.Id_system == id_system);
-                RemindListDB temp = new RemindListDB() { Id = id, Id_system = id_system, json = json };
+            RemindListDB temp = new RemindListDB() { Id = id, Id_system = id_system, json = json };
             conn.Insert(temp);
 
+
+        }
+        public static void ReadDatabase(Visibility visibility)
+        {
+            try
+            {
+
+                using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
+                {
+
+                    App.remindList.Clear();
+                    var list = conn.Table<RemindListDB>();
+                    foreach (var item in list)
+                    {
+                        MyRemind temp = JsonConvert.DeserializeObject<MyRemind>(item.json);
+                        //getDetailClass(ref temp);
+                        temp.Tag = item.Id_system;
+                        temp.ClassDay = ClassMixDay(ref temp);
+                        if (visibility == Visibility.Visible)
+                            temp.Dot = Visibility.Collapsed;
+                        else
+                            temp.Dot = Visibility.Visible;
+                        temp.Rewrite = visibility;
+                        temp.DeleteIcon = visibility;
+                        App.remindList.Add(temp);
+                    }
+                }
+            }
+            catch
+            {
+                var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath);
+                conn.CreateTable<RemindListDB>();
+            }
+        }
+
+        private static string ClassMixDay(ref MyRemind remind)
+        {
+            string temp = "";
+            for (int i = 0; i < remind.DateItems.Count; i++)
+            {
+                temp += ConvertDay(int.Parse(remind.DateItems[i].Day)) + ConvertClass(int.Parse(remind.DateItems[i].Class)) + "节、";
+            }
+
+            temp = temp.Remove(temp.Length - 1);
+            return temp;
+        }
+        private static string ConvertClass(int i)
+        {
+            switch (i)
+            {
+                case 0:
+                    return "12";
+                case 1:
+                    return "34";
+                case 2:
+                    return "56";
+                case 3:
+                    return "78";
+                case 4:
+                    return "910";
+                case 5:
+                    return "1112";
+                default:
+                    return "";
+            }
+
+        }
+        private static string ConvertDay(int i)
+        {
+            switch (i)
+            {
+                case 0:
+                    return "周一";
+                case 1:
+                    return "周二";
+                case 2:
+                    return "周三";
+                case 3:
+                    return "周四";
+                case 4:
+                    return "周五";
+                case 5:
+                    return "周六";
+                case 6:
+                    return "周日";
+                default:
+                    return "";
+            }
 
         }
         public static void ToDatabase(string id, string json, string id_system)

@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -37,13 +38,40 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                 SplitLine.Y2 = e.NewSize.Height - 48;
             };
             CreateCourseTable();
-
+            //SystemNavigationManager.GetForCurrentView().BackRequested += CourseTablePage_BackRequested; ;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
+
+        //private void CourseTablePage_BackRequested(object sender, BackRequestedEventArgs e)
+        //{
+
+        //    if (page == typeof(EditRemindPage))
+        //    {
+        //        Frame.GoBack();
+        //        SystemNavigationManager.GetForCurrentView().BackRequested -= CourseTablePage_BackRequested;
+        //        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+        //    }
+        //    else
+        //    {
+        //        this.Visibility = Visibility.Collapsed;
+        //        //Frame.GoBack();
+        //        SystemNavigationManager.GetForCurrentView().BackRequested -= CourseTablePage_BackRequested;
+        //        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+        //    }
+        //}
+
         Type page;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            page = e.Parameter as Type;
+            try
+            {
+
+                page = e.Parameter as Type;
+            }
+            catch
+            {
+            }
         }
         private void CreateCourseTable()
         {
@@ -140,13 +168,18 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                     }
                 }
             Debug.WriteLine(App.SelectedTime.SelTimeString);
-            if (page == typeof(EditRemindPage))
+            if (page == typeof(EditRemindPage) )
             {
                 Frame.GoBack();
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
             }
             else
             {
-                Frame.Navigate(typeof(FristPage));
+                this.Visibility = Visibility.Collapsed;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
+                //Frame.GoBack();
             }
         }
         public string CourseList(int row, int column)

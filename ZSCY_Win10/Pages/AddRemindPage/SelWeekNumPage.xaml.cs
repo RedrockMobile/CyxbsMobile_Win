@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -36,7 +37,26 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             this.InitializeComponent();
             WeekListGridView.ItemsSource = SelWeekList;
             InitializeWeekList();
+            //SystemNavigationManager.GetForCurrentView().BackRequested += SelWeekNumPage_BackRequested; ; ;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
+
+        //private void SelWeekNumPage_BackRequested(object sender, BackRequestedEventArgs e)
+        //{
+        //    if (page == typeof(EditRemindPage))
+        //    {
+        //        Frame.GoBack();
+        //        SystemNavigationManager.GetForCurrentView().BackRequested -= SelWeekNumPage_BackRequested;
+        //        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+        //    }
+        //    else
+        //    {
+        //        this.Visibility = Visibility.Collapsed;
+        //        //Frame.GoBack();
+        //        SystemNavigationManager.GetForCurrentView().BackRequested -= SelWeekNumPage_BackRequested;
+        //        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+        //    }
+        //}
 
         private void InitializeWeekList()
         {
@@ -69,17 +89,20 @@ namespace ZSCY_Win10.Pages.AddRemindPage
         private void SelWeek_Tapped(object sender, TappedRoutedEventArgs e)
         {
             int temp = (sender as GridView).SelectedIndex;
-            if (!SelWeekList[temp].isSelected)
+            if (temp>-1)
             {
-                SelWeekList[temp].ItemContentColor = SelectedFontColor;
-                SelWeekList[temp].ItemFillColor = SelectedFillColor;
-                SelWeekList[temp].isSelected = true;
-            }
-            else
-            {
-                SelWeekList[temp].ItemContentColor = UnselectedFontColor;
-                SelWeekList[temp].ItemFillColor = UnselectedFillColor;
-                SelWeekList[temp].isSelected = false;
+                if (!SelWeekList[temp].isSelected)
+                {
+                    SelWeekList[temp].ItemContentColor = SelectedFontColor;
+                    SelWeekList[temp].ItemFillColor = SelectedFillColor;
+                    SelWeekList[temp].isSelected = true;
+                }
+                else
+                {
+                    SelWeekList[temp].ItemContentColor = UnselectedFontColor;
+                    SelWeekList[temp].ItemFillColor = UnselectedFillColor;
+                    SelWeekList[temp].isSelected = false;
+                }
             }
 
         }
@@ -96,15 +119,26 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                 {
                     SelectedWeekNum temp = new SelectedWeekNum() { WeekNum = i + 1 };
                     temp.SetWeekTime(i);
+                    temp.WeekNumOfMonday.AddDays(-7);
                     App.selectedWeekNumList.Add(temp);
                     App.selectedWeek.WeekNumString += (i + 1).ToString() + "、";
                 }
             }
             if (page == typeof(EditRemindPage))
+            {
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                 Frame.GoBack();
+            }
             else
             {
-                Frame.Navigate(typeof(FristPage));
+                Frame rootFrame = Window.Current.Content as Frame;
+                //rootFrame.Visibility = Visibility.Collapsed;
+                this.Visibility = Visibility.Collapsed;
+
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
+
+                //Frame.GoBack();
             }
             Debug.WriteLine(App.selectedWeek.WeekNumString);
         }

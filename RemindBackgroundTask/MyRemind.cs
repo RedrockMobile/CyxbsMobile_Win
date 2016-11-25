@@ -1,16 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows.Foundation;
 
-namespace ZSCY_Win10.Models.RemindPage
+namespace RemindBackgroundTask3
 {
 
+class SelectedWeekNum
+    {
+        private int weekNum;
+        private static DateTime oneWeekTime = new DateTime(2016, 9, 5, 0, 0, 0);
+        private DateTime weekNumOfMonday;
+        public void SetWeekTime(int i)
+        {
+            weekNumOfMonday = oneWeekTime.AddDays(i * 7);
+            Debug.WriteLine(weekNumOfMonday);
+        }
+        public DateTime WeekNumOfMonday
+        {
+            get
+            {
+                return weekNumOfMonday;
+            }
+
+            set
+            {
+                weekNumOfMonday = value;
+            }
+        }
+        public int WeekNum
+        {
+            get
+            {
+                return weekNum;
+            }
+
+            set
+            {
+                weekNum = value;
+            }
+        }
+
+    }
     [DataContract]
-    public class DateItemModel
+class DateItemModel
     {
         ///<summary>
         /// 
@@ -34,7 +72,7 @@ namespace ZSCY_Win10.Models.RemindPage
 
 
     [DataContract]
-    public class MyRemind : BaseModel
+class MyRemind
     {
         public Guid Id_system { get; set; }
         public DateTimeOffset time { get; set; }
@@ -45,47 +83,8 @@ namespace ZSCY_Win10.Models.RemindPage
         private Visibility deleteIcon;
         public string Tag { get; set; }
 
-        public Visibility Rewrite
-        {
-            get
-            {
-                return rewrite;
-            }
 
-            set
-            {
-                rewrite = value;
-                RaisePropertyChanged(nameof(Rewrite));
-            }
-        }
 
-        public Visibility DeleteIcon
-        {
-            get
-            {
-                return deleteIcon;
-            }
-
-            set
-            {
-                deleteIcon = value;
-                RaisePropertyChanged(nameof(DeleteIcon));
-            }
-        }
-
-        public Visibility Dot
-        {
-            get
-            {
-                return dot;
-            }
-
-            set
-            {
-                dot = value;
-                RaisePropertyChanged(nameof(Dot));
-            }
-        }
 
 
         ///<summary>
@@ -132,7 +131,7 @@ namespace ZSCY_Win10.Models.RemindPage
             set
             {
                 _title = value;
-                RaisePropertyChanged(nameof(Title));
+
             }
         }
 
@@ -149,7 +148,6 @@ namespace ZSCY_Win10.Models.RemindPage
             set
             {
                 _content = value;
-                RaisePropertyChanged(nameof(Content));
             }
         }
 
@@ -169,7 +167,6 @@ namespace ZSCY_Win10.Models.RemindPage
             set
             {
                 classDay = value;
-                RaisePropertyChanged(ClassDay);
             }
         }
 
@@ -183,12 +180,11 @@ namespace ZSCY_Win10.Models.RemindPage
             set
             {
                 totalWeek = value;
-                RaisePropertyChanged(TotalWeek);
             }
         }
     }
 
-    public class AddRemindReturn
+    class AddRemindReturn
     {
         [DataMember(Name = "stuNum")]
         public string StuNum { get; set; }
@@ -203,6 +199,6 @@ namespace ZSCY_Win10.Models.RemindPage
         public string Id { get; set; }
     }
 
-   
+
 
 }

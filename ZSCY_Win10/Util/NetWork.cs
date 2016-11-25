@@ -183,22 +183,26 @@ namespace ZSCY_Win10.Util
             paramList.Add(new KeyValuePair<string, string>("stuNum", myRemind.StuNum));
             paramList.Add(new KeyValuePair<string, string>("idNum", myRemind.IdNum));
             paramList.Add(new KeyValuePair<string, string>("id", myRemind.Id));
-            string date = "[";
-            string _class = "";
-            string day = "";
-            for (int i = 0; i < myRemind.DateItems.Count; i++)
-            {
-                //string dateJson = JsonConvert.SerializeObject(myRemind.DateItems[i]);
-                //date += $"{dateJson},";
-                day = myRemind.DateItems[i].Day + ",";
-                _class = myRemind.DateItems[i].Class + ",";
-            }
-            day=day.Remove(day.Length - 1);
-            _class=_class.Remove(_class.Length - 1);
-            date = date.Remove(date.Length - 1) + "]";
-            paramList.Add(new KeyValuePair<string, string>("week", myRemind.DateItems[0].Week));
-            paramList.Add(new KeyValuePair<string, string>("class", _class));
-            paramList.Add(new KeyValuePair<string, string>("day", day));
+            string dataJson = JsonConvert.SerializeObject(myRemind.DateItems);
+            //dataJson = dataJson.Remove(0);//删掉第一个{
+            //dataJson = dataJson.Remove(dataJson.Length - 1);//删掉最后一个}
+            //string date = "[";
+            //string _class = "";
+            //string day = "";
+            //for (int i = 0; i < myRemind.DateItems.Count; i++)
+            //{
+            //    string dateJson = JsonConvert.SerializeObject(myRemind.DateItems[i]);
+            //    date += $"{dateJson},";
+            //    //day = myRemind.DateItems[i].Day + ",";
+            //    //_class = myRemind.DateItems[i].Class + ",";
+            //}
+            //day=day.Remove(day.Length - 1);
+            //_class=_class.Remove(_class.Length - 1);
+            //date = date.Remove(date.Length - 1) + "]";
+            //paramList.Add(new KeyValuePair<string, string>("week", myRemind.DateItems[0].Week));
+            //paramList.Add(new KeyValuePair<string, string>("class", _class));
+            //paramList.Add(new KeyValuePair<string, string>("day", day));
+            paramList.Add(new KeyValuePair<string, string>("data", dataJson));
             paramList.Add(new KeyValuePair<string, string>("title", myRemind.Title));
             paramList.Add(new KeyValuePair<string, string>("time", myRemind.Time));
             paramList.Add(new KeyValuePair<string, string>("content", myRemind.Content));
@@ -212,6 +216,7 @@ namespace ZSCY_Win10.Util
             paramList.Add(new KeyValuePair<string, string>("id", myRemind.Id));
             return paramList;
         }
+      
         public static async Task<string> httpRequest(string api, List<KeyValuePair<string, string>> paramList)
         {
 

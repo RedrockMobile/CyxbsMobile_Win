@@ -13,8 +13,8 @@ namespace ZSCY_Win10.Util.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            int i = int.Parse( value.ToString());
-            if(i==0)
+          
+            if (value==null)
             {
                 Color gray = Color.FromArgb(255, 167, 167, 167);
 
@@ -37,7 +37,7 @@ namespace ZSCY_Win10.Util.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (int.Parse(value.ToString()) != 0)
+            if (value!=null)
                 return value + "分钟前";
             else
             {
@@ -63,11 +63,18 @@ namespace ZSCY_Win10.Util.Converter
         }
     }
     public class AddRemindShowString : IValueConverter
-        {
+    {
 
-            public object Convert(object value, Type targetType, object parameter, string language)
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            if (value== null)
             {
-                string[] temp = value.ToString().Split(' ');
+                return "";
+            }
+            else
+            {
+
+                string[] temp = value.ToString().Split(',');
                 //莫名的多一个""
                 if (temp.Length - 1 > 6)
                 {
@@ -84,15 +91,24 @@ namespace ZSCY_Win10.Util.Converter
                 }
             }
 
-            public object ConvertBack(object value, Type targetType, object parameter, string language)
-            {
-                throw new NotImplementedException();
-            }
         }
-        public class AddRmindShowWeekNum : IValueConverter
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            public object Convert(object value, Type targetType, object parameter, string language)
+            throw new NotImplementedException();
+        }
+    }
+    public class AddRmindShowWeekNum : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            if (value==null)
             {
+                return "";
+            }
+            else
+            {
+
                 string[] temp = value.ToString().Split('、');
                 if (temp.Length - 1 > 10)
                 {
@@ -110,12 +126,13 @@ namespace ZSCY_Win10.Util.Converter
                     return value;
                 }
             }
-
-            public object ConvertBack(object value, Type targetType, object parameter, string language)
-            {
-                throw new NotImplementedException();
-            }
         }
 
-
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
     }
+
+
+}

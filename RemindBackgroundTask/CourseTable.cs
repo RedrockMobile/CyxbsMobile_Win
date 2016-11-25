@@ -5,46 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
-namespace ZSCY_Win10.Models.RemindPage
+namespace RemindBackgroundTask3
 {
-    /// <summary>
-    /// 打印课表表格
-    /// </summary>
-    public class ExcalContent
-    {
-        private Grid grid;
-        private bool isCheck;
 
-        public Grid Grid
-        {
-            get
-            {
-                return grid;
-            }
-
-            set
-            {
-                grid = value;
-            }
-        }
-
-        public bool IsCheck
-        {
-            get
-            {
-                return isCheck;
-            }
-
-            set
-            {
-                isCheck = value;
-            }
-        }
-    }
     /// <summary>
     /// 坐标转时间
     /// </summary>
-    public class TimeSet
+class TimeSet
     {
         private bool isCheck;
         private TimeSpan time;
@@ -68,7 +35,7 @@ namespace ZSCY_Win10.Models.RemindPage
                     time = new TimeSpan(19, 0, 0);
                     break;
                 case 5:
-                    time = new TimeSpan(20, 50, 0);
+                    time = new TimeSpan(21, 5, 0);
                     break;
                 default:
                     time = new TimeSpan(0, 0, 0);

@@ -22,6 +22,9 @@ using Windows.Storage;
 using System.ComponentModel;
 using System.Diagnostics;
 using Windows.UI.Popups;
+using Windows.UI.Core;
+using ZSCY_Win10.Util;
+using Windows.Security.Credentials;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -32,20 +35,52 @@ namespace ZSCY_Win10.Pages.AddRemindPage
     /// </summary>
     public sealed partial class RemindListPage : Page
     {
-        ObservableCollection<MyRemind> remindList = new ObservableCollection<MyRemind>();
         List<string> DeleteList = new List<string>();
         private bool isSave;
         public RemindListPage()
         {
             this.InitializeComponent();
-            ReadDatabase();
-            RemindListView.ItemsSource = remindList;
+            DatabaseMethod.ReadDatabase(Visibility.Collapsed);
+            RemindListView.ItemsSource = App.remindList;
+        
             isSave = true;
             this.SizeChanged += (s, e) =>
-              {
-                  ListGrid1.Width = 400;
-              };
+            {
+                ListGrid1.Width = 400;
+                var state = "VisualState000";
+                if (e.NewSize.Width > 000)
+                {
+                    ListGrid1.Width = e.NewSize.Width;
+                    Frame2.Width = e.NewSize.Width;
+                    state = "VisualState000";
+                    ListGrid2.Visibility = Visibility.Visible;
+                }
+                if (e.NewSize.Width > 800)
+                {
+                    ListGrid1.Width = 400;
+                    Frame2.Width = e.NewSize.Width - 400;
+                    state = "VisualState800";
+                }
+                VisualStateManager.GoToState(this, state, true);
+            };
+            SystemNavigationManager.GetForCurrentView().BackRequested += RemindListPage_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar") && Utils.getPhoneWidth() < 400)
+            {
+                RefreshAppBarButton.Visibility = Visibility.Collapsed;
+            }
         }
+
+        private void RemindListPage_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+
+
+            Frame.GoBack();
+            SystemNavigationManager.GetForCurrentView().BackRequested -= RemindListPage_BackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+
+        }
+
         protected override async void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             base.OnNavigatingFrom(e);
@@ -79,35 +114,6 @@ namespace ZSCY_Win10.Pages.AddRemindPage
 
 
 
-        private void ReadDatabase()
-        {
-            try
-            {
-
-                using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
-                {
-
-                    remindList.Clear();
-                    var list = conn.Table<RemindListDB>();
-                    foreach (var item in list)
-                    {
-                        MyRemind temp = JsonConvert.DeserializeObject<MyRemind>(item.json);
-                        //getDetailClass(ref temp);
-                        temp.Tag = item.Id_system;
-                        temp.ClassDay = ClassMixDay(ref temp);
-                        temp.Dot = Visibility.Visible;
-                        temp.Rewrite = Visibility.Collapsed;
-                        temp.DeleteIcon = Visibility.Collapsed;
-                        remindList.Add(temp);
-                    }
-                }
-            }
-            catch
-            {
-                var conn=new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath);
-                conn.CreateTable<RemindListDB>();
-            }
-        }
         //private void getDetailClass(ref MyRemind myRemind)
         //{
         //    string[] dayArray = myRemind.DateItems[0].Day.Split(',');
@@ -122,68 +128,14 @@ namespace ZSCY_Win10.Pages.AddRemindPage
 
         //}
 
-        private string ClassMixDay(ref MyRemind remind)
-        {
-            string temp = "";
-            for (int i = 0; i < remind.DateItems.Count; i++)
-            {
-                temp += ConvertDay(int.Parse(remind.DateItems[i].Day)) + ConvertClass(int.Parse(remind.DateItems[i].Class)) + "节、";
-            }
 
-            temp = temp.Remove(temp.Length - 1);
-            return temp;
-        }
-        private string ConvertClass(int i)
-        {
-            switch (i)
-            {
-                case 0:
-                    return "12";
-                case 1:
-                    return "34";
-                case 2:
-                    return "56";
-                case 3:
-                    return "78";
-                case 4:
-                    return "910";
-                case 5:
-                    return "1112";
-                default:
-                    return "";
-            }
-
-        }
-        private string ConvertDay(int i)
-        {
-            switch (i)
-            {
-                case 0:
-                    return "周一";
-                case 1:
-                    return "周二";
-                case 2:
-                    return "周三";
-                case 3:
-                    return "周四";
-                case 4:
-                    return "周五";
-                case 5:
-                    return "周六";
-                case 6:
-                    return "周日";
-                default:
-                    return "";
-            }
-
-        }
 
         private void EditRemindList_Click(object sender, RoutedEventArgs e)
         {
             isSave = false;
             EditRemind_Icon.Glyph = "";
             EditRemindList.Click += SaveRemindList_Click;
-            foreach (var item in remindList)
+            foreach (var item in App.remindList)
             {
                 item.Dot = Visibility.Collapsed;
                 item.Rewrite = Visibility.Visible;
@@ -195,7 +147,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             isSave = true;
             EditRemind_Icon.Glyph = "";
             EditRemindList.Click += EditRemindList_Click;
-            foreach (var item in remindList)
+            foreach (var item in App.remindList)
             {
                 item.Dot = Visibility.Visible;
                 item.Rewrite = Visibility.Collapsed;
@@ -207,8 +159,8 @@ namespace ZSCY_Win10.Pages.AddRemindPage
         private void DeleteRemindGridButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             int i = RemindListView.SelectedIndex;
-            DeleteList.Add(remindList[i].Tag);
-            remindList.RemoveAt(i);
+            DeleteList.Add(App.remindList[i].Tag);
+            App.remindList.RemoveAt(i);
         }
 
         private void RewriteRemindGridButton_Tapped(object sender, TappedRoutedEventArgs e)
@@ -216,9 +168,25 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             int i = RemindListView.SelectedIndex;
             isSave = true;
             MyRemind remind = new MyRemind();
-            remind = remindList[i];
+            remind = App.remindList[i];
             App.isLoad = false;
+            ListGrid2.Visibility = Visibility.Visible;
             Frame2.Navigate(typeof(EditRemindPage), remind);
+        }
+
+        private void RefreshListView_RefreshInvoked(DependencyObject sender, object args)
+        {
+            RemindHelp.SyncRemind();
+        }
+
+        private void RefreshAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            RemindHelp.SyncRemind();
+        }
+
+        private void RemindListSV_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+
         }
     }
 

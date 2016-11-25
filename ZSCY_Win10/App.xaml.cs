@@ -89,7 +89,15 @@ namespace ZSCY_Win10
         public static SelTimeStringViewModel SelectedTime = new SelTimeStringViewModel();
         public static ObservableCollection<SelectedWeekNum> selectedWeekNumList = new ObservableCollection<SelectedWeekNum>();
         public static SelWeekNumStringViewModel selectedWeek = new SelWeekNumStringViewModel();
+        /// <summary>
+        ///提醒列表的数据源
+        /// </summary>
+        public static ObservableCollection<MyRemind> remindList = new ObservableCollection<MyRemind>();
+
         public static string RemindListDBPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db");
+        /// <summary>
+        /// 防止改写事件内容是触发导航加载
+        /// </summary>
         public static bool isLoad = false;
         #endregion
         /// <summary>
@@ -150,13 +158,29 @@ namespace ZSCY_Win10
 
         private async void addBackgroundTask()
         {
+            List<string> backgroundName = new List<string>();
+            backgroundName.Add(exampleTaskName);
+            backgroundName.Add("Toastbuilder");
+            backgroundName.Add("LiveTileBackgroundTask");
+            backgroundName.Add("RemindBackgroundTask");
             try
             {
-                foreach (var cur in BackgroundTaskRegistration.AllTasks)
+                //foreach (var cur in BackgroundTaskRegistration.AllTasks)
+                //{
+                //if (cur.Value.Name == exampleTaskName || cur.Value.Name == "Toastbuilder"||cur.Value.Name== "LiveTileBackgroundTask")
+                //{
+                //    cur.Value.Unregister(true);
+                //}
+
+                //}
+                foreach (var item in backgroundName)
                 {
-                    if (cur.Value.Name == exampleTaskName || cur.Value.Name == "Toastbuilder"||cur.Value.Name== "LiveTileBackgroundTask")
+                    var list = from i in BackgroundTaskRegistration.AllTasks
+                               where i.Value.Name == item
+                               select i;
+                    foreach(var i in list)
                     {
-                        cur.Value.Unregister(true);
+                        i.Value.Unregister(true);
                     }
                 }
                 BackgroundAccessStatus status = await BackgroundExecutionManager.RequestAccessAsync();
@@ -170,11 +194,18 @@ namespace ZSCY_Win10
                 Toastbuilder.TaskEntryPoint = "MyMessageBackgroundTask.ToastBackgroundTask";
                 Toastbuilder.SetTrigger(new ToastNotificationActionTrigger());
                 BackgroundTaskRegistration Toasttask = Toastbuilder.Register();
+
                 BackgroundTaskBuilder builder2 = new BackgroundTaskBuilder();
                 builder2.Name = "LiveTileBackgroundTask";
                 builder2.TaskEntryPoint = "LiveTileBackgroundTask.LiveTileBackgroundTask";
                 builder2.SetTrigger(new TimeTrigger(15, false));
                 BackgroundTaskRegistration registration = builder2.Register();
+
+                BackgroundTaskBuilder builder3 = new BackgroundTaskBuilder();
+                builder3.Name = "RemindBackgroundTask";
+                builder3.TaskEntryPoint = "SycnRemindBackgroundTask.RemindBackgroundTask";
+                builder3.SetTrigger(new TimeTrigger(15, false));
+                BackgroundTaskRegistration sycnRemind = builder3.Register();
             }
             catch (Exception) { }
         }

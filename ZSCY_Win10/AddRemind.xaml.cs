@@ -10,6 +10,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Security.Credentials;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -38,9 +39,11 @@ namespace ZSCY_Win10
 
         private static SolidColorBrush UnselectedFontColor = new SolidColorBrush(Color.FromArgb(255, 70, 70, 70));
         private static SolidColorBrush SelectedFontColor = new SolidColorBrush(Color.FromArgb(255, 233, 243, 253));
-        private bool OneStatus = true;//为什么都未做或都做完了
+        private bool isEdit = false;//为什么都未做或都做完了
+        private bool isSmall = false;
         private bool TwoStatus = true;//编写提醒中
         private bool ThreeStatus = true;//选择课程中
+        private Frame frameTemp;
         public AddRemind()
         {
             this.InitializeComponent();
@@ -54,31 +57,76 @@ namespace ZSCY_Win10
             beforeTime.Add(new BeforeTimeSel { BeforeString = "提前十分钟", isRemind = true, BeforeTime = new TimeSpan(0, 10, 0), IconVisibility = Visibility.Collapsed });
             beforeTime.Add(new BeforeTimeSel { BeforeString = "提前二十分钟", isRemind = true, BeforeTime = new TimeSpan(0, 20, 0), IconVisibility = Visibility.Collapsed });
             beforeTime.Add(new BeforeTimeSel { BeforeString = "提前一个小时", isRemind = true, BeforeTime = new TimeSpan(1, 0, 0), IconVisibility = Visibility.Collapsed });
-            Frame2.Navigate(typeof(FristPage));
+            //Frame2.Navigate(typeof(FristPage));
+            SystemNavigationManager.GetForCurrentView().BackRequested += AddRemind_BackRequested; ;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             this.SizeChanged += (s, e) =>
             {
 
                 Frame2.Height = e.NewSize.Height;
-                RemindGrid1.Width = 400;
+                RemindGrid1.Width = 400;                 
+                var state = "VisualState000";
+                if (e.NewSize.Width > 000)
+                {
+                    RemindGrid1.Width = e.NewSize.Width;
+                    Frame2.Width = e.NewSize.Width;
+                    SplitLine1.Visibility = Visibility.Collapsed;
+                    //isSmall = true;
+                    //if(isEdit)
+                    //{
+                    //    RemindGrid1.Visibility = Visibility.Collapsed;
+                    //}
+                    //else
+                    //{
+                    //    RemindGrid1.Visibility = Visibility.Visible;
+                    //}
+                }
+                if (e.NewSize.Width > 800)
+                {
+                    RemindGrid1.Width = 400;
+                    Frame2.Width = e.NewSize.Width - 400;
+                    isSmall = false;
+                    //RemindGrid1.Visibility = Visibility.Visible;
+                    SplitLine1.Visibility = Visibility.Visible;
+                    state = "VisualState800";
+
+                }
+                VisualStateManager.GoToState(this, state, true);
 
             };
             Initialize();
         }
-       private void Initialize()
+
+        private void AddRemind_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            if (SelRemindGrid.Visibility==Visibility.Visible)
+            {
+                SelRemindGrid.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                Frame.GoBack();
+                SystemNavigationManager.GetForCurrentView().BackRequested -= AddRemind_BackRequested;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            }
+        }
+
+        private void Initialize()
         {
             App.selectedWeek.WeekNumString = "";
             App.SelectedTime.SelTimeString = "";
-            for(int i=0;i<6;i++)
+            for (int i = 0; i < 6; i++)
             {
-                for(int j=0;j<7;j++)
+                for (int j = 0; j < 7; j++)
                 {
                     App.timeSet[i, j] = null;
                 }
-            }           
+            }
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            isEdit = false;
         }
         private string CourseList(int row, int column)
         {
@@ -141,6 +189,7 @@ namespace ZSCY_Win10
 
         private void RemindGridButon_Tapped(object sender, TappedRoutedEventArgs e)
         {
+
             SelRemindGrid.Visibility = Visibility.Visible;
         }
 
@@ -230,7 +279,7 @@ namespace ZSCY_Win10
                             myRemind.Time = beforeTime[SelRemindListView.SelectedIndex].BeforeTime.TotalMinutes.ToString();
                             myRemind.Title = TitleTextBox.Text;
                             myRemind.Content = ContentTextBox.Text;
-                           
+
                             myRemind.IdNum = idNum;
                             myRemind.StuNum = stuNum;
                             try
@@ -286,11 +335,13 @@ namespace ZSCY_Win10
         }
         private void TimeGridButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            RemindGrid2.Visibility = Visibility.Visible;
             Frame2.Navigate(typeof(CourseTablePage));
         }
 
         private void WeekNumGridButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            RemindGrid2.Visibility = Visibility.Visible;
             Frame2.Navigate(typeof(SelWeekNumPage));
         }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -22,16 +21,13 @@ namespace ZSCY_Win10.Pages.AddRemindPage
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class FristPage : Page
+    public sealed partial class RemindTest : Page
     {
-        public FristPage()
+        public RemindTest()
         {
             this.InitializeComponent();
+            ListViewToasts.ItemsSource = ToastNotificationManager.CreateToastNotifier().GetScheduledToastNotifications();
 
-            this.SizeChanged += (s, e) =>
-            {
-                SplitLine.Y2 = e.NewSize.Height - 48;
-            };
         }
     }
 }

@@ -10,6 +10,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Security.Credentials;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -60,7 +61,26 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                 EditRemindScrollViewer.Height = e.NewSize.Height - 48;
             };
             //this.Initial();
+            //SystemNavigationManager.GetForCurrentView().BackRequested += EditRemindPage_BackRequested ;
+            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
+
+        //private void EditRemindPage_BackRequested(object sender, BackRequestedEventArgs e)
+        //{
+        //    if (SelRemindGrid.Visibility == Visibility.Visible)
+        //    {
+        //        SelRemindGrid.Visibility = Visibility.Visible;
+        //        SystemNavigationManager.GetForCurrentView().BackRequested -= EditRemindPage_BackRequested ;
+        //        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+        //    }
+        //    else
+        //    {
+        //        this.NavigationCacheMode = NavigationCacheMode.Disabled;
+        //        this.Visibility = Visibility.Collapsed;
+        //        SystemNavigationManager.GetForCurrentView().BackRequested -= EditRemindPage_BackRequested; 
+        //        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+        //    }
+        //}
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -68,6 +88,8 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             if (e.Parameter != null && !App.isLoad)
             {
                 App.isLoad = true;
+                App.SelectedTime.SelTimeString = "";
+                App.selectedWeek.WeekNumString = "";
 
                 MyRemind temp = new MyRemind();
                 temp = e.Parameter as MyRemind;
@@ -106,8 +128,8 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                 }
                 foreach (var item in temp.DateItems)
                 {
-                    App.timeSet[int.Parse(item.Day), int.Parse(item.Class)].IsCheck = true;
-                    App.SelectedTime.SelTimeString += CourseList(int.Parse(item.Day), int.Parse(item.Class)) + " ";
+                    App.timeSet[int.Parse(item.Class), int.Parse(item.Day)].IsCheck = true;
+                    App.SelectedTime.SelTimeString += CourseList(int.Parse(item.Class), int.Parse(item.Day)) + " ";
                 }
             }
 
@@ -314,11 +336,15 @@ namespace ZSCY_Win10.Pages.AddRemindPage
 
                             }
                             DatabaseMethod.EditDatabase(myRemind.Id, databaseJson, id_system);
+                            DatabaseMethod.ReadDatabase(Visibility.Visible);
                             App.isLoad = false;
+                            App.selectedWeekNumList.Clear();
                         }
                     }
                 }
             }
+            this.NavigationCacheMode = NavigationCacheMode.Disabled;
+            this.Visibility = Visibility.Collapsed;
         }
         private void RemindGridButon_Tapped(object sender, TappedRoutedEventArgs e)
         {

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 
+
 namespace LiveTileBackgroundTask
 {
     public sealed class LiveTileBackgroundTask : IBackgroundTask
