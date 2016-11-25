@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,14 +11,53 @@ namespace LiveTileBackgroundTask
 {
     class Util
     {
-        public static void UpdateTile(List<ClassList> tempList, int nowWeek, string weekDay)
+        static int largeTileGroupCount = 0;
+        public static async void UpdateTile(List<ClassList> tempList, int nowWeek, string weekDay)
         {
-            //通过这个方法，我们就可以为动态磁贴的添加做基础
+            //为应用创建磁贴更新
             var updater = TileUpdateManager.CreateTileUpdaterForApplication();
             //这里设置的是所以磁贴都可以为动态
             updater.EnableNotificationQueue(true);
             updater.Clear();
             int itemCount = 0;
+            List<int> correctCount = new List<int>(0);
+            #region 创建动态磁贴XML文档
+            //1：创建动态磁贴模板
+            string tileXml = "<tile>" +
+                    "<visual>" +
+                        //中磁贴
+                        "<binding template=\"TileMedium\">" +
+                            "<text hint-wrap=\"true\"></text>" +
+                            "<text></text>" +
+                            "<text hint-wrap=\"true\"></text>" +
+                        "</binding>" +
+                        //宽磁贴
+                        "<binding template=\"TileWide\">" +
+                            "<text hint-style=\"subtitle\"></text>" +
+                            "<text></text>" +
+                            "<text hint-wrap=\"true\"></text>" +
+                        "</binding>" +
+                        //大磁贴
+                        "<binding template=\"TileLarge\">" +
+                            "<group>" +
+                                "<subgroup>" +
+                                    "<text hint-wrap=\"true\" hint-style=\"subtitle\"></text>" +
+                                    "<text></text>" +
+                                    "<text hint-wrap=\"true\"></text>" +
+                                "</subgroup>" +
+                            "</group>" +
+                            "<text>" + "\n" + "</text>" +
+                            "<group>" +
+                                "<subgroup>" +
+                                    "<text hint-wrap=\"true\" hint-style=\"subtitle\"></text>" +
+                                    "<text></text>" +
+                                    "<text hint-wrap=\"true\"></text>" +
+                                "</subgroup>" +
+                            "</group>" +
+                        "</binding>" +
+                    "</visual>" +
+                 "</tile>";
+            #endregion
             for (int i = 0; i < tempList.Count; i++)
             {
                 string course = tempList[i].Course.ToString();
@@ -25,56 +65,54 @@ namespace LiveTileBackgroundTask
                 string lesson = tempList[i].Lesson.ToString() + "  ";
                 string classroom = tempList[i].Classroom.ToString();
                 int[] weeks = tempList[i].Week;
-                for (int j = 0; j < weeks.Length; j++)//判断课程是否为本周课程
+                //判断课程是否为本周课程
+                for (int j = 0; j < weeks.Length; j++)
                 {
                     if (weeks[j] == nowWeek && tempList[i].Day.Equals(weekDay))
                     {
-                        //1：创建XML对象_宽磁贴
-                        string xmlWide = "<tile>" +
-                                "<visual>" +
-                                    "<binding template=\"TileWide\">" +
-                                        "<text hint-style=\"subtitle\"></text>" +
-                                        "<text></text>" +
-                                        "<text></text>" +
-                                    "</binding>" +
-                                "</visual>" +
-                             "</tile>";
-                        //1：创建XML对象_中磁贴
-                        string xmlMedium = "<tile>" +
-                                "<visual>" +
-                                    "<binding template=\"TileMedium\">" +
-                                        "<text hint-wrap=\"true\"></text>" +
-                                        "<text></text>" +
-                                        "<text hint-wrap=\"true\"></text>" +
-                                    "</binding>" +
-                                "</visual>" +
-                             "</tile>";
-                        //2.接着给这个XML对象赋值
-                        XmlDocument docWide = new XmlDocument();
-                        docWide.LoadXml(xmlWide);
-                        XmlNodeList elementsWide = docWide.GetElementsByTagName("text");
-                        elementsWide[0].AppendChild(docWide.CreateTextNode(course));
-                        elementsWide[1].AppendChild(docWide.CreateTextNode(teacher));
-                        elementsWide[2].AppendChild(docWide.CreateTextNode(lesson));
-                        elementsWide[2].AppendChild(docWide.CreateTextNode(classroom));
-
-                        XmlDocument docMedium = new XmlDocument();
-                        docMedium.LoadXml(xmlMedium);
-                        XmlNodeList elementsMedium = docMedium.GetElementsByTagName("text");
-                        elementsMedium[0].AppendChild(docMedium.CreateTextNode(course));
-                        elementsMedium[1].AppendChild(docMedium.CreateTextNode(teacher));
-                        elementsMedium[2].AppendChild(docMedium.CreateTextNode(lesson));
-                        elementsMedium[2].AppendChild(docMedium.CreateTextNode(classroom));
-
-                        //3.然后用Update方法来更新这个磁贴
-                        updater.Update(new TileNotification(docWide));
-                        updater.Update(new TileNotification(docMedium));
-                        //4.最后这里需要注意的是微软规定动态磁贴的队列数目小于5个，所以这里做出判断
+                        //满足条件的课程编号存入correctCount
+                        correctCount.Add(i);
+                        //微软规定动态磁贴的队列数目小于5个
                         if (itemCount++ > 5)
                         {
                             break;
                         }
                     }
+                }
+            }
+            //为XML对象赋值并推送更新
+            for (int i = 0; i < correctCount.Count; i++)
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(tileXml);
+                XmlNodeList elements = doc.GetElementsByTagName("text");
+                elements[0].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Course));
+                elements[1].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Teacher));
+                elements[2].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Lesson));
+                elements[2].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Classroom));
+                elements[3].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Course));
+                elements[4].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Teacher));
+                elements[5].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Lesson));
+                elements[5].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Classroom));
+                elements[6].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Course));
+                elements[7].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Teacher));
+                elements[8].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Lesson));
+                elements[8].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Classroom));
+                try
+                {
+                    elements[10].AppendChild(doc.CreateTextNode(tempList[correctCount[i + 1]].Course));
+                    elements[11].AppendChild(doc.CreateTextNode(tempList[correctCount[i + 1]].Teacher));
+                    elements[12].AppendChild(doc.CreateTextNode(tempList[correctCount[i + 1]].Lesson));
+                    elements[12].AppendChild(doc.CreateTextNode(tempList[correctCount[i + 1]].Classroom));
+                }
+                catch(ArgumentOutOfRangeException ex)
+                {
+                    elements[10].AppendChild(doc.CreateTextNode("没课啦 \\(≧▽≦)/"));
+                    elements[11].AppendChild(doc.CreateTextNode("记得好好复习哟~"));
+                }
+                finally
+                {
+                    updater.Update(new TileNotification(doc));
                 }
             }
         }

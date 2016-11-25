@@ -13,7 +13,6 @@ namespace LiveTileBackgroundTask
     public sealed class LiveTileBackgroundTask : IBackgroundTask
     {
         private static string stuNum = "";
-        private static string idNum = "";
         private static string resourceName = "ZSCY";
         List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
         public async void Run(IBackgroundTaskInstance taskInstance)
