@@ -272,7 +272,7 @@
                         <Grid x:Name="RemindGrid" Margin="15,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition/>
+                             <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="提醒" Foreground="#747474" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             <Grid x:Name="RemindGridButon" HorizontalAlignment="Stretch" Height="70" VerticalAlignment="Stretch" Grid.Column="1" BorderThickness="0,0,0,1" BorderBrush="#F6F6F6" Tapped="RemindGridButon_Tapped">
