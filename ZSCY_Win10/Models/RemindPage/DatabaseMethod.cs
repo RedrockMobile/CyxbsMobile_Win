@@ -97,8 +97,12 @@ namespace ZSCY_Win10.Models.RemindPage
             var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath);
             var up = conn.Table<RemindListDB>();
             //机智的我，删除和插入替换了update
-
-            up.Delete(x => x.Id == id || x.Id_system == id_system);
+            if (id != null && id_system == null)
+                up.Delete(x => x.Id == id);
+            else if (id == null && id_system != null)
+                up.Delete(x => x.Id_system == id_system);
+            else if (id != null && id_system != null)
+                up.Delete(x => x.Id == id && x.Id_system == id_system);
             RemindListDB temp = new RemindListDB() { Id = id, Id_system = id_system, json = json };
             conn.Insert(temp);
 
