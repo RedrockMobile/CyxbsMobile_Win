@@ -11,9 +11,18 @@ namespace SycnRemindBackgroundTask
     {
         public void Run(IBackgroundTaskInstance taskInstance)
         {
-            BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
+            try
+            {
+BackgroundTaskDeferral deferral = taskInstance.GetDeferral();
             RemindHelp.SyncRemind();
             deferral.Complete();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
     }
 }
