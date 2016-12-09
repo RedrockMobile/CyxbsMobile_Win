@@ -97,11 +97,17 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                 int x = 0;
                 for (int i = 0; i < beforeTime.Count; i++)
                 {
-                    if (beforeTime[i].getBeforeTime() == int.Parse(temp.Time))
+                    if (temp.Time != null)
                     {
-                        x = i;
-                        break;
+
+                        if (beforeTime[i].getBeforeTime() == int.Parse(temp.Time))
+                        {
+                            x = i;
+                            break;
+                        }
                     }
+                    else
+                        x = 0;
                 }
                 SelRemindListView.SelectedIndex = indexBefore = x;
                 TitleTextBox.Text = temp.Title;
@@ -293,7 +299,15 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                                         myRemind.DateItems.Add(dateItem);
                                     }
                             }
-                            myRemind.Time = beforeTime[SelRemindListView.SelectedIndex].BeforeTime.TotalMinutes.ToString();
+                            if (SelRemindListView.SelectedIndex == 0)
+                            {
+                                myRemind.Time = null;
+                            }
+                            else
+                            {
+
+                                myRemind.Time = beforeTime[SelRemindListView.SelectedIndex].BeforeTime.TotalMinutes.ToString();
+                            }
                             myRemind.Title = TitleTextBox.Text;
                             myRemind.Content = ContentTextBox.Text;
                             string databaseJson = JsonConvert.SerializeObject(myRemind);
