@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Windows.Storage;
 using Windows.Storage.Streams;
+
 namespace MyMessageBackgroundTask
 {
     public sealed class MessageBackgroundTask : IBackgroundTask

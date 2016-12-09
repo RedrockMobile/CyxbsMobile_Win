@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
+
 namespace MyMessageBackgroundTask
 {
      class NetWork
@@ -46,6 +47,7 @@ namespace MyMessageBackgroundTask
                             content = response.Content.ReadAsStringAsync().Result;
                         //else if (response.StatusCode == HttpStatusCode.NotFound)
                         //    Utils.Message("Oh...服务器又跪了，给我们点时间修好它");
+
                     }
                     catch (Exception e)
                     {
@@ -59,8 +61,10 @@ namespace MyMessageBackgroundTask
                 //    return "";
                 //else
                 return content;
+
             });
         }
+
         public static async Task<string> headUpload(string stunum, string fileUri, string uri = "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/home/Photo/upload", bool isPath = false)
         {
             Windows.Web.Http.HttpClient _httpClient = new Windows.Web.Http.HttpClient();
@@ -73,14 +77,17 @@ namespace MyMessageBackgroundTask
                 saveFile = await StorageFile.GetFileFromPathAsync(fileUri);
             else
                 saveFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(fileUri));
+
             try
             {
                 // 构造需要上传的文件数据
                 IRandomAccessStreamWithContentType stream1 = await saveFile.OpenReadAsync();
                 Windows.Web.Http.HttpStreamContent streamContent = new Windows.Web.Http.HttpStreamContent(stream1);
                 Windows.Web.Http.HttpMultipartFormDataContent fileContent = new Windows.Web.Http.HttpMultipartFormDataContent();
+
                 fileContent.Add(streamContent, "fold", "head.png");
                 fileContent.Add(stunumStringContent, "stunum");
+
                 Windows.Web.Http.HttpResponseMessage response =
                     await
                         _httpClient.PostAsync(new Uri(uri), fileContent)
@@ -95,6 +102,7 @@ namespace MyMessageBackgroundTask
                 return "";
             }
         }
+
         public static async Task<bool> downloadFile(string uri, string saveUri, string filename)
         {
             System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient();
@@ -126,15 +134,18 @@ namespace MyMessageBackgroundTask
                                 await streamSave.WriteAsync(bytes, 0, bytes.Length);
                             }
                             return true;
+
                         }
                         else
                         {
                             return false;
+
                         }
                     }
                     else
                     {
                         return false;
+
                     }
                 }
                 catch (Exception)
@@ -143,5 +154,6 @@ namespace MyMessageBackgroundTask
                 }
             });
         }
+
     }
 }

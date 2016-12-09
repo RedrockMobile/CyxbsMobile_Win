@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+
     <Grid Background="White">
         <!--<StackPanel Margin="15">
             <TextBlock Name="TitleTextBlock" Foreground="#333" FontSize="20" TextWrapping="WrapWholeWords" FontWeight="Bold"></TextBlock>
@@ -21,6 +22,7 @@
             <WebView Name="ContentWebView" Height="600" ></WebView>
             <TextBlock Name="ContentTextBlock" TextWrapping="WrapWholeWords" Foreground="#333" FontSize="16"></TextBlock>
         </StackPanel>-->
+
         <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -38,5 +40,6 @@
             </Grid>
             <WebView Name="ContentWebView" Margin="15,0" Grid.Row="3" ></WebView>
         </Grid>
+
     </Grid>
 </Page>

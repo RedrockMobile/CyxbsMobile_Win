@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace ZSCY_Win10.ViewModels.Remind
 {
     public  class  SelTimeStringViewModel : BaseViewModel
     {
         private  string selTimeString;
+        
         public  string SelTimeString
         {
             get
@@ -20,16 +22,21 @@ namespace ZSCY_Win10.ViewModels.Remind
                 RaisePropertyChanged(nameof(SelTimeString));
             }
         }
+
+
+
     }
     public class SelWeekNumStringViewModel : BaseViewModel
     {
         private string weekNumString;
+
         public string WeekNumString
         {
             get
             {
                 return weekNumString;
             }
+
             set
             {
                 weekNumString = value;
@@ -37,4 +44,5 @@ namespace ZSCY_Win10.ViewModels.Remind
             }
         }
     }
+
 }

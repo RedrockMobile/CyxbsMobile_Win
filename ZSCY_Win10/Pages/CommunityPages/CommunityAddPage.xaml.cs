@@ -25,7 +25,9 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Data;
 using ZSCY_Win10.Util;
+
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
+
 namespace ZSCY_Win10.Pages.CommunityPages
 {
     /// <summary>
@@ -36,6 +38,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
         ObservableCollection<CommunityImageList> imageList = new ObservableCollection<CommunityImageList>();
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         private static string resourceName = "ZSCY";
+
         public CommunityAddPage()
         {
             this.InitializeComponent();
@@ -57,13 +60,17 @@ namespace ZSCY_Win10.Pages.CommunityPages
                         commandbar.Margin = new Thickness(48, 0, 0, 0);
                     }
                 }
+
             };
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+
         }
+
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             commandbar.Visibility = Visibility.Collapsed;
         }
+
         private async void init()
         {
             addImgGridView.ItemsSource = imageList;
@@ -73,6 +80,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 file2SoftwareBitmapSource(file, 0, true);
             }
         }
+
         private async void addImgGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (((CommunityImageList)e.ClickedItem).imgName == "CommunityAddImg.png")
@@ -139,6 +147,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 }
             }
         }
+
         private async void file2SoftwareBitmapSource(StorageFile file, int index = 0, bool isAddImage = false)
         {
             if (!isAddImage)
@@ -146,6 +155,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 IStorageFolder applicationFolder = ApplicationData.Current.TemporaryFolder;
                 await file.CopyAndReplaceAsync(await applicationFolder.CreateFileAsync(file.Name, CreationCollisionOption.ReplaceExisting));
             }
+
             SoftwareBitmapSource source = new SoftwareBitmapSource();
             SoftwareBitmap sb = null;
             using (IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.Read))
@@ -157,6 +167,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             await source.SetBitmapAsync(sb);
             imageList.Insert(index, new CommunityImageList { imgUri = source, imgName = file.Name, imgPath = file.Path, imgAppPath = "ms-appdata:///Temp/" + file.Name });
         }
+
         private async void addArticleAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             addArticleAppBarButton.IsEnabled = false;
@@ -195,6 +206,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                         string imgUp = await NetWork.headUpload(credentialList[0].UserName, imageList[i].imgAppPath, "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Photo/uploadArticle", false);
                         if (imgUp != "" && imgUp.IndexOf("Request Entity Too Large") == -1)
                         {
+
                             JObject obj = JObject.Parse(imgUp);
                             if (Int32.Parse(obj["state"].ToString()) == 200)
                             {
@@ -203,11 +215,13 @@ namespace ZSCY_Win10.Pages.CommunityPages
                                 //appSetting.Values["headimgdate"] = objdata["date"].ToString();
                                 imageList[i].imgPhoto_src = objdata["photosrc"].ToString();
                                 imageList[i].imgThumbnail_src = objdata["thumbnail_src"].ToString();
+
                                 imgPhoto_src += ("," + objdata["photosrc"].ToString());
                                 imgThumbnail_src += ("," + objdata["thumbnail_src"].ToString());
                                 imgPhoto_src = imgPhoto_src.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", "");
                                 imgThumbnail_src = imgThumbnail_src.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/thumbnail/", "");
                             }
+
                         }
                         else if (imgUp.IndexOf("Request Entity Too Large") != -1)
                         {
@@ -242,6 +256,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                         StorageFile imgfile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(imageList[i].imgAppPath));
                         imgfile.DeleteAsync();
                     }
+
                 }
                 catch (Exception) { }
                 if (imgPhoto_src != "")
@@ -254,6 +269,8 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 }
             }
             addProgressBar.IsIndeterminate = true;
+
+
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("type_id", "5")); //现在只有哔哔叨叨
             paramList.Add(new KeyValuePair<string, string>("title", addContentTextBox.Text));
@@ -297,14 +314,19 @@ namespace ZSCY_Win10.Pages.CommunityPages
             catch (Exception) { }
             addArticleAppBarButton.IsEnabled = true;
             addProgressBar.Visibility = Visibility.Collapsed;
+
         }
+
+
         private void addTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (addContentTextBox.Text != "")
                 addArticleAppBarButton.IsEnabled = true;
             else
                 addArticleAppBarButton.IsEnabled = false;
+
         }
+
         private void addContentTextBox_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
@@ -314,6 +336,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                     addContentTextBox.Text += "\r\n";
                 addContentTextBox.SelectionStart = addContentTextBox.Text.Length;
             }
+
         }
     }
 }

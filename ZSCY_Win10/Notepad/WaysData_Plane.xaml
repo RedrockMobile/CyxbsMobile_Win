@@ -9,6 +9,7 @@
  >
     <StackPanel >
         <Grid >
+        
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition/>
@@ -87,6 +88,7 @@
                     路公交车到学校
                 </Run>
             </TextBlock>
+
         </Grid>
         <Grid>
             <Grid.ColumnDefinitions>

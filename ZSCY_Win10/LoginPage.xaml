@@ -9,7 +9,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     >
+
     <Page.Resources>
+
         <!--圆角button-->
         <Style x:Key="RoundButton" TargetType="Button">
             <Setter Property="FontSize" Value="15"/>
@@ -120,6 +122,7 @@
                         <Setter Target="MainStackPanel.(StackPanel.Orientation)" Value="Vertical"/>
                     </VisualState.Setters>
                 </VisualState>
+
                 <VisualState x:Name="VisualState600">
                     <VisualState.Setters>
                         <Setter Target="MainStackPanel.(StackPanel.Orientation)" Value="Horizontal"/>
@@ -128,6 +131,7 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+
         <StackPanel Name="MainStackPanel" Orientation="Vertical" HorizontalAlignment="Center"  Margin="0,100,0,0">
             <Image  Source="Assets\Logo.png" VerticalAlignment="Top" Margin="15,0,15,15" Height="150" Width="150" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"></Image>
             <StackPanel x:Name="stackPanel" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -140,6 +144,7 @@
                 <Grid Margin="0,20,0,0" Width="200">
                     <Grid  Width="200">
                         <StackPanel>
+                            
                         <Button Name="LoginButton" Content="登 录" Style="{StaticResource RoundButton}"  IsEnabled="False" HorizontalAlignment="Stretch" Click="LoginButton_Click" Foreground="White" Background="#FF2884F3"/>
                         <Button Name="noLoginButton" Content="随便看看" Style="{StaticResource RoundButton}"  IsEnabled="True" HorizontalAlignment="Stretch" Click="noLoginButton_Click" Foreground="White" Background="LightGray"/>
                         </StackPanel>

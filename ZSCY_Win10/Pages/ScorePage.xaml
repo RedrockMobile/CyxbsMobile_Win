@@ -9,6 +9,7 @@
     FontFamily="Microsoft YaHei UI"
     FontWeight="Light"
     x:Name="itemPage">
+
     <Grid Background="White">
         <ScrollViewer Background="White">
             <Grid>

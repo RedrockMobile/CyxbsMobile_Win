@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
+
 namespace ZSCY_Win10.Util.Converter
 {
     public class KBAllScrollViewerHeightConverter : IValueConverter
@@ -12,6 +13,7 @@ namespace ZSCY_Win10.Util.Converter
         {
             return Utils.getPhoneHeight() - 48 - 50;
         }
+
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();

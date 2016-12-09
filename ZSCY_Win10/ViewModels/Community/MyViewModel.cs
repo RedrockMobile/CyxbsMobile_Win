@@ -8,11 +8,13 @@ using Windows.Storage;
 using ZSCY_Win10.Common;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Service;
+
 namespace ZSCY_Win10.ViewModels.Community
 {
     public class MyViewModel : ViewModelBase
     {
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+
         public ObservableCollection<MyNotification> MyNotify { get; private set; } = new ObservableCollection<MyNotification>();
         public ObservableCollection<MyFeed> MyFeedlist { get; private set; } = new ObservableCollection<MyFeed>();
         private PeoInfo info;
@@ -25,6 +27,7 @@ namespace ZSCY_Win10.ViewModels.Community
             set
             {
                 this.info = value;
+
                 OnPropertyChanged(nameof(Info));
             }
         }
@@ -53,6 +56,7 @@ namespace ZSCY_Win10.ViewModels.Community
                 Info = infotemp;
             }
         }
+
         public async void getNotifications(int size = 15)
         {
             List<MyNotification> s = await MyService.GetNotifications(notificationspage++, 15);
@@ -61,6 +65,7 @@ namespace ZSCY_Win10.ViewModels.Community
                 MyNotify.Add(s[i]);
             }
         }
+
         public async void getFeeds(int size = 15)
         {
             List<MyFeed> f = await MyService.GetMyFeeds(feedspage++, 15);
@@ -69,5 +74,6 @@ namespace ZSCY_Win10.ViewModels.Community
                 MyFeedlist.Add(f[i]);
             }
         }
+
     }
 }

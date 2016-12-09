@@ -17,7 +17,9 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Models.RemindPage;
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+
 namespace ZSCY_Win10.Pages.AddRemindPage
 {
     /// <summary>
@@ -38,6 +40,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             //SystemNavigationManager.GetForCurrentView().BackRequested += SelWeekNumPage_BackRequested; ; ;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
+
         //private void SelWeekNumPage_BackRequested(object sender, BackRequestedEventArgs e)
         //{
         //    if (page == typeof(EditRemindPage))
@@ -54,10 +57,12 @@ namespace ZSCY_Win10.Pages.AddRemindPage
         //        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         //    }
         //}
+
         private void InitializeWeekList()
         {
             for (int i = 0; i < 20; i++)
             {
+
                 SelWeekNum temp = new SelWeekNum()
                 {
                     ItemContent = (i + 1).ToString(),
@@ -99,7 +104,11 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                     SelWeekList[temp].isSelected = false;
                 }
             }
+
         }
+
+
+
         private void SaveSelected_Tapped(object sender, TappedRoutedEventArgs e)
         {
             App.selectedWeek.WeekNumString = "";
@@ -125,7 +134,10 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                 Frame rootFrame = Window.Current.Content as Frame;
                 //rootFrame.Visibility = Visibility.Collapsed;
                 this.Visibility = Visibility.Collapsed;
+
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
+
                 //Frame.GoBack();
             }
             Debug.WriteLine(App.selectedWeek.WeekNumString);

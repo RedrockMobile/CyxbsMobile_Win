@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+
 namespace ZSCY_Win10.Common
 {
     /// <summary>
@@ -17,10 +18,12 @@ namespace ZSCY_Win10.Common
     {
         private readonly Action _execute;
         private readonly Func<bool> _canExecute;
+
         /// <summary>
         /// 调用 RaiseCanExecuteChanged 时引发。
         /// </summary>
         public event EventHandler CanExecuteChanged;
+
         /// <summary>
         /// 创建可始终执行的新命令。
         /// </summary>
@@ -29,6 +32,7 @@ namespace ZSCY_Win10.Common
             : this(execute, null)
         {
         }
+
         /// <summary>
         /// 创建新命令。
         /// </summary>
@@ -41,6 +45,7 @@ namespace ZSCY_Win10.Common
             _execute = execute;
             _canExecute = canExecute;
         }
+
         /// <summary>
         /// 确定此 <see cref="RelayCommand"/> 是否可在其当前状态下执行。
         /// </summary>
@@ -52,6 +57,7 @@ namespace ZSCY_Win10.Common
         {
             return _canExecute == null ? true : _canExecute();
         }
+
         /// <summary>
         /// 对当前命令目标执行 <see cref="RelayCommand"/>。
         /// </summary>
@@ -62,6 +68,7 @@ namespace ZSCY_Win10.Common
         {
             _execute();
         }
+
         /// <summary>
         /// 用于引发 <see cref="CanExecuteChanged"/> 事件的方法
         /// 执行 <see cref="CanExecute"/> 的返回值

@@ -4,13 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace ZSCY.Data
 {
     public class JWList
     {
+
         public JWList()
         {
         }
+
         public JWList(string iD, string title, string date, string read, string Content)
         {
             ID = iD;
@@ -19,11 +22,14 @@ namespace ZSCY.Data
             Read = read;
             this.Content = Content;
         }
+
         public string ID { get; set; }
         public string Title { get; set; }
         public string Date { get; set; }
         public string Read { get; set; }
         public string Content { get; set; }
+
+
         public void GetListAttribute(JObject JWListJObject)
         {
             ID = JWListJObject["id"].ToString();
@@ -33,4 +39,5 @@ namespace ZSCY.Data
             //Content = JWListJObject["content"].ToString();
         }
     }
+
 }

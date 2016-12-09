@@ -4,14 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace ZSCY.Data
 {
     public class NewsList
     {
         private string v;
+
         public NewsList()
         {
         }
+
         public NewsList(string id, string articleid, string title, string head, string date, string read, string content, string all)
         {
             ID = id;
@@ -23,6 +26,7 @@ namespace ZSCY.Data
             Content = content;
             Content_all = all;
         }
+
         public string ID { get; set; }
         public string Articleid { get; set; }
         public string Title { get; set; }
@@ -31,6 +35,8 @@ namespace ZSCY.Data
         public string Read { get; set; }
         public string Content { get; set; }
         public string Content_all { get; set; }
+
+
         public void GetListAttribute(JObject NewsListJObject)
         {
             ID = NewsListJObject["id"].ToString();
@@ -41,4 +47,5 @@ namespace ZSCY.Data
             Read = NewsListJObject["read"] != null ? NewsListJObject["read"].ToString() : "";
         }
     }
+
 }

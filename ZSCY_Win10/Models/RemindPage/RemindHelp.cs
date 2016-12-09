@@ -16,6 +16,7 @@ using Windows.Security.Credentials;
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using System.Collections.ObjectModel;
+
 namespace ZSCY_Win10.Models.RemindPage
 {
     public static class RemindHelp
@@ -30,14 +31,18 @@ namespace ZSCY_Win10.Models.RemindPage
         }
         private static void addNotification(MyRemind remind)
         {
+
             ScheduledToastNotification scheduledNotifi = GenerateAlarmNotification(remind);
+
             ToastNotificationManager.CreateToastNotifier().AddToSchedule(scheduledNotifi);
         }
+
         private static ScheduledToastNotification GenerateAlarmNotification(MyRemind remind)
         {
             ToastContent content = new ToastContent()
             {
                 Scenario = ToastScenario.Alarm,
+
                 Visual = new ToastVisual()
                 {
                     BindingGeneric = new ToastBindingGeneric()
@@ -48,6 +53,7 @@ namespace ZSCY_Win10.Models.RemindPage
                                                 {
                                                     Text = $"提醒: {remind.Title}"
                                                 },
+
                                                 new AdaptiveText()
                                                 {
                                                     Text = remind.Content
@@ -61,7 +67,9 @@ namespace ZSCY_Win10.Models.RemindPage
             {
                 Tag = GetTag(remind)
             };
+
         }
+
         private static string id;
         public static string GetTag(MyRemind remind)
         {
@@ -70,11 +78,13 @@ namespace ZSCY_Win10.Models.RemindPage
             // Tag needs to be 16 chars or less, so hash the Id
             return temp;
         }
+
         public static async Task<string> AddAllRemind(MyRemind remind, TimeSpan beforeTime)
         {
             id = "";
             for (int i = 0; i < App.selectedWeekNumList.Count; i++)
             {
+
                 for (int r = 0; r < 6; r++)
                 {
                     for (int c = 0; c < 7; c++)
@@ -84,11 +94,13 @@ namespace ZSCY_Win10.Models.RemindPage
                             remind.time = App.selectedWeekNumList[i].WeekNumOfMonday.AddDays(c) + App.timeSet[r, c].Time - beforeTime;
                             if (remind.time < DateTime.Now.ToUniversalTime())
                             {
+
                             }
                             else
                             {
                                 await AddRemind(remind);
                             }
+
                         }
                     }
                 }
@@ -97,6 +109,7 @@ namespace ZSCY_Win10.Models.RemindPage
         }
         public static async Task<string> SyncAllRemind(MyRemind remind)
         {
+
             id = "";
             if (remind.Time != null)
             {
@@ -104,6 +117,8 @@ namespace ZSCY_Win10.Models.RemindPage
                 int hour = int.Parse(remind.Time) / 60;
                 int day = hour / 24;
                 TimeSpan beforeTime = new TimeSpan(day, hour, min, 0);
+
+
                 List<SelectedWeekNum> weeklist = new List<SelectedWeekNum>();
                 foreach (var item in remind.DateItems)
                 {
@@ -120,6 +135,7 @@ namespace ZSCY_Win10.Models.RemindPage
                         remind.time = swn.WeekNumOfMonday.AddDays(itemDayList) + classTime.Time - beforeTime;
                         if (remind.time.Ticks < DateTime.Now.Ticks)
                         {
+
                         }
                         else
                         {
@@ -143,12 +159,15 @@ namespace ZSCY_Win10.Models.RemindPage
             }
             catch
             {
+
                 Debug.WriteLine("网络问题请求失败");
             }
             //相当于MyRemind
             GetRemindModel getRemid = JsonConvert.DeserializeObject<GetRemindModel>(content);
+
             try
             {
+
                 getRemid = await JsonConvert.DeserializeObjectAsync<GetRemindModel>(content);
             }
             catch (Exception e)
@@ -184,6 +203,7 @@ namespace ZSCY_Win10.Models.RemindPage
                 mr.Time = item.Time;
                 mr.Id = item.Id.ToString();
                 remindList.Add(mr);
+
             }
             #endregion
             List<string> RemindTagList = new List<string>();
@@ -191,10 +211,12 @@ namespace ZSCY_Win10.Models.RemindPage
             var notifier = ToastNotificationManager.CreateToastNotifier();
             if (RemindTagList != null)
             {
+
                 for (int i = 0; i < RemindTagList.Count(); i++)
                 {
                     var scheduledNotifs = notifier.GetScheduledToastNotifications()
                   .Where(n => n.Tag.Equals(RemindTagList[i]));
+
                     // Remove all of those from the schedule
                     foreach (var n in scheduledNotifs)
                     {
@@ -202,6 +224,7 @@ namespace ZSCY_Win10.Models.RemindPage
                     }
                 }
             }
+
             foreach (var remindItem in remindList)
             {
                 string id = await SyncAllRemind(remindItem);
@@ -210,4 +233,8 @@ namespace ZSCY_Win10.Models.RemindPage
             DatabaseMethod.ReadDatabase(Windows.UI.Xaml.Visibility.Collapsed);
         }
     }
+
+
+
+
 }

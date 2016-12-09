@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace ZSCY.Data
 {
     public class uIdList
@@ -11,11 +12,14 @@ namespace ZSCY.Data
         public string uId { get; set; }
         public string uName { get; set; }
     }
+
     public class AuIdList
     {
         public ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>();
         //public int week { get; set; }
+
     }
+
     public class FreeList
     {
         public int weekday { get; set; }

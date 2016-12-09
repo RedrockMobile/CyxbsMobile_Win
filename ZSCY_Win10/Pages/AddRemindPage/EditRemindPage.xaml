@@ -332,6 +332,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -375,6 +376,7 @@
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
                             </Grid>
+
                         </StackPanel>
                         <Grid Grid.Row="1">
                             <Grid.RowDefinitions>
@@ -452,6 +454,7 @@
         <!--<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe109;" HorizontalAlignment="Right"  Margin="0,0,5,0" Grid.Row="0"/>-->
         <!--
                     <TextBlock Text="选择周数" Grid.Row="0" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+
                 </Grid>
             </Grid>
         </ScrollViewer>-->
@@ -472,6 +475,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="内容" Foreground="#747474" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                     <TextBox Name="ContentTextBox" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="150" Style="{StaticResource EditRemindContentTextBox}">
+                       
                     </TextBox>
                 </Grid>
                 <Grid Name="RemindTimeGrid" Margin="15,0">
@@ -488,6 +492,7 @@
                         <Rectangle Fill="White" Opacity="0"/>
                         <!--填充grid-->
                         <TextBlock Name="SelectedTimeTextBlock" Text="{Binding SelTimeString,Mode=OneWay}" Foreground="#747474" TextAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Right"  Grid.Column="0"/>
+
                         <FontIcon FontFamily="Segoe MDL2 Assets" Grid.Column="1" Glyph="&#xE00F;" Foreground="#47A7FE" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     </Grid>
                 </Grid>
@@ -505,6 +510,7 @@
                         <Rectangle Fill="White" Opacity="0"/>
                         <!--填充grid-->
                         <TextBlock Name="SelectedWeekNumTextBlock" Text="{Binding WeekNumString,Mode=OneWay,Converter={StaticResource AddRmindShowWeekNum}}" Foreground="#747474" TextAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Right"  Grid.Column="0"/>
+
                         <FontIcon FontFamily="Segoe MDL2 Assets" Grid.Column="1" Glyph="&#xE00F;" Foreground="#47A7FE" HorizontalAlignment="Right" VerticalAlignment="Center" />
                     </Grid>
                 </Grid>

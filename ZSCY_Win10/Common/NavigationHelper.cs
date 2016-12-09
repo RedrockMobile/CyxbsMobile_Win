@@ -9,6 +9,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+
 namespace ZSCY_Win10.Common
 {
     /// <summary>
@@ -60,6 +61,7 @@ namespace ZSCY_Win10.Common
     {
         private Page Page { get; set; }
         private Frame Frame { get { return this.Page.Frame; } }
+
         /// <summary>
         /// 初始化 <see cref="NavigationHelper"/> 类的新实例。
         /// </summary>
@@ -69,6 +71,7 @@ namespace ZSCY_Win10.Common
         public NavigationHelper(Page page)
         {
             this.Page = page;
+
             // 当此页是可视化树的一部分时，进行两个更改: 
             // 1) 将应用程序视图状态映射到页的可视状态
             // 2) 处理用于在 Windows 中向前和向后移动的
@@ -89,6 +92,7 @@ namespace ZSCY_Win10.Common
                 }
 #endif
             };
+
             // 当页不再可见时，撤消相同更改
             this.Page.Unloaded += (sender, e) =>
             {
@@ -102,9 +106,12 @@ namespace ZSCY_Win10.Common
 #endif
             };
         }
+
         #region 导航支持
+
         RelayCommand _goBackCommand;
         RelayCommand _goForwardCommand;
+
         /// <summary>
         /// 如果 Frame 管理其导航历史记录，则 <see cref="RelayCommand"/> 用于绑定到后退按钮的 Command 属性
         /// 以导航到后退导航历史记录中的最新项
@@ -150,6 +157,7 @@ namespace ZSCY_Win10.Common
                 return _goForwardCommand;
             }
         }
+
         /// <summary>
         /// <see cref="GoBackCommand"/> 属性使用的虚拟方法，用于
         /// 确定 <see cref="Frame"/> 能否后退。
@@ -174,6 +182,7 @@ namespace ZSCY_Win10.Common
         {
             return this.Frame != null && this.Frame.CanGoForward;
         }
+
         /// <summary>
         /// <see cref="GoBackCommand"/> 属性使用的虚拟方法，用于
         /// 调用 <see cref="Windows.UI.Xaml.Controls.Frame.GoBack"/> 方法。
@@ -190,6 +199,7 @@ namespace ZSCY_Win10.Common
         {
             if (this.Frame != null && this.Frame.CanGoForward) this.Frame.GoForward();
         }
+
 #if WINDOWS_PHONE_APP
         /// <summary>
         /// 在按下硬件“后退”按钮时调用。仅适用于 Windows Phone。
@@ -216,6 +226,7 @@ namespace ZSCY_Win10.Common
             AcceleratorKeyEventArgs e)
         {
             var virtualKey = e.VirtualKey;
+
             // 仅当按向左、向右或专用上一页或下一页键时才进一步
             // 调查
             if ((e.EventType == CoreAcceleratorKeyEventType.SystemKeyDown ||
@@ -230,6 +241,7 @@ namespace ZSCY_Win10.Common
                 bool shiftKey = (coreWindow.GetKeyState(VirtualKey.Shift) & downState) == downState;
                 bool noModifiers = !menuKey && !controlKey && !shiftKey;
                 bool onlyAlt = menuKey && !controlKey && !shiftKey;
+
                 if (((int)virtualKey == 166 && noModifiers) ||
                     (virtualKey == VirtualKey.Left && onlyAlt))
                 {
@@ -246,6 +258,7 @@ namespace ZSCY_Win10.Common
                 }
             }
         }
+
         /// <summary>
         /// 当此页处于活动状态并占用整个窗口时，在每次鼠标单击、触摸屏点击
         /// 或执行等效交互时调用。  用于检测浏览器样式下一页和
@@ -257,10 +270,12 @@ namespace ZSCY_Win10.Common
             PointerEventArgs e)
         {
             var properties = e.CurrentPoint.Properties;
+
             // 忽略与鼠标左键、右键和中键的键关联
             if (properties.IsLeftButtonPressed || properties.IsRightButtonPressed ||
                 properties.IsMiddleButtonPressed)
                 return;
+
             // 如果按下后退或前进(但不是同时)，则进行相应导航
             bool backPressed = properties.IsXButton1Pressed;
             bool forwardPressed = properties.IsXButton2Pressed;
@@ -272,9 +287,13 @@ namespace ZSCY_Win10.Common
             }
         }
 #endif
+
         #endregion
+
         #region 进程生命期管理
-        private string _pageKey;
+
+        private String _pageKey;
+
         /// <summary>
         /// 在当前页上注册此事件以向该页填入
         /// 在导航过程中传递的内容以及任何
@@ -288,6 +307,7 @@ namespace ZSCY_Win10.Common
         /// 该页。
         /// </summary>
         public event SaveStateEventHandler SaveState;
+
         /// <summary>
         /// 在此页将要在 Frame 中显示时进行调用。
         /// 此方法调用 <see cref="LoadState"/>，应在此处放置所有
@@ -299,6 +319,7 @@ namespace ZSCY_Win10.Common
         {
             var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
             this._pageKey = "Page-" + this.Frame.BackStackDepth;
+
             if (e.NavigationMode == NavigationMode.New)
             {
                 // 在向导航堆栈添加新页时清除向前导航的
@@ -310,6 +331,7 @@ namespace ZSCY_Win10.Common
                     nextPageIndex++;
                     nextPageKey = "Page-" + nextPageIndex;
                 }
+
                 // 将导航参数传递给新页
                 if (this.LoadState != null)
                 {
@@ -323,10 +345,11 @@ namespace ZSCY_Win10.Common
                 // 给页
                 if (this.LoadState != null)
                 {
-                    this.LoadState(this, new LoadStateEventArgs(e.Parameter, (Dictionary<string, Object>)frameState[this._pageKey]));
+                    this.LoadState(this, new LoadStateEventArgs(e.Parameter, (Dictionary<String, Object>)frameState[this._pageKey]));
                 }
             }
         }
+
         /// <summary>
         /// 当此页不再在 Frame 中显示时调用。
         /// 此方法调用 <see cref="SaveState"/>，应在此处放置所有
@@ -337,15 +360,17 @@ namespace ZSCY_Win10.Common
         public void OnNavigatedFrom(NavigationEventArgs e)
         {
             var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
-            var pageState = new Dictionary<string, Object>();
+            var pageState = new Dictionary<String, Object>();
             if (this.SaveState != null)
             {
                 this.SaveState(this, new SaveStateEventArgs(pageState));
             }
             frameState[_pageKey] = pageState;
         }
+
         #endregion
     }
+
     /// <summary>
     /// 代表将处理 <see cref="NavigationHelper.LoadState"/> 事件的方法
     /// </summary>
@@ -354,6 +379,7 @@ namespace ZSCY_Win10.Common
     /// 代表将处理 <see cref="NavigationHelper.SaveState"/> 事件的方法
     /// </summary>
     public delegate void SaveStateEventHandler(object sender, SaveStateEventArgs e);
+
     /// <summary>
     /// 一个类，用于存放在某页尝试加载状态时所需的事件数据。
     /// </summary>
@@ -369,6 +395,7 @@ namespace ZSCY_Win10.Common
         /// 的字典。 首次访问某页时，此项将为 null。
         /// </summary>
         public Dictionary<string, Object> PageState { get; private set; }
+
         /// <summary>
         /// 初始化 <see cref="LoadStateEventArgs"/> 类的新实例。
         /// </summary>
@@ -396,6 +423,7 @@ namespace ZSCY_Win10.Common
         /// 要填入可序列化状态的空字典。
         /// </summary>
         public Dictionary<string, Object> PageState { get; private set; }
+
         /// <summary>
         /// 初始化 <see cref="SaveStateEventArgs"/> 类的新实例。
         /// </summary>

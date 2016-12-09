@@ -8,10 +8,12 @@
     xmlns:converter="using:ZSCY_Win10.Util.Converter"
     xmlns:pr="using:PullToRefresh.UWP"
     mc:Ignorable="d">
+
     <Page.Resources>
         <converter:KBAllScrollViewerHeightConverter x:Key="KBAllScrollViewerHeightConverter"/>
         <converter:LongClassRoomConverter x:Key="LongClassRoomConverter"/>
     </Page.Resources>
+
     <Grid >
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
@@ -143,16 +145,20 @@
                     </AppBarButton>-->
                 </Grid>
             </Grid>
+
             <StackPanel Name="TodayTitleStackPanel" Orientation="Horizontal" Margin="360,0,0,0" Visibility="Collapsed">
                 <Line  Y1="0" Y2="48" Stroke="#58b3ff" StrokeThickness="1"/>
                 <TextBlock Text="今日" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
             </StackPanel>
+
         </Grid>
+
         <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
+
             <!--大课表Grid-->
             <Grid x:Name="KBAllGrid" Grid.Column="0">
                 <StackPanel >
@@ -184,6 +190,8 @@
                                 <ColumnDefinition Width="1 *"/>
                                 <ColumnDefinition Width="1 *"/>
                             </Grid.ColumnDefinitions>
+
+
                             <TextBlock Text="一" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
                             <TextBlock Text="二" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
                             <TextBlock Text="三" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
@@ -191,6 +199,7 @@
                             <TextBlock Text="五" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
                             <TextBlock Text="六" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
                             <TextBlock Text="日" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+
                         </Grid>
                         <!--<StackPanel Grid.Row="0" Grid.Column="1">
                             <TextBlock Text="18" FontSize="18" Foreground="#555" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
@@ -229,6 +238,7 @@
                                     <ColumnDefinition Width="2 *"/>
                                     <ColumnDefinition Width="21 *"/>
                                 </Grid.ColumnDefinitions>
+
                                 <Grid Grid.Column="0" >
                                     <Grid.RowDefinitions>
                                         <!--行-->
@@ -306,6 +316,7 @@
                                         </TextBlock>
                                     </Grid>
                                 </Grid>
+
                                 <Grid VerticalAlignment="Stretch" x:Name="kebiaoGrid" Grid.Column="1">
                                     <Grid.ColumnDefinitions>
                                         <!--列-->
@@ -354,6 +365,7 @@
                                                                     <TextBlock Text="教师" Foreground="#333" Grid.Column="0" Grid.Row="1" FontSize="18" Margin="0,2.5,5,2.5"/>
                                                                     <TextBlock Text="类型" Foreground="#333" Grid.Column="0" Grid.Row="2" FontSize="18" Margin="0,2.5,5,2.5"/>
                                                                     <TextBlock Text="周数" Foreground="#333" Grid.Column="0" Grid.Row="3" FontSize="18" Margin="0,2.5,5,2.5"/>
+
                                                                     <TextBlock Text="{Binding Classroom,Converter={StaticResource LongClassRoomConverter},Mode=OneWay}" Foreground="#333" Grid.Column="1" Grid.Row="0" FontSize="18" VerticalAlignment="Center"/>
                                                                     <TextBlock Text="{Binding Teacher}" Foreground="#333" Grid.Column="1" Grid.Row="1" FontSize="18" VerticalAlignment="Center"/>
                                                                     <TextBlock Text="{Binding Type}" Foreground="#333" Grid.Column="1" Grid.Row="2" FontSize="18" VerticalAlignment="Center"/>
@@ -362,6 +374,7 @@
                                                             </DataTemplate>
                                                         </ListView.ItemTemplate>
                                                     </ListView>
+
                                                 </PivotItem>
                                             </Pivot>
                                         </Flyout>
@@ -471,6 +484,7 @@
                                     	<Run Text="12"/>
                                     </TextBlock>
                                 </Grid>
+
                             </Grid>
                             <Grid Name="KebiaoDayGrid"  Grid.Column="1" Grid.Row="1" Margin="0,0,15,0">
                                 <Grid.RowDefinitions>
@@ -508,5 +522,9 @@
         <Grid Grid.Row="1">
             <ProgressRing Name="progress" IsActive="True" Height="60" Width="60"/>
         </Grid>
+
+
+
     </Grid>
+
 </Page>

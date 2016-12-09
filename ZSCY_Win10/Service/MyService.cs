@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Util;
+
 namespace ZSCY_Win10.Service
 {
     public class MyService
     {
         public static ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         private static string resourceName = "ZSCY";
+
         public static async Task<List<MyNotification>> GetNotifications(int page = 0, int size = 15)
         {
             return await Task.Run(async () =>
@@ -58,6 +60,7 @@ namespace ZSCY_Win10.Service
                 catch (Exception) { }
                 return feeds;
             });
+
             return null;
         }
         public static async Task<List<MyFeed>> GetMyFeeds(int page = 0, int size = 15)
@@ -74,6 +77,7 @@ namespace ZSCY_Win10.Service
                 paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
                 paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
                 paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
+                
                 string response = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Article/searchtrends", paramList);
                 Debug.WriteLine(response);
                 //response = Utils.ConvertUnicodeStringToChinese(response);
@@ -98,8 +102,11 @@ namespace ZSCY_Win10.Service
                 catch (Exception) { }
                 return feeds;
             });
+
             return null;
         }
+
+
         const string api = "cyxbsMobile/index.php/Home/Person/search";
         public static async Task<PeoInfo> GetPerson()
         {

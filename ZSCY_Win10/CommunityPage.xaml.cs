@@ -26,7 +26,9 @@ using ZSCY_Win10.Pages.CommunityPages;
 using ZSCY_Win10.Service;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
+
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
+
 namespace ZSCY_Win10
 {
     /// <summary>
@@ -44,6 +46,7 @@ namespace ZSCY_Win10
         List<Img> clickImgList = new List<Img>();
         int clickImfIndex = 0;
         bool isPersonInfo = false;
+
         public CommunityPage()
         {
             this.InitializeComponent();
@@ -66,6 +69,7 @@ namespace ZSCY_Win10
                     //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     //    HubSectionKBTitle.Text = CommunityContentTitleTextBlock.Text;
                     //}
+
                 }
                 if (!App.showpane)
                 {
@@ -106,13 +110,16 @@ namespace ZSCY_Win10
                 BBDDScrollViewer.ChangeView(0, App.CommunityScrollViewerOffset, 1);
             }
         }
+
         protected async override void OnNavigatedFrom(NavigationEventArgs e)
         {
             SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
+
         public Frame CommunityFrame { get { return this.cframe; } }
         //public Frame MyFrame { get { return this.Myframe; } }
+
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             if (!e.Handled)
@@ -138,6 +145,8 @@ namespace ZSCY_Win10
                 }
             }
         }
+
+
         /// <summary>
         /// 下拉刷新
         /// </summary>
@@ -170,6 +179,7 @@ namespace ZSCY_Win10
             }
             //init
         }
+
         /// <summary>
         /// 刷新按钮
         /// </summary>
@@ -202,6 +212,7 @@ namespace ZSCY_Win10
             }
             //init
         }
+
         /// <summary>
         /// 继续加载
         /// </summary>
@@ -228,6 +239,7 @@ namespace ZSCY_Win10
             }
             //init
         }
+
         /// <summary>
         /// Pivot切换
         /// </summary>
@@ -254,6 +266,7 @@ namespace ZSCY_Win10
                 //init
             }
         }
+
         /// <summary>
         /// 加载失败重新加载
         /// </summary>
@@ -276,6 +289,7 @@ namespace ZSCY_Win10
             }
             //init
         }
+
         private void CommunityAddAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO:未登陆时 无法发表新帖
@@ -306,6 +320,7 @@ namespace ZSCY_Win10
                 msgPopup.ShowWIndow();
             }
         }
+
         private void BBDDListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             this.cframe.Navigate(typeof(CommunityContentPage), e.ClickedItem, new DrillInNavigationTransitionInfo());
@@ -316,6 +331,7 @@ namespace ZSCY_Win10
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             }
         }
+
         private void RMDTListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             this.cframe.Navigate(typeof(CommunityContentPage), e.ClickedItem, new DrillInNavigationTransitionInfo());
@@ -326,6 +342,7 @@ namespace ZSCY_Win10
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             //}
         }
+
         private async void liskButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO:未登陆时 不能点赞
@@ -338,6 +355,7 @@ namespace ZSCY_Win10
                 if (credentialList.Count > 0)
                 {
                     var b = sender as Button;
+
                     string num_id = b.TabIndex.ToString();
                     Debug.WriteLine(num_id);
                     Debug.WriteLine("id " + num_id.Substring(2));
@@ -446,6 +464,7 @@ namespace ZSCY_Win10
                 msgPopup.ShowWIndow();
             }
         }
+
         private async void RMDTScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             if (RMDTScrollViewer.VerticalOffset > (RMDTScrollViewer.ScrollableHeight - 500) && RMDTScrollViewer.ScrollableHeight != hotOldScrollableHeight)
@@ -456,6 +475,7 @@ namespace ZSCY_Win10
             }
             //Debug.WriteLine(RMDTScrollViewer.VerticalOffset);
         }
+
         private void BBDDScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             if (BBDDScrollViewer.VerticalOffset > (BBDDScrollViewer.ScrollableHeight - 500) && BBDDScrollViewer.ScrollableHeight != BBDDOldScrollableHeight)
@@ -465,6 +485,7 @@ namespace ZSCY_Win10
                 ViewModel.getbbdd(1, 15, 5);
             }
         }
+
         private void PhotoGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
             Img img = e.ClickedItem as Img;
@@ -486,6 +507,7 @@ namespace ZSCY_Win10
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
+
         private void CommunityItemPhoto_Tapped(object sender, TappedRoutedEventArgs e)
         {
             CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
@@ -494,6 +516,9 @@ namespace ZSCY_Win10
             //backImgButton.Visibility = Visibility.Collapsed;
             //nextImgButton.Visibility = Visibility.Collapsed;
         }
+
+
+
         private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
             //if (appSetting.Values.ContainsKey("idNum"))
@@ -517,16 +542,19 @@ namespace ZSCY_Win10
                 msgPopup.ShowWIndow();
             }
         }
+
         private void CommunityItemPhotoImage_Holding(object sender, HoldingRoutedEventArgs e)
         {
             //Debug.WriteLine("Holding");
             //savePic();
         }
+
         private void CommunityItemPhotoImage_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             Debug.WriteLine("RightTapped");
             savePic();
         }
+
         private async void savePic()
         {
             var dig = new MessageDialog("是否保存此图片");
@@ -552,6 +580,7 @@ namespace ZSCY_Win10
             {
             }
         }
+
         private void CommunityItemPhotoImage_ImageOpened(object sender, RoutedEventArgs e)
         {
             DependencyObject x =VisualTreeHelper.GetParent(sender as Image);
@@ -560,5 +589,6 @@ namespace ZSCY_Win10
             ProgressRing p = z as ProgressRing;
             p.IsActive = false;
         }
+
     }
 }

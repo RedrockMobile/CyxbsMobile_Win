@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace ZSCY.Models
 {
     public class ruxue_page : BaseModel
@@ -18,54 +19,65 @@ namespace ZSCY.Models
         //        {
         //            return anquan;
         //        }
+
         //        set
         //        {
         //            anquan = value;
         //            RaisePropertyChanged(nameof(Anquan));
         //        }
         //    }
+
         //    public string Ruxue
         //    {
         //        get
         //        {
         //            return ruxue;
         //        }
+
         //        set
         //        {
         //            ruxue = value;
         //            RaisePropertyChanged(nameof(Ruxue));
+
         //        }
         //    }
+
         //    public string Jiangxuejin
         //    {
         //        get
         //        {
         //            return jiangxuejin;
         //        }
+
         //        set
         //        {
         //            jiangxuejin = value;
         //            RaisePropertyChanged(nameof(Jiangxuejin));
+
         //        }
         //    }
+
         //    public string Xueshengshouce
         //    {
         //        get
         //        {
         //            return xueshengshouce;
         //        }
+
         //        set
         //        {
         //            xueshengshouce = value;
         //            RaisePropertyChanged(nameof(Xueshengshouce));
         //        }}
         private string []icon;
+
         public string []Icon
         {
             get
             {
                 return icon;
             }
+
             set
             {
                 icon = value;

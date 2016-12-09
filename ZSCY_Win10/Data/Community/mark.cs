@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+
 namespace ZSCY_Win10.Data.Community
 {
     class Mark
@@ -15,6 +16,7 @@ namespace ZSCY_Win10.Data.Community
         public string photo_thumbnail_src { get; set; }
         public string created_time { get; set; }
         public string content { get; set; }
+
         public void GetListAttribute(JObject jObject)
         {
             stunum = jObject["stunum"].ToString();

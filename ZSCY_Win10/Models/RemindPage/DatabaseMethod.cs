@@ -11,6 +11,7 @@ using ZSCY_Win10.Util;
 using Windows.Security.Credentials;
 using Newtonsoft.Json;
 using Windows.UI.Xaml;
+
 namespace ZSCY_Win10.Models.RemindPage
 {
     public static class DatabaseMethod
@@ -29,6 +30,7 @@ namespace ZSCY_Win10.Models.RemindPage
                 }
             }
             //var TagList = from x in list where x.Id_system.Equals("") select x.Id_system;
+
             conn.DropTable<RemindListDB>();
             conn.CreateTable<RemindListDB>();
             return TagList;
@@ -51,16 +53,19 @@ namespace ZSCY_Win10.Models.RemindPage
                         Id = item.Id,
                         IdNum = idNum
                     };
+
                     await NetWork.httpRequest(ApiUri.deleteRemindApi, NetWork.deleteRemind(remind));
                 }
                 list.Delete(i => i.Id_system.Equals(tag));
             }
             string[] TagArray = tag.Split(',');
             var notifier = ToastNotificationManager.CreateToastNotifier();
+
             for (int i = 0; i < TagArray.Count(); i++)
             {
                 var scheduledNotifs = notifier.GetScheduledToastNotifications()
               .Where(n => n.Tag.Equals(TagArray[i]));
+
                 // Remove all of those from the schedule
                 foreach (var n in scheduledNotifs)
                 {
@@ -92,16 +97,21 @@ namespace ZSCY_Win10.Models.RemindPage
             var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath);
             var up = conn.Table<RemindListDB>();
             //机智的我，删除和插入替换了update
+
             up.Delete(x => x.Id == id || x.Id_system == id_system);
             RemindListDB temp = new RemindListDB() { Id = id, Id_system = id_system, json = json };
             conn.Insert(temp);
+
+
         }
         public static void ReadDatabase(Visibility visibility)
         {
             try
             {
+
                 using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
                 {
+
                     App.remindList.Clear();
                     var list = conn.Table<RemindListDB>();
                     foreach (var item in list)
@@ -126,6 +136,7 @@ namespace ZSCY_Win10.Models.RemindPage
                 conn.CreateTable<RemindListDB>();
             }
         }
+
         private static string ClassMixDay(ref MyRemind remind)
         {
             string temp = "";
@@ -133,6 +144,7 @@ namespace ZSCY_Win10.Models.RemindPage
             {
                 temp += ConvertDay(int.Parse(remind.DateItems[i].Day)) + ConvertClass(int.Parse(remind.DateItems[i].Class)) + "节、";
             }
+
             temp = temp.Remove(temp.Length - 1);
             return temp;
         }
@@ -155,6 +167,7 @@ namespace ZSCY_Win10.Models.RemindPage
                 default:
                     return "";
             }
+
         }
         private static string ConvertDay(int i)
         {
@@ -177,6 +190,7 @@ namespace ZSCY_Win10.Models.RemindPage
                 default:
                     return "";
             }
+
         }
         public static void ToDatabase(string id, string json, string id_system)
         {
@@ -185,6 +199,7 @@ namespace ZSCY_Win10.Models.RemindPage
                 conn.CreateTable<RemindListDB>();
                 conn.Insert(new RemindListDB() { Id = id, Id_system = id_system, json = json });
             }
+
         }
         public static string[] id_systemToArray(string id)
         {

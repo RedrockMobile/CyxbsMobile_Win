@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+
     <Grid Background="#f6f6f6">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
@@ -18,6 +19,7 @@
             <AppBarButton Name="SaveRemind" Icon="Accept" Foreground="White"  HorizontalAlignment="Right" Tapped="SaveRemind_Tapped"/>
         </Grid>
         <Line x:Name="SplitLine" Grid.Row="1" Y1="0" Y2="0" Stroke="Gray" StrokeThickness="1"/>
+
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -51,6 +53,7 @@
                         <ColumnDefinition Width="1 *"/>
                         <ColumnDefinition Width="1 *"/>
                     </Grid.ColumnDefinitions>
+
                     <TextBlock Text="一" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
                     <TextBlock Text="二" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
                     <TextBlock Text="三" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
@@ -58,14 +61,17 @@
                     <TextBlock Text="五" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
                     <TextBlock Text="六" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
                     <TextBlock Text="日" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+
                 </Grid>
             </Grid>
+
             <ScrollViewer  VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled" Grid.Row="1" >
                 <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2 *"/>
                         <ColumnDefinition Width="21 *"/>
                     </Grid.ColumnDefinitions>
+
                     <Grid Grid.Column="0" >
                         <Grid.RowDefinitions>
                             <!--行-->
@@ -173,5 +179,6 @@
                 </Grid>
             </ScrollViewer>
         </Grid>
+
     </Grid>
 </Page>

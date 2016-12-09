@@ -7,8 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.Foundation;
+
 namespace SycnRemindBackgroundTask
 {
+
     internal sealed class SelectedWeekNum
     {
         private int weekNum;
@@ -25,6 +27,7 @@ namespace SycnRemindBackgroundTask
             {
                 return weekNumOfMonday;
             }
+
             set
             {
                 weekNumOfMonday = value;
@@ -36,11 +39,13 @@ namespace SycnRemindBackgroundTask
             {
                 return weekNum;
             }
+
             set
             {
                 weekNum = value;
             }
         }
+
     }
     [DataContract]
  internal sealed class DateItemModel
@@ -55,12 +60,17 @@ namespace SycnRemindBackgroundTask
         /// </summary>
         [DataMember(Name = "class")]
         public string Class { get; set; }
+
         ///<summary>
         /// 
         /// </summary>
         [DataMember(Name = "day")]
         public string Day { get; set; }
+
     }
+
+
+
     [DataContract]
  internal sealed class MyRemind
     {
@@ -72,21 +82,29 @@ namespace SycnRemindBackgroundTask
         private Visibility rewrite;
         private Visibility deleteIcon;
         public string Tag { get; set; }
+
+
+
+
+
         ///<summary>
         /// timestamp+4位随机
         /// </summary>
         [DataMember(Name = "id")]
         public string Id { get; set; }
+
         ///<summary>
         /// 
         /// </summary>
         [DataMember(Name = "stuNum")]
         public string StuNum { get; set; }
+
         ///<summary>
         /// 
         /// </summary>
         [DataMember(Name = "idNum")]
         public string IdNum { get; set; }
+
         ///<summary>
         /// 
         /// </summary>
@@ -99,6 +117,7 @@ namespace SycnRemindBackgroundTask
         /// </summary>
         [DataMember(Name = "time")]
         public string Time { get; set; }
+
         ///<summary>
         /// 事项的标题，不能为空
         /// </summary>
@@ -112,8 +131,10 @@ namespace SycnRemindBackgroundTask
             set
             {
                 _title = value;
+
             }
         }
+
         ///<summary>
         /// 事项的具体内容,可为空
         /// </summary>
@@ -129,44 +150,55 @@ namespace SycnRemindBackgroundTask
                 _content = value;
             }
         }
+
         ///<summary>
         /// 当前学期，不传默认本学期 格式 本学期为201620171 下学期为201620172 
         /// </summary>
         [DataMember(Name = "term")]
         public string Term { get; set; }
+
         public string ClassDay
         {
             get
             {
                 return classDay;
             }
+
             set
             {
                 classDay = value;
             }
         }
+
         public string TotalWeek
         {
             get
             {
                 return totalWeek;
             }
+
             set
             {
                 totalWeek = value;
             }
         }
     }
+
    internal sealed class AddRemindReturn
     {
         [DataMember(Name = "stuNum")]
         public string StuNum { get; set; }
+
         ///<summary>
         /// 
         /// </summary>
         [DataMember(Name = "idNum")]
         public string IdNum { get; set; }
+
         [DataMember(Name = "id")]
         public string Id { get; set; }
     }
+
+
+
 }

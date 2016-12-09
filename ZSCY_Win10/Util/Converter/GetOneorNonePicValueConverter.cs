@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 using ZSCY_Win10.Data.Community;
+
 namespace ZSCY_Win10.Util.Converter
 {
     public class GetOneorNonePicValueConverter : IValueConverter
@@ -29,6 +30,7 @@ namespace ZSCY_Win10.Util.Converter
                 return "";
             }
         }
+
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();

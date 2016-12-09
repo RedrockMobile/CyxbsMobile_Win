@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ZSCY_Win10.Common;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Service;
+
 namespace ZSCY_Win10.ViewModels.Community
 {
     public class CommunityPersonInfoViewModel : ViewModelBase
@@ -23,10 +24,12 @@ namespace ZSCY_Win10.ViewModels.Community
             set
             {
                 this.info = value;
+
                 OnPropertyChanged(nameof(Info));
             }
         }
         public ObservableCollection<MyFeed> MyFeedlist { get; private set; } = new ObservableCollection<MyFeed>();
+
         public CommunityPersonInfoViewModel(string stunum)
         {
             this.stunum = stunum;

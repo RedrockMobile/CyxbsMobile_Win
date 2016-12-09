@@ -19,7 +19,9 @@ using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+
 namespace ZSCY_Win10.Pages.CommunityPages
 {
     /// <summary>
@@ -54,8 +56,10 @@ namespace ZSCY_Win10.Pages.CommunityPages
             };
         }
         public Frame ContentFrame { get { return this.frame; } }
+
         private void PhotoGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
+
             Img img = e.ClickedItem as Img;
             GridView gridView = sender as GridView;
             clickImgList = ((Img[])gridView.ItemsSource).ToList();
@@ -67,12 +71,16 @@ namespace ZSCY_Win10.Pages.CommunityPages
             //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
+
+
+
         private void CommunityItemPhoto_Tapped(object sender, TappedRoutedEventArgs e)
         {
             CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
             //SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
             //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
+
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             if (!e.Handled)
@@ -94,6 +102,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 }
                 else
                 {
+
                     if (Frame.CanGoBack)
                     {
                         Frame.GoBack();
@@ -104,8 +113,10 @@ namespace ZSCY_Win10.Pages.CommunityPages
             }
             e.Handled = true;
         }
+
         private void LikeButton_Click(object sender, RoutedEventArgs e)
         {
+
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -113,11 +124,13 @@ namespace ZSCY_Win10.Pages.CommunityPages
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
+
         private void infoListScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             if (infoListScrollViewer.VerticalOffset > (infoListScrollViewer.ScrollableHeight - 500) && infoListScrollViewer.ScrollableHeight != infoListScrollableHeight)
@@ -127,21 +140,25 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 ViewModel.Get();
             }
         }
+
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             this.ContentFrame.Visibility = Visibility.Visible;
             this.ContentFrame.Navigate(typeof(CommunityMyContentPage), e.ClickedItem);
         }
+
         private void CommunityItemPhotoImage_Holding(object sender, HoldingRoutedEventArgs e)
         {
             //Debug.WriteLine("Holding");
             //savePic();
         }
+
         private void CommunityItemPhotoImage_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             Debug.WriteLine("RightTapped");
             savePic();
         }
+
         private async void savePic()
         {
             var dig = new MessageDialog("是否保存此图片");
@@ -167,6 +184,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             {
             }
         }
+
         private void CommunityItemPhotoImage_ImageOpened(object sender, RoutedEventArgs e)
         {
             DependencyObject x = VisualTreeHelper.GetParent(sender as Image);

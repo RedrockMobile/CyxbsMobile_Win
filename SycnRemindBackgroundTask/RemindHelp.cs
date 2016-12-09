@@ -11,28 +11,34 @@ using Windows.Security.Credentials;
 using Newtonsoft.Json;
 using System.Runtime.Serialization.Json;
 using System.Collections.ObjectModel;
+
+
 namespace SycnRemindBackgroundTask
 {
     internal sealed class RemindHelp
     {
-        public static void AddRemind(MyRemind remind)
+        public static  void AddRemind(MyRemind remind)
         {
             remind.Id_system = Guid.NewGuid();
             //await Task.Run(delegate
             //{
-            addNotification(remind);
+                addNotification(remind);
             //});
         }
         private static void addNotification(MyRemind remind)
         {
+
             ScheduledToastNotification scheduledNotifi = GenerateAlarmNotification(remind);
+
             ToastNotificationManager.CreateToastNotifier().AddToSchedule(scheduledNotifi);
         }
+
         private static ScheduledToastNotification GenerateAlarmNotification(MyRemind remind)
         {
             ToastContent content = new ToastContent()
             {
                 Scenario = ToastScenario.Alarm,
+
                 Visual = new ToastVisual()
                 {
                     BindingGeneric = new ToastBindingGeneric()
@@ -43,6 +49,7 @@ namespace SycnRemindBackgroundTask
                                                 {
                                                     Text = $"提醒: {remind.Title}"
                                                 },
+
                                                 new AdaptiveText()
                                                 {
                                                     Text = remind.Content
@@ -56,7 +63,9 @@ namespace SycnRemindBackgroundTask
             {
                 Tag = GetTag(remind)
             };
+
         }
+
         private static string id;
         public static string GetTag(MyRemind remind)
         {
@@ -65,15 +74,20 @@ namespace SycnRemindBackgroundTask
             // Tag needs to be 16 chars or less, so hash the Id
             return temp;
         }
+
+
         public static async Task<string> SyncAllRemind(MyRemind remind)
         {
+
             id = "";
             if (remind.Time != null)
             {
                 int min = int.Parse(remind.Time) % 60;
                 int hour = int.Parse(remind.Time) / 60;
                 int day = hour / 24;
-                TimeSpan beforeTime = new TimeSpan(day, hour, min, 0);
+                TimeSpan beforeTime = new TimeSpan(day, hour, min,0);
+
+
                 List<SelectedWeekNum> weeklist = new List<SelectedWeekNum>();
                 foreach (var item in remind.DateItems)
                 {
@@ -85,14 +99,16 @@ namespace SycnRemindBackgroundTask
                     for (int i = 0; i < itemWeekList.Count(); i++)
                     {
                         SelectedWeekNum swn = new SelectedWeekNum();
-                        swn.SetWeekTime(int.Parse(itemWeekList[i]) - 1);
+                        swn.SetWeekTime(int.Parse(itemWeekList[i])-1);
+
                         remind.time = swn.WeekNumOfMonday.AddDays(itemDayList) + classTime.Time - beforeTime;
                         if (remind.time.Ticks < DateTime.Now.Ticks)
                         {
+
                         }
                         else
                         {
-                            AddRemind(remind);
+                             AddRemind(remind);
                         }
                     }
                 }
@@ -119,10 +135,13 @@ namespace SycnRemindBackgroundTask
             }
             catch (Exception)
             {
+
                 throw;
             }
             //相当于MyRemind
             GetRemindModel getRemid = new GetRemindModel();
+
+
             try
             {
                 getRemid = JsonConvert.DeserializeObject<GetRemindModel>(content);
@@ -160,6 +179,7 @@ namespace SycnRemindBackgroundTask
                 mr.Time = item.Time;
                 mr.Id = item.Id.ToString();
                 remindList.Add(mr);
+
             }
             #endregion
             List<string> RemindTagList = new List<string>();
@@ -167,10 +187,12 @@ namespace SycnRemindBackgroundTask
             var notifier = ToastNotificationManager.CreateToastNotifier();
             if (RemindTagList != null)
             {
+
                 for (int i = 0; i < RemindTagList.Count(); i++)
                 {
                     var scheduledNotifs = notifier.GetScheduledToastNotifications()
                   .Where(n => n.Tag.Equals(RemindTagList[i]));
+
                     // Remove all of those from the schedule
                     foreach (var n in scheduledNotifs)
                     {
@@ -178,11 +200,17 @@ namespace SycnRemindBackgroundTask
                     }
                 }
             }
+
             foreach (var remindItem in remindList)
             {
                 string id = await SyncAllRemind(remindItem);
                 DatabaseMethod.ToDatabase(remindItem.Id, JsonConvert.SerializeObject(remindItem), id);
             }
+
         }
     }
+
+
+
+
 }

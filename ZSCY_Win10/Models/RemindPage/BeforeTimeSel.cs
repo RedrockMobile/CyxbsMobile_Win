@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
+
 namespace ZSCY_Win10.Models.RemindPage
 {
     public class BeforeTimeSel:BaseModel
@@ -23,28 +24,34 @@ namespace ZSCY_Win10.Models.RemindPage
             {
                 return beforeString;
             }
+
             set
             {
                 beforeString = value;
             }
         }
+
         public TimeSpan BeforeTime
         {
             get
             {
                 return beforeTime;
             }
+
             set
             {
                 beforeTime = value;
             }
         }
+
+      
         public Visibility IconVisibility
         {
             get
             {
                 return iconVisibility;
             }
+
             set
             {
                 iconVisibility = value;

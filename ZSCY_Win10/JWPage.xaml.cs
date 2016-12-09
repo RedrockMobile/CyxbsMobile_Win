@@ -19,7 +19,9 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Util;
+
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
+
 namespace ZSCY_Win10
 {
     /// <summary>
@@ -68,6 +70,7 @@ namespace ZSCY_Win10
             };
             Debug.WriteLine("Init");
         }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             JWListView.ItemsSource = JWList;
@@ -79,6 +82,9 @@ namespace ZSCY_Win10
             //}
             UmengSDK.UmengAnalytics.TrackPageStart("JWPage");
         }
+
+
+
         private async void getJWCache()
         {
             JWList = await getCache();
@@ -91,7 +97,9 @@ namespace ZSCY_Win10
             //{
             //    JWList.Add(JWListitem);
             //}
+
         }
+
         public static async Task<ObservableCollection<JWList>> getCache()
         {
             return await Task.Run(() =>
@@ -100,6 +108,7 @@ namespace ZSCY_Win10
                 return jw;
             });
         }
+
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -122,6 +131,7 @@ namespace ZSCY_Win10
                 {
                     JArray JWListArray = Utils.ReadJso(jw);
                     JWListView.ItemsSource = JWList;
+
                     for (int i = 0; i < JWListArray.Count; i++)
                     {
                         int failednum = 0;
@@ -134,6 +144,7 @@ namespace ZSCY_Win10
                         if (jwContent != "")
                         {
                             string JWContentText = jwContent.Replace("(\r?\n(\\s*\r?\n)+)", "\r\n");
+
                             JObject jwContentobj = JObject.Parse(JWContentText);
                             if (Int32.Parse(jwContentobj["status"].ToString()) == 200)
                             {
@@ -202,7 +213,9 @@ namespace ZSCY_Win10
                 continueJWGrid.Visibility = Visibility.Collapsed;
             }
         }
+
         public Frame JWFrame { get { return this.frame; } }
+
         private void OnNavigatedToPage(object sender, NavigationEventArgs e)
         {
             // After a successful navigation set keyboard focus to the loaded page
@@ -212,21 +225,25 @@ namespace ZSCY_Win10
                 control.Loaded += Page_Loaded;
             }
         }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ((Page)sender).Focus(FocusState.Programmatic);
             ((Page)sender).Loaded -= Page_Loaded;
         }
+
         private void continueJWGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             page++;
             initJWList(page);
             continueJWGrid.Visibility = Visibility.Collapsed;
         }
+
         private void JWListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
             initJWList();
         }
+
         private void JWRefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             page = 1;
@@ -234,9 +251,13 @@ namespace ZSCY_Win10
             continueJWGrid.Visibility = Visibility.Collapsed;
             initJWList();
         }
+
         private void JWListView_ItemClick(object sender, ItemClickEventArgs e)
         {
+
+
             JWList JWItem = new JWList(((JWList)e.ClickedItem).ID, ((JWList)e.ClickedItem).Title, ((JWList)e.ClickedItem).Date, ((JWList)e.ClickedItem).Read, ((JWList)e.ClickedItem).Content == null ? "加载中..." : ((JWList)e.ClickedItem).Content);
+
             Debug.WriteLine("JWListgrid.Width" + JWListgrid.Width);
             if (JWListgrid.Width == 400)
             {
@@ -255,6 +276,7 @@ namespace ZSCY_Win10
             JWFrame.Visibility = Visibility.Visible;
             this.JWFrame.Navigate(typeof(JWContentPage), JWItem);
         }
+
         private void JWBackAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             //if (JWFrame == null)
@@ -270,6 +292,7 @@ namespace ZSCY_Win10
             JWRefreshAppBarButton.Visibility = Visibility.Visible;
             JWListView.SelectedIndex = -1;
         }
+
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             //if (JWFrame == null)
@@ -286,6 +309,7 @@ namespace ZSCY_Win10
             JWRefreshAppBarButton.Visibility = Visibility.Visible;
             JWListView.SelectedIndex = -1;
         }
+
         /// <summary>
         /// 下拉刷新的事件
         /// </summary>

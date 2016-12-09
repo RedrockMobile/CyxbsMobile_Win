@@ -23,7 +23,9 @@ using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Pages.CommunityPages;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
+
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
+
 namespace ZSCY_Win10
 {
     /// <summary>
@@ -87,6 +89,7 @@ namespace ZSCY_Win10
             };
         }
         public Frame MyFrame { get { return this.frame; } }
+
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             if (MyFrame.Visibility == Visibility.Visible)
@@ -126,6 +129,9 @@ namespace ZSCY_Win10
             //}
             e.Handled = true;
         }
+
+
+
         private void aboutMe_Click(object sender, RoutedEventArgs e)
         {
             aboutMeGrid.Visibility = Visibility.Visible;
@@ -135,6 +141,7 @@ namespace ZSCY_Win10
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
+
         private void myTidings_Click(object sender, RoutedEventArgs e)
         {
             myTidingsGrid.Visibility = Visibility.Visible;
@@ -144,11 +151,14 @@ namespace ZSCY_Win10
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
+
+
         private void EditAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             PeoInfo peoinfo = new PeoInfo(ViewModel.Info.nickname, ViewModel.Info.introduction, ViewModel.Info.phone, ViewModel.Info.qq);
             Frame.Navigate(typeof(SetPersonInfoPage), peoinfo);
         }
+
         private void PhotoGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
             Img img = e.ClickedItem as Img;
@@ -161,9 +171,12 @@ namespace ZSCY_Win10
             //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
+
         private void LikeButton_Click(object sender, RoutedEventArgs e)
         {
+
         }
+
         private void CommunityItemPhoto_Tapped(object sender, TappedRoutedEventArgs e)
         {
             CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
@@ -172,6 +185,7 @@ namespace ZSCY_Win10
             //backImgButton.Visibility = Visibility.Collapsed;
             //nextImgButton.Visibility = Visibility.Collapsed;
         }
+
         private void myTidingsScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             if (myTidingsScrollViewer.VerticalOffset > (myTidingsScrollViewer.ScrollableHeight - 500) && myTidingsScrollViewer.ScrollableHeight != myTidingsOldScrollableHeight)
@@ -181,6 +195,7 @@ namespace ZSCY_Win10
                 ViewModel.getFeeds();
             }
         }
+
         private void aboutMeScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             if (aboutMeScrollViewer.VerticalOffset > (aboutMeScrollViewer.ScrollableHeight - 500) && aboutMeScrollViewer.ScrollableHeight != aboutMeOldScrollableHeight)
@@ -190,26 +205,31 @@ namespace ZSCY_Win10
                 ViewModel.getNotifications();
             }
         }
+
         private void Aboutme_ItemClick(object sender, ItemClickEventArgs e)
         {
             MyFrame.Visibility = Visibility.Visible;
             MyFrame.Navigate(typeof(CommunityMyContentPage), e.ClickedItem);
         }
+
         private void Myfeed_ItemClick(object sender, ItemClickEventArgs e)
         {
             MyFrame.Visibility = Visibility.Visible;
             MyFrame.Navigate(typeof(CommunityMyContentPage), e.ClickedItem);
         }
+
         private void CommunityItemPhotoImage_Holding(object sender, HoldingRoutedEventArgs e)
         {
             //Debug.WriteLine("Holding");
             //savePic();
         }
+
         private void CommunityItemPhotoImage_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             Debug.WriteLine("RightTapped");
             savePic();
         }
+
         private async void savePic()
         {
             var dig = new MessageDialog("是否保存此图片");
@@ -243,5 +263,8 @@ namespace ZSCY_Win10
             ProgressRing p = z as ProgressRing;
             p.IsActive = false;
         }
+
     }
+
+
 }

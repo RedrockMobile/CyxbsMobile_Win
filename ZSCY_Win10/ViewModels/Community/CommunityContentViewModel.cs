@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZSCY_Win10.Common;
 using ZSCY_Win10.Data.Community;
+
 namespace ZSCY_Win10.ViewModels.Community
 {
     public class CommunityContentViewModel : ViewModelBase
@@ -23,6 +24,7 @@ namespace ZSCY_Win10.ViewModels.Community
                 OnPropertyChanged(nameof(hotfeed));
             }
         }
+
         public BBDDFeed BBDD
         {
             get

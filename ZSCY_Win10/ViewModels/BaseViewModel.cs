@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace ZSCY_Win10.ViewModels
 {
     public class BasePageViewModel : INotifyPropertyChanged

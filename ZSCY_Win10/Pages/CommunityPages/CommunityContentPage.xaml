@@ -42,6 +42,8 @@
                 </DataTemplate>
             </util:ImgDataTemplateSelector.MorePhotoTemplate>
         </util:ImgDataTemplateSelector>
+
+
         <!--根据热门类型动态选择数据模板-->
         <util:HotOrBBDDSelector x:Key="HotFeedsDataTemplateSelector">
             <util:HotOrBBDDSelector.BBDDTemplate>
@@ -147,10 +149,14 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+
                 <Grid Grid.Row="0">
                     <ListView ItemTemplateSelector="{StaticResource HotFeedsDataTemplateSelector}" ItemsSource="{x:Bind ViewModel.feeds}" ItemContainerStyle="{StaticResource ItemContainerStyle}" SelectionMode="None" IsItemClickEnabled="False">
+
                     </ListView>
+
                 </Grid>
+
                 <Grid Grid.Row="1" Margin="0,5,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -200,6 +206,7 @@
                 </Grid>
             </Grid>
         </ScrollViewer>
+
         <Grid Name="sendMarkGrid" Margin="5" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -211,6 +218,7 @@
                 <ProgressRing Name="sendMarkProgressRing" IsActive="True" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center"></ProgressRing>
             </Grid>
         </Grid>
+
         <!--图像-->
         <Grid Name="CommunityItemPhotoGrid" Visibility="Collapsed" >
             <Grid Background="Black" Name="CommunityItemPhotoBackGrid" Opacity="0.5" Tapped="CommunityItemPhoto_Tapped"/>
@@ -228,4 +236,5 @@
             </FlipView>
         </Grid>
     </Grid>
+
 </Page>

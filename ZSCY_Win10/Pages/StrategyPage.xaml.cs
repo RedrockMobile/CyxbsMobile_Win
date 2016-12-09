@@ -32,23 +32,28 @@ using Windows.UI.Xaml.Shapes;
 using ZSCY_Win10;
 using Windows.Phone.UI.Input;
 using Windows.UI.ViewManagement;
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+
 namespace ZSCY.Pages
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+
     public sealed partial class StrategyPage : Page
     {
         private int pivot_index;
         string XSQString = "";
         string LXQString = "";
         StrategyViewModel viewmodel = new StrategyViewModel();
+
         public StrategyPage()
         {
             this.InitializeComponent();
             SPivot.SelectedIndex = 0;
             this.DataContext = viewmodel;
+
             //手机物理返回键订阅事件
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
             {
@@ -60,13 +65,17 @@ namespace ZSCY.Pages
                 Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += PC_BackRequested;
             }
         }
+
         private void PC_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e)
         {
             FirstPage.firstpage.Second_Page_Back();
             Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
+
         }
+
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
+
             base.OnNavigatedTo(e);
             if (e.NavigationMode == NavigationMode.New)
             {
@@ -83,6 +92,7 @@ namespace ZSCY.Pages
                 viewmodel.Jiangxuejin = "";
                 viewmodel.Ruxue = "";
                 viewmodel.Xueshengshouce = "";
+
                 viewmodel.Icon = new ObservableCollection<string>();
                 viewmodel.Text = new ObservableCollection<string>();
                 viewmodel.Icon.Add("");
@@ -93,6 +103,7 @@ namespace ZSCY.Pages
                 viewmodel.Text.Add("展开");
                 viewmodel.Text.Add("展开");
                 viewmodel.Text.Add("展开");
+
                 viewmodel.AllQQInfo = new Allstring();
                 viewmodel.QdContent = new ObservableCollection<qindan_content>();
                 viewmodel.QsIntroduce = new ObservableCollection<qinshiIntroduce>();
@@ -101,6 +112,7 @@ namespace ZSCY.Pages
                 viewmodel.MjContent = new ObservableCollection<zhoubianmeijing>();
                 #endregion
                 await PivotItem1_First_Step();
+
                 //await Task.Delay(100);
             }
         }
@@ -122,10 +134,12 @@ namespace ZSCY.Pages
             {
                 return;
             }
+
             if (SPivot.SelectedIndex == 4 && !App.isLoading[4])
             {
                 //XSQ_qqGroup();
                 //viewmodel.AllQQInfo.XYQ_All = XSQString;
+
                 //LXQ_qqGroup();
                 //viewmodel.AllQQInfo.LXQ_All = LXQString;
                 viewmodel.XYQ_All = await XSQ_qqGet();
@@ -177,8 +191,10 @@ namespace ZSCY.Pages
             viewmodel.Header = header_lists;
             Ruxue_Get();
         }
+
         async void Qindan_Get()
         {
+
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Json/必备清单.json", UriKind.Absolute));
             string json = await FileIO.ReadTextAsync(file);
             JObject json_object = JObject.Parse(json);
@@ -195,12 +211,15 @@ namespace ZSCY.Pages
             }
             catch (Exception)
             {
+
                 throw;
             }
+
             for (int i = 0; i < 6; i++)
             {
                 viewmodel.QdContent.Add(new qindan_content { content = qindanTemp[i].content.ToString() });
             }
+
         }
         List<KeyValuePair<string, string>> paramListMJ = new List<KeyValuePair<string, string>>();
         public async Task<string> mjHttpClient()
@@ -217,10 +236,12 @@ namespace ZSCY.Pages
                     responese = httpClient.PostAsync(new Uri(Api.zhoubianmeijing_api), new FormUrlEncodedContent(paramListMJ)).Result;
                     if (responese.StatusCode == HttpStatusCode.OK)
                         content = responese.Content.ReadAsStringAsync().Result;
+
                 }
                 catch
                 {
                     var messageDialog = new MessageDialog("好像没网络耶！！！");
+
                     await messageDialog.ShowAsync();
                 }
             });
@@ -231,6 +252,7 @@ namespace ZSCY.Pages
             string content = "";
             try
             {
+
                 content = await mjHttpClient();
                 JObject json = JObject.Parse(content);
                 for (int i = 0; i < 8; i++)
@@ -246,8 +268,10 @@ namespace ZSCY.Pages
             }
             catch
             {
+
             }
         }
+
         List<KeyValuePair<string, string>> paramListRC = new List<KeyValuePair<string, string>>();
         public async Task<string> rcHttpClient()
         {
@@ -260,15 +284,19 @@ namespace ZSCY.Pages
                 HttpResponseMessage response;
                 try
                 {
+
                     response = httpClient.PostAsync(new Uri(Api.richangshenghuo_api), new FormUrlEncodedContent(paramListRC)).Result;
                     if (response.StatusCode == HttpStatusCode.OK)
                         content = response.Content.ReadAsStringAsync().Result;
+
                 }
                 catch
                 {
                     var messageDialog = new MessageDialog("好像没网络耶！！！");
+
                     await messageDialog.ShowAsync();
                 }
+
             });
             return content;
         }
@@ -291,20 +319,26 @@ namespace ZSCY.Pages
                 catch
                 {
                     var messageDialog = new MessageDialog("好像没网络耶！！！");
+
                     await messageDialog.ShowAsync();
                 }
+
             });
             return content;
+
         }
         private async void meishi_Get()
         {
             string content = "";
+
+
             try
             {
                 content = await msHttpClient();
                 JObject json = JObject.Parse(content);
                 for (int i = 0; i < 60; i++)
                 {
+
                     viewmodel.MsContent.Add(new zhoubianmeishi
                     {
                         Name = json["data"][i]["name"].ToString(),
@@ -319,6 +353,7 @@ namespace ZSCY.Pages
                 return;
             }
         }
+
         private async void richang_Get()
         {
             try
@@ -327,6 +362,7 @@ namespace ZSCY.Pages
                 JObject json = JObject.Parse(content);
                 for (int i = 0; i < 19; i++)
                 {
+
                     viewmodel.RichangContent.Add(new richangshenghuo
                     {
                         Name = json["data"][i]["name"].ToString(),
@@ -340,6 +376,7 @@ namespace ZSCY.Pages
                 return;
             }
         }
+
         public async Task<string> qsHttpClient()
         {
             string content = "";
@@ -357,8 +394,11 @@ namespace ZSCY.Pages
                     catch
                     {
                         var messageDialog = new MessageDialog("好像没网络耶！！！");
+
                         await messageDialog.ShowAsync();
+
                     }
+
                     return content;
                 });
             }
@@ -368,6 +408,7 @@ namespace ZSCY.Pages
                 return "";
             }
         }
+
         private async void qinshi_Get()
         {
             //TODO:有个X 记得处理 
@@ -381,6 +422,7 @@ namespace ZSCY.Pages
                 {
                     try
                     {
+
                         viewmodel.QsIntroduce.Add(new qinshiIntroduce { Introduction = json["data"][i]["introduction"].ToString(), Uri = json["data"][i]["photo"][0]["photo_src"].ToString() });
                     }
                     catch
@@ -401,12 +443,16 @@ namespace ZSCY.Pages
             StorageFile ruxue_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/ruxue.txt", UriKind.Absolute));
             StorageFile jiangxuejin_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/jiangxuejin.txt", UriKind.Absolute));
             StorageFile xueshengshouce_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/xueshengshouce.txt", UriKind.Absolute));
+
+
             viewmodel.Anquan = await FileIO.ReadTextAsync(anquan_File);
             viewmodel.Ruxue = await FileIO.ReadTextAsync(ruxue_File);
             viewmodel.Jiangxuejin = await FileIO.ReadTextAsync(jiangxuejin_File);
             viewmodel.Xueshengshouce = await FileIO.ReadTextAsync(xueshengshouce_File);
+
             #endregion
         }
+
         //private async void anquanButton_Click(object sender, RoutedEventArgs e)
         //{
         //    if (App.isReduced[0])
@@ -424,10 +470,12 @@ namespace ZSCY.Pages
         //    StorageFile anquan_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/anquan.txt", UriKind.Absolute));
         //    viewmodel.Anquan = await FileIO.ReadTextAsync(anquan_File);
         //}
+
         //private async void ruxueButton_Click(object sender, RoutedEventArgs e)
         //{
         //    if (App.isReduced[1])
         //    {
+
         //        App.isReduced[1] = false;
         //        viewmodel.Text[1] = "收起";
         //        viewmodel.Icon[1] = "";
@@ -441,10 +489,12 @@ namespace ZSCY.Pages
         //    StorageFile ruxue_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/ruxue.txt", UriKind.Absolute));
         //    viewmodel.Ruxue = await FileIO.ReadTextAsync(ruxue_File);
         //}
+
         //private async void jiangxuejinButton_Click(object sender, RoutedEventArgs e)
         //{
         //    if (App.isReduced[2])
         //    {
+
         //        App.isReduced[2] = false;
         //        viewmodel.Text[2] = "收起";
         //        viewmodel.Icon[2] = "";
@@ -457,11 +507,14 @@ namespace ZSCY.Pages
         //    }
         //    StorageFile jiangxuejin_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/jiangxuejin.txt", UriKind.Absolute));
         //    viewmodel.Jiangxuejin = await FileIO.ReadTextAsync(jiangxuejin_File);
+
         //}
+
         //private async void xueshengshouceButton_Click(object sender, RoutedEventArgs e)
         //{
         //    if (App.isReduced[3])
         //    {
+
         //        App.isReduced[3] = false;
         //        JDhtml.Visibility = Visibility.Visible;
         //        jidianGrid.Height = new GridLength(170);
@@ -492,9 +545,11 @@ namespace ZSCY.Pages
                         LXQString += '\n';
                     i++;
                 }
+
             }
             //LXQString = await LXQ_qqGet();
         }
+
         //TODO:两个异步方法 暂时没用 UI不更新
         public static async Task<string> LXQ_qqGet()
         {
@@ -516,6 +571,7 @@ namespace ZSCY.Pages
                return tempString;
            });
         }
+
         public static async Task<string> XSQ_qqGet()
         {
             string tempString = "";
@@ -535,7 +591,9 @@ namespace ZSCY.Pages
                 }
                 return tempString;
             });
+
         }
+
         private async void XSQ_qqGroup()
         {
             using (var conn = Models.getDB.GetDbxsqConnection())
@@ -554,10 +612,12 @@ namespace ZSCY.Pages
         }
         Point Point_new = new Point();
         Point Point_old = new Point();
+
         private void back_but_Click(object sender, RoutedEventArgs e)
         {
             FirstPage.firstpage.Second_Page_Back();
         }
+
         bool isExit = false;
         private void OnBackPressed(object sender, BackPressedEventArgs e)
         {
@@ -581,6 +641,7 @@ namespace ZSCY.Pages
                 statusBar.ShowAsync();
                 statusBar.ProgressIndicator.Text = "再按一次返回键即将退出程序 ~\\(≧▽≦)/~"; // 状态栏显示文本
                 statusBar.ProgressIndicator.ShowAsync();
+
                 if (isExit)
                 {
                     App.Current.Exit();
@@ -602,6 +663,7 @@ namespace ZSCY.Pages
                 }//Frame在其他页面并且事件未处理
             }
         }
+
         private void bigImage_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             isPoint = false;
@@ -623,6 +685,7 @@ namespace ZSCY.Pages
             Point_old = e.GetCurrentPoint(scrollViewer).Position;
             isPoint = true;
         }
+
         private void bigImage_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
             isPoint = false;
@@ -631,6 +694,7 @@ namespace ZSCY.Pages
         {
             showimage.Visibility = Visibility.Collapsed;
         }
+
         private void Rectangle_Tapped(object sender, TappedRoutedEventArgs e)
         {
             ImageBrush s = ((sender as Rectangle).Fill as ImageBrush);

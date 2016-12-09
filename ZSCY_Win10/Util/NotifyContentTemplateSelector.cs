@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using ZSCY_Win10.Data.Community;
+
 namespace ZSCY_Win10.Util
 {
     public class NotifyContentTemplateSelector : DataTemplateSelector

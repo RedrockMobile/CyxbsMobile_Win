@@ -9,11 +9,14 @@ using SQLite.Net;
 using SQLite.Net.Platform.WinRT;
 using System.IO;
 using ZSCY.Models;
+
 namespace ZSCY_Win10.ViewModels
 {
      public class StrategyViewModel:BasePageViewModel
     {
+       
         private ObservableCollection<StrategyHeader> header;
+
         //private ruxue_page ruxue;
         public ObservableCollection<StrategyHeader> Header
         {
@@ -21,6 +24,7 @@ namespace ZSCY_Win10.ViewModels
             {
                 return header;
             }
+
             set
             {
                 header = value;
@@ -34,6 +38,7 @@ namespace ZSCY_Win10.ViewModels
             {
                 return allQQInfo;
             }
+
             set
             {
                 allQQInfo = value;
@@ -41,18 +46,22 @@ namespace ZSCY_Win10.ViewModels
             }
         }
         private ObservableCollection<qinshiIntroduce> qsIntroduce;
+
+
         public ObservableCollection<qinshiIntroduce> QsIntroduce
         {
             get
             {
                 return qsIntroduce;
             }
+
             set
             {
                 qsIntroduce = value;
                 RaisePropertyChanged(nameof(QsIntroduce));
             }
         }
+
         private ObservableCollection<richangshenghuo> richangContent;
         public ObservableCollection<richangshenghuo> RichangContent
         {
@@ -60,6 +69,7 @@ namespace ZSCY_Win10.ViewModels
             {
                 return richangContent;
             }
+
             set
             {
                 richangContent = value;
@@ -67,12 +77,14 @@ namespace ZSCY_Win10.ViewModels
             }
         }
         private ObservableCollection<zhoubianmeijing> mjContent;
+
         public ObservableCollection<zhoubianmeijing> MjContent
         {
             get
             {
                 return mjContent;
             }
+
             set
             {
                 mjContent = value;
@@ -86,12 +98,16 @@ namespace ZSCY_Win10.ViewModels
             {
                 return msContent;
             }
+
             set
             {
                 msContent = value;
                 RaisePropertyChanged(nameof(MsContent));
             }
         }
+
+
+
         private ObservableCollection<qindan_content> qdContent;
         public ObservableCollection<qindan_content> QdContent
         {
@@ -99,6 +115,7 @@ namespace ZSCY_Win10.ViewModels
             {
                 return qdContent;
             }
+
             set
             {
                 qdContent = value;
@@ -109,12 +126,14 @@ namespace ZSCY_Win10.ViewModels
         /// 放缩键图标
         /// </summary>
         private ObservableCollection<string> icon;
+
         public ObservableCollection<string> Icon
         {
             get
             {
                 return icon;
             }
+
             set
             {
                 icon = value;
@@ -131,6 +150,7 @@ namespace ZSCY_Win10.ViewModels
             {
                 return text;
             }
+
             set
             {
                 text = value;
@@ -142,6 +162,7 @@ namespace ZSCY_Win10.ViewModels
         //    {
         //        return ruxue;
         //    }
+
         //    set
         //    {
         //        ruxue = value;
@@ -158,42 +179,51 @@ namespace ZSCY_Win10.ViewModels
             {
                 return anquan;
             }
+
             set
             {
                 anquan = value;
                 RaisePropertyChanged(nameof(Anquan));
             }
         }
+
         public string Ruxue
         {
             get
             {
                 return ruxue;
             }
+
             set
             {
                 ruxue = value;
                 RaisePropertyChanged(nameof(Ruxue));
+
             }
         }
+
         public string Jiangxuejin
         {
             get
             {
                 return jiangxuejin;
             }
+
             set
             {
                 jiangxuejin = value;
                 RaisePropertyChanged(nameof(Jiangxuejin));
+
             }
         }
+
         public string Xueshengshouce
         {
             get
             {
                 return xueshengshouce;
             }
+
             set
             {
                 xueshengshouce = value;
@@ -201,31 +231,37 @@ namespace ZSCY_Win10.ViewModels
             }
         }
         private string lXQ_All;
+
         public string LXQ_All
         {
             get
             {
                 return lXQ_All;
             }
+
             set
             {
                 lXQ_All = value;
                 RaisePropertyChanged(nameof(LXQ_All));
             }
         }
+
         public string XYQ_All
         {
             get
             {
                 return xYQ_All;
             }
+
             set
             {
                 xYQ_All = value;
                 RaisePropertyChanged(nameof(XYQ_All));
             }
         }
+
         private string xYQ_All;
     }
+
 }
 

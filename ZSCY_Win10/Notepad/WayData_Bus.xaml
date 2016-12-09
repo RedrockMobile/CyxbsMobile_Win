@@ -8,6 +8,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
+
     <StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -44,6 +45,7 @@
                     路公交车至学校
                 </Run>
             </TextBlock>
+
         </Grid>
         <Grid>
             <Grid.ColumnDefinitions>

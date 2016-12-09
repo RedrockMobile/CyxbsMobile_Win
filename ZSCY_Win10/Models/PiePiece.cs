@@ -7,6 +7,7 @@ using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
+
 namespace ZSCY.Models
 {
     class PiePiece:Path
@@ -18,18 +19,27 @@ namespace ZSCY.Models
             get { return (double)GetValue(RadiusProperty); }
             set { SetValue(RadiusProperty, value); }
         }
+
+
+
         public static readonly DependencyProperty PushOutProperty = DependencyProperty.Register("PushOutProperty", typeof(double), typeof(PiePiece), new PropertyMetadata(0.0));
         public double PushOut       //距离饼图中心的距离
         {
             get { return (double)GetValue(PushOutProperty); }
             set { SetValue(PushOutProperty, value); }
         }
+
+
+
         public static readonly DependencyProperty InnerRadiusProperty = DependencyProperty.Register("InnerRadiusProperty", typeof(double), typeof(PiePiece), new PropertyMetadata(0.0));
         public double InnerRadius       //内圆半径
         {
             get { return (double)GetValue(InnerRadiusProperty); }
             set { SetValue(InnerRadiusProperty, value); }
         }
+
+
+
         public static readonly DependencyProperty WedgeAngleProperty = DependencyProperty.Register("WedgeAngleProperty", typeof(double), typeof(PiePiece), new PropertyMetadata(0.0));
         public double WedgeAngle        //饼图片形的角度
         {
@@ -40,36 +50,54 @@ namespace ZSCY.Models
                 this.Percentage = (value / 360.0);
             }
         }
+
+
+
         public static readonly DependencyProperty RotationAngleProperty = DependencyProperty.Register("RotationAngleProperty", typeof(double), typeof(PiePiece), new PropertyMetadata(0.0));
         public double RotationAngle     //旋转的角度
         {
             get { return (double)GetValue(RotationAngleProperty); }
             set { SetValue(RotationAngleProperty, value); }
         }
+
+
+
         public static readonly DependencyProperty CentreXPropety = DependencyProperty.Register("CentreXPropety", typeof(double), typeof(PiePiece), new PropertyMetadata(0.0));
         public double CentreX       //X的坐标
         {
             get { return (double)GetValue(CentreXPropety); }
             set { SetValue(CentreXPropety, value); }
         }
+
+
+
         public static readonly DependencyProperty CentreYPropety = DependencyProperty.Register("CentreYPropety", typeof(double), typeof(PiePiece), new PropertyMetadata(0.0));
         public double CentreY       //Y的坐标
         {
             get { return (double)GetValue(CentreYPropety); }
             set { SetValue(CentreYPropety, value); }
         }
+
+
+
         public static readonly DependencyProperty PercentageProperty = DependencyProperty.Register("PercentageProperty", typeof(double), typeof(PiePiece), new PropertyMetadata(0.0));
         public double Percentage       //饼图片形所占饼图的百分比
         {
             get { return (double)GetValue(PercentageProperty); }
             private set { SetValue(PercentageProperty, value); }
         }
+
+
+
         public static readonly DependencyProperty PieceValueProperty = DependencyProperty.Register("PieceValueProperty", typeof(double), typeof(PiePiece), new PropertyMetadata(0.0));
         public double PieceValue       //该饼图形所代表的数值
         {
             get { return (double)GetValue(PieceValueProperty); }
             set { SetValue(PieceValueProperty, value); }
         }
+
+
+
         #endregion
         public PiePiece()
         {
@@ -105,7 +133,9 @@ namespace ZSCY.Models
                 return;
             lastWidth = width;
             lastHeight = height;
+
             Point startPoint = new Point(CentreX, CentreY);
+
             Point innerArcStartPoint = ComputeCartesianCoordinate(RotationAngle, InnerRadius);
             innerArcStartPoint = Offset(innerArcStartPoint, CentreX, CentreY);
             Point innerArcEndPoint = ComputeCartesianCoordinate(RotationAngle + WedgeAngle, InnerRadius);
@@ -114,7 +144,9 @@ namespace ZSCY.Models
             outerArcStartPoint = Offset(outerArcStartPoint, CentreX, CentreY);
             Point outerArcEndPoint = ComputeCartesianCoordinate(RotationAngle + WedgeAngle, Radius);
             outerArcEndPoint = Offset(outerArcEndPoint, CentreX, CentreY);
+
             bool largeArc = WedgeAngle > 180.0;
+
             if (PushOut > 0)
             {
                 Point offset = ComputeCartesianCoordinate(RotationAngle + WedgeAngle / 2, PushOut);
@@ -123,15 +155,19 @@ namespace ZSCY.Models
                 outerArcStartPoint = Offset(outerArcStartPoint, offset.X, offset.Y);
                 outerArcEndPoint = Offset(outerArcEndPoint, offset.X, offset.Y);
             }
+
             Size outerArcSize = new Size(Radius, Radius);
             Size innerArcSize = new Size(InnerRadius, InnerRadius);
+
             var geometry = new PathGeometry();
+
             figure = new PathFigure();
             figure.StartPoint = innerArcStartPoint;
             AddLine(outerArcStartPoint);
             AddArc(outerArcEndPoint, outerArcSize, largeArc, SweepDirection.Clockwise);
             AddLine(innerArcEndPoint);
             AddArc(innerArcStartPoint, innerArcSize, largeArc, SweepDirection.Counterclockwise);
+
             figure.IsClosed = true;
             geometry.Figures.Add(figure);
             this.Data = geometry;

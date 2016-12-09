@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:ZSCY_Win10.Data"
     mc:Ignorable="d">
+
     <Page.Resources>
         <converter:KBGridWidthConverter x:Key="KBGridWidthConverterKey"/>
         <converter:KBGridHeighConverter x:Key="KBGridHeighConverterKey"/>
@@ -24,7 +25,9 @@
                 <TextBlock Text="{Binding Itemname}" VerticalAlignment="Bottom" FontSize="15" HorizontalAlignment="Left"  Foreground="White" Margin="10,0,0,5" FontFamily="Microsoft Yahei UI"/>
             </Grid>
         </DataTemplate>
+
     </Page.Resources>
+
     <Grid Background="#f8f8f8">
         <Grid Name="BlueBackGrid" Background="#068cfd" VerticalAlignment="Top" Height="50"/>
         <Hub Name="MainHub" Margin="0,0,0,0" SectionsInViewChanged="MainHub_SectionsInViewChanged">
@@ -78,11 +81,13 @@
                                 <TextBlock  Text="日" FontSize="20" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="7" FontWeight="Light"></TextBlock>
                             </Grid>
                             <ScrollViewer Name="KebiaoScrollViewer" Height="{Binding ActualHeight, Converter={StaticResource KBScrollViewerHeighConverterKey}, ElementName=AppCommandBar, Mode=OneWay}" Width="{Binding ElementName=KBHubSection,Path=Width,Converter={StaticResource KBGridWidthConverterKey}}" VerticalAlignment="Stretch">
+
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="2 *"/>
                                         <ColumnDefinition Width="21 *"/>
                                     </Grid.ColumnDefinitions>
+
                                     <Grid Grid.Column="0">
                                         <Grid.RowDefinitions>
                                             <!--行-->
@@ -136,6 +141,7 @@
                                             <TextBlock FontSize="20" FontWeight="Light" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center">12</TextBlock>
                                         </Grid>
                                     </Grid>
+
                                     <Grid VerticalAlignment="Stretch" Name="kebiaoGrid" Grid.Column="1">
                                         <Grid.ColumnDefinitions>
                                             <!--列-->
@@ -184,6 +190,7 @@
                                                                         <TextBlock Text="教师" Grid.Column="0" Grid.Row="1" FontSize="18" Margin="0,2.5,5,2.5"/>
                                                                         <TextBlock Text="类型" Grid.Column="0" Grid.Row="2" FontSize="18" Margin="0,2.5,5,2.5"/>
                                                                         <TextBlock Text="周数" Grid.Column="0" Grid.Row="3" FontSize="18" Margin="0,2.5,5,2.5"/>
+
                                                                         <TextBlock Text="{Binding Classroom,Converter={StaticResource LongClassRoomConverter},Mode=OneWay}" Grid.Column="1" Grid.Row="0" FontSize="18" VerticalAlignment="Center"/>
                                                                         <TextBlock Text="{Binding Teacher}" Grid.Column="1" Grid.Row="1" FontSize="18" VerticalAlignment="Center"/>
                                                                         <TextBlock Text="{Binding Type}" Grid.Column="1" Grid.Row="2" FontSize="18" VerticalAlignment="Center"/>
@@ -192,6 +199,7 @@
                                                                 </DataTemplate>
                                                             </ListView.ItemTemplate>
                                                         </ListView>
+
                                                     </PivotItem>
                                                 </Pivot>
                                             </Flyout>
@@ -214,6 +222,7 @@
                         <Grid VerticalAlignment="Center" Grid.Row="0" Height="{Binding ElementName=BlueBackGrid,Path=Height}">
                             <TextBlock Name="HubSectionJWTitle" Text="教务信息" Foreground="White"  FontSize="35" FontWeight="Light" VerticalAlignment="Bottom" FontFamily="Microsoft YaHei UI"/>
                         </Grid>
+
                         <StackPanel Grid.Row="1" Margin="0,10,0,0" Width="{Binding ElementName=JWHubSection,Path=Width,Converter={StaticResource KBGridWidthConverterKey}}">
                             <ScrollViewer Grid.Row="1" Height="{Binding ActualHeight, Converter={StaticResource JWScrollViewerHeighConverter}, ElementName=AppCommandBar, Mode=OneWay}" Width="{Binding ElementName=KBHubSection,Path=Width,Converter={StaticResource KBGridWidthConverterKey}}" >
                                 <StackPanel Name="JWListStackPanel">
@@ -234,6 +243,7 @@
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
+
                                     <Grid  Name="opacityGrid" Height="150" Background="#f8f8f8" Width="{Binding ElementName=JWListProgressStackPanel,Path=Width}" Visibility="Collapsed">
                                         <Grid.Resources>
                                             <Storyboard x:Name="OpacityJWGrid">
@@ -241,6 +251,7 @@
                                             </Storyboard>
                                         </Grid.Resources>
                                     </Grid>
+
                                     <!--列表的加载条-->
                                     <StackPanel Name="JWListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
                                         <ProgressBar IsIndeterminate="True" />
@@ -257,9 +268,12 @@
                                     </Grid>
                                 </StackPanel>
                             </ScrollViewer>
+
+
                         </StackPanel>
                     </Grid>
                 </HubSection.Header>
+
             </HubSection>
             <!--更多hubsection-->
             <HubSection Name="MoreHubSection"  DataContext="{Binding Group[0]}" >
@@ -293,6 +307,7 @@
             </HubSection>
         </Hub>
     </Grid>
+
     <Page.BottomAppBar >
         <CommandBar Name="AppCommandBar" >
             <AppBarButton Name="KBRefreshAppBarButton" Icon="Refresh" Label="刷新" Click="KBRefreshAppBarButton_Click"/>

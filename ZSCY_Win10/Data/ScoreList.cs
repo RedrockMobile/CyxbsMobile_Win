@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace ZSCY.Data
 {
     class ScoreList
@@ -14,6 +15,7 @@ namespace ZSCY.Data
         public string Property { get; set; }
         public string Status { get; set; }
         public string Term { get; set; }
+
         public void GetAttribute(JObject scoreDetailJObject)
         {
             Student = scoreDetailJObject["student"].ToString() ;

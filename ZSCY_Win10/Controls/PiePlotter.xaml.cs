@@ -15,7 +15,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
+
 namespace ZSCY_Win10.Controls
 {
     public sealed partial class PiePlotter : UserControl
@@ -40,12 +42,15 @@ namespace ZSCY_Win10.Controls
             }
         }
         #endregion
+
         private List<PiePiece> piePieces = new List<PiePiece>();
         private PieDataItem CurrentItem;
+
         public PiePlotter()
         {
             this.InitializeComponent();
         }
+
         public void ShowPie()
         {
             List<PieDataItem> myCollectionView = (List<PieDataItem>)this.DataContext;
@@ -87,6 +92,7 @@ namespace ZSCY_Win10.Controls
             }
             NotifyChange();
         }
+
         void piece_Tapped(object sender, TappedRoutedEventArgs e)
         {
             PiePiece piePiece = sender as PiePiece;
@@ -94,6 +100,7 @@ namespace ZSCY_Win10.Controls
             ShowPie();
         }
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void NotifyChange([CallerMemberName]string property = null)
         {
             if (this.PropertyChanged != null)

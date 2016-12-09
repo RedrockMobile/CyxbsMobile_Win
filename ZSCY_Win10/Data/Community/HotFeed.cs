@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using ZSCY_Win10.Common;
+
 namespace ZSCY_Win10.Data.Community
 {
     public class HotFeed : ViewModelBase, IFeeds
@@ -60,6 +61,7 @@ namespace ZSCY_Win10.Data.Community
                 OnPropertyChanged(nameof(is_my_Like));
             }
         }
+
         public void GetAttributes(JObject feedsJObject)
         {
             id = feedsJObject["id"].ToString();
@@ -137,6 +139,7 @@ namespace ZSCY_Win10.Data.Community
                             img[j].ImgSrc = img[j].ImgSmallSrc = "";
                         }
                     }
+
                 }
                 catch (Exception e)
                 {

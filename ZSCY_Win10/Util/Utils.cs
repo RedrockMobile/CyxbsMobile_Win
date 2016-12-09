@@ -20,6 +20,7 @@ using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.Web.Http;
+
 namespace ZSCY_Win10.Util
 {
     class Utils
@@ -43,10 +44,13 @@ namespace ZSCY_Win10.Util
             //toast.Dismissed += toast_Dismissed;//消失
             //toast.Failed += toast_Failed;//消除
             ToastNotificationManager.CreateToastNotifier().Show(toast);
+
             //从通知中心删除
             await Task.Delay(3000);
             ToastNotificationManager.History.Clear();
+
         }
+
         private async static void toast_Activated(ToastNotification sender, object args)
         {
             try
@@ -58,6 +62,7 @@ namespace ZSCY_Win10.Util
                 Debug.WriteLine("打开SavedPictures文件夹失败");
             }
         }
+
         /// <summary>
         /// 获取当前日期是今年的第几周
         /// </summary>
@@ -66,12 +71,18 @@ namespace ZSCY_Win10.Util
         {
             //一.找到第一周的最后一天（先获取1月1日是星期几，从而得知第一周周末是几）
             int firstWeekend = 7 - Convert.ToInt32(DateTime.Parse(DateTime.Today.Year + "-1-1").DayOfWeek);
+
             //二.获取今天是一年当中的第几天
             int currentDay = DateTime.Today.DayOfYear;
+
             //三.（今天 减去 第一周周末）/7 等于 距第一周有多少周 再加上第一周的1 就是今天是今年的第几周了
             //    刚好考虑了惟一的特殊情况就是，今天刚好在第一周内，那么距第一周就是0 再加上第一周的1 最后还是1
             return Convert.ToInt32(Math.Ceiling((currentDay - firstWeekend) / 7.0)) + 1;
         }
+
+
+
+
         /// <summary>
         ///UNICODE字符转为中文 
         /// </summary>
@@ -81,7 +92,9 @@ namespace ZSCY_Win10.Util
         {
             if (string.IsNullOrEmpty(unicodeString))
                 return string.Empty;
+
             string outStr = unicodeString;
+
             Regex re = new Regex("\\\\u[0123456789abcdef]{4}", RegexOptions.IgnoreCase);
             MatchCollection mc = re.Matches(unicodeString);
             foreach (Match ma in mc)
@@ -90,12 +103,14 @@ namespace ZSCY_Win10.Util
             }
             return outStr;
         }
+
         private static char ConverUnicodeStringToChar(string str)
         {
             char outStr = Char.MinValue;
             outStr = (char)int.Parse(str.Remove(0, 2), System.Globalization.NumberStyles.HexNumber);
             return outStr;
         }
+
         public static async Task ShowSystemTrayAsync(Color backgroundColor, Color foregroundColor, double opacity = 1,
             string text = "", bool isIndeterminate = false)
         {
@@ -103,13 +118,16 @@ namespace ZSCY_Win10.Util
             statusBar.BackgroundColor = backgroundColor;
             statusBar.ForegroundColor = foregroundColor;
             statusBar.BackgroundOpacity = opacity;
+
             statusBar.ProgressIndicator.Text = text;
             if (!isIndeterminate)
             {
                 statusBar.ProgressIndicator.ProgressValue = 0;
             }
             await statusBar.ProgressIndicator.ShowAsync();
+
         }
+
         /// <summary>
         /// 弹出对话框
         /// </summary>
@@ -122,6 +140,7 @@ namespace ZSCY_Win10.Util
             }
             catch (Exception) { Debug.WriteLine("Utils,MessageDialog异常"); }
         }
+
         /// <summary>
         /// 屏幕高度
         /// </summary>
@@ -130,6 +149,7 @@ namespace ZSCY_Win10.Util
         {
             return Window.Current.Bounds.Height;
         }
+
         /// <summary>
         /// 屏幕宽度
         /// </summary>
@@ -138,6 +158,7 @@ namespace ZSCY_Win10.Util
         {
             return Window.Current.Bounds.Width;
         }
+
         /// <summary>
         /// 时间转时间戳
         /// </summary>
@@ -150,6 +171,7 @@ namespace ZSCY_Win10.Util
             TimeSpan ts = nowdate.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return Convert.ToInt64(ts.TotalSeconds).ToString();
         }
+
         /// <summary>
         /// 时间戳转时间
         /// </summary>
@@ -162,6 +184,7 @@ namespace ZSCY_Win10.Util
             TimeSpan toNow = new TimeSpan(lTime);
             return dtStart.Add(toNow);
         }
+
         public static JArray ReadJso(string jsonstring, string sdata = "data")
         {
             if (jsonstring != "")
@@ -187,12 +210,14 @@ namespace ZSCY_Win10.Util
                 //    return null;
                 //}
             }
+
             else
             {
                 Message("网络错误！", "错误");
                 return null;
             }
         }
+
         /// <summary>
         /// 获取星期
         /// </summary>
@@ -231,6 +256,7 @@ namespace ZSCY_Win10.Util
                         return "";
                 }
         }
+
         /// <summary>
         /// 异步从网络下载图片
         /// </summary>
@@ -259,6 +285,8 @@ namespace ZSCY_Win10.Util
                     var pixelProvider = await decoder.GetPixelDataAsync(
                         decoder.BitmapPixelFormat, decoder.BitmapAlphaMode, bt,
                         ExifOrientationMode.IgnoreExifOrientation, ColorManagementMode.ColorManageToSRgb);
+
+
                     //下面保存图片
                     // Now that we have the pixel data, get the destination file
                     var localFolder = ApplicationData.Current.LocalFolder;
@@ -284,5 +312,6 @@ namespace ZSCY_Win10.Util
             }
             catch (Exception) { Debug.WriteLine("工具，图片异常"); }
         }
+
     }
 }

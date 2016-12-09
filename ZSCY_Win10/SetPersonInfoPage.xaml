@@ -18,6 +18,7 @@
             <Setter Property="Margin" Value="15,0,0,0" />
         </Style>
     </Page.Resources>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
@@ -85,11 +86,13 @@
                      />
                     <TextBlock x:Name="qqTextBlock" 
                            Style="{StaticResource SetPersonInfoPageTextBlock}"/>
+
                     <!--信息展示--><!--
                     <StackPanel Margin="15">
                         <TextBlock x:Name="textBlockone" Text="信息：" FontSize="12" />
                         <TextBlock x:Name="textBlocktwo" TextWrapping="Wrap" FontSize="12" />
                     </StackPanel>-->
+
                 </StackPanel>
             </ScrollViewer>
         </Grid>

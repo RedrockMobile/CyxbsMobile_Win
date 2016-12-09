@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace ZSCY_Win10.Models.RemindPage
 {
     /// <summary>
@@ -61,6 +62,9 @@ namespace ZSCY_Win10.Models.RemindPage
                     break;
             }
         }
+       
+
+
         public string WeekNum
         {
             get
@@ -69,6 +73,7 @@ namespace ZSCY_Win10.Models.RemindPage
             }
             set { weekNum = value; }
         }
+
         public string ClassNum
         {
             get
@@ -76,13 +81,17 @@ namespace ZSCY_Win10.Models.RemindPage
                 return classNum;
             }
             set { classNum = value; }
+
+
         }
+
         public bool IsCheck
         {
             get
             {
                 return isCheck;
             }
+
             set
             {
                 isCheck = value;

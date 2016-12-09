@@ -11,6 +11,7 @@ using Windows.ApplicationModel.Background;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Notifications;
+
 namespace MyMessageBackgroundTask
 {
     public sealed class ToastBackgroundTask : IBackgroundTask

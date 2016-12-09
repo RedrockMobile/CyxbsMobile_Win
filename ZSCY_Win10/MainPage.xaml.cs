@@ -29,6 +29,7 @@ using ZSCY_Win10.Data;
 using Windows.Phone.UI.Input;
 using Windows.ApplicationModel.Background;
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
+
 namespace ZSCY_Win10
 {
     /// <summary>
@@ -159,6 +160,7 @@ namespace ZSCY_Win10
             {
                 stuNameTextBlock.Text = "尚未登陆~";
             }
+
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequseted;
             //如果是在手机上，有实体键，隐藏返回键。
             if (ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
@@ -185,6 +187,7 @@ namespace ZSCY_Win10
             }
             catch { }
         }
+
         bool isExit = false;
         private void OnBackPressed(object sender, BackPressedEventArgs e)
         {
@@ -207,6 +210,7 @@ namespace ZSCY_Win10
                 statusBar.ShowAsync();
                 statusBar.ProgressIndicator.Text = "再按一次返回键即将退出程序 ~\\(≧▽≦)/~"; // 状态栏显示文本
                 statusBar.ProgressIndicator.ShowAsync();
+
                 if (isExit)
                 {
                     App.Current.Exit();
@@ -228,11 +232,13 @@ namespace ZSCY_Win10
                 }//Frame在其他页面并且事件未处理
             }
         }
+
         private async void ActivateWindow()
         {
             await Task.Delay(100);
             Window.Current.Activate();
         }
+
         private async void initHeadImage()
         {
             var vault = new Windows.Security.Credentials.PasswordVault();
@@ -257,6 +263,7 @@ namespace ZSCY_Win10
                             JObject objdata = JObject.Parse(obj["data"].ToString());
                             headimgImageBrush.ImageSource = new BitmapImage(new Uri(objdata["photo_src"].ToString()));
                             appSetting.Values["Community_headimg_src"] = objdata["photo_src"].ToString();
+
                             Size downloadSize = new Size(48, 48);
                             await Utils.DownloadAndScale("headimg.png", objdata["photo_src"].ToString(), new Size(100, 100));
                         }
@@ -280,8 +287,10 @@ namespace ZSCY_Win10
                 {
                     Debug.WriteLine("缓存头像文件不存在");
                 }
+
             }
         }
+
         private async void showNotice()
         {
             if (!appSetting.Values.ContainsKey("showNotice"))
@@ -304,13 +313,17 @@ namespace ZSCY_Win10
                 {
                 }
             }
+
         }
+
         public Frame AppFrame { get { return this.frame; } }
+
         private void SystemNavigationManager_BackRequseted(object sender, BackRequestedEventArgs e)
         {
             //e.Handled = true;
             //Application.Current.Exit();
         }
+
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             bool ignored = false;
@@ -319,8 +332,10 @@ namespace ZSCY_Win10
         private void BackRequested(ref bool handled)
         {
             // Get a hold of the current frame so that we can inspect the app back stack.
+
             if (this.AppFrame == null)
                 return;
+
             // Check to see if this is the top-most page on the app back stack.
             if (this.AppFrame.CanGoBack && !handled)
             {
@@ -333,6 +348,7 @@ namespace ZSCY_Win10
         //{
         //    SplitSet.IsPaneOpen = !SplitSet.IsPaneOpen;
         //}
+
         //protected override void OnNavigatedTo(NavigationEventArgs e)
         //{
         //    var api = "Windows.UI.ViewManagement.StatusBar";
@@ -342,8 +358,11 @@ namespace ZSCY_Win10
         //        var statusbar = StatusBar.GetForCurrentView();
         //        statusbar.BackgroundOpacity = 1;
         //        statusbar.BackgroundColor = Colors.CornflowerBlue;
+
         //    }
+
         //}
+
         //private string ConvertToUpper(string txt)
         //{
         //    bool isKeyExist = appSetting.Values.ContainsKey("ResultUpper");
@@ -359,14 +378,18 @@ namespace ZSCY_Win10
         //        {
         //            return txt;
         //        }
+
         //    }
         //}
+
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             bool ignored = false;
             this.BackRequested(ref ignored);
         }
+
         #region Navigation
+
         /// <summary>
         /// Navigate to the Page for the selected <paramref name="listViewItem"/>.
         /// </summary>
@@ -417,6 +440,7 @@ namespace ZSCY_Win10
                                             BackOpacityGrid.Visibility = Visibility.Collapsed;
                                             loadingStackPanel.Visibility = Visibility.Collapsed;
                                             this.AppFrame.Navigate(typeof(SetPersonInfoPage), item.DestPage);
+
                                         }
                                         else if (null != result && result.Label == "暂时不了")
                                         {
@@ -434,6 +458,7 @@ namespace ZSCY_Win10
                                         appSetting.Values["Community_phone"] = jPerInfo["data"]["phone"].ToString();
                                         appSetting.Values["Community_qq"] = jPerInfo["data"]["qq"].ToString();
                                         Debug.WriteLine(appSetting.Values["Community_headimg_src"].ToString());
+
                                         Debug.WriteLine(jPerInfo["data"]["id"].ToString());
                                         BackOpacityGrid.Visibility = Visibility.Collapsed;
                                         loadingStackPanel.Visibility = Visibility.Collapsed;
@@ -519,7 +544,9 @@ namespace ZSCY_Win10
                             break;
                     }
                 }
+
                 var container = (ListViewItem)NavMenuList.ContainerFromItem(item);
+
                 // While updating the selection state of the item prevent it from taking keyboard focus.  If a
                 // user is invoking the back button via the keyboard causing the selected nav menu item to change
                 // then focus will remain on the back button.
@@ -562,6 +589,7 @@ namespace ZSCY_Win10
         }
         private void OnNavigatedToPage(object sender, NavigationEventArgs e)
         {
+
             // After a successful navigation set keyboard focus to the loaded page
             if (e.Content is Page && e.Content != null)
             {
@@ -569,22 +597,27 @@ namespace ZSCY_Win10
                 control.Loaded += Page_Loaded;
             }
         }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ((Page)sender).Focus(FocusState.Programmatic);
             ((Page)sender).Loaded -= Page_Loaded;
         }
+
         #endregion
+
         public Rect TogglePaneButtonRect
         {
             get;
             private set;
         }
+
         /// <summary>
         /// An event to notify listeners when the hamburger button may occlude other content in the app.
         /// The custom "PageHeader" user control is using this.
         /// </summary>
         public event TypedEventHandler<MainPage, Rect> TogglePaneButtonRectChanged;
+
         /// <summary>
         /// Callback when the SplitView's Pane is toggled open or close.  When the Pane is not visible
         /// then the floating hamburger may be occluding other content in the app unless it is aware.
@@ -595,6 +628,7 @@ namespace ZSCY_Win10
         {
             this.CheckTogglePaneButtonSizeChanged();
         }
+
         /// <summary>
         /// Check for the conditions where the navigation pane does not occupy the space under the floating
         /// hamburger button and trigger the event.
@@ -612,8 +646,10 @@ namespace ZSCY_Win10
             {
                 this.TogglePaneButtonRect = new Rect();
             }
+
             TogglePaneButton.Visibility = Visibility.Visible;
             TogglePaneLightButton.Visibility = Visibility.Collapsed;
+
             var handler = this.TogglePaneButtonRectChanged;
             if (handler != null)
             {
@@ -621,6 +657,7 @@ namespace ZSCY_Win10
                 handler.DynamicInvoke(this, this.TogglePaneButtonRect);
             }
         }
+
         /// <summary>
         /// Enable accessibility on each nav menu item by setting the AutomationProperties.Name on each container
         /// using the associated Label of each item.
@@ -638,6 +675,7 @@ namespace ZSCY_Win10
                 args.ItemContainer.ClearValue(AutomationProperties.NameProperty);
             }
         }
+
         private void RootSplitView_LayoutUpdated(object sender, object e)
         {
             if (RootSplitView.IsPaneOpen)
@@ -654,12 +692,15 @@ namespace ZSCY_Win10
                 }
             }
         }
+
         private void ManipulationStackPanel_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingRoutedEventArgs e)
         {
             RootSplitView.IsPaneOpen = !RootSplitView.IsPaneOpen;
         }
+
         private void ManipulationStackPanel_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
         {
+
         }
         //TODO:未登录时不能选择上传头像
         private async void headimgRectangle_Tapped(object sender, TappedRoutedEventArgs e)
@@ -715,11 +756,13 @@ namespace ZSCY_Win10
                 msgPopup.ShowWIndow();
             }
         }
+
         private void BackOpacityGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             ClipHeadGrid.Visibility = Visibility.Collapsed;
             BackOpacityGrid.Visibility = Visibility.Collapsed;
         }
+
         /// <summary>
         /// 鼠标按下
         /// </summary>
@@ -730,6 +773,7 @@ namespace ZSCY_Win10
             oldPoint = e.GetCurrentPoint(headScrollViewer).Position;
             isPoint = true;
         }
+
         /// <summary>
         /// 鼠标在控件上移动
         /// </summary>
@@ -747,6 +791,7 @@ namespace ZSCY_Win10
                 oldPoint = currentPoint;
             }
         }
+
         /// <summary>
         /// 鼠标松开
         /// </summary>
@@ -756,6 +801,7 @@ namespace ZSCY_Win10
         {
             isPoint = false;
         }
+
         /// <summary>
         /// 鼠标离开控件
         /// </summary>
@@ -765,6 +811,7 @@ namespace ZSCY_Win10
         {
             isPoint = false;
         }
+
         private async void clipHeadOKButton_Click(object sender, RoutedEventArgs e)
         {
             upClipHeadProgressBar.Visibility = Visibility.Visible;
@@ -821,6 +868,7 @@ namespace ZSCY_Win10
                 Debug.WriteLine("设置头像，保存新头像异常");
             }
         }
+
         private void clipHeadDisButton_Click(object sender, RoutedEventArgs e)
         {
             ClipHeadGrid.Visibility = Visibility.Collapsed;

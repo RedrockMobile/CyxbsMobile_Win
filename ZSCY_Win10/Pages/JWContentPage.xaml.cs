@@ -17,7 +17,9 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Util;
+
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
+
 namespace ZSCY_Win10
 {
     /// <summary>
@@ -30,6 +32,7 @@ namespace ZSCY_Win10
             this.InitializeComponent();
             //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
         }
+
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             //e.Handled = true;
@@ -37,13 +40,17 @@ namespace ZSCY_Win10
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             var JWItem = (JWList)e.Parameter;
+
             if (JWItem.Content == "加载中...")
                 getContent(JWItem.ID);
+
             TitleTextBlock.Text = JWItem.Title;
             ContentTextBlock.Text = JWItem.Content;
             DateReadTextBlock.Text = "发布时间:" + JWItem.Date + "阅读人数:" + JWItem.Read;
             UmengSDK.UmengAnalytics.TrackPageStart("JWContentPage");
         }
+
+
         private async void getContent(string ID)
         {
             List<KeyValuePair<String, String>> contentparamList = new List<KeyValuePair<String, String>>();
@@ -70,6 +77,7 @@ namespace ZSCY_Win10
                     ContentTextBlock.Text = "加载失败";
             }
         }
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             UmengSDK.UmengAnalytics.TrackPageEnd("JWContentPage");

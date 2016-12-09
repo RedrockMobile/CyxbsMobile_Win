@@ -10,6 +10,7 @@
     d:DataContext="{Binding Source={d:DesignData Source=Data/moreitems.json, Type=data:DataSource}}"
     mc:Ignorable="d"
     Background="White">
+
     <Grid x:Name="grid" Background="White">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
@@ -58,12 +59,14 @@
                 <TextBlock Name="MoreContentTitleTextBlock" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
             </Grid>
         </Grid>
+
         <!--实体-->
         <Grid x:Name="grid1" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
+
             <!--列表-->
             <Grid x:Name="MoreListgrid" Grid.Column="0" DataContext="{Binding Group[0]}" Background="White">
                 <ScrollViewer VerticalScrollBarVisibility="Hidden">
@@ -85,6 +88,7 @@
                     </ListView>
                 </ScrollViewer>
             </Grid>
+
             <!--正文-->
             <Grid Name="MoreContentGrid" Grid.Column="1">
                 <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1"/>

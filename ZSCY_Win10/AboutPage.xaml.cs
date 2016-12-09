@@ -17,7 +17,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
+
 namespace ZSCY_Win10
 {
     /// <summary>
@@ -40,8 +42,10 @@ namespace ZSCY_Win10
             };
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
         }
+
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         { }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             //HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
@@ -52,5 +56,9 @@ namespace ZSCY_Win10
             //HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageEnd("AboutPage");
         }
+
+
+
+
     }
 }

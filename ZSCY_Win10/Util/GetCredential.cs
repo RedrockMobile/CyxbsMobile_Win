@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Security.Credentials;
+
 namespace ZSCY_Win10.Util
 {
     public static class GetCredential

@@ -17,7 +17,9 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Util;
+
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
+
 namespace ZSCY_Win10
 {
     /// <summary>
@@ -30,6 +32,7 @@ namespace ZSCY_Win10
             this.InitializeComponent();
             //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
         }
+
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             //e.Handled = true;
@@ -37,10 +40,13 @@ namespace ZSCY_Win10
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             var NewsItem = (NewsList)e.Parameter;
+
             if (NewsItem.Content == "加载中...")
                 getContent(NewsItem.Articleid);
+
             TitleTextBlock.Text = NewsItem.Title;
             //ContentTextBlock.Text = NewsItem.Content_all;
+
             if (NewsItem.Content_all != "")
             {
                 JObject newsContentobj = JObject.Parse(NewsItem.Content_all);
@@ -59,6 +65,8 @@ namespace ZSCY_Win10
             }
             UmengSDK.UmengAnalytics.TrackPageStart("NewsContentPage");
         }
+
+
         private async void getContent(string Articleid)
         {
             //List<KeyValuePair<String, String>> contentparamList = new List<KeyValuePair<String, String>>();
@@ -84,6 +92,10 @@ namespace ZSCY_Win10
             //    else
             //        ContentTextBlock.Text = "加载失败";
             //}
+
+
+
+
             List<KeyValuePair<String, String>> contentparamList = new List<KeyValuePair<String, String>>();
             contentparamList.Add(new KeyValuePair<string, string>("type", "jwzx"));
             contentparamList.Add(new KeyValuePair<string, string>("articleid", Articleid));
@@ -99,6 +111,7 @@ namespace ZSCY_Win10
                 }
             }
         }
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             UmengSDK.UmengAnalytics.TrackPageEnd("NewsContentPage");

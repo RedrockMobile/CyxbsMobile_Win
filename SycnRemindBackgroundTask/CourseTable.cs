@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
+
 namespace SycnRemindBackgroundTask
 {
+
     /// <summary>
     /// 坐标转时间
     /// </summary>
@@ -40,23 +42,27 @@ namespace SycnRemindBackgroundTask
                     break;
             }
         }
+
         public bool IsCheck
         {
             get
             {
                 return isCheck;
             }
+
             set
             {
                 isCheck = value;
             }
         }
+
         public TimeSpan Time
         {
             get
             {
                 return time;
             }
+
             //set
             //{
             //    time = value;

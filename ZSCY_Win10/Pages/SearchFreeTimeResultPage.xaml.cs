@@ -19,7 +19,9 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Util;
+
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
+
 namespace ZSCY.Pages
 {
     /// <summary>
@@ -48,13 +50,16 @@ namespace ZSCY.Pages
             //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             AuIdList auIdList = (AuIdList)e.Parameter;
             muIdList = auIdList.muIdList;
+
             initFree();
         }
+
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             //HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
         }
+
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
         {
             Frame rootFrame = Window.Current.Content as Frame;
@@ -63,7 +68,9 @@ namespace ZSCY.Pages
                 rootFrame.GoBack();
                 e.Handled = true;
             }
+
         }
+
         private async void initFree()
         {
             kb = new string[muIdList.Count];
@@ -91,6 +98,7 @@ namespace ZSCY.Pages
             }
             initFreeList();
         }
+
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
@@ -104,6 +112,7 @@ namespace ZSCY.Pages
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             }
         }
+
         private void initFreeList()
         {
             FreeLoddingTextBlock.Text = "处理中...";
@@ -132,6 +141,7 @@ namespace ZSCY.Pages
                 Debug.WriteLine(FreeLoddingProgressBar.Value);
             }
             FreeLoddingStackPanel.Visibility = Visibility.Collapsed;
+
             for (int i = 0; i < 7; i++)
             {
                 for (int j = 0; j < 6; j++)
@@ -145,6 +155,7 @@ namespace ZSCY.Pages
                         break;
                     }
                 }
+
                 for (int j = 0; j < 6; j++)
                 {
                     if (freeclasstime[i, j] == 0)

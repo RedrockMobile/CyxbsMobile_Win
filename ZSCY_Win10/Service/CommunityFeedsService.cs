@@ -10,10 +10,12 @@ using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Util;
 using System.Collections.ObjectModel;
 using Windows.Storage;
+
 namespace ZSCY_Win10.Service
 {
     public class CommunityFeedsService
     {
+
         //const string hotFeeds = @"cyxbsMobile/index.php/Home/Article/searchHotArticle";
         //const string bbddfeeds = @"cyxbsMobile/index.php/Home/Article/listArticle";
         //TODO:新的api 可不传参数stuNum和idNum
@@ -22,6 +24,7 @@ namespace ZSCY_Win10.Service
         public static string[] feedsapi = { hotFeeds, bbddfeeds };
         public static ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         private static string resourceName = "ZSCY";
+
         /// <summary>
         /// 获取动态列表
         /// </summary>
@@ -48,6 +51,7 @@ namespace ZSCY_Win10.Service
                 }
                 catch
                 {
+
                 }
                 paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
                 paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
@@ -79,7 +83,9 @@ namespace ZSCY_Win10.Service
             /*    try
                 {
                     JArray jsonstr = JArray.Parse(response);
+
                     List<BBDDFeed> feedslist = new List<BBDDFeed>();
+
                     for (int j = 0; j < jsonstr.Count; j++)
                     {
                         JObject jsondetail = (JObject)(jsonstr[j]);
@@ -92,6 +98,7 @@ namespace ZSCY_Win10.Service
                         }
                     }
                     return feedslist;
+
                 }
                 catch (Newtonsoft.Json.JsonReaderException)
                 {
@@ -118,6 +125,7 @@ namespace ZSCY_Win10.Service
                 */
             return null;
         }
+
         public static async Task<List<HotFeed>> GetHot(int type = 0, int page = 0, int size = 15, int typeid = 5)
         {
             //TODO:未登陆时 不添加参数stuNum和idNum
@@ -126,6 +134,7 @@ namespace ZSCY_Win10.Service
                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
                try
                {
+
                    var vault = new Windows.Security.Credentials.PasswordVault();
                    var credentialList = vault.FindAllByResource(resourceName);
                    credentialList[0].RetrievePassword();
@@ -139,6 +148,7 @@ namespace ZSCY_Win10.Service
                }
                catch
                {
+
                }
                paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
                paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
@@ -169,6 +179,7 @@ namespace ZSCY_Win10.Service
                return feeds;
            });
         }
+
         public static async Task<string> setPraise(string type_id, string article_id, bool addORcancel)
         {
             var vault = new Windows.Security.Credentials.PasswordVault();

@@ -42,6 +42,7 @@
                         <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill"/>
                     </Grid>
                 </DataTemplate>
+
             </util:ImgDataTemplateSelector.TwoPhotoTemplate>
             <util:ImgDataTemplateSelector.MorePhotoTemplate>
                 <DataTemplate x:DataType="model:Img">
@@ -213,6 +214,7 @@
                 <TextBlock Name="MyContentTitleTextBlock" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
             </Grid>
         </Grid>
+
         <!--实体-->
         <Grid x:Name="myPageGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -269,6 +271,7 @@
                     </Grid>
                 </ScrollViewer>
             </Grid>
+
             <!--与我相关-->
             <Grid Name="aboutMeGrid" Visibility="Collapsed" Grid.Column="0" Background="#FFECECEC">
                 <ScrollViewer Name="aboutMeScrollViewer" ViewChanged="aboutMeScrollViewer_ViewChanged">
@@ -295,6 +298,7 @@
                     </ListView>
                 </ScrollViewer>
             </Grid>
+
             <!--正文-->
             <Grid Name="MyContentGrid" Grid.Column="1">
                 <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1"/>
@@ -310,6 +314,7 @@
                     </Frame.ContentTransitions>
                 </Frame>
             </Grid>
+
             <!--图像-->
             <Grid Name="CommunityItemPhotoGrid" Grid.ColumnSpan="2" Visibility="Collapsed" >
                 <Grid Background="Black" Name="CommunityItemPhotoBackGrid" Grid.ColumnSpan="2" Opacity="0.5" Tapped="CommunityItemPhoto_Tapped"/>
@@ -357,6 +362,8 @@
                 </Button>-->
             </Grid>
         </Grid>
+
+
     </Grid>
 </Page>
 

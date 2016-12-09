@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace ZSCY_Win10.ViewModels.Remind
 {
+     
         public class BaseViewModel : INotifyPropertyChanged
         {
             public event PropertyChangedEventHandler PropertyChanged;

@@ -12,7 +12,9 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Util;
+
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
+
 namespace ZSCY_Win10
 {
     /// <summary>
@@ -61,6 +63,7 @@ namespace ZSCY_Win10
                 abstractNumTextBlock.Text = abstractTextBox.Text.Length + "/30";
                 SetPersonInfoOKAppBarButton.IsEnabled = true;
             }
+
             if (this.Frame.CanGoBack)
             {
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
@@ -72,6 +75,7 @@ namespace ZSCY_Win10
                 SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
             }
         }
+
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             if (this.Frame.CanGoBack)
@@ -82,6 +86,7 @@ namespace ZSCY_Win10
                 SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
             }
         }
+
         private async void SetPersonInfoOKAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             appSetting.Values["Community_nickname"] = nameTextBox.Text;
@@ -138,12 +143,14 @@ namespace ZSCY_Win10
             }
             catch (Exception) { }
         }
+
         //昵称
         private void nameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             //nametext = nameTextBox.Text;
             Completeness();
         }
+
         //简介
         private void abstractTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -157,8 +164,10 @@ namespace ZSCY_Win10
             }
             else
                 abstractNumTextBlock.Foreground = new SolidColorBrush(abstractOriginalNumcolor);
+
             Completeness();
         }
+
         //手机
         private void phoneTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -169,8 +178,10 @@ namespace ZSCY_Win10
             }
             else
                 completeness1 = false;
+
             Completeness();
         }
+
         //QQ
         private void qqTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -181,8 +192,10 @@ namespace ZSCY_Win10
             }
             else
                 completeness2 = false;
+
             Completeness();
         }
+
         //判定是否可以提交
         private void Completeness()
         {

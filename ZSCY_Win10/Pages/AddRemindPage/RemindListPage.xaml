@@ -15,6 +15,7 @@
         <converter:BeforeTimeIconColor x:Key="BeforeTimeIconColor"/>
     </Page.Resources>
     <!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+      
             <ListView Name="RemindListView" >
                 -->
     <!--<ListView.ItemTemplate>
@@ -36,7 +37,9 @@
                 </DataTemplate>
             </ListView.ItemTemplate>-->
     <!--
+           
             </ListView>
+
         <Popup Name="AddRemindPopup"   HorizontalAlignment="Right" VerticalAlignment="Bottom" IsOpen="True">
             <Grid Name="AddRemindGrid" Tapped="AddRemindGrid_Tapped">
                 <Ellipse Width="50" Height="50" Fill="#068cfd"/>
@@ -45,7 +48,9 @@
         </Popup>
     </Grid>-->
     <!--
+           
             </ListView>
+
         <Popup Name="AddRemindPopup"   HorizontalAlignment="Right" VerticalAlignment="Bottom" IsOpen="True">
             <Grid Name="AddRemindGrid" Tapped="AddRemindGrid_Tapped">
                 <Ellipse Width="50" Height="50" Fill="#068cfd"/>
@@ -69,6 +74,7 @@
                 <VisualState x:Name="VisualState800"/>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition/>
@@ -77,6 +83,7 @@
             <RowDefinition Height="48"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+
         <Grid x:Name="grid" Background="#068cfd" Grid.Row="0" HorizontalAlignment="Stretch" Grid.Column="0">
             <TextBlock x:Name="YourRemindTitle" Text="你的提醒" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" >
@@ -179,6 +186,7 @@
                                                     </StackPanel>
                                                 </Grid>
                                                 <Grid Grid.Row="0" Grid.RowSpan="3" Visibility="{x:Bind Rewrite, Mode=OneWay}">
+
                                                     <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                                         <Rectangle.Fill >
                                                             <LinearGradientBrush StartPoint="0,0">
@@ -220,5 +228,6 @@
             <Line x:Name="SplitLine1"  Y1="0" Y2="48" Stroke="#58b3ff" StrokeThickness="1"/>
             <!--<TextBlock Name="AddRemindTitle" Text="添加提醒" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>-->
         </StackPanel>
+
     </Grid>
 </Page>

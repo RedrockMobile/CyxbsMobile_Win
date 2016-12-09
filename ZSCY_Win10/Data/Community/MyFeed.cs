@@ -7,11 +7,13 @@ using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using Windows.Storage;
 using ZSCY_Win10.Common;
+
 namespace ZSCY_Win10.Data.Community
 {
     public class MyFeed : ViewModelBase
     {
         public static ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+
         private string remarknum { get; set; }
         private string nick_name;
         private string head_img = "ms-appx:///Community_nohead.png";
@@ -59,6 +61,8 @@ namespace ZSCY_Win10.Data.Community
                 OnPropertyChanged();
             }
         }
+
+
         public void GetAttributes(JObject feedsJObject, bool myfeed = false)
         {
             id = feedsJObject["id"].ToString();
@@ -80,6 +84,7 @@ namespace ZSCY_Win10.Data.Community
                 nickname = appSetting.Values["Community_nickname"].ToString();
                 headimg = appSetting.Values["Community_headimg_src"].ToString();
             }
+
             if (articlephotos != "")
             {
                 try
@@ -121,6 +126,7 @@ namespace ZSCY_Win10.Data.Community
                 catch (Exception e)
                 {
                     Debug.WriteLine(e.Message);
+
                 }
             }
         }

@@ -7,6 +7,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
+
 namespace ZSCY_Win10.Util.Converter
 {
     public class TextBlockInlineConverter : IValueConverter
@@ -55,6 +56,7 @@ namespace ZSCY_Win10.Util.Converter
             span.Inlines.Add(left);
             return span;
         }
+
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();

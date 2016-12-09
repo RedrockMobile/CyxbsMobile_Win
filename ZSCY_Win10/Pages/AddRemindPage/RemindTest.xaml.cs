@@ -13,7 +13,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+
 namespace ZSCY_Win10.Pages.AddRemindPage
 {
     /// <summary>
@@ -25,6 +27,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
         {
             this.InitializeComponent();
             ListViewToasts.ItemsSource = ToastNotificationManager.CreateToastNotifier().GetScheduledToastNotifications();
+
         }
     }
 }

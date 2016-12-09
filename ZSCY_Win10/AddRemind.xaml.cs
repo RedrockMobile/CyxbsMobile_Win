@@ -25,7 +25,9 @@ using ZSCY_Win10.Controls.RemindPage;
 using ZSCY_Win10.Models.RemindPage;
 using ZSCY_Win10.Pages.AddRemindPage;
 using ZSCY_Win10.Util;
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+
 namespace ZSCY_Win10
 {
     /// <summary>
@@ -34,6 +36,7 @@ namespace ZSCY_Win10
     public sealed partial class AddRemind : Page
     {
         ObservableCollection<BeforeTimeSel> beforeTime = new ObservableCollection<BeforeTimeSel>();
+
         private static SolidColorBrush UnselectedFontColor = new SolidColorBrush(Color.FromArgb(255, 70, 70, 70));
         private static SolidColorBrush SelectedFontColor = new SolidColorBrush(Color.FromArgb(255, 233, 243, 253));
         private bool isEdit = false;//为什么都未做或都做完了
@@ -59,6 +62,7 @@ namespace ZSCY_Win10
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             this.SizeChanged += (s, e) =>
             {
+
                 Frame2.Height = e.NewSize.Height;
                 RemindGrid1.Width = 400;                 
                 var state = "VisualState000";
@@ -85,11 +89,14 @@ namespace ZSCY_Win10
                     //RemindGrid1.Visibility = Visibility.Visible;
                     SplitLine1.Visibility = Visibility.Visible;
                     state = "VisualState800";
+
                 }
                 VisualStateManager.GoToState(this, state, true);
+
             };
             Initialize();
         }
+
         private void AddRemind_BackRequested(object sender, BackRequestedEventArgs e)
         {
             if (SelRemindGrid.Visibility==Visibility.Visible)
@@ -103,6 +110,7 @@ namespace ZSCY_Win10
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             }
         }
+
         private void Initialize()
         {
             App.selectedWeek.WeekNumString = "";
@@ -172,13 +180,19 @@ namespace ZSCY_Win10
             string temp = string.Concat(weekNum, classNum);
             return temp;
         }
+
         private void SaveEdit_Tapped(object sender, TappedRoutedEventArgs e)
         {
+
+
         }
+
         private void RemindGridButon_Tapped(object sender, TappedRoutedEventArgs e)
         {
+
             SelRemindGrid.Visibility = Visibility.Visible;
         }
+
         private void SelRemindBackgroupGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             SelRemindGrid.Visibility = Visibility.Collapsed;
@@ -188,17 +202,21 @@ namespace ZSCY_Win10
         {
             if (SelRemindListView.SelectedIndex == -1)
             {
+
                 beforeTime[indexBefore].IconVisibility = Visibility.Collapsed;
                 indexBefore = 0;
             }
             else
             {
                 beforeTime[indexBefore].IconVisibility = Visibility.Collapsed;
+
                 int temp = indexBefore = (sender as ListView).SelectedIndex;
                 beforeTime[temp].IconVisibility = Visibility.Visible;
+
                 SelectedRemindTextBlock.Text = beforeTime[temp].BeforeString;
                 SelRemindGrid.Visibility = Visibility.Collapsed;
             }
+
         }
         private async void SaveEditRemind_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -206,6 +224,7 @@ namespace ZSCY_Win10
             {
                 new ErrorNotification("标题不能为空").Show();
                 return;
+
             }
             else
             {
@@ -243,9 +262,10 @@ namespace ZSCY_Win10
                                 for (int j = 0; j < 6; j++)
                                     if (App.timeSet[j, i].IsCheck)
                                     {
-                                        //dateItem.Class += j.Tostring() + ",";
-                                        //dateItem.Day += i.Tostring() + ",";
+                                        //dateItem.Class += j.ToString() + ",";
+                                        //dateItem.Day += i.ToString() + ",";
                                         DateItemModel dateItem = new DateItemModel();
+
                                         dateItem.Class = j.ToString();
                                         dateItem.Day = i.ToString();
                                         for (int k = 0; k < App.selectedWeekNumList.Count; k++)
@@ -259,6 +279,7 @@ namespace ZSCY_Win10
                             myRemind.Time = beforeTime[SelRemindListView.SelectedIndex].BeforeTime.TotalMinutes.ToString();
                             myRemind.Title = TitleTextBox.Text;
                             myRemind.Content = ContentTextBox.Text;
+
                             myRemind.IdNum = idNum;
                             myRemind.StuNum = stuNum;
                             try
@@ -271,6 +292,7 @@ namespace ZSCY_Win10
                             }
                             catch
                             {
+
                             }
                             string id_system = "";
                             if (beforeTime[SelRemindListView.SelectedIndex].isRemind)
@@ -281,6 +303,7 @@ namespace ZSCY_Win10
                             }
                             else
                             {
+
                             }
                             myRemind.IdNum = "";
                             myRemind.StuNum = "";
@@ -290,6 +313,7 @@ namespace ZSCY_Win10
                     }
                 }
             }
+
             Initialization();
         }
         /// <summary>
@@ -307,33 +331,45 @@ namespace ZSCY_Win10
                     App.timeSet[i, j] = null;
             SelectedRemindTextBlock.Text = "";
             SelRemindListView.SelectedIndex = -1;
+
         }
         private void TimeGridButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             RemindGrid2.Visibility = Visibility.Visible;
             Frame2.Navigate(typeof(CourseTablePage));
         }
+
         private void WeekNumGridButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             RemindGrid2.Visibility = Visibility.Visible;
             Frame2.Navigate(typeof(SelWeekNumPage));
         }
+
         //private void CreateCourseWeek()
         //{
+
         //    for (int i = 0; i < weekList.Count(); i++)
         //    {
         //        weekList[i] = new WeekList();//初始化
         //        weekList[i].Grid = new Grid();
         //        weekList[i].Grid.Margin = new Thickness(3);
+
         //        weekList[i].SetWeekName(i + 1);
+
+
         //        weekList[i].Textblock = new TextBlock();
         //        weekList[i].Textblock.Text = weekList[i].WeekName;
         //        weekList[i].Textblock.Foreground = new SolidColorBrush(Colors.Black);
         //        weekList[i].Textblock.HorizontalAlignment = HorizontalAlignment.Center;
         //        weekList[i].Textblock.VerticalAlignment = VerticalAlignment.Center;
+
         //        weekList[i].Rect = new Rectangle();
         //        weekList[i].Rect.Fill = new SolidColorBrush(Colors.Azure);
+
+
         //        weekList[i].IsCheck = false;
+
+
         //        int column = i % 5;
         //        int row = i / 5;
         //        weekList[i].Grid.Children.Add(weekList[i].Rect);
@@ -343,6 +379,7 @@ namespace ZSCY_Win10
         //        Grid.SetRow(weekList[i].Grid, row);
         //        weekList[i].Rect.Tapped += Rect_Tapped;
         //        weekList[i].Textblock.Tapped += Textblock_Tapped;
+
         //    }
         //}
         //private void Rect_Tapped(object sender, TappedRoutedEventArgs e)
@@ -350,6 +387,7 @@ namespace ZSCY_Win10
         //    int row = Grid.GetRow((sender as Rectangle).Parent as Grid);
         //    int column = Grid.GetColumn((sender as Rectangle).Parent as Grid);
         //    row *= 5;
+
         //    if (!weekList[row + column].IsCheck)
         //    {
         //        weekList[row + column].IsCheck = true;
@@ -366,6 +404,7 @@ namespace ZSCY_Win10
         //    int row = Grid.GetRow((sender as TextBlock).Parent as Grid);
         //    int column = Grid.GetColumn((sender as TextBlock).Parent as Grid);
         //    row *= 5;
+
         //    if (!weekList[row + column].IsCheck)
         //    {
         //        weekList[row + column].IsCheck = true;
@@ -377,17 +416,22 @@ namespace ZSCY_Win10
         //        weekList[row + column].Rect.Fill = new SolidColorBrush(Colors.Azure); 
         //    }
         //}
+
         //private void CreateCourseTable()
         //{
         //    for (int i = 0, k = 0; i < kebiaoGrid.RowDefinitions.Count; i += 2, k++)
         //        for (int j = 0; j < kebiaoGrid.ColumnDefinitions.Count; j++)
         //        {
         //            excal[k, j] = new ExcalContent();
+
         //            excal[k, j].Grid = new Grid();
         //            Rectangle rect = new Rectangle();
+
         //            excal[k, j].Grid.HorizontalAlignment = HorizontalAlignment.Stretch;
         //            excal[k, j].Grid.VerticalAlignment = VerticalAlignment.Stretch;
         //            excal[k, j].Grid.BorderBrush = new SolidColorBrush(Colors.White);
+
+
         //            if (timeSet[k, j] != null)//判断是否第一次添加课程
         //            {
         //                if (timeSet[k, j].IsCheck)
@@ -406,16 +450,23 @@ namespace ZSCY_Win10
         //            {
         //                timeSet[k, j] = new TimeSet();
         //                timeSet[k, j].IsCheck = false;
+
         //                excal[k, j].IsCheck = false;
+
         //                rect.Fill = new SolidColorBrush(Colors.SkyBlue);
         //            }
         //            excal[k, j].Grid.BorderThickness = new Thickness(1);
+
         //            Grid.SetRowSpan(excal[k, j].Grid, 2);
+
         //            excal[k, j].Grid.Children.Add(rect);
+
         //            kebiaoGrid.Children.Add(excal[k, j].Grid);
         //            Grid.SetRow(excal[k, j].Grid, i);
         //            Grid.SetColumn(excal[k, j].Grid, j);
+
         //            rect.Tapped += SelItems_Tapped;
+
         //        }
         //}
         //private void SelItems_Tapped(object sender, TappedRoutedEventArgs e)
@@ -425,8 +476,10 @@ namespace ZSCY_Win10
         //    row /= 2;
         //    if (excal[row, column].IsCheck == false)
         //    {
+
         //        excal[row, column].IsCheck = true;
         //        (excal[row, column].Grid.Children[0] as Rectangle).Fill = new SolidColorBrush(Colors.Gray);
+
         //        timeSet[row, column].IsCheck = true;
         //        timeSet[row, column].Set(row);
         //    }
@@ -434,18 +487,23 @@ namespace ZSCY_Win10
         //    {
         //        excal[row, column].IsCheck = false;
         //        (excal[row, column].Grid.Children[0] as Rectangle).Fill = new SolidColorBrush(Colors.SkyBlue);
+
         //        timeSet[row, column].IsCheck = false;
         //        timeSet[row, column].Set(-1);
         //    }
+
         //}
         //private void CourseAddPressed_PointerPressed(object sender, PointerRoutedEventArgs e)
         //{
         //    (sender as Grid).Background = new SolidColorBrush(Colors.Gray);
+
         //}
+
         //private void CourseAddExited_PointerPressed(object sender, PointerRoutedEventArgs e)
         //{
         //    (sender as Grid).Background = new SolidColorBrush(Colors.White);
         //}
+
         //private void CourseSel_Tapped(object sender, TappedRoutedEventArgs e)
         //{
         //    CourseTableGrid.Visibility = Visibility.Visible;
@@ -455,12 +513,15 @@ namespace ZSCY_Win10
         //    SaveRemind.Visibility = Visibility.Collapsed;
         //    CreateCourseTable();
         //}
+
         //private void AddRemindAppBarButton_Click(object sender, RoutedEventArgs e)
         //{
         //    SaveCourseTime.Visibility = Visibility.Collapsed;
         //}
+
         //private void SaveCourseTime_Click(object sender, RoutedEventArgs e)
         //{
+
         //    SaveCourseTime.Visibility = Visibility.Collapsed;
         //    CourseTableGrid.Visibility = Visibility.Collapsed;
         //    RemindGrid.Visibility = Visibility.Visible;
@@ -472,6 +533,7 @@ namespace ZSCY_Win10
         //                courseList.Add(new CourseList(i, j, timeSet[i, j].IsCheck));
         //        }
         //}
+
         //private void Initial()//初始化
         //{
         //    CreateCourseWeek();
@@ -489,6 +551,7 @@ namespace ZSCY_Win10
         //    AddRemindTitle.Visibility = Visibility.Visible;
         //    Initial();
         //}
+
         //private void SaveRemind_Click(object sender, RoutedEventArgs e)
         //{
         //    RemindListGrid.Visibility = Visibility.Visible;
@@ -498,8 +561,10 @@ namespace ZSCY_Win10
         //    SplitLine1.Visibility = Visibility.Collapsed;
         //    AddRemindTitle.Visibility = Visibility.Collapsed;
         //}
+
         //private void AddRemindGrid_Tapped(object sender, TappedRoutedEventArgs e)
         //{
+
         //}
     }
 }
