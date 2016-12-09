@@ -10,8 +10,6 @@
     FontWeight="Light"
     x:Name="itemPage"
     Background="#068cfd">
-
-
     <Grid Name="itemStackPanel">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -31,38 +29,32 @@
                 <Image Source="../Assets/ic_time08.png" Width="30" Height="30"></Image>
                 <TextBlock Text="1~2" Margin="0,5,0,0" Foreground="White" HorizontalAlignment="Center" FontSize="20"></TextBlock>
             </StackPanel>
-
             <Grid Name="Time10Grid" Background="#d3d3d3" Tapped="Time10Grid_Tapped" Grid.Column="1"></Grid>
             <StackPanel VerticalAlignment="Center" Margin="5" Grid.Column="1" Tapped="Time10Grid_Tapped">
                 <Image Source="../Assets/ic_time10.png" Width="30" Height="30"></Image>
                 <TextBlock Text="3~4" Margin="0,5,0,0" Foreground="White" HorizontalAlignment="Center" FontSize="20"></TextBlock>
             </StackPanel>
-
             <Grid Name="Time14Grid" Background="#d3d3d3" Tapped="Time14Grid_Tapped" Grid.Column="2"></Grid>
             <StackPanel VerticalAlignment="Center" Margin="5" Grid.Column="2" Tapped="Time14Grid_Tapped">
                 <Image Source="../Assets/ic_time14.png" Width="30" Height="30"></Image>
                 <TextBlock Text="5~6" Margin="0,5,0,0" Foreground="White" HorizontalAlignment="Center" FontSize="20"></TextBlock>
             </StackPanel>
-
             <Grid Name="Time16Grid" Background="#d3d3d3" Tapped="Time16Grid_Tapped" Grid.Column="3"></Grid>
             <StackPanel VerticalAlignment="Center" Margin="5" Grid.Column="3" Tapped="Time16Grid_Tapped">
                 <Image Source="../Assets/ic_time16.png" Width="30" Height="30"></Image>
                 <TextBlock Text="7~8" Margin="0,5,0,0" Foreground="White" HorizontalAlignment="Center" FontSize="20"></TextBlock>
             </StackPanel>
-
             <Grid Name="Time19Grid" Background="#d3d3d3" Tapped="Time19Grid_Tapped" Grid.Column="4"></Grid>
             <StackPanel VerticalAlignment="Center" Margin="5" Grid.Column="4" Tapped="Time19Grid_Tapped">
                 <Image Source="../Assets/ic_time19.png" Width="30" Height="30"></Image>
                 <TextBlock Text="9~10" Margin="0,5,0,0" Foreground="White" HorizontalAlignment="Center" FontSize="20"></TextBlock>
             </StackPanel>
-
             <Grid Name="Time21Grid" Background="#d3d3d3" Tapped="Time21Grid_Tapped" Grid.Column="5"></Grid>
             <StackPanel VerticalAlignment="Center" Margin="5" Grid.Column="5" Tapped="Time21Grid_Tapped">
                 <Image Source="../Assets/ic_time21.png" Width="30" Height="30"></Image>
                 <TextBlock Text="11~12" Margin="0,5,0,0" Foreground="White" HorizontalAlignment="Center" FontSize="20"></TextBlock>
             </StackPanel>
         </Grid>
-
         <ScrollViewer Grid.Row="1" Background="White">
             <Grid  Margin="10">
                 <Grid.RowDefinitions>
@@ -74,7 +66,6 @@
                         <TextBlock Text=" 查询记录" FontSize="25" VerticalAlignment="Center" Foreground="#068cfd" />
                     </StackPanel>
                 </Grid>-->
-
                 <Grid Grid.Row="0" >
                     <ListView ItemsSource="{x:Bind emptyRoomAndFloor}" SelectionMode="None">
                         <ListView.ItemTemplate>
@@ -100,7 +91,6 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </Grid>
-                
                 <StackPanel Name="ListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="ListFailedStackPanel_Tapped">
                     <Image Name="ListFailedStackPanelImage" Source="../Assets/ic_failed.png" Height="80" Width="80" HorizontalAlignment="Center" />
                     <TextBlock Name="ListFailedStackPanelTextBlock" Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
@@ -108,7 +98,6 @@
             </Grid>
         </ScrollViewer>
     </Grid>
-
     <Page.BottomAppBar>
         <CommandBar>
             <AppBarButton Name="FilterAppBarToggleButton" Icon="Filter" Label="二教" Click="FilterAppBarToggleButton_Click"/>

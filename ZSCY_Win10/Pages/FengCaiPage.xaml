@@ -8,7 +8,6 @@
     xmlns:viewmodel="using:ZSCY_Win10.ViewModels"
     xmlns:converter="using:ZSCY_Win10.Util.Converter"
     mc:Ignorable="d">
-
     <Page.Resources>
         <Style x:Key="FengCaiPivotStyle" TargetType="Pivot">
             <Setter Property="Background" Value="Transparent"/>
@@ -210,7 +209,6 @@
                                 </ScrollViewer>
                             </Grid>
                         </Grid>
-
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -365,11 +363,9 @@
             <DoubleAnimation From="0" To="0.5" Storyboard.TargetName="black_background" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4"></DoubleAnimation>
         </Storyboard>
     </Page.Resources>
-
     <Page.DataContext>
         <viewmodel:FengCaiViewModel></viewmodel:FengCaiViewModel>
     </Page.DataContext>
-
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"></RowDefinition>
@@ -387,7 +383,6 @@
             </Grid>
             <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="重邮风采" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Foreground_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Grid>
-        
         <Grid Grid.Row="1">
             <Pivot x:Name="pivot" Style="{StaticResource FengCaiPivotStyle}" SelectionChanged="pivot_SelectionChanged">
                 <PivotItem Style="{StaticResource FengCaiPivotItemStyle}">

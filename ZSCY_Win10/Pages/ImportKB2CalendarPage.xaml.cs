@@ -16,9 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
-
 namespace ZSCY.Pages
 {
     /// <summary>
@@ -31,11 +29,8 @@ namespace ZSCY.Pages
         {
             this.InitializeComponent();
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
-
         }
         private static string resourceName = "ZSCY";
-
-
         /// <summary>
         /// 在此页将要在 Frame 中显示时进行调用。
         /// </summary>
@@ -50,26 +45,19 @@ namespace ZSCY.Pages
             URLTextBlock.Text = "http://hongyan.cqupt.edu.cn/api/kebiao_ics?xh=" + credentialList[0].UserName;
             UmengSDK.UmengAnalytics.TrackPageStart("ImportKB2CalendarPage");
         }
-
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             UmengSDK.UmengAnalytics.TrackPageEnd("ImportKB2CalendarPage");
         }
-
-
-
         private async void ToCalendar_Click(object sender, RoutedEventArgs e)
         {
             bool success = await Launcher.LaunchUriAsync(new Uri("https://bay04.calendar.live.com/calendar/import.aspx?mkt=zh-CN#"));
         }
-
         private async void ToAccount_Click(object sender, RoutedEventArgs e)
         {
             bool success = await Launcher.LaunchUriAsync(new Uri("ms-settings-emailandaccounts:"));
-
         }
-
         private void URLTextBlock_TextChanged(object sender, TextChangedEventArgs e)
         {
             var vault = new Windows.Security.Credentials.PasswordVault();

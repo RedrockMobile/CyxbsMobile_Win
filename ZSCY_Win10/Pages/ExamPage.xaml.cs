@@ -23,9 +23,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Util;
-
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
-
 namespace ZSCY.Pages
 {
     /// <summary>
@@ -42,12 +40,10 @@ namespace ZSCY.Pages
             appSetting = ApplicationData.Current.LocalSettings;
             //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
         }
-
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
         }
-
         /// <summary>
         /// 在此页将要在 Frame 中显示时进行调用。
         /// </summary>
@@ -60,7 +56,6 @@ namespace ZSCY.Pages
             this.progress.IsActive = false;
             UmengSDK.UmengAnalytics.TrackPageStart("ExamPage");
         }
-
         private async void initExam()
         {
             string exam = "";
@@ -68,7 +63,6 @@ namespace ZSCY.Pages
             var vault = new Windows.Security.Credentials.PasswordVault();
             var credentialList = vault.FindAllByResource(resourceName);
             credentialList[0].RetrievePassword();
-
             //await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 2, 140, 253), Colors.White, text: "正在紧张安排考试...", isIndeterminate: true);
             //TODO:未登陆时 没有考试/补考信息
             if (IsExamOrRe == 2)
@@ -126,7 +120,6 @@ namespace ZSCY.Pages
                     else if (Int32.Parse(obj["status"].ToString()) == 300)
                     {
                         ListFailedStackPanelTextBlock.Text = "暂无数据，过几天再来看看";
-
                         ListFailedStackPanel.Visibility = Visibility.Visible;
                         ListFailedStackPanelImage.Visibility = Visibility.Collapsed;
                         ListFailedStackPanelTextBlock.Visibility = Visibility.Visible;
@@ -134,7 +127,6 @@ namespace ZSCY.Pages
                     else if (Int32.Parse(obj["status"].ToString()) == 0)
                     {
                         ListFailedStackPanelTextBlock.Text = "没补考的孩子别瞎点";
-
                         ListFailedStackPanel.Visibility = Visibility.Visible;
                         ListFailedStackPanelImage.Visibility = Visibility.Collapsed;
                         ListFailedStackPanelTextBlock.Visibility = Visibility.Visible;
@@ -142,7 +134,6 @@ namespace ZSCY.Pages
                     else
                     {
                         ListFailedStackPanelTextBlock.Text = "加载失败，点击重试";
-
                         ListFailedStackPanel.Visibility = Visibility.Visible;
                         ListFailedStackPanelImage.Visibility = Visibility.Visible;
                         ListFailedStackPanelTextBlock.Visibility = Visibility.Visible;
@@ -152,7 +143,6 @@ namespace ZSCY.Pages
                 {
                     Debug.WriteLine("考试信息->解析异常");
                     ListFailedStackPanelTextBlock.Text = "加载失败，点击重试";
-
                     ListFailedStackPanel.Visibility = Visibility.Visible;
                     ListFailedStackPanelImage.Visibility = Visibility.Visible;
                     ListFailedStackPanelTextBlock.Visibility = Visibility.Visible;
@@ -161,7 +151,6 @@ namespace ZSCY.Pages
             else
             {
                 ListFailedStackPanelTextBlock.Text = "加载失败，点击重试";
-
                 ListFailedStackPanel.Visibility = Visibility.Visible;
                 ListFailedStackPanelImage.Visibility = Visibility.Visible;
                 ListFailedStackPanelTextBlock.Visibility = Visibility.Visible;
@@ -169,8 +158,6 @@ namespace ZSCY.Pages
             //StatusBar statusBar = StatusBar.GetForCurrentView();
             //await statusBar.ProgressIndicator.HideAsync();
         }
-
-
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -178,7 +165,6 @@ namespace ZSCY.Pages
             //await statusBar.ProgressIndicator.HideAsync();
             UmengSDK.UmengAnalytics.TrackPageEnd("ExamPage");
         }
-
         private void ListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
             ListFailedStackPanel.Visibility = Visibility.Collapsed;

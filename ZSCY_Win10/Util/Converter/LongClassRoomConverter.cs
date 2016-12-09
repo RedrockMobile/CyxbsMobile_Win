@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Windows.UI.Xaml.Data;
-
 namespace ZSCY_Win10.Util.Converter
 {
     public class LongClassRoomConverter : IValueConverter
@@ -16,7 +15,6 @@ namespace ZSCY_Win10.Util.Converter
                 Regex reg = new Regex(pattern,RegexOptions.None);
                 if (Regex.IsMatch(classroom, pattern))
                 {
-
                     MatchCollection mc = reg.Matches(classroom);
                     foreach (Match item in mc)
                     {
@@ -32,7 +30,6 @@ namespace ZSCY_Win10.Util.Converter
             }
             return room + classroom;
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             return null;

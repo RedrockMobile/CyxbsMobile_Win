@@ -27,9 +27,7 @@ using ZSCY_Win10.Data;
 using ZSCY_Win10.Util;
 using Windows.UI.Popups;
 using ZSCY_Win10.Controls;
-
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
-
 namespace ZSCY_Win10
 {
     /// <summary>
@@ -103,7 +101,6 @@ namespace ZSCY_Win10
                 KBRefreshAppBarButton.Visibility = Visibility.Collapsed;
             }
         }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             //TODO:未登陆时 没有课表
@@ -147,16 +144,13 @@ namespace ZSCY_Win10
                 KBCalendarAppBarButton.IsEnabled = false;
                 KBZoomAppBarButton.IsEnabled = false;
             }
-
         }
-
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             Debug.WriteLine("OnNavigatedFrom");
             UmengSDK.UmengAnalytics.TrackPageEnd("KBPage");
         }
-
         private void SetKebiaoGridBorder(int week)
         {
             //边框
@@ -170,7 +164,6 @@ namespace ZSCY_Win10
             //        kebiaoGrid.Children.Add(border);
             //    }
             //}
-
             //星期背景色
             if (week == 0)
             {
@@ -181,13 +174,11 @@ namespace ZSCY_Win10
                 backgrid.SetValue(Grid.ColumnProperty, (Int16.Parse(Utils.GetWeek()) + 6) % 7);
                 backgrid.SetValue(Grid.RowSpanProperty, 12);
                 kebiaoGrid.Children.Add(backgrid);
-
                 backweekgrid.Background = new SolidColorBrush(Color.FromArgb(255, 254, 245, 207));
                 backweekgrid.SetValue(Grid.ColumnProperty, (Int16.Parse(Utils.GetWeek()) == 0 ? 6 : Int16.Parse(Utils.GetWeek()) - 1));
                 backweekgrid.SetValue(Grid.RowSpanProperty, 2);
                 KebiaoWeekTitleGrid.Children.Remove(backweekgrid);
                 KebiaoWeekTitleGrid.Children.Add(backweekgrid);
-
             }
             else
             {
@@ -208,8 +199,6 @@ namespace ZSCY_Win10
             KebiaoWeek.SetValue(Grid.ColumnProperty, (Int16.Parse(Utils.GetWeek()) == 0 ? 6 : Int16.Parse(Utils.GetWeek()) - 1));
             KebiaoWeek.SetValue(Grid.RowProperty, 1);
             KebiaoWeekTitleGrid.Children.Add(KebiaoWeek);
-
-
         }
         //TODO:未登陆时 没有课表
         private async void initKB(bool isRefresh = false)
@@ -245,21 +234,15 @@ namespace ZSCY_Win10
                 {
                     HubSectionKBTitle.Text = "我的课表";
                     HubSectionKBTitle.FontSize = 18;
-
                 }
-
             }
             catch { }
-
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
             //if (isRefresh)
             //    paramList.Add(new KeyValuePair<string, string>("forceFetch", "true"));
-
-
             string kbtemp = await NetWork.getHttpWebRequest("redapi2/api/kebiao", paramList); //新
                                                                                               //string kbtemp = await NetWork.getHttpWebRequest("api/kebiao", paramList); //旧
-
             if (!appSetting.Values.ContainsKey("HttpTime"))
                 appSetting.Values["HttpTime"] = DateTimeOffset.Now.ToString();
             if (kbtemp != "")
@@ -284,14 +267,12 @@ namespace ZSCY_Win10
                         Debug.WriteLine("主页 -> 课表缓存，读取异常");
                     }
                     //保存当前星期
-
                     if (kbtemp == "")
                     {
                         Debug.WriteLine("上次时间" + appSetting.Values["HttpTime"].ToString());
                         //DateTimeOffset d = DateTimeOffset.Parse(appSetting.Values["HttpTime"].ToString());
                         Debug.WriteLine("1");
                         int httpweekday = (Int16)DateTimeOffset.Parse(appSetting.Values["HttpTime"].ToString()).DayOfWeek == 0 ? 7 : (Int16)DateTimeOffset.Parse(appSetting.Values["HttpTime"].ToString()).DayOfWeek;
-
                         Debug.WriteLine("差" + (DateTimeOffset.Now - DateTimeOffset.Parse(appSetting.Values["HttpTime"].ToString())).TotalDays);
                         double weekday = (DateTimeOffset.Now - DateTimeOffset.Parse(appSetting.Values["HttpTime"].ToString())).TotalDays - (7 - httpweekday);
                         Debug.WriteLine("weekday_前" + weekday);
@@ -322,34 +303,28 @@ namespace ZSCY_Win10
             DateTime weekend = GetWeekLastDaySun(now);
             this.HubSectionKBDate.Text = weekstart.Month + "." + weekstart.Day + "--" + weekend.Month + "." + weekend.Day;
             ShowWeekOnKB(weekstart);
-
         }
         public DateTime GetWeekFirstDayMon(DateTime datetime)
         {
             //星期一为第一天   
             int weeknow = Convert.ToInt32(datetime.DayOfWeek);
-
             //因为是以星期一为第一天，所以要判断weeknow等于0时，要向前推6天。   
             weeknow = (weeknow == 0 ? (7 - 1) : (weeknow - 1));
             int daydiff = (-1) * weeknow;
-
             //本周第一天   
             string FirstDay = datetime.AddDays(daydiff).ToString("yyyy-MM-dd");
             return Convert.ToDateTime(FirstDay);
         }
-
         public DateTime GetWeekLastDaySun(DateTime datetime)
         {
             //星期天为最后一天   
             int weeknow = Convert.ToInt32(datetime.DayOfWeek);
             weeknow = (weeknow == 0 ? 7 : weeknow);
             int daydiff = (7 - weeknow);
-
             //本周最后一天   
             string LastDay = datetime.AddDays(daydiff).ToString("yyyy-MM-dd");
             return Convert.ToDateTime(LastDay);
         }
-
         public void ShowWeekOnKB(DateTime datestart)
         {
             MonthTextBlock.Text = datestart.Month.ToString() + "月";
@@ -367,15 +342,12 @@ namespace ZSCY_Win10
                 KebiaoWeekTitleGrid.Children.Add(DateOnKBTextBlock[i]);
             }
         }
-
         private void showKB(int weekOrAll = 1, int week = 0)
         {
             for (int i = 0; i < 7; i++)
                 for (int j = 0; j < 6; j++)
                     classtime[i, j] = null;
-
             GetTransaction();
-
             kebiaoGrid.Children.Clear();
             SetKebiaoGridBorder(week);
             classList.Clear();
@@ -435,12 +407,10 @@ namespace ZSCY_Win10
                     }
                 }
             }
-
             KebiaoDayGrid.Children.Clear();
             //这特么在逗我
             //if (transationList.Count != 0)
             //   SetTransactionDay(transationList, classList);
-
             //当日课表显示
             for (int i = 0; i < ClassListArray.Count; i++)
             {
@@ -458,10 +428,8 @@ namespace ZSCY_Win10
                 }
                 //#endif
             }
-
             colorlist.Clear();
         }
-
         /// <summary>
         /// 当日事项填充
         /// </summary>
@@ -519,9 +487,7 @@ namespace ZSCY_Win10
                             transactionGrid.SetValue(Grid.RowProperty, System.Int32.Parse(transactionitem.date[i]._class * 2 + ""));
                             transactionGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(transactionitem.date[i].day + ""));
                             transactionGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(2 + ""));
-
                             transactionGrid.Margin = new Thickness(2);
-
                             transactionGrid.HorizontalAlignment = HorizontalAlignment.Right;
                             transactionGrid.VerticalAlignment = VerticalAlignment.Top;
                             transactionGrid.Width = 8;
@@ -546,9 +512,7 @@ namespace ZSCY_Win10
                             transactionGrid.SetValue(Grid.RowProperty, System.Int32.Parse(transactionitem.date[i]._class * 2 + ""));
                             transactionGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(transactionitem.date[i].day + ""));
                             transactionGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(2 + ""));
-
                             transactionGrid.Background = new SolidColorBrush(Tcolor[RightC]);
-
                             Grid polygonGrid = new Grid();
                             polygonGrid.HorizontalAlignment = HorizontalAlignment.Right;
                             polygonGrid.VerticalAlignment = VerticalAlignment.Top;
@@ -566,17 +530,14 @@ namespace ZSCY_Win10
                             pl.StrokeThickness = 0;
                             polygonGrid.Children.Add(pl);
                             transactionGrid.Children.Add(polygonGrid);
-
                             isInClassGrid = false;
                             transactionGrid.Margin = new Thickness(0.5);
-
                             kebiaoGrid.Children.Add(transactionGrid);
                         }
                     }
                 }
             }
         }
-
         /// <summary>
         /// 学期事项填充
         /// </summary>
@@ -620,9 +581,7 @@ namespace ZSCY_Win10
                         transactionGrid.SetValue(Grid.RowProperty, System.Int32.Parse(transactionitem.date[i]._class * 2 + ""));
                         transactionGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(transactionitem.date[i].day + ""));
                         transactionGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(2 + ""));
-
                         transactionGrid.Margin = new Thickness(2);
-
                         transactionGrid.HorizontalAlignment = HorizontalAlignment.Right;
                         transactionGrid.VerticalAlignment = VerticalAlignment.Top;
                         transactionGrid.Width = 8;
@@ -647,9 +606,7 @@ namespace ZSCY_Win10
                         transactionGrid.SetValue(Grid.RowProperty, System.Int32.Parse(transactionitem.date[i]._class * 2 + ""));
                         transactionGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(transactionitem.date[i].day + ""));
                         transactionGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(2 + ""));
-
                         transactionGrid.Background = new SolidColorBrush(Tcolor[RightC]);
-
                         Grid polygonGrid = new Grid();
                         polygonGrid.HorizontalAlignment = HorizontalAlignment.Right;
                         polygonGrid.VerticalAlignment = VerticalAlignment.Top;
@@ -667,16 +624,13 @@ namespace ZSCY_Win10
                         pl.StrokeThickness = 0;
                         polygonGrid.Children.Add(pl);
                         transactionGrid.Children.Add(polygonGrid);
-
                         IsInClass = false;
                         transactionGrid.Margin = new Thickness(0.5);
-
                         kebiaoGrid.Children.Add(transactionGrid);
                     }
                 }
             }
         }
-
         /// <summary>
         /// 日视图课程格子的填充
         /// </summary>
@@ -689,18 +643,14 @@ namespace ZSCY_Win10
             BackGrid.SetValue(Grid.RowProperty, System.Int32.Parse(classitem.Hash_lesson * 2 + ""));
             BackGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(classitem.Hash_day + ""));
             BackGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(classitem.Period + ""));
-
             StackPanel BackStackPanel = new StackPanel();
             BackStackPanel.Margin = new Thickness(15);
             BackStackPanel.VerticalAlignment = VerticalAlignment.Center;
-
             TextBlock classNameTextBlock = new TextBlock();
             classNameTextBlock.Text = classitem.Course;
             classNameTextBlock.FontSize = 20;
             classNameTextBlock.Margin = new Thickness(0, 3, 0, 3);
             classNameTextBlock.Foreground = new SolidColorBrush(Colors.White);
-
-
             StackPanel classTeaStackPanel = new StackPanel();
             Image classTeaImage = new Image();
             TextBlock classTeaTextBlock = new TextBlock();
@@ -715,8 +665,6 @@ namespace ZSCY_Win10
             classTeaStackPanel.Children.Add(classTeaImage);
             classTeaStackPanel.Children.Add(classTeaTextBlock);
             classTeaStackPanel.Margin = new Thickness(0, 3, 0, 3);
-
-
             StackPanel classAddStackPanel = new StackPanel();
             Image classAddImage = new Image();
             TextBlock classAddTextBlock = new TextBlock();
@@ -731,7 +679,6 @@ namespace ZSCY_Win10
             classAddStackPanel.Children.Add(classAddImage);
             classAddStackPanel.Children.Add(classAddTextBlock);
             classAddStackPanel.Margin = new Thickness(0, 3, 0, 3);
-
             StackPanel classTypeStackPanel = new StackPanel();
             Image classTypeImage = new Image();
             TextBlock classTypeTextBlock = new TextBlock();
@@ -746,17 +693,13 @@ namespace ZSCY_Win10
             classTypeStackPanel.Children.Add(classTypeImage);
             classTypeStackPanel.Children.Add(classTypeTextBlock);
             classTypeStackPanel.Margin = new Thickness(0, 3, 0, 3);
-
             BackStackPanel.Children.Add(classNameTextBlock);
             BackStackPanel.Children.Add(classTeaStackPanel);
             BackStackPanel.Children.Add(classAddStackPanel);
             BackStackPanel.Children.Add(classTypeStackPanel);
-
             BackGrid.Children.Add(BackStackPanel);
-
             KebiaoDayGrid.Children.Add(BackGrid);
         }
-
         //新增:获取事项信息
         private async void GetTransaction()
         {
@@ -799,7 +742,6 @@ namespace ZSCY_Win10
                 }
             }
         }
-
         /// <summary>
         /// 周视图课程格子的填充
         /// </summary>
@@ -811,10 +753,8 @@ namespace ZSCY_Win10
             //foreach (var transactionItem in transationList) {
             //    if (item.Week == transactionItem.week && item.Lesson == transactionItem.classToLesson)
             //    {
-
             //    }
             //}
-
             Color[] colors = new Color[]{
                    //Color.FromArgb(255,132, 191, 19),
                    //Color.FromArgb(255,67, 182, 229),
@@ -832,16 +772,13 @@ namespace ZSCY_Win10
                    Color.FromArgb(255,159, 213, 27),
                    Color.FromArgb(255,200, 200, 200), //灰色
                 };
-
             //折叠角的颜色数组
             Color[] _color = new Color[] {
                 Color.FromArgb(255,255,219,178),
                 Color.FromArgb(255,162,229,255),
                 Color.FromArgb(255,155,244,244),
             };
-
             TextBlock ClassTextBlock = new TextBlock();
-
             ClassTextBlock.Text = item.Course + "\n" + item.Classroom + "\n" + item.Teacher;
             ClassTextBlock.Foreground = new SolidColorBrush(Colors.White);
             ClassTextBlock.FontSize = 12;
@@ -850,7 +787,6 @@ namespace ZSCY_Win10
             ClassTextBlock.HorizontalAlignment = HorizontalAlignment.Center;
             ClassTextBlock.Margin = new Thickness(3);
             ClassTextBlock.MaxLines = 6;
-
             Grid BackGrid = new Grid();
             BackGrid.Background = new SolidColorBrush(colors[ClassColor]);
             BackGrid.SetValue(Grid.RowProperty, System.Int32.Parse(item.Hash_lesson * 2 + ""));
@@ -858,7 +794,6 @@ namespace ZSCY_Win10
             BackGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(item.Period + ""));
             BackGrid.Margin = new Thickness(0.5);
             BackGrid.Children.Add(ClassTextBlock);
-
             //TODO:新增 折叠三角
             if (classtime[item.Hash_day, item.Hash_lesson] != null)
             {
@@ -867,7 +802,6 @@ namespace ZSCY_Win10
                 img.VerticalAlignment = VerticalAlignment.Bottom;
                 img.HorizontalAlignment = HorizontalAlignment.Right;
                 img.Width = 10;
-
                 //他要折叠..我画一个三角好了..
                 Grid _grid = new Grid();
                 Polygon pl = new Polygon();
@@ -885,9 +819,7 @@ namespace ZSCY_Win10
                 _grid.VerticalAlignment = VerticalAlignment.Bottom;
                 _grid.HorizontalAlignment = HorizontalAlignment.Right;
                 BackGrid.Children.Add(_grid);
-
                 BackGrid.Children.Add(img);
-
                 string[] temp = classtime[item.Hash_day, item.Hash_lesson];
                 string[] tempnew = new string[temp.Length + 1];
                 for (int i = 0; i < temp.Length; i++)
@@ -903,11 +835,9 @@ namespace ZSCY_Win10
                 Debug.WriteLine("else~id->" + item._Id);
                 classtime[item.Hash_day, item.Hash_lesson] = tempnew;
             }
-
             BackGrid.Tapped += BackGrid_Tapped;
             kebiaoGrid.Children.Add(BackGrid);
         }
-
         private void BackGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Debug.WriteLine("前" + KBCLassFlyoutPivot.Items.Count.ToString());
@@ -924,7 +854,6 @@ namespace ZSCY_Win10
             for (int i = 0; i < temp.Length; i++)
             {
                 ClassList c = classList.Find(p => p._Id.Equals(temp[i]));
-
                 PivotItem pi = new PivotItem();
                 TextBlock HeaderTextBlock = new TextBlock();
                 HeaderTextBlock.Text = c.Course;
@@ -941,7 +870,6 @@ namespace ZSCY_Win10
             }
             KBCLassFlyout.ShowAt(page);
         }
-
         /// <summary>
         /// 课表刷新
         /// </summary>
@@ -960,7 +888,6 @@ namespace ZSCY_Win10
             initKB(true);
             this.progress.IsActive = false;
         }
-
         /// <summary>
         /// 查询他人
         /// </summary>
@@ -971,7 +898,6 @@ namespace ZSCY_Win10
             KBZoomFlyout.ShowAt(page);
             KBZoomFlyoutTextBox.SelectAll();
         }
-
         /// <summary>
         /// 切换课表
         /// </summary>
@@ -980,7 +906,6 @@ namespace ZSCY_Win10
         private void KBCalendarAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             //transationList.Clear();
-
             showKB(wOa);
             DateTime now = DateTime.Now;
             DateTime weekstart = GetWeekFirstDayMon(now);
@@ -999,15 +924,11 @@ namespace ZSCY_Win10
                 HubSectionKBDate.Text = weekstart.Month + "." + weekstart.Day + "--" + weekend.Month + "." + weekend.Day;
             }
         }
-
-
-
         private void KBSearchButton_Click(object sender, RoutedEventArgs e)
         {
             transationList.Clear();
             KBSearch();
         }
-
         private void KBSearch()
         {
             //KBSearchButton.IsChecked = false;
@@ -1023,18 +944,15 @@ namespace ZSCY_Win10
             else
                 Utils.Message("请输入正确的学号");
         }
-
         private void HubSectionKBNum_Tapped(object sender, TappedRoutedEventArgs e)
         {
             KBNumFlyout.ShowAt(page);
             HubSectionKBNum.SelectAll();
         }
-
         private void KBNumSearchButton_Click(object sender, RoutedEventArgs e)
         {
             KBNumSearch();
         }
-
         private void KBNumSearch()
         {
             //TODO:未登陆不能选择周次
@@ -1053,7 +971,6 @@ namespace ZSCY_Win10
             else
                 Utils.Message("请输入正确的周次");
         }
-
         private void initToday()
         {
             todaydateTextBlock.Text = DateTime.Now.Year + "年" + DateTime.Now.Month + "月" + DateTime.Now.Day + "日";
@@ -1066,7 +983,6 @@ namespace ZSCY_Win10
                 todayNumofstuTextBlock.Text = "开学第    天";
             }
         }
-
         private void KBNumFlyoutTextBox_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
@@ -1082,8 +998,6 @@ namespace ZSCY_Win10
                 }
             }
         }
-
-
         private void KBZoomFlyoutTextBox_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
@@ -1099,7 +1013,6 @@ namespace ZSCY_Win10
                 }
             }
         }
-
         private void KebiaoAllpr_RefreshInvoked(DependencyObject sender, object args)
         {
             var vault = new Windows.Security.Credentials.PasswordVault();
@@ -1112,17 +1025,14 @@ namespace ZSCY_Win10
             initKB(true);
             this.progress.IsActive = false;
         }
-
         private void AddRemind_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(AddRemind));
         }
-
         private void RemindList_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(RemindListPage));
         }
-
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(RemindTest));

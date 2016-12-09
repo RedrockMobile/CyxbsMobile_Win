@@ -22,9 +22,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Util;
-
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
-
 namespace ZSCY.Pages
 {
     /// <summary>
@@ -35,7 +33,6 @@ namespace ZSCY.Pages
         int maxFloor;
         bool isBuildEight = false;
         string BuildEight;
-
         private ApplicationDataContainer appSetting;
         Color gridColorGray = new Color();
         Color gridColorBlue = new Color();
@@ -47,19 +44,14 @@ namespace ZSCY.Pages
             false,
             false,
         };      
-
         string[] emptyReslut = new string[6]; //保存返回值
         string[][] emptyRoomReslut = new string[6][]; //保存返回的教室值
-
         string NowWeek;
         string buildNum = "2";
         string NowWeekday;
-
         bool isShowEmpty = true;
-
         ObservableCollection<EmptyRoomList> emptyRoomList = new ObservableCollection<EmptyRoomList>();
         ObservableCollection<EmptyRoomList> emptyRoomAndFloor = new ObservableCollection<EmptyRoomList>();
-
         public EmptyRoomsPage()
         {
             this.InitializeComponent();
@@ -67,7 +59,6 @@ namespace ZSCY.Pages
             gridColorGray = Color.FromArgb(255, 211, 211, 211);
             gridColorBlue = Color.FromArgb(255, 6, 140, 253);
             NowWeek = appSetting.Values["NowWeek"].ToString();
-
             for (int i = 0; i < 6; i++)
             {
                 emptyRoomReslut[i] = new string[100];
@@ -75,14 +66,11 @@ namespace ZSCY.Pages
                     emptyRoomReslut[i][j] = "";
             }
             NowWeekday = (Int16.Parse(Utils.GetWeek()) == 0 ? 7 : Int16.Parse(Utils.GetWeek())).ToString();
-         
         }
-
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
         }
-
         /// <summary>
         /// 在此页将要在 Frame 中显示时进行调用。
         /// </summary>
@@ -92,8 +80,6 @@ namespace ZSCY.Pages
         {
             UmengSDK.UmengAnalytics.TrackPageStart("EmptyRoomsPage");
         }
-
-
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -101,7 +87,6 @@ namespace ZSCY.Pages
             //await statusBar.ProgressIndicator.HideAsync();
             UmengSDK.UmengAnalytics.TrackPageEnd("EmptyRoomsPage");
         }
-
         private void Time08Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (!gridColor[0])
@@ -118,10 +103,7 @@ namespace ZSCY.Pages
                     emptyRoomReslut[0][i] = "";
                 ShowEmpty();
             }
-
         }
-
-
         private void Time10Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (!gridColor[1])
@@ -139,7 +121,6 @@ namespace ZSCY.Pages
                 ShowEmpty();
             }
         }
-
         private void Time14Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (!gridColor[2])
@@ -157,7 +138,6 @@ namespace ZSCY.Pages
                 ShowEmpty();
             }
         }
-
         private void Time16Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (!gridColor[3])
@@ -175,7 +155,6 @@ namespace ZSCY.Pages
                 ShowEmpty();
             }
         }
-
         private void Time19Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (!gridColor[4])
@@ -193,7 +172,6 @@ namespace ZSCY.Pages
                 ShowEmpty();
             }
         }
-
         private void Time21Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (!gridColor[5])
@@ -211,8 +189,6 @@ namespace ZSCY.Pages
                 ShowEmpty();
             }
         }
-
-
         //private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         //{
         //    JXLButton.Content = (sender as MenuFlyoutItem).Text;
@@ -235,7 +211,6 @@ namespace ZSCY.Pages
         //            break;
         //    }
         //    emptyRoomList.Clear();
-
         //    Time08Grid.Background = new SolidColorBrush(gridColorGray);
         //    Time10Grid.Background = new SolidColorBrush(gridColorGray);
         //    Time14Grid.Background = new SolidColorBrush(gridColorGray);
@@ -252,7 +227,6 @@ namespace ZSCY.Pages
         //            emptyRoomReslut[i][j] = "";
         //    }
         //}
-
         /// <summary>
         /// 空教室网络请求
         /// </summary>
@@ -297,10 +271,8 @@ namespace ZSCY.Pages
             //StatusBar statusBar = StatusBar.GetForCurrentView();
             //await statusBar.ProgressIndicator.HideAsync();
         }
-
         private void ShowEmpty()
         {
-
 #if DEBUG
             for (int i = 0; i < 6; i++)
             {
@@ -308,7 +280,6 @@ namespace ZSCY.Pages
             }
 #endif
             List<string[]> emptyRoomReslutuse = new List<string[]>();
-
             for (int i = 0; i < 6; i++)
             {
                 if (emptyRoomReslut[i][0] != "")
@@ -318,20 +289,17 @@ namespace ZSCY.Pages
             }
             emptyRoomList.Clear();
             emptyRoomAndFloor.Clear();
-
             if (emptyRoomReslutuse.Count != 0)
             {
                 for (int i = 1; i < emptyRoomReslutuse.Count; i++)
                 {
                     emptyRoomReslutuse[0] = emptyRoomReslutuse[0].Intersect(emptyRoomReslutuse[i]).ToArray();
                 }
-
                 for (int i = 0; i < emptyRoomReslutuse[0].Length; i++)
                 {
                     emptyRoomList.Add(new EmptyRoomList { Room = emptyRoomReslutuse[0][i] });
                 }
             }
-
             foreach (var item in emptyRoomList)
                 if (item.Room.Substring(0, 1) == "8")
                     isBuildEight = true;
@@ -343,7 +311,6 @@ namespace ZSCY.Pages
                     if (int.Parse(item.Room.Substring(1, 1)) > maxFloor)
                         maxFloor = int.Parse(item.Room.Substring(1, 1));
                 }
-
                 //创建maxFloor个List对象
                 for (int i = 0; i < maxFloor; i++)
                 {
@@ -367,11 +334,9 @@ namespace ZSCY.Pages
                     if (int.Parse(item.Room.Substring(1, 1)) > maxFloor)
                         maxFloor = int.Parse(item.Room.Substring(1, 1));
                 }
-
                 //创建maxFloor个List对象
                 for (int i = 0; i < maxFloor; i++)
                 {
-
                     EmptyRoomList er = new EmptyRoomList();
                     er.Floor = " #" + (i + 1).ToString();
                     er.Rooms = new List<string>();
@@ -404,8 +369,6 @@ namespace ZSCY.Pages
                 isBuildEight = false;
             }
         }
-
-
         private void ListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
             ListFailedStackPanel.Visibility = Visibility.Collapsed;
@@ -418,8 +381,6 @@ namespace ZSCY.Pages
             if (isShowEmpty)
                 ShowEmpty();
         }
-
-
         private MenuFlyoutItem getJXLMenuFlyoutItem(string text)
         {
             MenuFlyoutItem menuFlyoutItem = new MenuFlyoutItem();
@@ -427,7 +388,6 @@ namespace ZSCY.Pages
             menuFlyoutItem.Click += JXLMenuFlyoutItem_click;
             return menuFlyoutItem;
         }
-
         private void JXLMenuFlyoutItem_click(object sender, RoutedEventArgs e)
         {
             MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
@@ -452,7 +412,6 @@ namespace ZSCY.Pages
             }
             emptyRoomList.Clear();
             emptyRoomAndFloor.Clear();
-
             Time08Grid.Background = new SolidColorBrush(gridColorGray);
             Time10Grid.Background = new SolidColorBrush(gridColorGray);
             Time14Grid.Background = new SolidColorBrush(gridColorGray);
@@ -469,13 +428,9 @@ namespace ZSCY.Pages
                     emptyRoomReslut[i][j] = "";
             }
         }
-
         private void FilterAppBarToggleButton_Click(object sender, RoutedEventArgs e)
         {
-
-
             MenuFlyout JXLMenuFlyout = new MenuFlyout();
-
             JXLMenuFlyout.Items.Add(getJXLMenuFlyoutItem("二教"));
             JXLMenuFlyout.Items.Add(getJXLMenuFlyoutItem("三教"));
             JXLMenuFlyout.Items.Add(getJXLMenuFlyoutItem("四教"));

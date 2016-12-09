@@ -54,7 +54,6 @@
                     <TextBlock Text="Version 2.1" HorizontalAlignment="Center" Foreground="#555" FontSize="20"></TextBlock>
                 </StackPanel>
             </StackPanel>
-
             <StackPanel Name="AboutRedStackPanel" Margin="0,0,0,20" VerticalAlignment="Bottom" >
                 <TextBlock Text="重庆邮电大学红岩网校工作站" FontSize="18" Foreground="#333" HorizontalAlignment="Center"></TextBlock>
                 <HyperlinkButton Margin="0,0,0,20" Content="http://hongyan.cqupt.edu.cn" NavigateUri="http://hongyan.cqupt.edu.cn" FontSize="18" Foreground="#333" HorizontalAlignment="Center"></HyperlinkButton>

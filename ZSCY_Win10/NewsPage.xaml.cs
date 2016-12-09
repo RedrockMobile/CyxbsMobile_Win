@@ -22,9 +22,7 @@ using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Data;
 using ZSCY_Win10.Util;
-
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
-
 namespace ZSCY_Win10
 {
     /// <summary>
@@ -38,7 +36,6 @@ namespace ZSCY_Win10
         ObservableCollection<NewsList> CYList = new ObservableCollection<NewsList>();
         ObservableCollection<NewsList> XSList = new ObservableCollection<NewsList>();
         int[] pagestatus = new int[] { 0, 0, 0, 0 };
-
         public NewsPage()
         {
             this.InitializeComponent();
@@ -79,14 +76,12 @@ namespace ZSCY_Win10
             };
             Debug.WriteLine("Init");
         }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             JWListView.ItemsSource = JWList;
             XWListView.ItemsSource = XWList;
             CYListView.ItemsSource = CYList;
             XSListView.ItemsSource = XSList;
-
             //if (App.JWListCache.Count == 0)
             //else
             //{
@@ -94,9 +89,6 @@ namespace ZSCY_Win10
             //}
             UmengSDK.UmengAnalytics.TrackPageStart("JWPage");
         }
-
-
-
         //private async void getJWCache()
         //{
         //    JWList = await getCache();
@@ -109,9 +101,7 @@ namespace ZSCY_Win10
         //    //{
         //    //    JWList.Add(JWListitem);
         //    //}
-
         //}
-
         //public static async Task<ObservableCollection<JWList>> getCache()
         //{
         //    return await Task.Run(() =>
@@ -120,7 +110,6 @@ namespace ZSCY_Win10
         //        return jw;
         //    });
         //}
-
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -149,13 +138,11 @@ namespace ZSCY_Win10
                     XSListProgressStackPanel.Visibility = Visibility.Visible;
                     break;
             }
-
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("type", type));
             paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
             string news = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/news/searchtitle", paramList);
             Debug.WriteLine("news->" + news);
-
             switch (type)
             {
                 case "jwzx":
@@ -171,7 +158,6 @@ namespace ZSCY_Win10
                     XSListProgressStackPanel.Visibility = Visibility.Collapsed;
                     break;
             }
-
             if (news != "")
             {
                 JObject obj = JObject.Parse(news);
@@ -179,7 +165,6 @@ namespace ZSCY_Win10
                 {
                     JArray NewsListArray = Utils.ReadJso(news);
                     //JWListView.ItemsSource = JWList;
-
                     for (int i = 0; i < NewsListArray.Count; i++)
                     {
                         int failednum = 0;
@@ -187,7 +172,6 @@ namespace ZSCY_Win10
                         Newsitem.GetListAttribute((JObject)NewsListArray[i]);
                         if (Newsitem.Title != "")
                         {
-
                             //请求正文
                             List<KeyValuePair<String, String>> contentparamList = new List<KeyValuePair<String, String>>();
                             contentparamList.Add(new KeyValuePair<string, string>("type", type));
@@ -215,9 +199,7 @@ namespace ZSCY_Win10
                                         }
                                     }
                                     catch (Exception) { }
-
                                     //content.Replace("&nbsp;", "");
-
                                     //while (content.StartsWith("\r") || content.StartsWith("\n") || content.StartsWith("\t") || content.StartsWith(" ") || content.StartsWith("&nbsp;"))
                                     //    content = content.Substring(1);
                                     //while (content.StartsWith("&nbsp;"))
@@ -230,8 +212,6 @@ namespace ZSCY_Win10
                                     content = content.Replace("（见附件）", "见附件");
                                     content = content.Replace("MicrosoftInternetExplorer4", "");
                                     content = content.Replace("Normal07.8磅02falsefalsefalse", "");
-
-
                                     //while (content.StartsWith("\r\n "))
                                     //    content = content.Substring(3);
                                     //while (content.StartsWith("\r\n"))
@@ -267,7 +247,6 @@ namespace ZSCY_Win10
                                     }
                                 }
                             }
-
                         }
                     }
                     //JWListView.ItemsSource = JWList;
@@ -333,9 +312,7 @@ namespace ZSCY_Win10
                 }
             }
         }
-
         public Frame NewsFrame { get { return this.frame; } }
-
         private void OnNavigatedToPage(object sender, NavigationEventArgs e)
         {
             // After a successful navigation set keyboard focus to the loaded page
@@ -345,13 +322,11 @@ namespace ZSCY_Win10
                 control.Loaded += Page_Loaded;
             }
         }
-
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ((Page)sender).Focus(FocusState.Programmatic);
             ((Page)sender).Loaded -= Page_Loaded;
         }
-
         /// <summary>
         /// 继续加载
         /// </summary>
@@ -381,9 +356,7 @@ namespace ZSCY_Win10
                     break;
             }
             initNewsList(type, page);
-
         }
-
         /// <summary>
         /// 加载失败重新加载
         /// </summary>
@@ -409,7 +382,6 @@ namespace ZSCY_Win10
             }
             initNewsList(type);
         }
-
         /// <summary>
         /// 刷新按钮
         /// </summary>
@@ -417,7 +389,6 @@ namespace ZSCY_Win10
         /// <param name="e"></param>
         private void NewsRefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-
             page = 0;
             string type = "";
             pagestatus[NewsPivot.SelectedIndex]++;
@@ -446,11 +417,9 @@ namespace ZSCY_Win10
             }
             initNewsList(type);
         }
-
         private void NewsListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             NewsList newsItem = new NewsList(((NewsList)e.ClickedItem).ID, ((NewsList)e.ClickedItem).Articleid, ((NewsList)e.ClickedItem).Title, ((NewsList)e.ClickedItem).Head, ((NewsList)e.ClickedItem).Date, ((NewsList)e.ClickedItem).Read, ((NewsList)e.ClickedItem).Content == null ? "加载中..." : ((NewsList)e.ClickedItem).Content, ((NewsList)e.ClickedItem).Content_all == null ? "加载中..." : ((NewsList)e.ClickedItem).Content_all);
-
             Debug.WriteLine("NewsListgrid.Width" + NewsListgrid.Width);
             if (NewsListgrid.Width == 400)
             {
@@ -527,7 +496,6 @@ namespace ZSCY_Win10
                                 {
                                     Anneximg = new Uri("ms-appx:///Assets/Annex_img/Annex_other.png", UriKind.Absolute);
                                 }
-
                                 annexList.Add(new NewsContentList.Annex { name = annex.name, address = annex.address, Anneximg = Anneximg });
                                 DownloadAppBarButton.Visibility = Visibility.Visible;
                             }
@@ -545,7 +513,6 @@ namespace ZSCY_Win10
             }
             this.NewsFrame.Navigate(typeof(NewsContentPage), newsItem);
         }
-
         private void JWBackAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             //if (NewsFrame == null)
@@ -564,7 +531,6 @@ namespace ZSCY_Win10
             CYListView.SelectedIndex = -1;
             XSListView.SelectedIndex = -1;
         }
-
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             //if (NewsFrame == null)
@@ -585,14 +551,11 @@ namespace ZSCY_Win10
             CYListView.SelectedIndex = -1;
             XSListView.SelectedIndex = -1;
         }
-
-
         private void DownloadAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             AnnexListView.SelectedIndex = -1;
             DownloadFlyout.ShowAt(newsGrid);
         }
-
         private async void AnnexListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             try
@@ -614,8 +577,6 @@ namespace ZSCY_Win10
                 await new MessageDialog("附件地址异常").ShowAsync();
             }
         }
-
-
         /// <summary>
         /// 下拉刷新
         /// </summary>
@@ -651,7 +612,6 @@ namespace ZSCY_Win10
             }
             initNewsList(type);
         }
-
         /// <summary>
         /// Pivot切换
         /// </summary>

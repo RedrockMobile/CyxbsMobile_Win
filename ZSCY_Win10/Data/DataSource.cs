@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Storage;
-
 namespace ZSCY_Win10.Data
 {
     public class Morepageclass
@@ -14,7 +13,6 @@ namespace ZSCY_Win10.Data
         public string Itemname { get; set; }
         public string ItemPage { get; set; }
         public string Itemimgsrc { get; set; }
-
         public Morepageclass(string name, string src,string id,string page)
         {
             this.Itemimgsrc = src;
@@ -22,15 +20,11 @@ namespace ZSCY_Win10.Data
             this.ItemPage = page;
             this.UniqueID = id;
         }
-
         public override string ToString()
         {
             return this.Itemname;
         }
-
-
     }
-
     public class Group
     {
         public Group()
@@ -39,13 +33,10 @@ namespace ZSCY_Win10.Data
         }
         public  ObservableCollection<Morepageclass> items { get;private set; }
     }
-
-
     public sealed class DataSource
     {
         private static DataSource ds=new DataSource();
         private  ObservableCollection<Group>  group=new ObservableCollection<Group>();
-
         public ObservableCollection<Group> Group
         {
             get { return group; }
@@ -60,7 +51,6 @@ namespace ZSCY_Win10.Data
             Uri dataUri = new Uri("ms-appx:///Data/moreitems.json");
             try
             {
-
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(dataUri);
             string jsonText = await FileIO.ReadTextAsync(file);
             JsonObject jsonObject= JsonObject.Parse(jsonText);
@@ -75,7 +65,6 @@ namespace ZSCY_Win10.Data
             }
             catch (Exception exception)
             {
-                
                 Debug.WriteLine(exception.Message);
             }
         }

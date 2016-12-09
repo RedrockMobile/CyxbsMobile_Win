@@ -19,9 +19,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Util;
-
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
-
 namespace ZSCY_Win10
 {
     /// <summary>
@@ -54,13 +52,10 @@ namespace ZSCY_Win10
                   VisualStateManager.GoToState(this, state, true);
               };
         }
-
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             mlogin();
-
         }
-
         private async void mlogin()
         {
             var vault = new Windows.Security.Credentials.PasswordVault();
@@ -134,7 +129,6 @@ namespace ZSCY_Win10
             //StuNumTextBox.Focus(FocusState.Unfocused);
             // IdNumPasswordBox.Focus(FocusState.Pointer);
         }
-
         private async void DisableSystemJumpListAsync()
         {
             var jumpList = await Windows.UI.StartScreen.JumpList.LoadCurrentAsync();
@@ -159,16 +153,13 @@ namespace ZSCY_Win10
             jumpList.Items.Add(CreateJumpListItemTask("/more", "更多", "ms-appx:///Assets/iconfont-more_w.png"));
             await jumpList.SaveAsync();
         }
-
         private void StuNumTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             isLoginButtonEnable();
         }
-
         private void IdNumPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             isLoginButtonEnable();
-
         }
         private void isLoginButtonEnable()
         {
@@ -177,7 +168,6 @@ namespace ZSCY_Win10
             else
                 LoginButton.IsEnabled = false;
         }
-
         private void TextBox_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
@@ -189,18 +179,15 @@ namespace ZSCY_Win10
                     Utils.Message("信息不完全");
             }
         }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             UmengSDK.UmengAnalytics.TrackPageStart("LoginPage");
         }
-
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             UmengSDK.UmengAnalytics.TrackPageEnd("LoginPage");
         }
-
         private void noLoginButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(MainPage), "/kb");

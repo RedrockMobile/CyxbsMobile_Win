@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace SycnRemindBackgroundTask
 {
     internal sealed class RemindListDB
@@ -17,6 +16,5 @@ namespace SycnRemindBackgroundTask
         /// </summary>
         public string Id_system { get; set; }
         public string json { get; set; }
-       
     }
 }

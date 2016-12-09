@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace LiveTileBackgroundTask
 {
     class ClassList
@@ -29,7 +28,6 @@ namespace LiveTileBackgroundTask
         public string _Id { get; set; }
         public int[] Week { get; set; }
         public string Classtime { get; set; }
-
         public void GetAttribute(JObject classDetailJObject)
         {
             Hash_day = (int)classDetailJObject["hash_day"];

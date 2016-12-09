@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ZSCY_Win10.Models.RemindPage
 {
     public  class RemindListDB
@@ -17,6 +16,5 @@ namespace ZSCY_Win10.Models.RemindPage
         /// </summary>
         public string Id_system { get; set; }
         public string json { get; set; }
-       
     }
 }

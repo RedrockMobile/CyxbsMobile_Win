@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 using ZSCY_Win10.Common;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Service;
-
 namespace ZSCY_Win10.ViewModels.Community
 {
     public class CommunityMyContentViewModel : ViewModelBase
     {
         private MyFeed myVar;
-
         public MyFeed Item
         {
             get { return myVar; }
@@ -21,9 +19,7 @@ namespace ZSCY_Win10.ViewModels.Community
         public CommunityMyContentViewModel(object e)
         {
             getItem(e);
-
         }
-
         private async void getItem(object e)
         {
             if (e is MyFeed)
@@ -39,6 +35,5 @@ namespace ZSCY_Win10.ViewModels.Community
                 Item = await CommunityMyContentService.GetFeed(5, (e as MyNotification).article_id);
             }
         }
-
     }
 }

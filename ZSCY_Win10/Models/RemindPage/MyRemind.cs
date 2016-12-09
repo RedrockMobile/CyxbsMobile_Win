@@ -5,10 +5,8 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
-
 namespace ZSCY_Win10.Models.RemindPage
 {
-
     [DataContract]
     public class DateItemModel
     {
@@ -22,17 +20,12 @@ namespace ZSCY_Win10.Models.RemindPage
         /// </summary>
         [DataMember(Name = "class")]
         public string Class { get; set; }
-
         ///<summary>
         /// 
         /// </summary>
         [DataMember(Name = "day")]
         public string Day { get; set; }
-
     }
-
-
-
     [DataContract]
     public class MyRemind : BaseModel
     {
@@ -44,68 +37,57 @@ namespace ZSCY_Win10.Models.RemindPage
         private Visibility rewrite;
         private Visibility deleteIcon;
         public string Tag { get; set; }
-
         public Visibility Rewrite
         {
             get
             {
                 return rewrite;
             }
-
             set
             {
                 rewrite = value;
                 RaisePropertyChanged(nameof(Rewrite));
             }
         }
-
         public Visibility DeleteIcon
         {
             get
             {
                 return deleteIcon;
             }
-
             set
             {
                 deleteIcon = value;
                 RaisePropertyChanged(nameof(DeleteIcon));
             }
         }
-
         public Visibility Dot
         {
             get
             {
                 return dot;
             }
-
             set
             {
                 dot = value;
                 RaisePropertyChanged(nameof(Dot));
             }
         }
-
-
         ///<summary>
         /// timestamp+4位随机
         /// </summary>
         [DataMember(Name = "id")]
         public string Id { get; set; }
-
         ///<summary>
         /// 
         /// </summary>
         [DataMember(Name = "stuNum")]
         public string StuNum { get; set; }
-
         ///<summary>
         /// 
         /// </summary>
         [DataMember(Name = "idNum")]
         public string IdNum { get; set; }
-
         ///<summary>
         /// 
         /// </summary>
@@ -118,7 +100,6 @@ namespace ZSCY_Win10.Models.RemindPage
         /// </summary>
         [DataMember(Name = "time")]
         public string Time { get; set; }
-
         ///<summary>
         /// 事项的标题，不能为空
         /// </summary>
@@ -135,7 +116,6 @@ namespace ZSCY_Win10.Models.RemindPage
                 RaisePropertyChanged(nameof(Title));
             }
         }
-
         ///<summary>
         /// 事项的具体内容,可为空
         /// </summary>
@@ -152,34 +132,29 @@ namespace ZSCY_Win10.Models.RemindPage
                 RaisePropertyChanged(nameof(Content));
             }
         }
-
         ///<summary>
         /// 当前学期，不传默认本学期 格式 本学期为201620171 下学期为201620172 
         /// </summary>
         [DataMember(Name = "term")]
         public string Term { get; set; }
-
         public string ClassDay
         {
             get
             {
                 return classDay;
             }
-
             set
             {
                 classDay = value;
                 RaisePropertyChanged(ClassDay);
             }
         }
-
         public string TotalWeek
         {
             get
             {
                 return totalWeek;
             }
-
             set
             {
                 totalWeek = value;
@@ -187,22 +162,16 @@ namespace ZSCY_Win10.Models.RemindPage
             }
         }
     }
-
     public class AddRemindReturn
     {
         [DataMember(Name = "stuNum")]
         public string StuNum { get; set; }
-
         ///<summary>
         /// 
         /// </summary>
         [DataMember(Name = "idNum")]
         public string IdNum { get; set; }
-
         [DataMember(Name = "id")]
         public string Id { get; set; }
     }
-
-   
-
 }

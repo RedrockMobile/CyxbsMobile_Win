@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZSCY_Win10.Data;
-
 namespace ZSCY_Win10.Data
 {
     class ClassListLight:EmptyClassDayLesson
@@ -18,7 +17,6 @@ namespace ZSCY_Win10.Data
         public int[] Week { get; set; } //上课的周次
         //public string Course { get; set; }
         public string[] Name { get; set; }
-
         public ClassListLight Clone()
         {
             ClassListLight cll = new ClassListLight();
@@ -62,7 +60,6 @@ namespace ZSCY_Win10.Data
                 return null;
         }
     }
-
     public class People
     {
         public string name { get; set; }

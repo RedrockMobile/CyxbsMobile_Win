@@ -25,9 +25,7 @@ using ZSCY.Data;
 using ZSCY_Win10;
 using ZSCY_Win10.Data;
 using ZSCY_Win10.Util;
-
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
-
 namespace ZSCY.Pages
 {
     /// <summary>
@@ -75,7 +73,6 @@ namespace ZSCY.Pages
             week_old = week = int.Parse(appSetting.Values["nowWeek"].ToString());
             FilterAppBarButton.Label = "第" + appSetting.Values["nowWeek"].ToString() + "周";
         }
-
         /// <summary>
         /// 在此页将要在 Frame 中显示时进行调用。
         /// </summary>
@@ -89,13 +86,11 @@ namespace ZSCY.Pages
             FlyoutFreeDetailNameGridView.ItemsSource = peoplelist;
             initFree();
         }
-
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             //HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
         }
-
         /// <summary>
         /// 获得各个学号的课表
         /// </summary>
@@ -154,13 +149,11 @@ namespace ZSCY.Pages
             else
                 showFreeKB(termresult);
         }
-
         private void showFreeKB(ObservableCollection<ClassListLight> result, bool showWeekend = false)
         {
             kebiaoGrid.Children.Clear();
             int ClassColor = 0;
             colorlist.Clear();
-
             for (int i = 0; i < result.Count; i++)
             {
                 peoplelist.Clear();
@@ -267,14 +260,12 @@ namespace ZSCY.Pages
             else
                 ClassTextBlock.Margin = new Thickness(3);
             ClassTextBlock.MaxLines = 6;
-
             Grid BackGrid = new Grid();
             BackGrid.Background = new SolidColorBrush(colors[ClassColor]);
             BackGrid.SetValue(Grid.RowProperty, System.Int32.Parse(lesson * 2 + ""));
             BackGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(day + ""));
             BackGrid.SetValue(Grid.RowSpanProperty, 2);
             BackGrid.Margin = new Thickness(0.5);
-
             if ((setcoloritem is ClassListLight) && ResultName[day, lesson].Length == muIdList.Count)
             {
                 TextBlock AllPeopleTextBlock = new TextBlock();
@@ -293,8 +284,6 @@ namespace ZSCY.Pages
             BackGrid.Tapped += BackGrid_Tapped;
             kebiaoGrid.Children.Add(BackGrid);
         }
-
-
         private void BackGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             peoplelist.Clear();
@@ -361,7 +350,6 @@ namespace ZSCY.Pages
             FreeDetailWeekTextBlock.Text = "星期" + week + " " + nowclass;
             FreeDetailTimeTextBlock.Text = time;
             FreeDetailPeopleTextBlock.Text = "共计" + temp.Length + "人";
-
             FlyoutFreeDetailWeekTextBlock.Text = "星期" + week + " " + nowclass;
             FlyoutFreeDetailTimeTextBlock.Text = time;
             FlyoutFreeDetailPeopleTextBlock.Text = "共计" + temp.Length + "人";
@@ -371,7 +359,6 @@ namespace ZSCY.Pages
                 {
                     peoplelist.Add(new People { name = temp[i] });
                 }
-
             }
             else
             {
@@ -382,7 +369,6 @@ namespace ZSCY.Pages
                     if (weeks.Length != 0)
                         weekstr = WeeknumConverter(weeks);
                     peoplelist.Add(new People { name = temp[i], weekstostr = weekstr });
-
                 }
             }
             if (FreeDetailGrid.Visibility == Visibility.Collapsed)
@@ -390,7 +376,6 @@ namespace ZSCY.Pages
             FreeNoClickStackPanel.Visibility = Visibility.Collapsed;
             FreeDetailStackPanel.Visibility = Visibility.Visible;
         }
-
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
@@ -404,12 +389,10 @@ namespace ZSCY.Pages
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             }
         }
-
         private void FilterAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             KBNumFlyout.ShowAt(commandBar);
         }
-
         /// <summary>
         /// 周次选择的搜索键
         /// </summary>
@@ -420,7 +403,6 @@ namespace ZSCY.Pages
             weekorterm = false;
             KBNumSearch();
         }
-
         /// <summary>
         /// 课表选择页面对回车键的监听
         /// </summary>
@@ -530,7 +512,6 @@ namespace ZSCY.Pages
                 showFreeKB(termresult, showWeekend);
             }
         }
-
         /// <summary>
         /// 周数友好显示
         /// </summary>
@@ -538,7 +519,6 @@ namespace ZSCY.Pages
         /// <returns>友好的字符串</returns>
         private string WeeknumConverter(int[] weeks)
         {
-
             int len = weeks.Length;
             Array.Sort(weeks);
             if (len == 18)

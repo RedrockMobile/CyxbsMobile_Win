@@ -26,9 +26,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using ZSCY_Win10;
 using Windows.Phone.UI.Input;
 using Windows.UI.ViewManagement;
-
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
-
 namespace ZSCY.Pages
 {
     /// <summary>
@@ -41,18 +39,15 @@ namespace ZSCY.Pages
         private double[] pivotitem1_ver_offest;
         private ZSCY_Win10.ViewModels.FengCaiViewModel viewmodel;
         public static FengCaiPage fengcaipage;
-
         public FengCaiPage()
         {
             this.InitializeComponent();
             pivot_index = 0;
             zuzhi_listview_index = 0;
-
             viewmodel = new ZSCY_Win10.ViewModels.FengCaiViewModel();
             this.DataContext = viewmodel;
             fengcaipage = this;
             this.SizeChanged += FengCaiPage_SizeChanged;
-
             //手机物理返回键订阅事件
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
             {
@@ -68,7 +63,6 @@ namespace ZSCY.Pages
         {
             FirstPage.firstpage.Second_Page_Back();
             Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
-
         }
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -85,19 +79,16 @@ namespace ZSCY.Pages
                 zuzhi_listview.SelectedIndex = pivot.SelectedIndex = 0;
             }
         }
-
         private void FengCaiPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             viewmodel.Page_Width = e.NewSize.Width;
             viewmodel.Page_Height = e.NewSize.Height;
         }
-
         private async Task First_Step()
         {
             StorageFile file;
             string json = "";
             JObject json_object;
-
             #region 得到Header列表
             file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Json/fengcai_header_lists.json", UriKind.Absolute));
             json = await FileIO.ReadTextAsync(file);
@@ -112,7 +103,6 @@ namespace ZSCY.Pages
             }
             viewmodel.Header = header_lists;
             #endregion
-
             #region 得到组织列表
             file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Json/fengcai_zuzhi_lists.json", UriKind.Absolute));
             json = await FileIO.ReadTextAsync(file);
@@ -127,7 +117,6 @@ namespace ZSCY.Pages
             }
             viewmodel.ZuZhi = zuzhi_lists;
             #endregion
-
             #region 得到组织介绍
             file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Json/fengcai_zuzhi_intro.json", UriKind.Absolute));
             json = await FileIO.ReadTextAsync(file);
@@ -147,7 +136,6 @@ namespace ZSCY.Pages
             }
             viewmodel.Zuzhi_Intro = intro_lists;
             #endregion
-
             #region 得到原创重邮内容
             json = await ZSCY_Win10.Util.Request.YuanChuang_Request();
             if (json != null)
@@ -172,7 +160,6 @@ namespace ZSCY.Pages
                 viewmodel.YuanChuang = yc_lists;
             }
             #endregion
-
             #region 得到最美重邮文字内容
             file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Json/fengcai_zuimei.json", UriKind.Absolute));
             json = await FileIO.ReadTextAsync(file);
@@ -186,7 +173,6 @@ namespace ZSCY.Pages
             }
             viewmodel.ZuiMei = zuimei_lists;
             #endregion
-
             #region 得到最美重邮图片
             json = await ZSCY_Win10.Util.Request.ZuiMei_Request();
             if (json != null)
@@ -202,7 +188,6 @@ namespace ZSCY.Pages
                 viewmodel.ZuiMei_Photos = zuimei_lists;
             }
             #endregion
-
             #region 得到优秀学子内容
             json = await ZSCY_Win10.Util.Request.XueZi_Request();
             if (json != null)
@@ -224,7 +209,6 @@ namespace ZSCY.Pages
                 viewmodel.XueZi = xuezi_lists;
             }
             #endregion
-
             #region 得到优秀教师内容
             json = await ZSCY_Win10.Util.Request.Teather_Request();
             if (json != null)
@@ -246,7 +230,6 @@ namespace ZSCY.Pages
             }
             #endregion
         }
-
         private void PivotItem1_Add_Content(int p)
         {
             zuzhi_content.Children.Clear();
@@ -279,7 +262,6 @@ namespace ZSCY.Pages
                 }
             }
         }
-
         private TextBlock New_TextBlock(int p, string content)
         {
             TextBlock tb = new TextBlock();
@@ -307,7 +289,6 @@ namespace ZSCY.Pages
             tb.TextWrapping = TextWrapping.Wrap;
             return tb;
         }
-
         private void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -327,7 +308,6 @@ namespace ZSCY.Pages
                 return;
             }
         }
-
         private void zuzhi_listview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             pivotitem1_ver_offest[zuzhi_listview_index] = zuzhi_sc.VerticalOffset;
@@ -342,12 +322,10 @@ namespace ZSCY.Pages
             }
             zuzhi_listview_index = zuzhi_listview.SelectedIndex;
         }
-
         private async void yc_listview_ItemClick(object sender, ItemClickEventArgs e)
         {
             await Launcher.LaunchUriAsync(new Uri((e.ClickedItem as Models.yuanchuang).video_url));
         }
-
         private void XueZi_Rectangle_Loaded(object sender, RoutedEventArgs e)
         {
             Binding binding1 = new Binding();
@@ -359,7 +337,6 @@ namespace ZSCY.Pages
             binding2.Path = new PropertyPath("XueZi_Width");
             (sender as Rectangle).SetBinding(Rectangle.WidthProperty, binding2);
         }
-
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is Models.xuezi)
@@ -379,7 +356,6 @@ namespace ZSCY.Pages
             black_background_sb.Begin();
             detail_popup.IsOpen = true;
         }
-
         private void detail_popup_Closed(object sender, object e)
         {
             detail_img.ImageSource = null;
@@ -387,12 +363,10 @@ namespace ZSCY.Pages
             detail_content.Text = "";
             black_background.Visibility = Visibility.Collapsed;
         }
-
         private void back_but_Click(object sender, RoutedEventArgs e)
         {
             FirstPage.firstpage.Second_Page_Back();
         }
-
         bool isExit = false;
         private void OnBackPressed(object sender, BackPressedEventArgs e)
         {
@@ -416,7 +390,6 @@ namespace ZSCY.Pages
                 statusBar.ShowAsync();
                 statusBar.ProgressIndicator.Text = "再按一次返回键即将退出程序 ~\\(≧▽≦)/~"; // 状态栏显示文本
                 statusBar.ProgressIndicator.ShowAsync();
-
                 if (isExit)
                 {
                     App.Current.Exit();

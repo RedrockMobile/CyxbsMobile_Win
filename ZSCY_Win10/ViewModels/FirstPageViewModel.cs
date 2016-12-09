@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ZSCY_Win10.ViewModels
 {
     public class FirstPageViewModel : BasePageViewModel
@@ -21,7 +20,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Page_Height));
             }
         }
-
         private double _page_width;
         public double Page_Width
         {

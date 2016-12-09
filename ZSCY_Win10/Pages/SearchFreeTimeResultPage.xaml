@@ -9,14 +9,12 @@
     Name="page"
     xmlns:converter="using:ZSCY_Win10.Util.Converter"
     Background="#068cfd">
-
     <Page.Resources>
         <converter:FreeisTiVisConverter x:Key="FreeisTiVisConverter"/>
         <converter:FreeisCoVisConverter x:Key="FreeisCoVisConverter"/>
         <converter:FreeWeekdayCoVisConverter x:Key="FreeWeekdayCoVisConverter"/>
         <converter:FreeTimeCoVisConverter x:Key="FreeTimeCoVisConverter"/>
     </Page.Resources>
-
     <Grid Background="#fff">
         <Grid.RowDefinitions>
             <!--<RowDefinition Height="auto"/>-->
@@ -25,9 +23,7 @@
         <!--<StackPanel VerticalAlignment="Top" Orientation="Horizontal" Grid.Row="0" Background="#068cfd" >
             <TextBlock Text="找空闲" FontSize="35" VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" Margin="15,0,0,0"></TextBlock>
         </StackPanel>-->
-
         <Grid Grid.Row="1" Margin="15">
-
             <ListView Name="FreeListView">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -38,14 +34,9 @@
                                 <Line Margin="0,0,0,10" X1="0" X2="{Binding ActualWidth, ElementName=page, Mode=OneWay}" Stroke="Black" StrokeThickness="1"></Line>
                             </StackPanel>
                         </Grid>
-
                     </DataTemplate>
                 </ListView.ItemTemplate>
-
             </ListView>
-
-
-
             <StackPanel Name="FreeLoddingStackPanel" VerticalAlignment="Center">
                 <TextBlock Name="FreeLoddingTextBlock" HorizontalAlignment="Center" FontSize="15" Margin="0,0,0,5" Foreground="#333" Text="正在加载..."/>
                 <ProgressBar Name="FreeLoddingProgressBar" IsIndeterminate="False" Value="0"/>

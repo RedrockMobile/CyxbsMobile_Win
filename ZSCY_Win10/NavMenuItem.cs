@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
-
 namespace ZSCY_Win10
 {
     public class NavMenuItem
@@ -21,6 +20,5 @@ namespace ZSCY_Win10
         }
         public Type DestPage { get; set; }
         public object Arguments { get; set; }
-
     }
 }

@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:remindpage="using:ZSCY_Win10.Models.RemindPage"
     mc:Ignorable="d">
-
     <Grid Background="#f5f5f5">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>

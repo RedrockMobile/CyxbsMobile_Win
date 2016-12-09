@@ -11,7 +11,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Notepad="using:ZSCY_Win10.Notepad"
     mc:Ignorable="d">
-
     <Page.Resources>
         <converter:ExpandingConverter0 x:Key="expandingConverter0"/>
         <converter:ExpandingConverter1 x:Key="expandingConverter1"/>
@@ -218,7 +217,6 @@
                                 </ScrollViewer>
                             </Grid>
                         </Grid>
-
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -308,12 +306,9 @@
             </Setter>
         </Style>
     </Page.Resources>
-
     <Page.DataContext>
         <viewmodel:StrategyViewModel></viewmodel:StrategyViewModel>
     </Page.DataContext>
-
-
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"></RowDefinition>
@@ -332,7 +327,6 @@
             <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="新生攻略" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Foreground_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Grid>
         <Grid Grid.Row="1">
-
             <Pivot Name="SPivot" Style="{StaticResource StrategyStyle}" Grid.Row="1" SelectionChanged="SPivot_SelectionChanged">
                 <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
                     <PivotItem.Header>
@@ -365,7 +359,6 @@
                                     </Button.Content>
                                 </Button>-->
                             </Grid>
-
                             <!--<Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
@@ -384,8 +377,6 @@
                                     </Button.Content>
                                 </Button>
                             </Grid>
-
-
                             <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
@@ -404,7 +395,6 @@
                                     </Button.Content>
                                 </Button>
                             </Grid>
-
                             <Grid >
                                 <Grid.RowDefinitions>
                                     <RowDefinition x:Name="jidianGrid" Height="0"/>
@@ -412,7 +402,6 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="1" Text="学生手册节选" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>
-
                                 <WebView Name="JDhtml" Source="ms-appx-web:///Assets/jidian.html" Grid.Row="0" Visibility="Collapsed"/>
                                 <TextBlock Name="xueshengshouce" Margin="15,0,15,14" LineHeight="26" Grid.Row="2" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"  
                                        Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Xueshengshouce,Converter={StaticResource expandingConverter3}}" TextWrapping="Wrap"/>
@@ -429,7 +418,6 @@
                         </StackPanel>
                     </ScrollViewer>
                 </PivotItem>
-
                 <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
                     <PivotItem.Header>
                         <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
@@ -463,7 +451,6 @@
                         </StackPanel>
                     </ScrollViewer>
                 </PivotItem>
-
                 <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
                     <PivotItem.Header>
                         <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
@@ -498,12 +485,10 @@
                                             <TextBlock Name="Introduction" Grid.Row="1" Text="{x:Bind Introduction ,Converter={StaticResource jsonConverter}}" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" 
                                      Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" TextWrapping="Wrap"/>
                                         </Grid>
-
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-
                     </Grid>
                 </PivotItem>
                 <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
@@ -517,7 +502,6 @@
                         </Grid>
                     </PivotItem.Header>
                     <ScrollViewer>
-
                         <StackPanel>
                             <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
                                 <StackPanel Margin="15,14,15,15">
@@ -569,14 +553,12 @@
                     </PivotItem.Header>
                     <Grid>
                         <ScrollViewer Name="GroupSVName">
-
                             <StackPanel>
                                 <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
                                     <StackPanel Margin="15,14,15,15">
                                         <TextBlock Text="新生群" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
                                         <TextBlock Text="{Binding XYQ_All}" LineHeight="26" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
                   FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" TextWrapping="Wrap">
-
                                         </TextBlock>
                                     </StackPanel>
                                 </Grid>
@@ -585,7 +567,6 @@
                                         <TextBlock Text="老乡群" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
                                         <TextBlock Text="{Binding LXQ_All}" LineHeight="26" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
                   FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
-
                                         </TextBlock>
                                     </StackPanel>
                                 </Grid>

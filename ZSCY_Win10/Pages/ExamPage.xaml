@@ -14,7 +14,6 @@
     <Page.Resources>
         <DataTemplate x:Key="examcontent">
             <Grid>
-
             </Grid>
         </DataTemplate>
         <!--<Style TargetType="ListViewItem">
@@ -45,7 +44,6 @@
                                 <Line X1="35" Y1="0" X2="35" Y2="30" Stroke="#FF3498DB" StrokeThickness="2" Stretch="Fill"/>
                                 <TextBlock Text="{Binding DateTime ,Converter={StaticResource ExamDateConverter}}" TextAlignment="Center"></TextBlock>
                                 <Line X1="35" Y1="0" X2="35" Y2="30" Stroke="#FF3498DB" StrokeThickness="2" Stretch="Fill"/>
-
                             </StackPanel>
                             <Grid Grid.Column="1">
                                 <Image Source="{Binding DateTime,Converter={StaticResource StarFillConverter}}" Height="25" Width="25" HorizontalAlignment="Center"></Image>

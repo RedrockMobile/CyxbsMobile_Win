@@ -24,9 +24,7 @@ using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Service;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
-
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace ZSCY_Win10.Pages.CommunityPages
 {
     /// <summary>
@@ -47,8 +45,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
         bool isfirst = true;
         bool issend = false;
         private static string resourceName = "ZSCY";
-
-
         public CommunityMyContentPage()
         {
             this.InitializeComponent();
@@ -64,7 +60,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 }
             };
         }
-
         private void PhotoGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
             Img img = e.ClickedItem as Img;
@@ -82,7 +77,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
-
         private void CommunityItemPhoto_Tapped(object sender, TappedRoutedEventArgs e)
         {
             CommunityItemPhotoGrid.Visibility = Visibility.Collapsed;
@@ -90,7 +84,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
             SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
             //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
-
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             if (CommunityItemPhotoGrid.Visibility == Visibility.Visible)
@@ -101,16 +94,13 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 App.isPerInfoContentImgShow = false;
                 //if (Utils.getPhoneWidth() > 800)
                 //{
-
                 //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                 //}
                 //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             }
         }
-
         private void LikeButton_Click(object sender, RoutedEventArgs e)
         {
-
         }
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -120,7 +110,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
             markListView.ItemsSource = markList;
             getMark();
         }
-
         private async void getMark()
         {
             string id = "";
@@ -135,9 +124,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 type_id = "5";
                 id = (ee.Parameter as MyNotification).article_id;
             }
-
-
-
             //if (ViewModel.BBDD != null)
             //{
             //    id = ViewModel.BBDD.id;
@@ -212,7 +198,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
             catch (Exception) { }
             isMark2Peo = false;
         }
-
         private void sendMarkTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (sendMarkTextBox.Text.Length > 0)
@@ -224,7 +209,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 sendMarkButton.IsEnabled = false;
             }
         }
-
         private async void sendMarkButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO:未登陆时 不能发表评论
@@ -283,7 +267,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
             }
             catch (Exception) { }
         }
-
         private void markListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var clickMarkItem = (Mark)e.ClickedItem;
@@ -312,7 +295,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
             sendMarkTextBox.Focus(FocusState.Keyboard);
             sendMarkTextBox.SelectionStart = sendMarkTextBox.Text.Length;
         }
-
         private void contentScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             if (!issend)
@@ -325,19 +307,16 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 }
             }
         }
-
         private void CommunityItemPhotoImage_Holding(object sender, HoldingRoutedEventArgs e)
         {
             //Debug.WriteLine("Holding");
             //savePic();
         }
-
         private void CommunityItemPhotoImage_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             Debug.WriteLine("RightTapped");
             savePic();
         }
-
         private async void savePic()
         {
             var dig = new MessageDialog("是否保存此图片");

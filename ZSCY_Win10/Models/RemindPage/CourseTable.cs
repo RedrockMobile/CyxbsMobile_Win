@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
-
 namespace ZSCY_Win10.Models.RemindPage
 {
     /// <summary>
@@ -14,27 +13,23 @@ namespace ZSCY_Win10.Models.RemindPage
     {
         private Grid grid;
         private bool isCheck;
-
         public Grid Grid
         {
             get
             {
                 return grid;
             }
-
             set
             {
                 grid = value;
             }
         }
-
         public bool IsCheck
         {
             get
             {
                 return isCheck;
             }
-
             set
             {
                 isCheck = value;
@@ -75,27 +70,23 @@ namespace ZSCY_Win10.Models.RemindPage
                     break;
             }
         }
-
         public bool IsCheck
         {
             get
             {
                 return isCheck;
             }
-
             set
             {
                 isCheck = value;
             }
         }
-
         public TimeSpan Time
         {
             get
             {
                 return time;
             }
-
             //set
             //{
             //    time = value;

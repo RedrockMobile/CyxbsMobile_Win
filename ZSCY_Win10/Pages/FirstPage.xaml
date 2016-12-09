@@ -85,11 +85,9 @@
             <DoubleAnimation Storyboard.TargetName="second_frame_trans" Storyboard.TargetProperty="X" From="0" Duration="0:0:0.3"></DoubleAnimation>
         </Storyboard>
     </Page.Resources>
-
     <Page.DataContext>
         <viewmodel:FirstPageViewModel></viewmodel:FirstPageViewModel>
     </Page.DataContext>
-
     <Grid x:Name="root_grid" Background="{Binding Source={StaticResource APPTheme},Path=Backgorund_Color_Brush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"></RowDefinition>

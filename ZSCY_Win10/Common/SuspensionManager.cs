@@ -10,7 +10,6 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-
 namespace ZSCY_Win10.Common
 {
     /// <summary>
@@ -25,7 +24,6 @@ namespace ZSCY_Win10.Common
         private static Dictionary<string, object> _sessionState = new Dictionary<string, object>();
         private static List<Type> _knownTypes = new List<Type>();
         private const string sessionStateFilename = "_sessionState.xml";
-
         /// <summary>
         /// 提供对当前会话的全局会话状态的访问。  此状态
         /// 由 <see cref="SaveAsync"/> 序列化并由
@@ -37,7 +35,6 @@ namespace ZSCY_Win10.Common
         {
             get { return _sessionState; }
         }
-
         /// <summary>
         /// 读取和写入会话状态时向 <see cref="DataContractSerializer"/> 提供的
         /// 自定义类型的列表。  最初为空，可能会
@@ -47,7 +44,6 @@ namespace ZSCY_Win10.Common
         {
             get { return _knownTypes; }
         }
-
         /// <summary>
         /// 保存当前 <see cref="SessionState"/>。  任何 <see cref="Frame"/> 实例
         /// (已向 <see cref="RegisterFrame"/> 注册)都还将保留其当前的
@@ -68,13 +64,11 @@ namespace ZSCY_Win10.Common
                         SaveFrameNavigationState(frame);
                     }
                 }
-
                 // 以同步方式序列化会话状态以避免对共享
                 // 状态
                 MemoryStream sessionData = new MemoryStream();
                 DataContractSerializer serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
                 serializer.WriteObject(sessionData, _sessionState);
-
                 // 获取 SessionState 文件的输出流并以异步方式写入状态
                 StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(sessionStateFilename, CreationCollisionOption.ReplaceExisting);
                 using (Stream fileStream = await file.OpenStreamForWriteAsync())
@@ -88,7 +82,6 @@ namespace ZSCY_Win10.Common
                 throw new SuspensionManagerException(e);
             }
         }
-
         /// <summary>
         /// 还原之前保存的 <see cref="SessionState"/>。  任何 <see cref="Frame"/> 实例
         /// (已向 <see cref="RegisterFrame"/> 注册)都还将还原其先前的导航
@@ -100,10 +93,9 @@ namespace ZSCY_Win10.Common
         /// <returns>反映何时读取会话状态的异步任务。
         /// 在此任务完成之前，不应依赖 <see cref="SessionState"/>
         /// 完成。</returns>
-        public static async Task RestoreAsync(String sessionBaseKey = null)
+        public static async Task RestoreAsync(string sessionBaseKey = null)
         {
-            _sessionState = new Dictionary<String, Object>();
-
+            _sessionState = new Dictionary<string, Object>();
             try
             {
                 // 获取 SessionState 文件的输入流
@@ -114,7 +106,6 @@ namespace ZSCY_Win10.Common
                     DataContractSerializer serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
                     _sessionState = (Dictionary<string, object>)serializer.ReadObject(inStream.AsStreamForRead());
                 }
-
                 // 将任何已注册框架还原为其已保存状态
                 foreach (var weakFrameReference in _registeredFrames)
                 {
@@ -131,15 +122,13 @@ namespace ZSCY_Win10.Common
                 throw new SuspensionManagerException(e);
             }
         }
-
         private static DependencyProperty FrameSessionStateKeyProperty =
-            DependencyProperty.RegisterAttached("_FrameSessionStateKey", typeof(String), typeof(SuspensionManager), null);
+            DependencyProperty.RegisterAttached("_FrameSessionStateKey", typeof(string), typeof(SuspensionManager), null);
         private static DependencyProperty FrameSessionBaseKeyProperty =
-            DependencyProperty.RegisterAttached("_FrameSessionBaseKeyParams", typeof(String), typeof(SuspensionManager), null);
+            DependencyProperty.RegisterAttached("_FrameSessionBaseKeyParams", typeof(string), typeof(SuspensionManager), null);
         private static DependencyProperty FrameSessionStateProperty =
-            DependencyProperty.RegisterAttached("_FrameSessionState", typeof(Dictionary<String, Object>), typeof(SuspensionManager), null);
+            DependencyProperty.RegisterAttached("_FrameSessionState", typeof(Dictionary<string, Object>), typeof(SuspensionManager), null);
         private static List<WeakReference<Frame>> _registeredFrames = new List<WeakReference<Frame>>();
-
         /// <summary>
         /// 注册 <see cref="Frame"/> 实例以允许将其导航历史记录保存到
         /// <see cref="SessionState"/> 并从中还原。  如果框架将参与会话状态管理，
@@ -154,33 +143,28 @@ namespace ZSCY_Win10.Common
         /// 存储与导航相关的信息。</param>
         /// <param name="sessionBaseKey">标识会话类型的可选密钥。
         /// 这可用于区分多个应用程序启动方案。</param>
-        public static void RegisterFrame(Frame frame, String sessionStateKey, String sessionBaseKey = null)
+        public static void RegisterFrame(Frame frame, string sessionStateKey, string sessionBaseKey = null)
         {
             if (frame.GetValue(FrameSessionStateKeyProperty) != null)
             {
                 throw new InvalidOperationException("Frames can only be registered to one session state key");
             }
-
             if (frame.GetValue(FrameSessionStateProperty) != null)
             {
                 throw new InvalidOperationException("Frames must be either be registered before accessing frame session state, or not registered at all");
             }
-
             if (!string.IsNullOrEmpty(sessionBaseKey))
             {
                 frame.SetValue(FrameSessionBaseKeyProperty, sessionBaseKey);
                 sessionStateKey = sessionBaseKey + "_" + sessionStateKey;
             }
-
             // 使用依赖项属性可会话键与框架相关联，并记录其
             // 导航状态应托管的框架
             frame.SetValue(FrameSessionStateKeyProperty, sessionStateKey);
             _registeredFrames.Add(new WeakReference<Frame>(frame));
-
             // 查看导航状态是否可还原
             RestoreFrameNavigationState(frame);
         }
-
         /// <summary>
         /// 解除之前由 <see cref="RegisterFrame"/> 注册的 <see cref="Frame"/>
         /// 与 <see cref="SessionState"/> 的关联。  之前捕获的任何导航状态都将
@@ -192,14 +176,13 @@ namespace ZSCY_Win10.Common
         {
             // 移除会话状态并移除框架列表中其导航
             // 状态将被保存的框架(以及无法再访问的任何弱引用)
-            SessionState.Remove((String)frame.GetValue(FrameSessionStateKeyProperty));
+            SessionState.Remove((string)frame.GetValue(FrameSessionStateKeyProperty));
             _registeredFrames.RemoveAll((weakFrameReference) =>
             {
                 Frame testFrame;
                 return !weakFrameReference.TryGetTarget(out testFrame) || testFrame == frame;
             });
         }
-
         /// <summary>
         /// 为与指定的 <see cref="Frame"/> 相关联的会话状态提供存储。
         /// 之前已向 <see cref="RegisterFrame"/> 注册的框架已自动
@@ -213,41 +196,38 @@ namespace ZSCY_Win10.Common
         /// <param name="frame">需要会话状态的实例。</param>
         /// <returns>状态集合受限于与
         /// <see cref="SessionState"/> 相同的序列化机制。</returns>
-        public static Dictionary<String, Object> SessionStateForFrame(Frame frame)
+        public static Dictionary<string, Object> SessionStateForFrame(Frame frame)
         {
-            var frameState = (Dictionary<String, Object>)frame.GetValue(FrameSessionStateProperty);
-
+            var frameState = (Dictionary<string, Object>)frame.GetValue(FrameSessionStateProperty);
             if (frameState == null)
             {
-                var frameSessionKey = (String)frame.GetValue(FrameSessionStateKeyProperty);
+                var frameSessionKey = (string)frame.GetValue(FrameSessionStateKeyProperty);
                 if (frameSessionKey != null)
                 {
                     // 已注册框架反映相应的会话状态
                     if (!_sessionState.ContainsKey(frameSessionKey))
                     {
-                        _sessionState[frameSessionKey] = new Dictionary<String, Object>();
+                        _sessionState[frameSessionKey] = new Dictionary<string, Object>();
                     }
-                    frameState = (Dictionary<String, Object>)_sessionState[frameSessionKey];
+                    frameState = (Dictionary<string, Object>)_sessionState[frameSessionKey];
                 }
                 else
                 {
                     // 未注册框架具有瞬时状态
-                    frameState = new Dictionary<String, Object>();
+                    frameState = new Dictionary<string, Object>();
                 }
                 frame.SetValue(FrameSessionStateProperty, frameState);
             }
             return frameState;
         }
-
         private static void RestoreFrameNavigationState(Frame frame)
         {
             var frameState = SessionStateForFrame(frame);
             if (frameState.ContainsKey("Navigation"))
             {
-                frame.SetNavigationState((String)frameState["Navigation"]);
+                frame.SetNavigationState((string)frameState["Navigation"]);
             }
         }
-
         private static void SaveFrameNavigationState(Frame frame)
         {
             var frameState = SessionStateForFrame(frame);
@@ -259,11 +239,9 @@ namespace ZSCY_Win10.Common
         public SuspensionManagerException()
         {
         }
-
         public SuspensionManagerException(Exception e)
             : base("SuspensionManager failed", e)
         {
-
         }
     }
 }

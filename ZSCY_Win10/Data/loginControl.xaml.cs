@@ -12,16 +12,13 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace ZSCY_Win10.Data
 {
     public sealed partial class loginControl : UserControl
     {
         private Popup m_Popup;
         private string m_TextBlockContent;
-
         private loginControl()
         {
             this.InitializeComponent();
@@ -31,9 +28,7 @@ namespace ZSCY_Win10.Data
             m_Popup.Child = this;
             this.Loaded += MessagePopupWindow_Loaded;
             this.Unloaded += MessagePopupWindow_Unloaded;
-
         }
-
         public loginControl(string showMsg) : this()
         {
             this.m_TextBlockContent = showMsg;
@@ -43,41 +38,33 @@ namespace ZSCY_Win10.Data
             this.tbContent.Text = m_TextBlockContent;
             Window.Current.SizeChanged += MessagePopupWindow_SizeChanged; ;
         }
-
         private void MessagePopupWindow_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
         {
             this.Width = e.Size.Width;
             this.Height = e.Size.Height;
         }
-
         private void MessagePopupWindow_Unloaded(object sender, RoutedEventArgs e)
         {
             Window.Current.SizeChanged -= MessagePopupWindow_SizeChanged; ;
         }
-
-
         public void ShowWIndow()
         {
             m_Popup.IsOpen = true;
         }
-
         private void DismissWindow()
         {
             m_Popup.IsOpen = false;
         }
-
         private void LeftButton_Click(object sender, RoutedEventArgs e)
         {
             DismissWindow();
             LeftClick?.Invoke(this, e);
         }
-
         private void RightButton_Click(object sender, RoutedEventArgs e)
         {
             DismissWindow();
             RightClick?.Invoke(this, e);
         }
-
         public event EventHandler<RoutedEventArgs> LeftClick;
         public event EventHandler<RoutedEventArgs> RightClick;
     }

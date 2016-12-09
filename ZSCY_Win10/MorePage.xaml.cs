@@ -22,9 +22,7 @@ using ZSCY.Data;
 using ZSCY.Pages;
 using ZSCY_Win10.Common;
 using ZSCY_Win10.Data;
-
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
-
 namespace ZSCY_Win10
 {
     /// <summary>
@@ -75,9 +73,6 @@ namespace ZSCY_Win10
                 cutoffLine.Y2 = e.NewSize.Height;
             };
         }
-
-
-
         public ObservableDictionary Morepageclass
         {
             get
@@ -92,21 +87,14 @@ namespace ZSCY_Win10
             InitMore();
             UmengSDK.UmengAnalytics.TrackPageStart("MorePage");
         }
-
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             UmengSDK.UmengAnalytics.TrackPageEnd("MorePage");
         }
-
         private void InitMore()
         {
         }
-
-
         public Frame MoreFrame { get { return this.frame; } }
-
-
-
         private void MoreBackAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             //if (JWFrame == null)
@@ -120,12 +108,10 @@ namespace ZSCY_Win10
             MoreContentTitleTextBlock.Text = "";
             HubSectionKBTitle.Text = "更多";
             MoreListView.SelectedIndex = -1;
-
             CommandBar c = new CommandBar();
             this.BottomAppBar = c;
             c.Visibility = Visibility.Collapsed;
         }
-
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             //if (JWFrame == null)
@@ -144,7 +130,6 @@ namespace ZSCY_Win10
                 MoreContentTitleTextBlock.Text = "";
                 HubSectionKBTitle.Text = "更多";
                 MoreListView.SelectedIndex = -1;
-
                 CommandBar c = new CommandBar();
                 this.BottomAppBar = c;
                 c.Visibility = Visibility.Collapsed;
@@ -158,10 +143,8 @@ namespace ZSCY_Win10
                 }
             }
         }
-
         private async void MoreListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
             var item = e.ClickedItem as Morepageclass;
             if ((MoreListgrid.Width == 300) || item.UniqueID == "Card")
             {
@@ -293,6 +276,4 @@ namespace ZSCY_Win10
             }
         }
     }
-
-
 }

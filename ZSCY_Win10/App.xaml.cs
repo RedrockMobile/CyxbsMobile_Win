@@ -34,7 +34,6 @@ using ZSCY_Win10.Pages.CommunityPages;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
 using ZSCY_Win10.ViewModels.Remind;
-
 /*
                    _ooOoo_
                   o8888888o
@@ -57,7 +56,6 @@ using ZSCY_Win10.ViewModels.Remind;
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
          佛祖保佑  永无BUG  UWP专供
 */
-
 namespace ZSCY_Win10
 {
     /// <summary>
@@ -65,7 +63,6 @@ namespace ZSCY_Win10
     /// </summary>
     sealed partial class App : Application
     {
-
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         //public static JWList[] jwlistCache;
         public static ObservableCollection<JWList> JWListCache = new ObservableCollection<JWList>();
@@ -93,7 +90,6 @@ namespace ZSCY_Win10
         ///提醒列表的数据源
         /// </summary>
         public static ObservableCollection<MyRemind> remindList = new ObservableCollection<MyRemind>();
-
         public static string RemindListDBPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db");
         /// <summary>
         /// 防止改写事件内容是触发导航加载
@@ -139,12 +135,10 @@ namespace ZSCY_Win10
             {
                 appSetting.Values["CommunityPerInfo"] = false;
             }
-
             if (!appSetting.Values.ContainsKey("Community_headimg_src"))
             {
                 appSetting.Values["Community_headimg_src"] = "ms-appx:///Assets/Community_nohead.png";
             }
-
             if (!appSetting.Values.ContainsKey("isUseingBackgroundTask"))
             {
                 appSetting.Values["isUseingBackgroundTask"] = true;
@@ -155,7 +149,6 @@ namespace ZSCY_Win10
                 addBackgroundTask();
             }
         }
-
         private async void addBackgroundTask()
         {
             List<string> backgroundName = new List<string>();
@@ -171,7 +164,6 @@ namespace ZSCY_Win10
                 //{
                 //    cur.Value.Unregister(true);
                 //}
-
                 //}
                 foreach (var item in backgroundName)
                 {
@@ -184,23 +176,26 @@ namespace ZSCY_Win10
                     }
                 }
                 BackgroundAccessStatus status = await BackgroundExecutionManager.RequestAccessAsync();
-                BackgroundTaskBuilder builder1 = new BackgroundTaskBuilder();
-                builder1.Name = exampleTaskName;
-                builder1.TaskEntryPoint = "MyMessageBackgroundTask.MessageBackgroundTask";
-                builder1.SetTrigger(new TimeTrigger(15, false)); //定时后台任务
-                BackgroundTaskRegistration task = builder1.Register();
+                //注册吐司通知后台任务
                 BackgroundTaskBuilder Toastbuilder = new BackgroundTaskBuilder();
                 Toastbuilder.Name = "Toastbuilder";
                 Toastbuilder.TaskEntryPoint = "MyMessageBackgroundTask.ToastBackgroundTask";
                 Toastbuilder.SetTrigger(new ToastNotificationActionTrigger());
                 BackgroundTaskRegistration Toasttask = Toastbuilder.Register();
+                BackgroundTaskBuilder builder1 = new BackgroundTaskBuilder();
+                builder1.Name = exampleTaskName;
+                builder1.TaskEntryPoint = "MyMessageBackgroundTask.MessageBackgroundTask";
+                builder1.SetTrigger(new TimeTrigger(15, false));
+                BackgroundTaskRegistration task = builder1.Register();
 
+                //注册动态磁贴后台任务
                 BackgroundTaskBuilder builder2 = new BackgroundTaskBuilder();
                 builder2.Name = "LiveTileBackgroundTask";
                 builder2.TaskEntryPoint = "LiveTileBackgroundTask.LiveTileBackgroundTask";
                 builder2.SetTrigger(new TimeTrigger(15, false));
                 BackgroundTaskRegistration registration = builder2.Register();
 
+                //注册同步事项后台任务
                 BackgroundTaskBuilder builder3 = new BackgroundTaskBuilder();
                 builder3.Name = "RemindBackgroundTask";
                 builder3.TaskEntryPoint = "SycnRemindBackgroundTask.RemindBackgroundTask";
@@ -209,7 +204,6 @@ namespace ZSCY_Win10
             }
             catch (Exception) { }
         }
-
         private async void DisableSystemJumpListAsync()
         {
             var jumpList = await Windows.UI.StartScreen.JumpList.LoadCurrentAsync();
@@ -219,8 +213,7 @@ namespace ZSCY_Win10
         }
         private Windows.UI.StartScreen.JumpListItem CreateJumpListItemTask(string u, string description, string uri)
         {
-            var taskItem = JumpListItem.CreateWithArguments(
-                                    u, description);
+            var taskItem = JumpListItem.CreateWithArguments(u, description);
             taskItem.Description = description;
             taskItem.Logo = new Uri(uri);
             return taskItem;
@@ -234,9 +227,6 @@ namespace ZSCY_Win10
             jumpList.Items.Add(CreateJumpListItemTask("/more", "更多", "ms-appx:///Assets/iconfont-more_w.png"));
             await jumpList.SaveAsync();
         }
-
-
-
         /// <summary>
         /// 在应用程序由最终用户正常启动时进行调用。
         /// 将在启动应用程序以打开特定文件等情况下使用。
@@ -244,7 +234,6 @@ namespace ZSCY_Win10
         /// <param name="e">有关启动请求和过程的详细信息。</param>
         protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
             //#if DEBUG
             //            if (System.Diagnostics.Debugger.IsAttached)
             //            {
@@ -253,21 +242,17 @@ namespace ZSCY_Win10
             //#endif
             //UmengAnalytics.IsDebug = true;
             Frame rootFrame = Window.Current.Content as Frame;
-
             // 不要在窗口已包含内容时重复应用程序初始化，
             // 只需确保窗口处于活动状态
             if (rootFrame == null)
             {
                 // 创建要充当导航上下文的框架，并导航到第一页
                 rootFrame = new Frame();
-
                 rootFrame.NavigationFailed += OnNavigationFailed;
-
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: 从之前挂起的应用程序加载状态
                 }
-
                 // 将框架放在当前窗口中
                 Window.Current.Content = rootFrame;
             }
@@ -301,7 +286,6 @@ namespace ZSCY_Win10
                             if (!rootFrame.Navigate(typeof(MainPage), e.Arguments))
                             {
                                 throw new Exception("Failed to create initial page");
-
                             }
                             Window.Current.Activate();
                         }
@@ -326,9 +310,7 @@ namespace ZSCY_Win10
                                 {
                                     throw new Exception("Failed to create initial page");
                                 }
-
                             }
-
                         }
                     }
                 }
@@ -353,7 +335,6 @@ namespace ZSCY_Win10
                         {
                             throw new Exception("Failed to create initial page");
                         }
-
                     }
                 }
             }
@@ -362,16 +343,12 @@ namespace ZSCY_Win10
             await UmengAnalytics.StartTrackAsync("57317d07e0f55a28fe002bec", "Marketplace_Win10"); //公共
                                                                                                    //await InitNotificationsAsync();
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size { Width = 400, Height = 480 });
-
         }
-
-
         private async void OnResuming(object sender, object e)
         {
             //await UmengAnalytics.StartTrackAsync("55cd8c8be0f55a20ba00440d", "Marketplace_Win10"); //私有
             await UmengAnalytics.StartTrackAsync("57317d07e0f55a28fe002bec", "Marketplace_Win10"); //公共
         }
-
         /// <summary>
         /// 导航到特定页失败时调用
         /// </summary>
@@ -381,7 +358,6 @@ namespace ZSCY_Win10
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
-
         /// <summary>
         /// 在将要挂起应用程序执行时调用。  在不知道应用程序
         /// 无需知道应用程序会被终止还是会恢复，
@@ -403,18 +379,15 @@ namespace ZSCY_Win10
                 // Get a channel URI from WNS.
                 var channel = await PushNotificationChannelManager
                     .CreatePushNotificationChannelForApplicationAsync();
-
                 // Register the channel URI with Notification Hubs.
                 await App.MobileService.GetPush().RegisterAsync(channel.Uri);
                 Debug.WriteLine(channel.Uri);
-
             }
             catch (Exception channel)
             {
                 Debug.WriteLine(channel.Message);
             }
         }
-
         protected async override void OnActivated(IActivatedEventArgs args)
         {
             //判断是否为Toast所激活
@@ -431,6 +404,5 @@ namespace ZSCY_Win10
             }
             //Window.Current.Activate();
         }
-
     }
 }

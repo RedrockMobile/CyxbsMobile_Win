@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Windows.Storage;
-
 namespace ZSCY_Win10.Data.Community
 {
     public class PeoInfo : IFeeds
@@ -19,7 +18,6 @@ namespace ZSCY_Win10.Data.Community
             this.phone = phone;
             this.qq = qq;
         }
-
         public PeoInfo(string nickname, string introduction, string gender, string phone, string qq)
         {
             this.nickname = nickname;
@@ -28,7 +26,6 @@ namespace ZSCY_Win10.Data.Community
             this.phone = phone;
             this.qq = qq;
         }
-
         public string id { get; set; }
         public string stunum { get; set; }
         public string introduction { get; set; }
@@ -40,7 +37,6 @@ namespace ZSCY_Win10.Data.Community
         public string updated_time { get; set; }
         public string phone { get; set; }
         public string qq { get; set; }
-
         public void GetAttributes(JObject feedsJObject)
         {
             id = feedsJObject["id"].ToString();
@@ -54,7 +50,6 @@ namespace ZSCY_Win10.Data.Community
             updated_time = feedsJObject["updated_time"].ToString();
             phone = feedsJObject["phone"].ToString();
             qq = feedsJObject["qq"].ToString();
-
         }
     }
 }

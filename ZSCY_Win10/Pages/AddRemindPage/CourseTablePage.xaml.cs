@@ -17,9 +17,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using ZSCY_Win10.Models.RemindPage;
-
 //The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace ZSCY_Win10.Pages.AddRemindPage
 {
     /// <summary>
@@ -41,10 +39,8 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             //SystemNavigationManager.GetForCurrentView().BackRequested += CourseTablePage_BackRequested; ;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
-
         //private void CourseTablePage_BackRequested(object sender, BackRequestedEventArgs e)
         //{
-
         //    if (page == typeof(EditRemindPage))
         //    {
         //        Frame.GoBack();
@@ -59,14 +55,12 @@ namespace ZSCY_Win10.Pages.AddRemindPage
         //        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         //    }
         //}
-
         Type page;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             try
             {
-
                 page = e.Parameter as Type;
             }
             catch
@@ -79,20 +73,15 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                 for (int j = 0; j < kebiaoGrid.ColumnDefinitions.Count; j++)
                 {
                     CourseTable[k, j] = new ExcalContent();
-
                     CourseTable[k, j].Grid = new Grid();
                     Rectangle rect = new Rectangle();
-
                     CourseTable[k, j].Grid.HorizontalAlignment = HorizontalAlignment.Stretch;
                     CourseTable[k, j].Grid.VerticalAlignment = VerticalAlignment.Stretch;
                     CourseTable[k, j].Grid.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 246, 246, 246));
-
-
                     if (App.timeSet[k, j] == null)//判断是否第一次添加课程
                     {
                         App.timeSet[k, j] = new TimeSet();
                         App.timeSet[k, j].IsCheck = false;
-
                         CourseTable[k, j].IsCheck = false;
                         rect.Fill = UnselectedColor;
                     }
@@ -110,20 +99,14 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                         }
                     }
                     CourseTable[k, j].Grid.BorderThickness = new Thickness(1);
-
                     Grid.SetRowSpan(CourseTable[k, j].Grid, 2);
-
                     CourseTable[k, j].Grid.Children.Add(rect);
-
                     kebiaoGrid.Children.Add(CourseTable[k, j].Grid);
                     Grid.SetRow(CourseTable[k, j].Grid, i);
                     Grid.SetColumn(CourseTable[k, j].Grid, j);
-
                     rect.Tapped += SelItems_Tapped;
-
                 }
         }
-
         private void SelItems_Tapped(object sender, TappedRoutedEventArgs e)
         {
             int row = Grid.GetRow((sender as Rectangle).Parent as Grid);
@@ -131,10 +114,8 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             row /= 2;
             if (CourseTable[row, column].IsCheck == false)
             {
-
                 CourseTable[row, column].IsCheck = true;
                 (CourseTable[row, column].Grid.Children[0] as Rectangle).Fill = SelectedColor;
-
                 //App.timeSet[row, column].IsCheck = true;
                 //App.timeSet[row, column].Set(row);
             }
@@ -142,13 +123,10 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             {
                 CourseTable[row, column].IsCheck = false;
                 (CourseTable[row, column].Grid.Children[0] as Rectangle).Fill = UnselectedColor;
-
                 //App.timeSet[row, column].IsCheck = false;
                 //App.timeSet[row, column].Set(-1);
             }
-
         }
-
         private void SaveRemind_Tapped(object sender, TappedRoutedEventArgs e)
         {
             App.SelectedTime.SelTimeString = "";
@@ -172,13 +150,11 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             {
                 Frame.GoBack();
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-
             }
             else
             {
                 this.Visibility = Visibility.Collapsed;
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-
                 //Frame.GoBack();
             }
         }

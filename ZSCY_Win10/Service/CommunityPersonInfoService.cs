@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Util;
-
 namespace ZSCY_Win10.Service
 {
     public class CommunityPersonInfoService
@@ -92,7 +91,6 @@ namespace ZSCY_Win10.Service
                 catch (Exception) { }
                 return feeds;
             });
-
             return null;
         }
     }

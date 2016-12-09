@@ -4,11 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-
 namespace ZSCY_Win10.Data.Community
 {
-
-
     public class JWZXFeeds : HotFeedsContentBase, IFeeds
     {
         public string id { get; set; }
@@ -47,5 +44,4 @@ namespace ZSCY_Win10.Data.Community
             content = content.Replace("Normal07.8磅02falsefalsefalse", "");
         }
     }
-
 }

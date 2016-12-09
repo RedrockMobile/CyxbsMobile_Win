@@ -7,7 +7,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using ZSCY_Win10.Data.Community;
-
 namespace ZSCY_Win10.Util
 {
     public class ImgDataTemplateSelector : DataTemplateSelector
@@ -43,7 +42,6 @@ namespace ZSCY_Win10.Util
                 {
                     return (T)parent;
                 }
-
                 parent = VisualTreeHelper.GetParent(parent);
             }
             return null;

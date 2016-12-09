@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml.Data;
-
 namespace ZSCY_Win10.Util.Converter
 {
     class ExamDateConverter : IValueConverter
@@ -47,7 +46,6 @@ namespace ZSCY_Win10.Util.Converter
             }
             return "待\r定";
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();

@@ -6,14 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="#068cfd">
-
         </Grid>
         <Line x:Name="SplitLine" Y1="0" Y2="0" Stroke="Gray" StrokeThickness="1" Grid.Row="1"/>
         <FontIcon Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 

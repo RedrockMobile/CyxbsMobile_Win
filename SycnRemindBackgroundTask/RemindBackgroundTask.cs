@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
-
 namespace SycnRemindBackgroundTask
 {
     public sealed class RemindBackgroundTask : IBackgroundTask

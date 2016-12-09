@@ -22,9 +22,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Pages;
-
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
-
 namespace ZSCY_Win10
 {
     /// <summary>
@@ -34,11 +32,9 @@ namespace ZSCY_Win10
     {
         private ApplicationDataContainer appSetting;
         private static string resourceName = "ZSCY";
-
         public SettingPage()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
-
             this.InitializeComponent();
             if (appSetting.Values.ContainsKey("OpacityTile"))
                 OpacityToggleSwitch.IsOn = bool.Parse(appSetting.Values["OpacityTile"].ToString());
@@ -47,7 +43,6 @@ namespace ZSCY_Win10
                 OpacityToggleSwitch.IsOn = false;
                 appSetting.Values["OpacityTile"] = false;
             }
-
             if (appSetting.Values.ContainsKey("isUseingBackgroundTask"))
             {
                 Debug.WriteLine(appSetting.Values["isUseingBackgroundTask"].ToString());
@@ -58,9 +53,7 @@ namespace ZSCY_Win10
                 backGroundToastToggleSwitch.IsOn = false;
                 appSetting.Values["isUseingBackgroundTask"] = false;
             }
-
             //AllKBGrayToggleSwitch.IsOn = bool.Parse(appSetting.Values["AllKBGray"].ToString());
-
             this.SizeChanged += (s, e) =>
             {
                 if (!App.showpane)
@@ -74,13 +67,11 @@ namespace ZSCY_Win10
                 }
             };
         }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             //HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageStart("SettingPage");
         }
-
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
         {
             Frame rootFrame = Window.Current.Content as Frame;
@@ -96,7 +87,6 @@ namespace ZSCY_Win10
             UmengSDK.UmengAnalytics.TrackPageEnd("SettingPage");
             //HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
         }
-
         private async void importKB2calendarButton_Click(object sender, RoutedEventArgs e)
         {
             var dig = new MessageDialog("订阅课表为实验室功能，我们无法保证此功能100%可用与数据100%正确性，我们期待您的反馈。\n\n是否继续尝试？", "警告");
@@ -117,7 +107,6 @@ namespace ZSCY_Win10
             {
             }
         }
-
         private void AboutAppBarToggleButton_Click(object sender, RoutedEventArgs e)
         {
             //Frame.Navigate(typeof(AboutPage));
@@ -189,7 +178,6 @@ namespace ZSCY_Win10
             {
             }
         }
-
         private void BackAppBarToggleButton_Click(object sender, RoutedEventArgs e)
         {
             //BackAppBarToggleButton.IsChecked = false;
@@ -197,7 +185,6 @@ namespace ZSCY_Win10
             HubSectionKBTitle.Text = "设置";
             frame.Visibility = Visibility.Collapsed;
         }
-
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
@@ -208,7 +195,6 @@ namespace ZSCY_Win10
             HubSectionKBTitle.Text = "设置";
             frame.Visibility = Visibility.Collapsed;
         }
-
         private async void SwitchAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             //appSetting.Values.Remove("idNum");
@@ -242,7 +228,6 @@ namespace ZSCY_Win10
             Frame rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(LoginPage));
         }
-
         private async void DisableSystemJumpListAsync()
         {
             var jumpList = await Windows.UI.StartScreen.JumpList.LoadCurrentAsync();
@@ -250,14 +235,12 @@ namespace ZSCY_Win10
             jumpList.Items.Clear();
             await jumpList.SaveAsync();
         }
-
         private async void OpacityToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             Uri logo1 = null;
             Uri logo2 = null;
             Uri logo3 = null;
             Uri logo4 = null;
-
             var useLogo1 = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Square71x71Logo.scale-240.png", UriKind.Absolute));
             var useLogo2 = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Square71x71Logo.scale-400.png", UriKind.Absolute));
             var useLogo3 = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Square150x150Logo.scale-200.png", UriKind.Absolute));
@@ -266,7 +249,6 @@ namespace ZSCY_Win10
 #if DEBUG
             //foreach (var item in filesinthefolder)
             //{
-
             //    if (item.Name == "Assets")
             //    {
             //        var f2 = await item.GetFilesAsync();
@@ -328,7 +310,6 @@ namespace ZSCY_Win10
                     appSetting.Values["OpacityTile"] = false;
                     copy = true;
                     Debug.WriteLine("Blue->Alpha");
-
                 }
                 if (copy)
                 {
@@ -352,8 +333,6 @@ namespace ZSCY_Win10
                 ////updater150.AddToSchedule(Schedule);
                 //await Task.Delay(1000);
                 //updater150.Update(newTile150);
-
-
                 //string tileString71 = "<tile>" +
                 //                "<visual version=\"2\">" +
                 //                    "<binding template=\"TileSquare71x71Image\">" +
@@ -361,7 +340,6 @@ namespace ZSCY_Win10
                 //                    "</binding>" +
                 //                "</visual>" +
                 //            "</tile>";
-
                 //XmlDocument tileXML71 = new XmlDocument();
                 //tileXML71.LoadXml(tileString71);
                 //TileNotification newTile71 = new TileNotification(tileXML71);
@@ -369,47 +347,31 @@ namespace ZSCY_Win10
                 //updater71.EnableNotificationQueue(false);
                 //await Task.Delay(1000);
                 //updater71.Update(newTile71);
-
-
-
-
             }
             catch (Exception)
             {
                 OpacityToggleSwitch.IsEnabled = true;
             }
-
-
-
-
             //XmlDocument TileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileSquare150x150Image);
             //XmlNodeList TileImage = TileXml.GetElementsByTagName("image");
             //((XmlElement)TileImage[0]).SetAttribute("src", "ms-appx:///Assets/AlphaLogo/Logo.scale-240.png");
-
             //var TileUpdater = TileUpdateManager.CreateTileUpdaterForApplication();
             //ScheduledTileNotification Schedule = new ScheduledTileNotification(TileXml, DateTimeOffset.Now.AddSeconds(5));
             //TileUpdater.Clear();
             //TileUpdater.EnableNotificationQueue(true);
             //TileUpdater.AddToSchedule(Schedule);
-
-
             //TileNotification newTile = new TileNotification(TileXml);
             //TileUpdater updater = TileUpdateManager.CreateTileUpdaterForApplication();
             //updater.EnableNotificationQueue(false);
             //updater.Update(newTile);
-
-
             //var Logo1 = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/SmallLogo.scale-240.png", UriKind.Absolute));
             //var Logo2 = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Square71x71Logo.scale-240.png", UriKind.Absolute));
-
         }
-
         private void AllKBGrayToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             //appSetting.Values["AllKBGray"] = !AllKBGrayToggleSwitch.IsOn;          
             appSetting.Values["AllKBGray"] = true;
         }
-
         private void backGroundToastToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             appSetting.Values["isUseingBackgroundTask"] = backGroundToastToggleSwitch.IsOn;

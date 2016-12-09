@@ -23,9 +23,7 @@ using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10;
 using ZSCY_Win10.Util;
-
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
-
 namespace ZSCY.Pages
 {
     /// <summary>
@@ -60,12 +58,10 @@ namespace ZSCY.Pages
             }
             catch { }
         }
-
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
         }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             //HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
@@ -73,17 +69,12 @@ namespace ZSCY.Pages
             MorePage.isFreeRe = 0;
             UmengSDK.UmengAnalytics.TrackPageStart("SearchFreeTime");
         }
-
-
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             //HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageEnd("SearchFreeTime");
         }
-
-
-
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
         {
             Frame rootFrame = Window.Current.Content as Frame;
@@ -92,14 +83,11 @@ namespace ZSCY.Pages
                 rootFrame.GoBack();
                 e.Handled = true;
             }
-
         }
-
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             mAddButton();
         }
-
         private async void mAddButton()
         {
             var muIDArray = App.muIdList.ToArray().ToList();
@@ -136,7 +124,6 @@ namespace ZSCY.Pages
                                     PeopleListMenuFlyout.Items.Add(getPeopleListMenuFlyoutItem(Personalitem.Name + "-" + Personalitem.Major + "-" + Personalitem.Stunum));
                                 }
                                 PeopleListMenuFlyout.ShowAt(AddTextBox);
-
                             }
                             else
                             {
@@ -160,17 +147,14 @@ namespace ZSCY.Pages
                         }
                         else
                             Utils.Message("学号或姓名不正确");
-
                     }
                     catch (Exception) { }
-
                 }
                 AddTextBox.Text = "";
             }
             AddButton.IsEnabled = true;
             AddProgressRing.IsActive = false;
         }
-
         private MenuFlyoutItem getPeopleListMenuFlyoutItem(string text)
         {
             MenuFlyoutItem menuFlyoutItem = new MenuFlyoutItem();
@@ -178,7 +162,6 @@ namespace ZSCY.Pages
             menuFlyoutItem.Click += PeopleListMenuFlyoutItem_click;
             return menuFlyoutItem;
         }
-
         private void PeopleListMenuFlyoutItem_click(object sender, RoutedEventArgs e)
         {
             MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
@@ -190,7 +173,6 @@ namespace ZSCY.Pages
                 Utils.Message("此学号已添加");
             else
                 App.muIdList.Add(new uIdList { uId = menuFlyoutItemnum, uName = menuFlyoutItemname });
-
             //AddDateCostTextBox.Text = menuFlyoutItem.Text;
             //switch (menuFlyoutItem.Text)
             //{
@@ -205,7 +187,6 @@ namespace ZSCY.Pages
             //        break;
             //}
         }
-
         private async void uIdListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var dig = new MessageDialog("确定删除" + (((uIdList)e.ClickedItem).uName) + "(" + ((uIdList)e.ClickedItem).uId + ")", "警告");
@@ -221,7 +202,6 @@ namespace ZSCY.Pages
                 App.muIdList.Remove(u);
             }
         }
-
         private void ForwardAppBarToggleButton_Click(object sender, RoutedEventArgs e)
         {
             if (App.muIdList.Count < 2)
@@ -236,13 +216,11 @@ namespace ZSCY.Pages
                 Frame.Navigate(typeof(SearchFreeTimeResultPage_new), Au);
             }
         }
-
         //private void HubSectionKBNum_Tapped(object sender, TappedRoutedEventArgs e)
         //{
         //    KBNumFlyout.ShowAt(page);
         //    //HubSectionKBNum.SelectAll();
         //}
-
         private void AddTextBox_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
@@ -256,7 +234,6 @@ namespace ZSCY.Pages
                 //}
             }
         }
-
         private async void DeleteAppBarToggleButton_Click(object sender, RoutedEventArgs e)
         {
             var dig = new MessageDialog("确定删除所有数据", "警告");

@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Util;
-
 namespace ZSCY_Win10.Service
 {
     public class CommunityMyContentService
@@ -17,7 +16,6 @@ namespace ZSCY_Win10.Service
         //const string api = "cyxbsMobile/index.php/Home/Article/searchContent";
         const string api = "cyxbsMobile/index.php/Home/NewArticle/searchContent";
         private static string resourceName = "ZSCY";
-
         public static async Task<MyFeed> GetFeed(int type_id, string article_id)
         {
             //TODO:未登陆时 不添加参数stuNum和idNum
@@ -56,9 +54,7 @@ namespace ZSCY_Win10.Service
             }
             catch (Exception) { }
             return null;
-
         }
-
         public static async Task<HotFeed> GetHotFeed(int type_id, string article_id)
         {
             var vault = new Windows.Security.Credentials.PasswordVault();
@@ -89,7 +85,6 @@ namespace ZSCY_Win10.Service
             }
             catch (Exception) { }
             return null;
-
         }
     }
 }

@@ -5,13 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-
 namespace ZSCY_Win10.Data.Community
 {
     public class MyNotification : IFeeds
     {
-
-
         public string type { get; set; }
         public string content { get; set; }//回复内容
         public string article_content { get; set; }//原文
@@ -21,8 +18,6 @@ namespace ZSCY_Win10.Data.Community
         public string stunum { get; set; }
         public string nickname { get; set; }
         public string photo_src { get; set; }
-
-
         public void GetAttributes(JObject feedsJObject)
         {
             type = feedsJObject["type"].ToString();
@@ -65,14 +60,12 @@ namespace ZSCY_Win10.Data.Community
                         {
                             article_photo_src[j] = new Img();
                             article_photo_src[j].ImgSrc = article_photo_src[j].ImgSmallSrc = "";
-
                         }
                     }
                 }
                 catch (Exception e)
                 {
                     Debug.WriteLine(e.Message);
-
                 }
             }
         }

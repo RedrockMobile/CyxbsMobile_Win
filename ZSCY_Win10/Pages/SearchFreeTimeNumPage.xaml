@@ -8,7 +8,6 @@
     mc:Ignorable="d"
     Name="page"
     Background="#068cfd">
-
     <Grid Background="#fff">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="73*"/>
@@ -39,7 +38,6 @@
                     </Flyout>
                 </FlyoutBase.AttachedFlyout>-->
         </StackPanel>
-
         <Grid Grid.Row="1" Margin="15" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
@@ -68,11 +66,8 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Grid>
-
-
         </Grid>
     </Grid>
-
     <Page.BottomAppBar>
         <CommandBar Name="commandBar">
             <AppBarButton Name="DeleteAppBarToggleButton" Icon="Delete" Label="清空" Click="DeleteAppBarToggleButton_Click"></AppBarButton>

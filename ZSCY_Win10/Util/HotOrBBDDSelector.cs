@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using ZSCY_Win10.Data.Community;
-
 namespace ZSCY_Win10.Util
 {
     public class HotOrBBDDSelector : DataTemplateSelector
     {
         public DataTemplate BBDDTemplate { get; set; }
         public DataTemplate nBBDDTemplate { get; set; }
-
         protected override DataTemplate SelectTemplateCore(System.Object item, DependencyObject container)
         {
             FrameworkElement element = container as FrameworkElement;

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-
 namespace ZSCY.Models
 {
     public class LXQ
@@ -19,9 +17,5 @@ namespace ZSCY.Models
     }
     public class Allstring : BaseModel
     {
-
-
-      
     }
-
 }

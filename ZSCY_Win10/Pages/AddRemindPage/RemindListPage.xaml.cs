@@ -25,9 +25,7 @@ using Windows.UI.Popups;
 using Windows.UI.Core;
 using ZSCY_Win10.Util;
 using Windows.Security.Credentials;
-
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace ZSCY_Win10.Pages.AddRemindPage
 {
     /// <summary>
@@ -42,7 +40,6 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             this.InitializeComponent();
             DatabaseMethod.ReadDatabase(Visibility.Collapsed);
             RemindListView.ItemsSource = App.remindList;
-        
             isSave = true;
             this.SizeChanged += (s, e) =>
             {
@@ -70,17 +67,12 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                 RefreshAppBarButton.Visibility = Visibility.Collapsed;
             }
         }
-
         private void RemindListPage_BackRequested(object sender, BackRequestedEventArgs e)
         {
-
-
             Frame.GoBack();
             SystemNavigationManager.GetForCurrentView().BackRequested -= RemindListPage_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-
         }
-
         protected override async void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             base.OnNavigatingFrom(e);
@@ -102,18 +94,13 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                     else
                     {
                         e.Cancel = true;
-
                     }
                 }
             }
             else
             {
-
             }
         }
-
-
-
         //private void getDetailClass(ref MyRemind myRemind)
         //{
         //    string[] dayArray = myRemind.DateItems[0].Day.Split(',');
@@ -125,11 +112,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
         //    }
         //    mix = mix.Remove(mix.Length - 1);
         //    myRemind.DateItems[0].Class = mix;
-
         //}
-
-
-
         private void EditRemindList_Click(object sender, RoutedEventArgs e)
         {
             isSave = false;
@@ -162,7 +145,6 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             DeleteList.Add(App.remindList[i].Tag);
             App.remindList.RemoveAt(i);
         }
-
         private void RewriteRemindGridButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             int i = RemindListView.SelectedIndex;
@@ -173,21 +155,16 @@ namespace ZSCY_Win10.Pages.AddRemindPage
             ListGrid2.Visibility = Visibility.Visible;
             Frame2.Navigate(typeof(EditRemindPage), remind);
         }
-
         private void RefreshListView_RefreshInvoked(DependencyObject sender, object args)
         {
             RemindHelp.SyncRemind();
         }
-
         private void RefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             RemindHelp.SyncRemind();
         }
-
         private void RemindListSV_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
-
         }
     }
-
 }

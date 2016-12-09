@@ -10,11 +10,9 @@
     xmlns:converter="using:ZSCY_Win10.Util.Converter"
     mc:Ignorable="d"
     Background="White">
-
     <Page.Resources>
         <converter:NewsConverter x:Key="NewsConverter" x:Name="NewsConverter"/>
     </Page.Resources>
-
     <Grid Name="newsGrid" Background="White">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
@@ -82,14 +80,12 @@
                 </FlyoutBase.AttachedFlyout>
             </AppBarButton>
         </Grid>
-
         <!--实体-->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-
             <!--列表-->
             <Grid x:Name="NewsListgrid" Grid.Column="0" Background="White">
                 <Pivot Name="NewsPivot" SelectionChanged="NewsPivot_SelectionChanged">
@@ -217,7 +213,6 @@
                         <PivotItem.Header>
                             <TextBlock Text="重邮新闻" FontSize="15"></TextBlock>
                         </PivotItem.Header>
-
                         <pr:PullToRefreshBox x:Name="CYListpr" RefreshInvoked="NewsListpr_RefreshInvoked"  VerticalAlignment="Stretch"  Margin="-12,0" >
                             <ScrollViewer VerticalScrollBarVisibility="Hidden">
                                 <Grid>
@@ -238,17 +233,11 @@
                                                             <ColumnDefinition/>
                                                             <ColumnDefinition Width="auto"/>
                                                         </Grid.ColumnDefinitions>
-
                                                         <!--标题-->
-
                                                         <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" TextTrimming="WordEllipsis" HorizontalAlignment="Stretch" FontSize="16" Foreground="#333333" FontFamily="Microsoft YaHei UI" ></TextBlock>
-
                                                         <!--正文-->
-
                                                         <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Content}" VerticalAlignment="Top" MaxLines="2" TextTrimming="WordEllipsis" TextWrapping="WrapWholeWords" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
-
                                                         <!--阅读、时间-->
-
                                                         <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
                                                             <TextBlock Text="{Binding Read}" FontSize="12" HorizontalAlignment="Right" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
                                                             <TextBlock Text="{Binding Date}" FontSize="12" FontFamily="Microsoft YaHei UI"  Foreground="#737373"></TextBlock>
@@ -261,23 +250,17 @@
                                         </ListView.ItemTemplate>
                                     </ListView>
                                     <StackPanel Grid.Row="1">
-
                                         <!--列表的加载条-->
-
                                         <StackPanel Name="CYListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
                                             <ProgressBar IsIndeterminate="True" />
                                             <TextBlock Text="疯狂加载中..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
                                         </StackPanel>
-
                                         <!--列表的失败报错-->
-
                                         <StackPanel Name="CYListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="NewsListFailedStackPanel_Tapped">
                                             <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
                                             <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
                                         </StackPanel>
-
                                         <!--继续加载-->
-
                                         <Grid Name="continueCYGrid" Height="50" Tapped="continueNewsGrid_Tapped" Visibility="Collapsed">
                                             <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
                                         </Grid>
@@ -347,14 +330,7 @@
                         </pr:PullToRefreshBox>
                     </PivotItem>
                 </Pivot>
-
-
-
-
-
-
             </Grid>
-
             <!--正文-->
             <Grid Name="NewsContentGrid" Grid.Column="1">
                 <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1"/>

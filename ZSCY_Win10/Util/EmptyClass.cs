@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZSCY_Win10.Data;
-
 namespace ZSCY_Win10.Util
 {
     class EmptyClass
@@ -19,10 +18,8 @@ namespace ZSCY_Win10.Util
         /// 所有学号的课程，数据源
         /// </summary>
         public Dictionary<string, List<ClassListLight>> Searchlist { get; set; }
-
         public EmptyClass(int weeknum, Dictionary<string, List<ClassListLight>> searchlist)
         {
-
             this.Weeknum = weeknum;
             this.Searchlist = searchlist;
             if (weeknum < 0 && weeknum != -100)
@@ -38,7 +35,6 @@ namespace ZSCY_Win10.Util
         /// <returns></returns>
         public async Task getfreetimeasync(ObservableCollection<ClassListLight> weekresult, ObservableCollection<EmptyTable> termresult)
         {
-
             //所有人的名字
             string[] names = (from n in Searchlist.Keys select n).ToArray();
             //星期，时间段，人名数组
@@ -90,7 +86,6 @@ namespace ZSCY_Win10.Util
                             tobeadded.Name[k] = len[k].Name[0];
                         }
                     }
-
                     if (tobeadded.Name.Length != names.Length)
                     {
                         tobeadded.Name = names.Except(tobeadded.Name).ToArray();
@@ -147,10 +142,7 @@ namespace ZSCY_Win10.Util
                     }
                 }
             }
-
         }
-
-
         public  ObservableCollection<ClassListLight> getweekresult()
         {
             string[] names = (from n in Searchlist.Keys select n).ToArray();
@@ -201,7 +193,6 @@ namespace ZSCY_Win10.Util
                         tobeadded.Name[k] = len[k].Name[0];
                     }
                 }
-
                 if (tobeadded.Name.Length != names.Length)
                 {
                     tobeadded.Name = names.Except(tobeadded.Name).ToArray();
@@ -306,7 +297,6 @@ namespace ZSCY_Win10.Util
                             tobeadded.Name[k] = len[k].Name[0];
                         }
                     }
-
                     if (tobeadded.Name.Length != names.Length)
                     {
                         tobeadded.Name = names.Except(tobeadded.Name).ToArray();
@@ -375,7 +365,6 @@ namespace ZSCY_Win10.Util
                 else
                     return false;
             }
-
             public int GetHashCode(ClassListLight obj)
             {
                 return 0;

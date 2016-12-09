@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
-
 namespace ZSCY_Win10.Util.Converter
 {
     class JsonConverter : IValueConverter
@@ -15,7 +14,6 @@ namespace ZSCY_Win10.Util.Converter
             s = s.Replace("\n", string.Empty).Replace("\r", string.Empty).Replace("\t",string.Empty);
             return s;
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();

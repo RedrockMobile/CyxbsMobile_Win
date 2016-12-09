@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ZSCY_Win10.Util
 {
     public class Request
@@ -28,7 +27,6 @@ namespace ZSCY_Win10.Util
                 return null;
             }
         }
-
         public static async Task<string> ZuiMei_Request()
         {
             HttpClient httpclient = new HttpClient();
@@ -48,7 +46,6 @@ namespace ZSCY_Win10.Util
                 return null;
             }
         }
-
         public static async Task<string> XueZi_Request()
         {
             HttpClient httpclient = new HttpClient();
@@ -68,7 +65,6 @@ namespace ZSCY_Win10.Util
                 return null;
             }
         }
-
         public static async Task<string> Teather_Request()
         {
             HttpClient httpclient = new HttpClient();

@@ -9,11 +9,9 @@
     Name="page"
     xmlns:converter="using:ZSCY_Win10.Util.Converter"
     Background="#068cfd">
-
     <Page.Resources>
         <converter:FreeKBScrollViewerHeightConverter x:Key="FreeKBScrollViewerHeightConverter"/>
     </Page.Resources>
-
     <Grid Name="rootGrid" Background="#fff">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
@@ -32,7 +30,6 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition />
@@ -47,7 +44,6 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <!--日期星期-->
-
                 <Grid x:Name="KebiaoWeekGrid" Height="25" Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <!--列-->
@@ -77,7 +73,6 @@
                         <TextBlock Text="五" FontSize="18" Foreground="#333" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
                         <TextBlock Text="六" FontSize="18" Foreground="#333" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
                         <TextBlock Text="日" FontSize="18" Foreground="#333" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
-
                     </Grid>
                 </Grid>
                 <ScrollViewer x:Name="KebiaoAllScrollViewer" Height="{Binding ActualHeight, Converter={StaticResource FreeKBScrollViewerHeightConverter}, ElementName=page, Mode=OneWay}" Grid.Row="1" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Hidden">
@@ -86,7 +81,6 @@
                             <ColumnDefinition Width="2 *"/>
                             <ColumnDefinition Width="21 *"/>
                         </Grid.ColumnDefinitions>
-
                         <Grid Grid.Column="0" >
                             <Grid.RowDefinitions>
                                 <!--行-->
@@ -211,14 +205,12 @@
                                                 <TextBlock Name="FlyoutFreeDetailTimeTextBlock" Foreground="#333" Grid.Row="1" FontWeight="Light" Height="20"/>
                                             </Grid>
                                         </Grid>
-
                                         <Grid Margin="0,10,0,0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="auto"/>
                                                 <ColumnDefinition/>
                                             </Grid.ColumnDefinitions>
                                             <Image Source="../Assets/dialog_course_peo.png" VerticalAlignment="Top" Width="20" Height="20"/>
-
                                             <Grid Grid.Column="1">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition />
@@ -248,7 +240,6 @@
                                 </Flyout>
                             </FlyoutBase.AttachedFlyout>
                         </Grid>
-
                     </Grid>
                 </ScrollViewer>
             </Grid>
@@ -258,8 +249,6 @@
                 <ProgressBar Name="FreeLoddingProgressBar" IsIndeterminate="False" Value="0"/>
             </StackPanel>
         </Grid>
-
-
         <!--人员详情-->
         <Grid Name="FreeDetailGrid" Grid.Column="1" Visibility="Visible">
             <Line  x:Name="cutoffLine" HorizontalAlignment="Left" Stroke="Gray" StrokeThickness="1"/>
@@ -282,14 +271,12 @@
                         <TextBlock Name="FreeDetailTimeTextBlock" Foreground="#333" Grid.Row="1" FontWeight="Light" Height="20"/>
                     </Grid>
                 </Grid>
-
                 <Grid Margin="0,10,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Image Source="../Assets/dialog_course_peo.png" VerticalAlignment="Top" Width="20" Height="20"/>
-
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -318,13 +305,11 @@
                     </Grid>
                 </Grid>
             </StackPanel>
-
             <StackPanel Name="FreeNoClickStackPanel" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.3">
                 <Image Source="../Assets/iconfont-coffee.png" Width="100" Height="100"/>
                 <TextBlock Text="没课约" Margin="0,10" HorizontalAlignment="Center"/>
             </StackPanel>
         </Grid>
-
     </Grid>
     <Page.BottomAppBar>
         <CommandBar Name="commandBar">

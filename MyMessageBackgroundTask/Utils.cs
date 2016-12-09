@@ -20,7 +20,6 @@ using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.Web.Http;
-
 namespace MyMessageBackgroundTask
 {
     class Utils
@@ -42,7 +41,6 @@ namespace MyMessageBackgroundTask
             await Task.Delay(3000);
             ToastNotificationManager.History.Clear();
         }
-
         public static async void actionsToast(string title, string content, string id)
         {
             string xml = "<toast>" +
@@ -73,9 +71,6 @@ namespace MyMessageBackgroundTask
             ToastNotifier nt = ToastNotificationManager.CreateToastNotifier();
             nt.Show(notification);
         }
-
-
-
         /// <summary>
         /// 获取当前日期是今年的第几周
         /// </summary>
@@ -84,18 +79,12 @@ namespace MyMessageBackgroundTask
         {
             //一.找到第一周的最后一天（先获取1月1日是星期几，从而得知第一周周末是几）
             int firstWeekend = 7 - Convert.ToInt32(DateTime.Parse(DateTime.Today.Year + "-1-1").DayOfWeek);
-
             //二.获取今天是一年当中的第几天
             int currentDay = DateTime.Today.DayOfYear;
-
             //三.（今天 减去 第一周周末）/7 等于 距第一周有多少周 再加上第一周的1 就是今天是今年的第几周了
             //    刚好考虑了惟一的特殊情况就是，今天刚好在第一周内，那么距第一周就是0 再加上第一周的1 最后还是1
             return Convert.ToInt32(Math.Ceiling((currentDay - firstWeekend) / 7.0)) + 1;
         }
-
-
-
-
         /// <summary>
         ///UNICODE字符转为中文 
         /// </summary>
@@ -105,9 +94,7 @@ namespace MyMessageBackgroundTask
         {
             if (string.IsNullOrEmpty(unicodeString))
                 return string.Empty;
-
             string outStr = unicodeString;
-
             Regex re = new Regex("\\\\u[0123456789abcdef]{4}", RegexOptions.IgnoreCase);
             MatchCollection mc = re.Matches(unicodeString);
             foreach (Match ma in mc)
@@ -116,15 +103,12 @@ namespace MyMessageBackgroundTask
             }
             return outStr;
         }
-
         private static char ConverUnicodeStringToChar(string str)
         {
             char outStr = Char.MinValue;
             outStr = (char)int.Parse(str.Remove(0, 2), System.Globalization.NumberStyles.HexNumber);
             return outStr;
         }
-
-
         /// <summary>
         /// 弹出对话框
         /// </summary>
@@ -137,7 +121,6 @@ namespace MyMessageBackgroundTask
             }
             catch (Exception) { Debug.WriteLine("Utils,MessageDialog异常"); }
         }
-
         /// <summary>
         /// 屏幕高度
         /// </summary>
@@ -146,7 +129,6 @@ namespace MyMessageBackgroundTask
         {
             return Window.Current.Bounds.Height;
         }
-
         /// <summary>
         /// 屏幕宽度
         /// </summary>
@@ -155,7 +137,6 @@ namespace MyMessageBackgroundTask
         {
             return Window.Current.Bounds.Width;
         }
-
         /// <summary>
         /// 时间转时间戳
         /// </summary>
@@ -168,7 +149,6 @@ namespace MyMessageBackgroundTask
             TimeSpan ts = nowdate.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return Convert.ToInt64(ts.TotalSeconds).ToString();
         }
-
         /// <summary>
         /// 时间戳转时间
         /// </summary>
@@ -181,7 +161,6 @@ namespace MyMessageBackgroundTask
             TimeSpan toNow = new TimeSpan(lTime);
             return dtStart.Add(toNow);
         }
-
         public static JArray ReadJso(string jsonstring, string sdata = "data")
         {
             if (jsonstring != "")
@@ -207,14 +186,12 @@ namespace MyMessageBackgroundTask
                 //    return null;
                 //}
             }
-
             else
             {
                 Message("网络错误！", "错误");
                 return null;
             }
         }
-
         /// <summary>
         /// 获取星期
         /// </summary>
@@ -253,7 +230,6 @@ namespace MyMessageBackgroundTask
                         return "";
                 }
         }
-
         /// <summary>
         /// 异步从网络下载图片
         /// </summary>
@@ -282,8 +258,6 @@ namespace MyMessageBackgroundTask
                     var pixelProvider = await decoder.GetPixelDataAsync(
                         decoder.BitmapPixelFormat, decoder.BitmapAlphaMode, bt,
                         ExifOrientationMode.IgnoreExifOrientation, ColorManagementMode.ColorManageToSRgb);
-
-
                     //下面保存图片
                     // Now that we have the pixel data, get the destination file
                     var localFolder = ApplicationData.Current.LocalFolder;

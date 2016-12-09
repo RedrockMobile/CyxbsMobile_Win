@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-
 namespace ZSCY_Win10.Data.Community
 {
     public class HotFeedsContentBase : IFeeds
@@ -21,7 +20,6 @@ namespace ZSCY_Win10.Data.Community
             }
             else
                 content = feedsJObject["content"].ToString();
-
             //try
             //{
             //    JWZXFeeds j = new JWZXFeeds();

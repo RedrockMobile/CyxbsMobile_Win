@@ -8,24 +8,20 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-
     <Grid>
         <Border x:Name="OutBorder" Background="#55000000" 
                 VerticalAlignment="Stretch" 
                 HorizontalAlignment="Stretch"/>
-
         <StackPanel x:Name="ContentGrid" Background="White" 
               Margin="45,45"
               Orientation="Vertical"
               VerticalAlignment="Center" Height="150" Width="300">
-
             <Grid Padding="20">
                 <TextBlock x:Name="tbContent"
                            Grid.Row="0" 
                            TextWrapping="Wrap"  
                            HorizontalAlignment="Center" />
             </Grid>
-
             <Grid Padding="15" VerticalAlignment="Bottom">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

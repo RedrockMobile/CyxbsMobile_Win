@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ZSCY_Win10.ViewModels
 {
     public class BigDataViewModel:BasePageViewModel
     {
         private double _page_height;
         private double _page_width;
-
         public double Page_Height
         {
             get
@@ -23,7 +21,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Page_Height));
             }
         }
-
         public double Page_Width
         {
             get

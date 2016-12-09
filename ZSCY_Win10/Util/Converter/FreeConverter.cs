@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
-
 namespace ZSCY_Win10.Util.Converter
 {
     public class FreeKBScrollViewerHeightConverter : IValueConverter
@@ -14,7 +13,6 @@ namespace ZSCY_Win10.Util.Converter
         {
             return Utils.getPhoneHeight() - 48 - 50 - 48;
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();
@@ -29,15 +27,12 @@ namespace ZSCY_Win10.Util.Converter
                 return Visibility.Visible;
             else
                 return Visibility.Collapsed;
-
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();
         }
     }
-
     public class FreeisCoVisConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -46,15 +41,12 @@ namespace ZSCY_Win10.Util.Converter
                 return Visibility.Visible;
             else
                 return Visibility.Collapsed;
-
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();
         }
     }
-
     public class FreeWeekdayCoVisConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -83,17 +75,14 @@ namespace ZSCY_Win10.Util.Converter
                 case 6:
                     weekday = "星期天";
                     break;
-
             }
             return weekday;
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();
         }
     }
-
     public class FreeTimeCoVisConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -119,20 +108,12 @@ namespace ZSCY_Win10.Util.Converter
                 case 5:
                     time = "11~12节";
                     break;
-
             }
             return time;
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();
         }
     }
-
-
-
-
-
-
 }

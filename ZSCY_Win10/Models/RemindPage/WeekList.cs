@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
-
 namespace ZSCY_Win10.Models.RemindPage
 {
     public class WeekList
@@ -20,7 +19,6 @@ namespace ZSCY_Win10.Models.RemindPage
         private bool isCheck;
         private DateTime weekNumOfMonday;
         private static DateTime oneWeekTime = new DateTime(2016, 9, 5, 0, 0, 0);
-
         public void SetWeekName(int i)
         {
             weekName = string.Format("第{0}周", i);
@@ -33,72 +31,61 @@ namespace ZSCY_Win10.Models.RemindPage
             {
                 return weekName;
             }
-
             set
             {
                 weekName = value;
             }
         }
-
         public bool IsCheck
         {
             get
             {
                 return isCheck;
             }
-
             set
             {
                 isCheck = value;
             }
         }
-
         public Rectangle Rect
         {
             get
             {
                 return rect;
             }
-
             set
             {
                 rect = value;
             }
         }
-
         public Grid Grid
         {
             get
             {
                 return grid;
             }
-
             set
             {
                 grid = value;
             }
         }
-
         public TextBlock Textblock
         {
             get
             {
                 return textblock;
             }
-
             set
             {
                 textblock = value;
             }
         }
-
         public DateTime WeekNumOfMonday
         {
             get
             {
                 return weekNumOfMonday;
             }
-
             set
             {
                 weekNumOfMonday = value;
@@ -121,7 +108,6 @@ namespace ZSCY_Win10.Models.RemindPage
             {
                 return weekNumOfMonday;
             }
-
             set
             {
                 weekNumOfMonday = value;
@@ -133,21 +119,16 @@ namespace ZSCY_Win10.Models.RemindPage
             {
                 return weekNum;
             }
-
             set
             {
                 weekNum = value;
             }
         }
-
     }
-
     public class SelWeekNum:BaseModel
     {
         private SolidColorBrush itemFillColor;
         private string itemContent;
-        
-       
         public bool isSelected { get; set; }
         public string ItemContent
         {
@@ -161,35 +142,29 @@ namespace ZSCY_Win10.Models.RemindPage
             }
         }
         private SolidColorBrush itemContentColor;
-
         public SolidColorBrush ItemFillColor
         {
             get
             {
                 return itemFillColor;
             }
-
             set
             {
                 itemFillColor = value;
                 RaisePropertyChanged(nameof(ItemFillColor));
             }
         }
-
         public SolidColorBrush ItemContentColor
         {
             get
             {
                 return itemContentColor;
             }
-
             set
             {
                 itemContentColor = value;
                 RaisePropertyChanged(nameof(ItemContentColor));
             }
         }
-
-     
     }
 }

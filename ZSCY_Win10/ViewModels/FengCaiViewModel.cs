@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
-
 namespace ZSCY_Win10.ViewModels
 {
     public class FengCaiViewModel : BasePageViewModel
@@ -25,7 +24,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Header));
             }
         }
-
         private ObservableCollection<ZSCY.Models.zuzhi> _zuzhi;
         public ObservableCollection<ZSCY.Models.zuzhi> ZuZhi
         {
@@ -39,7 +37,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(ZuZhi));
             }
         }
-
         private ObservableCollection<ZSCY.Models.zuzhi_intro> _zuzhi_intro;
         public ObservableCollection<ZSCY.Models.zuzhi_intro> Zuzhi_Intro
         {
@@ -53,7 +50,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Zuzhi_Intro));
             }
         }
-
         private ObservableCollection<string> _zuimei;
         public ObservableCollection<string> ZuiMei
         {
@@ -67,7 +63,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(ZuiMei));
             }
         }
-
         private ObservableCollection<string> _zuimei_photos;
         public ObservableCollection<string> ZuiMei_Photos
         {
@@ -81,7 +76,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(ZuiMei_Photos));
             }
         }
-
         private ObservableCollection<ZSCY.Models.yuanchuang> _yuanchuang;
         public ObservableCollection<ZSCY.Models.yuanchuang> YuanChuang
         {
@@ -95,7 +89,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(_yuanchuang));
             }
         }
-
         private ObservableCollection<ZSCY.Models.xuezi> _xuezi;
         public ObservableCollection<ZSCY.Models.xuezi> XueZi
         {
@@ -109,7 +102,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(XueZi));
             }
         }
-
         private ObservableCollection<ZSCY.Models.teacher> _teacher;
         public ObservableCollection<ZSCY.Models.teacher> Teacher
         {
@@ -123,10 +115,8 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Teacher));
             }
         }
-
         private double _page_height;
         private double _page_width;
-
         public double Page_Height
         {
             get
@@ -139,7 +129,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Page_Height));
             }
         }
-
         public double Page_Width
         {
             get
@@ -152,7 +141,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Page_Width));
             }
         }
-
         public double ZuiMei_Photo_Height
         {
             get
@@ -164,7 +152,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(ZuiMei_Photo_Height));
             }
         }
-
         public double ZuiMei_Photo_Width
         {
             get
@@ -176,7 +163,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(ZuiMei_Photo_Width));
             }
         }
-
         public double XueZi_Height
         {
             get
@@ -188,7 +174,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(XueZi_Height));
             }
         }
-
         public double XueZi_Width
         {
             get
@@ -200,7 +185,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(XueZi_Width));
             }
         }
-
         public double Detail_Height
         {
             get
@@ -212,7 +196,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Detail_Height));
             }
         }
-
         public double Detail_Width
         {
             get

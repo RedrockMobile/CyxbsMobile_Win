@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using ZSCY_Win10.Common;
-
 namespace ZSCY_Win10.Data.Community
 {
     public class BBDDFeed : ViewModelBase, IFeeds
@@ -51,7 +50,6 @@ namespace ZSCY_Win10.Data.Community
                 OnPropertyChanged(nameof(remark_num));
             }
         }
-
         public string is_my_like
         {
             get
@@ -64,7 +62,6 @@ namespace ZSCY_Win10.Data.Community
                 OnPropertyChanged(nameof(is_my_like));
             }
         }
-
         public void GetAttributes(JObject feedsJObject)
         {
             title = feedsJObject["title"].ToString();
@@ -114,14 +111,12 @@ namespace ZSCY_Win10.Data.Community
                         {
                             article_photo_src[j] = new Img();
                             article_photo_src[j].ImgSrc = article_photo_src[j].ImgSmallSrc = "";
-
                         }
                     }
                 }
                 catch (Exception e)
                 {
                     Debug.WriteLine(e.Message);
-
                 }
             }
             //if (UserHead == "")

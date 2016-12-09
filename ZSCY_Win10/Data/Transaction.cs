@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZSCY_Win10.Util;
-
 namespace ZSCY_Win10.Data
 {
     class DateInTransaction
@@ -19,7 +18,6 @@ namespace ZSCY_Win10.Data
         public int[] week { get; set; }
         public int weekLength { get; set; }
     }
-
     class Transaction
     {
         public long id { get; set; }
@@ -30,24 +28,18 @@ namespace ZSCY_Win10.Data
         public string content { get; set; }
         public List<DateInTransaction> date { get; set; }
         public string classToLesson { get; set; }
-
         public void GetAttribute(JObject TransationDetailJObject)
         {
-
             //接口改了 现在事项在哪节课/周数/星期存在date集合里 2016年11月17日23:07:23
             id = (long)TransationDetailJObject["id"];
-
             //time可以为空了 额
             if (TransationDetailJObject["time"] != null)
                 time =TransationDetailJObject["time"].ToString();
             else time = "";
             title = TransationDetailJObject["title"].ToString();
             content = TransationDetailJObject["content"].ToString();
-
             classToLesson = TransationDetailJObject["date"].ToString();
-
             date = JsonConvert.DeserializeObject<List<DateInTransaction>>(classToLesson);
-
             List<int> _templist = new List<int>();
             for (int i = 0; i < date.Count; i++)
             {
@@ -58,7 +50,6 @@ namespace ZSCY_Win10.Data
             // JObject tempJobject = JObject.Parse(gradelimit.ToString());
             //string[] temp = new string[gradelimit.Count];
             //JArray TransasctionArray = Utils.ReadJso(gradelimit.ToString(),"date");
-
             //for (int i = 0; i < gradelimit.Count; ++i)
             //{
             //    //temp[i] = Int32.Parse(gradelimit[i].ToString());
@@ -72,7 +63,6 @@ namespace ZSCY_Win10.Data
             //    weektemp[i] = Int32.Parse(weeklimit[i].ToString());
             //}
             //week = temp;
-
             //switch (_class)
             //{
             //    case 0:

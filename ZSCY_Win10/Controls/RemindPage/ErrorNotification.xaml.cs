@@ -13,9 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace ZSCY_Win10.Controls.RemindPage
 {
     public sealed partial class ErrorNotification : UserControl
@@ -40,7 +38,6 @@ namespace ZSCY_Win10.Controls.RemindPage
         }
         public ErrorNotification(string content):this(content,TimeSpan.FromSeconds(1))
         {
-
         }
         public void Show()
         {
@@ -49,15 +46,12 @@ namespace ZSCY_Win10.Controls.RemindPage
         private void Notification_Unloaded(object sender, RoutedEventArgs e)
         {
             Window.Current.SizeChanged -= Current_SizeChanged;
-
         }
-
         private void Current_SizeChanged(object sender, WindowSizeChangedEventArgs e)
         {
             this.Width = e.Size.Width;
             this.Height = e.Size.Height;
         }
-
         private void Notification_Loaded(object sender, RoutedEventArgs e)
         {
             NotificationContent.Text = this.content;
@@ -66,7 +60,6 @@ namespace ZSCY_Win10.Controls.RemindPage
             this.Notification.Completed += Notification_Completed;
             Window.Current.SizeChanged += Current_SizeChanged;
         }
-
         private void Notification_Completed(object sender, object e)
         {
             this.popup.IsOpen = false;

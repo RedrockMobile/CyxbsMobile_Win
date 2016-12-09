@@ -14,9 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
-
 namespace ZSCY.Pages
 {
     /// <summary>
@@ -25,11 +23,8 @@ namespace ZSCY.Pages
     public sealed partial class FirstPage : Page
     {
         private int click_index;
-
         private ZSCY_Win10.ViewModels.FirstPageViewModel viewmodel = new ZSCY_Win10.ViewModels.FirstPageViewModel();
-
         public static FirstPage firstpage;
-
         public FirstPage()
         {
             this.InitializeComponent();
@@ -41,7 +36,6 @@ namespace ZSCY.Pages
             Window.Current.SizeChanged += Current_SizeChanged;
             second_frame.Navigated += Second_frame_Navigated;
         }
-
         private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
         {
             if (second_frame.Content == null)
@@ -55,13 +49,10 @@ namespace ZSCY.Pages
                     second_frame_trans.X = this.Width;
                 }
             }
-
         }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
             if (e.NavigationMode == NavigationMode.New)
             {
                 viewmodel.Page_Height = this.Height;
@@ -75,24 +66,20 @@ namespace ZSCY.Pages
                 }
             }
         }
-
         public void Second_Page_Forwoard() //页面前进方法
         {
             (go_forward_sb.Children[0] as DoubleAnimation).From = second_frame_trans.X;
             go_forward_sb.Begin();
         }
-
         public void Second_Page_Back() //页面后退方法
         {
             (go_back_sb.Children[0] as DoubleAnimation).To = second_frame.ActualWidth;
             go_back_sb.Begin();
         }
-
         private void Go_back_sb_Completed(object sender, object e)
         {
             second_frame.Content = null;
         }
-
         private void FirstPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (e.NewSize.Width <= 800)
@@ -106,7 +93,6 @@ namespace ZSCY.Pages
                 viewmodel.Page_Width = (e.NewSize.Width - 30) / 2;
             }
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i < ((sender as Button).Parent as Grid).Children.Count; i++)
@@ -132,7 +118,6 @@ namespace ZSCY.Pages
                     }; break;
             }
         }
-
         private async void Second_frame_Navigated(object sender, NavigationEventArgs e)
         {
             await Task.Delay(200);

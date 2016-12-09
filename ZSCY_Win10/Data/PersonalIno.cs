@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Windows.Storage;
-
 namespace ZSCY.Data
 {
     public class PersonalIno
@@ -22,7 +21,6 @@ namespace ZSCY.Data
         private string grade;
         private ApplicationDataContainer appSetting;
         private static string resourceName = "ZSCY";
-
         public PersonalIno()
         {
             var vault = new Windows.Security.Credentials.PasswordVault();
@@ -37,98 +35,83 @@ namespace ZSCY.Data
             this.College = appSetting.Values["college"].ToString();
             this.Gender = appSetting.Values["gender"].ToString();
         }
-
         public string Stunum
         {
             get
             {
                 return stunum;
             }
-
             set
             {
                 stunum = value;
             }
         }
-
         public string Idnum
         {
             get
             {
                 return idnum;
             }
-
             set
             {
                 idnum = value;
             }
         }
-
         public string Name
         {
             get
             {
                 return name;
             }
-
             set
             {
                 name = value;
             }
         }
-
         public string Gender
         {
             get
             {
                 return gender;
             }
-
             set
             {
                 gender = value;
             }
         }
-
         public string Classnum
         {
             get
             {
                 return clsssnum;
             }
-
             set
             {
                 clsssnum = value;
             }
         }
-
         public string Major
         {
             get
             {
                 return major;
             }
-
             set
             {
                 major = value;
             }
         }
-
         public string College
         {
             get
             {
                 return college;
             }
-
             set
             {
                 college = value;
             }
         }
-
         public void GetAttribute(JObject PeopleDetailJObject)
         {
             stunum = PeopleDetailJObject["stunum"].ToString();
