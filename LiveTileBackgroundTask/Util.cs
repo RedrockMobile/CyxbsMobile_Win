@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace LiveTileBackgroundTask
     class Util
     {
         static int largeTileGroupCount = 0;
-        public static async void UpdateTile(List<ClassList> tempList, int nowWeek, string weekDay)
+        public static async void UpdateTile(List<ClassList> tempList1, List<Transaction> tempList2, int nowWeek, string weekDay)
         {
             //为应用创建磁贴更新
             var updater = TileUpdateManager.CreateTileUpdaterForApplication();
@@ -39,6 +40,7 @@ namespace LiveTileBackgroundTask
                         "</binding>" +
                         //大磁贴
                         "<binding template=\"TileLarge\">" +
+                            "<text></text>" +
                             "<group>" +
                                 "<subgroup>" +
                                     "<text hint-wrap=\"true\" hint-style=\"subtitle\"></text>" +
@@ -58,17 +60,13 @@ namespace LiveTileBackgroundTask
                     "</visual>" +
                  "</tile>";
             #endregion
-            for (int i = 0; i < tempList.Count; i++)
+            for (int i = 0; i < tempList1.Count; i++)
             {
-                string course = tempList[i].Course.ToString();
-                string teacher = tempList[i].Teacher.ToString();
-                string lesson = tempList[i].Lesson.ToString() + "  ";
-                string classroom = tempList[i].Classroom.ToString();
-                int[] weeks = tempList[i].Week;
+                int[] weeks = tempList1[i].Week;
                 //判断课程是否为本周课程
                 for (int j = 0; j < weeks.Length; j++)
                 {
-                    if (weeks[j] == nowWeek && tempList[i].Day.Equals(weekDay))
+                    if (weeks[j] == nowWeek && tempList1[i].Day.Equals(weekDay))
                     {
                         //满足条件的课程编号存入correctCount
                         correctCount.Add(i);
@@ -86,29 +84,35 @@ namespace LiveTileBackgroundTask
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(tileXml);
                 XmlNodeList elements = doc.GetElementsByTagName("text");
-                elements[0].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Course));
-                elements[1].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Teacher));
-                elements[2].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Lesson));
-                elements[2].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Classroom));
-                elements[3].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Course));
-                elements[4].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Teacher));
-                elements[5].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Lesson));
-                elements[5].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Classroom));
-                elements[6].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Course));
-                elements[7].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Teacher));
-                elements[8].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Lesson));
-                elements[8].AppendChild(doc.CreateTextNode(tempList[correctCount[i]].Classroom));
+                //中磁贴
+                elements[0].AppendChild(doc.CreateTextNode(tempList1[correctCount[i]].Course));
+                elements[1].AppendChild(doc.CreateTextNode(tempList1[correctCount[i]].Teacher));
+                elements[2].AppendChild(doc.CreateTextNode(tempList1[correctCount[i]].Lesson));
+                elements[2].AppendChild(doc.CreateTextNode(tempList1[correctCount[i]].Classroom));
+                //宽磁贴
+                elements[3].AppendChild(doc.CreateTextNode(tempList1[correctCount[i]].Course));
+                elements[4].AppendChild(doc.CreateTextNode(tempList1[correctCount[i]].Teacher));
+                elements[5].AppendChild(doc.CreateTextNode(tempList1[correctCount[i]].Lesson));
+                elements[5].AppendChild(doc.CreateTextNode(tempList1[correctCount[i]].Classroom));
+                //大磁贴
+                elements[7].AppendChild(doc.CreateTextNode(tempList1[correctCount[i]].Course));
+                elements[8].AppendChild(doc.CreateTextNode(tempList1[correctCount[i]].Teacher));
+                elements[9].AppendChild(doc.CreateTextNode(tempList1[correctCount[i]].Lesson));
+                elements[9].AppendChild(doc.CreateTextNode(tempList1[correctCount[i]].Classroom));
                 try
                 {
-                    elements[10].AppendChild(doc.CreateTextNode(tempList[correctCount[i + 1]].Course));
-                    elements[11].AppendChild(doc.CreateTextNode(tempList[correctCount[i + 1]].Teacher));
-                    elements[12].AppendChild(doc.CreateTextNode(tempList[correctCount[i + 1]].Lesson));
-                    elements[12].AppendChild(doc.CreateTextNode(tempList[correctCount[i + 1]].Classroom));
+                    elements[11].AppendChild(doc.CreateTextNode("提醒：" + tempList2[i].Title));
+                    elements[12].AppendChild(doc.CreateTextNode(tempList2[i].Content));
+                    for (int j = 0; j < tempList2[i].Date[0].Week.Length; j++)
+                    {
+                        elements[13].AppendChild(doc.CreateTextNode("第" + tempList2[i].Date[0].Week[j].ToString() + "周" + " "));
+                    }
                 }
-                catch(ArgumentOutOfRangeException ex)
+                catch (ArgumentOutOfRangeException)
                 {
-                    elements[10].AppendChild(doc.CreateTextNode("没课啦 \\(≧▽≦)/"));
-                    elements[11].AppendChild(doc.CreateTextNode("记得好好复习哟~"));
+                    Debug.WriteLine("事项数组越界");
+                    elements[11].AppendChild(doc.CreateTextNode("没课啦 \\(≧▽≦)/"));
+                    elements[12].AppendChild(doc.CreateTextNode("记得好好复习哟~"));
                 }
                 finally
                 {
