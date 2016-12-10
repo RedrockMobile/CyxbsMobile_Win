@@ -53,7 +53,7 @@ namespace LiveTileBackgroundTask
                 #endregion
                 //获取当地星期
                 string weekDay = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek);
-                Util.UpdateTile(tempList1, tempList2, nowWeek, "星期一");
+                Util.UpdateTile(tempList1, tempList2, nowWeek, weekDay);
                 deferral.Complete();
                 //异步后台任务结束
                 Debug.WriteLine("结束动态磁贴后台任务");

@@ -111,7 +111,7 @@ namespace LiveTileBackgroundTask
                 catch (ArgumentOutOfRangeException)
                 {
                     Debug.WriteLine("事项数组越界");
-                    elements[11].AppendChild(doc.CreateTextNode("没课啦 \\(≧▽≦)/"));
+                    elements[11].AppendChild(doc.CreateTextNode("暂无待办事项"));
                     elements[12].AppendChild(doc.CreateTextNode("记得好好复习哟~"));
                 }
                 finally
