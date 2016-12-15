@@ -285,7 +285,7 @@ namespace ZSCY_Win10
                             try
                             {
                                 AddRemindReturn returnStatus = new AddRemindReturn();
-                                //TODO 由于不提醒上传的time是一个null无法返回404错误
+                                //string content = await NetWork.getHttpWebRequest(ApiUri.addRemindApi, NetWork.addRemind(myRemind), 0, true);
                                 string content = await NetWork.httpRequest(ApiUri.addRemindApi, NetWork.addRemind(myRemind));
                                 returnStatus = JsonConvert.DeserializeObject<AddRemindReturn>(content);
                                 myRemind.Id = returnStatus.Id;

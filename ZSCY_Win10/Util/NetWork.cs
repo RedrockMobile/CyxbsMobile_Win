@@ -221,17 +221,26 @@ namespace ZSCY_Win10.Util
         {
 
             string content = "";
-            await Task.Run(() =>
+            try
             {
-                HttpClient httpClient = new HttpClient();
-
-                HttpResponseMessage response = httpClient.PostAsync(new Uri(api), new FormUrlEncodedContent(paramList)).Result;
-                if (response.StatusCode == HttpStatusCode.OK)
+                await Task.Run(() =>
                 {
-                    content = response.Content.ReadAsStringAsync().Result;
-                    Debug.WriteLine(content);
-                }
-            });
+                    HttpClient httpClient = new HttpClient();
+                    HttpRequestMessage requst = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Post, new Uri(api));
+
+                    HttpResponseMessage response = httpClient.PostAsync(new Uri(api), new FormUrlEncodedContent(paramList)).Result;
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        content = response.Content.ReadAsStringAsync().Result;
+                        Debug.WriteLine(content);
+                    }
+                });
+            }
+            catch (Exception f)
+            {
+                Debug.WriteLine(f);
+            }
+  
             return content;
             //return await Task.Run(async () =>
             //{

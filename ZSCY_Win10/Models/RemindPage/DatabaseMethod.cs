@@ -11,11 +11,14 @@ using ZSCY_Win10.Util;
 using Windows.Security.Credentials;
 using Newtonsoft.Json;
 using Windows.UI.Xaml;
+using System.Runtime.Serialization;
+using SQLite.Net.Attributes;
 
 namespace ZSCY_Win10.Models.RemindPage
 {
     public static class DatabaseMethod
     {
+   
         public static List<string> ClearRemindItem()
         {
             var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath);
@@ -84,35 +87,39 @@ namespace ZSCY_Win10.Models.RemindPage
             }
             return modelList;
         }
+
         public static RemindListDB ToModel(string id)
         {
             var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath);
             var item = (from p in conn.Table<RemindListDB>()
-                        where p.Id == id
+                        where p.Id.Equals(id)
                         select p).FirstOrDefault();
             return item;
         }
-        public static void EditDatabase(string id, string json, string id_system)
+
+
+        public static void EditDatabase(int num,string id, string json, string id_system)
         {
             var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath);
             var up = conn.Table<RemindListDB>();
             //机智的我，删除和插入替换了update
-            bool isfound_id, isfound_id_system;
-            isfound_id = isfound_id_system = true;
-            if (id == null)
-                isfound_id = false;
-            if (id_system == null)
-                isfound_id_system = false;
-            if (isfound_id)
-                up.Delete(x => x.Id == id);
-            else if (isfound_id_system)
-                up.Delete(x => x.Id_system == id_system);
-            else if (isfound_id_system && isfound_id)
-                up.Delete(x => x.Id == id && x.Id_system == id_system);
-            else
-            {
+            //bool isfound_id, isfound_id_system;
+            //isfound_id = isfound_id_system = true;
+            //if (id == null)
+            //    isfound_id = false;
+            //if (id_system == null)
+            //    isfound_id_system = false;
+            //if (isfound_id)
+            //    up.Delete(x => x.Id == id);
+            //else if (isfound_id_system)
+            //    up.Delete(x => x.Id_system == id_system);
+            //else if (isfound_id_system && isfound_id)
+            //    up.Delete(x => x.Id == id && x.Id_system == id_system);
+            //else
+            //{
 
-            }
+            //}
+            up.Delete(x => x.Num == num);
             //if (id != null && id_system == null)
             //    up.Delete(x => x.Id == id);
             //else if (id == null && id_system != null)

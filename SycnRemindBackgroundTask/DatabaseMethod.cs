@@ -40,16 +40,16 @@ namespace SycnRemindBackgroundTask
             //}
             var list = conn.Table<RemindListDB>();
             List<string> TagList = new List<string>();
-           foreach(var item in list)
+            foreach (var item in list)
             {
                 var itemList = item.Id_system.Split(',');
-                for(int i=0;i<itemList.Count();i++)
+                for (int i = 0; i < itemList.Count(); i++)
                 {
                     TagList.Add(itemList[i]);
                 }
             }
             //var TagList = from x in list where x.Id_system.Equals("") select x.Id_system;
-          
+
             conn.DropTable<RemindListDB>();
             conn.CreateTable<RemindListDB>();
 
@@ -112,18 +112,35 @@ namespace SycnRemindBackgroundTask
                         select p).FirstOrDefault();
             return item;
         }
-        public static void EditDatabase(string id, string json, string id_system)
+        public static void EditDatabase(int num, string id, string json, string id_system)
         {
             var conn = new SQLiteConnection(new SQLitePlatformWinRT(), Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db"));
             var up = conn.Table<RemindListDB>();
             //机智的我，删除和插入替换了update
+            //bool isfound_id, isfound_id_system;
+            //isfound_id = isfound_id_system = true;
+            //if (id == null)
+            //    isfound_id = false;
+            //if (id_system == null)
+            //    isfound_id_system = false;
+            //if (isfound_id)
+            //    up.Delete(x => x.Id.Equals(id));
+            //else if (isfound_id_system)
+            //    up.Delete(x => x.Id_system.Equals(id_system));
+            //else if (isfound_id_system && isfound_id)
+            //    up.Delete(x => x.Id .Equals( id) && x.Id_system.Equals( id_system));
+            //else
+            //{
 
-            up.Delete(x => x.Id == id || x.Id_system == id_system);
+            //}
+            up.Delete(x => x.Num == num);
             RemindListDB temp = new RemindListDB() { Id = id, Id_system = id_system, json = json };
             conn.Insert(temp);
 
 
+
         }
+
         //public static void ReadDatabase(Visibility visibility)
         //{
         //    try

@@ -186,15 +186,21 @@ namespace SycnRemindBackgroundTask
 
    internal sealed class AddRemindReturn
     {
-        [DataMember(Name = "stuNum")]
-        public string StuNum { get; set; }
+        ///<summary>
+        /// 
+        /// </summary>
+        [DataMember(Name = "status")]
+        public int Status { get; set; }
 
         ///<summary>
         /// 
         /// </summary>
-        [DataMember(Name = "idNum")]
-        public string IdNum { get; set; }
+        [DataMember(Name = "info")]
+        public string Info { get; set; }
 
+        ///<summary>
+        /// 
+        /// </summary>
         [DataMember(Name = "id")]
         public string Id { get; set; }
     }

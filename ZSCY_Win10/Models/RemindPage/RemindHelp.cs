@@ -131,7 +131,7 @@ namespace ZSCY_Win10.Models.RemindPage
                     {
                         SelectedWeekNum swn = new SelectedWeekNum();
                         //TODO 周数是是从第一周开始所以week设置要减一
-                        swn.SetWeekTime(int.Parse(itemWeekList[i])-1);
+                        swn.SetWeekTime(int.Parse(itemWeekList[i]) - 1);
                         remind.time = swn.WeekNumOfMonday.AddDays(itemDayList) + classTime.Time - beforeTime;
                         if (remind.time.Ticks < DateTime.Now.Ticks)
                         {
@@ -232,6 +232,8 @@ namespace ZSCY_Win10.Models.RemindPage
             }
             DatabaseMethod.ReadDatabase(Windows.UI.Xaml.Visibility.Collapsed);
         }
+     
+
     }
 
 

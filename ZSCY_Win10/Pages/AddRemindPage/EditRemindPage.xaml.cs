@@ -323,11 +323,12 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                                 Debug.WriteLine("网络问题请求失败");
                             }
                             string id_system = "";
+                            RemindListDB temp = new RemindListDB();
                             if (beforeTime[SelRemindListView.SelectedIndex].isRemind)
                             {
                                 TimeSpan time = beforeTime[SelRemindListView.SelectedIndex].BeforeTime;
                                 //设置通知
-                                RemindListDB temp = DatabaseMethod.ToModel(myRemind.Id);
+                                 temp = DatabaseMethod.ToModel(myRemind.Id);
                                 string[] TagArray = temp.Id_system.Split(',');
                                 var notifier = ToastNotificationManager.CreateToastNotifier();
 
@@ -349,7 +350,7 @@ namespace ZSCY_Win10.Pages.AddRemindPage
                             {
 
                             }
-                            DatabaseMethod.EditDatabase(myRemind.Id, databaseJson, id_system);
+                            DatabaseMethod.EditDatabase(temp.Num,myRemind.Id, databaseJson, id_system);
                             DatabaseMethod.ReadDatabase(Visibility.Visible);
                             App.isLoad = false;
                             App.selectedWeekNumList.Clear();

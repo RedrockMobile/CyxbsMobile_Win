@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite.Net.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,14 @@ using System.Threading.Tasks;
 
 namespace ZSCY_Win10.Models.RemindPage
 {
-    public  class RemindListDB
+    [Table("RemindList")]
+
+    public class RemindListDB
     {
+        [Column("num")]
+        [PrimaryKey]
+        [AutoIncrement()]
+        public int Num { get; set; }
         /// <summary>
         /// 网络获取的id，用于删改数据库和网络备份
         /// </summary>
@@ -17,6 +24,6 @@ namespace ZSCY_Win10.Models.RemindPage
         /// </summary>
         public string Id_system { get; set; }
         public string json { get; set; }
-       
+
     }
 }
