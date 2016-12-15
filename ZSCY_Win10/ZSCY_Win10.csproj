@@ -19,9 +19,9 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>ZSCY_Win10_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxBundlePlatforms>x64|arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
     <PackageCertificateThumbprint>FBD8F45C97EFD52F6541595D863995416DBF69E6</PackageCertificateThumbprint>
-    <AppxBundle>Auto</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -101,6 +101,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\aCircle.png" />
+    <Content Include="Assets\address_03.png" />
     <Content Include="Assets\AlphaLogo\Square150x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -155,6 +156,7 @@
     <Content Include="Assets\Community_nohead.png" />
     <Content Include="Assets\Community_XSJZ.png" />
     <Content Include="Assets\Community_XWGG.png" />
+    <Content Include="Assets\course_03.png" />
     <Content Include="Assets\dialog_course_add_white.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -168,6 +170,8 @@
     <Content Include="Assets\dialog_course_type_white.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\exam_03.png" />
+    <Content Include="Assets\girl_03.png" />
     <Content Include="Assets\grzx_black.png" />
     <Content Include="Assets\iconfont-coffee.png" />
     <Content Include="Assets\iconfont-more_w.png" />
@@ -201,6 +205,7 @@
     <Content Include="Assets\more_score333.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\noclassBoy_03.png" />
     <Content Include="Assets\Plane-8.png" />
     <Content Include="Assets\shape _1.png" />
     <Content Include="Assets\Square150x150Logo.scale-400.png">
@@ -217,9 +222,11 @@
     <Content Include="Assets\StarEmpty.png" />
     <Content Include="Assets\StarFilled.png" />
     <Content Include="Assets\starun.png" />
-    <Content Include="Assets\StoreLogo.scale-400.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Assets\teacher_03.png" />
+    <Content Include="Assets\time_03.png" />
+    <Content Include="Assets\type_03.png" />
+    <Content Include="Assets\weeks_03.png" />
     <Content Include="Assets\首页1.png" />
     <Content Include="Assets\首页2.png" />
     <Content Include="Assets\首页3.png" />
@@ -257,6 +264,9 @@
     <Compile Include="Common\ViewModelBase.cs" />
     <Compile Include="CommunityPage.xaml.cs">
       <DependentUpon>CommunityPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ClassInfoControl.xaml.cs">
+      <DependentUpon>ClassInfoControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NavMenuListView.cs" />
     <Compile Include="Controls\NotifyPopup.xaml.cs">
@@ -639,6 +649,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CommunityPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ClassInfoControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

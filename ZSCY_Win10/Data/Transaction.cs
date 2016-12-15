@@ -10,7 +10,7 @@ using ZSCY_Win10.Util;
 
 namespace ZSCY_Win10.Data
 {
-    class DateInTransaction
+   public class DateInTransaction
     {
         //字段class 很强势
         [JsonProperty(PropertyName = "class")]
@@ -20,7 +20,7 @@ namespace ZSCY_Win10.Data
         public int weekLength { get; set; }
     }
 
-    class Transaction
+   public class Transaction
     {
         public long id { get; set; }
         //这个高级用法并没有卵用
@@ -30,6 +30,7 @@ namespace ZSCY_Win10.Data
         public string content { get; set; }
         public List<DateInTransaction> date { get; set; }
         public string classToLesson { get; set; }
+        public string week { get; set; }
 
         public void GetAttribute(JObject TransationDetailJObject)
         {
