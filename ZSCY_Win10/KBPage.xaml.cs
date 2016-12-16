@@ -215,6 +215,8 @@ namespace ZSCY_Win10
         //TODO:未登陆时 没有课表
         private async void initKB(bool isRefresh = false)
         {
+            string Transactiontemp = null;
+
             try
             {
                 var vault = new Windows.Security.Credentials.PasswordVault();
@@ -260,7 +262,21 @@ namespace ZSCY_Win10
 
             string kbtemp = await NetWork.getHttpWebRequest("redapi2/api/kebiao", paramList); //新
                                                                                               //string kbtemp = await NetWork.getHttpWebRequest("api/kebiao", paramList); //旧
-
+            try
+            {
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                List<KeyValuePair<String, String>> TransactionparamList = new List<KeyValuePair<String, String>>();
+                TransactionparamList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+                TransactionparamList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
+                Transactiontemp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/getTransaction", TransactionparamList);
+            }
+            catch
+            {
+                NotifyPopup notifyPopup = new NotifyPopup("网络异常 无法读取事项~");
+                notifyPopup.Show();
+            }
             if (!appSetting.Values.ContainsKey("HttpTime"))
                 appSetting.Values["HttpTime"] = DateTimeOffset.Now.ToString();
             if (kbtemp != "")
@@ -312,7 +328,7 @@ namespace ZSCY_Win10
                     todayNumofstuTextBlock.Text = "开学第" + ((Int16.Parse(appSetting.Values["nowWeek"].ToString()) - 1) * 7 + (Int16.Parse(Utils.GetWeek()) == 0 ? 7 : Int16.Parse(Utils.GetWeek()))).ToString() + "天";
                     //showKB(2, Int32.Parse(appSetting.Values["nowWeek"].ToString()));
 #if DEBUG
-                    showKB(2);
+                    showKB(2, 0, Transactiontemp);
 #else
                     showKB(2);
 #endif
@@ -369,7 +385,7 @@ namespace ZSCY_Win10
             }
         }
 
-        private void showKB(int weekOrAll = 1, int week = 0)
+        private void showKB(int weekOrAll = 1, int week = 0, string transactioncontent = null)
         {
             for (int i = 0; i < 7; i++)
                 for (int j = 0; j < 6; j++)
@@ -383,7 +399,7 @@ namespace ZSCY_Win10
             var credentialList = vault.FindAllByResource(resourceName);
             credentialList[0].RetrievePassword();
             if (stuNum == credentialList[0].UserName)
-                GetTransaction();
+                GetTransaction(transactioncontent);
 
             kebiaoGrid.Children.Clear();
             SetKebiaoGridBorder(week);
@@ -803,26 +819,58 @@ namespace ZSCY_Win10
 
         //bool isGetTransactionSuccess = false;
         //新增:获取事项信息
-        private async void GetTransaction()
+        private async void GetTransaction(string contentstring = null)
         {
-            //clear出了无法理解的问题..暂时用一个判断吧 聊胜于无
             bool secondTimeAdd = false;
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
-            if (credentialList[0] != null)
+            if (contentstring == null)
             {
-                try
+                //clear出了无法理解的问题..暂时用一个判断吧 聊胜于无           
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                if (credentialList[0] != null)
                 {
-                    List<KeyValuePair<String, String>> TransactionparamList = new List<KeyValuePair<String, String>>();
-                    TransactionparamList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-                    TransactionparamList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
-                    string Transactiontemp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/getTransaction", TransactionparamList);
-                    //isGetTransactionSuccess = true;
-                    JObject Tobj = JObject.Parse(Transactiontemp);
+                    try
+                    {
+                        List<KeyValuePair<String, String>> TransactionparamList = new List<KeyValuePair<String, String>>();
+                        TransactionparamList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+                        TransactionparamList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
+                        string Transactiontemp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/getTransaction", TransactionparamList);
+                        //isGetTransactionSuccess = true;
+                        JObject Tobj = JObject.Parse(Transactiontemp);
+                        if (Int32.Parse(Tobj["status"].ToString()) == 200)
+                        {
+                            JArray TransactionArray = Utils.ReadJso(Transactiontemp);
+                            for (int i = 0; i < TransactionArray.Count; i++)
+                            {
+                                Transaction transactionItem = new Transaction();
+                                transactionItem.GetAttribute((JObject)TransactionArray[i]);
+                                foreach (var existItem in transationList)
+                                {
+                                    if (transactionItem.id == existItem.id)
+                                    { secondTimeAdd = true; break; }
+                                }
+                                if (!secondTimeAdd)
+                                    transationList.Add(transactionItem);
+                                Debug.WriteLine(i);
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        NotifyPopup notifyPopup = new NotifyPopup("网络异常 无法读取事项~");
+                        notifyPopup.Show();
+                    }
+                }
+            }
+            else
+            {
+                if (contentstring != "")
+                {
+                    JObject Tobj = JObject.Parse(contentstring);
                     if (Int32.Parse(Tobj["status"].ToString()) == 200)
                     {
-                        JArray TransactionArray = Utils.ReadJso(Transactiontemp);
+                        JArray TransactionArray = Utils.ReadJso(contentstring);
                         for (int i = 0; i < TransactionArray.Count; i++)
                         {
                             Transaction transactionItem = new Transaction();
@@ -837,11 +885,6 @@ namespace ZSCY_Win10
                             Debug.WriteLine(i);
                         }
                     }
-                }
-                catch
-                {
-                    NotifyPopup notifyPopup = new NotifyPopup("网络异常 无法读取事项~");
-                    notifyPopup.Show();
                 }
             }
         }
