@@ -34,7 +34,8 @@ namespace ZSCY_Win10.Controls
             this.InitializeComponent();
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
-                outGrid.Width = 350;
+                outGrid.Width = Window.Current.Bounds.Width;
+                outGrid.Height= Window.Current.Bounds.Height;
                 outGrid.Margin = new Thickness(0, 0, 0, 0);
                 contentAll.Padding = new Thickness(0);
             }
