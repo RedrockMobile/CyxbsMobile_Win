@@ -234,12 +234,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DataBase\qq_Group.db" />
-    <Content Include="DataBase\Json\fengcai_header_lists.json" />
-    <Content Include="DataBase\Json\fengcai_zuimei.json" />
-    <Content Include="DataBase\Json\fengcai_zuzhi_intro.json" />
-    <Content Include="DataBase\Json\fengcai_zuzhi_lists.json" />
-    <Content Include="DataBase\Json\strategy_header_lists.json" />
-    <Content Include="DataBase\Json\必备清单.json" />
+    <Content Include="Json\fengcai_header_lists.json" />
+    <Content Include="Json\fengcai_zuimei.json" />
+    <Content Include="Json\fengcai_zuzhi_intro.json" />
+    <Content Include="Json\fengcai_zuzhi_lists.json" />
+    <Content Include="Json\strategy_header_lists.json" />
+    <Content Include="Json\必备清单.json" />
     <None Include="project.json" />
     <None Include="ZSCY_Win10_StoreKey.pfx" />
     <None Include="ZSCY_Win10_TemporaryKey.pfx" />
