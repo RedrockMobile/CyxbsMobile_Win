@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System.Profile;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -31,6 +32,12 @@ namespace ZSCY_Win10.Controls
         public ClassInfoControl(List<ClassList> cl, List<Transaction> mmr, ExamList el)
         {
             this.InitializeComponent();
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                outGrid.Width = 350;
+                outGrid.Margin = new Thickness(0, 0, 0, 0);
+                contentAll.Padding = new Thickness(0);
+            }
             this.SizeChanged += (s, e) =>
             {
                 var state = "VisualState000";
@@ -42,6 +49,7 @@ namespace ZSCY_Win10.Controls
                 if (e.NewSize.Width > 450)
                 {
                     state = "VisualState800";
+                    
                 }
                 VisualStateManager.GoToState(this, state, true);
             };
