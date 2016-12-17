@@ -46,7 +46,7 @@ namespace ZSCY_Win10.Controls
                 VisualStateManager.GoToState(this, state, true);
             };
 
-                this.Width = Window.Current.Bounds.Width;
+            this.Width = Window.Current.Bounds.Width;
             this.Height = Window.Current.Bounds.Height;
             this.Loaded += MessagePopupWindow_Loaded;
             this.Unloaded += MessagePopupWindow_Unloaded;
@@ -116,7 +116,7 @@ namespace ZSCY_Win10.Controls
                 noclassGrid.Visibility = Visibility.Visible;
             }
             List<Transaction> mrl = new List<Transaction>();
-            if (mmr.Count!=0)
+            if (mmr.Count > 1)
             {
                 foreach (var item in mmr)
                 {
@@ -125,7 +125,7 @@ namespace ZSCY_Win10.Controls
                     {
                         for (int j = 0; j < item.date[i].week.Length; j++)
                         {
-                            if (j == item.date[i].week.Length - 1&& !temp.week.Contains(item.date[i].week[j].ToString()))
+                            if (j == item.date[i].week.Length - 1 && !temp.week.Contains(item.date[i].week[j].ToString()))
                                 temp.week += item.date[i].week[j].ToString();
                             else if (temp.week != null)
                             {
@@ -142,13 +142,19 @@ namespace ZSCY_Win10.Controls
                     mrl.Add(temp);
                 }
             }
-            else 
+            else if (mmr.Count == 0)
             {
                 //mrl.Add(new Transaction { title = "没做完 别看" });
                 transactionGridson.Visibility = Visibility.Collapsed;
                 notransactionGrid.Visibility = Visibility.Visible;
             }
-
+            else if (mmr.Count == 1) {
+                Transaction temp = new Transaction();
+                temp.title = mmr[0].title;
+                temp.content = mmr[0].content;
+                temp.week = $"{mmr[0].date[0].week[0].ToString()}周";
+                mrl.Add(temp);
+            }
             RemindListView.ItemsSource = mrl;
             m_Popup = new Popup();
             m_Popup.Child = this;
