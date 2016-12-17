@@ -24,12 +24,12 @@
         <Border x:Name="OutBorder" Background="#55000000" 
                 VerticalAlignment="Stretch" 
                 HorizontalAlignment="Stretch" />
-        <Grid Background="White" Margin="35,10,35,10" VerticalAlignment="Center" Height="600" Width="400">
+        <Grid Name="outGrid" Background="White" Margin="35,10,35,10" VerticalAlignment="Center" Height="600" Width="400">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Padding="20">
+            <Grid Name="contentAll" Grid.Row="0" Padding="20">
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
                     Name="cancel" Tapped="cancelBtn_Click"
                     FontFamily="Segoe MDL2 Assets" 

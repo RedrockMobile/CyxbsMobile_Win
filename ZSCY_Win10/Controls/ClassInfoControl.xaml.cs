@@ -31,7 +31,22 @@ namespace ZSCY_Win10.Controls
         public ClassInfoControl(List<ClassList> cl, List<Transaction> mmr, ExamList el)
         {
             this.InitializeComponent();
-            this.Width = Window.Current.Bounds.Width;
+            this.SizeChanged += (s, e) =>
+            {
+                var state = "VisualState000";
+                if (e.NewSize.Width <= 450)
+                {
+                    outGrid.Margin = new Thickness(0, 0, 0, 0);
+                    contentAll.Padding = new Thickness(0);
+                }
+                if (e.NewSize.Width > 450)
+                {
+                    state = "VisualState800";
+                }
+                VisualStateManager.GoToState(this, state, true);
+            };
+
+                this.Width = Window.Current.Bounds.Width;
             this.Height = Window.Current.Bounds.Height;
             this.Loaded += MessagePopupWindow_Loaded;
             this.Unloaded += MessagePopupWindow_Unloaded;
