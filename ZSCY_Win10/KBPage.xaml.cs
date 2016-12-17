@@ -865,7 +865,7 @@ namespace ZSCY_Win10
             }
             else
             {
-                if (contentstring != "")
+                if (contentstring!=null&&contentstring != "")
                 {
                     JObject Tobj = JObject.Parse(contentstring);
                     if (Int32.Parse(Tobj["status"].ToString()) == 200)
