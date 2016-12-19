@@ -135,6 +135,9 @@ namespace ZSCY_Win10
                     KBRefreshAppBarButton.IsEnabled = false;
                     KBCalendarAppBarButton.IsEnabled = false;
                     KBZoomAppBarButton.IsEnabled = false;
+                    ShowMoreAppBarButton.IsEnabled = false;
+
+
                 }
             }
             catch
@@ -147,6 +150,7 @@ namespace ZSCY_Win10
                 KBRefreshAppBarButton.IsEnabled = false;
                 KBCalendarAppBarButton.IsEnabled = false;
                 KBZoomAppBarButton.IsEnabled = false;
+                ShowMoreAppBarButton.IsEnabled = false;
             }
 
         }
