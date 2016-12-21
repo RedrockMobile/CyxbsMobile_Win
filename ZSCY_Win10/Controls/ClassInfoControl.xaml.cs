@@ -49,7 +49,7 @@ namespace ZSCY_Win10.Controls
                 if (e.NewSize.Width > 450)
                 {
                     state = "VisualState800";
-                    
+
                 }
                 VisualStateManager.GoToState(this, state, true);
             };
@@ -124,25 +124,37 @@ namespace ZSCY_Win10.Controls
                 noclassGrid.Visibility = Visibility.Visible;
             }
             List<Transaction> mrl = new List<Transaction>();
-            if (mmr.Count > 1)
+            if (mmr.Count != 0)
             {
                 foreach (var item in mmr)
                 {
                     Transaction temp = new Transaction();
-                    for (int i = 0; i < item.date.Count; i++)
+                    if (item.date.Count > 1)
                     {
-                        for (int j = 0; j < item.date[i].week.Length; j++)
+                        for (int i = 0; i < item.date.Count; i++)
                         {
-                            if (j == item.date[i].week.Length - 1 && !temp.week.Contains(item.date[i].week[j].ToString()))
-                                temp.week += item.date[i].week[j].ToString();
-                            else if (temp.week != null)
+                            for (int j = 0; j < item.date[i].week.Length; j++)
                             {
-                                if (!temp.week.Contains(item.date[i].week[j].ToString()))
-                                    temp.week += item.date[i].week[j].ToString() + "、";
+                                if (temp.week == null)
+                                    if (item.date[i].week.Length == 1)
+                                        temp.week += item.date[i].week[j].ToString();
+                                    else
+                                        temp.week += item.date[i].week[j].ToString() + "、";
+                                else if (j == item.date[i].week.Length - 1 && !temp.week.Contains(item.date[i].week[j].ToString()))
+                                    temp.week += item.date[i].week[j].ToString();
+                                else if (temp.week != null)
+                                {
+                                    if (!temp.week.Contains(item.date[i].week[j].ToString()))
+                                        temp.week += item.date[i].week[j].ToString() + "、";
+                                }
                             }
-                            else
-                                temp.week += item.date[i].week[j].ToString() + "、";
                         }
+                    }
+                    else if (item.date.Count == 1)
+                    {
+                        temp.title = mmr[0].title;
+                        temp.content = mmr[0].content;
+                        temp.week = $"{mmr[0].date[0].week[0].ToString()}";
                     }
                     temp.week += "周";
                     temp.title = item.title;
@@ -150,19 +162,20 @@ namespace ZSCY_Win10.Controls
                     mrl.Add(temp);
                 }
             }
-            else if (mmr.Count == 0)
+            else 
             {
                 //mrl.Add(new Transaction { title = "没做完 别看" });
                 transactionGridson.Visibility = Visibility.Collapsed;
                 notransactionGrid.Visibility = Visibility.Visible;
             }
-            else if (mmr.Count == 1) {
-                Transaction temp = new Transaction();
-                temp.title = mmr[0].title;
-                temp.content = mmr[0].content;
-                temp.week = $"{mmr[0].date[0].week[0].ToString()}周";
-                mrl.Add(temp);
-            }
+            //else if (mmr.Count == 1)
+            //{
+            //    Transaction temp = new Transaction();
+            //    temp.title = mmr[0].title;
+            //    temp.content = mmr[0].content;
+            //    temp.week = $"{mmr[0].date[0].week[0].ToString()}周";
+            //    mrl.Add(temp);
+            //}
             RemindListView.ItemsSource = mrl;
             m_Popup = new Popup();
             m_Popup.Child = this;
