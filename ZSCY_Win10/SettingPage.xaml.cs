@@ -12,6 +12,7 @@ using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
@@ -22,6 +23,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Pages;
+using ZSCY_Win10.Models.RemindPage;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
@@ -146,6 +148,7 @@ namespace ZSCY_Win10
             if (null != result && result.Label == "是")
             {
                 appSetting.Values.Clear();
+                DelectRemind();
                 try
                 {
                     var vault = new Windows.Security.Credentials.PasswordVault();
@@ -177,8 +180,9 @@ namespace ZSCY_Win10
                 {
                     await storageFileWR.DeleteAsync();
                 }
-                catch (Exception)
+                catch (Exception error)
                 {
+                    Debug.WriteLine(error.Message);
                     Debug.WriteLine("设置 -> 重置应用异常");
                 }
                 //Application.Current.Exit();
@@ -414,6 +418,27 @@ namespace ZSCY_Win10
         {
             appSetting.Values["isUseingBackgroundTask"] = backGroundToastToggleSwitch.IsOn;
             Debug.WriteLine(appSetting.Values["isUseingBackgroundTask"].ToString());
+        }
+        private void DelectRemind()
+        {
+            List<string> RemindTagList = new List<string>();
+            RemindTagList = DatabaseMethod.ClearRemindItem() as List<string>;
+            var notifier = ToastNotificationManager.CreateToastNotifier();
+            if (RemindTagList != null)
+            {
+
+                for (int i = 0; i < RemindTagList.Count(); i++)
+                {
+                    var scheduledNotifs = notifier.GetScheduledToastNotifications()
+                  .Where(n => n.Tag.Equals(RemindTagList[i]));
+
+                    // Remove all of those from the schedule
+                    foreach (var n in scheduledNotifs)
+                    {
+                        notifier.RemoveFromSchedule(n);
+                    }
+                }
+            }
         }
     }
 }
