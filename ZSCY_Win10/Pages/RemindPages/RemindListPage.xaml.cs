@@ -33,6 +33,21 @@ namespace ZSCY_Win10.Pages.RemindPages
             this.InitializeComponent();
             viewmodel = new RemindListViewModel();
             RemindListView.ItemsSource = viewmodel.RemindListOC;
+            var state = "VisualState000";
+            this.SizeChanged += (s, e) =>
+              {
+                  if (e.NewSize.Width > 000)
+                  {
+                      ListGrid1.Width = e.NewSize.Width;
+                      state = "VisualState000";
+                  }
+                  if(e.NewSize.Width>800)
+                  {
+                      ListGrid1.Width = 400;
+                      state = "VisualState800";
+                  }
+                  VisualStateManager.GoToState(this, state, true);
+              };
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             SystemNavigationManager.GetForCurrentView().BackRequested += RemindListPage_BackRequested; 
         }

@@ -131,7 +131,7 @@ namespace ZSCY_Win10.ViewModels.Remind
 
         public void GetData()
         {
-
+            RemindListOC.Clear();
 
             var DBList = DatabaseMethod.ToModel();
             foreach (var item in DBList)
