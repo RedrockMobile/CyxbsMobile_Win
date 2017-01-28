@@ -20,7 +20,7 @@ namespace ZSCY_Win10.Models.RemindModels
         public TimeSpan NowTime()
         {
             TimeSpan time = new TimeSpan(DayNum, 0, 0, 0);
-            time.Add(NowHMS(ClassNum));
+            time = time.Add(NowHMS(ClassNum));
             return time;
         }
         private TimeSpan NowHMS(int classNum)

@@ -60,11 +60,7 @@ namespace ZSCY_Win10.Pages.RemindPages
             SystemNavigationManager.GetForCurrentView().BackRequested -= RemindListPage_BackRequested;
         }
 
-        //protected override void OnNavigatedFrom(NavigationEventArgs e)
-        //{
-        //    base.OnNavigatedFrom(e);
-        //    viewmodel.ReloadList();
-        //}
+   
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);

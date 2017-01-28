@@ -77,15 +77,15 @@ namespace ZSCY_Win10.ViewModels.Remind
                 Debug.WriteLine(n);
             }
         }
-        //需要判断是否是编辑状态，坑爹的后台编辑上传的week居然从一开始，添加是从零开始的
-        private static string GetSelWeek(string content, string title, List<RemindSystemModel> remindSystemList, bool isEdit = false)
+       
+        private static string GetSelWeek(string content, string title, List<RemindSystemModel> remindSystemList)
         {
             string weekString = "";
             foreach (var week in App.SelWeekList)
             {
                 GetSelClassTime(content, title, remindSystemList, week);
-                if (isEdit) weekString += $"{week + 1},";
-                else weekString += $"{week},";
+                weekString += $"{week + 1},";
+               
             }
             weekString = weekString.Remove(weekString.Length - 1);
             return weekString;
@@ -96,7 +96,7 @@ namespace ZSCY_Win10.ViewModels.Remind
             string[] tag = remind.Id_system.Split(',');
             RemindSystemUtil.DeleteRemind(tag);
             List<RemindSystemModel> remindSystemList = new List<RemindSystemModel>();
-            string weekString = GetSelWeek(content, title, remindSystemList, true);//设置本地通知的时间转换
+            string weekString = GetSelWeek(content, title, remindSystemList);//设置本地通知的时间转换
             try
             {
                 int indexBefore = App.indexBefore;
