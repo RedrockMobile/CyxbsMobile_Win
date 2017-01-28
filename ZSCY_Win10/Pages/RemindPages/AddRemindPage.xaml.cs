@@ -75,7 +75,7 @@ namespace ZSCY_Win10.Pages.RemindPages
             {
                 editRemind = e.Parameter as RemindListModel;
                 ReloadData();
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 
             }
             else
@@ -173,14 +173,22 @@ namespace ZSCY_Win10.Pages.RemindPages
         {
             if (pageType.Equals("add"))
             {
+
                 App.addRemindViewModel.AddRemind(content, title);
                 ClearAllData();
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                SaveEditRemind.IsEnabled = false;
+                new Action(async () =>
+                {
+                    await Task.Delay(600);
+                    SaveEditRemind.IsEnabled = true;
+                })();//防止多次添加
             }
             else
             {
                 if (NetworkInterface.GetIsNetworkAvailable())
                 {
+                    SaveEditRemind.IsEnabled = false;
                     App.addRemindViewModel.EditRemind(content, title, editRemind);
                     ClearAllData();
                     new Action(async () =>
