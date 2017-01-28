@@ -29,7 +29,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Data;
-using ZSCY_Win10.Models.RemindPage;
+using ZSCY_Win10.Models.RemindModels;
 using ZSCY_Win10.Pages.CommunityPages;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
@@ -85,20 +85,25 @@ namespace ZSCY_Win10
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
         private static string resourceName = "ZSCY";
         #region 事件提醒
-        public static TimeSet[,] timeSet = new TimeSet[6, 7];
-        public static SelTimeStringViewModel SelectedTime = new SelTimeStringViewModel();
-        public static ObservableCollection<SelectedWeekNum> selectedWeekNumList = new ObservableCollection<SelectedWeekNum>();
-        public static SelWeekNumStringViewModel selectedWeek = new SelWeekNumStringViewModel();
-        /// <summary>
-        ///提醒列表的数据源
-        /// </summary>
-        public static ObservableCollection<MyRemind> remindList = new ObservableCollection<MyRemind>();
+        //public static TimeSet[,] timeSet = new TimeSet[6, 7];
+        //public static SelTimeStringViewModel SelectedTime = new SelTimeStringViewModel();
+        //public static ObservableCollection<SelectedWeekNum> selectedWeekNumList = new ObservableCollection<SelectedWeekNum>();
+        //public static SelWeekNumStringViewModel selectedWeek = new SelWeekNumStringViewModel();
+        ///// <summary>
+        /////提醒列表的数据源
+        ///// </summary>
+        //public static ObservableCollection<MyRemind> remindList = new ObservableCollection<MyRemind>();
 
         public static string RemindListDBPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db");
         /// <summary>
         /// 防止改写事件内容是触发导航加载
         /// </summary>
         public static bool isLoad = false;
+        public static List<int> SelWeekList = new List<int>();
+        public static List<SelCourseModel> SelCoursList = new List<SelCourseModel>();
+        public static AddRemindPageViewModel addRemindViewModel = new AddRemindPageViewModel();
+        public static int indexBefore = -1;
+
         #endregion
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，

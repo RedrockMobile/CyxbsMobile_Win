@@ -13,8 +13,8 @@ namespace ZSCY_Win10.Util.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-          
-            if (value==null)
+
+            if (value == null)
             {
                 Color gray = Color.FromArgb(255, 167, 167, 167);
 
@@ -37,7 +37,7 @@ namespace ZSCY_Win10.Util.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value!=null)
+            if (value != null)
                 return value + "分钟前";
             else
             {
@@ -67,7 +67,7 @@ namespace ZSCY_Win10.Util.Converter
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value== null)
+            if (value == null)
             {
                 return "";
             }
@@ -102,7 +102,7 @@ namespace ZSCY_Win10.Util.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value==null)
+            if (value == null)
             {
                 return "";
             }

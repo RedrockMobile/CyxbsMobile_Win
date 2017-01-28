@@ -22,11 +22,13 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using ZSCY.Data;
-using ZSCY_Win10.Pages.AddRemindPage;
 using ZSCY_Win10.Data;
 using ZSCY_Win10.Util;
 using Windows.UI.Popups;
 using ZSCY_Win10.Controls;
+using ZSCY_Win10.Pages.RemindPages;
+using ZSCY_Win10.Pages.AddRemindPage;
+using Windows.UI.Xaml.Media.Animation;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
@@ -103,6 +105,10 @@ namespace ZSCY_Win10
             {
                 KBRefreshAppBarButton.Visibility = Visibility.Collapsed;
             }
+#if DEBUG
+            TestButton.Visibility = Visibility.Visible;
+#endif        
+
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -136,8 +142,6 @@ namespace ZSCY_Win10
                     KBCalendarAppBarButton.IsEnabled = false;
                     KBZoomAppBarButton.IsEnabled = false;
                     ShowMoreAppBarButton.IsEnabled = false;
-
-
                 }
             }
             catch
@@ -242,7 +246,7 @@ namespace ZSCY_Win10
 #if DEBUG
                         showKB(2, 5);
 #else
-                    showKB(2);
+                        showKB(2);
 #endif
                     }
                     catch (Exception) { Debug.WriteLine("主页->课表数据缓存异常"); }
@@ -869,7 +873,7 @@ namespace ZSCY_Win10
             }
             else
             {
-                if (contentstring!=null&&contentstring != "")
+                if (contentstring != null && contentstring != "")
                 {
                     JObject Tobj = JObject.Parse(contentstring);
                     if (Int32.Parse(Tobj["status"].ToString()) == 200)
@@ -1234,12 +1238,12 @@ namespace ZSCY_Win10
 
         private void AddRemind_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(AddRemind));
+            Frame.Navigate(typeof(AddRemindPage),"add");
         }
 
         private void RemindList_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(RemindListPage));
+            Frame.Navigate(typeof(RemindListPage),false);
         }
 
         private void TestButton_Click(object sender, RoutedEventArgs e)

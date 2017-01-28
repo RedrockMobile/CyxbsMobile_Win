@@ -248,9 +248,6 @@
     <Compile Include="AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddRemind.xaml.cs">
-      <DependentUpon>AddRemind.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -313,16 +310,17 @@
     <Compile Include="Models\qindan_content.cs" />
     <Compile Include="Models\qinshiIntroduce.cs" />
     <Compile Include="Models\QQGroup_DB.cs" />
-    <Compile Include="Models\RemindPage\ApiUri.cs" />
-    <Compile Include="Models\RemindPage\BaseModel.cs" />
-    <Compile Include="Models\RemindPage\CourseList.cs" />
-    <Compile Include="Models\RemindPage\DatabaseMethod.cs" />
-    <Compile Include="Models\RemindPage\getRemindModel.cs" />
-    <Compile Include="Models\RemindPage\JsonMethod.cs" />
-    <Compile Include="Models\RemindPage\MyRemind.cs" />
-    <Compile Include="Models\RemindPage\RemindHelp.cs" />
-    <Compile Include="Models\RemindPage\RemindListDB.cs" />
-    <Compile Include="Models\RemindPage\WeekList.cs" />
+    <Compile Include="Models\RemindModels\AddRemindBackModel.cs" />
+    <Compile Include="Models\RemindModels\AddRemindModel.cs" />
+    <Compile Include="Models\RemindModels\DataBaseModel.cs" />
+    <Compile Include="Models\RemindModels\DateModel.cs" />
+    <Compile Include="Models\RemindModels\RemindBackupModel.cs" />
+    <Compile Include="Models\RemindModels\RemindBaseModel.cs" />
+    <Compile Include="Models\RemindModels\RemindLsitModel.cs" />
+    <Compile Include="Models\RemindModels\RemindModel.cs" />
+    <Compile Include="Models\RemindModels\RemindSystemModel.cs" />
+    <Compile Include="Models\RemindModels\SelCourseModel.cs" />
+    <Compile Include="Models\RemindModels\WeekNumClass.cs" />
     <Compile Include="Models\richangshenghuo.cs" />
     <Compile Include="Models\ruxue_page.cs" />
     <Compile Include="Models\SexRatio.cs" />
@@ -370,24 +368,6 @@
     <Compile Include="Notepad\WaysData_Plane.xaml.cs">
       <DependentUpon>WaysData_Plane.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AddRemindPage\CourseTablePage.xaml.cs">
-      <DependentUpon>CourseTablePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\AddRemindPage\EditRemindPage.xaml.cs">
-      <DependentUpon>EditRemindPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\AddRemindPage\FristPage.xaml.cs">
-      <DependentUpon>FristPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\AddRemindPage\RemindListPage.xaml.cs">
-      <DependentUpon>RemindListPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\AddRemindPage\RemindTest.xaml.cs">
-      <DependentUpon>RemindTest.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\AddRemindPage\SelWeekNumPage.xaml.cs">
-      <DependentUpon>SelWeekNumPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\BigDataPage.xaml.cs">
       <DependentUpon>BigDataPage.xaml</DependentUpon>
     </Compile>
@@ -427,8 +407,19 @@
     <Compile Include="Pages\JWContentPage.xaml.cs">
       <DependentUpon>JWContentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\RemindPage\BeforeTimeSel.cs" />
-    <Compile Include="Models\RemindPage\CourseTable.cs" />
+    <Compile Include="Pages\RemindPages\AddRemindPage.xaml.cs">
+      <DependentUpon>AddRemindPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RemindPages\CourseTablePage.xaml.cs">
+      <DependentUpon>CourseTablePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RemindPages\RemindListPage.xaml.cs">
+      <DependentUpon>RemindListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RemindPages\RemindTest.xaml.cs" />
+    <Compile Include="Pages\RemindPages\WeeksPage.xaml.cs">
+      <DependentUpon>WeeksPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ScorePage.xaml.cs">
       <DependentUpon>ScorePage.xaml</DependentUpon>
     </Compile>
@@ -483,6 +474,13 @@
     <Compile Include="Util\Converter\LongClassRoomConverter.cs" />
     <Compile Include="Util\Converter\NewsConverter.cs" />
     <Compile Include="Util\Converter\NotifyTypeValueConverter.cs" />
+    <Compile Include="Util\Converter\RemindConverter\BeforeTimeIconColor.cs" />
+    <Compile Include="Util\Converter\RemindConverter\CourseTimeConverter.cs" />
+    <Compile Include="Util\Converter\RemindConverter\IsRewriteConverter.cs" />
+    <Compile Include="Util\Converter\RemindConverter\RemindListBeforeTimeConverter.cs" />
+    <Compile Include="Util\Converter\RemindConverter\RemindListClassTimeConverter.cs" />
+    <Compile Include="Util\Converter\RemindConverter\RemindListWeekConverter.cs" />
+    <Compile Include="Util\Converter\RemindConverter\WeekNumConverter.cs" />
     <Compile Include="Util\Converter\StarFillConverter.cs" />
     <Compile Include="Util\Converter\TextBlockInlineConverter.cs" />
     <Compile Include="Util\EmptyClass.cs" />
@@ -492,6 +490,9 @@
     <Compile Include="Util\ImgDataTemplateSelector.cs" />
     <Compile Include="Util\NetWork.cs" />
     <Compile Include="Util\NotifyContentTemplateSelector.cs" />
+    <Compile Include="Util\Remind\DatabaseMethod.cs" />
+    <Compile Include="Util\Remind\RemindSystemUtil.cs" />
+    <Compile Include="Util\Remind\RemindWebRequest.cs" />
     <Compile Include="Util\Request.cs" />
     <Compile Include="Util\TextBlockFormatter.cs" />
     <Compile Include="Util\Utils.cs" />
@@ -504,8 +505,9 @@
     <Compile Include="ViewModels\Community\MyViewModel.cs" />
     <Compile Include="ViewModels\FengCaiViewModel.cs" />
     <Compile Include="ViewModels\FirstPageViewModel.cs" />
-    <Compile Include="ViewModels\Remind\BaseViewModel.cs" />
-    <Compile Include="ViewModels\Remind\SelTimeStringViewModel.cs" />
+    <Compile Include="ViewModels\Remind\AddRemindPageViewModel.cs" />
+    <Compile Include="ViewModels\Remind\RemindListViewModel.cs" />
+    <Compile Include="ViewModels\Remind\WeeksPageViewModel.cs" />
     <Compile Include="ViewModels\StrategyViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -644,10 +646,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddRemind.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="CommunityPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -712,30 +710,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\AddRemindPage\CourseTablePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\AddRemindPage\EditRemindPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\AddRemindPage\FristPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\AddRemindPage\RemindListPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\AddRemindPage\RemindTest.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\AddRemindPage\SelWeekNumPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\BigDataPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -787,6 +761,26 @@
     <Page Include="Pages\JWContentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\RemindPages\AddRemindPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RemindPages\CourseTablePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RemindPages\RemindListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RemindPages\RemindTest.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\RemindPages\WeeksPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ScorePage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -857,6 +851,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

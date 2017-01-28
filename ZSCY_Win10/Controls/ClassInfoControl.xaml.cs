@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Data;
-using ZSCY_Win10.Models.RemindPage;
+//using ZSCY_Win10.Models.RemindPage;
 using ZSCY_Win10.Util.Converter;
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 

@@ -23,7 +23,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Pages;
-using ZSCY_Win10.Models.RemindPage;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
@@ -422,7 +421,7 @@ namespace ZSCY_Win10
         private void DelectRemind()
         {
             List<string> RemindTagList = new List<string>();
-            RemindTagList = DatabaseMethod.ClearRemindItem() as List<string>;
+            //RemindTagList = DatabaseMethod.ClearRemindItem() as List<string>;
             var notifier = ToastNotificationManager.CreateToastNotifier();
             if (RemindTagList != null)
             {

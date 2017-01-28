@@ -122,7 +122,7 @@
                                 </MenuFlyoutItem>
                                 <MenuFlyoutItem Name="AddRemind" Text="添加提醒" Click="AddRemind_Click"/>
                                 <MenuFlyoutItem Name="RemindList" Text="所有提醒" Click="RemindList_Click"/>
-                                <!--<MenuFlyoutItem Name="TestButton" Text="TestButton" Click="TestButton_Click"/>-->
+                                <MenuFlyoutItem Name="TestButton" Text="TestButton" Click="TestButton_Click" Visibility="Collapsed"/>
                             </MenuFlyout>
                         </AppBarButton.Flyout>
                     </AppBarButton>

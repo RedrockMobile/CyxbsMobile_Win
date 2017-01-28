@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace ZSCY.Models
 {
-    public class BaseModel
+    public class BaseModel:INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+    
         public void RaisePropertyChanged(string propertyName)
         {
             try
