@@ -38,28 +38,26 @@ namespace ZSCY_Win10.Pages.RemindPages
               {
                   if (e.NewSize.Width > 000)
                   {
-                      ListGrid1.Width = e.NewSize.Width;
-                      grid.Width = e.NewSize.Width;
+                      ListGrid1.Width = grid.Width = e.NewSize.Width;
                       state = "VisualState000";
                   }
-                  if(e.NewSize.Width>800)
+                  if (e.NewSize.Width > 800)
                   {
-                      ListGrid1.Width = 400;
-                      grid.Width = 400;
+                      ListGrid1.Width = grid.Width = 400;
 
                       state = "VisualState800";
                   }
                   VisualStateManager.GoToState(this, state, true);
               };
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            SystemNavigationManager.GetForCurrentView().BackRequested += RemindListPage_BackRequested; 
+            SystemNavigationManager.GetForCurrentView().BackRequested += RemindListPage_BackRequested;
         }
 
         private void RemindListPage_BackRequested(object sender, BackRequestedEventArgs e)
         {
             Frame.Navigate(typeof(KBPage));
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            SystemNavigationManager.GetForCurrentView().BackRequested -= RemindListPage_BackRequested; 
+            SystemNavigationManager.GetForCurrentView().BackRequested -= RemindListPage_BackRequested;
         }
 
         //protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -70,7 +68,7 @@ namespace ZSCY_Win10.Pages.RemindPages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if((bool)e.Parameter)
+            if ((bool)e.Parameter)
             {
                 viewmodel.RefreshList((bool)e.Parameter);
             }

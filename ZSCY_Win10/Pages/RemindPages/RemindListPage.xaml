@@ -27,6 +27,7 @@
                         <Setter Target="ListGrid1.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="grid.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="ShowRemindStackPanel.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="grid1.(UIElement.Visibility)" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualState800"/>
