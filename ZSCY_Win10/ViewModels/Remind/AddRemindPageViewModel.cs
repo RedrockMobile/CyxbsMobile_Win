@@ -85,7 +85,7 @@ namespace ZSCY_Win10.ViewModels.Remind
             {
                 GetSelClassTime(content, title, remindSystemList, week);
                 if (isEdit) weekString += $"{week + 1},";
-                else weekString += $"{week}";
+                else weekString += $"{week},";
             }
             weekString = weekString.Remove(weekString.Length - 1);
             return weekString;

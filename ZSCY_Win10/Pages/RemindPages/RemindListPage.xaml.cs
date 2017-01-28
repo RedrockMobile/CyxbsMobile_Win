@@ -39,11 +39,14 @@ namespace ZSCY_Win10.Pages.RemindPages
                   if (e.NewSize.Width > 000)
                   {
                       ListGrid1.Width = e.NewSize.Width;
+                      grid.Width = e.NewSize.Width;
                       state = "VisualState000";
                   }
                   if(e.NewSize.Width>800)
                   {
                       ListGrid1.Width = 400;
+                      grid.Width = 400;
+
                       state = "VisualState800";
                   }
                   VisualStateManager.GoToState(this, state, true);
