@@ -305,6 +305,8 @@
     <Compile Include="Models\CareerRatio.cs" />
     <Compile Include="Models\fengcaiheaders.cs" />
     <Compile Include="Models\getDB.cs" />
+    <Compile Include="Models\LFDetailPageModel.cs" />
+    <Compile Include="Models\LostAndFoundPageModel.cs" />
     <Compile Include="Models\PieDataItem.cs" />
     <Compile Include="Models\PiePiece.cs" />
     <Compile Include="Models\qindan_content.cs" />
@@ -400,6 +402,12 @@
     </Compile>
     <Compile Include="Pages\ImportKB2CalendarPage.xaml.cs">
       <DependentUpon>ImportKB2CalendarPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LostAndFoundPages\LFDetailPage.xaml.cs">
+      <DependentUpon>LFDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LostAndFoundPages\LostAndFoundPage.xaml.cs">
+      <DependentUpon>LostAndFoundPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\NewsContentPage.xaml.cs">
       <DependentUpon>NewsContentPage.xaml</DependentUpon>
@@ -505,6 +513,8 @@
     <Compile Include="ViewModels\Community\MyViewModel.cs" />
     <Compile Include="ViewModels\FengCaiViewModel.cs" />
     <Compile Include="ViewModels\FirstPageViewModel.cs" />
+    <Compile Include="ViewModels\LFDetailPageViewModel.cs" />
+    <Compile Include="ViewModels\LostAndFoundPageViewModel.cs" />
     <Compile Include="ViewModels\Remind\AddRemindPageViewModel.cs" />
     <Compile Include="ViewModels\Remind\RemindListViewModel.cs" />
     <Compile Include="ViewModels\Remind\WeeksPageViewModel.cs" />
@@ -753,6 +763,14 @@
     <Page Include="Pages\ImportKB2CalendarPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\LostAndFoundPages\LFDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\LostAndFoundPages\LostAndFoundPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\NewsContentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
