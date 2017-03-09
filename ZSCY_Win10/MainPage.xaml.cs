@@ -28,6 +28,7 @@ using ZSCY_Win10.Util;
 using ZSCY_Win10.Data;
 using Windows.Phone.UI.Input;
 using Windows.ApplicationModel.Background;
+using ZSCY_Win10.Pages.LostAndFoundPages;
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
 namespace ZSCY_Win10
@@ -53,9 +54,9 @@ namespace ZSCY_Win10
                 },
                 new NavMenuItem()
                 {
-                    Image = "ms-appx:///Assets/iconfont-newstudent.png",
-                    Label = "新生专题",
-                    DestPage = typeof(FirstPage)
+                    Image = "ms-appx:///Assets/Lost and Found-50.png",
+                    Label = "失物招领",
+                    DestPage = typeof(LostAndFoundPage)
                 },
                 new NavMenuItem()
                 {

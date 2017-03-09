@@ -287,6 +287,11 @@ namespace ZSCY_Win10
                         var a = await Launcher.LaunchUriAsync(new Uri("cquptcard:"));
                         MoreFrame.Visibility = Visibility.Collapsed;
                         break;
+                    case "freshMan":
+                        Frame.Navigate(typeof(FirstPage));
+                        MoreFrame.Visibility = Visibility.Collapsed;
+                        isFreeRe = 0;
+                        break;
                     default:
                         break;
                 }

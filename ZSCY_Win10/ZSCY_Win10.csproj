@@ -101,6 +101,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\aCircle.png" />
+    <Content Include="Assets\address.png" />
     <Content Include="Assets\address_03.png" />
     <Content Include="Assets\AlphaLogo\Square150x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -157,6 +158,7 @@
     <Content Include="Assets\Community_XSJZ.png" />
     <Content Include="Assets\Community_XWGG.png" />
     <Content Include="Assets\course_03.png" />
+    <Content Include="Assets\describe.png" />
     <Content Include="Assets\dialog_course_add_white.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -182,6 +184,8 @@
     <Content Include="Assets\Logo.scale-240.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Lost and Found-50.png" />
+    <Content Include="Assets\lostOrFound.png" />
     <Content Include="Assets\more_calendar333.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -207,6 +211,8 @@
     </Content>
     <Content Include="Assets\noclassBoy_03.png" />
     <Content Include="Assets\Plane-8.png" />
+    <Content Include="Assets\QQ.png" />
+    <Content Include="Assets\s.png" />
     <Content Include="Assets\shape _1.png" />
     <Content Include="Assets\Square150x150Logo.scale-400.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -224,7 +230,10 @@
     <Content Include="Assets\starun.png" />
     <Content Include="Assets\StoreLogo.scale-400.png" />
     <Content Include="Assets\teacher_03.png" />
+    <Content Include="Assets\tel.png" />
+    <Content Include="Assets\time.png" />
     <Content Include="Assets\time_03.png" />
+    <Content Include="Assets\type.png" />
     <Content Include="Assets\type_03.png" />
     <Content Include="Assets\weeks_03.png" />
     <Content Include="Assets\首页1.png" />
@@ -402,6 +411,9 @@
     </Compile>
     <Compile Include="Pages\ImportKB2CalendarPage.xaml.cs">
       <DependentUpon>ImportKB2CalendarPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LostAndFoundPages\InfoPublish.xaml.cs">
+      <DependentUpon>InfoPublish.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\LostAndFoundPages\LFDetailPage.xaml.cs">
       <DependentUpon>LFDetailPage.xaml</DependentUpon>
@@ -764,6 +776,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\LostAndFoundPages\InfoPublish.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\LostAndFoundPages\LFDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -845,8 +861,8 @@
     <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
       <Name>Behaviors SDK %28XAML%29</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.16.2">
-      <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.16.2%29</Name>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.17.0">
+      <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.17.0%29</Name>
     </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.14393.0">
       <Name>Windows Mobile Extensions for the UWP</Name>

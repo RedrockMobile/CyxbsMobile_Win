@@ -35,6 +35,12 @@
       "Itemname": "空闲查询",
       "ItemPage": "SearchFreeTimeNumPage.xaml",
       "Itemimgsrc": "Assets/more_freetime333.png"
+    },
+    {
+      "UniqueId": "freshMan",
+      "Itemname": "新生专题",
+      "ItemPage": "FirstPage.xaml",
+      "Itemimgsrc": "Assets/iconfont-newstudent.png"
     }
   ]
 }
