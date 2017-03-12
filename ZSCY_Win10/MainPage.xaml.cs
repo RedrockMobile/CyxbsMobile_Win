@@ -29,6 +29,7 @@ using ZSCY_Win10.Data;
 using Windows.Phone.UI.Input;
 using Windows.ApplicationModel.Background;
 using ZSCY_Win10.Pages.LostAndFoundPages;
+using Windows.System.Profile;
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
 namespace ZSCY_Win10
@@ -558,6 +559,8 @@ namespace ZSCY_Win10
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                StatusBar.GetForCurrentView().ShowAsync().AsTask();
             try
             {
                 NavMenuList.ItemsSource = navlist;

@@ -10,7 +10,9 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.System;
+using Windows.System.Profile;
 using Windows.UI.Core;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
@@ -451,10 +453,35 @@ namespace ZSCY_Win10
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
+        }
+
+        private async void Error_ClickAsync(object sender, RoutedEventArgs e)
+        {
+            StorageFile file = null;
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                file = await ApplicationData.Current.LocalFolder.GetFileAsync("ZSCY_Mobile_Log.txt");
+            else
+                file = await ApplicationData.Current.LocalFolder.GetFileAsync("ZSCY_Log.txt");
+            string errorText = await FileIO.ReadTextAsync(file);
+            //文件选择器
+            FileSavePicker fileSavePicker = new FileSavePicker();
+            fileSavePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
+            fileSavePicker.FileTypeChoices.Add("文本文件", new List<string>() { ".txt" });
+            fileSavePicker.SuggestedFileName = file.Name;
+            Windows.Storage.StorageFile saveFile = await fileSavePicker.PickSaveFileAsync();
+            if (saveFile != null)
+            {
+                Windows.Storage.CachedFileManager.DeferUpdates(saveFile);
+                await Windows.Storage.FileIO.WriteTextAsync(saveFile, errorText);
+                Windows.Storage.Provider.FileUpdateStatus status =
+                    await Windows.Storage.CachedFileManager.CompleteUpdatesAsync(saveFile);
+            }
+
+
         }
     }
 }

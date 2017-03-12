@@ -38,7 +38,6 @@ namespace ZSCY_Win10.Pages.StartPages
         public StartPage()
         {
             this.InitializeComponent();
-
             ViewModel = new StartPageViewModel();
             GaussianBlurHelp.InitializeBlur(Glass);
             //Navigate();

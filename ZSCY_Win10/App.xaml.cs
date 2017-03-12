@@ -16,6 +16,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Networking.PushNotifications;
 using Windows.Storage;
+using Windows.System.Profile;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.StartScreen;
@@ -163,24 +164,29 @@ namespace ZSCY_Win10
 
 
             //监听异常
-            CoreApplication.UnhandledErrorDetected += CoreApplication_UnhandledErrorDetected ;
+            CoreApplication.UnhandledErrorDetected += CoreApplication_UnhandledErrorDetected;
 
         }
 
-        private void CoreApplication_UnhandledErrorDetected(object sender, UnhandledErrorDetectedEventArgs e)
+        private async void CoreApplication_UnhandledErrorDetected(object sender, UnhandledErrorDetectedEventArgs e)
         {
             try
             {
                 e.UnhandledError.Propagate();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-#if DEBUG
-                 new MessageDialog(ex.Message+"\n"+ ex.StackTrace).ShowAsync();
-#else
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.StackTrace);
-#endif
+                //#if DEBUG
+                new MessageDialog(ex.Message + "\n" + ex.StackTrace).ShowAsync();
+                //#else
+                StorageFile file = null;
+                if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                    file = await ApplicationData.Current.LocalFolder.CreateFileAsync("ZSCY_Mobile_Log.txt", CreationCollisionOption.OpenIfExists);
+                else
+                    file = await ApplicationData.Current.LocalFolder.CreateFileAsync("ZSCY_Log.txt", CreationCollisionOption.OpenIfExists);
+                string errorText = $"[{DateTime.Now.ToString()}]\r\n{ex.StackTrace}\r\n";
+                await FileIO.AppendTextAsync(file, errorText, Windows.Storage.Streams.UnicodeEncoding.Utf8);
+                //#endif
             }
             finally
             {
@@ -387,7 +393,7 @@ namespace ZSCY_Win10
             // 确保当前窗口处于活动状态
             //await UmengAnalytics.StartTrackAsync("55cd8c8be0f55a20ba00440d", "Marketplace_Win10"); //私有
             await UmengAnalytics.StartTrackAsync("57317d07e0f55a28fe002bec", "Marketplace_Win10"); //公共
-            //await InitNotificationsAsync();
+                                                                                                   //await InitNotificationsAsync();
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size { Width = 400, Height = 480 });
 
 
