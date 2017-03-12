@@ -22,7 +22,6 @@
     <AppxBundlePlatforms>x86</AppxBundlePlatforms>
     <PackageCertificateThumbprint>FBD8F45C97EFD52F6541595D863995416DBF69E6</PackageCertificateThumbprint>
     <AppxBundle>Never</AppxBundle>
-    <AppxPackageDir>C:\Users\pengj\Desktop\zscy</AppxPackageDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -100,9 +99,9 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
     </Content>
     <Content Include="Assets\aCircle.png" />
+    <Content Include="Assets\address.png" />
     <Content Include="Assets\address_03.png" />
     <Content Include="Assets\AlphaLogo\Square150x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -159,6 +158,7 @@
     <Content Include="Assets\Community_XSJZ.png" />
     <Content Include="Assets\Community_XWGG.png" />
     <Content Include="Assets\course_03.png" />
+    <Content Include="Assets\describe.png" />
     <Content Include="Assets\dialog_course_add_white.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -184,6 +184,8 @@
     <Content Include="Assets\Logo.scale-240.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Lost and Found-50.png" />
+    <Content Include="Assets\lostOrFound.png" />
     <Content Include="Assets\more_calendar333.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -209,6 +211,8 @@
     </Content>
     <Content Include="Assets\noclassBoy_03.png" />
     <Content Include="Assets\Plane-8.png" />
+    <Content Include="Assets\QQ.png" />
+    <Content Include="Assets\s.png" />
     <Content Include="Assets\shape _1.png" />
     <Content Include="Assets\Square150x150Logo.scale-400.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -226,7 +230,10 @@
     <Content Include="Assets\starun.png" />
     <Content Include="Assets\StoreLogo.scale-400.png" />
     <Content Include="Assets\teacher_03.png" />
+    <Content Include="Assets\tel.png" />
+    <Content Include="Assets\time.png" />
     <Content Include="Assets\time_03.png" />
+    <Content Include="Assets\type.png" />
     <Content Include="Assets\type_03.png" />
     <Content Include="Assets\weeks_03.png" />
     <Content Include="Assets\首页1.png" />
@@ -301,8 +308,6 @@
     <Compile Include="Data\JWList.cs" />
     <Compile Include="Data\PersonalIno.cs" />
     <Compile Include="Data\ScoreList.cs" />
-    <Compile Include="Data\StartPage\Database.cs" />
-    <Compile Include="Data\StartPage\ImageList.cs" />
     <Compile Include="Data\TodoItem.cs" />
     <Compile Include="Data\Transaction.cs" />
     <Compile Include="Models\BaseModel.cs" />
@@ -330,7 +335,6 @@
     <Compile Include="Models\richangshenghuo.cs" />
     <Compile Include="Models\ruxue_page.cs" />
     <Compile Include="Models\SexRatio.cs" />
-    <Compile Include="Models\StartPageModels\StartPageModel.cs" />
     <Compile Include="Models\StrategyHeader.cs" />
     <Compile Include="Models\SubjectRatio.cs" />
     <Compile Include="Models\Switch.cs" />
@@ -408,6 +412,9 @@
     <Compile Include="Pages\ImportKB2CalendarPage.xaml.cs">
       <DependentUpon>ImportKB2CalendarPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\LostAndFoundPages\InfoPublish.xaml.cs">
+      <DependentUpon>InfoPublish.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\LostAndFoundPages\LFDetailPage.xaml.cs">
       <DependentUpon>LFDetailPage.xaml</DependentUpon>
     </Compile>
@@ -444,9 +451,6 @@
     </Compile>
     <Compile Include="Pages\SearchFreeTimeResultPage.xaml.cs">
       <DependentUpon>SearchFreeTimeResultPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\StartPages\StartPage.xaml.cs">
-      <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\StrategyPage.xaml.cs">
       <DependentUpon>StrategyPage.xaml</DependentUpon>
@@ -498,10 +502,8 @@
     <Compile Include="Util\Converter\RemindConverter\RemindListWeekConverter.cs" />
     <Compile Include="Util\Converter\RemindConverter\WeekNumConverter.cs" />
     <Compile Include="Util\Converter\StarFillConverter.cs" />
-    <Compile Include="Util\Converter\StartPageConverts\UrlConvert.cs" />
     <Compile Include="Util\Converter\TextBlockInlineConverter.cs" />
     <Compile Include="Util\EmptyClass.cs" />
-    <Compile Include="Util\GaussianBlurHelp.cs" />
     <Compile Include="Util\GetCredential.cs" />
     <Compile Include="Util\HotFeedsDataTemplateSelector.cs" />
     <Compile Include="Util\HotOrBBDDSelector.cs" />
@@ -512,7 +514,6 @@
     <Compile Include="Util\Remind\RemindSystemUtil.cs" />
     <Compile Include="Util\Remind\RemindWebRequest.cs" />
     <Compile Include="Util\Request.cs" />
-    <Compile Include="Util\StartPage\StartPageHelp.cs" />
     <Compile Include="Util\TextBlockFormatter.cs" />
     <Compile Include="Util\Utils.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
@@ -529,7 +530,6 @@
     <Compile Include="ViewModels\Remind\AddRemindPageViewModel.cs" />
     <Compile Include="ViewModels\Remind\RemindListViewModel.cs" />
     <Compile Include="ViewModels\Remind\WeeksPageViewModel.cs" />
-    <Compile Include="ViewModels\StartPage\StartPageViewModel.cs" />
     <Compile Include="ViewModels\StrategyViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -637,9 +637,7 @@
     <Content Include="Assets\Table.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Package.StoreAssociation.xml">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Notepad\anquan.txt" />
     <Content Include="Notepad\jiangxuejin.txt" />
     <Content Include="Notepad\ruxue.txt" />
@@ -778,6 +776,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\LostAndFoundPages\InfoPublish.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\LostAndFoundPages\LFDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -830,10 +832,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\StartPages\StartPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\StrategyPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -860,8 +858,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
+      <Name>Behaviors SDK %28XAML%29</Name>
+    </SDKReference>
     <SDKReference Include="SQLite.UWP.2015, Version=3.17.0">
-      <Name>SQLite for Universal Windows Platform</Name>
+      <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.17.0%29</Name>
     </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.14393.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
