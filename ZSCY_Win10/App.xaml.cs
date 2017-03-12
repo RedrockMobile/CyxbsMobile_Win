@@ -31,6 +31,7 @@ using ZSCY.Data;
 using ZSCY_Win10.Data;
 using ZSCY_Win10.Models.RemindModels;
 using ZSCY_Win10.Pages.CommunityPages;
+using ZSCY_Win10.Pages.StartPages;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
 using ZSCY_Win10.ViewModels.Remind;
@@ -91,7 +92,7 @@ namespace ZSCY_Win10
         //public static SelWeekNumStringViewModel selectedWeek = new SelWeekNumStringViewModel();
         ///// <summary>
         /////提醒列表的数据源
-        ///// </summary>
+        //l/// </summary>
         //public static ObservableCollection<MyRemind> remindList = new ObservableCollection<MyRemind>();
 
         public static string RemindListDBPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db");
@@ -159,6 +160,32 @@ namespace ZSCY_Win10
             {
                 addBackgroundTask();
             }
+
+
+            //监听异常
+            CoreApplication.UnhandledErrorDetected += CoreApplication_UnhandledErrorDetected ;
+
+        }
+
+        private void CoreApplication_UnhandledErrorDetected(object sender, UnhandledErrorDetectedEventArgs e)
+        {
+            try
+            {
+                e.UnhandledError.Propagate();
+            }
+            catch(Exception ex)
+            {
+#if DEBUG
+                 new MessageDialog(ex.Message+"\n"+ ex.StackTrace).ShowAsync();
+#else
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+#endif
+            }
+            finally
+            {
+                Application.Current.Exit();
+            }
         }
 
         private async void addBackgroundTask()
@@ -183,7 +210,7 @@ namespace ZSCY_Win10
                     var list = from i in BackgroundTaskRegistration.AllTasks
                                where i.Value.Name == item
                                select i;
-                    foreach(var i in list)
+                    foreach (var i in list)
                     {
                         i.Value.Unregister(true);
                     }
@@ -258,21 +285,17 @@ namespace ZSCY_Win10
             //#endif
             //UmengAnalytics.IsDebug = true;
             Frame rootFrame = Window.Current.Content as Frame;
-
             // 不要在窗口已包含内容时重复应用程序初始化，
             // 只需确保窗口处于活动状态
             if (rootFrame == null)
             {
                 // 创建要充当导航上下文的框架，并导航到第一页
                 rootFrame = new Frame();
-
                 rootFrame.NavigationFailed += OnNavigationFailed;
-
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: 从之前挂起的应用程序加载状态
                 }
-
                 // 将框架放在当前窗口中
                 Window.Current.Content = rootFrame;
             }
@@ -292,7 +315,7 @@ namespace ZSCY_Win10
                     credentialList[0].RetrievePassword();
                     if (e.Kind == ActivationKind.Launch && (e.Arguments == "/jwzx" || e.Arguments == "/more") && credentialList.Count > 0)
                     {
-                        if (!rootFrame.Navigate(typeof(MainPage), e.Arguments))
+                        if (!rootFrame.Navigate(typeof(StartPage), e.Arguments))
                         {
                             throw new Exception("Failed to create initial page");
                         }
@@ -303,23 +326,21 @@ namespace ZSCY_Win10
                         if (!(credentialList.Count > 0))
                         {
                             //if (!rootFrame.Navigate(typeof(LoginPage), e.Arguments))
-                            if (!rootFrame.Navigate(typeof(MainPage), e.Arguments))
+                            if (!rootFrame.Navigate(typeof(StartPage), e.Arguments))
                             {
                                 throw new Exception("Failed to create initial page");
-
                             }
-                            Window.Current.Activate();
                         }
                         else
                         {
                             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar") && Utils.getPhoneWidth() < 400)
                             {
                                 Debug.WriteLine("小于400的Phone" + Utils.getPhoneWidth());
-                                //if (!rootFrame.Navigate(typeof(MainPage_m), e.Arguments))
+                                //if (!rootFrame.Navigate(typeof(StartPage_m), e.Arguments))
                                 //{
                                 //    throw new Exception("Failed to create initial page");
                                 //}
-                                if (!rootFrame.Navigate(typeof(MainPage), "/kb"))
+                                if (!rootFrame.Navigate(typeof(StartPage), "/kb"))
                                 {
                                     throw new Exception("Failed to create initial page");
                                 }
@@ -327,13 +348,11 @@ namespace ZSCY_Win10
                             else
                             {
                                 Debug.WriteLine("大于400的phone OR PC");
-                                if (!rootFrame.Navigate(typeof(MainPage), "/kb"))
+                                if (!rootFrame.Navigate(typeof(StartPage), "/kb"))
                                 {
                                     throw new Exception("Failed to create initial page");
                                 }
-
                             }
-
                         }
                     }
                 }
@@ -342,11 +361,11 @@ namespace ZSCY_Win10
                     if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar") && Utils.getPhoneWidth() < 400)
                     {
                         Debug.WriteLine("小于400的Phone" + Utils.getPhoneWidth());
-                        //if (!rootFrame.Navigate(typeof(MainPage_m), e.Arguments))
+                        //if (!rootFrame.Navigate(typeof(StartPage_m), e.Arguments))
                         //{
                         //    throw new Exception("Failed to create initial page");
                         //}
-                        if (!rootFrame.Navigate(typeof(MainPage), "/kb"))
+                        if (!rootFrame.Navigate(typeof(StartPage), "/kb"))
                         {
                             throw new Exception("Failed to create initial page");
                         }
@@ -354,23 +373,26 @@ namespace ZSCY_Win10
                     else
                     {
                         Debug.WriteLine("大于400的phone OR PC");
-                        if (!rootFrame.Navigate(typeof(MainPage), "/kb"))
+                        if (!rootFrame.Navigate(typeof(StartPage), "/kb"))
                         {
                             throw new Exception("Failed to create initial page");
                         }
-
                     }
                 }
             }
+
+
+            Window.Current.Activate();
+
             // 确保当前窗口处于活动状态
             //await UmengAnalytics.StartTrackAsync("55cd8c8be0f55a20ba00440d", "Marketplace_Win10"); //私有
             await UmengAnalytics.StartTrackAsync("57317d07e0f55a28fe002bec", "Marketplace_Win10"); //公共
-                                                                                                   //await InitNotificationsAsync();
+            //await InitNotificationsAsync();
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size { Width = 400, Height = 480 });
 
+
+
         }
-
-
         private async void OnResuming(object sender, object e)
         {
             //await UmengAnalytics.StartTrackAsync("55cd8c8be0f55a20ba00440d", "Marketplace_Win10"); //私有

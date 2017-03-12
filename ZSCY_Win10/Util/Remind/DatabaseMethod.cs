@@ -3,6 +3,7 @@ using SQLite.Net.Platform.WinRT;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -209,7 +210,9 @@ namespace ZSCY_Win10.Util.Remind
         {
             using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
             {
-                conn.CreateTable<DataBaseModel>();
+             
+                    conn.CreateTable<DataBaseModel>();
+          
                 conn.Insert(new DataBaseModel() { Id = id, Id_system = id_system, json = json });
             }
 

@@ -162,7 +162,10 @@ namespace ZSCY.Pages
                             Utils.Message("学号或姓名不正确");
 
                     }
-                    catch (Exception) { }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
 
                 }
                 AddTextBox.Text = "";

@@ -9,7 +9,8 @@
     "Newtonsoft.Json": "9.0.1",
     "PullToRefresh.UWP": "0.3.4",
     "SQLite.Net-PCL": "3.1.1",
-    "UmengAnalytics": "3.1.0"
+    "UmengAnalytics": "3.1.0",
+    "Win2D.uwp": "1.20.0"
   },
   "frameworks": {
     "uap10.0": {}

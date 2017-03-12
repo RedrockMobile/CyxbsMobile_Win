@@ -569,11 +569,11 @@ namespace ZSCY_Win10
                         break;
                     case "/jwzx":
                         NavMenuList.SelectedItem = 1;
-                        this.AppFrame.Navigate(navlist[1].DestPage, navlist[1].Arguments);
+                        this.AppFrame.Navigate(navlist[2].DestPage, navlist[2].Arguments);
                         break;
                     case "/more":
                         NavMenuList.SelectedItem = 2;
-                        this.AppFrame.Navigate(navlist[2].DestPage, navlist[2].Arguments);
+                        this.AppFrame.Navigate(navlist[5].DestPage, navlist[5].Arguments);
                         break;
                     default:
                         NavMenuList.SelectedItem = 0;

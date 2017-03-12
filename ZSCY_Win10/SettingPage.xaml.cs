@@ -147,7 +147,14 @@ namespace ZSCY_Win10
             var result = await dig.ShowAsync();
             if (null != result && result.Label == "是")
             {
-                appSetting.Values.Clear();
+                try
+                {
+                    appSetting.Values.Clear();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
                 DelectRemind();
                 try
                 {
@@ -421,24 +428,32 @@ namespace ZSCY_Win10
         }
         private void DelectRemind()
         {
-            List<string> RemindTagList = new List<string>();
-            //RemindTagList = DatabaseMethod.ClearRemindItem() as List<string>;
-            RemindTagList = DatabaseMethod.ClearRemindItem();
-            var notifier = ToastNotificationManager.CreateToastNotifier();
-            if (RemindTagList != null)
+            try
             {
 
-                for (int i = 0; i < RemindTagList.Count(); i++)
+                List<string> RemindTagList = new List<string>();
+                //RemindTagList = DatabaseMethod.ClearRemindItem() as List<string>;
+                RemindTagList = DatabaseMethod.ClearRemindItem();
+                var notifier = ToastNotificationManager.CreateToastNotifier();
+                if (RemindTagList != null)
                 {
-                    var scheduledNotifs = notifier.GetScheduledToastNotifications()
-                  .Where(n => n.Tag.Equals(RemindTagList[i]));
 
-                    // Remove all of those from the schedule
-                    foreach (var n in scheduledNotifs)
+                    for (int i = 0; i < RemindTagList.Count(); i++)
                     {
-                        notifier.RemoveFromSchedule(n);
+                        var scheduledNotifs = notifier.GetScheduledToastNotifications()
+                      .Where(n => n.Tag.Equals(RemindTagList[i]));
+
+                        // Remove all of those from the schedule
+                        foreach (var n in scheduledNotifs)
+                        {
+                            notifier.RemoveFromSchedule(n);
+                        }
                     }
                 }
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
             }
         }
     }

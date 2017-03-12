@@ -22,6 +22,7 @@
     <AppxBundlePlatforms>x86</AppxBundlePlatforms>
     <PackageCertificateThumbprint>FBD8F45C97EFD52F6541595D863995416DBF69E6</PackageCertificateThumbprint>
     <AppxBundle>Never</AppxBundle>
+    <AppxPackageDir>C:\Users\pengj\Desktop\zscy</AppxPackageDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -99,6 +100,7 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Assets\aCircle.png" />
     <Content Include="Assets\address_03.png" />
@@ -299,6 +301,8 @@
     <Compile Include="Data\JWList.cs" />
     <Compile Include="Data\PersonalIno.cs" />
     <Compile Include="Data\ScoreList.cs" />
+    <Compile Include="Data\StartPage\Database.cs" />
+    <Compile Include="Data\StartPage\ImageList.cs" />
     <Compile Include="Data\TodoItem.cs" />
     <Compile Include="Data\Transaction.cs" />
     <Compile Include="Models\BaseModel.cs" />
@@ -326,6 +330,7 @@
     <Compile Include="Models\richangshenghuo.cs" />
     <Compile Include="Models\ruxue_page.cs" />
     <Compile Include="Models\SexRatio.cs" />
+    <Compile Include="Models\StartPageModels\StartPageModel.cs" />
     <Compile Include="Models\StrategyHeader.cs" />
     <Compile Include="Models\SubjectRatio.cs" />
     <Compile Include="Models\Switch.cs" />
@@ -440,6 +445,9 @@
     <Compile Include="Pages\SearchFreeTimeResultPage.xaml.cs">
       <DependentUpon>SearchFreeTimeResultPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\StartPages\StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\StrategyPage.xaml.cs">
       <DependentUpon>StrategyPage.xaml</DependentUpon>
     </Compile>
@@ -490,8 +498,10 @@
     <Compile Include="Util\Converter\RemindConverter\RemindListWeekConverter.cs" />
     <Compile Include="Util\Converter\RemindConverter\WeekNumConverter.cs" />
     <Compile Include="Util\Converter\StarFillConverter.cs" />
+    <Compile Include="Util\Converter\StartPageConverts\UrlConvert.cs" />
     <Compile Include="Util\Converter\TextBlockInlineConverter.cs" />
     <Compile Include="Util\EmptyClass.cs" />
+    <Compile Include="Util\GaussianBlurHelp.cs" />
     <Compile Include="Util\GetCredential.cs" />
     <Compile Include="Util\HotFeedsDataTemplateSelector.cs" />
     <Compile Include="Util\HotOrBBDDSelector.cs" />
@@ -502,6 +512,7 @@
     <Compile Include="Util\Remind\RemindSystemUtil.cs" />
     <Compile Include="Util\Remind\RemindWebRequest.cs" />
     <Compile Include="Util\Request.cs" />
+    <Compile Include="Util\StartPage\StartPageHelp.cs" />
     <Compile Include="Util\TextBlockFormatter.cs" />
     <Compile Include="Util\Utils.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
@@ -518,6 +529,7 @@
     <Compile Include="ViewModels\Remind\AddRemindPageViewModel.cs" />
     <Compile Include="ViewModels\Remind\RemindListViewModel.cs" />
     <Compile Include="ViewModels\Remind\WeeksPageViewModel.cs" />
+    <Compile Include="ViewModels\StartPage\StartPageViewModel.cs" />
     <Compile Include="ViewModels\StrategyViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -625,7 +637,9 @@
     <Content Include="Assets\Table.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Package.StoreAssociation.xml" />
+    <None Include="Package.StoreAssociation.xml">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Notepad\anquan.txt" />
     <Content Include="Notepad\jiangxuejin.txt" />
     <Content Include="Notepad\ruxue.txt" />
@@ -816,6 +830,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\StartPages\StartPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\StrategyPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -842,11 +860,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
-      <Name>Behaviors SDK %28XAML%29</Name>
-    </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.16.2">
-      <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.16.2%29</Name>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.17.0">
+      <Name>SQLite for Universal Windows Platform</Name>
     </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.14393.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
