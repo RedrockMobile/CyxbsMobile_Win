@@ -310,6 +310,8 @@
     <Compile Include="Data\ScoreList.cs" />
     <Compile Include="Data\TodoItem.cs" />
     <Compile Include="Data\Transaction.cs" />
+    <Compile Include="Data\StartPage\Database.cs" />
+    <Compile Include="Data\StartPage\ImageList.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\CareerRatio.cs" />
     <Compile Include="Models\fengcaiheaders.cs" />
@@ -343,6 +345,7 @@
     <Compile Include="Models\yuanchuang.cs" />
     <Compile Include="Models\zhoubianmeijing.cs" />
     <Compile Include="Models\zhoubianmeishi.cs" />
+    <Compile Include="Models\StartpAgeModels\StartPageModel.cs" />
     <Compile Include="Models\zuzhi.cs" />
     <Compile Include="Models\zuzhi_intro.cs" />
     <Compile Include="MyPage.xaml.cs">
@@ -455,6 +458,9 @@
     <Compile Include="Pages\StrategyPage.xaml.cs">
       <DependentUpon>StrategyPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\StartPages\StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resouces\Api.cs" />
     <Compile Include="Resouces\APPTheme.cs" />
@@ -503,7 +509,9 @@
     <Compile Include="Util\Converter\RemindConverter\WeekNumConverter.cs" />
     <Compile Include="Util\Converter\StarFillConverter.cs" />
     <Compile Include="Util\Converter\TextBlockInlineConverter.cs" />
+    <Compile Include="Util\Converter\StartPageConverts\UrlConvert.cs"/>
     <Compile Include="Util\EmptyClass.cs" />
+    <Compile Include="Util\GaussianBlurHelp.cs" />
     <Compile Include="Util\GetCredential.cs" />
     <Compile Include="Util\HotFeedsDataTemplateSelector.cs" />
     <Compile Include="Util\HotOrBBDDSelector.cs" />
@@ -516,6 +524,7 @@
     <Compile Include="Util\Request.cs" />
     <Compile Include="Util\TextBlockFormatter.cs" />
     <Compile Include="Util\Utils.cs" />
+    <Compile Include="Util\StartPage\StartPageHelp.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BigDataViewModel.cs" />
     <Compile Include="ViewModels\Community\CommunityContentViewModel.cs" />
@@ -531,6 +540,7 @@
     <Compile Include="ViewModels\Remind\RemindListViewModel.cs" />
     <Compile Include="ViewModels\Remind\WeeksPageViewModel.cs" />
     <Compile Include="ViewModels\StrategyViewModel.cs" />
+    <Compile Include="ViewModels\StartPage\StartPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -856,11 +866,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\StartPages\StartPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
-      <Name>Behaviors SDK %28XAML%29</Name>
-    </SDKReference>
     <SDKReference Include="SQLite.UWP.2015, Version=3.17.0">
       <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.17.0%29</Name>
     </SDKReference>
