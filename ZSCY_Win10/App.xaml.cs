@@ -176,9 +176,7 @@ namespace ZSCY_Win10
             }
             catch (Exception ex)
             {
-                //#if DEBUG
-                new MessageDialog(ex.Message + "\n" + ex.StackTrace).ShowAsync();
-                //#else
+
                 StorageFile file = null;
                 if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                     file = await ApplicationData.Current.LocalFolder.CreateFileAsync("ZSCY_Mobile_Log.txt", CreationCollisionOption.OpenIfExists);
@@ -186,11 +184,13 @@ namespace ZSCY_Win10
                     file = await ApplicationData.Current.LocalFolder.CreateFileAsync("ZSCY_Log.txt", CreationCollisionOption.OpenIfExists);
                 string errorText = $"[{DateTime.Now.ToString()}]\r\n{ex.StackTrace}\r\n";
                 await FileIO.AppendTextAsync(file, errorText, Windows.Storage.Streams.UnicodeEncoding.Utf8);
-                //#endif
             }
             finally
             {
+#if DEBUG
                 Application.Current.Exit();
+#else
+#endif
             }
         }
 

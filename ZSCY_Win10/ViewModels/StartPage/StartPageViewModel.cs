@@ -21,6 +21,8 @@ using Windows.UI.ViewManagement;
 using Windows.System.Profile;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml;
+using System.Net.NetworkInformation;
+using System.Diagnostics;
 
 namespace ZSCY_Win10.ViewModels.StartPage
 {
@@ -28,7 +30,8 @@ namespace ZSCY_Win10.ViewModels.StartPage
     {
         public StartPageViewModel()
         {
-            DownLoadImage();
+            if (NetworkInterface.GetIsNetworkAvailable())
+                DownLoadImage();
             SetImage();
         }
         /// <summary>
@@ -63,7 +66,7 @@ namespace ZSCY_Win10.ViewModels.StartPage
 
                 Model.HasPictrue = true;
                 Model.PictrueSource = @"Assets/SplashScreen.png";
-            
+
                 if (deviceType == "Windows.Mobile")
                 {
                     Model.StretchMode = Stretch.Uniform;
@@ -83,7 +86,16 @@ namespace ZSCY_Win10.ViewModels.StartPage
         }
         private async void DownLoadImage()
         {
-            string content = await NetWork.getHttpWebRequest(Api.StartPageImagApi, PostORGet: 1, fulluri: true);
+            string content = "";
+            try
+            {
+
+            content= await NetWork.getHttpWebRequest(Api.StartPageImagApi, PostORGet: 1, fulluri: true);
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
             ImageList imageList = JsonConvert.DeserializeObject<ImageList>(content);
             //创建加入数据库的临时变量
             Database dbTemp = new Database();
@@ -102,7 +114,7 @@ namespace ZSCY_Win10.ViewModels.StartPage
                     await StartPageHelp.DownloadPictrue(item.ImageUrl, imageName);
                 }
 #else
-                if (tempTime>DateTime.Now)
+                if (tempTime > DateTime.Now)
                 {
                     string imageName = item.ImageUrl.Substring(item.ImageUrl.LastIndexOf('/') + 1);
                     dbTemp.Name = item.Name;
