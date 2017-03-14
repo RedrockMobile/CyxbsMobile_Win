@@ -194,7 +194,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             }
             catch (Exception) { }
         }
-
+        int mark2PeoNameNum = 0;//回复者名字的数量   
         private void sendMarkTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (sendMarkTextBox.Text.Length > 0)
@@ -204,7 +204,15 @@ namespace ZSCY_Win10.Pages.CommunityPages
             else
             {
                 sendMarkButton.IsEnabled = false;
+
             }
+            if (mark2PeoNameNum!=0&&sendMarkTextBox.Text.Length<mark2PeoNameNum+6)
+            {
+                sendMarkTextBox.Text = "";
+                isMark2Peo = false;
+                mark2PeoNameNum = 0;
+            }
+           
         }
 
         private async void sendMarkButton_Click(object sender, RoutedEventArgs e)
@@ -294,6 +302,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
         private void markListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var clickMarkItem = (Mark)e.ClickedItem;
+            mark2PeoNameNum = clickMarkItem.nickname.Length;
             try
             {
                 var vault = new Windows.Security.Credentials.PasswordVault();

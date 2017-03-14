@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.Foundation;
+using Windows.Storage;
 
 namespace SycnRemindBackgroundTask
 {
@@ -14,8 +15,17 @@ namespace SycnRemindBackgroundTask
     internal sealed class SelectedWeekNum
     {
         private int weekNum;
-        private static DateTime oneWeekTime = new DateTime(2016, 9, 5, 0, 0, 0);
+        private static DateTime oneWeekTime;
         private DateTime weekNumOfMonday;
+        public SelectedWeekNum()
+        {
+            ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+            int num = int.Parse(appSetting.Values["nowWeek"].ToString());
+            int day = Convert.ToInt32(DateTime.Now.DayOfWeek);
+            int totalDay = (num - 1) * 7 + day - 1;
+            DateTime oneWeekFrist = DateTime.Now - DateTime.Now.TimeOfDay;
+            oneWeekTime = oneWeekFrist.AddDays(-totalDay);
+        }
         public void SetWeekTime(int i)
         {
             weekNumOfMonday = oneWeekTime.AddDays(i * 7);
@@ -48,7 +58,7 @@ namespace SycnRemindBackgroundTask
 
     }
     [DataContract]
- internal sealed class DateItemModel
+    internal sealed class DateItemModel
     {
         ///<summary>
         /// 
@@ -72,7 +82,7 @@ namespace SycnRemindBackgroundTask
 
 
     [DataContract]
- internal sealed class MyRemind
+    internal sealed class MyRemind
     {
         public Guid Id_system { get; set; }
         public DateTimeOffset time { get; set; }
@@ -184,7 +194,7 @@ namespace SycnRemindBackgroundTask
         }
     }
 
-   internal sealed class AddRemindReturn
+    internal sealed class AddRemindReturn
     {
         ///<summary>
         /// 

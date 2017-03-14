@@ -11,13 +11,13 @@ using Windows.Security.Credentials;
 using Newtonsoft.Json;
 using System.Runtime.Serialization.Json;
 using System.Collections.ObjectModel;
-
+using Windows.UI.Popups;
 
 namespace SycnRemindBackgroundTask
 {
     internal sealed class RemindHelp
     {
-    
+
         public static void AddRemind(MyRemind remind)
         {
             remind.Id_system = Guid.NewGuid();
@@ -139,18 +139,17 @@ namespace SycnRemindBackgroundTask
 
                 Debug.WriteLine(x.Message);
             }
-            //相当于MyRemind
+            //相当于MyRemind 
             GetRemindModel getRemid = new GetRemindModel();
-
-
             try
             {
                 getRemid = JsonConvert.DeserializeObject<GetRemindModel>(content);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debug.Write(e);
+                await new MessageDialog(ex.Message).ShowAsync();
             }
+
             List<string> getRemindList_json = new List<string>();
             List<MyRemind> remindList = new List<MyRemind>();
             #region 返回的json格式和添加的风格不一样，转换

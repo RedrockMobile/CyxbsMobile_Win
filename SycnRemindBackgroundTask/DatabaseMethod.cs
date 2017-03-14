@@ -52,7 +52,7 @@ namespace SycnRemindBackgroundTask
 
             conn.DropTable<RemindListDB>();
             conn.CreateTable<RemindListDB>();
-
+            conn.Dispose();
             return TagList;
         }
         //public static async void DeleteRemindItem(string tag)
@@ -95,21 +95,27 @@ namespace SycnRemindBackgroundTask
         //}
         public static ObservableCollection<RemindListDB> ToModel()
         {
-            var conn = new SQLiteConnection(new SQLitePlatformWinRT(), Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db"));
-            var list = conn.Table<RemindListDB>();
             ObservableCollection<RemindListDB> modelList = new ObservableCollection<RemindListDB>();
-            foreach (var item in list)
+            using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db")))
             {
-                modelList.Add(item);
+                conn.CreateTable<RemindListDB>();
+                var list = conn.Table<RemindListDB>();
+                foreach (var item in list)
+                {
+                    modelList.Add(item);
+                }
             }
             return modelList;
         }
         public static RemindListDB ToModel(string id)
         {
-            var conn = new SQLiteConnection(new SQLitePlatformWinRT(), Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db"));
-            var item = (from p in conn.Table<RemindListDB>()
-                        where p.Id == id
-                        select p).FirstOrDefault();
+            RemindListDB item = new RemindListDB();
+            using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db")))
+            {
+               item = (from p in conn.Table<RemindListDB>()
+                            where p.Id == id
+                            select p).FirstOrDefault();
+            }
             return item;
         }
         public static void EditDatabase(int num, string id, string json, string id_system)
@@ -131,13 +137,11 @@ namespace SycnRemindBackgroundTask
             //    up.Delete(x => x.Id .Equals( id) && x.Id_system.Equals( id_system));
             //else
             //{
-
             //}
             up.Delete(x => x.Num == num);
             RemindListDB temp = new RemindListDB() { Id = id, Id_system = id_system, json = json };
             conn.Insert(temp);
-
-
+            conn.Dispose();
 
         }
 
@@ -244,6 +248,7 @@ namespace SycnRemindBackgroundTask
             var item = (from p in conn.Table<RemindListDB>()
                         where p.Id == id
                         select p).FirstOrDefault();
+            conn.Dispose();
             return item.Id_system.Split(',');
         }
     }

@@ -65,21 +65,28 @@ namespace ZSCY_Win10.Util.Remind
 
         public static ObservableCollection<DataBaseModel> ToModel()
         {
-            var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath);
-            var list = conn.Table<DataBaseModel>();
             ObservableCollection<DataBaseModel> modelList = new ObservableCollection<DataBaseModel>();
-            foreach (var item in list)
+
+            using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
             {
-                modelList.Add(item);
+                conn.CreateTable<DataBaseModel>();
+                var list = conn.Table<DataBaseModel>();
+                foreach (var item in list)
+                {
+                    modelList.Add(item);
+                }
             }
             return modelList;
         }
         public static DataBaseModel ToModel(string id)
         {
-            var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath);
-            var item = (from p in conn.Table<DataBaseModel>()
+            DataBaseModel item = new DataBaseModel();
+            using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
+            {
+                item = (from p in conn.Table<DataBaseModel>()
                         where p.Id.Equals(id)
                         select p).FirstOrDefault();
+            }
             return item;
         }
 
@@ -210,9 +217,9 @@ namespace ZSCY_Win10.Util.Remind
         {
             using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
             {
-             
-                    conn.CreateTable<DataBaseModel>();
-          
+
+                conn.CreateTable<DataBaseModel>();
+
                 conn.Insert(new DataBaseModel() { Id = id, Id_system = id_system, json = json });
             }
 

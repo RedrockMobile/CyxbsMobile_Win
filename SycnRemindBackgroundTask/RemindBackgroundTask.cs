@@ -30,33 +30,35 @@ namespace SycnRemindBackgroundTask
                 var list = DatabaseMethod.ToModel();
 
                 BackgroundTaskDeferral deferral1 = taskInstance.GetDeferral();
-                foreach (var item in list)
-                {
-
-                    if (item.Id == null)
+                if (list.Count > 0)
+                    //上传上次未上传的
+                    foreach (var item in list)
                     {
-                        string content = "";
-                        isLoad = true;
-                        MyRemind tempRemind = new MyRemind();
-                        tempRemind = JsonConvert.DeserializeObject<MyRemind>(item.json);
-                        tempRemind.IdNum = credential.Password;
-                        tempRemind.StuNum = credential.UserName;
-                        content = await NetWork.httpRequest(@"http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Person/addTransaction", NetWork.addRemind(tempRemind));
-                        Debug.WriteLine(content);
 
-                        AddRemindReturn tempReturn = JsonConvert.DeserializeObject<AddRemindReturn>(content);
-                        if (tempReturn.Status == 200)
+                        if (item.Id == null)
                         {
-                            string id = tempReturn.Id;
-                            tempRemind.Id = id;
-                            tempRemind.IdNum = null;
-                            tempRemind.StuNum = null;
-                            DatabaseMethod.EditDatabase(item.Num, id, JsonConvert.SerializeObject(tempRemind), item.Id_system);
+                            string content = "";
+                            isLoad = true;
+                            MyRemind tempRemind = new MyRemind();
+                            tempRemind = JsonConvert.DeserializeObject<MyRemind>(item.json);
+                            tempRemind.IdNum = credential.Password;
+                            tempRemind.StuNum = credential.UserName;
+                            content = await NetWork.httpRequest(@"http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Person/addTransaction", NetWork.addRemind(tempRemind));
+                            Debug.WriteLine(content);
+
+                            AddRemindReturn tempReturn = JsonConvert.DeserializeObject<AddRemindReturn>(content);
+                            if (tempReturn.Status == 200)
+                            {
+                                string id = tempReturn.Id;
+                                tempRemind.Id = id;
+                                tempRemind.IdNum = null;
+                                tempRemind.StuNum = null;
+                                DatabaseMethod.EditDatabase(item.Num, id, JsonConvert.SerializeObject(tempRemind), item.Id_system);
+                            }
+
+
                         }
-
-
                     }
-                }
 
                 deferral1.Complete();
                 BackgroundTaskDeferral deferral2 = taskInstance.GetDeferral();
