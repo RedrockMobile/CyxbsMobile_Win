@@ -203,14 +203,7 @@ namespace ZSCY_Win10
             backgroundName.Add("RemindBackgroundTask");
             try
             {
-                //foreach (var cur in BackgroundTaskRegistration.AllTasks)
-                //{
-                //if (cur.Value.Name == exampleTaskName || cur.Value.Name == "Toastbuilder"||cur.Value.Name== "LiveTileBackgroundTask")
-                //{
-                //    cur.Value.Unregister(true);
-                //}
-
-                //}
+    
                 foreach (var item in backgroundName)
                 {
                     var list = from i in BackgroundTaskRegistration.AllTasks
