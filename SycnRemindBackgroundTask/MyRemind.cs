@@ -15,16 +15,19 @@ namespace SycnRemindBackgroundTask
     internal sealed class SelectedWeekNum
     {
         private int weekNum;
-        private static DateTime oneWeekTime;
+        private  DateTime oneWeekTime;
         private DateTime weekNumOfMonday;
         public SelectedWeekNum()
         {
-            ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
-            int num = int.Parse(appSetting.Values["nowWeek"].ToString());
-            int day = Convert.ToInt32(DateTime.Now.DayOfWeek);
-            int totalDay = (num - 1) * 7 + day - 1;
-            DateTime oneWeekFrist = DateTime.Now - DateTime.Now.TimeOfDay;
-            oneWeekTime = oneWeekFrist.AddDays(-totalDay);
+            if (oneWeekTime == new DateTime(1,1,1,0,0,0))
+            {
+                ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+                int num = int.Parse(appSetting.Values["nowWeek"].ToString());
+                int day = Convert.ToInt32(DateTime.Now.DayOfWeek);
+                int totalDay = (num - 1) * 7 + day - 1;
+                DateTime oneWeekFrist = DateTime.Now - DateTime.Now.TimeOfDay;
+                oneWeekTime = oneWeekFrist.AddDays(-totalDay);
+            }
         }
         public void SetWeekTime(int i)
         {

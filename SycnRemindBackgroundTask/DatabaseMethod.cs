@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 using Windows.UI.Xaml;
 using Windows.Storage;
 using System.IO;
-
+using System.Diagnostics;
 
 namespace SycnRemindBackgroundTask
 {
@@ -42,7 +42,9 @@ namespace SycnRemindBackgroundTask
             List<string> TagList = new List<string>();
             foreach (var item in list)
             {
-                var itemList = item.Id_system.Split(',');
+                string[] itemList =
+                    item.Id_system != null ? item.Id_system.Split(',') :new string[0];
+
                 for (int i = 0; i < itemList.Count(); i++)
                 {
                     TagList.Add(itemList[i]);
@@ -112,9 +114,9 @@ namespace SycnRemindBackgroundTask
             RemindListDB item = new RemindListDB();
             using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db")))
             {
-               item = (from p in conn.Table<RemindListDB>()
-                            where p.Id == id
-                            select p).FirstOrDefault();
+                item = (from p in conn.Table<RemindListDB>()
+                        where p.Id == id
+                        select p).FirstOrDefault();
             }
             return item;
         }
