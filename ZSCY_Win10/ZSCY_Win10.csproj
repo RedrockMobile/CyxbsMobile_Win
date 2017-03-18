@@ -508,8 +508,9 @@
     <Compile Include="Util\Converter\RemindConverter\RemindListWeekConverter.cs" />
     <Compile Include="Util\Converter\RemindConverter\WeekNumConverter.cs" />
     <Compile Include="Util\Converter\StarFillConverter.cs" />
+    <Compile Include="Util\Converter\StartPageConverts\BackgroundImageConvert.cs" />
     <Compile Include="Util\Converter\TextBlockInlineConverter.cs" />
-    <Compile Include="Util\Converter\StartPageConverts\UrlConvert.cs"/>
+    <Compile Include="Util\Converter\StartPageConverts\UrlConvert.cs" />
     <Compile Include="Util\EmptyClass.cs" />
     <Compile Include="Util\GaussianBlurHelp.cs" />
     <Compile Include="Util\GetCredential.cs" />

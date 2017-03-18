@@ -37,8 +37,6 @@ namespace ZSCY_Win10.ViewModels.StartPage
         /// <summary>
         /// 判断数据库是否有图片
         /// </summary>
-
-
         private void SetImage()
         {
             Database temp = new Database();

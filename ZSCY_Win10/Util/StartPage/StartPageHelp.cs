@@ -91,8 +91,17 @@ namespace ZSCY_Win10.Util.StartPage
                 {
 
                     var list = conn.Table<Database>();
-                    var array = list.OrderBy(x => Convert.ToDateTime(x.StartTime)).ToList();
-                    int i = 0;
+                    var array = list.ToList();
+                    array.Sort((x, y) => 
+                    {
+#if DEBUG
+                        return Convert.ToDateTime(x.StartTime) > Convert.ToDateTime(y.StartTime) ? -1 : 1;
+
+#else
+                        return Convert.ToDateTime(x.StartTime) > Convert.ToDateTime(y.StartTime)?1:-1;
+
+#endif
+                    });
                     Debug.WriteLine(array.Count() + list.Count());
                     foreach (var item in array)
                     {
@@ -100,13 +109,9 @@ namespace ZSCY_Win10.Util.StartPage
 #if DEBUG
 
 
-                        if (DateTime.Now < Convert.ToDateTime(item.StartTime))
-                        {
-                            break;
-                        }
 #else
 
-                        if (DateTime.Now > Convert.ToDateTime(item.StartTime))
+                        if (DateTime.Now < Convert.ToDateTime(item.StartTime))
                         {
                             break;
                         }
@@ -115,8 +120,9 @@ namespace ZSCY_Win10.Util.StartPage
                         isSuccess = true;
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+
                     conn.CreateTable<Database>();
                 }
 
@@ -131,8 +137,8 @@ namespace ZSCY_Win10.Util.StartPage
             }
         }
 
-        #endregion
-        #region 图片缓存辅助方法
+#endregion
+#region 图片缓存辅助方法
         public static DateTime GetTime(string time)
         {
             DateTime dt = new DateTime();
@@ -227,6 +233,6 @@ namespace ZSCY_Win10.Util.StartPage
             }
 
         }
-        #endregion
+#endregion
     }
 }

@@ -11,10 +11,11 @@
     mc:Ignorable="d">
     <Page.Resources>
         <convert:UrlConvert x:Key="UrlConvert"/>
+        <convert:BackgroundImageConvert x:Key="BackgroundImageConvert"/>
     </Page.Resources>
     <Grid Background="#058BFE" >
         <Image Name="BackgroundImage"  Source="{Binding ElementName=page,Path=ViewModel.Model.PictrueSource,Converter={StaticResource UrlConvert}}" 
-               HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+               HorizontalAlignment="Stretch" Stretch="UniformToFill" Visibility="{Binding ElementName=page,Path=ViewModel.Model.HasPictrue,Converter={StaticResource BackgroundImageConvert}}"/>
         <Canvas Name="Glass" Background="Transparent" HorizontalAlignment="Stretch" 
                 VerticalAlignment="Stretch"/>
         <Image Name="MainImage"  Source="{Binding ElementName=page,Path=ViewModel.Model.PictrueSource,Converter={StaticResource UrlConvert}}" 
