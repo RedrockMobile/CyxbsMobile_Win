@@ -400,6 +400,9 @@
     <Compile Include="Pages\CommunityPages\CommunityPersonInfo.xaml.cs">
       <DependentUpon>CommunityPersonInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ElectricChargeCheckPages\DialPlate.xaml.cs">
+      <DependentUpon>DialPlate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\EmptyRoomsPage.xaml.cs">
       <DependentUpon>EmptyRoomsPage.xaml</DependentUpon>
     </Compile>
@@ -508,8 +511,9 @@
     <Compile Include="Util\Converter\RemindConverter\RemindListWeekConverter.cs" />
     <Compile Include="Util\Converter\RemindConverter\WeekNumConverter.cs" />
     <Compile Include="Util\Converter\StarFillConverter.cs" />
+    <Compile Include="Util\Converter\StartPageConverts\BackgroundImageConvert.cs" />
     <Compile Include="Util\Converter\TextBlockInlineConverter.cs" />
-    <Compile Include="Util\Converter\StartPageConverts\UrlConvert.cs"/>
+    <Compile Include="Util\Converter\StartPageConverts\UrlConvert.cs" />
     <Compile Include="Util\EmptyClass.cs" />
     <Compile Include="Util\GaussianBlurHelp.cs" />
     <Compile Include="Util\GetCredential.cs" />
@@ -763,6 +767,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\CommunityPages\CommunityPersonInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ElectricChargeCheckPages\DialPlate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

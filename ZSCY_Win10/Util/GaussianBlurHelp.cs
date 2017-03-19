@@ -41,6 +41,11 @@ namespace ZSCY_Win10.Util
             ExpressionAnimation bindSizeAnimation = compositor.CreateExpressionAnimation("hostVisual.Size");
             bindSizeAnimation.SetReferenceParameter("hostVisual", hostVisual);
             glassVisual.StartAnimation("Size", bindSizeAnimation);
+
+            effectFactory.Dispose();
+            gausianBlur.Dispose();
+            backdropBrush.Dispose();
+
         }
     }
 }

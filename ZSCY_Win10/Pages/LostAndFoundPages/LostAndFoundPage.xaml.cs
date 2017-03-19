@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Models;
 using ZSCY_Win10.Resource;
@@ -97,23 +98,14 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var temp = e.ClickedItem as LFItem;
-            Frame.Navigate(typeof(LFDetailPage), temp.pro_id);
+            Frame.Navigate(typeof(LFDetailPage), temp.pro_id, new CommonNavigationTransitionInfo());
         }
-        protected override void OnNavigatedTo(NavigationEventArgs e)            //不知道启动位置临时写的OnNavigatedTo，记得修改
+        protected override void OnNavigatedTo(NavigationEventArgs e)            //临时OnNavigatedTo，记得修改
         {
             if (!IsItemLoaded[0])
             {
-                var but = e.Parameter as Button;            
-                if (but.Name == "ChooseLostPageBut")
-                {
-                    BaseUrl = "http://hongyan.cqupt.edu.cn/laf/api/view/lost/";
-                    Title = "寻物启事";
-                }
-                else
-                {
                     BaseUrl = "http://hongyan.cqupt.edu.cn/laf/api/view/found/";
                     Title = "失物招领";
-                }
             }
         }
 
