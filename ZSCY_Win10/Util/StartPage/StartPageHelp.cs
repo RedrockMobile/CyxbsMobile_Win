@@ -92,13 +92,13 @@ namespace ZSCY_Win10.Util.StartPage
 
                     var list = conn.Table<Database>();
                     var array = list.ToList();
-                    array.Sort((x, y) => 
+                    array.Sort((x, y) =>
                     {
 #if DEBUG
                         return Convert.ToDateTime(x.StartTime) > Convert.ToDateTime(y.StartTime) ? -1 : 1;
 
 #else
-                        return Convert.ToDateTime(x.StartTime) > Convert.ToDateTime(y.StartTime)?1:-1;
+                        return Convert.ToDateTime(x.StartTime) > Convert.ToDateTime(y.StartTime) ? 1 : -1;
 
 #endif
                     });
@@ -107,17 +107,22 @@ namespace ZSCY_Win10.Util.StartPage
                     {
                         Debug.WriteLine(item);
 #if DEBUG
-
+                        databaseTemp = item;
+                        isSuccess = true;
 
 #else
 
-                        if (DateTime.Now < Convert.ToDateTime(item.StartTime))
+                        if (DateTime.Now < Convert.ToDateTime(item.StartTime).AddDays(2) && DateTime.Now > Convert.ToDateTime(item.StartTime))
                         {
-                            break;
+                            databaseTemp = item;
+                            isSuccess = true;
+                        }
+                        else
+                        {
+                            File.Delete(item.Url);
+                            DeleteDatabase(item);
                         }
 #endif
-                        databaseTemp = item;
-                        isSuccess = true;
                     }
                 }
                 catch (Exception ex)
@@ -125,6 +130,7 @@ namespace ZSCY_Win10.Util.StartPage
 
                     conn.CreateTable<Database>();
                 }
+
 
             }
             return isSuccess;
@@ -137,8 +143,8 @@ namespace ZSCY_Win10.Util.StartPage
             }
         }
 
-#endregion
-#region 图片缓存辅助方法
+        #endregion
+        #region 图片缓存辅助方法
         public static DateTime GetTime(string time)
         {
             DateTime dt = new DateTime();
@@ -233,6 +239,6 @@ namespace ZSCY_Win10.Util.StartPage
             }
 
         }
-#endregion
+        #endregion
     }
 }
