@@ -23,8 +23,9 @@ namespace ZSCY_Win10.Models.RemindModels
         {
             ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
             int num = int.Parse(appSetting.Values["nowWeek"].ToString());
-            int day = Convert.ToInt32(DateTime.Now.DayOfWeek);
-            int totalDay = (num - 1) * 7 + day - 1;
+            int day = Convert.ToInt32(DateTime.Today.DayOfWeek);
+            int today = day == 0 ? 7 : day;
+            int totalDay = (num - 1) * 7 + today - 1;
             DateTime oneWeekFrist = DateTime.Now - DateTime.Now.TimeOfDay;
            oneWeekFrist= oneWeekFrist.AddDays(-totalDay);
 #if DEBUG
