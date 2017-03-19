@@ -98,9 +98,9 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var temp = e.ClickedItem as LFItem;
-            Frame.Navigate(typeof(LFDetailPage), temp.pro_id, new SlideNavigationTransitionInfo());
+            Frame.Navigate(typeof(LFDetailPage), temp.pro_id, new CommonNavigationTransitionInfo());
         }
-        protected override void OnNavigatedTo(NavigationEventArgs e)            //不知道启动位置临时写的OnNavigatedTo，记得修改
+        protected override void OnNavigatedTo(NavigationEventArgs e)            //临时OnNavigatedTo，记得修改
         {
             if (!IsItemLoaded[0])
             {
