@@ -1,0 +1,170 @@
+﻿<UserControl
+    x:Class="ZSCY_Win10.Pages.ElectricChargeCheckPages.DialPlate"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY_Win10.Pages.ElectricChargeCheckPages"
+    xmlns:Converter="using:ZSCY_Win10.Pages.ElectricChargeCheckPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Win2DBG="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    mc:Ignorable="d"
+    d:DesignHeight="450"
+    d:DesignWidth="420"
+    Unloaded="UserControl_Unloaded">
+
+    <UserControl.Resources>
+        <Converter:PercentValueToPoint x:Key="PVTP"/>
+        <Converter:PercentValueToPoint2 x:Key="PVTP2"/>
+    </UserControl.Resources>
+    <Grid Width="405" Height="410" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <!--表盘空底-->
+        <Path StrokeThickness="0" Stroke="#1F12D0FF" Fill="#1F12D0FF" CacheMode="BitmapCache">
+            <Path.Data>
+                <PathGeometry>
+                    <PathGeometry.Figures >
+                        <PathFigure StartPoint="-5,200">
+                            <PathFigure.Segments>
+                                <ArcSegment Point="405,200" Size="205,205" SweepDirection="Clockwise" />
+                            </PathFigure.Segments>
+                        </PathFigure>
+                    </PathGeometry.Figures>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <!--表盘刻度-->
+        <Path StrokeThickness="0" CacheMode="BitmapCache">
+            <Path.Data>
+                <PathGeometry>
+                    <PathGeometry.Figures>
+                        <PathFigure StartPoint="-5,200">
+                            <PathFigure.Segments>
+                                <ArcSegment Point="{x:Bind Percent,Converter={StaticResource PVTP2},Mode=OneWay}" Size="205,205" SweepDirection="Clockwise" />
+                                <PolyLineSegment Points="200,200"/>
+                            </PathFigure.Segments>
+                        </PathFigure>
+                    </PathGeometry.Figures>
+                </PathGeometry>
+            </Path.Data>
+            <Path.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Offset="0" Color="#12D0FF"/>
+                    <GradientStop Offset="1" Color="#1F12D0FF"/>
+                </LinearGradientBrush>
+            </Path.Fill>
+        </Path>
+        <!--背景以及遮盖部分-->
+        <Path Fill="#FFFFFFFF" StrokeThickness="0" CacheMode="BitmapCache">
+            <!--白色掩盖部分-->
+            <Path.Data>
+                <PathGeometry FillRule="Nonzero">
+                    <PathGeometry.Figures>
+                        <PathFigure StartPoint="12,200">
+                            <ArcSegment Point="388,200" Size="188,188" SweepDirection="Clockwise"/>
+                        </PathFigure>
+                        <PathFigure StartPoint="3,200">
+                            <PathFigure.Segments>
+                                <ArcSegment Point="8.93471050262451,152.009841918945" Size="197,197" SweepDirection="Clockwise" />
+                                <PolyLineSegment Points="200,200"/>
+                            </PathFigure.Segments>
+                        </PathFigure>
+                        <PathFigure StartPoint="9.71207809448242,149.014633178711">
+                            <PathFigure.Segments>
+                                <ArcSegment Point="27.8648662567139,104.195533752441" Size="197,197" SweepDirection="Clockwise" />
+                                <PolyLineSegment Points="200,200"/>
+                            </PathFigure.Segments>
+                        </PathFigure>
+                        <PathFigure StartPoint="29.3909320831299,101.503570556641">
+                            <PathFigure.Segments>
+                                <ArcSegment Point="58.5248107910156,62.9096221923828" Size="197,197" SweepDirection="Clockwise" />
+                                <PolyLineSegment Points="200,200"/>
+                            </PathFigure.Segments>
+                        </PathFigure>
+                        <PathFigure StartPoint="60.6955871582031,60.7043418884277">
+                            <PathFigure.Segments>
+                                <ArcSegment Point="98.8252944946289,30.9654521942139" Size="197,197" SweepDirection="Clockwise" />
+                                <PolyLineSegment Points="200,200"/>
+                            </PathFigure.Segments>
+                        </PathFigure>
+                        <PathFigure StartPoint="101.492851257324,29.3971214294434">
+                            <PathFigure.Segments>
+                                <ArcSegment Point="146.020111083984,10.5397882461548" Size="197,197" SweepDirection="Clockwise" />
+                                <PolyLineSegment Points="200,200"/>
+                            </PathFigure.Segments>
+                        </PathFigure>
+                        <PathFigure StartPoint="149.002685546875,9.71528244018555">
+                            <PathFigure.Segments>
+                                <ArcSegment Point="196.893280029297,3.02449822425842" Size="197,197" SweepDirection="Clockwise" />
+                                <PolyLineSegment Points="200,200"/>
+                            </PathFigure.Segments>
+                        </PathFigure>
+                        <PathFigure StartPoint="199.98762512207,3.00000047683716">
+                            <PathFigure.Segments>
+                                <ArcSegment Point="247.978149414063,8.93169593811035" Size="197,197" SweepDirection="Clockwise" />
+                                <PolyLineSegment Points="200,200"/>
+                            </PathFigure.Segments>
+                        </PathFigure>
+                        <PathFigure StartPoint="250.973403930664,9.70887470245361">
+                            <PathFigure.Segments>
+                                <ArcSegment Point="295.793640136719,27.8588466644287" Size="197,197" SweepDirection="Clockwise" />
+                                <PolyLineSegment Points="200,200"/>
+                            </PathFigure.Segments>
+                        </PathFigure>
+                        <PathFigure StartPoint="298.485717773438,29.384744644165">
+                            <PathFigure.Segments>
+                                <ArcSegment Point="337.081481933594,58.5161972045898" Size="197,197" SweepDirection="Clockwise" />
+                                <PolyLineSegment Points="200,200"/>
+                            </PathFigure.Segments>
+                        </PathFigure>
+                        <PathFigure StartPoint="339.286895751953,60.6868362426758">
+                            <PathFigure.Segments>
+                                <ArcSegment Point="369.028198242188,98.8146743774414" Size="197,197" SweepDirection="Clockwise" />
+                                <PolyLineSegment Points="200,200"/>
+                            </PathFigure.Segments>
+                        </PathFigure>
+                        <PathFigure StartPoint="370.5966796875,101.482131958008">
+                            <PathFigure.Segments>
+                                <ArcSegment Point="389.456817626953,146.008209228516" Size="197,197" SweepDirection="Clockwise" />
+                                <PolyLineSegment Points="200,200"/>
+                            </PathFigure.Segments>
+                        </PathFigure>
+                        <PathFigure StartPoint="390.281524658203,148.99072265625">
+                            <PathFigure.Segments>
+                                <ArcSegment Point="397,200" Size="197,197" SweepDirection="Clockwise" />
+                                <PolyLineSegment Points="200,200"/>
+                            </PathFigure.Segments>
+                        </PathFigure>
+                    </PathGeometry.Figures>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <Win2DBG:CanvasControl x:Name="BGCycle" Draw="BGCycle_Draw"/>
+        <Path StrokeThickness="0" Fill="#FFFFFFFF">
+            <Path.Data>
+                <EllipseGeometry Center="200,200" RadiusX="167" RadiusY="167" />
+            </Path.Data>
+        </Path>
+        <!--文字部分-->
+        <RelativePanel HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <TextBlock Text="{x:Bind BalanceProperty,Mode=OneWay}" x:Name="Balance" Foreground="#12D0FF" FontSize="118" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="元" Foreground="#12D0FF" Height="68" FontSize="32" RelativePanel.RightOf="Balance" RelativePanel.AlignBottomWith="Balance"/>
+            <TextBlock Text="{x:Bind DumpEnergyProperty,Mode=OneWay}" Foreground="#93B3C2" FontSize="31" x:Name="DumpEnergy" RelativePanel.Below="Balance" RelativePanel.AlignHorizontalCenterWith="Balance"/>
+            <TextBlock Text="度" Height="34" FontSize="23" Foreground="#93B3C2" RelativePanel.RightOf="DumpEnergy" RelativePanel.AlignBottomWith="DumpEnergy"/>
+        </RelativePanel>
+        <!--指针圆-->
+        <Path Fill="#D841CFFF" CacheMode="BitmapCache" >
+            <Path.Data>
+                <EllipseGeometry Center="{x:Bind Percent,Converter={StaticResource PVTP},Mode=OneWay}" RadiusX="12" RadiusY="12"/>
+            </Path.Data>
+        </Path>
+        <Path Fill="#2F12D0FF" CacheMode="BitmapCache">
+            <Path.Data>
+                <EllipseGeometry Center="{x:Bind Percent,Converter={StaticResource PVTP},Mode=OneWay}" RadiusX="17" RadiusY="17"/>
+            </Path.Data>
+        </Path>
+        <Path Fill="#2012D0FF" CacheMode="BitmapCache">
+            <Path.Data>
+                <EllipseGeometry Center="{x:Bind Percent,Converter={StaticResource PVTP},Mode=OneWay}" RadiusX="22" RadiusY="22"/>
+            </Path.Data>
+        </Path>
+    </Grid>
+</UserControl>
