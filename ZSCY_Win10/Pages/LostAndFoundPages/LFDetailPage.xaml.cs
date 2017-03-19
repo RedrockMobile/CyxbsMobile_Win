@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -37,6 +38,16 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
         {
             var temp = e.Parameter as string;
             VM = await Model.GetDetail(temp);
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            SystemNavigationManager.GetForCurrentView().BackRequested += PageBackRequested;
+        }
+
+        private void PageBackRequested(object sender, BackRequestedEventArgs e)
+        {
+            e.Handled = true;
+            SystemNavigationManager.GetForCurrentView().BackRequested -= PageBackRequested;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            Frame.GoBack();
         }
     }
 }
