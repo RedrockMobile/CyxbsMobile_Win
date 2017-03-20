@@ -119,8 +119,11 @@ namespace ZSCY_Win10.Util.StartPage
                         }
                         else
                         {
-                            File.Delete(item.Url);
-                            DeleteDatabase(item);
+                            if (DateTime.Now > Convert.ToDateTime(item.StartTime))
+                            {
+                                File.Delete(item.Url);
+                                DeleteDatabase(item);
+                            }
                         }
 #endif
                     }
