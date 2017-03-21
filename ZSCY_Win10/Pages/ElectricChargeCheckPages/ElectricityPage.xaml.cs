@@ -50,8 +50,8 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
             base.OnNavigatedTo(e);
             if (roomSettings.Values.ContainsKey("building") && roomSettings.Values.ContainsKey("room"))
             {
-                building.Text = roomSettings.Values["building"].ToString();
-                room.Text = roomSettings.Values["room"].ToString();
+                //building.Text = roomSettings.Values["building"].ToString();
+                //room.Text = roomSettings.Values["room"].ToString();
             }
         }
 
@@ -75,8 +75,8 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         {
             try
             {
-                paramList.Add(new KeyValuePair<string, string>("building", building.Text));
-                paramList.Add(new KeyValuePair<string, string>("room", room.Text));
+                //paramList.Add(new KeyValuePair<string, string>("building", building.Text));
+                //paramList.Add(new KeyValuePair<string, string>("room", room.Text));
                 string electricityJson = await netWork.GetElectricityByRoomNum(byRoomNumUri, paramList);
                 ElectricityByRoomNum electricityData = new ElectricityByRoomNum();
                 electricityData = netWork.ByRoomNumStringConvertToModel(electricityJson);
