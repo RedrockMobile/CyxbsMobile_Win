@@ -314,6 +314,7 @@
     <Compile Include="Data\StartPage\ImageList.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\CareerRatio.cs" />
+    <Compile Include="Models\Electricity.cs" />
     <Compile Include="Models\fengcaiheaders.cs" />
     <Compile Include="Models\getDB.cs" />
     <Compile Include="Models\LFDetailPageModel.cs" />
@@ -403,6 +404,10 @@
     <Compile Include="Pages\ElectricChargeCheckPages\DialPlate.xaml.cs">
       <DependentUpon>DialPlate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ElectricChargeCheckPages\ElectricityPage.xaml.cs">
+      <DependentUpon>ElectricityPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ElectricChargeCheckPages\NetWork.cs" />
     <Compile Include="Pages\EmptyRoomsPage.xaml.cs">
       <DependentUpon>EmptyRoomsPage.xaml</DependentUpon>
     </Compile>
@@ -771,6 +776,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ElectricChargeCheckPages\DialPlate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ElectricChargeCheckPages\ElectricityPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
