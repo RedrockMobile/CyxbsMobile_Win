@@ -43,7 +43,6 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (isPageLoaded)
-
                 pivot.SelectedIndex = listView.SelectedIndex;
         }
 
