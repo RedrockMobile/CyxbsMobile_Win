@@ -9,6 +9,46 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="47"/>
+                <RowDefinition Height="1"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="查电费" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+            <Grid Grid.Row="1" Background="LightGray"/>
+            <AppBarButton Grid.Row="0" HorizontalAlignment="Right" Name="ShowMoreAppBarButton">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe10c;"/>
+                <AppBarButton.Flyout >
+                    <MenuFlyout>
+                        <MenuFlyoutItem  Name="SetRemain" Text="设置提醒" Click="OnNavigateToPage"/>
+                        <MenuFlyoutItem  Name="SetRoom" Text="设置寝室" Click="OnNavigateToPage" />
+                        <MenuFlyoutItem  Name="CheckRecentCharge" Text="查看往期电费" Click="OnNavigateToPage" />
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+        </Grid>
+        <Grid Grid.Row="1">
+            <local:DialPlate HorizontalAlignment="Center"/>
+            
+            
+            
+            
+            
+        </Grid>
+        <Frame x:Name="frame" Grid.RowSpan="2" Visibility="Collapsed">
+            <Frame.ContentTransitions>
+                <TransitionCollection>
+                    <NavigationThemeTransition>
+                        <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                            <EntranceNavigationTransitionInfo/>
+                        </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    </NavigationThemeTransition>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+        </Frame>
     </Grid>
 </Page>

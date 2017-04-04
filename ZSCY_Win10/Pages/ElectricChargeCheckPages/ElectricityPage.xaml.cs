@@ -54,6 +54,17 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
                 //room.Text = roomSettings.Values["room"].ToString();
             }
         }
+        private void OnNavigateToPage(object sender, RoutedEventArgs e) //+Page!!!
+        {
+            var temp = sender as MenuFlyoutItem;
+            if (temp.Name == "SetRemain")
+                this.frame.Navigate(typeof(SetRemainPage), e);
+            else if (temp.Name == "SetRoom")
+                this.frame.Navigate(typeof(SetRoomPage), e);
+            else
+                this.frame.Navigate(typeof(CheckRecentChargePage), e);
+            frame.Visibility = Visibility.Visible;
+        }
 
         private async void IniData()
         {

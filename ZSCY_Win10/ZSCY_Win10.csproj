@@ -401,6 +401,9 @@
     <Compile Include="Pages\CommunityPages\CommunityPersonInfo.xaml.cs">
       <DependentUpon>CommunityPersonInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ElectricChargeCheckPages\CheckRecentChargePage.xaml.cs">
+      <DependentUpon>CheckRecentChargePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ElectricChargeCheckPages\DialPlate.xaml.cs">
       <DependentUpon>DialPlate.xaml</DependentUpon>
     </Compile>
@@ -408,6 +411,15 @@
       <DependentUpon>ElectricityPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ElectricChargeCheckPages\NetWork.cs" />
+    <Compile Include="Pages\ElectricChargeCheckPages\SetRemainPage.xaml.cs">
+      <DependentUpon>SetRemainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ElectricChargeCheckPages\SetRoomPage.xaml.cs">
+      <DependentUpon>SetRoomPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ElectricChargeCheckPages\SettedPage.xaml.cs">
+      <DependentUpon>SettedPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\EmptyRoomsPage.xaml.cs">
       <DependentUpon>EmptyRoomsPage.xaml</DependentUpon>
     </Compile>
@@ -541,6 +553,7 @@
     <Compile Include="ViewModels\Community\CommunityPersonInfoViewModel.cs" />
     <Compile Include="ViewModels\Community\CommunityViewModel.cs" />
     <Compile Include="ViewModels\Community\MyViewModel.cs" />
+    <Compile Include="ViewModels\ElectricChargeCheckPages\CheckRecentChargePageViewModel.cs" />
     <Compile Include="ViewModels\FengCaiViewModel.cs" />
     <Compile Include="ViewModels\FirstPageViewModel.cs" />
     <Compile Include="ViewModels\LFDetailPageViewModel.cs" />
@@ -775,11 +788,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ElectricChargeCheckPages\CheckRecentChargePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ElectricChargeCheckPages\DialPlate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ElectricChargeCheckPages\ElectricityPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ElectricChargeCheckPages\SetRemainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ElectricChargeCheckPages\SetRoomPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ElectricChargeCheckPages\SettedPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
