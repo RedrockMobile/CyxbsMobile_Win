@@ -6,7 +6,8 @@
     xmlns:viewmodel="using:ZSCY_Win10.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
 
     <Page.Resources>
         <local:BoolToVisibilityConverter x:Key="BTVC"/>
@@ -55,7 +56,10 @@
         <!--顶栏-->
         <Grid Background="{x:Bind AppTheme.APP_Color_Brush}" Grid.Row="0">
             <Grid x:Name="LostAndFoundPageTitleGrid"  HorizontalAlignment="Stretch">
-                <TextBlock x:Name="LostAndFoundPageTitle" Text="{x:Bind Title}" HorizontalAlignment="Center" Foreground="{x:Bind AppTheme.Foreground_Color_Brush}"  FontSize="{x:Bind AppTheme.Header_Size}" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                <ComboBox x:Name="combox" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0" Foreground="White" Background="#00FFFFFF" FontSize="{x:Bind AppTheme.Header_Size}" SelectedIndex="0" FontFamily="Microsoft YaHei UI" SelectionChanged="ComboBox_SelectionChanged">
+                    <x:String>失物招领</x:String>
+                    <x:String>寻物启事</x:String>
+                </ComboBox>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <AppBarButton x:Name="LostAndFoundPageAddAppBarButton" Icon="Add" Foreground="White" Click="LostAndFoundPageAddAppBarButton_Click"/>
                     <AppBarButton x:Name="LostAndFoundPageRefreshAppBarButton" Icon="Refresh" Foreground="White" Click="LostAndFoundPageRefreshAppBarButton_Click"/>

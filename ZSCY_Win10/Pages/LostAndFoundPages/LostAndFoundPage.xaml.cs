@@ -32,7 +32,7 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
         LostAndFoundPageViewModel[] VM = new LostAndFoundPageViewModel[8];//
         bool[] IsItemLoaded = { false, false, false, false, false, false, false, false };
         ObservableCollection<bool> IsProgressRingActive = new ObservableCollection<bool>();
-        string Title;
+        bool isComboxLoaded = false;
         string BaseUrl;
         public LostAndFoundPage()
         {
@@ -100,12 +100,11 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
             var temp = e.ClickedItem as LFItem;
             Frame.Navigate(typeof(LFDetailPage), temp.pro_id, new CommonNavigationTransitionInfo());
         }
-        protected override void OnNavigatedTo(NavigationEventArgs e)            //临时OnNavigatedTo，记得修改
+        protected override void OnNavigatedTo(NavigationEventArgs e)            
         {
             if (!IsItemLoaded[0])
             {
                     BaseUrl = "http://hongyan.cqupt.edu.cn/laf/api/view/found/";
-                    Title = "失物招领";
             }
         }
 
@@ -132,6 +131,38 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
             }
 
             IsItemLoaded[index] = true;
+        }
+
+        private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (isComboxLoaded)
+            {
+                if (combox.SelectedIndex == 0)
+                    BaseUrl = "http://hongyan.cqupt.edu.cn/laf/api/view/found/";
+                else
+                    BaseUrl = "http://hongyan.cqupt.edu.cn/laf/api/view/lost/";
+                for (int i = 0; i < 8; i++)
+                {
+                    VM[i].data.Clear();
+                    IsItemLoaded[i] = false;
+                }
+                int index = LostAndFoundPagePivot.SelectedIndex;
+                LostAndFoundPageViewModel temp = await Model.LoadItems(BaseUrl, index);
+                foreach (LFItem i in temp.data)
+                {
+                    VM[index].data.Add(i);
+                }
+                VM[index].next_page_url = temp.next_page_url;
+                if (VM[index].next_page_url == null)
+                {
+                    IsProgressRingActive[index] = false;
+                }
+            }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            isComboxLoaded = true;
         }
     }
     public class BoolToVisibilityConverter : IValueConverter
