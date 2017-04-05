@@ -47,7 +47,7 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
 
         private void LostAndFoundPageAddAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Frame.Navigate(typeof(InfoPublish));        
         }
 
         private async void LostAndFoundPageRefreshAppBarButton_Click(object sender, RoutedEventArgs e)
