@@ -30,5 +30,9 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         {
             this.Frame.Visibility = Visibility.Collapsed;
         }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

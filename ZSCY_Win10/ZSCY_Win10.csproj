@@ -172,6 +172,11 @@
     <Content Include="Assets\dialog_course_type_white.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\ElectricityPageLogo\PopWindow.png" />
+    <Content Include="Assets\ElectricityPageLogo\SetRemain.png" />
+    <Content Include="Assets\ElectricityPageLogo\SetRoom.png" />
+    <Content Include="Assets\ElectricityPageLogo\Setted.png" />
+    <Content Include="Assets\ElectricityPageLogo\Success.jpg" />
     <Content Include="Assets\exam_03.png" />
     <Content Include="Assets\girl_03.png" />
     <Content Include="Assets\grzx_black.png" />
@@ -409,6 +414,9 @@
     </Compile>
     <Compile Include="Pages\ElectricChargeCheckPages\ElectricityPage.xaml.cs">
       <DependentUpon>ElectricityPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ElectricChargeCheckPages\MessagePopup.xaml.cs">
+      <DependentUpon>MessagePopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ElectricChargeCheckPages\NetWork.cs" />
     <Compile Include="Pages\ElectricChargeCheckPages\SetRemainPage.xaml.cs">
@@ -797,6 +805,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ElectricChargeCheckPages\ElectricityPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ElectricChargeCheckPages\MessagePopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

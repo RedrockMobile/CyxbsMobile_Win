@@ -6,12 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
     <Grid Background="#7FFFFFFF">
-        <Grid HorizontalAlignment="Center" Width="500" Background="White" >
+        <Grid HorizontalAlignment="Center" Width="400" Background="White" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="47"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="320"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
@@ -20,14 +19,12 @@
                     <RowDefinition Height="1"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="设置提醒" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                <AppBarButton x:Name="BackButton" Icon="Back" Click="BackButton_Click" HorizontalAlignment="Left" Height="50" />
+                <AppBarButton Margin="10,0,0,0" x:Name="BackButton" Icon="Back" Click="BackButton_Click" HorizontalAlignment="Left" Height="50" />
                 <Grid Grid.Row="1" Background="LightGray"/>
             </Grid>
-            <Grid Grid.Row="1" Grid.RowSpan="2">
+            <Grid Grid.Row="1">
                 <Grid.Background>
-                    <ImageBrush>
-                        <!--这里放图片-->
-                    </ImageBrush>
+                    <ImageBrush ImageSource="Assets/ElectricityPageLogo/SetRemain.png"/>
                 </Grid.Background>
             </Grid>
             <StackPanel Grid.Row="2">

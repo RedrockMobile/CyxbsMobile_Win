@@ -33,7 +33,9 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
 
         private void RoomButton_Click(object sender, RoutedEventArgs e)
         {
-
+            //输入错误弹窗
+            //var msgPopup = new MessagePopup();
+            //msgPopup.ShowWindow();        //ShowWindow方法可传string型参数作为弹窗的提示
         }
     }
 }

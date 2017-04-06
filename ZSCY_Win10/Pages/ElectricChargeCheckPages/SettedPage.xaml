@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Grid Background="#7FFFFFFF">
-        <Grid HorizontalAlignment="Center" Width="500" Background="White" >
+        <Grid HorizontalAlignment="Center" Width="400" Background="White" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="47"/>
                 <RowDefinition Height="*"/>
@@ -18,29 +18,94 @@
                     <RowDefinition Height="46"/>
                     <RowDefinition Height="1"/>
                 </Grid.RowDefinitions>
-                <AppBarButton x:Name="BackButton" Icon="Back" Click="BackButton_Click" HorizontalAlignment="Left" Height="50" />
+                <AppBarButton x:Name="BackButton" Margin="10,0,0,0" Icon="Back" Click="BackButton_Click" HorizontalAlignment="Left" Height="50" />
                 <Grid Grid.Row="1" Background="LightGray"/>
             </Grid>
-            <Grid Grid.Row="1" x:Name="SuccessGrid" Visibility="Visible">
-                <Grid.Background>
-                    <ImageBrush>
-                        <!--这里放图片-->
-                    </ImageBrush>
-                </Grid.Background>
+            <Grid Grid.Row="1" x:Name="SuccessGrid" Visibility="Collapsed">
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="200" Width="200">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="Assets/ElectricityPageLogo/Success.jpg"/>
+                    </Grid.Background>
+                </Grid>
             </Grid>
             <Grid Grid.Row="1" x:Name="UnresetableGrid" Visibility="Collapsed">
-                <Grid.Background>
-                    <ImageBrush>
-                        <!--这里放图片-->
-                    </ImageBrush>
-                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="360"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.Background>
+                        <ImageBrush ImageSource="Assets/ElectricityPageLogo/Setted.png"/>
+                    </Grid.Background>
+                </Grid>
+                <StackPanel Grid.Row="1">
+                    <Grid Height="50"/>
+                    <RelativePanel HorizontalAlignment="Center">
+                        <TextBlock Height="40" x:Name="FlagTb0" Text="当前设置寝室：" FontSize="16" Foreground="#9d9d9d"/>
+                        <TextBlock Text="19栋417" FontSize="16" Foreground="#11bcff" RelativePanel.RightOf="FlagTb"/>
+                    </RelativePanel>
+                    <TextBlock Text="每月只能设置一次寝室，本月已设置" FontSize="16" Foreground="#9d9d9d" HorizontalAlignment="Center" />
+                </StackPanel>
             </Grid>
             <Grid Grid.Row="1" x:Name="ResetableGrid" Visibility="Collapsed">
-                <Grid.Background>
-                    <ImageBrush>
-                        <!--这里放图片-->
-                    </ImageBrush>
-                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="360"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.Background>
+                        <ImageBrush ImageSource="Assets/ElectricityPageLogo/Setted.png"/>
+                    </Grid.Background>
+                </Grid>
+                <StackPanel Grid.Row="1">
+                    <Grid Height="20"/>
+                    <TextBlock Text="当前设置寝室" FontSize="16" Foreground="#9d9d9d" HorizontalAlignment="Center" Height="40"/>
+                    <RelativePanel HorizontalAlignment="Center">
+                        <TextBlock x:Name="FlagTb1" Text="19" Foreground="#1bbcff" FontSize="50" Height="55"/>
+                        <TextBlock x:Name="FlagTb2" Text=" 栋" Foreground="#1bbcff" FontSize="20" Width="32" RelativePanel.RightOf="FlagTb1" RelativePanel.AlignBottomWith="FlagTb1"/>
+                        <TextBlock Text="417" Foreground="#1bbcff" FontSize="50" Height="55" RelativePanel.RightOf="FlagTb2"/>
+                    </RelativePanel>
+                    <Grid Height="40"/>
+                    <Button  HorizontalAlignment="Center" Click="Button_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Grid x:Name="RootGrid" CornerRadius="25" Background="#00FFFFFF">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup>
+                                            <VisualState x:Name="Normal">
+                                                <Storyboard>
+                                                    <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="PointerOver">
+                                                <Storyboard>
+                                                    <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="Pressed">
+                                                <Storyboard>
+                                                    <PointAnimation Storyboard.TargetName="ButtonLinearGradientBrush" Duration="0" Storyboard.TargetProperty="StartPoint" From="0,0" To="0,1" AutoReverse="True"/>
+                                                    <PointAnimation Storyboard.TargetName="ButtonLinearGradientBrush" Duration="0" Storyboard.TargetProperty="EndPoint" From="0,1" To="0,0" AutoReverse="True"/>
+                                                    <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <Rectangle x:Name="Rectangle" Width="300" Height="50" RadiusX="25" RadiusY="25">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" x:Name="ButtonLinearGradientBrush">
+                                                <GradientStop Color="#13D7FF" Offset="0"/>
+                                                <GradientStop Color="#12D0FF" Offset="0.65"/>
+                                                <GradientStop Color="#0AB4FF" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="重新设置" Foreground="White" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
             </Grid>
         </Grid>
     </Grid>
