@@ -43,6 +43,9 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
             idNum = credentialList[0].Password;
             paramIniList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
             IniData();
+
+
+            frame.Navigate(typeof(Page));
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

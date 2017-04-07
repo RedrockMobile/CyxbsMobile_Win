@@ -29,6 +29,8 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Visibility = Visibility.Collapsed;
+            while (Frame.CanGoBack)
+                this.Frame.GoBack();
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
