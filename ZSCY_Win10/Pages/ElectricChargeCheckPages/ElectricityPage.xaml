@@ -32,12 +32,49 @@
             </AppBarButton>
         </Grid>
         <Grid Grid.Row="1">
-            <local:DialPlate HorizontalAlignment="Center"/>
-            
-            
-            
-            
-            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <local:DialPlate HorizontalAlignment="Center" Grid.Row="0" />
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Foreground="#12B9FF" Text="15" FontSize="40" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Foreground="#999999" Text="日均量/度" FontSize="16" HorizontalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Foreground="#12B9FF" Text="30" FontSize="40" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Foreground="#999999" Text="月优惠量/度" FontSize="16" HorizontalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Foreground="#12B9FF" Text="343" FontSize="40" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Foreground="#999999" Text="电起度/度" FontSize="16" HorizontalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Column="3">
+                    <TextBlock Foreground="#12B9FF" Text="370" FontSize="40" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Foreground="#999999" Text="电止度/度" FontSize="16" HorizontalAlignment="Center"></TextBlock>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="2" Background="#F0F1F5"/>
+            <StackPanel Grid.Row="3" Padding="10">
+                <TextBlock Height="27" Text="注意事项" FontSize="18" Foreground="#9ea1a6"/>
+                <RelativePanel>
+                    <TextBlock Height="27" Name="FlagTb0" Text="抄表日期： " FontSize="16" Foreground="#9ea1a6"/>
+                    <TextBlock Text="2016年11月30日 11：16" FontSize="16" Foreground="#9ea1a6" RelativePanel.RightOf="FlagTb0"/>
+                </RelativePanel>
+                <RelativePanel>
+                    <TextBlock Height="27" Text="用电过程中如需查询，请致电 " Name="FlagTb1" FontSize="16" Foreground="#9ea1a6"/>
+                    <TextBlock Text=" 023-62487902" FontSize="16" Foreground="#1bb8fa" RelativePanel.RightOf="FlagTb1"/>
+                </RelativePanel>
+            </StackPanel>
         </Grid>
         <Frame x:Name="frame" Grid.RowSpan="2" Visibility="Collapsed">
             <Frame.ContentTransitions>
