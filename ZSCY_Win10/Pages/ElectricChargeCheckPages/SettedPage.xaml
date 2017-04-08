@@ -21,10 +21,10 @@
                 <AppBarButton x:Name="BackButton" Margin="10,0,0,0" Icon="Back" Click="BackButton_Click" HorizontalAlignment="Left" Height="50" />
                 <Grid Grid.Row="1" Background="LightGray"/>
             </Grid>
-            <Grid Grid.Row="1" x:Name="SuccessGrid" Visibility="Visible">
+            <Grid Grid.Row="1" x:Name="SuccessGrid" Visibility="Collapsed">
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="200" Width="200">
                     <Grid.Background>
-                        <ImageBrush ImageSource="Assets/Success.jpg"/>
+                        <ImageBrush ImageSource="Assets/ElectricityPageLogo/Success.jpg"/>
                     </Grid.Background>
                 </Grid>
             </Grid>
@@ -35,7 +35,7 @@
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.Background>
-                        <ImageBrush ImageSource="Assets/Setted.png"/>
+                        <ImageBrush ImageSource="Assets/ElectricityPageLogo/Setted.png"/>
                     </Grid.Background>
                 </Grid>
                 <StackPanel Grid.Row="1">
@@ -54,16 +54,16 @@
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.Background>
-                        <ImageBrush ImageSource="Assets/Setted.png"/>
+                        <ImageBrush ImageSource="Assets/ElectricityPageLogo/Setted.png"/>
                     </Grid.Background>
                 </Grid>
                 <StackPanel Grid.Row="1">
                     <Grid Height="20"/>
                     <TextBlock Text="当前设置寝室" FontSize="16" Foreground="#9d9d9d" HorizontalAlignment="Center" Height="40"/>
                     <RelativePanel HorizontalAlignment="Center">
-                        <TextBlock x:Name="FlagTb1" Text="19" Foreground="#1bbcff" FontSize="50" Height="55"/>
+                        <TextBlock x:Name="FlagTb1" Text="{x:Bind resetableGridBuildingNum}" Foreground="#1bbcff" FontSize="50" Height="55"/>
                         <TextBlock x:Name="FlagTb2" Text=" 栋" Foreground="#1bbcff" FontSize="20" Width="32" RelativePanel.RightOf="FlagTb1" RelativePanel.AlignBottomWith="FlagTb1"/>
-                        <TextBlock Text="417" Foreground="#1bbcff" FontSize="50" Height="55" RelativePanel.RightOf="FlagTb2"/>
+                        <TextBlock Text="{x:Bind resetableGridRoomNum}" Foreground="#1bbcff" FontSize="50" Height="55" RelativePanel.RightOf="FlagTb2"/>
                     </RelativePanel>
                     <Grid Height="40"/>
                     <Button x:Name="setButton" IsEnabled="False" HorizontalAlignment="Center" Click="Button_Click">

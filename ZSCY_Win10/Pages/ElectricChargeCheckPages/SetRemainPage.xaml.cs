@@ -41,6 +41,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         private void RemainButton_Click(object sender, RoutedEventArgs e)
         {
             limitSettings.Values["limitCharge"] = RemainTextBox.Text;
+            this.Frame.Navigate(typeof(SettedPage));
         }
     }
 }

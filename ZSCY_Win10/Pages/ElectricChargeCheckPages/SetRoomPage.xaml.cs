@@ -39,7 +39,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.GoBack();
-            this.Frame.Visibility = Visibility.Collapsed;
+            //this.Frame.Visibility = Visibility.Collapsed;
         }
 
         private async void RoomButton_Click(object sender, RoutedEventArgs e)
@@ -64,6 +64,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
                 roomSettings.Values["isBindingRoom"] = true;
                 roomSettings.Values["BindingRoomDate"] = DateTime.Now.ToString();
             }
+            //this.Frame.Navigate(typeof(SettedPage)); //设置成功之后跳转的成功画面 @Boss Qin记得加上去
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -131,9 +131,17 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
                     settings.Values["bindingRoomDate"] = new DateTime(1970, 1, 1, 0, 0, 0, 0).ToString();
                 }
                 TimeSpan timeSpan = DateTime.Now - DateTime.Parse(settings.Values["bindingRoomDate"].ToString());
-                if (!bool.Parse(settings.Values["isBindingRoom"].ToString()) && timeSpan.TotalDays > 30)
+                if (bool.Parse(settings.Values["isBindingRoom"].ToString()) && timeSpan.TotalDays > 30)
                 {
-                    this.frame.Navigate(typeof(SetRoomPage), e);
+                    this.frame.Navigate(typeof(SettedPage), true);
+                }
+                else if(bool.Parse(settings.Values["isBindingRoom"].ToString()) && timeSpan.TotalDays < 30)
+                {
+                    this.frame.Navigate(typeof(SettedPage), false);
+                }
+                else
+                {
+                    this.frame.Navigate(typeof(SetRoomPage));
                 }
             }
             else
