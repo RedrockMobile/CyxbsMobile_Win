@@ -56,8 +56,8 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
             //输入错误弹窗
             if (ComboBox.SelectedItem == null || RoomTextBox.Text.ToString().Length != 3 || electricityData.elec_inf.elec_spend == null)
             {
-                var msgPopup = new MessagePopup();
-                msgPopup.ShowWindow();//ShowWindow方法可传string型参数作为弹窗的提示
+                var msgPopup = new MessagePopup(); //MessagePop构造方法可传string型参数作为弹窗的提示
+                msgPopup.ShowWindow();              
             }
             else
             {

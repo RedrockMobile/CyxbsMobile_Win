@@ -145,7 +145,11 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
                 }
             }
             else
-                this.frame.Navigate(typeof(CheckRecentChargePage), e);
+            {
+                var msgPopup = new MessagePopup("即将上线，敬请期待");
+                msgPopup.ShowWindow();
+            }
+                //this.frame.Navigate(typeof(CheckRecentChargePage), e);
             frame.Visibility = Visibility.Visible;
         }
     }
