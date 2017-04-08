@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -24,89 +25,120 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
     /// </summary>
     public sealed partial class ElectricityPage : Page
     {
+        ApplicationDataContainer settings = ApplicationData.Current.LocalSettings;
         private static string byStuNumUri = "http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ElectricityQuery/ElectricityQuery/getElectric";
         private static string byRoomNumUri = "http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ElectricityQuery/ElectricityQuery/queryElecByRoom";
         List<KeyValuePair<string, string>> paramIniList = new List<KeyValuePair<string, string>>();
         List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
-        private static string stuNum = "";
-        private static string idNum = "";
-        private static string resourceName = "ZSCY";
-        ApplicationDataContainer roomSettings = ApplicationData.Current.LocalSettings;
+        private static string stuNum = "2015212862";
         NetWork netWork = new NetWork();
         public ElectricityPage()
         {
             this.InitializeComponent();
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
-            stuNum = credentialList[0].UserName;
-            idNum = credentialList[0].Password;
-            paramIniList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
-            IniData();
-
-
+            
             frame.Navigate(typeof(Page));
+            paramIniList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
+            if (!settings.Values.ContainsKey("isBindingRoom"))
+            {
+                settings.Values["isBindingRoom"] = false;
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
-            if (roomSettings.Values.ContainsKey("building") && roomSettings.Values.ContainsKey("room"))
+            IniData();
+        }
+
+        public async void IniData()//使用学号查询电费接口初始化数据
+        {
+            if (bool.Parse(settings.Values["isBindingRoom"].ToString()))
             {
-                //building.Text = roomSettings.Values["building"].ToString();
-                //room.Text = roomSettings.Values["room"].ToString();
+                try
+                {
+                    paramList.Add(new KeyValuePair<string, string>("building", settings.Values["building"].ToString()));
+                    paramList.Add(new KeyValuePair<string, string>("room", settings.Values["room"].ToString()));
+                    //储存ElectricityByStuNum数据的实例
+                    string electricityJson = await netWork.GetElectricityByRoomNum(byRoomNumUri, paramList);
+                    ElectricityByRoomNum electricityData = new ElectricityByRoomNum();
+                    electricityData = netWork.ByRoomNumStringConvertToModel(electricityJson);
+                    //本月电费消费
+                    string elec_Cost = electricityData.elec_inf.elec_cost[0] + "." + electricityData.elec_inf.elec_cost[1];//Cost数组转为String
+                    electricityData.elec_inf.elec_perday = elec_Cost;
+                    //百分比
+                    if (!settings.Values.ContainsKey("limitCharge"))
+                    {
+                        settings.Values["limitCharge"] = 20;
+                    }
+                    electricityData.elec_inf.elec_percent = (double.Parse(elec_Cost) / double.Parse(settings.Values["limitCharge"].ToString()));
+                    dialPlate.Percent = electricityData.elec_inf.elec_percent;
+                    //电费余额
+                    electricityData.elec_inf.elec_chargeBalance = (int.Parse(electricityData.elec_inf.elec_end) - int.Parse(electricityData.elec_inf.elec_start)).ToString();
+                    this.dialPlate.BalanceProperty = electricityData.elec_inf.elec_chargeBalance;
+                    //电量剩余度数
+                    electricityData.elec_inf.elec_dumpEnergy = (30 - (int.Parse(electricityData.elec_inf.elec_end) - int.Parse(electricityData.elec_inf.elec_start))).ToString();
+                    this.dialPlate.DumpEnergyProperty = electricityData.elec_inf.elec_dumpEnergy;
+                    //设置数据源
+                    this.DataContext = electricityData.elec_inf;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+            }
+            else
+            {
+                try
+                {
+                    //储存ElectricityByStuNum数据的实例
+                    string electricityIniJson = await netWork.GetElectricityByStuNum(byStuNumUri, paramIniList);
+                    ElectricityByStuNum electricityIniData = new ElectricityByStuNum();
+                    electricityIniData = netWork.ByStuNumStringConvertToModel(electricityIniJson);
+                    //本月电费消费
+                    string elec_Cost = electricityIniData.data.result.current.elec_cost[0] + "." + electricityIniData.data.result.current.elec_cost[1];//Cost数组转为String
+                    electricityIniData.data.result.current.elec_perday = elec_Cost;
+                    //百分比
+                    if (!settings.Values.ContainsKey("limitCharge"))
+                    {
+                        settings.Values["limitCharge"] = 20;
+                    }
+                    electricityIniData.data.result.current.elec_percent = (double.Parse(elec_Cost) / double.Parse(settings.Values["limitCharge"].ToString()));
+                    dialPlate.Percent = electricityIniData.data.result.current.elec_percent;
+                    //电费余额
+                    electricityIniData.data.result.current.elec_chargeBalance = (int.Parse(electricityIniData.data.result.current.elec_end) - int.Parse(electricityIniData.data.result.current.elec_start)).ToString();
+                    this.dialPlate.BalanceProperty = electricityIniData.data.result.current.elec_chargeBalance;
+                    //电量剩余度数
+                    electricityIniData.data.result.current.elec_dumpEnergy = (30 - (int.Parse(electricityIniData.data.result.current.elec_end) - int.Parse(electricityIniData.data.result.current.elec_start))).ToString();
+                    this.dialPlate.DumpEnergyProperty = electricityIniData.data.result.current.elec_dumpEnergy;
+                    //设置数据源
+                    this.DataContext = electricityIniData.data.result.current;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
             }
         }
-        private void OnNavigateToPage(object sender, RoutedEventArgs e) //+Page!!!
+
+        private void OnNavigateToPage(object sender, RoutedEventArgs e) 
         {
             var temp = sender as MenuFlyoutItem;
             if (temp.Name == "SetRemain")
                 this.frame.Navigate(typeof(SetRemainPage), e);
             else if (temp.Name == "SetRoom")
-                this.frame.Navigate(typeof(SetRoomPage), e);
+            {
+                if (!settings.Values.ContainsKey("bindingRoomDate"))
+                {
+                    settings.Values["bindingRoomDate"] = new DateTime(1970, 1, 1, 0, 0, 0, 0).ToString();
+                }
+                TimeSpan timeSpan = DateTime.Now - DateTime.Parse(settings.Values["bindingRoomDate"].ToString());
+                if (!bool.Parse(settings.Values["isBindingRoom"].ToString()) && timeSpan.TotalDays > 30)
+                {
+                    this.frame.Navigate(typeof(SetRoomPage), e);
+                }
+            }
             else
                 this.frame.Navigate(typeof(CheckRecentChargePage), e);
             frame.Visibility = Visibility.Visible;
-        }
-
-        private async void IniData()
-        {
-            try
-            {
-                string electricityIniJson = await netWork.GetElectricityByStuNum(byStuNumUri, paramIniList);
-                ElectricityByStuNum electricityIniData = new ElectricityByStuNum();
-                electricityIniData = netWork.ByStuNumStringConvertToModel(electricityIniJson);
-                string elec_Cost = electricityIniData.data.result.current.elec_cost[0] + "." + electricityIniData.data.result.current.elec_cost[1];//Cost数组转为String
-                electricityIniData.data.result.current.elec_perday = elec_Cost;
-            }
-            catch
-            {
-                //StuNum电费查询异常处理
-            }
-        }
-
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                //paramList.Add(new KeyValuePair<string, string>("building", building.Text));
-                //paramList.Add(new KeyValuePair<string, string>("room", room.Text));
-                string electricityJson = await netWork.GetElectricityByRoomNum(byRoomNumUri, paramList);
-                ElectricityByRoomNum electricityData = new ElectricityByRoomNum();
-                electricityData = netWork.ByRoomNumStringConvertToModel(electricityJson);
-                string elec_Cost = electricityData.elec_inf.elec_cost[0] + "." + electricityData.elec_inf.elec_cost[1];//Cost数组转为String
-                electricityData.elec_inf.elec_perday = elec_Cost;
-            }
-            catch
-            {
-                //roomnum电费查询异常处理
-            }
-        }
-
-        private string GetTimeStamp()
-        {
-            TimeSpan timeSpan = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);//获取1970/1/1到现在的时间间隔
-            return Convert.ToInt64(timeSpan.TotalSeconds).ToString();//时间间隔转换为Unix时间戳
         }
     }
 }

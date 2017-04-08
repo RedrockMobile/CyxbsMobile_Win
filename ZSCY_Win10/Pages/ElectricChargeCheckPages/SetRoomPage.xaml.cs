@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,9 +23,18 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
     /// </summary>
     public sealed partial class SetRoomPage : Page
     {
+        private static string byRoomNumUri = "http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ElectricityQuery/ElectricityQuery/queryElecByRoom";
+        List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
+        ApplicationDataContainer roomSettings = ApplicationData.Current.LocalSettings;
+        NetWork netWork = new NetWork();
         public SetRoomPage()
         {
             this.InitializeComponent();
+            if (roomSettings.Values.ContainsKey("building") && roomSettings.Values.ContainsKey("room"))
+            {
+                ComboBox.SelectedIndex = int.Parse(roomSettings.Values["building"].ToString());
+                RoomTextBox.Text = roomSettings.Values["room"].ToString();
+            }
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
@@ -32,11 +42,38 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
             this.Frame.Visibility = Visibility.Collapsed;
         }
 
-        private void RoomButton_Click(object sender, RoutedEventArgs e)
+        private async void RoomButton_Click(object sender, RoutedEventArgs e)
         {
+            ElectricityByRoomNum electricityData = new ElectricityByRoomNum();
+            if (roomSettings.Values.ContainsKey("building") && roomSettings.Values.ContainsKey("room"))
+            {
+                paramList.Add(new KeyValuePair<string, string>("building", roomSettings.Values["building"].ToString()));
+                paramList.Add(new KeyValuePair<string, string>("room", roomSettings.Values["room"].ToString()));
+                //储存ElectricityByStuNum数据的实例
+                string electricityJson = await netWork.GetElectricityByRoomNum(byRoomNumUri, paramList);
+                electricityData = netWork.ByRoomNumStringConvertToModel(electricityJson);
+            }
             //输入错误弹窗
-            //var msgPopup = new MessagePopup();
-            //msgPopup.ShowWindow();        //ShowWindow方法可传string型参数作为弹窗的提示
+            if (ComboBox.SelectedItem == null || RoomTextBox.Text.ToString().Length != 3 || electricityData.elec_inf.elec_spend == null)
+            {
+                var msgPopup = new MessagePopup();
+                msgPopup.ShowWindow();//ShowWindow方法可传string型参数作为弹窗的提示
+            }
+            else
+            {
+                roomSettings.Values["isBindingRoom"] = true;
+                roomSettings.Values["BindingRoomDate"] = DateTime.Now.ToString();
+            }
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            roomSettings.Values["building"] = ComboBox.SelectedIndex;
+        }
+
+        private void RoomTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            roomSettings.Values["room"] = RoomTextBox.Text;
         }
     }
 }

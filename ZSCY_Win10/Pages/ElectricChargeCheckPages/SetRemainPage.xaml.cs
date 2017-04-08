@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,18 +23,24 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
     /// </summary>
     public sealed partial class SetRemainPage : Page
     {
+        ApplicationDataContainer limitSettings = ApplicationData.Current.LocalSettings;
         public SetRemainPage()
         {
             this.InitializeComponent();
+            if (limitSettings.Values.ContainsKey("limitCharge"))
+            {
+                RemainTextBox.Text = (limitSettings.Values["limitCharge"]).ToString();
+            }
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.GoBack();
             this.Frame.Visibility = Visibility.Collapsed;
         }
+
         private void RemainButton_Click(object sender, RoutedEventArgs e)
         {
-
+            limitSettings.Values["limitCharge"] = RemainTextBox.Text;
         }
     }
 }

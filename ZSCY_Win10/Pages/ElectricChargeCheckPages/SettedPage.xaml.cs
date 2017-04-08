@@ -22,19 +22,28 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
     /// </summary>
     public sealed partial class SettedPage : Page
     {
+        //判断是否可以重新改绑
+        TimeSpan timeSpan = DateTime.Now - DateTime.Now;
         public SettedPage()
         {
             this.InitializeComponent();
+            double totalDays = timeSpan.TotalDays;
+            if (totalDays >= 31)
+            {
+                //setButton.IsEnabled = true;
+            }
         }
+
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Visibility = Visibility.Collapsed;
             while (Frame.CanGoBack)
                 this.Frame.GoBack();
         }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Frame.Navigate(typeof(SetRoomPage));
         }
     }
 }

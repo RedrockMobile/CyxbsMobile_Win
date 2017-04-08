@@ -412,6 +412,7 @@
     <Compile Include="Pages\ElectricChargeCheckPages\DialPlate.xaml.cs">
       <DependentUpon>DialPlate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ElectricChargeCheckPages\ElectricityModel.cs" />
     <Compile Include="Pages\ElectricChargeCheckPages\ElectricityPage.xaml.cs">
       <DependentUpon>ElectricityPage.xaml</DependentUpon>
     </Compile>

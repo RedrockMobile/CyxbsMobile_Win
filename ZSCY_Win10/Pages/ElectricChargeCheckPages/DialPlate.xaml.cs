@@ -17,13 +17,14 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Graphics.Canvas.Brushes;
+using System.ComponentModel;
 
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
 {
-    public sealed partial class DialPlate : UserControl
+    public sealed partial class DialPlate : UserControl,INotifyPropertyChanged
     {
         public DialPlate()
         {
@@ -33,7 +34,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         public double Percent   //表盘的百分比，定义域0.0-100.0，double型，默认值0
         {
             get { return (double)GetValue(_percent); }
-            set { SetValue(_percent, value); }
+            set { SetValue(_percent, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Percent")); }
         }
 
         private static readonly DependencyProperty _percent = DependencyProperty.Register("_percent", typeof(double), typeof(DialPlate), new PropertyMetadata((double)0));
@@ -41,7 +42,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         public string BalanceProperty   //电费余额，注意长度不建议长于5位,表盘会溢出,string型,默认值--
         {
             get { return (string)GetValue(_balanceProperty); }
-            set { SetValue(_balanceProperty, value); }
+            set { SetValue(_balanceProperty, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Percent")); }
         }
 
         public static readonly DependencyProperty _balanceProperty = DependencyProperty.Register("Balance", typeof(string), typeof(DialPlate), new PropertyMetadata("--"));
@@ -49,10 +50,12 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         public string DumpEnergyProperty   //电量剩余度数，注意长度不建议长于8位,表盘会溢出,string型,默认值--
         {
             get { return (string)GetValue(_dumpEnergyProperty); }
-            set { SetValue(_dumpEnergyProperty, value); }
+            set { SetValue(_dumpEnergyProperty, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Percent")); }
         }
 
         public static readonly DependencyProperty _dumpEnergyProperty = DependencyProperty.Register("Balance", typeof(string), typeof(DialPlate), new PropertyMetadata("--"));
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void BGCycle_Draw(Microsoft.Graphics.Canvas.UI.Xaml.CanvasControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasDrawEventArgs args)
         {

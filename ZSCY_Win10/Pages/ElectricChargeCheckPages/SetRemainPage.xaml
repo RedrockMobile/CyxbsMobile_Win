@@ -24,13 +24,22 @@
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.Background>
-                    <ImageBrush ImageSource="Assets/ElectricityPageLogo/SetRemain.png"/>
+                    <ImageBrush ImageSource="Assets/SetRemain.png"/>
                 </Grid.Background>
             </Grid>
             <StackPanel Grid.Row="2">
                 <TextBlock FontSize="20" Height="40" Text="请输入一个最低电费提醒值" Foreground="#999999" HorizontalAlignment="Center"/>
                 <RelativePanel HorizontalAlignment="Center">
-                    <TextBox x:Name="RemainTextBox" InputScope="Number" TextAlignment="Center" FontSize="50" Text="20.00" Height="70" IsColorFontEnabled="True" Foreground="#12D0FF" BorderThickness="0" Width="200">
+                    <TextBox x:Name="RemainTextBox" 
+                             InputScope="Number" 
+                             TextAlignment="Center" 
+                             FontSize="50" 
+                             Text="20.00" 
+                             Height="70" 
+                             IsColorFontEnabled="True" 
+                             Foreground="#12D0FF" 
+                             BorderThickness="0"
+                             Width="200">
                         <TextBox.Template>
                             <ControlTemplate TargetType="TextBox">
                                 <Grid>
