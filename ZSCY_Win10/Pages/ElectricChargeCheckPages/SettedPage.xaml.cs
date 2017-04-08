@@ -34,20 +34,20 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.Parameter == null)
+            if (e.Parameter == null)                            //当传入的参数为空时，作为设置成功页面
                 SuccessGrid.Visibility = Visibility.Visible;
             else
             {
-                if ((bool)e.Parameter)
+                if ((bool)e.Parameter)                          //传入参数为true时，作为可再设置页面
                 {
-                    ResetableGrid.Visibility = Visibility.Visible;
                     unresetableGridString = roomSettings.Values["building"].ToString() + "栋" + roomSettings.Values["room"].ToString();
+                    ResetableGrid.Visibility = Visibility.Visible;
                 }
-                else
+                else                                            //传入参数为false时，作为不可再设置页面
                 {
-                    UnresetableGrid.Visibility = Visibility.Visible;
                     resetableGridBuildingNum = roomSettings.Values["building"].ToString();
                     resetableGridRoomNum = roomSettings.Values["room"].ToString();
+                    UnresetableGrid.Visibility = Visibility.Visible;
                 }
             }
 

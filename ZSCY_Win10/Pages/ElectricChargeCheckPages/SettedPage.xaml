@@ -42,7 +42,7 @@
                     <Grid Height="50"/>
                     <RelativePanel HorizontalAlignment="Center">
                         <TextBlock Height="40" x:Name="FlagTb0" Text="当前设置寝室：" FontSize="16" Foreground="#9d9d9d"/>
-                        <TextBlock Text="19栋417" FontSize="16" Foreground="#11bcff" RelativePanel.RightOf="FlagTb0"/>
+                        <TextBlock Text="{x:Bind unresetableGridString}" FontSize="16" Foreground="#11bcff" RelativePanel.RightOf="FlagTb0"/>
                     </RelativePanel>
                     <TextBlock Text="每月只能设置一次寝室，本月已设置" FontSize="16" Foreground="#9d9d9d" HorizontalAlignment="Center" />
                 </StackPanel>

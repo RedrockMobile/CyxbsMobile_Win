@@ -131,17 +131,17 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
                     settings.Values["bindingRoomDate"] = new DateTime(1970, 1, 1, 0, 0, 0, 0).ToString();
                 }
                 TimeSpan timeSpan = DateTime.Now - DateTime.Parse(settings.Values["bindingRoomDate"].ToString());
-                if (bool.Parse(settings.Values["isBindingRoom"].ToString()) && timeSpan.TotalDays > 30)
+                if (bool.Parse(settings.Values["isBindingRoom"].ToString()) && timeSpan.TotalDays >= 30)
                 {
-                    this.frame.Navigate(typeof(SettedPage), true);
+                    this.frame.Navigate(typeof(SettedPage), true);          //设置过寝室且距离上次设置时间超过30天，进入可再设置页面
                 }
                 else if(bool.Parse(settings.Values["isBindingRoom"].ToString()) && timeSpan.TotalDays < 30)
                 {
-                    this.frame.Navigate(typeof(SettedPage), false);
+                    this.frame.Navigate(typeof(SettedPage), false);         //设置过寝室且距离上次设置时间小于30天，进入不可再设置页面
                 }
                 else
                 {
-                    this.frame.Navigate(typeof(SetRoomPage));
+                    this.frame.Navigate(typeof(SetRoomPage));               //从未设置过寝室，直接进入设置寝室页面
                 }
             }
             else
