@@ -69,7 +69,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
                     {
                         settings.Values["limitCharge"] = 20;
                     }
-                    electricityData.elec_inf.elec_percent = (double.Parse(elec_Cost) / double.Parse(settings.Values["limitCharge"].ToString()));
+                    electricityData.elec_inf.elec_percent = (double.Parse(elec_Cost) / double.Parse(settings.Values["limitCharge"].ToString()) * 100);
                     dialPlate.Percent = electricityData.elec_inf.elec_percent;
                     //电费余额
                     electricityData.elec_inf.elec_chargeBalance = (int.Parse(electricityData.elec_inf.elec_end) - int.Parse(electricityData.elec_inf.elec_start)).ToString();
@@ -101,7 +101,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
                     {
                         settings.Values["limitCharge"] = 20;
                     }
-                    electricityIniData.data.result.current.elec_percent = (double.Parse(elec_Cost) / double.Parse(settings.Values["limitCharge"].ToString()));
+                    electricityIniData.data.result.current.elec_percent = (double.Parse(elec_Cost) / double.Parse(settings.Values["limitCharge"].ToString()) * 100);
                     dialPlate.Percent = electricityIniData.data.result.current.elec_percent;
                     //电费余额
                     electricityIniData.data.result.current.elec_chargeBalance = (int.Parse(electricityIniData.data.result.current.elec_end) - int.Parse(electricityIniData.data.result.current.elec_start)).ToString();
@@ -111,6 +111,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
                     this.dialPlate.DumpEnergyProperty = electricityIniData.data.result.current.elec_dumpEnergy;
                     //设置数据源
                     this.DataContext = electricityIniData.data.result.current;
+                    Debug.WriteLine(this.dialPlate.DumpEnergyProperty);
                 }
                 catch (Exception ex)
                 {

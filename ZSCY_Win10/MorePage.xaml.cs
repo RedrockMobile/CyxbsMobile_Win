@@ -22,6 +22,7 @@ using ZSCY.Data;
 using ZSCY.Pages;
 using ZSCY_Win10.Common;
 using ZSCY_Win10.Data;
+using ZSCY_Win10.Pages.ElectricChargeCheckPages;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
@@ -289,6 +290,11 @@ namespace ZSCY_Win10
                         break;
                     case "freshMan":
                         Frame.Navigate(typeof(FirstPage));
+                        MoreFrame.Visibility = Visibility.Collapsed;
+                        isFreeRe = 0;
+                        break;
+                    case "Electricity":
+                        Frame.Navigate(typeof(ElectricityPage));
                         MoreFrame.Visibility = Visibility.Collapsed;
                         isFreeRe = 0;
                         break;

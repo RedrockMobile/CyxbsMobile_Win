@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Graphics.Canvas.Brushes;
 using System.ComponentModel;
+using System.Diagnostics;
 
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -42,18 +43,17 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         public string BalanceProperty   //电费余额，注意长度不建议长于5位,表盘会溢出,string型,默认值--
         {
             get { return (string)GetValue(_balanceProperty); }
-            set { SetValue(_balanceProperty, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Percent")); }
+            set { SetValue(_balanceProperty, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("BalanceProperty")); }
         }
 
-        public static readonly DependencyProperty _balanceProperty = DependencyProperty.Register("Balance", typeof(string), typeof(DialPlate), new PropertyMetadata("--"));
+        private static readonly DependencyProperty _balanceProperty = DependencyProperty.Register("Balance", typeof(string), typeof(DialPlate), new PropertyMetadata("--"));
 
         public string DumpEnergyProperty   //电量剩余度数，注意长度不建议长于8位,表盘会溢出,string型,默认值--
         {
-            get { return (string)GetValue(_dumpEnergyProperty); }
-            set { SetValue(_dumpEnergyProperty, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Percent")); }
+            get {   return (string)GetValue(_dumpEnergyProperty); }
+            set {   SetValue(_dumpEnergyProperty, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DumpEnergyProperty")); }
         }
-
-        public static readonly DependencyProperty _dumpEnergyProperty = DependencyProperty.Register("Balance", typeof(string), typeof(DialPlate), new PropertyMetadata("--"));
+        private static readonly DependencyProperty _dumpEnergyProperty = DependencyProperty.Register("Balance", typeof(string), typeof(DialPlate), new PropertyMetadata("--"));
 
         public event PropertyChangedEventHandler PropertyChanged;
 

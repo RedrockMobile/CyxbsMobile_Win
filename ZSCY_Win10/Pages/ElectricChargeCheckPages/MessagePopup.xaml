@@ -13,7 +13,7 @@
         <Border Background="#55000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
         <Grid CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="200">
             <Grid.Background>
-                <ImageBrush ImageSource="Assets/ElectricityPageLogo/PopWindow.png" />
+                <ImageBrush ImageSource="ms-appx:///Assets/ElectricityPageLogo/PopWindow.png" />
             </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="7*"/>

@@ -24,7 +24,7 @@
             <Grid Grid.Row="1" x:Name="SuccessGrid" Visibility="Collapsed">
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="200" Width="200">
                     <Grid.Background>
-                        <ImageBrush ImageSource="Assets/ElectricityPageLogo/Success.jpg"/>
+                        <ImageBrush ImageSource="ms-appx:///Assets/ElectricityPageLogo/Success.jpg"/>
                     </Grid.Background>
                 </Grid>
             </Grid>
@@ -35,7 +35,7 @@
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.Background>
-                        <ImageBrush ImageSource="Assets/ElectricityPageLogo/Setted.png"/>
+                        <ImageBrush ImageSource="ms-appx:///Assets/ElectricityPageLogo/Setted.png"/>
                     </Grid.Background>
                 </Grid>
                 <StackPanel Grid.Row="1">
@@ -54,7 +54,7 @@
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.Background>
-                        <ImageBrush ImageSource="Assets/ElectricityPageLogo/Setted.png"/>
+                        <ImageBrush ImageSource="ms-appx:///Assets/ElectricityPageLogo/Setted.png"/>
                     </Grid.Background>
                 </Grid>
                 <StackPanel Grid.Row="1">

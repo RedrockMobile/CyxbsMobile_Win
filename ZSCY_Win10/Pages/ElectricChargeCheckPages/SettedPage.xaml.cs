@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -40,18 +41,17 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
             {
                 if ((bool)e.Parameter)                          //传入参数为true时，作为可再设置页面
                 {
-                    unresetableGridString = roomSettings.Values["building"].ToString() + "栋" + roomSettings.Values["room"].ToString();
+                    resetableGridBuildingNum = roomSettings.Values["building"].ToString();
+                    resetableGridRoomNum = roomSettings.Values["room"].ToString();
                     ResetableGrid.Visibility = Visibility.Visible;
                 }
                 else                                            //传入参数为false时，作为不可再设置页面
                 {
-                    resetableGridBuildingNum = roomSettings.Values["building"].ToString();
-                    resetableGridRoomNum = roomSettings.Values["room"].ToString();
+                    unresetableGridString = roomSettings.Values["building"].ToString() + "栋" + roomSettings.Values["room"].ToString();
                     UnresetableGrid.Visibility = Visibility.Visible;
                 }
             }
 
-            
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {

@@ -191,7 +191,7 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.RowSpan="1">
                     <Grid.Background>
-                        <ImageBrush ImageSource="Assets/ElectricityPageLogo/SetRoom.png"/>
+                        <ImageBrush ImageSource="ms-appx:///Assets/ElectricityPageLogo/SetRoom.png"/>
                     </Grid.Background>
                 </Grid>
                 <StackPanel Grid.Row="2" >

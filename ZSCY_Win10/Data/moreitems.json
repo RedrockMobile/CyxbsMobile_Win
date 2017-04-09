@@ -41,6 +41,12 @@
       "Itemname": "新生专题",
       "ItemPage": "FirstPage.xaml",
       "Itemimgsrc": "Assets/iconfont-newstudent.png"
+    },
+    {
+      "UniqueId": "Electricity",
+      "Itemname": "电费查询",
+      "ItemPage": "ElectricityPage.xaml",
+      "Itemimgsrc": "Assets/more_card333.png"
     }
   ]
 }
