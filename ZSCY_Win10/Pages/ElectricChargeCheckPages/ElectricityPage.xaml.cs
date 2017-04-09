@@ -30,13 +30,18 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         private static string byRoomNumUri = "http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ElectricityQuery/ElectricityQuery/queryElecByRoom";
         List<KeyValuePair<string, string>> paramIniList = new List<KeyValuePair<string, string>>();
         List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
-        private static string stuNum = "2015212862";
+        private static string resourceName = "ZSCY";
+        private static string stuNum = "";
         NetWork netWork = new NetWork();
         public ElectricityPage()
         {
             this.InitializeComponent();
-            
             frame.Navigate(typeof(Page));
+            //获取stuNum参数
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
+            stuNum = credentialList[0].UserName;
             paramIniList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
             if (!settings.Values.ContainsKey("isBindingRoom"))
             {
