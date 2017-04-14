@@ -135,7 +135,7 @@
                                             </Grid>
                                             <TextBlock Text="{x:Bind Remind.Content}" Grid.Row="1" Foreground="#878787" TextWrapping="Wrap" Margin="5,0,0,50"/>
                                             <Grid Grid.Row="2" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,1,0,0" BorderBrush="Gray">
-                                                <TextBlock Text="{x:Bind Remind.DateItems[0].Week,Converter={StaticResource RemindListWeekConverter}}" Foreground="#5393FF" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding Remind.DateItems[0].Week,Converter={StaticResource RemindListWeekConverter}}" Foreground="#5393FF" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE916;" Foreground="{x:Bind Remind.Time,Converter={StaticResource BeforeTimeIconColor}}" VerticalAlignment="Center" Margin="5,0"/>
                                                     <TextBlock x:Name="BeforeTimeTextBlock" Text="{x:Bind Remind.Time,Converter={StaticResource RemindListBeforeTimeConverter}}" Foreground="#A6A6A6" VerticalAlignment="Center"/>
