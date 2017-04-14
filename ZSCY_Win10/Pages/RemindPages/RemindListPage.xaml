@@ -54,7 +54,9 @@
         </Grid>
         <Grid x:Name="grid1"  Background="#068cfd" Grid.Row="0" HorizontalAlignment="Stretch" Grid.Column="1"/>
         <Grid  x:Name="ListGrid1"  Background="#F5F5F5" Grid.Row="1" Grid.Column="0" BorderBrush="Gray" BorderThickness="0,0,1,0">
-            <pr:PullToRefreshBox Name="RefreshListView" RefreshInvoked="RefreshListView_RefreshInvoked" VerticalAlignment="Stretch">
+            <!--<pr:PullToRefreshBox Name="RefreshListView" RefreshInvoked="RefreshListView_RefreshInvoked" VerticalAlignment="Stretch">-->
+            <pr:PullToRefreshBox RefreshInvoked="RefreshListView_RefreshInvoked" VerticalAlignment="Stretch">
+                
                 <Grid>
                     <ListView x:Name="RemindListView" Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                         <ListView.ItemContainerStyle>
@@ -167,6 +169,8 @@
                     </ListView>
                 </Grid>
             </pr:PullToRefreshBox>
+
+            <!--</pr:PullToRefreshBox>-->
             <ProgressRing Name="progressRing" Width="50" Height="50" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Grid>
         <Grid x:Name="ListGrid2" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
