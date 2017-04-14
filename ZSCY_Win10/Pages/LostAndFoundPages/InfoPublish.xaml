@@ -157,7 +157,7 @@
             <Line X1="10" X2="900" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
             <Button Name="publishBtn" Background="#41a3ff" RelativePanel.AlignHorizontalCenterWithPanel="True"
                     RelativePanel.AlignVerticalCenterWithPanel="True" Content="发布信息" FontSize="25"
-                    Foreground="White" Width="340"/>
+                    Foreground="White" Width="340" Click="publishBtn_Click"/>
         </RelativePanel>
         <Grid x:Name="SelRemindGrid" Grid.Row="1" Grid.RowSpan="8" Visibility="Collapsed">
             <Grid.RowDefinitions>

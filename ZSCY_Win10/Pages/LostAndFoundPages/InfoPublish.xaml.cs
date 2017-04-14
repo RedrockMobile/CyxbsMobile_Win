@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -14,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using ZSCY_Win10.Util;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,7 +28,8 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
     {
         bool islost = true;
         string temptype;
-        
+        private static string resourceName = "ZSCY";
+
         List<TempItemClass> tic = new List<TempItemClass>() {
             new TempItemClass { type="一卡通",IconV=Visibility.Collapsed},
             new TempItemClass { type="钱包",IconV=Visibility.Collapsed},
@@ -100,9 +103,54 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
             timebox.Text = args.NewDate.UtcDateTime.ToString();
         }
 
-        private void publishBtn_Click(object sender, RoutedEventArgs e)
+        private async void publishBtn_Click(object sender, RoutedEventArgs e)
         {
-            //TODO:post
+            if (typeTb.Text != "" && DescribeBox.Text != "" && timebox.Text != "" && addressBox.Text != "")
+            {
+                if (telBox.Text == "" && qqbox.Text == "")
+                    Utils.Message("请至少输入一个联系方式");
+                else
+                {
+                    var vault = new Windows.Security.Credentials.PasswordVault();
+                    var credentialList = vault.FindAllByResource(resourceName);
+                    //TODO:post
+                    string property = "";
+                    if (islost)
+                        property = "寻物启事";
+                    else
+                        property = "失物招领";
+                    List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+                    paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+                    paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
+                    paramList.Add(new KeyValuePair<string, string>("property", property));
+                    paramList.Add(new KeyValuePair<string, string>("category", typeTb.Text));
+                    paramList.Add(new KeyValuePair<string, string>("detail", DescribeBox.Text));
+                    paramList.Add(new KeyValuePair<string, string>("pickTime", timebox.Text));
+                    paramList.Add(new KeyValuePair<string, string>("place", addressBox.Text));
+                    if (telBox.Text == "")
+                        paramList.Add(new KeyValuePair<string, string>("qq", qqbox.Text));
+                    else if (qqbox.Text == "")
+                        paramList.Add(new KeyValuePair<string, string>("phone", telBox.Text));
+                    else
+                    {
+                        paramList.Add(new KeyValuePair<string, string>("phone", telBox.Text));
+                        paramList.Add(new KeyValuePair<string, string>("qq", qqbox.Text));
+                    }
+                    string postup = await NetWork.getHttpWebRequest("laf/api/create", paramList);
+                    if (postup != "")
+                    {
+                        JObject obj = JObject.Parse(postup);
+                        if (obj["state"].ToString() == "成功添加失物招领信息")
+                        {
+                            Utils.Message("发表成功 青协审核后将发布在失物招领中~");
+                        }
+                        else
+                            Utils.Message(obj["state"].ToString());
+                    }
+                }
+            }
+            else
+                Utils.Message("请完善信息");
         }
     }
 }
