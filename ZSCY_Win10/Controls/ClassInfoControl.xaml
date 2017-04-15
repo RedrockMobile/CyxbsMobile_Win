@@ -78,9 +78,9 @@
                         <Image Margin="10 10 0 10" 
                        Name="_img" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\course_03.png" Height="38" Width="38"/>
                         <TextBlock RelativePanel.RightOf="_img"
-                           Margin="20 0 0 0" Text="课程" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
+                           Margin="20 0 0 0" Text="课程" FontSize="16" FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
                         <TextBlock RelativePanel.AlignRightWithPanel="True"
-                           Margin="0 0 20 0" 
+                           Margin="0 0 20 0" TextTrimming="CharacterEllipsis"
                            RelativePanel.AlignVerticalCenterWithPanel="True"
                            HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Course}" VerticalAlignment="Center"/>
                     </RelativePanel>

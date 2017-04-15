@@ -100,7 +100,7 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
 
         private void DatePickerFlyout_DatePicked(DatePickerFlyout sender, DatePickedEventArgs args)
         {
-            timebox.Text = args.NewDate.UtcDateTime.ToString();
+            timebox.Text = args.NewDate.UtcDateTime.ToString().Substring(0, args.NewDate.UtcDateTime.ToString().Length-7);
         }
 
         private async void publishBtn_Click(object sender, RoutedEventArgs e)

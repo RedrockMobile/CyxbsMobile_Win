@@ -5,7 +5,7 @@
     xmlns:local="using:ZSCY_Win10.Pages.LostAndFoundPages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" >
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -33,7 +33,8 @@
             <Line X1="0" X2="900" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
             <Line X1="0" X2="900" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
             <Image Margin="10 10 0 10" 
-                       Name="_img" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\course_03.png" Height="35" Width="35"/>
+                       Name="_img" RelativePanel.AlignLeftWithPanel="True"  
+                   RelativePanel.AlignVerticalCenterWithPanel="True"  Source="/Assets\course_03.png" Height="35" Width="35"/>
             <TextBlock RelativePanel.RightOf="_img" Text="信息分类" VerticalAlignment="Center"
                        HorizontalAlignment="Center" 
                        RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="15"
@@ -57,7 +58,7 @@
             <Image Margin="10 10 0 10" 
                        Name="_img1" RelativePanel.AlignLeftWithPanel="True"  
                    RelativePanel.AlignVerticalCenterWithPanel="True"  
-                   Source="..\Assets\type_03.png" Height="35" Width="35"/>
+                   Source="/Assets\type_03.png" Height="35" Width="35"/>
             <TextBlock RelativePanel.RightOf="_img1" Name="bt" Text="物品分类" VerticalAlignment="Center"
                        HorizontalAlignment="Center" 
                        RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="15"
@@ -78,7 +79,7 @@
             <Image Margin="10 10 0 10" 
                        Name="_img2" RelativePanel.AlignLeftWithPanel="True"  
                    RelativePanel.AlignTopWithPanel="True"  
-                   Source="..\Assets\teacher_03.png" Height="35" Width="35"/>
+                   Source="/Assets\teacher_03.png" Height="35" Width="35"/>
             <TextBlock RelativePanel.RightOf="_img2" Name="bt2" Text="描       述"  RelativePanel.AlignTopWithPanel="True" 
                        HorizontalAlignment="Center" Margin="15 15 0 10"
                        RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="15"
@@ -92,7 +93,7 @@
             <Image Margin="10 10 0 10" 
                        Name="_img4" RelativePanel.AlignLeftWithPanel="True"  
                    RelativePanel.AlignVerticalCenterWithPanel="True"  
-                   Source="..\Assets\weeks_03.png" Height="35" Width="35"/>
+                   Source="/Assets\weeks_03.png" Height="35" Width="35"/>
             <TextBlock RelativePanel.RightOf="_img4" Text="时       间" VerticalAlignment="Center"
                        HorizontalAlignment="Center"  Name="timetb"
                        RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="15"
@@ -117,7 +118,7 @@
             <Image Margin="10 10 0 10" 
                        Name="_img5" RelativePanel.AlignLeftWithPanel="True"  
                    RelativePanel.AlignVerticalCenterWithPanel="True"  
-                   Source="..\Assets\weeks_03.png" Height="35" Width="35"/>
+                   Source="/Assets\address.png" Height="34" Width="34"/>
             <TextBlock RelativePanel.RightOf="_img5" Text="地       点" Name="address" VerticalAlignment="Center"
                        HorizontalAlignment="Center" 
                        RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="15"
@@ -130,7 +131,7 @@
             <Image Margin="10 10 0 10" 
                        Name="_img6" RelativePanel.AlignLeftWithPanel="True"  
                    RelativePanel.AlignVerticalCenterWithPanel="True"  
-                   Source="..\Assets\weeks_03.png" Height="35" Width="35"/>
+                   Source="/Assets\tel.png" Height="34" Width="34"/>
             <TextBlock RelativePanel.RightOf="_img6" Text="电       话" Name="tel" VerticalAlignment="Center"
                        HorizontalAlignment="Center" 
                        RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="15"
@@ -144,13 +145,13 @@
             <Image Margin="10 10 0 10" 
                        Name="_img7" RelativePanel.AlignLeftWithPanel="True"  
                    RelativePanel.AlignVerticalCenterWithPanel="True"  
-                   Source="..\Assets\weeks_03.png" Height="35" Width="35"/>
+                   Source="/Assets\qq.png" Height="34" Width="34"/>
             <TextBlock RelativePanel.RightOf="_img7" Text="Q         Q" VerticalAlignment="Center"
                        HorizontalAlignment="Center"  Name="qq"
                        RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="15"
                        Margin="15 0 0 0" Foreground="#aaaaaa"/>
             <TextBox RelativePanel.AlignVerticalCenterWithPanel="True" Margin="20 10 0 0" RelativePanel.RightOf="qq" 
-                     Name=" qqbox" BorderThickness="0" TextWrapping="Wrap" PlaceholderText="请留下联系方式/选填其一"/>
+                     Name="qqbox" BorderThickness="0" TextWrapping="Wrap" PlaceholderText="请留下联系方式/选填其一"/>
         </RelativePanel>
         <RelativePanel Grid.Row="8" >
             <Line X1="10" X2="900" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>

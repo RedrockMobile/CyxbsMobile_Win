@@ -97,6 +97,8 @@ namespace ZSCY_Win10.Controls
             {
                 ClassList pl = Resources["pl"] as ClassList;
                 ClassList pl2 = Resources["pl2"] as ClassList;
+                if (cl[0].Course.Length > 15)
+                    cl[0].Course = cl[0].Course.Substring(0, 12) + "..";
                 pl.Course = cl[0].Course;
                 pl.Teacher = cl[0].Teacher;
                 pl.Classroom = cl[0].Classroom;
@@ -108,6 +110,8 @@ namespace ZSCY_Win10.Controls
                     istype1 = false;
                     type1.Visibility = Visibility.Collapsed;
                     type2.Visibility = Visibility.Visible;
+                    if (cl[1].Course.Length > 15)
+                        cl[1].Course = cl[1].Course.Substring(0, 12) + "..";
                     pl2.Course = cl[1].Course;
                     pl2.Teacher = cl[1].Teacher;
                     pl2.Classroom = cl[1].Classroom;
