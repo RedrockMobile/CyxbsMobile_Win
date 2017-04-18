@@ -85,15 +85,9 @@ namespace ZSCY_Win10.ViewModels.StartPage
         private async void DownLoadImage()
         {
             string content = "";
-            try
-            {
-
-            content= await NetWork.getHttpWebRequest(Api.StartPageImagApi, PostORGet: 1, fulluri: true);
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
+            content = await NetWork.getHttpWebRequest(Api.StartPageImagApi, PostORGet: 1, fulluri: true);
+            if (string.IsNullOrWhiteSpace(content))
+                return;
             ImageList imageList = JsonConvert.DeserializeObject<ImageList>(content);
             //创建加入数据库的临时变量
             Database dbTemp = new Database();
