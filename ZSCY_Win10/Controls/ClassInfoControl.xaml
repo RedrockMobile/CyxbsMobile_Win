@@ -23,7 +23,7 @@
     <Grid >
         <Border x:Name="OutBorder" Background="#55000000" 
                 VerticalAlignment="Stretch" 
-                HorizontalAlignment="Stretch" />
+                HorizontalAlignment="Stretch" Tapped="cancelBtn_Click"/>
         <Grid Name="outGrid" Background="White" Margin="35,10,35,10" VerticalAlignment="Center" Height="600" Width="400">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>

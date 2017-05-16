@@ -139,6 +139,7 @@
     <Content Include="Assets\Annex_img\Annex_zip.png" />
     <Content Include="Assets\back.png" />
     <Content Include="Assets\BadgeLogo.scale-100.png" />
+    <Content Include="Assets\base.jpg" />
     <Content Include="Assets\BlueLogo\Square150x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -347,6 +348,12 @@
     <Compile Include="Models\SubjectRatio.cs" />
     <Compile Include="Models\Switch.cs" />
     <Compile Include="Models\teacher.cs" />
+    <Compile Include="Models\TopicModels\Articles.cs" />
+    <Compile Include="Models\TopicModels\LikeButtonClickEvent.cs" />
+    <Compile Include="Models\TopicModels\pic.cs" />
+    <Compile Include="Models\TopicModels\Topic.cs" />
+    <Compile Include="Models\TopicModels\TopicContent.cs" />
+    <Compile Include="Models\TopicModels\TopicRemark.cs" />
     <Compile Include="Models\xuezi.cs" />
     <Compile Include="Models\yuanchuang.cs" />
     <Compile Include="Models\zhoubianmeijing.cs" />
@@ -489,6 +496,18 @@
     </Compile>
     <Compile Include="Pages\StartPages\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TopicPages\AddTopicArticles.xaml.cs">
+      <DependentUpon>AddTopicArticles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TopicPages\SearchTopic.xaml.cs">
+      <DependentUpon>SearchTopic.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TopicPages\TopicArticlesConent.xaml.cs">
+      <DependentUpon>TopicArticlesConent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TopicPages\TopicContentPage.xaml.cs">
+      <DependentUpon>TopicContentPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resouces\Api.cs" />
@@ -904,6 +923,22 @@
     <Page Include="Pages\StrategyPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\TopicPages\AddTopicArticles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TopicPages\SearchTopic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TopicPages\TopicArticlesConent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TopicPages\TopicContentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SetPersonInfoPage.xaml">
       <SubType>Designer</SubType>

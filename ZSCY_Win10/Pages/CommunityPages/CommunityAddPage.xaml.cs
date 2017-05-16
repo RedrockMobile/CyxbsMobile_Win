@@ -24,6 +24,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Data;
+using ZSCY_Win10.Models.TopicModels;
 using ZSCY_Win10.Util;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
@@ -38,6 +39,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
         ObservableCollection<CommunityImageList> imageList = new ObservableCollection<CommunityImageList>();
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         private static string resourceName = "ZSCY";
+        Topic para;
 
         public CommunityAddPage()
         {
@@ -64,6 +66,16 @@ namespace ZSCY_Win10.Pages.CommunityPages
             };
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
 
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            var item = e.Parameter;
+            if (item is Topic)
+            {
+                para = item as Topic;
+                addContentTextBox.Text = para.keyword;
+            }
         }
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
@@ -272,7 +284,13 @@ namespace ZSCY_Win10.Pages.CommunityPages
 
 
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("type_id", "5")); //现在只有哔哔叨叨
+            if (para != null)
+            {
+                paramList.Add(new KeyValuePair<string, string>("type_id", "7")); //rua
+                paramList.Add(new KeyValuePair<string, string>("topic_id", para.topic_id.ToString())); //rua
+            }
+            else
+                paramList.Add(new KeyValuePair<string, string>("type_id", "5")); //现在只有哔哔叨叨
             paramList.Add(new KeyValuePair<string, string>("title", addContentTextBox.Text));
             //paramList.Add(new KeyValuePair<string, string>("user_id", appSetting.Values["Community_people_id"].ToString())); //记得改了
             paramList.Add(new KeyValuePair<string, string>("content", addContentTextBox.Text));
@@ -282,7 +300,13 @@ namespace ZSCY_Win10.Pages.CommunityPages
             //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
             paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
             paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
-            string ArticleUp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Article/addArticle", paramList);
+            string ArticleUp = "";
+            if (para != null)
+            {
+                ArticleUp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Topic/addTopicArticle", paramList);
+            }
+            else
+                ArticleUp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Article/addArticle", paramList);
             Debug.WriteLine(ArticleUp);
             try
             {

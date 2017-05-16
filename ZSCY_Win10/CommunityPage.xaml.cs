@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -20,9 +22,13 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Common;
+using ZSCY_Win10.Controls;
 using ZSCY_Win10.Data.Community;
+using ZSCY_Win10.Models;
+using ZSCY_Win10.Models.TopicModels;
 using ZSCY_Win10.Pages;
 using ZSCY_Win10.Pages.CommunityPages;
+using ZSCY_Win10.Pages.TopicPages;
 using ZSCY_Win10.Service;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
@@ -46,6 +52,7 @@ namespace ZSCY_Win10
         List<Img> clickImgList = new List<Img>();
         int clickImfIndex = 0;
         bool isPersonInfo = false;
+        ObservableCollection<Topic> topicList = new ObservableCollection<Topic>();
 
         public CommunityPage()
         {
@@ -91,6 +98,8 @@ namespace ZSCY_Win10
                 VisualStateManager.GoToState(this, state, true);
                 cutoffLine.Y2 = e.NewSize.Height;
             };
+            GetBaseTopInfo();
+            topicGridView.ItemsSource = topicList;
             //CommunityFrame.Visibility = Visibility.Visible;
             //CommunityFrame.Navigate(typeof(CommunityContentPage));
             //RMDTListView.ContainerContentChanging += RMDTListView_ContainerContentChanging;
@@ -566,7 +575,7 @@ namespace ZSCY_Win10
             if (null != result && result.Label == "是")
             {
                 Debug.WriteLine("保存图片");
-                bool saveImg = await NetWork.downloadFile(((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc, "picture",((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", ""));
+                bool saveImg = await NetWork.downloadFile(((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc, "picture", ((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", ""));
                 if (saveImg)
                 {
                     Utils.Toast("图片已保存到 \"保存的图片\"", "SavedPictures");
@@ -583,12 +592,60 @@ namespace ZSCY_Win10
 
         private void CommunityItemPhotoImage_ImageOpened(object sender, RoutedEventArgs e)
         {
-            DependencyObject x =VisualTreeHelper.GetParent(sender as Image);
+            DependencyObject x = VisualTreeHelper.GetParent(sender as Image);
             Grid g = x as Grid;
             var z = g.Children[0];
             ProgressRing p = z as ProgressRing;
             p.IsActive = false;
         }
 
+        private async void GetBaseTopInfo()
+        {
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
+            if (credentialList[0] != null)
+            {
+                try
+                {
+                    List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+                    paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+                    string Topictemp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Topic/topicList", paramList);
+                    JObject Tobj = JObject.Parse(Topictemp);
+                    if (Int32.Parse(Tobj["status"].ToString()) == 200)
+                    {
+                        JArray TopicArray = Utils.ReadJso(Topictemp);
+                        for (int i = 0; i < 2; i++)
+                        {
+                            Topic item = new Topic();
+                            item.GetAttribute((JObject)TopicArray[i]);
+                            if (item.imgdata.Equals(""))
+                            { item.imgdata = "/Assets/base.jpg"; item.color = "DarkGray"; }                     
+                            item.keyword =$"#{item.keyword}#";
+                            topicList.Add(item);
+                        }
+                    }
+                }
+                catch
+                {
+                    NotifyPopup notifyPopup = new NotifyPopup("网络异常 无法读取事项~");
+                    notifyPopup.Show();
+                }
+            }
+            Topic rditem = new Topic();
+            rditem.keyword = "#查看更多话题#";
+            rditem.imgdata = "/Assets/base.jpg";
+            rditem.color = "DarkGray";
+            topicList.Add(rditem);
+        }
+
+        private void topicGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            //TODO:有数据了测一下
+            if (((Topic)e.ClickedItem).keyword.Equals("#查看更多话题#"))
+                this.Frame.Navigate(typeof(SearchTopic));
+            else
+                this.Frame.Navigate(typeof(TopicContentPage), e.ClickedItem, new DrillInNavigationTransitionInfo());
+        }
     }
 }
