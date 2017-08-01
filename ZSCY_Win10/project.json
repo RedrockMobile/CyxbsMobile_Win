@@ -1,17 +1,17 @@
 ﻿{
   "dependencies": {
     "LLQNotifier": "0.7.0",
-    "Microsoft.ApplicationInsights": "1.0.0",
-    "Microsoft.ApplicationInsights.PersistenceChannel": "1.0.0",
-    "Microsoft.ApplicationInsights.WindowsApps": "1.0.0",
-    "Microsoft.Azure.Mobile.Client": "2.0.1",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.1",
-    "Microsoft.Toolkit.Uwp.Notifications": "1.3.1",
-    "Newtonsoft.Json": "9.0.1",
+    "Microsoft.ApplicationInsights": "2.4.0",
+    "Microsoft.ApplicationInsights.PersistenceChannel": "1.2.3",
+    "Microsoft.ApplicationInsights.WindowsApps": "1.1.1",
+    "Microsoft.Azure.Mobile.Client": "4.0.1",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.3",
+    "Microsoft.Toolkit.Uwp.Notifications": "1.5.1",
+    "Newtonsoft.Json": "10.0.3",
     "PullToRefresh.UWP": "0.3.4",
     "SQLite.Net-PCL": "3.1.1",
     "UmengAnalytics": "3.1.0",
-    "Win2D.uwp": "1.20.0"
+    "Win2D.uwp": "1.21.0"
   },
   "frameworks": {
     "uap10.0": {}
