@@ -1,0 +1,78 @@
+﻿<Page
+    x:Class="ZSCY_Win10.Pages.LostAndFoundPages.LFDetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY_Win10.Pages.LostAndFoundPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <!--顶栏-->
+        <Grid Background="{x:Bind AppTheme.APP_Color_Brush}" Grid.Row="0">
+            <Grid x:Name="DetailPageTitleGrid"  HorizontalAlignment="Stretch">
+                <TextBlock x:Name="DetailPageTitle" Text="详细信息" HorizontalAlignment="Center" Foreground="{x:Bind AppTheme.Foreground_Color_Brush}"  FontSize="{x:Bind AppTheme.Header_Size}" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+            </Grid>
+        </Grid>
+        <!--内容-->
+        <Grid Background="White" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0">
+                <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="5,0,10,0">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="{x:Bind VM.HeadImg}"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                    <TextBlock Text="{x:Bind VM.connect_name}" FontSize="20" />
+                    <TextBlock Text="{x:Bind VM.Category}" Foreground="DarkGray"/>
+                </StackPanel>
+            </StackPanel>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="55"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{x:Bind VM.pro_description}" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="WrapWholeWords"  MaxLines="5" Foreground="Gray" />
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2" Background="#FFE6E6E6">
+        </Grid>
+        <!--详细-->
+        <Grid Grid.Row="3" Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="联系人" Grid.Row="0" Grid.Column="1" Foreground="DarkGray"/>
+            <TextBlock Text="时   间" Grid.Row="1" Grid.Column="1" Foreground="DarkGray"/>
+            <TextBlock Text="地   点" Grid.Row="2" Grid.Column="1" Foreground="DarkGray"/>
+            <TextBlock Text="电   话" Grid.Row="3" Grid.Column="1" Foreground="DarkGray"/>
+            <TextBlock Text="Q    Q" Grid.Row="4" Grid.Column="1" Foreground="DarkGray"/>
+            <TextBlock Text="{x:Bind VM.connect_name}" Grid.Row="0" Grid.Column="2"/>
+            <TextBlock Text="{x:Bind VM.L_or_F_time}" Grid.Row="1" Grid.Column="2"/>
+            <TextBlock Text="{x:Bind VM.L_or_F_place}" Grid.Row="2" Grid.Column="2"/>
+            <TextBlock Text="{x:Bind VM.connect_phone}" Grid.Row="3" Grid.Column="2"/>
+            <TextBlock Text="{x:Bind VM.connect_wx}" Grid.Row="4" Grid.Column="2"/>
+        </Grid>
+    </Grid>
+</Page>

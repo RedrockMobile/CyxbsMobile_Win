@@ -20,8 +20,15 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Shapes;
 using ZSCY.Data;
+using ZSCY_Win10.Data;
 using ZSCY_Win10.Util;
+using Windows.UI.Popups;
+using ZSCY_Win10.Controls;
+using ZSCY_Win10.Pages.RemindPages;
+using ZSCY_Win10.Pages.AddRemindPage;
+using Windows.UI.Xaml.Media.Animation;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
@@ -35,12 +42,15 @@ namespace ZSCY_Win10
         private string stuNum = "";
         private string kb = "";
         private int wOa = 1;
+        private static string resourceName = "ZSCY";
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
         Grid backweekgrid = new Grid();
         TextBlock[] DateOnKBTextBlock = new TextBlock[7] { new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock() };
         List<ClassList> classList = new List<ClassList>();
+        List<Transaction> transationList = new List<Transaction>();
         string[,][] classtime = new string[7, 6][];
+        long[,][] transactiontime = new long[7, 6][];
         private Dictionary<string, int> colorlist = new Dictionary<string, int>(); //课表格子颜色
         public KBPage()
         {
@@ -95,33 +105,59 @@ namespace ZSCY_Win10
             {
                 KBRefreshAppBarButton.Visibility = Visibility.Collapsed;
             }
-        }
+#if DEBUG
+            TestButton.Visibility = Visibility.Visible;
+#endif        
 
+        }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             //TODO:未登陆时 没有课表
-            Debug.WriteLine("OnNavigatedTo");
-            if (appSetting.Values.ContainsKey("idNum"))
+            try
             {
-                progress.Visibility = Visibility.Visible;
-                stuNum = appSetting.Values["stuNum"].ToString();
-                initKB();
-                this.progress.IsActive = false;
-                initToday();
-                UmengSDK.UmengAnalytics.TrackPageStart("KBPage");
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                Debug.WriteLine("OnNavigatedTo");
+                //if (appSetting.Values.ContainsKey("idNum"))
+                if (credentialList.Count > 0)
+                {
+                    progress.Visibility = Visibility.Visible;
+                    //stuNum = appSetting.Values["stuNum"].ToString();
+                    stuNum = credentialList[0].UserName;
+                    initKB();
+                    this.progress.IsActive = false;
+                    initToday();
+                    UmengSDK.UmengAnalytics.TrackPageStart("KBPage");
+                }
+                else
+                {
+                    progress.Visibility = Visibility.Collapsed;
+                    HubSectionKBTitle.Text = "未登陆 暂无";
+                    initToday();
+                    baseInfoStackPanel.IsTapEnabled = false;
+                    HubSectionKBNum.IsTapEnabled = false;
+                    KBRefreshAppBarButton.IsEnabled = false;
+                    KBCalendarAppBarButton.IsEnabled = false;
+                    KBZoomAppBarButton.IsEnabled = false;
+                    ShowMoreAppBarButton.IsEnabled = false;
+                }
             }
-            else
+            catch
             {
-                HubSectionKBTitle.Text = "您未登陆 暂无课表信息";
+                progress.Visibility = Visibility.Collapsed;
+                HubSectionKBTitle.Text = "未登陆 暂无";
+                initToday();
                 baseInfoStackPanel.IsTapEnabled = false;
                 HubSectionKBNum.IsTapEnabled = false;
                 KBRefreshAppBarButton.IsEnabled = false;
                 KBCalendarAppBarButton.IsEnabled = false;
                 KBZoomAppBarButton.IsEnabled = false;
+                ShowMoreAppBarButton.IsEnabled = false;
             }
-        }
 
+        }
 
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -148,6 +184,7 @@ namespace ZSCY_Win10
             if (week == 0)
             {
                 Grid backgrid = new Grid();
+                //TODO:改动 当日空课表的背景色 
                 backgrid.Background = new SolidColorBrush(Color.FromArgb(255, 254, 245, 207));
                 backgrid.SetValue(Grid.RowProperty, 0);
                 backgrid.SetValue(Grid.ColumnProperty, (Int16.Parse(Utils.GetWeek()) + 6) % 7);
@@ -186,8 +223,15 @@ namespace ZSCY_Win10
         //TODO:未登陆时 没有课表
         private async void initKB(bool isRefresh = false)
         {
-            
-                if (stuNum == appSetting.Values["stuNum"].ToString() && !isRefresh)
+            string Transactiontemp = null;
+
+            try
+            {
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                //if (stuNum == appSetting.Values["stuNum"].ToString() && !isRefresh)
+                if (stuNum == credentialList[0].UserName && !isRefresh)
                 {
                     try
                     {
@@ -202,17 +246,21 @@ namespace ZSCY_Win10
 #if DEBUG
                         showKB(2, 5);
 #else
-                    showKB(2);
+                        showKB(2);
 #endif
                     }
                     catch (Exception) { Debug.WriteLine("主页->课表数据缓存异常"); }
                 }
-            if (stuNum == appSetting.Values["stuNum"].ToString())
-            {
-                HubSectionKBTitle.Text = "我的课表";
-                HubSectionKBTitle.FontSize = 18;
+                //if (stuNum == appSetting.Values["stuNum"].ToString())
+                if (stuNum == credentialList[0].UserName)
+                {
+                    HubSectionKBTitle.Text = "我的课表";
+                    HubSectionKBTitle.FontSize = 18;
+
+                }
 
             }
+            catch { }
 
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
@@ -222,7 +270,21 @@ namespace ZSCY_Win10
 
             string kbtemp = await NetWork.getHttpWebRequest("redapi2/api/kebiao", paramList); //新
                                                                                               //string kbtemp = await NetWork.getHttpWebRequest("api/kebiao", paramList); //旧
-
+            try
+            {
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                List<KeyValuePair<String, String>> TransactionparamList = new List<KeyValuePair<String, String>>();
+                TransactionparamList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+                TransactionparamList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
+                Transactiontemp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/getTransaction", TransactionparamList);
+            }
+            catch
+            {
+                NotifyPopup notifyPopup = new NotifyPopup("网络异常 无法读取事项~");
+                notifyPopup.Show();
+            }
             if (!appSetting.Values.ContainsKey("HttpTime"))
                 appSetting.Values["HttpTime"] = DateTimeOffset.Now.ToString();
             if (kbtemp != "")
@@ -274,7 +336,7 @@ namespace ZSCY_Win10
                     todayNumofstuTextBlock.Text = "开学第" + ((Int16.Parse(appSetting.Values["nowWeek"].ToString()) - 1) * 7 + (Int16.Parse(Utils.GetWeek()) == 0 ? 7 : Int16.Parse(Utils.GetWeek()))).ToString() + "天";
                     //showKB(2, Int32.Parse(appSetting.Values["nowWeek"].ToString()));
 #if DEBUG
-                    showKB(2);
+                    showKB(2, 0, Transactiontemp);
 #else
                     showKB(2);
 #endif
@@ -331,12 +393,21 @@ namespace ZSCY_Win10
             }
         }
 
-        private void showKB(int weekOrAll = 1, int week = 0)
+        private void showKB(int weekOrAll = 1, int week = 0, string transactioncontent = null)
         {
             for (int i = 0; i < 7; i++)
                 for (int j = 0; j < 6; j++)
                     classtime[i, j] = null;
 
+            for (int i = 0; i < 7; i++)
+                for (int j = 0; j < 6; j++)
+                    transactiontime[i, j] = null;
+
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
+            if (stuNum == credentialList[0].UserName)
+                GetTransaction(transactioncontent);
 
             kebiaoGrid.Children.Clear();
             SetKebiaoGridBorder(week);
@@ -370,6 +441,7 @@ namespace ZSCY_Win10
                     //        SetClassAll(classitem, 3);
                     //else
                     SetClassAll(classitem, ClassColor);
+                    SetTransactionAll(transationList, classList);
                     HubSectionKBNum.Visibility = Visibility.Collapsed;
                 }
                 else
@@ -380,6 +452,9 @@ namespace ZSCY_Win10
                         if (Array.IndexOf(classitem.Week, Int32.Parse(appSetting.Values["nowWeek"].ToString())) != -1)
                         {
                             SetClassAll(classitem, ClassColor);
+                            if (transationList.Count != 0)
+                                SetTransactionDay(transationList, classList);
+
                             HubSectionKBNum.Text = " | 第" + appSetting.Values["nowWeek"].ToString() + "周";
                         }
                     }
@@ -390,12 +465,17 @@ namespace ZSCY_Win10
                             SetClassAll(classitem, ClassColor);
                             HubSectionKBNum.Text = " | 第" + week.ToString() + "周";
                         }
+                        SetTransactionDay(transationList, classList, week);
                     }
                 }
             }
 
-            //当日课表显示
             KebiaoDayGrid.Children.Clear();
+            //这特么在逗我
+            //if (transationList.Count != 0)
+            //   SetTransactionDay(transationList, classList);
+
+            //当日课表显示
             for (int i = 0; i < ClassListArray.Count; i++)
             {
                 ClassList classitem = new ClassList();
@@ -412,8 +492,257 @@ namespace ZSCY_Win10
                 }
                 //#endif
             }
-            colorlist.Clear();
 
+            colorlist.Clear();
+        }
+
+        /// <summary>
+        /// 当日事项填充
+        /// </summary>
+        private void SetTransactionDay(List<Transaction> transationList, List<ClassList> classlist, int week = 0, int weekOrAll = 0)
+        {
+            int nowWEEK;
+            if (week == 0)
+                nowWEEK = Int32.Parse(appSetting.Values["nowWeek"].ToString());
+            else
+                nowWEEK = week;
+            //事项的背景颜色 略淡
+            Color[] Tcolor = new Color[]{
+                   Color.FromArgb(255,232,245,254),
+                   Color.FromArgb(255,255,245,233),
+                   Color.FromArgb(255,230,255,251)
+                };
+            //通过在某某节确定背景颜色
+            int RightC = 0;
+            bool isInClassGrid = false;
+            foreach (var transactionitem in transationList)
+            {
+                for (int i = 0; i < transactionitem.date.Count; i++)
+                {
+                    if (Array.IndexOf(transactionitem.date[i].week, nowWEEK) != -1)
+                    {
+                        foreach (var classitem in classlist)
+                        {
+                            if (Array.IndexOf(classitem.Week, nowWEEK) != -1)
+                            {
+                                //当前课与当前时段的事件在同一周
+                                //如果本周任意一节课与事件事件冲突 
+                                if (transactionitem.date[i].day == classitem.Hash_day && transactionitem.date[i]._class == classitem.Hash_lesson)
+                                { isInClassGrid = true; break; }
+                            }
+                        }
+                        switch (transactionitem.date[i]._class)
+                        {
+                            case 0:
+                            case 1:
+                                RightC = 0;
+                                break;
+                            case 2:
+                            case 3:
+                                RightC = 1;
+                                break;
+                            case 4:
+                            case 5:
+                                RightC = 2;
+                                break;
+                        }
+                        if (transactiontime[transactionitem.date[i].day, transactionitem.date[i]._class] == null)
+                        {
+                            long[] tempstr = new long[1];
+                            tempstr[0] = transactionitem.id;
+                            transactiontime[transactionitem.date[i].day, transactionitem.date[i]._class] = tempstr;
+                        }
+                        else if (Array.IndexOf(transactiontime[transactionitem.date[i].day, transactionitem.date[i]._class], transactionitem.id) == -1)
+                        {
+                            long[] temp = transactiontime[transactionitem.date[i].day, transactionitem.date[i]._class];
+                            long[] templ = new long[temp.Length + 1];
+                            for (int a = 0; a < temp.Length; a++)
+                                templ[a] = temp[a];
+                            //if (Array.IndexOf(templ, transactionitem.id) != -1)
+                            templ[temp.Length] = transactionitem.id;
+                            transactiontime[transactionitem.date[i].day, transactionitem.date[i]._class] = templ;
+                        }
+                        if (isInClassGrid)
+                        {
+                            //事件与课程冲突 就不订阅tapped事件了
+                            Grid transactionGrid = new Grid();
+                            transactionGrid.SetValue(Grid.RowProperty, System.Int32.Parse(transactionitem.date[i]._class * 2 + ""));
+                            transactionGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(transactionitem.date[i].day + ""));
+                            transactionGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(2 + ""));
+
+                            transactionGrid.Margin = new Thickness(2);
+
+                            transactionGrid.HorizontalAlignment = HorizontalAlignment.Right;
+                            transactionGrid.VerticalAlignment = VerticalAlignment.Top;
+                            transactionGrid.Width = 8;
+                            transactionGrid.Height = 8;
+                            transactionGrid.BorderThickness = new Thickness(0);
+                            transactionGrid.Background = new SolidColorBrush(Colors.Transparent);
+                            Polygon pl = new Polygon();
+                            PointCollection collection = new PointCollection();
+                            collection.Add(new Point(0, 0));
+                            collection.Add(new Point(10, 10));
+                            collection.Add(new Point(10, 0));
+                            pl.Points = collection;
+                            pl.StrokeThickness = 0;
+                            pl.Fill = new SolidColorBrush(Colors.White);
+                            transactionGrid.Children.Add(pl);
+                            isInClassGrid = false;
+                            kebiaoGrid.Children.Add(transactionGrid);
+                        }
+                        else
+                        {
+                            Grid transactionGrid = new Grid();
+                            transactionGrid.SetValue(Grid.RowProperty, System.Int32.Parse(transactionitem.date[i]._class * 2 + ""));
+                            transactionGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(transactionitem.date[i].day + ""));
+                            transactionGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(2 + ""));
+
+                            transactionGrid.Background = new SolidColorBrush(Tcolor[RightC]);
+
+                            Grid polygonGrid = new Grid();
+                            polygonGrid.HorizontalAlignment = HorizontalAlignment.Right;
+                            polygonGrid.VerticalAlignment = VerticalAlignment.Top;
+                            polygonGrid.Height = 8;
+                            polygonGrid.Width = 8;
+                            polygonGrid.Background = new SolidColorBrush(Colors.Transparent);
+                            polygonGrid.Margin = new Thickness(2);
+                            Polygon pl = new Polygon();
+                            PointCollection collection = new PointCollection();
+                            collection.Add(new Point(0, 0));
+                            collection.Add(new Point(10, 10));
+                            collection.Add(new Point(10, 0));
+                            pl.Points = collection;
+                            pl.Fill = new SolidColorBrush(Colors.White);
+                            pl.StrokeThickness = 0;
+                            polygonGrid.Children.Add(pl);
+                            transactionGrid.Children.Add(polygonGrid);
+
+                            isInClassGrid = false;
+                            transactionGrid.Margin = new Thickness(0.5);
+
+                            transactionGrid.Tapped += BackGrid_Tapped;
+                            kebiaoGrid.Children.Add(transactionGrid);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 学期事项填充
+        /// </summary>
+        /// 跟当日事件填充除了判断条件基本一致 但是不太好合/头有点晕 有空再做优化
+        private void SetTransactionAll(List<Transaction> transationList, List<ClassList> classlist)
+        {
+            Color[] Tcolor = new Color[]{
+                   Color.FromArgb(255,232,245,254),
+                   Color.FromArgb(255,255,245,233),
+                   Color.FromArgb(255,230,255,251)
+                };
+            int RightC = 0;
+            bool IsInClass = false;
+            foreach (var transactionitem in transationList)
+            {
+                for (int i = 0; i < transactionitem.date.Count; i++)
+                {
+                    foreach (var classitem in classlist)
+                    {
+                        if (transactionitem.date[i]._class == classitem.Hash_lesson)
+                        { IsInClass = true; break; }
+                    }
+                    switch (transactionitem.date[i]._class)
+                    {
+                        case 0:
+                        case 1:
+                            RightC = 0;
+                            break;
+                        case 2:
+                        case 3:
+                            RightC = 1;
+                            break;
+                        case 4:
+                        case 5:
+                            RightC = 2;
+                            break;
+                    }
+                    if (transactiontime[transactionitem.date[i].day, transactionitem.date[i]._class] == null)
+                    {
+                        long[] tempstr = new long[1];
+                        tempstr[0] = transactionitem.id;
+                        transactiontime[transactionitem.date[i].day, transactionitem.date[i]._class] = tempstr;
+                    }
+                    else if (Array.IndexOf(transactiontime[transactionitem.date[i].day, transactionitem.date[i]._class], transactionitem.id) == -1)
+                    {
+                        long[] temp = transactiontime[transactionitem.date[i].day, transactionitem.date[i]._class];
+                        long[] templ = new long[temp.Length + 1];
+                        for (int a = 0; a < temp.Length; a++)
+                            templ[a] = temp[a];
+                        //if (Array.IndexOf(templ, transactionitem.id) != -1)
+                        templ[temp.Length] = transactionitem.id;
+                        transactiontime[transactionitem.date[i].day, transactionitem.date[i]._class] = templ;
+                    }
+                    if (IsInClass)
+                    {
+                        Grid transactionGrid = new Grid();
+                        transactionGrid.SetValue(Grid.RowProperty, System.Int32.Parse(transactionitem.date[i]._class * 2 + ""));
+                        transactionGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(transactionitem.date[i].day + ""));
+                        transactionGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(2 + ""));
+
+                        transactionGrid.Margin = new Thickness(2);
+
+                        transactionGrid.HorizontalAlignment = HorizontalAlignment.Right;
+                        transactionGrid.VerticalAlignment = VerticalAlignment.Top;
+                        transactionGrid.Width = 8;
+                        transactionGrid.Height = 8;
+                        transactionGrid.BorderThickness = new Thickness(0);
+                        transactionGrid.Background = new SolidColorBrush(Colors.Transparent);
+                        Polygon pl = new Polygon();
+                        PointCollection collection = new PointCollection();
+                        collection.Add(new Point(0, 0));
+                        collection.Add(new Point(10, 10));
+                        collection.Add(new Point(10, 0));
+                        pl.Points = collection;
+                        pl.StrokeThickness = 0;
+                        pl.Fill = new SolidColorBrush(Colors.White);
+                        transactionGrid.Children.Add(pl);
+                        IsInClass = false;
+                        kebiaoGrid.Children.Add(transactionGrid);
+                    }
+                    else
+                    {
+                        Grid transactionGrid = new Grid();
+                        transactionGrid.SetValue(Grid.RowProperty, System.Int32.Parse(transactionitem.date[i]._class * 2 + ""));
+                        transactionGrid.SetValue(Grid.ColumnProperty, System.Int32.Parse(transactionitem.date[i].day + ""));
+                        transactionGrid.SetValue(Grid.RowSpanProperty, System.Int32.Parse(2 + ""));
+
+                        transactionGrid.Background = new SolidColorBrush(Tcolor[RightC]);
+
+                        Grid polygonGrid = new Grid();
+                        polygonGrid.HorizontalAlignment = HorizontalAlignment.Right;
+                        polygonGrid.VerticalAlignment = VerticalAlignment.Top;
+                        polygonGrid.Height = 8;
+                        polygonGrid.Width = 8;
+                        polygonGrid.Background = new SolidColorBrush(Colors.Transparent);
+                        polygonGrid.Margin = new Thickness(2);
+                        Polygon pl = new Polygon();
+                        PointCollection collection = new PointCollection();
+                        collection.Add(new Point(0, 0));
+                        collection.Add(new Point(10, 10));
+                        collection.Add(new Point(10, 0));
+                        pl.Points = collection;
+                        pl.Fill = new SolidColorBrush(Colors.White);
+                        pl.StrokeThickness = 0;
+                        polygonGrid.Children.Add(pl);
+                        transactionGrid.Children.Add(polygonGrid);
+
+                        IsInClass = false;
+                        transactionGrid.Margin = new Thickness(0.5);
+
+                        transactionGrid.Tapped += BackGrid_Tapped;
+                        kebiaoGrid.Children.Add(transactionGrid);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -496,6 +825,77 @@ namespace ZSCY_Win10
             KebiaoDayGrid.Children.Add(BackGrid);
         }
 
+        //bool isGetTransactionSuccess = false;
+        //新增:获取事项信息
+        private async void GetTransaction(string contentstring = null)
+        {
+            bool secondTimeAdd = false;
+            if (contentstring == null)
+            {
+                //clear出了无法理解的问题..暂时用一个判断吧 聊胜于无           
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                if (credentialList[0] != null)
+                {
+                    try
+                    {
+                        List<KeyValuePair<String, String>> TransactionparamList = new List<KeyValuePair<String, String>>();
+                        TransactionparamList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+                        TransactionparamList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
+                        string Transactiontemp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/getTransaction", TransactionparamList);
+                        //isGetTransactionSuccess = true;
+                        JObject Tobj = JObject.Parse(Transactiontemp);
+                        if (Int32.Parse(Tobj["status"].ToString()) == 200)
+                        {
+                            JArray TransactionArray = Utils.ReadJso(Transactiontemp);
+                            for (int i = 0; i < TransactionArray.Count; i++)
+                            {
+                                Transaction transactionItem = new Transaction();
+                                transactionItem.GetAttribute((JObject)TransactionArray[i]);
+                                foreach (var existItem in transationList)
+                                {
+                                    if (transactionItem.id == existItem.id)
+                                    { secondTimeAdd = true; break; }
+                                }
+                                if (!secondTimeAdd)
+                                    transationList.Add(transactionItem);
+                                Debug.WriteLine(i);
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        NotifyPopup notifyPopup = new NotifyPopup("网络异常 无法读取事项~");
+                        notifyPopup.Show();
+                    }
+                }
+            }
+            else
+            {
+                if (contentstring != null && contentstring != "")
+                {
+                    JObject Tobj = JObject.Parse(contentstring);
+                    if (Int32.Parse(Tobj["status"].ToString()) == 200)
+                    {
+                        JArray TransactionArray = Utils.ReadJso(contentstring);
+                        for (int i = 0; i < TransactionArray.Count; i++)
+                        {
+                            Transaction transactionItem = new Transaction();
+                            transactionItem.GetAttribute((JObject)TransactionArray[i]);
+                            foreach (var existItem in transationList)
+                            {
+                                if (transactionItem.id == existItem.id)
+                                { secondTimeAdd = true; break; }
+                            }
+                            if (!secondTimeAdd)
+                                transationList.Add(transactionItem);
+                            Debug.WriteLine(i);
+                        }
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// 周视图课程格子的填充
@@ -504,6 +904,13 @@ namespace ZSCY_Win10
         /// <param name="ClassColor">颜色数组，0~9</param>
         private void SetClassAll(ClassList item, int ClassColor)
         {
+            //有事项的画个角- -
+            //foreach (var transactionItem in transationList) {
+            //    if (item.Week == transactionItem.week && item.Lesson == transactionItem.classToLesson)
+            //    {
+
+            //    }
+            //}
 
             Color[] colors = new Color[]{
                    //Color.FromArgb(255,132, 191, 19),
@@ -522,6 +929,13 @@ namespace ZSCY_Win10
                    Color.FromArgb(255,159, 213, 27),
                    Color.FromArgb(255,200, 200, 200), //灰色
                 };
+
+            //折叠角的颜色数组
+            Color[] _color = new Color[] {
+                Color.FromArgb(255,255,219,178),
+                Color.FromArgb(255,162,229,255),
+                Color.FromArgb(255,155,244,244),
+            };
 
             TextBlock ClassTextBlock = new TextBlock();
 
@@ -542,6 +956,7 @@ namespace ZSCY_Win10
             BackGrid.Margin = new Thickness(0.5);
             BackGrid.Children.Add(ClassTextBlock);
 
+            //TODO:新增 折叠三角
             if (classtime[item.Hash_day, item.Hash_lesson] != null)
             {
                 Image img = new Image();
@@ -549,6 +964,25 @@ namespace ZSCY_Win10
                 img.VerticalAlignment = VerticalAlignment.Bottom;
                 img.HorizontalAlignment = HorizontalAlignment.Right;
                 img.Width = 10;
+
+                //他要折叠..我画一个三角好了..
+                Grid _grid = new Grid();
+                Polygon pl = new Polygon();
+                PointCollection collection = new PointCollection();
+                collection.Add(new Point(0, 0));
+                collection.Add(new Point(10, 0));
+                collection.Add(new Point(0, 10));
+                pl.Points = collection;
+                pl.Stroke = new SolidColorBrush(Colors.Black);
+                pl.StrokeThickness = 0;
+                _grid.Children.Add(pl);
+                _grid.Background = new SolidColorBrush(_color[ClassColor]);
+                _grid.Width = 10;
+                _grid.Height = 10;
+                _grid.VerticalAlignment = VerticalAlignment.Bottom;
+                _grid.HorizontalAlignment = HorizontalAlignment.Right;
+                BackGrid.Children.Add(_grid);
+
                 BackGrid.Children.Add(img);
 
                 string[] temp = classtime[item.Hash_day, item.Hash_lesson];
@@ -573,36 +1007,62 @@ namespace ZSCY_Win10
 
         private void BackGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Debug.WriteLine("前" + KBCLassFlyoutPivot.Items.Count.ToString());
-            do
-            {
-                KBCLassFlyoutPivot.Items.RemoveAt(0);
-            }
-            while (KBCLassFlyoutPivot.Items.Count.ToString() != "0");
-            Debug.WriteLine("删除" + KBCLassFlyoutPivot.Items.Count.ToString());
+            //Debug.WriteLine("前" + KBCLassFlyoutPivot.Items.Count.ToString());
+            //do
+            //{
+            //    KBCLassFlyoutPivot.Items.RemoveAt(0);
+            //}
+            //while (KBCLassFlyoutPivot.Items.Count.ToString() != "0");
+            //Debug.WriteLine("删除" + KBCLassFlyoutPivot.Items.Count.ToString());
+            //改用控件了 暂时停了以前的flyout系列方法
+            List<ClassList> cl = new List<ClassList>();
+            List<Transaction> tl = new List<Transaction>();
             Grid g = sender as Grid;
             Debug.WriteLine(g.GetValue(Grid.ColumnProperty));
             Debug.WriteLine(g.GetValue(Grid.RowProperty));
-            string[] temp = classtime[Int32.Parse(g.GetValue(Grid.ColumnProperty).ToString()), Int32.Parse(g.GetValue(Grid.RowProperty).ToString()) / 2];
-            for (int i = 0; i < temp.Length; i++)
+            string[] tempClass = classtime[Int32.Parse(g.GetValue(Grid.ColumnProperty).ToString()), Int32.Parse(g.GetValue(Grid.RowProperty).ToString()) / 2];
+            if (tempClass != null)
             {
-                ClassList c = classList.Find(p => p._Id.Equals(temp[i]));
-
-                PivotItem pi = new PivotItem();
-                TextBlock HeaderTextBlock = new TextBlock();
-                HeaderTextBlock.Text = c.Course;
-                HeaderTextBlock.FontSize = 25;
-                pi.Header = HeaderTextBlock;
-                ListView lv = new ListView();
-                lv.ItemTemplate = KBCLassFlyoutListView.ItemTemplate;
-                List<ClassList> cc = new List<ClassList>();
-                cc.Add(c);
-                lv.ItemsSource = cc;
-                pi.Content = lv;
-                KBCLassFlyoutPivot.Items.Add(pi);
-                Debug.WriteLine("后" + KBCLassFlyoutPivot.Items.Count.ToString());
+                for (int i = 0; i < tempClass.Length; i++)
+                {
+                    ClassList tempC = classList.Find(p => p._Id.Equals(tempClass[i]));
+                    cl.Add(tempC);
+                }
             }
-            KBCLassFlyout.ShowAt(page);
+
+            //传入事件 ┑(￣Д ￣)┍
+            long[] tempTra = transactiontime[Int32.Parse(g.GetValue(Grid.ColumnProperty).ToString()), Int32.Parse(g.GetValue(Grid.RowProperty).ToString()) / 2];
+            if (tempTra != null)
+            {
+                for (int i = 0; i < tempTra.Length; i++)
+                {
+                    Transaction tempt = transationList.Find(p => p.id.Equals(tempTra[i]));
+                    tl.Add(tempt);
+                }
+            }
+            var control2 = new ClassInfoControl(cl, tl, null);
+            control2.ShowWIndow();
+
+
+            //for (int i = 0; i < temp.Length; i++)
+            //{
+            //    ClassList c = classList.Find(p => p._Id.Equals(temp[i]));
+
+            //    PivotItem pi = new PivotItem();
+            //    TextBlock HeaderTextBlock = new TextBlock();
+            //    HeaderTextBlock.Text = c.Course;
+            //    HeaderTextBlock.FontSize = 25;
+            //    pi.Header = HeaderTextBlock;
+            //    ListView lv = new ListView();
+            //    lv.ItemTemplate = KBCLassFlyoutListView.ItemTemplate;
+            //    List<ClassList> cc = new List<ClassList>();
+            //    cc.Add(c);
+            //    lv.ItemsSource = cc;
+            //    pi.Content = lv;
+            //    KBCLassFlyoutPivot.Items.Add(pi);
+            //    Debug.WriteLine("后" + KBCLassFlyoutPivot.Items.Count.ToString());
+            //}
+            //KBCLassFlyout.ShowAt(page);
         }
 
         /// <summary>
@@ -613,8 +1073,12 @@ namespace ZSCY_Win10
         private void KBRefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO:未登陆时 无法刷新
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
             this.progress.IsActive = true;
-            stuNum = appSetting.Values["stuNum"].ToString();
+            //stuNum = appSetting.Values["stuNum"].ToString();
+            stuNum = credentialList[0].UserName;
             wOa = 1;
             initKB(true);
             this.progress.IsActive = false;
@@ -638,6 +1102,8 @@ namespace ZSCY_Win10
         /// <param name="e"></param>
         private void KBCalendarAppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            //transationList.Clear();
+
             showKB(wOa);
             DateTime now = DateTime.Now;
             DateTime weekstart = GetWeekFirstDayMon(now);
@@ -661,8 +1127,8 @@ namespace ZSCY_Win10
 
         private void KBSearchButton_Click(object sender, RoutedEventArgs e)
         {
+            transationList.Clear();
             KBSearch();
-
         }
 
         private void KBSearch()
@@ -759,11 +1225,30 @@ namespace ZSCY_Win10
 
         private void KebiaoAllpr_RefreshInvoked(DependencyObject sender, object args)
         {
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
             this.progress.IsActive = true;
-            stuNum = appSetting.Values["stuNum"].ToString();
+            //stuNum = appSetting.Values["stuNum"].ToString();
+            stuNum = credentialList[0].UserName;
             wOa = 1;
             initKB(true);
             this.progress.IsActive = false;
+        }
+
+        private void AddRemind_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(AddRemindPage),"add");
+        }
+
+        private void RemindList_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(RemindListPage),false);
+        }
+
+        private void TestButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(RemindTest));
         }
     }
 }

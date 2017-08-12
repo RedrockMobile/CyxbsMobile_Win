@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace ZSCY_Win10.UserControls
+namespace ZSCY_Win10.Controls
 {
     public sealed partial class PiePlotter : UserControl
     {
@@ -32,6 +32,7 @@ namespace ZSCY_Win10.UserControls
                 SetValue(HoleSizeProperty, value);
             }
         }
+
         public static readonly DependencyProperty PieWidthProperty = DependencyProperty.Register("PieWidth", typeof(double), typeof(PiePlotter), new PropertyMetadata(0.0));
         public double PieWidth      //饼图宽度
         {

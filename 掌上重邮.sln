@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSCY", "ZSCY\ZSCY.csproj", "{E6B12879-C824-45A0-9D63-ACB402B3524D}"
 EndProject
@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZSCY_Win10", "ZSCY_Win10\ZS
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyMessageBackgroundTask", "MyMessageBackgroundTask\MyMessageBackgroundTask.csproj", "{EA70B47F-1DB5-4A92-805D-9F144EFA396F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveTileBackgroundTask", "LiveTileBackgroundTask\LiveTileBackgroundTask.csproj", "{2896BBF7-5113-482E-B827-166C0C1429E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SycnRemindBackgroundTask", "SycnRemindBackgroundTask\SycnRemindBackgroundTask.csproj", "{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,6 +90,38 @@ Global
 		{EA70B47F-1DB5-4A92-805D-9F144EFA396F}.Release|x64.Build.0 = Release|x64
 		{EA70B47F-1DB5-4A92-805D-9F144EFA396F}.Release|x86.ActiveCfg = Release|x86
 		{EA70B47F-1DB5-4A92-805D-9F144EFA396F}.Release|x86.Build.0 = Release|x86
+		{2896BBF7-5113-482E-B827-166C0C1429E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2896BBF7-5113-482E-B827-166C0C1429E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2896BBF7-5113-482E-B827-166C0C1429E5}.Debug|ARM.ActiveCfg = Debug|ARM
+		{2896BBF7-5113-482E-B827-166C0C1429E5}.Debug|ARM.Build.0 = Debug|ARM
+		{2896BBF7-5113-482E-B827-166C0C1429E5}.Debug|x64.ActiveCfg = Debug|x64
+		{2896BBF7-5113-482E-B827-166C0C1429E5}.Debug|x64.Build.0 = Debug|x64
+		{2896BBF7-5113-482E-B827-166C0C1429E5}.Debug|x86.ActiveCfg = Debug|x86
+		{2896BBF7-5113-482E-B827-166C0C1429E5}.Debug|x86.Build.0 = Debug|x86
+		{2896BBF7-5113-482E-B827-166C0C1429E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2896BBF7-5113-482E-B827-166C0C1429E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2896BBF7-5113-482E-B827-166C0C1429E5}.Release|ARM.ActiveCfg = Release|ARM
+		{2896BBF7-5113-482E-B827-166C0C1429E5}.Release|ARM.Build.0 = Release|ARM
+		{2896BBF7-5113-482E-B827-166C0C1429E5}.Release|x64.ActiveCfg = Release|x64
+		{2896BBF7-5113-482E-B827-166C0C1429E5}.Release|x64.Build.0 = Release|x64
+		{2896BBF7-5113-482E-B827-166C0C1429E5}.Release|x86.ActiveCfg = Release|x86
+		{2896BBF7-5113-482E-B827-166C0C1429E5}.Release|x86.Build.0 = Release|x86
+		{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}.Debug|ARM.ActiveCfg = Debug|ARM
+		{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}.Debug|ARM.Build.0 = Debug|ARM
+		{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}.Debug|x64.ActiveCfg = Debug|x64
+		{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}.Debug|x64.Build.0 = Debug|x64
+		{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}.Debug|x86.ActiveCfg = Debug|x86
+		{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}.Debug|x86.Build.0 = Debug|x86
+		{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}.Release|ARM.ActiveCfg = Release|ARM
+		{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}.Release|ARM.Build.0 = Release|ARM
+		{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}.Release|x64.ActiveCfg = Release|x64
+		{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}.Release|x64.Build.0 = Release|x64
+		{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}.Release|x86.ActiveCfg = Release|x86
+		{38A8CD9D-386D-408D-BA00-BE6BF45ECB00}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

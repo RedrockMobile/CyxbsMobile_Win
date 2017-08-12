@@ -10,8 +10,11 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.System;
+using Windows.System.Profile;
 using Windows.UI.Core;
+using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
@@ -22,6 +25,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Pages;
+using ZSCY_Win10.Util.Remind;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
@@ -33,6 +37,7 @@ namespace ZSCY_Win10
     public sealed partial class SettingPage : Page
     {
         private ApplicationDataContainer appSetting;
+        private static string resourceName = "ZSCY";
 
         public SettingPage()
         {
@@ -144,15 +149,49 @@ namespace ZSCY_Win10
             var result = await dig.ShowAsync();
             if (null != result && result.Label == "是")
             {
-                appSetting.Values.Clear();
+                try
+                {
+                    appSetting.Values.Clear();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+                DelectRemind();
+                try
+                {
+                    var vault = new Windows.Security.Credentials.PasswordVault();
+                    var credentialList = vault.FindAllByResource(resourceName);
+                    foreach (var item in credentialList)
+                    {
+                        vault.Remove(item);
+                    }
+                }
+                catch { }
+                appSetting.Values["CommunityPerInfo"] = false;
+                appSetting.Values["isUseingBackgroundTask"] = false;
                 IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
                 IStorageFile storageFileWR = await applicationFolder.CreateFileAsync("kb", CreationCollisionOption.OpenIfExists);
                 try
                 {
                     await storageFileWR.DeleteAsync();
+                    if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.StartScreen.JumpList"))
+                    {
+                        if (JumpList.IsSupported())
+                            DisableSystemJumpListAsync();
+                    }
                 }
                 catch (Exception)
                 {
+                    Debug.WriteLine("个人 -> 切换账号删除课表数据异常");
+                }
+                try
+                {
+                    await storageFileWR.DeleteAsync();
+                }
+                catch (Exception error)
+                {
+                    Debug.WriteLine(error.Message);
                     Debug.WriteLine("设置 -> 重置应用异常");
                 }
                 //Application.Current.Exit();
@@ -185,7 +224,17 @@ namespace ZSCY_Win10
 
         private async void SwitchAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            appSetting.Values.Remove("idNum");
+            //appSetting.Values.Remove("idNum");
+            try
+            {
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                foreach (var item in credentialList)
+                {
+                    vault.Remove(item);
+                }
+            }
+            catch { }
             appSetting.Values["CommunityPerInfo"] = false;
             appSetting.Values["isUseingBackgroundTask"] = false;
             IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
@@ -378,6 +427,61 @@ namespace ZSCY_Win10
         {
             appSetting.Values["isUseingBackgroundTask"] = backGroundToastToggleSwitch.IsOn;
             Debug.WriteLine(appSetting.Values["isUseingBackgroundTask"].ToString());
+        }
+        private void DelectRemind()
+        {
+            try
+            {
+
+                List<string> RemindTagList = new List<string>();
+                //RemindTagList = DatabaseMethod.ClearRemindItem() as List<string>;
+                RemindTagList = DatabaseMethod.ClearRemindItem();
+                var notifier = ToastNotificationManager.CreateToastNotifier();
+                if (RemindTagList != null)
+                {
+
+                    for (int i = 0; i < RemindTagList.Count(); i++)
+                    {
+                        var scheduledNotifs = notifier.GetScheduledToastNotifications()
+                      .Where(n => n.Tag.Equals(RemindTagList[i]));
+
+                        // Remove all of those from the schedule
+                        foreach (var n in scheduledNotifs)
+                        {
+                            notifier.RemoveFromSchedule(n);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private async void Error_ClickAsync(object sender, RoutedEventArgs e)
+        {
+            StorageFile file = null;
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                file = await ApplicationData.Current.LocalFolder.GetFileAsync("ZSCY_Mobile_Log.txt");
+            else
+                file = await ApplicationData.Current.LocalFolder.GetFileAsync("ZSCY_Log.txt");
+            string errorText = await FileIO.ReadTextAsync(file);
+            //文件选择器
+            FileSavePicker fileSavePicker = new FileSavePicker();
+            fileSavePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
+            fileSavePicker.FileTypeChoices.Add("文本文件", new List<string>() { ".txt" });
+            fileSavePicker.SuggestedFileName = file.Name;
+            Windows.Storage.StorageFile saveFile = await fileSavePicker.PickSaveFileAsync();
+            if (saveFile != null)
+            {
+                Windows.Storage.CachedFileManager.DeferUpdates(saveFile);
+                await Windows.Storage.FileIO.WriteTextAsync(saveFile, errorText);
+                Windows.Storage.Provider.FileUpdateStatus status =
+                    await Windows.Storage.CachedFileManager.CompleteUpdatesAsync(saveFile);
+            }
+
+
         }
     }
 }

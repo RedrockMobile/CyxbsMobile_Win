@@ -31,6 +31,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using ZSCY_Win10;
 using Windows.Phone.UI.Input;
+using Windows.UI.ViewManagement;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -52,6 +53,24 @@ namespace ZSCY.Pages
             this.InitializeComponent();
             SPivot.SelectedIndex = 0;
             this.DataContext = viewmodel;
+
+            //手机物理返回键订阅事件
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+            {
+                Windows.Phone.UI.Input.HardwareButtons.BackPressed += OnBackPressed;
+            }
+            else
+            {
+                Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Visible;
+                Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += PC_BackRequested;
+            }
+        }
+
+        private void PC_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e)
+        {
+            FirstPage.firstpage.Second_Page_Back();
+            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
+
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -97,7 +116,7 @@ namespace ZSCY.Pages
                 //await Task.Delay(100);
             }
         }
-        private void SPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void SPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
@@ -114,15 +133,17 @@ namespace ZSCY.Pages
             catch (Exception)
             {
                 return;
-            } 
+            }
 
             if (SPivot.SelectedIndex == 4 && !App.isLoading[4])
             {
-                XSQ_qqGroup();
-                viewmodel.AllQQInfo.XYQ_All = XSQString;
+                //XSQ_qqGroup();
+                //viewmodel.AllQQInfo.XYQ_All = XSQString;
 
-                LXQ_qqGroup();
-                viewmodel.AllQQInfo.LXQ_All = LXQString;
+                //LXQ_qqGroup();
+                //viewmodel.AllQQInfo.LXQ_All = LXQString;
+                viewmodel.XYQ_All = await XSQ_qqGet();
+                viewmodel.LXQ_All = await LXQ_qqGet();
                 App.isLoading[4] = true;
             }
             else if (SPivot.SelectedIndex == 3 && !App.isLoading[3])
@@ -133,22 +154,22 @@ namespace ZSCY.Pages
             else if (SPivot.SelectedIndex == 2 && !App.isLoading[2])
             {
                 qinshi_Get();
-                //App.isLoading[2] = true;
+                App.isLoading[2] = true;
             }
             else if (SPivot.SelectedIndex == 5 && !App.isLoading[5])
             {
                 richang_Get();
-                //App.isLoading[5] = true;
+                App.isLoading[5] = true;
             }
             else if (SPivot.SelectedIndex == 6 && !App.isLoading[6])
             {
                 meishi_Get();
-                //App.isLoading[6] = true;
+                App.isLoading[6] = true;
             }
             else if (SPivot.SelectedIndex == 7 && !App.isLoading[7])
             {
                 meijing_Get();
-                //App.isLoading[7] = true;
+                App.isLoading[7] = true;
             }
         }
         private async Task PivotItem1_First_Step()
@@ -432,85 +453,85 @@ namespace ZSCY.Pages
             #endregion
         }
 
-        private async void anquanButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (App.isReduced[0])
-            {
-                App.isReduced[0] = false;
-                viewmodel.Text[0] = "收起";
-                viewmodel.Icon[0] = "";
-            }
-            else
-            {
-                App.isReduced[0] = true;
-                viewmodel.Text[0] = "展开";
-                viewmodel.Icon[0] = "";
-            }
-            StorageFile anquan_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/anquan.txt", UriKind.Absolute));
-            viewmodel.Anquan = await FileIO.ReadTextAsync(anquan_File);
-        }
+        //private async void anquanButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (App.isReduced[0])
+        //    {
+        //        App.isReduced[0] = false;
+        //        viewmodel.Text[0] = "收起";
+        //        viewmodel.Icon[0] = "";
+        //    }
+        //    else
+        //    {
+        //        App.isReduced[0] = true;
+        //        viewmodel.Text[0] = "展开";
+        //        viewmodel.Icon[0] = "";
+        //    }
+        //    StorageFile anquan_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/anquan.txt", UriKind.Absolute));
+        //    viewmodel.Anquan = await FileIO.ReadTextAsync(anquan_File);
+        //}
 
-        private async void ruxueButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (App.isReduced[1])
-            {
+        //private async void ruxueButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (App.isReduced[1])
+        //    {
 
-                App.isReduced[1] = false;
-                viewmodel.Text[1] = "收起";
-                viewmodel.Icon[1] = "";
-            }
-            else
-            {
-                App.isReduced[1] = true;
-                viewmodel.Text[1] = "展开";
-                viewmodel.Icon[1] = "";
-            }
-            StorageFile ruxue_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/ruxue.txt", UriKind.Absolute));
-            viewmodel.Ruxue = await FileIO.ReadTextAsync(ruxue_File);
-        }
+        //        App.isReduced[1] = false;
+        //        viewmodel.Text[1] = "收起";
+        //        viewmodel.Icon[1] = "";
+        //    }
+        //    else
+        //    {
+        //        App.isReduced[1] = true;
+        //        viewmodel.Text[1] = "展开";
+        //        viewmodel.Icon[1] = "";
+        //    }
+        //    StorageFile ruxue_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/ruxue.txt", UriKind.Absolute));
+        //    viewmodel.Ruxue = await FileIO.ReadTextAsync(ruxue_File);
+        //}
 
-        private async void jiangxuejinButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (App.isReduced[2])
-            {
+        //private async void jiangxuejinButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (App.isReduced[2])
+        //    {
 
-                App.isReduced[2] = false;
-                viewmodel.Text[2] = "收起";
-                viewmodel.Icon[2] = "";
-            }
-            else
-            {
-                App.isReduced[2] = true;
-                viewmodel.Text[2] = "展开";
-                viewmodel.Icon[2] = "";
-            }
-            StorageFile jiangxuejin_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/jiangxuejin.txt", UriKind.Absolute));
-            viewmodel.Jiangxuejin = await FileIO.ReadTextAsync(jiangxuejin_File);
+        //        App.isReduced[2] = false;
+        //        viewmodel.Text[2] = "收起";
+        //        viewmodel.Icon[2] = "";
+        //    }
+        //    else
+        //    {
+        //        App.isReduced[2] = true;
+        //        viewmodel.Text[2] = "展开";
+        //        viewmodel.Icon[2] = "";
+        //    }
+        //    StorageFile jiangxuejin_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/jiangxuejin.txt", UriKind.Absolute));
+        //    viewmodel.Jiangxuejin = await FileIO.ReadTextAsync(jiangxuejin_File);
 
-        }
+        //}
 
-        private async void xueshengshouceButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (App.isReduced[3])
-            {
+        //private async void xueshengshouceButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (App.isReduced[3])
+        //    {
 
-                App.isReduced[3] = false;
-                JDhtml.Visibility = Visibility.Visible;
-                jidianGrid.Height = new GridLength(170);
-                viewmodel.Text[3] = "收起";
-                viewmodel.Icon[3] = "";
-            }
-            else
-            {
-                App.isReduced[3] = true;
-                JDhtml.Visibility = Visibility.Collapsed;
-                jidianGrid.Height = new GridLength(0);
-                viewmodel.Text[3] = "展开";
-                viewmodel.Icon[3] = "";
-            }
-            StorageFile xueshengshouce_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/xueshengshouce.txt", UriKind.Absolute));
-            viewmodel.Xueshengshouce = await FileIO.ReadTextAsync(xueshengshouce_File);
-        }
+        //        App.isReduced[3] = false;
+        //        JDhtml.Visibility = Visibility.Visible;
+        //        jidianGrid.Height = new GridLength(170);
+        //        viewmodel.Text[3] = "收起";
+        //        viewmodel.Icon[3] = "";
+        //    }
+        //    else
+        //    {
+        //        App.isReduced[3] = true;
+        //        JDhtml.Visibility = Visibility.Collapsed;
+        //        jidianGrid.Height = new GridLength(0);
+        //        viewmodel.Text[3] = "展开";
+        //        viewmodel.Icon[3] = "";
+        //    }
+        //    StorageFile xueshengshouce_File = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Notepad/xueshengshouce.txt", UriKind.Absolute));
+        //    viewmodel.Xueshengshouce = await FileIO.ReadTextAsync(xueshengshouce_File);
+        //}
         private async void LXQ_qqGroup()
         {
             using (var conn = Models.getDB.GetDblxqConnection())
@@ -595,6 +616,52 @@ namespace ZSCY.Pages
         private void back_but_Click(object sender, RoutedEventArgs e)
         {
             FirstPage.firstpage.Second_Page_Back();
+        }
+
+        bool isExit = false;
+        private void OnBackPressed(object sender, BackPressedEventArgs e)
+        {
+            FirstPage.firstpage.Second_Page_Back();
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame == null)
+            {
+                return;
+            }//Frame内无内容
+            if (rootFrame.CurrentSourcePageType.Name != "MainPage")
+            {
+                if (rootFrame.CanGoBack && e.Handled == false)
+                {
+                    e.Handled = true;
+                    rootFrame.GoBack();
+                }
+            }//Frame不在MainPage页面并且可以返回则返回上一个页面并且事件未处理
+            else if (e.Handled == false)
+            {
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.ShowAsync();
+                statusBar.ProgressIndicator.Text = "再按一次返回键即将退出程序 ~\\(≧▽≦)/~"; // 状态栏显示文本
+                statusBar.ProgressIndicator.ShowAsync();
+
+                if (isExit)
+                {
+                    App.Current.Exit();
+                }
+                else
+                {
+                    isExit = true;
+                    Task.Run(async () =>
+                    {
+                        await Task.Delay(1500);
+                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                        {
+                            await statusBar.ProgressIndicator.HideAsync();
+                            await statusBar.ShowAsync(); //此处不隐藏状态栏
+                        });
+                        isExit = false;
+                    });
+                    e.Handled = true;
+                }//Frame在其他页面并且事件未处理
+            }
         }
 
         private void bigImage_PointerExited(object sender, PointerRoutedEventArgs e)

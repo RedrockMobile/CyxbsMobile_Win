@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ZSCY.Data
 {
-    class ClassList
+    public class ClassList
     {
         public int coler { get; set; }
         public int Hash_day { get; set; }
@@ -30,6 +30,8 @@ namespace ZSCY.Data
         public int[] Week { get; set; }
         public string Classtime { get; set; }
 
+        public int weekLength { get; set; }
+
         public void GetAttribute(JObject classDetailJObject)
         {
             Hash_day = (int)classDetailJObject["hash_day"];
@@ -45,11 +47,13 @@ namespace ZSCY.Data
             WeekBegin = (int)classDetailJObject["weekBegin"];
             WeekEnd = (int)classDetailJObject["weekEnd"];
             Type = classDetailJObject["type"] != null ? classDetailJObject["type"].ToString() : "";
-            Status = classDetailJObject["status"].ToString();
+            if (classDetailJObject["status"] != null)
+                Status = classDetailJObject["status"].ToString();
             Period = (int)classDetailJObject["period"];
             _Id = classDetailJObject["_id"] != null ? classDetailJObject["_id"].ToString() : "";
             var gradelimit = JArray.Parse(classDetailJObject["week"].ToString());
             int[] temp = new int[gradelimit.Count];
+            weekLength = gradelimit.Count;
             for (int i = 0; i < gradelimit.Count; ++i)
             {
                 temp[i] = Int32.Parse(gradelimit[i].ToString());
@@ -58,6 +62,5 @@ namespace ZSCY.Data
             //Classtime = (RawWeek != "单周" && RawWeek !="双周" ? RawWeek : "") + " " +( WeekModel == "all" ? "" : (WeekModel == "double" ? "双周" : "单周")) ;
             Debug.WriteLine(RawWeek);
         }
-
     }
 }

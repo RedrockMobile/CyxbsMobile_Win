@@ -16,6 +16,8 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Networking.PushNotifications;
 using Windows.Storage;
+using Windows.System.Profile;
+using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.StartScreen;
 using Windows.UI.ViewManagement;
@@ -28,9 +30,12 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Data;
+using ZSCY_Win10.Models.RemindModels;
 using ZSCY_Win10.Pages.CommunityPages;
+using ZSCY_Win10.Pages.StartPages;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
+using ZSCY_Win10.ViewModels.Remind;
 
 /*
                    _ooOoo_
@@ -80,7 +85,28 @@ namespace ZSCY_Win10
         public static bool[] isReduced = { true, true, true, true };
         public static bool[] isLoading = { false, false, false, false, false, false, false, false };
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
+        private static string resourceName = "ZSCY";
+        #region 事件提醒
+        //public static TimeSet[,] timeSet = new TimeSet[6, 7];
+        //public static SelTimeStringViewModel SelectedTime = new SelTimeStringViewModel();
+        //public static ObservableCollection<SelectedWeekNum> selectedWeekNumList = new ObservableCollection<SelectedWeekNum>();
+        //public static SelWeekNumStringViewModel selectedWeek = new SelWeekNumStringViewModel();
+        ///// <summary>
+        /////提醒列表的数据源
+        //l/// </summary>
+        //public static ObservableCollection<MyRemind> remindList = new ObservableCollection<MyRemind>();
 
+        public static string RemindListDBPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db");
+        /// <summary>
+        /// 防止改写事件内容是触发导航加载
+        /// </summary>
+        public static bool isLoad = false;
+        public static List<int> SelWeekList = new List<int>();
+        public static List<SelCourseModel> SelCoursList = new List<SelCourseModel>();
+        public static AddRemindPageViewModel addRemindViewModel = new AddRemindPageViewModel();
+        public static int indexBefore = -1;
+
+        #endregion
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。
@@ -95,10 +121,22 @@ namespace ZSCY_Win10
             this.Resuming += this.OnResuming;
             if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.StartScreen.JumpList"))
             {
-                if (JumpList.IsSupported() && appSetting.Values.ContainsKey("idNum"))
-                    SetSystemGroupAsync();
-                else if (JumpList.IsSupported())
-                    DisableSystemJumpListAsync();
+                try
+                {
+                    var vault = new Windows.Security.Credentials.PasswordVault();
+                    var credentialList = vault.FindAllByResource(resourceName);
+                    credentialList[0].RetrievePassword();
+                    if (JumpList.IsSupported() && credentialList.Count > 0)
+                        SetSystemGroupAsync();
+                    else if (JumpList.IsSupported())
+                        DisableSystemJumpListAsync();
+                }
+                catch
+                {
+                    if (JumpList.IsSupported())
+                        DisableSystemJumpListAsync();
+                }
+                //if (JumpList.IsSupported() && appSetting.Values.ContainsKey("idNum"))
             }
             //if (!appSetting.Values.ContainsKey("AllKBGray"))
             //{
@@ -123,40 +161,84 @@ namespace ZSCY_Win10
             {
                 addBackgroundTask();
             }
+
+
+            //监听异常
+            CoreApplication.UnhandledErrorDetected += CoreApplication_UnhandledErrorDetected;
+
+        }
+
+        private async void CoreApplication_UnhandledErrorDetected(object sender, UnhandledErrorDetectedEventArgs e)
+        {
+            try
+            {
+                e.UnhandledError.Propagate();
+            }
+            catch (Exception ex)
+            {
+
+                StorageFile file = null;
+                if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                    file = await ApplicationData.Current.LocalFolder.CreateFileAsync("ZSCY_Mobile_Log.txt", CreationCollisionOption.OpenIfExists);
+                else
+                    file = await ApplicationData.Current.LocalFolder.CreateFileAsync("ZSCY_Log.txt", CreationCollisionOption.OpenIfExists);
+                string errorText = $"[{DateTime.Now.ToString()}]\r\n{ex.StackTrace}\r\n";
+                await FileIO.AppendTextAsync(file, errorText, Windows.Storage.Streams.UnicodeEncoding.Utf8);
+            }
+            finally
+            {
+#if DEBUG
+                Application.Current.Exit();
+#else
+#endif
+            }
         }
 
         private async void addBackgroundTask()
         {
+            List<string> backgroundName = new List<string>();
+            backgroundName.Add(exampleTaskName);
+            backgroundName.Add("Toastbuilder");
+            backgroundName.Add("LiveTileBackgroundTask");
+            backgroundName.Add("RemindBackgroundTask");
             try
             {
-                foreach (var cur in BackgroundTaskRegistration.AllTasks)
+    
+                foreach (var item in backgroundName)
                 {
-                    if (cur.Value.Name == exampleTaskName || cur.Value.Name == "Toastbuilder")
+                    var list = from i in BackgroundTaskRegistration.AllTasks
+                               where i.Value.Name == item
+                               select i;
+                    foreach (var i in list)
                     {
-                        cur.Value.Unregister(true);
+                        i.Value.Unregister(true);
                     }
                 }
                 BackgroundAccessStatus status = await BackgroundExecutionManager.RequestAccessAsync();
-                var builder = new BackgroundTaskBuilder();
-                builder.Name = exampleTaskName;
-                builder.TaskEntryPoint = "MyMessageBackgroundTask.MessageBackgroundTask";
-                //后台触发器，可多个
-                //builder.SetTrigger(new SystemTrigger(SystemTriggerType.NetworkStateChange, false));
-                //builder.SetTrigger(new SystemTrigger(SystemTriggerType.InternetAvailable, false));
-                builder.SetTrigger(new TimeTrigger(15, false)); //定时后台任务
-                //builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
-                BackgroundTaskRegistration task = builder.Register();
-
-
-                var Toastbuilder = new BackgroundTaskBuilder();
+                BackgroundTaskBuilder builder1 = new BackgroundTaskBuilder();
+                builder1.Name = exampleTaskName;
+                builder1.TaskEntryPoint = "MyMessageBackgroundTask.MessageBackgroundTask";
+                builder1.SetTrigger(new TimeTrigger(15, false)); //定时后台任务
+                BackgroundTaskRegistration task = builder1.Register();
+                BackgroundTaskBuilder Toastbuilder = new BackgroundTaskBuilder();
                 Toastbuilder.Name = "Toastbuilder";
                 Toastbuilder.TaskEntryPoint = "MyMessageBackgroundTask.ToastBackgroundTask";
                 Toastbuilder.SetTrigger(new ToastNotificationActionTrigger());
-                //Toastbuilder.SetTrigger(new TimeTrigger(15, false)); //定时后台任务
                 BackgroundTaskRegistration Toasttask = Toastbuilder.Register();
+
+                BackgroundTaskBuilder builder2 = new BackgroundTaskBuilder();
+                builder2.Name = "LiveTileBackgroundTask";
+                builder2.TaskEntryPoint = "LiveTileBackgroundTask.LiveTileBackgroundTask";
+                builder2.SetTrigger(new TimeTrigger(15, false));
+                BackgroundTaskRegistration registration = builder2.Register();
+
+                BackgroundTaskBuilder builder3 = new BackgroundTaskBuilder();
+                builder3.Name = "RemindBackgroundTask";
+                builder3.TaskEntryPoint = "SycnRemindBackgroundTask.RemindBackgroundTask";
+                builder3.SetTrigger(new TimeTrigger(15, false));
+                BackgroundTaskRegistration sycnRemind = builder3.Register();
             }
             catch (Exception) { }
-
         }
 
         private async void DisableSystemJumpListAsync()
@@ -202,21 +284,17 @@ namespace ZSCY_Win10
             //#endif
             //UmengAnalytics.IsDebug = true;
             Frame rootFrame = Window.Current.Content as Frame;
-
             // 不要在窗口已包含内容时重复应用程序初始化，
             // 只需确保窗口处于活动状态
             if (rootFrame == null)
             {
                 // 创建要充当导航上下文的框架，并导航到第一页
                 rootFrame = new Frame();
-
                 rootFrame.NavigationFailed += OnNavigationFailed;
-
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: 从之前挂起的应用程序加载状态
                 }
-
                 // 将框架放在当前窗口中
                 Window.Current.Content = rootFrame;
             }
@@ -228,61 +306,92 @@ namespace ZSCY_Win10
 #if WINDOWS_PHONE_APP
                 Debug.WriteLine("#if WINDOWS_PHONE_APP");
 #endif
-                if (e.Kind == ActivationKind.Launch && (e.Arguments == "/jwzx" || e.Arguments == "/more") && appSetting.Values.ContainsKey("idNum"))
+                try
                 {
-                    if (!rootFrame.Navigate(typeof(MainPage), e.Arguments))
+                    //if (e.Kind == ActivationKind.Launch && (e.Arguments == "/jwzx" || e.Arguments == "/more") && appSetting.Values.ContainsKey("idNum"))
+                    var vault = new Windows.Security.Credentials.PasswordVault();
+                    var credentialList = vault.FindAllByResource(resourceName);
+                    credentialList[0].RetrievePassword();
+                    if (e.Kind == ActivationKind.Launch && (e.Arguments == "/jwzx" || e.Arguments == "/more") && credentialList.Count > 0)
                     {
-                        throw new Exception("Failed to create initial page");
-                    }
-                }
-                else
-                {
-                    if (!appSetting.Values.ContainsKey("idNum"))
-                    {
-                        //if (!rootFrame.Navigate(typeof(LoginPage), e.Arguments))
-                        if (!rootFrame.Navigate(typeof(MainPage), e.Arguments))
+                        if (!rootFrame.Navigate(typeof(StartPage), e.Arguments))
                         {
                             throw new Exception("Failed to create initial page");
-
                         }
-                        Window.Current.Activate();
                     }
                     else
                     {
-                        if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar") && Utils.getPhoneWidth() < 400)
+                        //if (!appSetting.Values.ContainsKey("idNum"))
+                        if (!(credentialList.Count > 0))
                         {
-                            Debug.WriteLine("小于400的Phone" + Utils.getPhoneWidth());
-                            //if (!rootFrame.Navigate(typeof(MainPage_m), e.Arguments))
-                            //{
-                            //    throw new Exception("Failed to create initial page");
-                            //}
-                            if (!rootFrame.Navigate(typeof(MainPage), "/kb"))
+                            //if (!rootFrame.Navigate(typeof(LoginPage), e.Arguments))
+                            if (!rootFrame.Navigate(typeof(StartPage), e.Arguments))
                             {
                                 throw new Exception("Failed to create initial page");
                             }
                         }
                         else
                         {
-                            Debug.WriteLine("大于400的phone OR PC");
-                            if (!rootFrame.Navigate(typeof(MainPage), "/kb"))
+                            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar") && Utils.getPhoneWidth() < 400)
                             {
-                                throw new Exception("Failed to create initial page");
+                                Debug.WriteLine("小于400的Phone" + Utils.getPhoneWidth());
+                                //if (!rootFrame.Navigate(typeof(StartPage_m), e.Arguments))
+                                //{
+                                //    throw new Exception("Failed to create initial page");
+                                //}
+                                if (!rootFrame.Navigate(typeof(StartPage), "/kb"))
+                                {
+                                    throw new Exception("Failed to create initial page");
+                                }
                             }
-
+                            else
+                            {
+                                Debug.WriteLine("大于400的phone OR PC");
+                                if (!rootFrame.Navigate(typeof(StartPage), "/kb"))
+                                {
+                                    throw new Exception("Failed to create initial page");
+                                }
+                            }
                         }
-
+                    }
+                }
+                catch
+                {
+                    if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar") && Utils.getPhoneWidth() < 400)
+                    {
+                        Debug.WriteLine("小于400的Phone" + Utils.getPhoneWidth());
+                        //if (!rootFrame.Navigate(typeof(StartPage_m), e.Arguments))
+                        //{
+                        //    throw new Exception("Failed to create initial page");
+                        //}
+                        if (!rootFrame.Navigate(typeof(StartPage), "/kb"))
+                        {
+                            throw new Exception("Failed to create initial page");
+                        }
+                    }
+                    else
+                    {
+                        Debug.WriteLine("大于400的phone OR PC");
+                        if (!rootFrame.Navigate(typeof(StartPage), "/kb"))
+                        {
+                            throw new Exception("Failed to create initial page");
+                        }
                     }
                 }
             }
+
+
+            Window.Current.Activate();
+
             // 确保当前窗口处于活动状态
             //await UmengAnalytics.StartTrackAsync("55cd8c8be0f55a20ba00440d", "Marketplace_Win10"); //私有
             await UmengAnalytics.StartTrackAsync("57317d07e0f55a28fe002bec", "Marketplace_Win10"); //公共
                                                                                                    //await InitNotificationsAsync();
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size { Width = 400, Height = 480 });
 
+
+
         }
-
-
         private async void OnResuming(object sender, object e)
         {
             //await UmengAnalytics.StartTrackAsync("55cd8c8be0f55a20ba00440d", "Marketplace_Win10"); //私有

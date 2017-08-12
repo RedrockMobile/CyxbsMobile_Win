@@ -1,0 +1,91 @@
+﻿<Page
+    x:Class="ZSCY_Win10.Pages.ElectricChargeCheckPages.ElectricityPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY_Win10.Pages.ElectricChargeCheckPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:ZSCY_Win10.Pages.ElectricChargeCheckPages"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="47"/>
+                <RowDefinition Height="1"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="查电费" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+            <Grid Grid.Row="1" Background="LightGray"/>
+            <AppBarButton Grid.Row="0" HorizontalAlignment="Right" Name="ShowMoreAppBarButton">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe10c;"/>
+                <AppBarButton.Flyout >
+                    <MenuFlyout>
+                        <MenuFlyoutItem  Name="SetRemain" Text="设置提醒" Click="OnNavigateToPage"/>
+                        <MenuFlyoutItem  Name="SetRoom" Text="设置寝室" Click="OnNavigateToPage" />
+                        <MenuFlyoutItem  Name="CheckRecentCharge" Text="查看往期电费" Click="OnNavigateToPage" />
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="430"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <local:DialPlate x:Name="dialPlate" HorizontalAlignment="Center" Grid.Row="0"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Foreground="#12B9FF" Text="{Binding elec_perday}" FontSize="40" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Foreground="#999999" Text="日均量/度" FontSize="16" HorizontalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Foreground="#12B9FF" Text="{Binding elec_free}" FontSize="40" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Foreground="#999999" Text="月优惠量/度" FontSize="16" HorizontalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Foreground="#12B9FF" Text="{Binding elec_start}" FontSize="40" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Foreground="#999999" Text="电起度/度" FontSize="16" HorizontalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Column="3">
+                    <TextBlock Foreground="#12B9FF" Text="{Binding elec_end}" FontSize="40" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Foreground="#999999" Text="电止度/度" FontSize="16" HorizontalAlignment="Center"></TextBlock>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="2" Background="#F0F1F5"/>
+            <StackPanel Grid.Row="3" Padding="10">
+                <TextBlock Height="27" Text="注意事项" FontSize="18" Foreground="#9ea1a6"/>
+                <RelativePanel>
+                    <TextBlock Height="27" Name="FlagTb0" Text="抄表日期： " FontSize="16" Foreground="#9ea1a6"/>
+                    <TextBlock Text="2016年11月30日 11：16" FontSize="16" Foreground="#9ea1a6" RelativePanel.RightOf="FlagTb0"/>
+                </RelativePanel>
+                <RelativePanel>
+                    <TextBlock Height="27" Text="用电过程中如需查询，请致电 " Name="FlagTb1" FontSize="16" Foreground="#9ea1a6"/>
+                    <TextBlock Text=" 023-62487902" FontSize="16" Foreground="#1bb8fa" RelativePanel.RightOf="FlagTb1"/>
+                </RelativePanel>
+            </StackPanel>
+        </Grid>
+        <Frame x:Name="frame" Grid.RowSpan="2" Visibility="Collapsed">
+            <Frame.ContentTransitions>
+                <TransitionCollection>
+                    <NavigationThemeTransition>
+                        <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                            <EntranceNavigationTransitionInfo/>
+                        </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    </NavigationThemeTransition>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+        </Frame>
+    </Grid>
+</Page>

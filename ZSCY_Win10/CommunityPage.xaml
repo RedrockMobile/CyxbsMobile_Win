@@ -267,7 +267,7 @@
 
             <!--列表-->
             <Grid x:Name="CommunityListgrid" Grid.Column="0"  Background="#FFE6E6E6">
-                <Pivot Background="White" Name="CommunityPivot" SelectionChanged="CommunityPivot_SelectionChanged">
+                <Pivot  Background="White" Name="CommunityPivot" SelectionChanged="CommunityPivot_SelectionChanged">
                     <!--热门动态-->
                     <PivotItem>
                         <PivotItem.Header>
@@ -309,20 +309,47 @@
                         </PivotItem.Header>
                         <pr:PullToRefreshBox x:Name="BBDDListpr" Background="#FFE6E6E6" RefreshInvoked="CommunityListpr_RefreshInvoked"  VerticalAlignment="Stretch"  Margin="-12,0" >
                             <ScrollViewer Name="BBDDScrollViewer" ViewChanged="BBDDScrollViewer_ViewChanged" VerticalScrollBarVisibility="Auto">
-                                <Grid>
+                                <Grid Margin="0 3 0 0">
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="165"/>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
+                                    <!--话题板块-->
+                                    <Grid Grid.Row="0" Background="White">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid >
+                                            <Grid >
+                                                <TextBlock Margin="5 12 0 0"  
+                                                Text="热门话题" FontSize="15" Foreground="DarkGray"/>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <GridView Name="topicGridView" IsItemClickEnabled="True" ItemClick="topicGridView_ItemClick">
+                                                <GridView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid Margin="0 0 0 0">
+                                                            <Image Source="{Binding imgdata}" Height="110" Width="120" Stretch="UniformToFill"/>
+                                                            <TextBlock Text="{Binding keyword}" FontSize="15" Foreground="{Binding color}" TextWrapping="WrapWholeWords"
+                                                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </GridView.ItemTemplate>
+                                            </GridView>
+                                        </Grid>
+                                    </Grid>
                                     <!--哔哔叨叨的ListView-->
-                                    <ListView Name="BBDDListView"  Style="{StaticResource FeedsListView}" ItemsSource="{x:Bind ViewModel.BBDD}" ItemClick="BBDDListView_ItemClick">
+                                    <ListView Name="BBDDListView" Grid.Row="1"  Style="{StaticResource FeedsListView}" ItemsSource="{x:Bind ViewModel.BBDD}" ItemClick="BBDDListView_ItemClick">
                                         <!--<Interactivity:Interaction.Behaviors>
                                             <Core:EventTriggerBehavior EventName="ItemClick">
                                                 <Core:InvokeCommandAction Command="{x:Bind BBDDitemCommand}"></Core:InvokeCommandAction>
                                             </Core:EventTriggerBehavior>
                                         </Interactivity:Interaction.Behaviors>-->
                                     </ListView>
-                                    <StackPanel Grid.Row="1" Visibility="Collapsed">
+                                    <StackPanel Grid.Row="2" Visibility="Collapsed">
                                         <!--列表的加载条-->
                                         <StackPanel Name="BBDDListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
                                             <ProgressBar IsIndeterminate="True" />
@@ -342,6 +369,7 @@
                             </ScrollViewer>
                         </pr:PullToRefreshBox>
                     </PivotItem>
+
                     <!--官方资讯-->
                     <!--<PivotItem>
                         <PivotItem.Header>
@@ -410,7 +438,8 @@
                 <FlipView Name="CommunityItemPhotoFlipView">
                     <FlipView.ItemTemplate>
                         <DataTemplate>
-                            <ScrollViewer Name="scrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" ZoomMode="Enabled" MaxZoomFactor="4" MinZoomFactor="0.8">
+                            <!--ToDo 图片发大后的移动-->
+                            <ScrollViewer Name="scrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" ZoomMode="Enabled"  MaxZoomFactor="4" MinZoomFactor="0.8">
                                 <Grid Name="grid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                     <ProgressRing Name="progressRing" Visibility="Visible" IsActive="True"/>
                                     <Image Name="CommunityItemPhotoImage" Stretch="Uniform" Source="{Binding ImgSrc}" Tapped="CommunityItemPhoto_Tapped" Holding="CommunityItemPhotoImage_Holding" RightTapped="CommunityItemPhotoImage_RightTapped" ImageOpened="CommunityItemPhotoImage_ImageOpened" Width="{Binding ActualWidth, ElementName=mpage, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=mpage,Converter={StaticResource CommunityItemPhotoFlipViewHeighConverter}, Mode=OneWay}"></Image>

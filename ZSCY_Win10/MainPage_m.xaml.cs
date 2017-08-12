@@ -40,6 +40,7 @@ namespace ZSCY_Win10
     /// </summary>
     public sealed partial class MainPage_m : Page
     {
+        private static string resourceName = "ZSCY";
         private ApplicationDataContainer appSetting;
         private ApplicationDataContainer appSettingclass;
         private bool isExit = false;
@@ -81,7 +82,11 @@ namespace ZSCY_Win10
             //this.navigationHelper = new NavigationHelper(this);
             //this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
 
-            stuNum = appSetting.Values["stuNum"].ToString();
+            //stuNum = appSetting.Values["stuNum"].ToString();
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
+            stuNum = credentialList[0].UserName;
             //initKB();
             initJW();
         }
@@ -129,27 +134,36 @@ namespace ZSCY_Win10
         /// <param name="isRefresh"> 是否为刷新</param>
         private async void initKB(bool isRefresh = false)
         {
-            if (stuNum == appSetting.Values["stuNum"].ToString() && !isRefresh)
+            //if (stuNum == appSetting.Values["stuNum"].ToString() && !isRefresh)
+            try
             {
-                try
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                if (stuNum == credentialList[0].UserName && !isRefresh)
                 {
-                    IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
-                    IStorageFile storageFileRE = await applicationFolder.GetFileAsync("kb");
-                    IRandomAccessStream accessStream = await storageFileRE.OpenReadAsync();
-                    using (StreamReader streamReader = new StreamReader(accessStream.AsStreamForRead((int)accessStream.Size)))
+                    try
                     {
-                        kb = streamReader.ReadToEnd();
+                        IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
+                        IStorageFile storageFileRE = await applicationFolder.GetFileAsync("kb");
+                        IRandomAccessStream accessStream = await storageFileRE.OpenReadAsync();
+                        using (StreamReader streamReader = new StreamReader(accessStream.AsStreamForRead((int)accessStream.Size)))
+                        {
+                            kb = streamReader.ReadToEnd();
+                        }
+                        HubSectionKBNum.Text = "第" + appSetting.Values["nowWeek"].ToString() + "周";
+                        showKB(2);
                     }
-                    HubSectionKBNum.Text = "第" + appSetting.Values["nowWeek"].ToString() + "周";
-                    showKB(2);
+                    catch (Exception) { Debug.WriteLine("主页->课表数据缓存异常"); }
                 }
-                catch (Exception) { Debug.WriteLine("主页->课表数据缓存异常"); }
+                //if (stuNum == appSetting.Values["stuNum"].ToString())
+                if (stuNum == credentialList[0].UserName)
+                {
+                    HubSectionKBTitle.Text = "我的课表";
+                    HubSectionKBTitle.FontSize = 35;
+                }
             }
-            if (stuNum == appSetting.Values["stuNum"].ToString())
-            {
-                HubSectionKBTitle.Text = "我的课表";
-                HubSectionKBTitle.FontSize = 35;
-            }
+            catch { }
 
             await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 2, 140, 253), Colors.White, text: "课表刷新中...", isIndeterminate: true);
 
@@ -703,7 +717,12 @@ namespace ZSCY_Win10
         /// <param name="e"></param>
         private void KBRefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            stuNum = appSetting.Values["stuNum"].ToString();
+
+            //stuNum = appSetting.Values["stuNum"].ToString();
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
+            stuNum = credentialList[0].UserName;
             wOa = 1;
             initKB(true);
         }

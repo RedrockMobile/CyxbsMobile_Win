@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ZSCY.Data
 {
-    class ExamList
+    public class ExamList
     {
         public string Student { get; set; }
         public string Course { get; set; }
@@ -32,7 +32,7 @@ namespace ZSCY.Data
             Week = ExamDetailJObject["week"] == null ? "" : ExamDetailJObject["week"].ToString();
             Weekday = ExamDetailJObject["weekday"] == null ? "" : ExamDetailJObject["weekday"].ToString();
             Begin_time = ExamDetailJObject["begin_time"] == null ? "" : ExamDetailJObject["begin_time"].ToString();
-            End_time =  ExamDetailJObject["end_time"] == null ? "" : ExamDetailJObject["end_time"].ToString();
+            End_time = ExamDetailJObject["end_time"] == null ? "" : ExamDetailJObject["end_time"].ToString();
             Status = ExamDetailJObject["status"] == null ? "" : ExamDetailJObject["status"].ToString();
             Term = ExamDetailJObject["term"] == null ? "" : ExamDetailJObject["term"].ToString();
             Date = ExamDetailJObject["date"] == null ? "" : ExamDetailJObject["date"].ToString();

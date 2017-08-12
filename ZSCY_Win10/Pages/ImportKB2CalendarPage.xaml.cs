@@ -31,7 +31,9 @@ namespace ZSCY.Pages
         {
             this.InitializeComponent();
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
+
         }
+        private static string resourceName = "ZSCY";
 
 
         /// <summary>
@@ -41,7 +43,11 @@ namespace ZSCY.Pages
         /// 此参数通常用于配置页。</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            URLTextBlock.Text = "http://hongyan.cqupt.edu.cn/api/kebiao_ics?xh=" + appSetting.Values["stuNum"].ToString();
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
+            //URLTextBlock.Text = "http://hongyan.cqupt.edu.cn/api/kebiao_ics?xh=" + appSetting.Values["stuNum"].ToString();
+            URLTextBlock.Text = "http://hongyan.cqupt.edu.cn/api/kebiao_ics?xh=" + credentialList[0].UserName;
             UmengSDK.UmengAnalytics.TrackPageStart("ImportKB2CalendarPage");
         }
 
@@ -66,7 +72,11 @@ namespace ZSCY.Pages
 
         private void URLTextBlock_TextChanged(object sender, TextChangedEventArgs e)
         {
-            URLTextBlock.Text = "http://hongyan.cqupt.edu.cn/api/kebiao_ics?xh=" + appSetting.Values["stuNum"].ToString();
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName); 
+            credentialList[0].RetrievePassword();
+            //URLTextBlock.Text = "http://hongyan.cqupt.edu.cn/api/kebiao_ics?xh=" + appSetting.Values["stuNum"].ToString();
+            URLTextBlock.Text = "http://hongyan.cqupt.edu.cn/api/kebiao_ics?xh=" + credentialList[0].UserName;
         }
     }
 }

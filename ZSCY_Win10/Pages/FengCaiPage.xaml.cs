@@ -25,6 +25,7 @@ using Windows.UI.Text;
 using Windows.UI.Xaml.Media.Imaging;
 using ZSCY_Win10;
 using Windows.Phone.UI.Input;
+using Windows.UI.ViewManagement;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -51,8 +52,24 @@ namespace ZSCY.Pages
             this.DataContext = viewmodel;
             fengcaipage = this;
             this.SizeChanged += FengCaiPage_SizeChanged;
-        }
 
+            //手机物理返回键订阅事件
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+            {
+                Windows.Phone.UI.Input.HardwareButtons.BackPressed += OnBackPressed;
+            }
+            else
+            {
+                Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Visible;
+                Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += PC_BackRequested;
+            }
+        }
+        private void PC_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e)
+        {
+            FirstPage.firstpage.Second_Page_Back();
+            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
+
+        }
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -374,6 +391,52 @@ namespace ZSCY.Pages
         private void back_but_Click(object sender, RoutedEventArgs e)
         {
             FirstPage.firstpage.Second_Page_Back();
+        }
+
+        bool isExit = false;
+        private void OnBackPressed(object sender, BackPressedEventArgs e)
+        {
+            FirstPage.firstpage.Second_Page_Back();
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame == null)
+            {
+                return;
+            }//Frame内无内容
+            if (rootFrame.CurrentSourcePageType.Name != "MainPage")
+            {
+                if (rootFrame.CanGoBack && e.Handled == false)
+                {
+                    e.Handled = true;
+                    rootFrame.GoBack();
+                }
+            }//Frame不在MainPage页面并且可以返回则返回上一个页面并且事件未处理
+            else if (e.Handled == false)
+            {
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.ShowAsync();
+                statusBar.ProgressIndicator.Text = "再按一次返回键即将退出程序 ~\\(≧▽≦)/~"; // 状态栏显示文本
+                statusBar.ProgressIndicator.ShowAsync();
+
+                if (isExit)
+                {
+                    App.Current.Exit();
+                }
+                else
+                {
+                    isExit = true;
+                    Task.Run(async () =>
+                    {
+                        await Task.Delay(1500);
+                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                        {
+                            await statusBar.ProgressIndicator.HideAsync();
+                            await statusBar.ShowAsync(); //此处不隐藏状态栏
+                        });
+                        isExit = false;
+                    });
+                    e.Handled = true;
+                }//Frame在其他页面并且事件未处理
+            }
         }
     }
 }

@@ -1,0 +1,491 @@
+﻿<Page
+    x:Class="ZSCY_Win10.Pages.LostAndFoundPages.LostAndFoundPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY_Win10.Pages.LostAndFoundPages"
+    xmlns:viewmodel="using:ZSCY_Win10.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <local:BoolToVisibilityConverter x:Key="BTVC"/>
+        <local:ObservableCollectionBoolToBoolConverter x:Key="OCBTB"/>
+        <Style x:Key="PivotItemStyle" TargetType="PivotItem">
+            <Setter Property="Background" Value="{ThemeResource PivotItemBackground}"/>
+            <Setter Property="Margin" Value="{ThemeResource PivotItemMargin}"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PivotItem">
+                        <Grid Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="Pivot">
+                                    <VisualState x:Name="Right"/>
+                                    <VisualState x:Name="Left"/>
+                                    <VisualState x:Name="Center"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Name="ItemContainerStyle" x:Key="ItemContainerStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Margin"  Value="-12,5"/>
+        </Style>
+        <Style x:Name="LostAndFoundPageListView" TargetType="ListView">
+            <Setter Property="Background" Value="#FFE6E6E6"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="IsItemClickEnabled" Value="True"/>
+            <Setter Property="SelectionMode" Value="None"/>
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ItemContainerStyle}"/>
+        </Style>
+    </Page.Resources>
+    <Grid x:Name="RootGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--顶栏-->
+        <Grid Background="{x:Bind AppTheme.APP_Color_Brush}" Grid.Row="0">
+            <Grid x:Name="LostAndFoundPageTitleGrid"  HorizontalAlignment="Stretch">
+                <ComboBox x:Name="combox" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0" Foreground="White" Background="#00FFFFFF" FontSize="{x:Bind AppTheme.Header_Size}" SelectedIndex="0" FontFamily="Microsoft YaHei UI" SelectionChanged="ComboBox_SelectionChanged">
+                    <x:String>失物招领</x:String>
+                    <x:String>寻物启事</x:String>
+                </ComboBox>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <AppBarButton x:Name="LostAndFoundPageAddAppBarButton" Icon="Add" Foreground="White" Click="LostAndFoundPageAddAppBarButton_Click"/>
+                    <AppBarButton x:Name="LostAndFoundPageRefreshAppBarButton" Icon="Refresh" Foreground="White" Click="LostAndFoundPageRefreshAppBarButton_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <!--内容-->
+        <Grid x:Name="ItemGrid" Grid.Row="1">
+            <Pivot x:Name="LostAndFoundPagePivot" SelectionChanged="LostAndFoundPagePivot_SelectionChanged" >
+                <PivotItem x:Name="AllPivot" Style="{StaticResource PivotItemStyle}" >
+                    <PivotItem.Header>
+                        <TextBlock Text="全部" FontSize="20" />
+                    </PivotItem.Header>
+                    <Grid>
+                        <ScrollViewer x:Name="AllScrollViewer" Height="auto" HorizontalScrollBarVisibility="Auto" ViewChanged="ScrollViewer_ViewChanged" HorizontalScrollMode="Disabled">
+                            <ScrollViewer.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <ListView ItemsSource="{x:Bind VM[0].data}" Style="{StaticResource LostAndFoundPageListView}" Grid.Row="0" ItemClick="ListView_ItemClick">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="viewmodel:LFItem">
+                                                <Grid Background="White">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="10"/>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0">
+                                                        <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="5,0,10,0">
+                                                            <Rectangle.Fill>
+                                                                <ImageBrush ImageSource="{x:Bind HeadImg}"/>
+                                                            </Rectangle.Fill>
+                                                        </Rectangle>
+                                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                                            <TextBlock Text="{x:Bind connect_name}" FontSize="20" />
+                                                            <TextBlock Text="{x:Bind Category}" Foreground="DarkGray"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <TextBlock Text="{x:Bind created_at}" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0" Foreground="DarkGray" Margin="0,0,20,0"/>
+                                                    <Grid Grid.Row="2" Width="{Binding ElementName=AllScrollViewer, Path=ViewportWidth}">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="55"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="20"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{x:Bind pro_description}" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="WrapWholeWords"  MaxLines="5" Foreground="Gray" />
+                                                    </Grid>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <ProgressRing IsActive="{x:Bind IsProgressRingActive[0],Converter={StaticResource OCBTB},Mode=OneWay}" Height="30" HorizontalAlignment="Center" Grid.Row="1"/>
+                                    <TextBlock Text="没有更多了" FontSize="18" Grid.Row="1" HorizontalAlignment="Center" Visibility="{x:Bind IsProgressRingActive[0],Converter={StaticResource BTVC},Mode=OneWay}"/>
+                                </Grid>
+                            </ScrollViewer.Content>
+                        </ScrollViewer>
+                    </Grid>
+                </PivotItem>
+                <PivotItem x:Name="YKTPivot" Style="{StaticResource PivotItemStyle}">
+                    <PivotItem.Header>
+                        <TextBlock Text="一卡通" FontSize="20"/>
+                    </PivotItem.Header>
+                    <Grid>
+                        <ScrollViewer x:Name="YKTScrollViewer" Height="auto" HorizontalScrollBarVisibility="Auto" ViewChanged="ScrollViewer_ViewChanged" HorizontalScrollMode="Disabled">
+                            <ScrollViewer.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <ListView ItemsSource="{x:Bind VM[1].data}" Style="{StaticResource LostAndFoundPageListView}" Grid.Row="0" ItemClick="ListView_ItemClick">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="viewmodel:LFItem">
+                                                <Grid Background="White">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="10"/>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0">
+                                                        <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="5,0,10,0">
+                                                            <Rectangle.Fill>
+                                                                <ImageBrush ImageSource="{x:Bind HeadImg}"/>
+                                                            </Rectangle.Fill>
+                                                        </Rectangle>
+                                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                                            <TextBlock Text="{x:Bind connect_name}" FontSize="20" />
+                                                            <TextBlock Text="{x:Bind Category}" Foreground="DarkGray"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <TextBlock Text="{x:Bind created_at}" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0" Foreground="DarkGray" Margin="0,0,20,0"/>
+                                                    <Grid Grid.Row="2" Width="{Binding ElementName=YKTScrollViewer, Path=ViewportWidth}">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="55"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="20"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{x:Bind pro_description}" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="WrapWholeWords"  MaxLines="5" Foreground="Gray" />
+                                                    </Grid>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <ProgressRing IsActive="{x:Bind IsProgressRingActive[1],Converter={StaticResource OCBTB},Mode=OneWay}" Height="30" HorizontalAlignment="Center" Grid.Row="1"/>
+                                    <TextBlock Text="没有更多了" FontSize="18" Grid.Row="1" HorizontalAlignment="Center" Visibility="{x:Bind IsProgressRingActive[1],Converter={StaticResource BTVC},Mode=OneWay}"/>
+                                </Grid>
+                            </ScrollViewer.Content>
+                        </ScrollViewer>
+                    </Grid>
+                </PivotItem>
+                <PivotItem x:Name="WalletPivot" Style="{StaticResource PivotItemStyle}">
+                    <PivotItem.Header>
+                        <TextBlock Text="钱包" FontSize="20"/>
+                    </PivotItem.Header>
+                    <Grid>
+                        <ScrollViewer x:Name="WalletScrollViewer" Height="auto" HorizontalScrollBarVisibility="Auto" ViewChanged="ScrollViewer_ViewChanged" HorizontalScrollMode="Disabled">
+                            <ScrollViewer.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <ListView ItemsSource="{x:Bind VM[2].data}" Style="{StaticResource LostAndFoundPageListView}" Grid.Row="0" ItemClick="ListView_ItemClick">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="viewmodel:LFItem">
+                                                <Grid Background="White">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="10"/>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0">
+                                                        <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="5,0,10,0">
+                                                            <Rectangle.Fill>
+                                                                <ImageBrush ImageSource="{x:Bind HeadImg}"/>
+                                                            </Rectangle.Fill>
+                                                        </Rectangle>
+                                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                                            <TextBlock Text="{x:Bind connect_name}" FontSize="20" />
+                                                            <TextBlock Text="{x:Bind Category}" Foreground="DarkGray"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <TextBlock Text="{x:Bind created_at}" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0" Foreground="DarkGray" Margin="0,0,20,0"/>
+                                                    <Grid Grid.Row="2" Width="{Binding ElementName=WalletScrollViewer, Path=ViewportWidth}">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="55"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="20"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{x:Bind pro_description}" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="WrapWholeWords"  MaxLines="5" Foreground="Gray" />
+                                                    </Grid>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <ProgressRing IsActive="{x:Bind IsProgressRingActive[2],Converter={StaticResource OCBTB},Mode=OneWay}" Height="30" HorizontalAlignment="Center" Grid.Row="1"/>
+                                    <TextBlock Text="没有更多了" FontSize="18" Grid.Row="1" HorizontalAlignment="Center" Visibility="{x:Bind IsProgressRingActive[2],Converter={StaticResource BTVC},Mode=OneWay}"/>
+                                </Grid>
+                            </ScrollViewer.Content>
+                        </ScrollViewer>
+                    </Grid>
+                </PivotItem>
+                <PivotItem x:Name="KeyPivot" Style="{StaticResource PivotItemStyle}">
+                    <PivotItem.Header>
+                        <TextBlock Text="钥匙" FontSize="20"/>
+                    </PivotItem.Header>
+                    <Grid>
+                        <ScrollViewer x:Name="KeyScrollViewer" Height="auto" HorizontalScrollBarVisibility="Auto" ViewChanged="ScrollViewer_ViewChanged" HorizontalScrollMode="Disabled">
+                            <ScrollViewer.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <ListView ItemsSource="{x:Bind VM[3].data}" Style="{StaticResource LostAndFoundPageListView}" Grid.Row="0" ItemClick="ListView_ItemClick">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="viewmodel:LFItem">
+                                                <Grid Background="White">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="10"/>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0">
+                                                        <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="5,0,10,0">
+                                                            <Rectangle.Fill>
+                                                                <ImageBrush ImageSource="{x:Bind HeadImg}"/>
+                                                            </Rectangle.Fill>
+                                                        </Rectangle>
+                                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                                            <TextBlock Text="{x:Bind connect_name}" FontSize="20" />
+                                                            <TextBlock Text="{x:Bind Category}" Foreground="DarkGray"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <TextBlock Text="{x:Bind created_at}" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0" Foreground="DarkGray" Margin="0,0,20,0"/>
+                                                    <Grid Grid.Row="2" Width="{Binding ElementName=KeyScrollViewer, Path=ViewportWidth}">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="55"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="20"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{x:Bind pro_description}" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="WrapWholeWords"  MaxLines="5" Foreground="Gray" />
+                                                    </Grid>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <ProgressRing IsActive="{x:Bind IsProgressRingActive[3],Converter={StaticResource OCBTB},Mode=OneWay}" Height="30" HorizontalAlignment="Center" Grid.Row="1"/>
+                                    <TextBlock Text="没有更多了" FontSize="18" Grid.Row="1" HorizontalAlignment="Center" Visibility="{x:Bind IsProgressRingActive[3],Converter={StaticResource BTVC},Mode=OneWay}"/>
+                                </Grid>
+                            </ScrollViewer.Content>
+                        </ScrollViewer>
+                    </Grid>
+                </PivotItem>
+                <PivotItem x:Name="DigitalDevicePivot" Style="{StaticResource PivotItemStyle}">
+                    <PivotItem.Header>
+                        <TextBlock Text="电子产品" FontSize="20"/>
+                    </PivotItem.Header>
+                    <Grid>
+                        <ScrollViewer x:Name="DigitalDeviceScrollViewer" Height="auto" HorizontalScrollBarVisibility="Auto" ViewChanged="ScrollViewer_ViewChanged" HorizontalScrollMode="Disabled">
+                            <ScrollViewer.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <ListView ItemsSource="{x:Bind VM[4].data}" Style="{StaticResource LostAndFoundPageListView}" Grid.Row="0" ItemClick="ListView_ItemClick">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="viewmodel:LFItem">
+                                                <Grid Background="White">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="10"/>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0">
+                                                        <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="5,0,10,0">
+                                                            <Rectangle.Fill>
+                                                                <ImageBrush ImageSource="{x:Bind HeadImg}"/>
+                                                            </Rectangle.Fill>
+                                                        </Rectangle>
+                                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                                            <TextBlock Text="{x:Bind connect_name}" FontSize="20" />
+                                                            <TextBlock Text="{x:Bind Category}" Foreground="DarkGray"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <TextBlock Text="{x:Bind created_at}" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0" Foreground="DarkGray" Margin="0,0,20,0"/>
+                                                    <Grid Grid.Row="2" Width="{Binding ElementName=DigitalDeviceScrollViewer, Path=ViewportWidth}">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="55"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="20"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{x:Bind pro_description}" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="WrapWholeWords"  MaxLines="5" Foreground="Gray" />
+                                                    </Grid>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <ProgressRing IsActive="{x:Bind IsProgressRingActive[4],Converter={StaticResource OCBTB},Mode=OneWay}" Height="30" HorizontalAlignment="Center" Grid.Row="1"/>
+                                    <TextBlock Text="没有更多了" FontSize="18" Grid.Row="1" HorizontalAlignment="Center" Visibility="{x:Bind IsProgressRingActive[4],Converter={StaticResource BTVC},Mode=OneWay}"/>
+                                </Grid>
+                            </ScrollViewer.Content>
+                        </ScrollViewer>
+                    </Grid>
+                </PivotItem>
+                <PivotItem x:Name="UmbrellaPivot" Style="{StaticResource PivotItemStyle}">
+                    <PivotItem.Header>
+                        <TextBlock Text="雨伞" FontSize="20"/>
+                    </PivotItem.Header>
+                    <Grid>
+                        <ScrollViewer x:Name="UmbrellaScrollViewer" Height="auto" HorizontalScrollBarVisibility="Auto" ViewChanged="ScrollViewer_ViewChanged" HorizontalScrollMode="Disabled">
+                            <ScrollViewer.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <ListView ItemsSource="{x:Bind VM[5].data}" Style="{StaticResource LostAndFoundPageListView}" Grid.Row="0" ItemClick="ListView_ItemClick">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="viewmodel:LFItem">
+                                                <Grid Background="White">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="10"/>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0">
+                                                        <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="5,0,10,0">
+                                                            <Rectangle.Fill>
+                                                                <ImageBrush ImageSource="{x:Bind HeadImg}"/>
+                                                            </Rectangle.Fill>
+                                                        </Rectangle>
+                                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                                            <TextBlock Text="{x:Bind connect_name}" FontSize="20" />
+                                                            <TextBlock Text="{x:Bind Category}" Foreground="DarkGray"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <TextBlock Text="{x:Bind created_at}" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0" Foreground="DarkGray" Margin="0,0,20,0"/>
+                                                    <Grid Grid.Row="2" Width="{Binding ElementName=UmbrellaScrollViewer, Path=ViewportWidth}">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="55"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="20"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{x:Bind pro_description}" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="WrapWholeWords"  MaxLines="5" Foreground="Gray" />
+                                                    </Grid>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <ProgressRing IsActive="{x:Bind IsProgressRingActive[5],Converter={StaticResource OCBTB},Mode=OneWay}" Height="30" HorizontalAlignment="Center" Grid.Row="1"/>
+                                    <TextBlock Text="没有更多了" FontSize="18" Grid.Row="1" HorizontalAlignment="Center" Visibility="{x:Bind IsProgressRingActive[5],Converter={StaticResource BTVC},Mode=OneWay}"/>
+                                </Grid>
+                            </ScrollViewer.Content>
+                        </ScrollViewer>
+                    </Grid>
+                </PivotItem>
+                <PivotItem x:Name="ClothingPivot" Style="{StaticResource PivotItemStyle}">
+                    <PivotItem.Header>
+                        <TextBlock Text="衣物" FontSize="20"/>
+                    </PivotItem.Header>
+                    <Grid>
+                        <ScrollViewer x:Name="ClothingScrollViewer" Height="auto" HorizontalScrollBarVisibility="Auto" ViewChanged="ScrollViewer_ViewChanged" HorizontalScrollMode="Disabled">
+                            <ScrollViewer.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <ListView ItemsSource="{x:Bind VM[6].data}" Style="{StaticResource LostAndFoundPageListView}" Grid.Row="0" ItemClick="ListView_ItemClick">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="viewmodel:LFItem">
+                                                <Grid Background="White">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="10"/>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0">
+                                                        <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="5,0,10,0">
+                                                            <Rectangle.Fill>
+                                                                <ImageBrush ImageSource="{x:Bind HeadImg}"/>
+                                                            </Rectangle.Fill>
+                                                        </Rectangle>
+                                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                                            <TextBlock Text="{x:Bind connect_name}" FontSize="20" />
+                                                            <TextBlock Text="{x:Bind Category}" Foreground="DarkGray"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <TextBlock Text="{x:Bind created_at}" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0" Foreground="DarkGray" Margin="0,0,20,0"/>
+                                                    <Grid Grid.Row="2" Width="{Binding ElementName=ClothingScrollViewer, Path=ViewportWidth}">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="55"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="20"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{x:Bind pro_description}" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="WrapWholeWords"  MaxLines="5" Foreground="Gray" />
+                                                    </Grid>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <ProgressRing IsActive="{x:Bind IsProgressRingActive[6],Converter={StaticResource OCBTB},Mode=OneWay}" Height="30" HorizontalAlignment="Center" Grid.Row="1"/>
+                                    <TextBlock Text="没有更多了" FontSize="18" Grid.Row="1" HorizontalAlignment="Center" Visibility="{x:Bind IsProgressRingActive[6],Converter={StaticResource BTVC},Mode=OneWay}"/>
+                                </Grid>
+                            </ScrollViewer.Content>
+                        </ScrollViewer>
+                    </Grid>
+                </PivotItem>
+                <PivotItem x:Name="OthersPivot" Style="{StaticResource PivotItemStyle}">
+                    <PivotItem.Header>
+                        <TextBlock Text="其他" FontSize="20"/>
+                    </PivotItem.Header>
+                    <Grid>
+                        <ScrollViewer x:Name="OthersScrollViewer" Height="auto" HorizontalScrollBarVisibility="Auto" ViewChanged="ScrollViewer_ViewChanged" HorizontalScrollMode="Disabled">
+                            <ScrollViewer.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <ListView ItemsSource="{x:Bind VM[7].data}" Style="{StaticResource LostAndFoundPageListView}" Grid.Row="0" ItemClick="ListView_ItemClick">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="viewmodel:LFItem">
+                                                <Grid Background="White">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="10"/>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0">
+                                                        <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="5,0,10,0">
+                                                            <Rectangle.Fill>
+                                                                <ImageBrush ImageSource="{x:Bind HeadImg}"/>
+                                                            </Rectangle.Fill>
+                                                        </Rectangle>
+                                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                                            <TextBlock Text="{x:Bind connect_name}" FontSize="20" />
+                                                            <TextBlock Text="{x:Bind Category}" Foreground="DarkGray"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <TextBlock Text="{x:Bind created_at}" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0" Foreground="DarkGray" Margin="0,0,20,0"/>
+                                                    <Grid Grid.Row="2" Width="{Binding ElementName=OthersScrollViewer, Path=ViewportWidth}">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="55"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="20"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{x:Bind pro_description}" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="WrapWholeWords"  MaxLines="5" Foreground="Gray" />
+                                                    </Grid>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <ProgressRing IsActive="{x:Bind IsProgressRingActive[7],Converter={StaticResource OCBTB},Mode=OneWay}" Height="30" HorizontalAlignment="Center" Grid.Row="1"/>
+                                    <TextBlock Text="没有更多了" FontSize="18" Grid.Row="1" HorizontalAlignment="Center" Visibility="{x:Bind IsProgressRingActive[7],Converter={StaticResource BTVC},Mode=OneWay}"/>
+                                </Grid>
+                            </ScrollViewer.Content>
+                        </ScrollViewer>
+                    </Grid>
+                </PivotItem>
+            </Pivot>
+        </Grid>
+    </Grid>
+</Page>

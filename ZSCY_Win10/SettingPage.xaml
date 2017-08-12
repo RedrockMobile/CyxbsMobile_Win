@@ -66,9 +66,10 @@
 
                             <TextBlock Text="使用透明磁贴" Visibility="Collapsed" FontSize="20" Foreground="Gray" Margin="0,10"/>
                             <ToggleSwitch  Name="OpacityToggleSwitch" Visibility="Collapsed" IsOn="False" OnContent="开" OffContent="关" Toggled="OpacityToggleSwitch_Toggled" Foreground="Black" />
-                            <TextBlock Text="社区新消息推送通知" Visibility="Visible" FontSize="20" Foreground="#333" Margin="0,10"/>
+                            <TextBlock  Text="社区新消息推送通知" Visibility="Visible" FontSize="20" Foreground="#333" Margin="0,10"/>
                             <ToggleSwitch  Name="backGroundToastToggleSwitch" Visibility="Visible" OnContent="开" OffContent="关" Toggled="backGroundToastToggleSwitch_Toggled" Foreground="Black" />
-
+                            <TextBlock Text="提取错误日志文件" Visibility="Visible" FontSize="20" Foreground="#333" Margin="0,10"/>
+                            <Button Name="Error" Foreground="#333"  Content="另存为日志文件"  Click="Error_ClickAsync" />
                         </StackPanel>
                     </PivotItem>
                     <PivotItem Header="重置"  >

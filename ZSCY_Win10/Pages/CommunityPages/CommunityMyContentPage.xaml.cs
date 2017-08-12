@@ -46,6 +46,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
         double oldmarkScrollViewerOffset = 0;
         bool isfirst = true;
         bool issend = false;
+        private static string resourceName = "ZSCY";
 
 
         public CommunityMyContentPage()
@@ -148,11 +149,16 @@ namespace ZSCY_Win10.Pages.CommunityPages
             //    type_id = ViewModel.hotfeed.type_id;
             //}
             //TODO:未登陆时 不添加参数stuNum和idNum
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("article_id", id));
             paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
-            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+            //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+            paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
             paramList.Add(new KeyValuePair<string, string>("size", "15"));
             paramList.Add(new KeyValuePair<string, string>("page", remarkPage.ToString()));
             string mark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/getremark", paramList);
@@ -236,11 +242,16 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 type_id = "5";
                 id = (ee.Parameter as MyNotification).article_id;
             }
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("article_id", id));
             paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
-            paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+            //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+            paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+            paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
             paramList.Add(new KeyValuePair<string, string>("content", sendMarkTextBox.Text));
             paramList.Add(new KeyValuePair<string, string>("answer_user_id", Mark2PeoNum));
             string sendMark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/postremarks", paramList);
@@ -276,6 +287,9 @@ namespace ZSCY_Win10.Pages.CommunityPages
         private void markListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var clickMarkItem = (Mark)e.ClickedItem;
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
             if (!isMark2Peo)
             {
                 isMark2Peo = true;
@@ -284,8 +298,9 @@ namespace ZSCY_Win10.Pages.CommunityPages
             {
                 sendMarkTextBox.Text = sendMarkTextBox.Text.Substring(sendMarkTextBox.Text.IndexOf(":") + 2);
             }
-            if (clickMarkItem.stunum != appSetting.Values["stuNum"].ToString())
-            {
+            //if (clickMarkItem.stunum != appSetting.Values["stuNum"].ToString())
+            if (clickMarkItem.stunum != credentialList[0].UserName)
+                {
                 sendMarkTextBox.Text = "回复 " + clickMarkItem.nickname + " : " + sendMarkTextBox.Text;
                 Mark2PeoNum = clickMarkItem.stunum;
             }

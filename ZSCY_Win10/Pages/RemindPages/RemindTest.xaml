@@ -1,0 +1,35 @@
+﻿<Page
+    x:Class="ZSCY_Win10.Pages.AddRemindPage.RemindTest"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY_Win10.Pages.AddRemindPage"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ListView
+            x:Name="ListViewToasts">
+            <ListView.Header>
+                <TextBlock
+                    Text="Scheduled Toasts"
+                    Style="{ThemeResource TitleTextBlockStyle}"
+                    Margin="20"/>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <RichTextBlock>
+                        <Paragraph>
+                            <Run Text="Tag: "/>
+                            <Run Text="{Binding Tag}"/>
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="DeliveryTime: "/>
+                            <Run Text="{Binding DeliveryTime}"/>
+                        </Paragraph>
+                    </RichTextBlock>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>

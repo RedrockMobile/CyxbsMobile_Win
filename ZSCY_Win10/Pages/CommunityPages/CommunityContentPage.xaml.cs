@@ -44,6 +44,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
         double oldmarkScrollViewerOffset = 0;
         bool isfirst = true;
         bool issend = false;
+        private static string resourceName = "ZSCY";
 
         public CommunityContentPage()
         {
@@ -117,13 +118,22 @@ namespace ZSCY_Win10.Pages.CommunityPages
             }
             //TODO:未登陆时 获取评论不添加stuNum和idNum
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("article_id", id));
-            paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
-            if (appSetting.Values.ContainsKey("idNum"))
+            try
             {
-                paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                paramList.Add(new KeyValuePair<string, string>("article_id", id));
+                paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
+                if (credentialList.Count > 0)
+                {
+                    //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+                    //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                    paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+                    paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
+                }
             }
+            catch { }
             paramList.Add(new KeyValuePair<string, string>("size", "15"));
             paramList.Add(new KeyValuePair<string, string>("page", remarkPage.ToString()));
             //string mark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/getremark", paramList);
@@ -184,7 +194,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             }
             catch (Exception) { }
         }
-
+        int mark2PeoNameNum = 0;//回复者名字的数量   
         private void sendMarkTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (sendMarkTextBox.Text.Length > 0)
@@ -194,72 +204,96 @@ namespace ZSCY_Win10.Pages.CommunityPages
             else
             {
                 sendMarkButton.IsEnabled = false;
+
             }
+            if (mark2PeoNameNum!=0&&sendMarkTextBox.Text.Length<mark2PeoNameNum+6)
+            {
+                sendMarkTextBox.Text = "";
+                isMark2Peo = false;
+                mark2PeoNameNum = 0;
+            }
+           
         }
 
         private async void sendMarkButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO:未登陆时 不能评论 
-            if (appSetting.Values.ContainsKey("idNum"))
+            //if (appSetting.Values.ContainsKey("idNum"))
+            try
             {
-                sendMarkButton.IsEnabled = false;
-                sendMarkProgressRing.Visibility = Visibility.Visible;
-                string id = "";
-                string type_id = "";
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                if (credentialList.Count > 0)
+                {
+                    sendMarkButton.IsEnabled = false;
+                    sendMarkProgressRing.Visibility = Visibility.Visible;
+                    string id = "";
+                    string type_id = "";
 
-                if (ViewModel.BBDD != null)
-                {
-                    id = ViewModel.BBDD.id;
-                    type_id = ViewModel.BBDD.type_id;
-                }
-                else
-                {
-                    id = ViewModel.hotfeed.article_id;
-                    type_id = ViewModel.hotfeed.type_id;
-                }
-                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-                paramList.Add(new KeyValuePair<string, string>("article_id", id));
-                paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
-                paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("content", sendMarkTextBox.Text));
-                paramList.Add(new KeyValuePair<string, string>("answer_user_id", Mark2PeoNum));
-                string sendMark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/postremarks", paramList);
-                Debug.WriteLine(sendMark);
-                try
-                {
-                    if (sendMark != "")
+                    if (ViewModel.BBDD != null)
                     {
-                        JObject obj = JObject.Parse(sendMark);
-                        if (Int32.Parse(obj["state"].ToString()) == 200)
+                        id = ViewModel.BBDD.id;
+                        type_id = ViewModel.BBDD.type_id;
+                    }
+                    else
+                    {
+                        id = ViewModel.hotfeed.article_id;
+                        type_id = ViewModel.hotfeed.type_id;
+                    }
+                    List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+                    paramList.Add(new KeyValuePair<string, string>("article_id", id));
+                    paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
+                    //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+                    //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
+                    paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+                    paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
+                    paramList.Add(new KeyValuePair<string, string>("content", sendMarkTextBox.Text));
+                    paramList.Add(new KeyValuePair<string, string>("answer_user_id", Mark2PeoNum));
+                    string sendMark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/postremarks", paramList);
+                    Debug.WriteLine(sendMark);
+                    try
+                    {
+                        if (sendMark != "")
                         {
-                            Utils.Toast("评论成功");
-                            issend = true;
-                            sendMarkTextBox.Text = "";
-                            markList.Clear();
-                            remarkPage = 0;
-                            getMark();
-                            if (type_id == "6")
-                                ViewModel.hotfeed.remark_num = (int.Parse(ViewModel.hotfeed.remark_num) + 1).ToString();
+                            JObject obj = JObject.Parse(sendMark);
+                            if (Int32.Parse(obj["state"].ToString()) == 200)
+                            {
+                                Utils.Toast("评论成功");
+                                issend = true;
+                                sendMarkTextBox.Text = "";
+                                markList.Clear();
+                                remarkPage = 0;
+                                getMark();
+                                if (type_id == "6")
+                                    ViewModel.hotfeed.remark_num = (int.Parse(ViewModel.hotfeed.remark_num) + 1).ToString();
+                            }
+                            else
+                            {
+                                Utils.Toast("评论失败");
+                            }
                         }
                         else
                         {
                             Utils.Toast("评论失败");
                         }
+                        sendMarkProgressRing.Visibility = Visibility.Collapsed;
                     }
-                    else
-                    {
-                        Utils.Toast("评论失败");
-                    }
-                    sendMarkProgressRing.Visibility = Visibility.Collapsed;
+                    catch (Exception) { }
+                    isMark2Peo = false;
                 }
-                catch (Exception) { }
-                isMark2Peo = false;
+                else
+                {
+                    var msgPopup = new Data.loginControl("您还没有登录 无法评论帖子~");
+                    msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
+                    msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先四处逛一逛~"); };
+                    msgPopup.ShowWIndow();
+                }
             }
-            else
+            catch
             {
                 var msgPopup = new Data.loginControl("您还没有登录 无法评论帖子~");
-                msgPopup.LeftClick += (s, c) => { Frame.Navigate(typeof(LoginPage)); };
+                msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
                 msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先四处逛一逛~"); };
                 msgPopup.ShowWIndow();
             }
@@ -268,24 +302,46 @@ namespace ZSCY_Win10.Pages.CommunityPages
         private void markListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var clickMarkItem = (Mark)e.ClickedItem;
-            if (!isMark2Peo)
+            mark2PeoNameNum = clickMarkItem.nickname.Length;
+            try
             {
-                isMark2Peo = true;
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                if (!isMark2Peo)
+                {
+                    isMark2Peo = true;
+                }
+                else
+                {
+                    //@lj 好了·
+                    sendMarkTextBox.Text = sendMarkTextBox.Text.Substring(sendMarkTextBox.Text.IndexOf(":") + 2);
+                }
+                //if (clickMarkItem.stunum != appSetting.Values["stuNum"].ToString())
+                if (clickMarkItem.stunum != credentialList[0].UserName)
+                {
+                    sendMarkTextBox.Text = "回复 " + clickMarkItem.nickname + " : " + sendMarkTextBox.Text;
+                    Mark2PeoNum = clickMarkItem.stunum;
+                }
+                else
+                {
+                    isMark2Peo = false;
+                    Mark2PeoNum = "0";
+                }
             }
-            else
+            catch
             {
-                //@lj 好了·
-                sendMarkTextBox.Text = sendMarkTextBox.Text.Substring(sendMarkTextBox.Text.IndexOf(":") + 2);
-            }
-            if (clickMarkItem.stunum != appSetting.Values["stuNum"].ToString())
-            {
-                sendMarkTextBox.Text = "回复 " + clickMarkItem.nickname + " : " + sendMarkTextBox.Text;
-                Mark2PeoNum = clickMarkItem.stunum;
-            }
-            else
-            {
+                if (!isMark2Peo)
+                {
+                    isMark2Peo = true;
+                }
+                else
+                {
+                    //@lj 好了·
+                    sendMarkTextBox.Text = sendMarkTextBox.Text.Substring(sendMarkTextBox.Text.IndexOf(":") + 2);
+                }
                 isMark2Peo = false;
-                Mark2PeoNum ="0";
+                Mark2PeoNum = "0";
             }
             sendMarkTextBox.Focus(FocusState.Keyboard);
             sendMarkTextBox.SelectionStart = sendMarkTextBox.Text.Length;
@@ -294,87 +350,101 @@ namespace ZSCY_Win10.Pages.CommunityPages
         private async void LikeButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO:未登陆时 不能点赞
-            if (appSetting.Values.ContainsKey("idNum"))
+            //if (appSetting.Values.ContainsKey("idNum"))
+            try
             {
-                var b = sender as Button;
-                string num_id = b.TabIndex.ToString();
-                Debug.WriteLine(num_id);
-                Debug.WriteLine("id " + num_id.Substring(2));
-                string like_num = "";
-                if (ViewModel.BBDD != null)
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                if (credentialList.Count > 0)
                 {
-                    BBDDFeed bbddfeed = ViewModel.BBDD;
-                    if (bbddfeed.is_my_like == "true" || bbddfeed.is_my_like == "True")
+                    var b = sender as Button;
+                    string num_id = b.TabIndex.ToString();
+                    Debug.WriteLine(num_id);
+                    Debug.WriteLine("id " + num_id.Substring(2));
+                    string like_num = "";
+                    if (ViewModel.BBDD != null)
                     {
-                        like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), false);
-                        if (like_num != "")
+                        BBDDFeed bbddfeed = ViewModel.BBDD;
+                        if (bbddfeed.is_my_like == "true" || bbddfeed.is_my_like == "True")
                         {
-                            bbddfeed.like_num = like_num;
-                            bbddfeed.is_my_like = "false";
-                            //if (args is HotFeed)
-                            //{
-                            //    HotFeed h = args as HotFeed;
-                            //    h.like_num = like_num;
-                            //    h.is_my_Like = "false";
-                            //}
+                            like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), false);
+                            if (like_num != "")
+                            {
+                                bbddfeed.like_num = like_num;
+                                bbddfeed.is_my_like = "false";
+                                //if (args is HotFeed)
+                                //{
+                                //    HotFeed h = args as HotFeed;
+                                //    h.like_num = like_num;
+                                //    h.is_my_Like = "false";
+                                //}
+                            }
+                        }
+                        else
+                        {
+                            like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), true);
+                            if (like_num != "")
+                            {
+                                bbddfeed.like_num = like_num;
+                                bbddfeed.is_my_like = "true";
+                                //if (args is HotFeed)
+                                //{
+                                //    HotFeed h = args as HotFeed;
+                                //    h.like_num = like_num;
+                                //    h.is_my_Like = "true";
+                                //}
+                            }
                         }
                     }
-                    else
+
+                    if (ViewModel.hotfeed != null)
                     {
-                        like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), true);
-                        if (like_num != "")
+                        HotFeed hotfeed = ViewModel.hotfeed;
+                        if (hotfeed.is_my_Like == "true" || hotfeed.is_my_Like == "True")
                         {
-                            bbddfeed.like_num = like_num;
-                            bbddfeed.is_my_like = "true";
-                            //if (args is HotFeed)
-                            //{
-                            //    HotFeed h = args as HotFeed;
-                            //    h.like_num = like_num;
-                            //    h.is_my_Like = "true";
-                            //}
+                            like_num = await CommunityFeedsService.setPraise(hotfeed.type_id, num_id.Substring(2), false);
+                            if (like_num != "")
+                            {
+                                hotfeed.like_num = like_num;
+                                hotfeed.is_my_Like = "false";
+                                //if (args is HotFeed)
+                                //{
+                                //    HotFeed h = args as HotFeed;
+                                //    h.like_num = like_num;
+                                //    h.is_my_Like = "false";
+                                //}
+                            }
+                        }
+                        else
+                        {
+                            like_num = await CommunityFeedsService.setPraise(hotfeed.type_id, num_id.Substring(2), true);
+                            if (like_num != "")
+                            {
+                                hotfeed.like_num = like_num;
+                                hotfeed.is_my_Like = "true";
+                                //if (args is HotFeed)
+                                //{
+                                //    HotFeed h = args as HotFeed;
+                                //    h.like_num = like_num;
+                                //    h.is_my_Like = "true";
+                                //}
+                            }
                         }
                     }
                 }
-
-                if (ViewModel.hotfeed != null)
+                else
                 {
-                    HotFeed hotfeed = ViewModel.hotfeed;
-                    if (hotfeed.is_my_Like == "true" || hotfeed.is_my_Like == "True")
-                    {
-                        like_num = await CommunityFeedsService.setPraise(hotfeed.type_id, num_id.Substring(2), false);
-                        if (like_num != "")
-                        {
-                            hotfeed.like_num = like_num;
-                            hotfeed.is_my_Like = "false";
-                            //if (args is HotFeed)
-                            //{
-                            //    HotFeed h = args as HotFeed;
-                            //    h.like_num = like_num;
-                            //    h.is_my_Like = "false";
-                            //}
-                        }
-                    }
-                    else
-                    {
-                        like_num = await CommunityFeedsService.setPraise(hotfeed.type_id, num_id.Substring(2), true);
-                        if (like_num != "")
-                        {
-                            hotfeed.like_num = like_num;
-                            hotfeed.is_my_Like = "true";
-                            //if (args is HotFeed)
-                            //{
-                            //    HotFeed h = args as HotFeed;
-                            //    h.like_num = like_num;
-                            //    h.is_my_Like = "true";
-                            //}
-                        }
-                    }
+                    var msgPopup = new Data.loginControl("您还没有登录 无法点赞~");
+                    msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
+                    msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先四处逛一逛~"); };
+                    msgPopup.ShowWIndow();
                 }
             }
-            else
+            catch
             {
                 var msgPopup = new Data.loginControl("您还没有登录 无法点赞~");
-                msgPopup.LeftClick += (s, c) => { Frame.Navigate(typeof(LoginPage)); };
+                msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
                 msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先四处逛一逛~"); };
                 msgPopup.ShowWIndow();
             }

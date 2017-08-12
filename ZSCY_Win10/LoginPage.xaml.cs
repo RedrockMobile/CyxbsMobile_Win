@@ -30,6 +30,7 @@ namespace ZSCY_Win10
     public sealed partial class LoginPage : Page
     {
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private static string resourceName = "ZSCY";
         public LoginPage()
         {
             this.InitializeComponent();
@@ -62,6 +63,7 @@ namespace ZSCY_Win10
 
         private async void mlogin()
         {
+            var vault = new Windows.Security.Credentials.PasswordVault();
             StuNumTextBox.IsEnabled = false;
             IdNumPasswordBox.IsEnabled = false;
             LoginProgressBar.IsActive = true;
@@ -70,8 +72,9 @@ namespace ZSCY_Win10
             noLoginButton.Visibility = Visibility.Collapsed;
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", StuNumTextBox.Text));
-            paramList.Add(new KeyValuePair<string, string>("idNum", IdNumPasswordBox.Password));
-            string login = await NetWork.getHttpWebRequest("api/verify", paramList);
+            paramList.Add(new KeyValuePair<string, string>("idNum", System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(IdNumPasswordBox.Password))));
+            //paramList.Add(new KeyValuePair<string, string>("idNum", IdNumPasswordBox.Password));
+            string login = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Verify/verifyLogin", paramList);
             Debug.WriteLine("login->" + login);
             if (login != "")
             {
@@ -80,8 +83,9 @@ namespace ZSCY_Win10
                     JObject obj = JObject.Parse(login);
                     if (Int32.Parse(obj["status"].ToString()) == 200)
                     {
-                        appSetting.Values["stuNum"] = StuNumTextBox.Text;
-                        appSetting.Values["idNum"] = IdNumPasswordBox.Password;
+                        vault.Add(new Windows.Security.Credentials.PasswordCredential(resourceName, StuNumTextBox.Text, IdNumPasswordBox.Password));
+                        //appSetting.Values["stuNum"] = StuNumTextBox.Text;
+                        //appSetting.Values["idNum"] = IdNumPasswordBox.Password;
                         JObject dataobj = JObject.Parse(obj["data"].ToString());
                         appSetting.Values["name"] = dataobj["name"].ToString();
                         appSetting.Values["classNum"] = dataobj["classNum"].ToString();
@@ -100,11 +104,20 @@ namespace ZSCY_Win10
                         Frame.Navigate(typeof(MainPage), "/kb");
                     }
                     else if (Int32.Parse(obj["status"].ToString()) == -100)
+                    {
                         Utils.Message("学号不存在");
+                        noLoginButton.Visibility = Visibility.Visible;
+                    }
                     else if (Int32.Parse(obj["status"].ToString()) == 201)
+                    {
                         Utils.Message("学号或密码错误");
+                        noLoginButton.Visibility = Visibility.Visible;
+                    }
                     else
+                    {
                         Utils.Message(obj["info"].ToString());
+                        noLoginButton.Visibility = Visibility.Visible;
+                    }
                 }
                 catch (Exception)
                 {

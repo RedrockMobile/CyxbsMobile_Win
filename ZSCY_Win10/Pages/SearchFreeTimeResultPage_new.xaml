@@ -338,7 +338,7 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBox VerticalAlignment="Center" Grid.Column="0" Name="KBNumFlyoutTextBox" PlaceholderText="输入学号以查询" InputScope="Number" KeyUp="KBNumFlyoutTextBox_KeyUp"/>
+                                <TextBox VerticalAlignment="Center" Grid.Column="0" Name="KBNumFlyoutTextBox" PlaceholderText="输入要查询的周次" InputScope="Number" KeyUp="KBNumFlyoutTextBox_KeyUp"/>
                                 <AppBarButton Grid.Column="1"  Name="KBNumSearchButton" Icon="Zoom" Click="KBNumSearchButton_Click" />
                             </Grid>
                         </StackPanel>

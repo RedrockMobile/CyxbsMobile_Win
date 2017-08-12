@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -20,9 +22,13 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Common;
+using ZSCY_Win10.Controls;
 using ZSCY_Win10.Data.Community;
+using ZSCY_Win10.Models;
+using ZSCY_Win10.Models.TopicModels;
 using ZSCY_Win10.Pages;
 using ZSCY_Win10.Pages.CommunityPages;
+using ZSCY_Win10.Pages.TopicPages;
 using ZSCY_Win10.Service;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
@@ -38,6 +44,7 @@ namespace ZSCY_Win10
     {
         private int page = 0;
         ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private static string resourceName = "ZSCY";
         int[] pagestatus = new int[] { 0, 0, 0, 0 };
         CommunityViewModel ViewModel { get; set; }
         double hotOldScrollableHeight = 0;
@@ -45,6 +52,7 @@ namespace ZSCY_Win10
         List<Img> clickImgList = new List<Img>();
         int clickImfIndex = 0;
         bool isPersonInfo = false;
+        ObservableCollection<Topic> topicList = new ObservableCollection<Topic>();
 
         public CommunityPage()
         {
@@ -90,6 +98,8 @@ namespace ZSCY_Win10
                 VisualStateManager.GoToState(this, state, true);
                 cutoffLine.Y2 = e.NewSize.Height;
             };
+            GetBaseTopInfo();
+            topicGridView.ItemsSource = topicList;
             //CommunityFrame.Visibility = Visibility.Visible;
             //CommunityFrame.Navigate(typeof(CommunityContentPage));
             //RMDTListView.ContainerContentChanging += RMDTListView_ContainerContentChanging;
@@ -295,12 +305,26 @@ namespace ZSCY_Win10
             CommunityFrame.Visibility = Visibility.Visible;
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            if (appSetting.Values.ContainsKey("idNum"))
-                CommunityFrame.Navigate(typeof(CommunityAddPage));
-            else
+            //if (appSetting.Values.ContainsKey("idNum"))
+            try
+            {
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                if (credentialList.Count > 0)
+                    CommunityFrame.Navigate(typeof(CommunityAddPage));
+                else
+                {
+                    var msgPopup = new Data.loginControl("您还没有登录 无法发布新帖~");
+                    msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
+                    msgPopup.RightClick += (s, c) => { Debug.WriteLine("您可以先去社区逛一逛~"); };
+                    msgPopup.ShowWIndow();
+                }
+            }
+            catch
             {
                 var msgPopup = new Data.loginControl("您还没有登录 无法发布新帖~");
-                msgPopup.LeftClick += (s, c) => { CommunityFrame.Navigate(typeof(LoginPage)); };
+                msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
                 msgPopup.RightClick += (s, c) => { Debug.WriteLine("您可以先去社区逛一逛~"); };
                 msgPopup.ShowWIndow();
             }
@@ -331,106 +355,120 @@ namespace ZSCY_Win10
         private async void liskButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO:未登陆时 不能点赞
-            if (appSetting.Values.ContainsKey("idNum"))
+            //if (appSetting.Values.ContainsKey("idNum"))
+            try
             {
-                var b = sender as Button;
-
-                string num_id = b.TabIndex.ToString();
-                Debug.WriteLine(num_id);
-                Debug.WriteLine("id " + num_id.Substring(2));
-                string like_num = "";
-                try
+                var vault = new Windows.Security.Credentials.PasswordVault();
+                var credentialList = vault.FindAllByResource(resourceName);
+                credentialList[0].RetrievePassword();
+                if (credentialList.Count > 0)
                 {
-                    if (int.Parse(num_id[0].ToString()) < 5) //hot
+                    var b = sender as Button;
+
+                    string num_id = b.TabIndex.ToString();
+                    Debug.WriteLine(num_id);
+                    Debug.WriteLine("id " + num_id.Substring(2));
+                    string like_num = "";
+                    try
                     {
-                        HotFeed hotfeed = ViewModel.HotFeeds.First(p => p.article_id.Equals(num_id.Substring(2)));
-                        if (hotfeed.is_my_Like == "true" || hotfeed.is_my_Like == "True")
+                        if (int.Parse(num_id[0].ToString()) < 5) //hot
                         {
-                            like_num = await CommunityFeedsService.setPraise(hotfeed.type_id, num_id.Substring(2), false);
-                            if (like_num != "")
+                            HotFeed hotfeed = ViewModel.HotFeeds.First(p => p.article_id.Equals(num_id.Substring(2)));
+                            if (hotfeed.is_my_Like == "true" || hotfeed.is_my_Like == "True")
                             {
-                                hotfeed.like_num = like_num;
-                                hotfeed.is_my_Like = "false";
-                                if (ViewModel.BBDD.Count(p => p.id.Equals(num_id.Substring(2))) != 0)
+                                like_num = await CommunityFeedsService.setPraise(hotfeed.type_id, num_id.Substring(2), false);
+                                if (like_num != "")
                                 {
-                                    BBDDFeed s = ViewModel.BBDD.First(p => p.id.Equals(num_id.Substring(2)));
-                                    if (s != null)
+                                    hotfeed.like_num = like_num;
+                                    hotfeed.is_my_Like = "false";
+                                    if (ViewModel.BBDD.Count(p => p.id.Equals(num_id.Substring(2))) != 0)
                                     {
-                                        s.like_num = like_num;
-                                        s.is_my_like = "false";
+                                        BBDDFeed s = ViewModel.BBDD.First(p => p.id.Equals(num_id.Substring(2)));
+                                        if (s != null)
+                                        {
+                                            s.like_num = like_num;
+                                            s.is_my_like = "false";
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                like_num = await CommunityFeedsService.setPraise(hotfeed.type_id, num_id.Substring(2), true);
+                                if (like_num != "")
+                                {
+                                    hotfeed.like_num = like_num;
+                                    hotfeed.is_my_Like = "true";
+                                    if (ViewModel.BBDD.Count(p => p.id.Equals(num_id.Substring(2))) != 0)
+                                    {
+                                        BBDDFeed s = ViewModel.BBDD.First(p => p.id.Equals(num_id.Substring(2)));
+                                        if (s != null)
+                                        {
+                                            s.like_num = like_num;
+                                            s.is_my_like = "true";
+                                        }
                                     }
                                 }
                             }
                         }
-                        else
+                        else if (num_id[0] == '5') //bbdd
                         {
-                            like_num = await CommunityFeedsService.setPraise(hotfeed.type_id, num_id.Substring(2), true);
-                            if (like_num != "")
+                            BBDDFeed bbddfeed = ViewModel.BBDD.First(p => p.id.Equals(num_id.Substring(2)));
+                            if (bbddfeed.is_my_like == "true" || bbddfeed.is_my_like == "True")
                             {
-                                hotfeed.like_num = like_num;
-                                hotfeed.is_my_Like = "true";
-                                if (ViewModel.BBDD.Count(p => p.id.Equals(num_id.Substring(2))) != 0)
+                                like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), false);
+                                if (like_num != "")
                                 {
-                                    BBDDFeed s = ViewModel.BBDD.First(p => p.id.Equals(num_id.Substring(2)));
-                                    if (s != null)
+                                    bbddfeed.like_num = like_num;
+                                    bbddfeed.is_my_like = "false";
+                                    if (ViewModel.HotFeeds.Count(p => p.article_id.Equals(num_id.Substring(2))) != 0)
                                     {
-                                        s.like_num = like_num;
-                                        s.is_my_like = "true";
+                                        HotFeed h = ViewModel.HotFeeds.First(p => p.article_id.Equals(num_id.Substring(2)));
+                                        if (h != null)
+                                        {
+                                            h.like_num = like_num;
+                                            h.is_my_Like = "false";
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), true);
+                                if (like_num != "")
+                                {
+                                    bbddfeed.like_num = like_num;
+                                    bbddfeed.is_my_like = "true";
+                                    if (ViewModel.HotFeeds.Count(p => p.article_id.Equals(num_id.Substring(2))) != 0)
+                                    {
+                                        HotFeed h = ViewModel.HotFeeds.First(p => p.article_id.Equals(num_id.Substring(2)));
+                                        if (h != null)
+                                        {
+                                            h.like_num = like_num;
+                                            h.is_my_Like = "true";
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                    else if (num_id[0] == '5') //bbdd
+                    catch (Exception)
                     {
-                        BBDDFeed bbddfeed = ViewModel.BBDD.First(p => p.id.Equals(num_id.Substring(2)));
-                        if (bbddfeed.is_my_like == "true" || bbddfeed.is_my_like == "True")
-                        {
-                            like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), false);
-                            if (like_num != "")
-                            {
-                                bbddfeed.like_num = like_num;
-                                bbddfeed.is_my_like = "false";
-                                if (ViewModel.HotFeeds.Count(p => p.article_id.Equals(num_id.Substring(2))) != 0)
-                                {
-                                    HotFeed h = ViewModel.HotFeeds.First(p => p.article_id.Equals(num_id.Substring(2)));
-                                    if (h != null)
-                                    {
-                                        h.like_num = like_num;
-                                        h.is_my_Like = "false";
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            like_num = await CommunityFeedsService.setPraise(bbddfeed.type_id, num_id.Substring(2), true);
-                            if (like_num != "")
-                            {
-                                bbddfeed.like_num = like_num;
-                                bbddfeed.is_my_like = "true";
-                                if (ViewModel.HotFeeds.Count(p => p.article_id.Equals(num_id.Substring(2))) != 0)
-                                {
-                                    HotFeed h = ViewModel.HotFeeds.First(p => p.article_id.Equals(num_id.Substring(2)));
-                                    if (h != null)
-                                    {
-                                        h.like_num = like_num;
-                                        h.is_my_Like = "true";
-                                    }
-                                }
-                            }
-                        }
+                        Debug.WriteLine("点赞异常");
                     }
                 }
-                catch (Exception)
+                else
                 {
-                    Debug.WriteLine("点赞异常");
+                    var msgPopup = new Data.loginControl("您还没有登录 无法点赞~");
+                    msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
+                    msgPopup.RightClick += (s, c) => { Debug.WriteLine("您可以先去社区逛一逛~"); };
+                    msgPopup.ShowWIndow();
                 }
             }
-            else
+            catch
             {
                 var msgPopup = new Data.loginControl("您还没有登录 无法点赞~");
-                msgPopup.LeftClick += (s, c) => { CommunityFrame.Navigate(typeof(LoginPage)); };
+                msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
                 msgPopup.RightClick += (s, c) => { Debug.WriteLine("您可以先去社区逛一逛~"); };
                 msgPopup.ShowWIndow();
             }
@@ -492,7 +530,11 @@ namespace ZSCY_Win10
 
         private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (appSetting.Values.ContainsKey("idNum"))
+            //if (appSetting.Values.ContainsKey("idNum"))
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
+            if (credentialList.Count > 0)
             {
                 BBDDFeed b = ((StackPanel)sender).DataContext as BBDDFeed;
                 App.ViewModel = ViewModel;
@@ -504,7 +546,7 @@ namespace ZSCY_Win10
             else
             {
                 var msgPopup = new Data.loginControl("登录即可查看他人动态~");
-                msgPopup.LeftClick += (s, c) => { Frame.Navigate(typeof(LoginPage)); };
+                msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
                 msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先四处逛一逛~"); };
                 msgPopup.ShowWIndow();
             }
@@ -533,7 +575,7 @@ namespace ZSCY_Win10
             if (null != result && result.Label == "是")
             {
                 Debug.WriteLine("保存图片");
-                bool saveImg = await NetWork.downloadFile(((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc, "picture",((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", ""));
+                bool saveImg = await NetWork.downloadFile(((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc, "picture", ((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", ""));
                 if (saveImg)
                 {
                     Utils.Toast("图片已保存到 \"保存的图片\"", "SavedPictures");
@@ -550,12 +592,60 @@ namespace ZSCY_Win10
 
         private void CommunityItemPhotoImage_ImageOpened(object sender, RoutedEventArgs e)
         {
-            DependencyObject x =VisualTreeHelper.GetParent(sender as Image);
+            DependencyObject x = VisualTreeHelper.GetParent(sender as Image);
             Grid g = x as Grid;
             var z = g.Children[0];
             ProgressRing p = z as ProgressRing;
             p.IsActive = false;
         }
 
+        private async void GetBaseTopInfo()
+        {
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            var credentialList = vault.FindAllByResource(resourceName);
+            credentialList[0].RetrievePassword();
+            if (credentialList[0] != null)
+            {
+                try
+                {
+                    List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
+                    paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+                    string Topictemp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Topic/topicList", paramList);
+                    JObject Tobj = JObject.Parse(Topictemp);
+                    if (Int32.Parse(Tobj["status"].ToString()) == 200)
+                    {
+                        JArray TopicArray = Utils.ReadJso(Topictemp);
+                        for (int i = 0; i < 2; i++)
+                        {
+                            Topic item = new Topic();
+                            item.GetAttribute((JObject)TopicArray[i]);
+                            if (item.imgdata.Equals(""))
+                            { item.imgdata = "/Assets/base.jpg"; item.color = "DarkGray"; }                     
+                            item.keyword =$"#{item.keyword}#";
+                            topicList.Add(item);
+                        }
+                    }
+                }
+                catch
+                {
+                    NotifyPopup notifyPopup = new NotifyPopup("网络异常 无法读取事项~");
+                    notifyPopup.Show();
+                }
+            }
+            Topic rditem = new Topic();
+            rditem.keyword = "#查看更多话题#";
+            rditem.imgdata = "/Assets/base.jpg";
+            rditem.color = "DarkGray";
+            topicList.Add(rditem);
+        }
+
+        private void topicGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            //TODO:有数据了测一下
+            if (((Topic)e.ClickedItem).keyword.Equals("#查看更多话题#"))
+                this.Frame.Navigate(typeof(SearchTopic));
+            else
+                this.Frame.Navigate(typeof(TopicContentPage), e.ClickedItem, new DrillInNavigationTransitionInfo());
+        }
     }
 }

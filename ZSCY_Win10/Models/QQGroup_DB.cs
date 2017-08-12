@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace ZSCY.Models
 {
     public class LXQ
@@ -16,11 +17,11 @@ namespace ZSCY.Models
         public string name { get; set; }
         public int qq_num { get; set; }
     }
-    public class Allstring
+    public class Allstring : BaseModel
     {
 
-        public string LXQ_All { get; set; }
-        public string XYQ_All { get; set; }
+
+      
     }
 
 }

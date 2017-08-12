@@ -1,0 +1,167 @@
+﻿<Page
+    x:Class="ZSCY_Win10.Pages.TopicPages.TopicArticlesConent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY_Win10.Pages.TopicPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:models="using:ZSCY_Win10.Models.TopicModels"   
+    xmlns:util="using:ZSCY_Win10.Util"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Name="ListView" x:Key="ListView" TargetType="ListView">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="IsItemClickEnabled" Value="True"/>
+            <Setter Property="SelectionMode" Value="None"/>
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ItemContainerStyle}"/>
+        </Style>
+        <Style x:Name="ItemContainerStyle" x:Key="ItemContainerStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+            <Setter Property="Margin"  Value="-12,5"></Setter>
+        </Style>
+    </Page.Resources>
+    <Grid Background="#ececec">
+        <ScrollViewer Name="contentScrollViewer"   Grid.Row="0" Margin="0,0,0,50" >
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Background="#FFE6E6E6">
+                    <ListView  Name="TopicArticles" Style="{StaticResource ListView}" IsItemClickEnabled="False">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Articles" >
+                                <StackPanel Orientation="Vertical" Padding="10" Background="White" Margin="0">
+                                    <StackPanel Orientation="Horizontal" Margin="0,10" >
+                                        <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
+                                            <Rectangle.Fill >
+                                                <ImageBrush ImageSource="{x:Bind user_photo_src}"></ImageBrush>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                            <TextBlock Text="{x:Bind nickname}" Style="{StaticResource UsernameTextBlock}"></TextBlock>
+                                            <TextBlock Text="{x:Bind created_time}" Style="{StaticResource TimeTextBlock}"></TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <TextBlock util:TextBlockFormatter.FormattedText="{x:Bind content,Converter={StaticResource TextBlockInlineConverter}}" TextWrapping="Wrap" MaxLines="5" TextTrimming="WordEllipsis"></TextBlock>
+                                    </StackPanel>
+                                    <GridView Name="PhotoGrid" Margin="0,10,0,0" 
+                                                  IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" 
+                                                  MinHeight="0" ItemsSource="{x:Bind articlesPic}"
+                                                  SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled">
+                                        <GridView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                                            </ItemsPanelTemplate>
+                                        </GridView.ItemsPanel>
+                                        <DataTemplate x:DataType="models:pic">
+                                            <Grid Height="100" Width="100">
+                                                <Image Source="{x:Bind article_thumbnail_src}" Stretch="UniformToFill"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GridView>
+                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                        <Button Style="{StaticResource LikeCommentButton}" Name="likeButton" TabIndex="{x:Bind num_id}" Tag="{x:Bind article_id}" Click="likeButton_Click">
+                                            <Button.Content>
+                                                <StackPanel Orientation="Horizontal" Margin="10,5">
+                                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="{x:Bind is_my_Like,Converter={StaticResource LikeValueConverter},Mode=OneWay}" />
+                                                    <TextBlock Text="{x:Bind like_num,Mode=OneWay}" Foreground="{x:Bind is_my_Like,Converter={StaticResource LikeValueConverter},Mode=OneWay}" Margin="5,0,5,2"></TextBlock>
+                                                </StackPanel>
+                                            </Button.Content>
+                                        </Button>
+                                        <Button Style="{StaticResource LikeCommentButton}" IsEnabled="False">
+                                            <Button.Content>
+                                                <StackPanel Orientation="Horizontal" Margin="10,5">
+                                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
+                                                    <TextBlock Text="{x:Bind remark_num,Mode=OneWay}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
+                                                </StackPanel>
+                                            </Button.Content>
+                                        </Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+                <Grid Grid.Row="1" Margin="0,5,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid Background="White">
+                        <TextBlock Text="评论" VerticalAlignment="Center" Margin="5"/>
+                    </Grid>
+                    <ListView Name="markListView" Margin="-12,0" IsItemClickEnabled="True" SelectionMode="None" Grid.Row="1">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                <Setter Property="Margin" Value="0,5"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Background="#fafafa">
+                                    <Grid Margin="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Rectangle Grid.Column="0" HorizontalAlignment="Left" Grid.Row="0" RadiusX="15" RadiusY="15" Height="30" Width="30">
+                                            <Rectangle.Fill>
+                                                <ImageBrush ImageSource="{Binding photo_src}"></ImageBrush>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                        <StackPanel Margin="10,0,0,0" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="0" Orientation="Vertical" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding nickname}" FontSize="10" Foreground="#555"></TextBlock>
+                                            <TextBlock Text="{Binding created_time}" FontSize="10" Foreground="#777"></TextBlock>
+                                        </StackPanel>
+                                        <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="1" Text="{Binding content}" Foreground="#555" TextWrapping="WrapWholeWords"></TextBlock>
+                                    </Grid>
+                                    <Line Stroke="#e7e7e7" StrokeThickness="1" X1="0" X2="{Binding ActualWidth, ElementName=page, Mode=OneWay}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Grid Name="NoMarkGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Visibility="Collapsed">
+                        <TextBlock Text="快来发表第一条评论吧~" Foreground="#888" Margin="0,20" HorizontalAlignment="Center"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+
+        <Grid Name="sendMarkGrid" Margin="5" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Name="sendMarkTextBox" Grid.Column="0"  PlaceholderText="输入你的评论" MaxHeight="50" TextWrapping="Wrap"  ></TextBox>
+            <Grid Grid.Column="1" Margin="5,0,0,0">
+                <Button Name="sendMarkButton" Margin="5,0,0,0" Content="发表" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Right" IsEnabled="True" Click="sendMarkButton_Click"></Button>
+                <ProgressRing Name="sendMarkProgressRing" IsActive="True" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center"></ProgressRing>
+            </Grid>
+        </Grid>
+
+        <Grid Name="CommunityItemPhotoGrid" Visibility="Collapsed" >
+            <Grid Background="Black" Name="CommunityItemPhotoBackGrid" Opacity="0.5"  />
+            <FlipView Name="CommunityItemPhotoFlipView">
+                <FlipView.ItemTemplate>
+                    <DataTemplate>
+                        <ScrollViewer Name="scrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" ZoomMode="Enabled" MaxZoomFactor="4" MinZoomFactor="0.8">
+                            <Grid Name="grid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <ProgressRing Name="progressRing" Visibility="Visible" IsActive="True"/>
+                                <Image Name="TopicItemPhotoImage" Stretch="Uniform" Source="{Binding ImgSrc}" Tapped="TopicItemPhotoImage_Tapped" Width="{Binding ActualWidth, ElementName=mpage, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=mpage,Converter={StaticResource CommunityItemPhotoFlipViewHeighConverter}, Mode=OneWay}"></Image>
+                            </Grid>
+                        </ScrollViewer>
+                    </DataTemplate>
+                </FlipView.ItemTemplate>
+            </FlipView>
+        </Grid>
+    </Grid>
+</Page>
+ 

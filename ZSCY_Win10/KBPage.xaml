@@ -1,4 +1,4 @@
-﻿<Page x:Name="page"
+﻿ <Page x:Name="page"
     x:Class="ZSCY_Win10.KBPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -98,7 +98,35 @@
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <AppBarButton Grid.Column="0" Name="KBRefreshAppBarButton" Icon="Refresh" Foreground="White" Click="KBRefreshAppBarButton_Click"/>
-                    <AppBarButton Grid.Column="1" Name="KBZoomAppBarButton" Icon="Zoom" Foreground="White" Click="KBZoomAppBarButton_Click">
+                    <AppBarButton Grid.Column="1" Name="KBCalendarAppBarButton" Icon="Calendar" Foreground="White" Click="KBCalendarAppBarButton_Click"/>
+                    <AppBarButton Grid.Column="2" Name="ShowMoreAppBarButton" Foreground="White">
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe10c;"/>
+                        <AppBarButton.Flyout>
+                           <MenuFlyout>
+                                <MenuFlyoutItem Name="KBZoomAppBarButton" Text="学号查询课表" Click="KBZoomAppBarButton_Click">
+                                    <FlyoutBase.AttachedFlyout >
+                                        <Flyout x:Name="KBZoomFlyout" >
+                                            <StackPanel Margin="10" Width="300">
+                                                <TextBlock Text="输入学号以查询" Foreground="#333" FontSize="15"/>
+                                                <Grid >
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox VerticalAlignment="Center" Grid.Column="0" Name="KBZoomFlyoutTextBox" PlaceholderText="输入学号以查询" InputScope="Number" KeyUp="KBZoomFlyoutTextBox_KeyUp"/>
+                                                    <AppBarButton Grid.Column="1"  Name="KBSearchButton" Icon="Zoom" Click="KBSearchButton_Click" />
+                                                </Grid>
+                                            </StackPanel>
+                                        </Flyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Name="AddRemind" Text="添加提醒" Click="AddRemind_Click"/>
+                                <MenuFlyoutItem Name="RemindList" Text="所有提醒" Click="RemindList_Click"/>
+                                <MenuFlyoutItem Name="TestButton" Text="TestButton" Click="TestButton_Click" Visibility="Collapsed"/>
+                            </MenuFlyout>
+                        </AppBarButton.Flyout>
+                    </AppBarButton>
+                    <!--<AppBarButton Grid.Column="1" Name="KBZoomAppBarButton" Icon="Zoom" Foreground="White" Click="KBZoomAppBarButton_Click">
                         <FlyoutBase.AttachedFlyout >
                             <Flyout x:Name="KBZoomFlyout" >
                                 <StackPanel Margin="10" Width="300">
@@ -114,8 +142,7 @@
                                 </StackPanel>
                             </Flyout>
                         </FlyoutBase.AttachedFlyout>
-                    </AppBarButton>
-                    <AppBarButton Grid.Column="2" Name="KBCalendarAppBarButton" Icon="Calendar" Foreground="White" Click="KBCalendarAppBarButton_Click"/>
+                    </AppBarButton>-->
                 </Grid>
             </Grid>
 

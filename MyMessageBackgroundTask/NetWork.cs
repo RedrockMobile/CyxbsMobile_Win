@@ -12,7 +12,7 @@ using Windows.Storage.Streams;
 
 namespace MyMessageBackgroundTask
 {
-    class NetWork
+     class NetWork
     {
         public static async Task<string> getHttpWebRequest(string api, List<KeyValuePair<String, String>> paramList = null, int PostORGet = 0, bool fulluri = false)
         {

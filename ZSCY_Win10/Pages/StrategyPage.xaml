@@ -316,7 +316,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="48"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Padding="10,15,10,15" Background="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}">
@@ -325,9 +325,9 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <Button x:Name="back_but" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BackButtonStyle}" Click="back_but_Click">
+                <!--<Button x:Name="back_but" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BackButtonStyle}" Click="back_but_Click">
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00E;" />
-                </Button>
+                </Button>-->
             </Grid>
             <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="新生攻略" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Foreground_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Grid>
@@ -347,15 +347,15 @@
                     <!--入学须知-->
                     <ScrollViewer  Name="SViewer" VerticalScrollBarVisibility="Auto">
                         <StackPanel >
-                            <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                            <Grid BorderThickness="0,0,0,0" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="安全须知" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>
-                                <TextBlock Name="anquan" Margin="15,0,15,14" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"
-                                      Grid.Row="1" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Anquan,Converter={StaticResource expandingConverter0},Mode=OneWay}" TextWrapping="Wrap"/>
-                                <Button Name="anquanButton" Margin="0,0,15,14" HorizontalAlignment="Right"  Foreground="LightBlue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Grid.Row="1" VerticalAlignment="Bottom" Click="anquanButton_Click" Style="{StaticResource ExpandingButton}">
+                                <!--<TextBlock Grid.Row="0" Text="安全须知" FontSize="18" Foreground="#333333" Margin="15,14,0,15"/>-->
+                                <TextBlock Name="anquan" Margin="15,15,15,14" LineHeight="26" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}"
+                                      Grid.Row="1" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Text="{Binding Anquan,Mode=OneWay}" TextWrapping="Wrap"/>
+                                <!--<Button Name="anquanButton" Margin="0,0,15,14" HorizontalAlignment="Right"  Foreground="LightBlue" FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" Grid.Row="1" VerticalAlignment="Bottom" Click="anquanButton_Click" Style="{StaticResource ExpandingButton}">
                                     <Button.Content>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding Text[0]}"/>
@@ -363,10 +363,10 @@
                                             </FontIcon>
                                         </StackPanel>
                                     </Button.Content>
-                                </Button>
+                                </Button>-->
                             </Grid>
 
-                            <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                            <!--<Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition/>
@@ -425,7 +425,7 @@
                                         </StackPanel>
                                     </Button.Content>
                                 </Button>
-                            </Grid>
+                            </Grid>-->
                         </StackPanel>
                     </ScrollViewer>
                 </PivotItem>
@@ -567,30 +567,31 @@
                             <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom" Visibility="Collapsed"></Line>
                         </Grid>
                     </PivotItem.Header>
+                    <Grid>
+                        <ScrollViewer Name="GroupSVName">
 
-                    <ScrollViewer Name="GroupSVName">
-
-                        <StackPanel>
-                            <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
-                                <StackPanel Margin="15,14,15,15">
-                                    <TextBlock Text="新生群" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
-                                    <TextBlock Text="{Binding AllQQInfo.XYQ_All}" LineHeight="26" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
+                            <StackPanel>
+                                <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                                    <StackPanel Margin="15,14,15,15">
+                                        <TextBlock Text="新生群" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
+                                        <TextBlock Text="{Binding XYQ_All}" LineHeight="26" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
                   FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}" TextWrapping="Wrap">
 
-                                    </TextBlock>
-                                </StackPanel>
-                            </Grid>
-                            <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
-                                <StackPanel Margin="15,14,15,15">
-                                    <TextBlock Text="老乡群" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
-                                    <TextBlock Text="{Binding AllQQInfo.LXQ_All}" LineHeight="26" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid BorderThickness="0,0,0,1" BorderBrush="{Binding Source={StaticResource APPTheme},Path=Line_Color}">
+                                    <StackPanel Margin="15,14,15,15">
+                                        <TextBlock Text="老乡群" FontSize="18" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,15"/>
+                                        <TextBlock Text="{Binding LXQ_All}" LineHeight="26" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush }" 
                   FontSize="{Binding Source={StaticResource APPTheme},Path=Second_Content_Size}">
 
-                                    </TextBlock>
-                                </StackPanel>
-                            </Grid>
-                        </StackPanel>
-                    </ScrollViewer>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
                 </PivotItem>
                 <PivotItem Style="{StaticResource StrategyPivotItemStyle}">
                     <PivotItem.Header>

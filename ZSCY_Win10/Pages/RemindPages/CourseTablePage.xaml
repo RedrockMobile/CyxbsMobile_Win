@@ -1,0 +1,194 @@
+﻿<Page
+    x:Class="ZSCY_Win10.Pages.RemindPages.CourseTablePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY_Win10.Pages.RemindPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid Background="#f6f6f6">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="VisualState000"/>
+                <VisualState x:Name="VisualState550">
+                    <VisualState.Setters>
+                        <Setter Target="grid.(FrameworkElement.HorizontalAlignment)" Value="Center"/>
+                        <Setter Target="grid.(FrameworkElement.Width)" Value="550"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Background="#068cfd" Grid.Row="0" HorizontalAlignment="Stretch">
+            <TextBlock Name="YourRemindTitle" Text="选择提醒时间" Foreground="White"  FontSize="18" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+            <!--<AppBarButton Name="EditRemind"  Icon="Edit" Foreground="White" HorizontalAlignment="Right" Visibility="Visible"/>-->
+            <!--<AppBarButton Name="SaveCourseTime" Icon="Save" Foreground="White" HorizontalAlignment="Right" Visibility="Visible"/>-->
+            <AppBarButton Name="SaveRemind" Icon="Accept" Foreground="White"  HorizontalAlignment="Right" Tapped="SaveRemind_Tapped"/>
+        </Grid>
+        <Line x:Name="SplitLine" Grid.Row="1" Y1="0" Y2="0" Stroke="Gray" StrokeThickness="1"/>
+
+        <Grid x:Name="grid" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <!--日期星期-->
+            <Grid x:Name="KebiaoWeekGrid" Height="50" Grid.Row="0" Margin="0,0,20,0">
+                <Grid.ColumnDefinitions>
+                    <!--列-->
+                    <ColumnDefinition Width="2 *"/>
+                    <ColumnDefinition Width="3 *"/>
+                    <ColumnDefinition Width="3 *"/>
+                    <ColumnDefinition Width="3 *"/>
+                    <ColumnDefinition Width="3 *"/>
+                    <ColumnDefinition Width="3 *"/>
+                    <ColumnDefinition Width="3 *"/>
+                    <ColumnDefinition Width="3 *"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Margin="3,0,0,0" Name="MonthTextBlock" Text="" FontSize="16" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                <Grid Name="KebiaoWeekTitleGrid" Grid.ColumnSpan="7" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1 *"/>
+                        <RowDefinition Height="1 *"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1 *"/>
+                        <ColumnDefinition Width="1 *"/>
+                        <ColumnDefinition Width="1 *"/>
+                        <ColumnDefinition Width="1 *"/>
+                        <ColumnDefinition Width="1 *"/>
+                        <ColumnDefinition Width="1 *"/>
+                        <ColumnDefinition Width="1 *"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="一" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                    <TextBlock Text="二" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                    <TextBlock Text="三" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                    <TextBlock Text="四" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                    <TextBlock Text="五" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                    <TextBlock Text="六" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+                    <TextBlock Text="日" FontSize="18" Foreground="#333" Grid.Row="1" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Light"/>
+
+                </Grid>
+            </Grid>
+
+            <ScrollViewer Name="keibiaoScrollViewer" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Auto" Grid.Row="1" >
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2 *"/>
+                        <ColumnDefinition Width="21 *"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0" >
+                        <Grid.RowDefinitions>
+                            <!--行-->
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                        </Grid.RowDefinitions>
+                        <Grid Name="KBAllnum1Grid" Grid.Row="0" Grid.Column="0" Height="65" >
+                            <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="1"/>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0" Height="65" >
+                            <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="2"/>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="0" Height="65" >
+                            <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="3"/>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0" Height="65" >
+                            <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="4"/>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="0" Height="65" >
+                            <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="5"/>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="5" Grid.Column="0" Height="65" >
+                            <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="6"/>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="6" Grid.Column="0" Height="65" >
+                            <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="7"/>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="7" Grid.Column="0" Height="65" >
+                            <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="8"/>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="8" Grid.Column="0" Height="65" >
+                            <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="9"/>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="9" Grid.Column="0" Height="65" >
+                            <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="10"/>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="10" Grid.Column="0" Height="65" >
+                            <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="11"/>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="11" Grid.Column="0" Height="65" >
+                            <TextBlock FontSize="20" FontWeight="Light" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    	<Run Text="12"/>
+                            </TextBlock>
+                        </Grid>
+                    </Grid>
+                    <Grid VerticalAlignment="Stretch" x:Name="kebiaoGrid" Grid.Column="1" Margin="0,0,20,0">
+                        <Grid.ColumnDefinitions>
+                            <!--列-->
+                            <ColumnDefinition Width="3 *"/>
+                            <ColumnDefinition Width="3 *"/>
+                            <ColumnDefinition Width="3 *"/>
+                            <ColumnDefinition Width="3 *"/>
+                            <ColumnDefinition Width="3 *"/>
+                            <ColumnDefinition Width="3 *"/>
+                            <ColumnDefinition Width="3 *"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <!--行-->
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                            <RowDefinition Height="1 *"/>
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+
+    </Grid>
+</Page>

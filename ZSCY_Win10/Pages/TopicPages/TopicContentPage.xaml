@@ -1,0 +1,174 @@
+﻿<Page
+    x:Class="ZSCY_Win10.Pages.TopicPages.TopicContentPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY_Win10.Pages.TopicPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:models="using:ZSCY_Win10.Models.TopicModels"   
+    xmlns:util="using:ZSCY_Win10.Util"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Name="ItemContainerStyle" x:Key="ItemContainerStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+            <Setter Property="Margin"  Value="-12,5"></Setter>
+        </Style>
+        <Style x:Name="ListView" x:Key="ListView" TargetType="ListView">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="IsItemClickEnabled" Value="True"/>
+            <Setter Property="SelectionMode" Value="None"/>
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ItemContainerStyle}"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="VisualState000">
+                    <VisualState.Setters>
+                        <Setter Target="TopicAllGrid.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="cutoffLine.(FrameworkElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="cframe.(FrameworkElement.MinHeight)" Value="0"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualState800">
+                    <VisualState.Setters>
+                        <Setter Target="TopicAllGrid.(FrameworkElement.Width)" Value="400"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Name="TopicAllGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <RelativePanel Name="titlePanel">
+                <Button Name="backBtn" RelativePanel.AlignLeftWithPanel="True" FontFamily="Segoe MDL2 Assets" Content="&#xE016;" Height="40" Width="40"
+                    Background="Transparent" FontSize="15" Click="backBtn_Click" IsFocusEngaged="False"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                <TextBlock Name="Title" RelativePanel.AlignHorizontalCenterWithPanel="True" 
+                       RelativePanel.AlignVerticalCenterWithPanel="True" FontSize="20"/>
+                <Button Background="Transparent"
+                    FontFamily="Segoe MDL2 Assets"
+                    Content="&#xE712;" RelativePanel.AlignRightWithPanel="True" FontSize="20" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+            </RelativePanel>
+            <Grid Grid.Row="1" Name="ImgGrid">
+                <Image Name="TopicImg" Height="200" Stretch="UniformToFill"/>
+                <Rectangle Height="60" Width="90" Fill="Black" Opacity="0.5" HorizontalAlignment="Right" 
+                       VerticalAlignment="Top" Margin="0 15 15 0" />
+                <Grid Height="70" Width="100" HorizontalAlignment="Right" 
+                       VerticalAlignment="Top" Margin="0 15 15 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="10"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Name="joinNum" FontSize="22" HorizontalAlignment="Center" Margin="20 0 0 0" Foreground="Blue"/>
+                    <TextBlock Grid.Row="1" Text="人已参与" Margin="20 0 0 0" FontSize="18" Foreground="White"/>
+                    <Polygon Grid.Row="2" Points="60,0,40,0,40,10" Fill="Black" Opacity="0.5" />
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2" Name="RemarkGrid" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Name="TopicTitle" Foreground="Black" FontSize="20" Margin="10 0 0 10" VerticalAlignment="Bottom"/>
+                <TextBlock Name="TopicContent" Grid.Row="1" Foreground="LightGray" FontSize="18" Margin="10 0 0 0 "/>
+                <ScrollViewer Grid.Row="2"  VerticalScrollBarVisibility="Auto">
+                    <Grid Grid.Row="2" Background="#FFE6E6E6">
+                        <ListView  Name="TopicArticles" Style="{StaticResource ListView}" ItemClick="TopicArticles_ItemClick">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:Articles" >
+                                    <StackPanel Orientation="Vertical" Padding="10" Background="White" Margin="0">
+                                        <StackPanel Orientation="Horizontal" Margin="0,10" >
+                                            <Rectangle RadiusX="25" RadiusY="25" Height="40" Width="40" Margin="0,0,10,0">
+                                                <Rectangle.Fill >
+                                                    <ImageBrush ImageSource="{x:Bind user_photo_src}"></ImageBrush>
+                                                </Rectangle.Fill>
+                                            </Rectangle>
+                                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                                <TextBlock Text="{x:Bind nickname}" Style="{StaticResource UsernameTextBlock}"></TextBlock>
+                                                <TextBlock Text="{x:Bind created_time}" Style="{StaticResource TimeTextBlock}"></TextBlock>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <TextBlock util:TextBlockFormatter.FormattedText="{x:Bind content,Converter={StaticResource TextBlockInlineConverter}}" TextWrapping="Wrap" MaxLines="5" TextTrimming="WordEllipsis"></TextBlock>
+                                        </StackPanel>
+                                        <GridView Name="PhotoGrid" Margin="0,10,0,0" 
+                                                  IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" 
+                                                  MinHeight="0" ItemsSource="{x:Bind articlesPic}"
+                                                  SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled">
+                                            <GridView.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                                                </ItemsPanelTemplate>
+                                            </GridView.ItemsPanel>
+                                            <DataTemplate x:DataType="models:pic">
+                                                <Grid Height="100" Width="100">
+                                                    <Image Source="{x:Bind article_thumbnail_src}" Stretch="UniformToFill"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </GridView>
+                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                            <Button Style="{StaticResource LikeCommentButton}" Name="likeButton" TabIndex="{x:Bind num_id}" Tag="{x:Bind article_id}" Click="likeButton_Click_1">
+                                                <Button.Content>
+                                                    <StackPanel Orientation="Horizontal" Margin="10,5">
+                                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="{x:Bind is_my_Like,Converter={StaticResource LikeValueConverter},Mode=OneWay}" />
+                                                        <TextBlock Text="{x:Bind like_num,Mode=OneWay}" Foreground="{x:Bind is_my_Like,Converter={StaticResource LikeValueConverter},Mode=OneWay}" Margin="5,0,5,2"></TextBlock>
+                                                    </StackPanel>
+                                                </Button.Content>
+                                            </Button>
+                                            <Button Style="{StaticResource LikeCommentButton}" IsEnabled="False">
+                                                <Button.Content>
+                                                    <StackPanel Orientation="Horizontal" Margin="10,5">
+                                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
+                                                        <TextBlock Text="{x:Bind remark_num,Mode=OneWay}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
+                                                    </StackPanel>
+                                                </Button.Content>
+                                            </Button>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+            <Grid Grid.Row="3" Name="joinGrid" BorderBrush="DarkGray">
+                <Line X1="0" X2="900" Y1="0" Y2="1" Height="1" VerticalAlignment="Top" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                <Line X1="0" X2="900" Y1="1" Y2="0" Height="1" VerticalAlignment="Top" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                <StackPanel Orientation="Horizontal" Name="Join" HorizontalAlignment="Center" VerticalAlignment="Center" Tapped="Join_Tapped">
+                    <Button Background="Transparent"
+                    FontFamily="Segoe MDL2 Assets" Foreground="LightBlue" 
+                    Content="&#xE70F;" FontSize="23"/>
+                    <TextBlock Text="立即参与" FontSize="23" Foreground="LightBlue"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <Grid Name="TopicContentGrid" Grid.Column="1">
+            <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1"/>
+            <Frame x:Name="cframe" Margin="1,0,0,0" Visibility="Collapsed">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition>
+                            <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                <EntranceNavigationTransitionInfo/>
+                            </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                        </NavigationThemeTransition>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+        </Grid>
+    </Grid>
+</Page>
