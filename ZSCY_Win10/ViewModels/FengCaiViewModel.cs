@@ -54,8 +54,8 @@ namespace ZSCY_Win10.ViewModels
             }
         }
 
-        private ObservableCollection<string> _zuimei;
-        public ObservableCollection<string> ZuiMei
+        private ObservableCollection<ZSCY.Models.zuimei> _zuimei;
+        public ObservableCollection<ZSCY.Models.zuimei> ZuiMei
         {
             get
             {
@@ -68,19 +68,19 @@ namespace ZSCY_Win10.ViewModels
             }
         }
 
-        private ObservableCollection<string> _zuimei_photos;
-        public ObservableCollection<string> ZuiMei_Photos
-        {
-            get
-            {
-                return _zuimei_photos;
-            }
-            set
-            {
-                _zuimei_photos = value;
-                RaisePropertyChanged(nameof(ZuiMei_Photos));
-            }
-        }
+        //private ObservableCollection<string> _zuimei_photos;
+        //public ObservableCollection<string> ZuiMei_Photos
+        //{
+        //    get
+        //    {
+        //        return _zuimei_photos;
+        //    }
+        //    set
+        //    {
+        //        _zuimei_photos = value;
+        //        RaisePropertyChanged(nameof(ZuiMei_Photos));
+        //    }
+        //}
 
         private ObservableCollection<ZSCY.Models.yuanchuang> _yuanchuang;
         public ObservableCollection<ZSCY.Models.yuanchuang> YuanChuang
@@ -181,7 +181,7 @@ namespace ZSCY_Win10.ViewModels
         {
             get
             {
-                return ((int)(XueZi_Width / 4.0) * 3);
+                return ((int)(_page_height / 4.0));
             }
             set
             {
@@ -193,7 +193,7 @@ namespace ZSCY_Win10.ViewModels
         {
             get
             {
-                return (int)((_page_width - 60.0) / 2.0);
+                return (int)(_page_width);
             }
             set
             {

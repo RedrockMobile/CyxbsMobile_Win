@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZSCY.Models
+namespace ZSCY_Win10.Models
 {
-    public class SexRatio
+    public class DailyLife
     {
+
         public class Rootobject
         {
             public int Status { get; set; }
@@ -19,9 +20,10 @@ namespace ZSCY.Models
 
         public class Datum
         {
-            public string college { get; set; }
-            public string MenRatio { get; set; }
-            public string WomenRatio { get; set; }
+            public string name { get; set; }
+            public string location { get; set; }
+            public string resume { get; set; }
+            public string[] url { get; set; }
         }
 
     }

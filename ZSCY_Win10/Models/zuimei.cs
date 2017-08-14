@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace ZSCY.Models
 {
-    public class teacher
+    public class zuimei
     {
-        public string name { get; set; }
-        public string url { get; set; }
-    }
+		public string title { get; set; }
+		public string url { get; set; }
+		public string content { get; set; }
+	}
 }

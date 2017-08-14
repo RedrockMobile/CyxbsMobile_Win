@@ -115,6 +115,19 @@ namespace ZSCY_Win10.Resource
             }
         }
 
+        //白色
+        public SolidColorBrush White_Color_Brush
+        {
+            get
+            {
+                return (SolidColorBrush)GetValue(White_Color_Brush_DP);
+            }
+            set
+            {
+                SetValue(White_Color_Brush_DP, value);
+            }
+        }
+
         //#adadae
         public SolidColorBrush ADADAE_Color_Brush
         {
@@ -220,6 +233,8 @@ namespace ZSCY_Win10.Resource
         public static readonly DependencyProperty Content_Header_Color_Brush_DP = DependencyProperty.Register("Content_Header_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 51, 51, 51)))); //#333333
 
         public static readonly DependencyProperty Light_Gary_Color_Brush_DP = DependencyProperty.Register("Light_Gary_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 85, 85, 85)))); //#555555
+
+        public static readonly DependencyProperty White_Color_Brush_DP = DependencyProperty.Register("White_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 10, 10, 10))));//透明
 
         public static readonly DependencyProperty ADADAE_Color_Brush_DP = DependencyProperty.Register("ADADAE_Color_Brush_DP", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 173, 173, 173)))); //#adadae
 

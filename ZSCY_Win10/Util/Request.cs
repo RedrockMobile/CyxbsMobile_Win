@@ -13,13 +13,13 @@ namespace ZSCY_Win10.Util
         {
             HttpClient httpclient = new HttpClient();
             HttpResponseMessage response = new HttpResponseMessage();
-            List<KeyValuePair<string, string>> param = new List<KeyValuePair<string, string>>();
+            //List<KeyValuePair<string, string>> param = new List<KeyValuePair<string, string>>();
             string result = "";
             try
             {
-                param.Add(new KeyValuePair<string, string>("page", "0"));
-                param.Add(new KeyValuePair<string, string>("size", "9"));
-                response = await httpclient.PostAsync(Resource.Api.yuanchuang_api, new FormUrlEncodedContent(param));
+                //param.Add(new KeyValuePair<string, string>("page", "0"));
+                //param.Add(new KeyValuePair<string, string>("size", "9"));
+                response = await httpclient.GetAsync(Resource.Api.yuanchuang_api);
                 result = await response.Content.ReadAsStringAsync();
                 return result;
             }
@@ -33,13 +33,13 @@ namespace ZSCY_Win10.Util
         {
             HttpClient httpclient = new HttpClient();
             HttpResponseMessage response = new HttpResponseMessage();
-            List<KeyValuePair<string, string>> param = new List<KeyValuePair<string, string>>();
+            //List<KeyValuePair<string, string>> param = new List<KeyValuePair<string, string>>();
             string result = "";
             try
             {
-                param.Add(new KeyValuePair<string, string>("page", "0"));
-                param.Add(new KeyValuePair<string, string>("size", "10"));
-                response = await httpclient.PostAsync(Resource.Api.zuimei_api, new FormUrlEncodedContent(param));
+                //param.Add(new KeyValuePair<string, string>("page", "0"));
+                //param.Add(new KeyValuePair<string, string>("size", "10"));
+                response = await httpclient.GetAsync(Resource.Api.zuimei_api);
                 result = await response.Content.ReadAsStringAsync();
                 return result;
             }
@@ -53,13 +53,13 @@ namespace ZSCY_Win10.Util
         {
             HttpClient httpclient = new HttpClient();
             HttpResponseMessage response = new HttpResponseMessage();
-            List<KeyValuePair<string, string>> param = new List<KeyValuePair<string, string>>();
+            //List<KeyValuePair<string, string>> param = new List<KeyValuePair<string, string>>();
             string result = "";
             try
             {
-                param.Add(new KeyValuePair<string, string>("page", "0"));
-                param.Add(new KeyValuePair<string, string>("size", "11"));
-                response = await httpclient.PostAsync(Resource.Api.youxiuxuezi_api, new FormUrlEncodedContent(param));
+                //param.Add(new KeyValuePair<string, string>("page", "0"));
+                //param.Add(new KeyValuePair<string, string>("size", "11"));
+                response = await httpclient.GetAsync(Resource.Api.youxiuxuezi_api);
                 result = await response.Content.ReadAsStringAsync();
                 return result;
             }
@@ -73,13 +73,53 @@ namespace ZSCY_Win10.Util
         {
             HttpClient httpclient = new HttpClient();
             HttpResponseMessage response = new HttpResponseMessage();
-            List<KeyValuePair<string, string>> param = new List<KeyValuePair<string, string>>();
+            //List<KeyValuePair<string, string>> param = new List<KeyValuePair<string, string>>();
             string result = "";
             try
             {
-                param.Add(new KeyValuePair<string, string>("page", "0"));
-                param.Add(new KeyValuePair<string, string>("size", "19"));
-                response = await httpclient.PostAsync(Resource.Api.youxiujiaoshi_api, new FormUrlEncodedContent(param));
+                //param.Add(new KeyValuePair<string, string>("page", "0"));
+                //param.Add(new KeyValuePair<string, string>("size", "19"));
+                response = await httpclient.GetAsync(Resource.Api.youxiujiaoshi_api);
+                result = await response.Content.ReadAsStringAsync();
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public static async Task<string> JunxunTupian_Request()
+        {
+            HttpClient httpclient = new HttpClient();
+            HttpResponseMessage response = new HttpResponseMessage();
+            //List<KeyValuePair<string, string>> param = new List<KeyValuePair<string, string>>();
+            string result = "";
+            try
+            {
+                //param.Add(new KeyValuePair<string, string>("page", "0"));
+                //param.Add(new KeyValuePair<string, string>("size", "19"));
+                response = await httpclient.GetAsync(Resource.Api.jinxuntupian_api);
+                result = await response.Content.ReadAsStringAsync();
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public static async Task<string> JunxunShipin_Request()
+        {
+            HttpClient httpclient = new HttpClient();
+            HttpResponseMessage response = new HttpResponseMessage();
+            //List<KeyValuePair<string, string>> param = new List<KeyValuePair<string, string>>();
+            string result = "";
+            try
+            {
+                //param.Add(new KeyValuePair<string, string>("page", "0"));
+                //param.Add(new KeyValuePair<string, string>("size", "19"));
+                response = await httpclient.GetAsync(Resource.Api.junxunshipin_api);
                 result = await response.Content.ReadAsStringAsync();
                 return result;
             }

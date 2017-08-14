@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZSCY.Models
+namespace ZSCY_Win10.Models
 {
-    public class xuezi
+    class junxunshipin
     {
-        public string name { get; set; }
-        public string resume { get; set; }
+        public string title { get; set; }
+        public string cover { get; set; }
         public string url { get; set; }
     }
 }

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZSCY.Models
+namespace ZSCY_Win10.Models
 {
-    public class SexRatio
+    public class SchoolBuildings
     {
         public class Rootobject
         {
@@ -19,9 +19,9 @@ namespace ZSCY.Models
 
         public class Datum
         {
-            public string college { get; set; }
-            public string MenRatio { get; set; }
-            public string WomenRatio { get; set; }
+            public string title { get; set; }
+            public string content { get; set; }
+            public string[] url { get; set; }
         }
 
     }

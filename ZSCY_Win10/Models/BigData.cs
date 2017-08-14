@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace ZSCY.Models
 {
-    public class xuezi
+    public class BigData
     {
-        public string name { get; set; }
-        public string resume { get; set; }
-        public string url { get; set; }
+        public string header { get; set; }
     }
 }

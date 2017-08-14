@@ -215,6 +215,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="FengCaiPivotItemStyle" TargetType="PivotItem">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Margin" Value="0,0,0,0"/>
@@ -239,6 +240,50 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <!--<Style x:Key="FengCaiListViewStyle0" TargetType="ListView">
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="TabNavigation" Value="Once"/>
+            <Setter Property="IsSwipeEnabled" Value="True"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Enabled"/>
+            <Setter Property="ScrollViewer.IsHorizontalRailEnabled" Value="True"/>
+            <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
+            <Setter Property="ScrollViewer.IsVerticalRailEnabled" Value="False"/>
+            <Setter Property="ScrollViewer.ZoomMode" Value="Disabled"/>
+            <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False"/>
+            <Setter Property="ScrollViewer.BringIntoViewOnFocusChange" Value="True"/>
+            <Setter Property="ItemContainerTransitions">
+                <Setter.Value>
+                    <TransitionCollection>
+                        <AddDeleteThemeTransition/>
+                        <ContentThemeTransition/>
+                        <ReorderThemeTransition/>
+                        <EntranceThemeTransition IsStaggeringEnabled="False"/>
+                    </TransitionCollection>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListView">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                            <ScrollViewer x:Name="ScrollViewer" AutomationProperties.AccessibilityView="Raw" BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" IsHorizontalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsHorizontalScrollChainingEnabled}" IsVerticalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsVerticalScrollChainingEnabled}" IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" TabNavigation="{TemplateBinding TabNavigation}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
+                                <ItemsPresenter FooterTransitions="{TemplateBinding FooterTransitions}" FooterTemplate="{TemplateBinding FooterTemplate}" Footer="{TemplateBinding Footer}" HeaderTemplate="{TemplateBinding HeaderTemplate}" Header="{TemplateBinding Header}" HeaderTransitions="{TemplateBinding HeaderTransitions}"/>
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+        
         <Style x:Key="FengCaiListViewStyle" TargetType="ListView">
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="TabNavigation" Value="Once"/>
@@ -281,6 +326,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="FengCaiListViewItemStyle" TargetType="ListViewItem">
             <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
             <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
@@ -289,7 +335,7 @@
             <Setter Property="TabNavigation" Value="Local"/>
             <Setter Property="IsHoldingEnabled" Value="True"/>
             <Setter Property="Padding" Value="0,0,0,0"></Setter>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -299,6 +345,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="FengCaiGridViewStyle" TargetType="GridView">
             <Setter Property="Padding" Value="0,0,20,0"/>
             <Setter Property="IsTabStop" Value="False"/>
@@ -342,6 +389,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="FengCaiGridViewItemStyle" TargetType="GridViewItem">
             <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
             <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
@@ -355,22 +403,43 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="GridViewItem">
-                        <ListViewItemPresenter CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" ContentMargin="{TemplateBinding Padding}" CheckMode="Overlay" ContentTransitions="{TemplateBinding ContentTransitions}" CheckBoxBrush="{ThemeResource SystemControlBackgroundChromeMediumBrush}" DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}" FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" PointerOverForeground="{x:Null}" PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}" PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" PointerOverBackground="{x:Null}" ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}" SelectedPressedBackground="{x:Null}" SelectionCheckMarkVisualEnabled="True" SelectedForeground="{x:Null}" SelectedPointerOverBackground="{x:Null}" SelectedBackground="{x:Null}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <ListViewItemPresenter CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" ContentMargin="{TemplateBinding Padding}" CheckMode="Overlay" ContentTransitions="{TemplateBinding ContentTransitions}" CheckBoxBrush="{ThemeResource SystemControlBackgroundChromeMediumBrush}" DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" SelectedForeground="Blue" DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}" FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" PointerOverForeground="{x:Null}" PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}" PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" PointerOverBackground="{x:Null}" ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}" SelectedPressedBackground="{x:Null}" SelectionCheckMarkVisualEnabled="True" SelectedPointerOverBackground="{x:Null}" SelectedBackground="{x:Null}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <converter:DetailMarginConverter x:Key="DetailMarginConverter"></converter:DetailMarginConverter>
+        
         <Storyboard x:Name="black_background_sb">
-            <DoubleAnimation From="0" To="0.5" Storyboard.TargetName="black_background" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4"></DoubleAnimation>
+            <DoubleAnimation From="0" To="0.8" Storyboard.TargetName="black_background" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4"></DoubleAnimation>
         </Storyboard>
+
+        <Storyboard x:Name="stackpanel_sb">
+            <DoubleAnimation From="0" To="1" Storyboard.TargetName="zuzhi_content" Storyboard.TargetProperty="Opacity" Duration="0:0:0.5"></DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Name="SB_Slide" Completed="SB_Slide_Completed">
+            <DoubleAnimationUsingKeyFrames x:Name="SB_Slide_TransX" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" >
+                <!--Storyboard.TargetName="rect1"-->
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="600">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <!--回弹效果-->
+                        <!--<BackEase EasingMode="EaseOut" Amplitude="0.3"/>-->
+                        <QuarticEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
     </Page.Resources>
 
     <Page.DataContext>
         <viewmodel:FengCaiViewModel></viewmodel:FengCaiViewModel>
     </Page.DataContext>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="FengCai" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -401,21 +470,168 @@
                         </Grid>
                     </PivotItem.Header>
                     <Grid>
-                        <Grid.ColumnDefinitions>
+                        <!--<Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <ListView x:Name="zuzhi_listview" Grid.Column="0" ItemsSource="{Binding ZuZhi}" HorizontalAlignment="Center" Style="{StaticResource FengCaiListViewStyle}" ItemContainerStyle="{StaticResource FengCaiListViewItemStyle}" SelectionChanged="zuzhi_listview_SelectionChanged">
+                        </Grid.ColumnDefinitions>-->
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <ListView x:Name="zuzhi_listview" ItemsSource="{Binding ZuZhi}" Background="White" SelectionChanged="zuzhi_listview_SelectionChanged"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled"
+                                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                  ScrollViewer.VerticalScrollMode="Disabled">
+                            <!--<ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,15,0,15">
+                                        <TextBlock Margin="10,0,10,0" Text="{Binding zuzhi_name}" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>-->
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListViewItem">
+                                                <ListViewItemPresenter CheckBrush="{x:Null}" ContentMargin="{TemplateBinding Padding}" CheckMode="Inline" ContentTransitions="{x:Null}" CheckBoxBrush="{x:Null}" DragForeground="{x:Null}" DragOpacity="0" DragBackground="{x:Null}" DisabledOpacity="0" FocusBorderBrush="{x:Null}" FocusSecondaryBorderBrush="{x:Null}" HorizontalContentAlignment="Center" PointerOverForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}" PressedBackground="{x:Null}" PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" PointerOverBackground="{x:Null}" ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" SelectionCheckMarkVisualEnabled="True" SelectedForeground="RoyalBlue" SelectedPointerOverBackground="{x:Null}" SelectedBackground="{x:Null}" VerticalContentAlignment="Center" SelectedPressedBackground="{x:Null}" Foreground="Black"/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsStackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Width="30" Margin="15,15,15,15">
-                                        <TextBlock Text="{Binding zuzhi_name}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Margin="0,0,0,0" Text="{Binding zuzhi_name}" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Rectangle x:Name="rect" Fill="RoyalBlue" Height="1" HorizontalAlignment="Stretch" Grid.Row="1" Opacity="0" Loaded="rect_Loaded">
+                                            <Rectangle.RenderTransform>
+                                                <CompositeTransform/>
+                                            </Rectangle.RenderTransform>
+                                        </Rectangle>
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                        <ScrollViewer x:Name="zuzhi_sc" Grid.Column="1" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollBarVisibility="Disabled">
-                            <StackPanel x:Name="zuzhi_content" Padding="15,15,15,15" Orientation="Vertical"></StackPanel>
+                        <Pivot x:Name="pivot0" Grid.Row="1" SelectedItem="{Binding SelectedItem,ElementName=zuzhi_listview,Mode=TwoWay}">
+                            <Pivot.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Background="LightBlue">
+                                        <TextBlock></TextBlock>
+                                    </Grid>
+                                    <!--<ScrollViewer x:Name="zuzhi_sc" Grid.Row="1" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollBarVisibility="Disabled">
+                                        <StackPanel x:Name="zuzhi_content" Padding="15,15,15,15" Orientation="Vertical"></StackPanel>
+                                    </ScrollViewer>-->
+                                </DataTemplate>
+                            </Pivot.ItemTemplate>
+                            <Pivot.Template>
+                                <!--去掉模板中多余的 UI（Header 等）和动画-->
+                                <ControlTemplate TargetType="Pivot">
+                                    <Grid x:Name="RootElement" Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                                        <Grid.Resources>
+                                            <Style x:Key="BaseContentControlStyle" TargetType="ContentControl">
+                                                <Setter Property="FontFamily" Value="Segoe UI"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="FontSize" Value="15"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="ContentControl">
+                                                            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" OpticalMarginAlignment="TrimSideBearings" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                            <Style x:Key="TitleContentControlStyle" BasedOn="{StaticResource BaseContentControlStyle}" TargetType="ContentControl">
+                                                <Setter Property="FontFamily" Value="{ThemeResource PivotTitleFontFamily}"/>
+                                                <Setter Property="FontWeight" Value="{ThemeResource PivotTitleThemeFontWeight}"/>
+                                                <Setter Property="FontSize" Value="{ThemeResource PivotTitleFontSize}"/>
+                                            </Style>
+                                        </Grid.Resources>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="Orientation">
+                                                <VisualState x:Name="Portrait">
+                                                </VisualState>
+                                                <VisualState x:Name="Landscape">
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                            <VisualStateGroup x:Name="NavigationButtonsVisibility">
+                                                <VisualState x:Name="NavigationButtonsHidden"/>
+                                                <VisualState x:Name="NavigationButtonsVisible">
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                            <VisualStateGroup x:Name="HeaderStates">
+                                                <VisualState x:Name="HeaderDynamic"/>
+                                                <VisualState x:Name="HeaderStatic">
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <ContentControl x:Name="TitleContentControl" ContentTemplate="{TemplateBinding TitleTemplate}" Content="{TemplateBinding Title}" IsTabStop="False" Margin="{StaticResource PivotPortraitThemePadding}" Style="{StaticResource TitleContentControlStyle}" Visibility="Collapsed"/>
+                                        <Grid Grid.Row="1">
+                                            <ScrollViewer x:Name="ScrollViewer" BringIntoViewOnFocusChange="False" HorizontalSnapPointsAlignment="Center" HorizontalSnapPointsType="MandatorySingle" HorizontalScrollBarVisibility="Hidden" Margin="{TemplateBinding Padding}" Template="{StaticResource ScrollViewerScrollBarlessTemplate}" VerticalSnapPointsType="None" VerticalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled" VerticalContentAlignment="Stretch" ZoomMode="Disabled"
+                                          ViewChanging="ScrollViewer_ViewChanging" DirectManipulationStarted="ScrollViewer_DirectManipulationStarted" >
+                                                <PivotPanel x:Name="Panel" VerticalAlignment="Stretch">
+                                                    <Grid x:Name="PivotLayoutElement">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="*"/>
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.RenderTransform>
+                                                            <CompositeTransform x:Name="PivotLayoutElementTranslateTransform"/>
+                                                        </Grid.RenderTransform>
+                                                        <!--<ContentPresenter x:Name="LeftHeaderPresenter" ContentTemplate="{TemplateBinding LeftHeaderTemplate}" Content="{TemplateBinding LeftHeader}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>-->
+                                                        <ContentControl x:Name="HeaderClipper" Grid.Column="1" HorizontalContentAlignment="Stretch" UseSystemFocusVisuals="True" Visibility="Collapsed">
+                                                            <ContentControl.Clip>
+                                                                <RectangleGeometry x:Name="HeaderClipperGeometry"/>
+                                                            </ContentControl.Clip>
+                                                            <Grid Background="Transparent">
+                                                                <PivotHeaderPanel x:Name="StaticHeader" Visibility="Collapsed"/>
+                                                                <PivotHeaderPanel x:Name="Header">
+                                                                    <PivotHeaderPanel.RenderTransform>
+                                                                        <TransformGroup>
+                                                                            <CompositeTransform x:Name="HeaderTranslateTransform"/>
+                                                                            <CompositeTransform x:Name="HeaderOffsetTranslateTransform"/>
+                                                                        </TransformGroup>
+                                                                    </PivotHeaderPanel.RenderTransform>
+                                                                </PivotHeaderPanel>
+                                                            </Grid>
+                                                        </ContentControl>
+                                                        <ItemsPresenter x:Name="PivotItemPresenter" Grid.ColumnSpan="3" Grid.Row="1">
+                                                            <ItemsPresenter.RenderTransform>
+                                                                <TransformGroup>
+                                                                    <TranslateTransform x:Name="ItemsPresenterTranslateTransform"/>
+                                                                    <CompositeTransform x:Name="ItemsPresenterCompositeTransform"/>
+                                                                </TransformGroup>
+                                                            </ItemsPresenter.RenderTransform>
+                                                        </ItemsPresenter>
+                                                    </Grid>
+                                                </PivotPanel>
+                                            </ScrollViewer>
+                                        </Grid>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Pivot.Template>
+                        </Pivot>
+                        <Line VerticalAlignment="Bottom" X1="0" Y1="0" X2="5000" Y2="0" StrokeThickness="1" Stroke="LightGray"></Line>
+                        <ScrollViewer x:Name="zuzhi_sc" Grid.Row="1" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollBarVisibility="Disabled">
+                            <StackPanel x:Name="zuzhi_content" Opacity="0" Visibility="Collapsed" Padding="15,5,15,15" Orientation="Vertical"></StackPanel>
                         </ScrollViewer>
                     </Grid>
                 </PivotItem>
@@ -439,22 +655,18 @@
                                             <ColumnDefinition Width="*"></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
                                         <Grid Grid.Column="0" Margin="0,0,12,0">
-                                            <Rectangle Height="120" Width="210">
+                                            <Rectangle Height="100" Width="100">
                                                 <Rectangle.Fill>
-                                                    <ImageBrush ImageSource="{Binding photo_src}" Stretch="Fill">
-                                                        <ImageBrush.Transform>
-                                                            <ScaleTransform CenterX="105" CenterY="60" ScaleY="2.4"></ScaleTransform>
-                                                        </ImageBrush.Transform>
-                                                    </ImageBrush>
+                                                    <ImageBrush ImageSource="{Binding cover}"></ImageBrush>
                                                 </Rectangle.Fill>
                                             </Rectangle>
                                         </Grid>
-                                        <RelativePanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <RelativePanel Width="300" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
                                             <TextBlock x:Name="title" Text="{Binding name}" TextTrimming="CharacterEllipsis" FontSize="17" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True" Margin="0,0,0,20"></TextBlock>
-                                            <TextBlock x:Name="jianjie" Text="简介：" FontWeight="Light" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush}" RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="title" Margin="0,0,0,5"></TextBlock>
-                                            <TextBlock x:Name="jianjie_content" Text="{Binding introduction}" TextTrimming="CharacterEllipsis" Foreground="{Binding Source={StaticResource APPTheme},Path=ADADAE_Color_Brush}" RelativePanel.Below="title" RelativePanel.RightOf="jianjie"></TextBlock>
-                                            <TextBlock x:Name="shichang" Text="时长：" FontWeight="Light" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush}" RelativePanel.Below="jianjie" RelativePanel.AlignLeftWithPanel="True"></TextBlock>
-                                            <TextBlock x:Name="shichang_content" Text="{Binding time}" Foreground="{Binding Source={StaticResource APPTheme},Path=ADADAE_Color_Brush}" RelativePanel.AlignVerticalCenterWith="shichang" RelativePanel.RightOf="shichang"></TextBlock>
+                                            <TextBlock x:Name="jianjie" Text="简介：重庆邮电大学倾力打造" FontWeight="Light" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush}" RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="title" Margin="0,0,0,5"></TextBlock>
+                                            <TextBlock x:Name="jianjie_content" TextTrimming="CharacterEllipsis" Foreground="{Binding Source={StaticResource APPTheme},Path=ADADAE_Color_Brush}" RelativePanel.Below="title" RelativePanel.RightOf="jianjie"></TextBlock>
+                                            <TextBlock x:Name="shichang" Text="时长：点开就知道了" FontWeight="Light" Foreground="{Binding Source={StaticResource APPTheme},Path=Light_Gary_Color_Brush}" RelativePanel.Below="jianjie" RelativePanel.AlignLeftWithPanel="True"></TextBlock>
+                                            <TextBlock x:Name="shichang_content" Foreground="{Binding Source={StaticResource APPTheme},Path=ADADAE_Color_Brush}" RelativePanel.AlignVerticalCenterWith="shichang" RelativePanel.RightOf="shichang"></TextBlock>
                                         </RelativePanel>
                                     </Grid>
                                 </DataTemplate>
@@ -495,64 +707,37 @@
                                     <Setter Property="LineHeight" Value="26"></Setter>
                                 </Style>
                             </StackPanel.Resources>
+                            <TextBlock Text="{Binding ZuiMei[0].title}" HorizontalAlignment="Center" FontSize="20" FontFamily="宋体"></TextBlock>
                             <Rectangle Height="{Binding ZuiMei_Photo_Height}" Width="{Binding ZuiMei_Photo_Width}">
                                 <Rectangle.Fill>
-                                    <ImageBrush ImageSource="{Binding ZuiMei_Photos[0]}"></ImageBrush>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding ZuiMei[0].url}"></ImageBrush>
                                 </Rectangle.Fill>
                             </Rectangle>
-                            <TextBlock Text="{Binding ZuiMei[0]}"></TextBlock>
+                            <TextBlock Text="{Binding ZuiMei[0].content}"></TextBlock>
+                            <Line X1="0" X2="5000" Y2="0" Y1="0" Stroke="LightGray" StrokeThickness="2" Margin="0,0,0,15"></Line>
+                            <TextBlock Text="{Binding ZuiMei[1].title}" HorizontalAlignment="Center" FontSize="20" FontFamily="宋体"></TextBlock>
                             <Rectangle Height="{Binding ZuiMei_Photo_Height}" Width="{Binding ZuiMei_Photo_Width}">
                                 <Rectangle.Fill>
-                                    <ImageBrush ImageSource="{Binding ZuiMei_Photos[1]}"></ImageBrush>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding ZuiMei[1].url}"></ImageBrush>
                                 </Rectangle.Fill>
                             </Rectangle>
-                            <TextBlock Text="{Binding ZuiMei[1]}"></TextBlock>
+                            <TextBlock Text="{Binding ZuiMei[1].content}"></TextBlock>
+                            <Line X1="0" X2="5000" Y2="0" Y1="0" Stroke="LightGray" StrokeThickness="2" Margin="0,0,0,15"></Line>
+                            <TextBlock Text="{Binding ZuiMei[2].title}" HorizontalAlignment="Center" FontSize="20" FontFamily="宋体"></TextBlock>
                             <Rectangle Height="{Binding ZuiMei_Photo_Height}" Width="{Binding ZuiMei_Photo_Width}">
                                 <Rectangle.Fill>
-                                    <ImageBrush ImageSource="{Binding ZuiMei_Photos[2]}"></ImageBrush>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding ZuiMei[2].url}"></ImageBrush>
                                 </Rectangle.Fill>
                             </Rectangle>
-                            <TextBlock Text="{Binding ZuiMei[2]}"></TextBlock>
+                            <TextBlock Text="{Binding ZuiMei[2].content}"></TextBlock>
+                            <Line X1="0" X2="5000" Y2="0" Y1="0" Stroke="LightGray" StrokeThickness="2" Margin="0,0,0,15"></Line>
+                            <TextBlock Text="{Binding ZuiMei[3].title}" HorizontalAlignment="Center" FontSize="20" FontFamily="宋体"></TextBlock>
                             <Rectangle Height="{Binding ZuiMei_Photo_Height}" Width="{Binding ZuiMei_Photo_Width}">
                                 <Rectangle.Fill>
-                                    <ImageBrush ImageSource="{Binding ZuiMei_Photos[3]}"></ImageBrush>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding ZuiMei[3].url}"></ImageBrush>
                                 </Rectangle.Fill>
                             </Rectangle>
-                            <Rectangle Height="{Binding ZuiMei_Photo_Height}" Width="{Binding ZuiMei_Photo_Width}">
-                                <Rectangle.Fill>
-                                    <ImageBrush ImageSource="{Binding ZuiMei_Photos[4]}"></ImageBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                            <Rectangle Height="{Binding ZuiMei_Photo_Height}" Width="{Binding ZuiMei_Photo_Width}">
-                                <Rectangle.Fill>
-                                    <ImageBrush ImageSource="{Binding ZuiMei_Photos[5]}"></ImageBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                            <TextBlock Text="{Binding ZuiMei[3]}"></TextBlock>
-                            <Rectangle Height="{Binding ZuiMei_Photo_Height}" Width="{Binding ZuiMei_Photo_Width}">
-                                <Rectangle.Fill>
-                                    <ImageBrush ImageSource="{Binding ZuiMei_Photos[6]}"></ImageBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                            <TextBlock Text="{Binding ZuiMei[4]}"></TextBlock>
-                            <Rectangle Height="{Binding ZuiMei_Photo_Height}" Width="{Binding ZuiMei_Photo_Width}">
-                                <Rectangle.Fill>
-                                    <ImageBrush ImageSource="{Binding ZuiMei_Photos[7]}"></ImageBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                            <TextBlock Text="{Binding ZuiMei[5]}"></TextBlock>
-                            <Rectangle Height="{Binding ZuiMei_Photo_Height}" Width="{Binding ZuiMei_Photo_Width}">
-                                <Rectangle.Fill>
-                                    <ImageBrush ImageSource="{Binding ZuiMei_Photos[8]}"></ImageBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                            <TextBlock Text="{Binding ZuiMei[6]}"></TextBlock>
-                            <Rectangle Height="{Binding ZuiMei_Photo_Height}" Width="{Binding ZuiMei_Photo_Width}">
-                                <Rectangle.Fill>
-                                    <ImageBrush ImageSource="{Binding ZuiMei_Photos[9]}"></ImageBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                            <TextBlock Text="{Binding ZuiMei[7]}"></TextBlock>
+                            <TextBlock Text="{Binding ZuiMei[3].content}"></TextBlock>
                         </StackPanel>
                     </ScrollViewer>
                 </PivotItem>
@@ -567,17 +752,37 @@
                         </Grid>
                     </PivotItem.Header>
                     <Grid>
-                        <GridView ItemsSource="{Binding XueZi}" Style="{StaticResource FengCaiGridViewStyle}" ItemContainerStyle="{StaticResource FengCaiGridViewItemStyle}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick">
+                        <GridView HorizontalAlignment="Center" ItemsSource="{Binding Teacher}" Style="{StaticResource FengCaiGridViewStyle}" ItemContainerStyle="{StaticResource FengCaiGridViewItemStyle}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick">
                             <GridView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Vertical">
-                                        <Rectangle RadiusX="7" RadiusY="7" Margin="0,0,0,10" Loaded="XueZi_Rectangle_Loaded">
+                                    <!--<Rectangle RadiusX="7" RadiusY="7" Margin="0,0,0,10" Loaded="XueZi_Rectangle_Loaded">
                                             <Rectangle.Fill>
                                                 <ImageBrush ImageSource="{Binding photo_thumbnail_src}" Stretch="UniformToFill"></ImageBrush>
                                             </Rectangle.Fill>
                                         </Rectangle>
                                         <TextBlock Text="{Binding name}" TextTrimming="CharacterEllipsis" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,5"></TextBlock>
-                                        <TextBlock Text="{Binding description}" TextTrimming="CharacterEllipsis" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}"></TextBlock>
+                                        <TextBlock Text="{Binding college}" TextTrimming="CharacterEllipsis" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}"></TextBlock>-->
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="150"></ColumnDefinition>
+                                                <ColumnDefinition Width="150"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"></RowDefinition>
+                                                <RowDefinition Height="*"></RowDefinition>
+                                                <RowDefinition Height="*"></RowDefinition>
+                                                <RowDefinition Height="*"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <!--<Image Grid.Column="0" Grid.RowSpan="4" Height="125" Source="ms-appx:///Assets/首页2.png"></Image>-->
+                                            <Ellipse Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="100">
+                                                <Ellipse.Fill>
+                                                    <ImageBrush ImageSource="{Binding url}" Stretch="UniformToFill"></ImageBrush>
+                                                </Ellipse.Fill>
+                                            </Ellipse>
+                                            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding name}" TextTrimming="CharacterEllipsis" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="35,0,0,0"></TextBlock>
+                                            <!--<TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding}" TextTrimming="CharacterEllipsis" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="35,0,0,0"></TextBlock>-->
+                                        </Grid>
                                     </StackPanel>
                                 </DataTemplate>
                             </GridView.ItemTemplate>
@@ -595,17 +800,37 @@
                         </Grid>
                     </PivotItem.Header>
                     <Grid>
-                        <GridView ItemsSource="{Binding Teacher}" Style="{StaticResource FengCaiGridViewStyle}" ItemContainerStyle="{StaticResource FengCaiGridViewItemStyle}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick">
+                        <GridView HorizontalAlignment="Center" ItemsSource="{Binding XueZi}" Style="{StaticResource FengCaiGridViewStyle}" ItemContainerStyle="{StaticResource FengCaiGridViewItemStyle}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick">
                             <GridView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Vertical">
-                                        <Rectangle RadiusX="7" RadiusY="7" Margin="0,0,0,10" Loaded="XueZi_Rectangle_Loaded">
+                                    <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                                        <!--<Rectangle RadiusX="7" RadiusY="7" Margin="0,0,0,10" Loaded="XueZi_Rectangle_Loaded">
                                             <Rectangle.Fill>
                                                 <ImageBrush ImageSource="{Binding photo_thumbnail_src}" Stretch="UniformToFill"></ImageBrush>
                                             </Rectangle.Fill>
                                         </Rectangle>
                                         <TextBlock Text="{Binding name}" TextTrimming="CharacterEllipsis" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="0,0,0,5"></TextBlock>
-                                        <TextBlock Text="{Binding college}" TextTrimming="CharacterEllipsis" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}"></TextBlock>
+                                        <TextBlock Text="{Binding college}" TextTrimming="CharacterEllipsis" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}"></TextBlock>-->
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="150"></ColumnDefinition>
+                                                <ColumnDefinition Width="150"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"></RowDefinition>
+                                                <RowDefinition Height="*"></RowDefinition>
+                                                <RowDefinition Height="*"></RowDefinition>
+                                                <RowDefinition Height="*"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <!--<Image Grid.Column="0" Grid.RowSpan="4" Height="125" Source="ms-appx:///Assets/首页2.png"></Image>-->
+                                            <Ellipse Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="100">
+                                                <Ellipse.Fill>
+                                                    <ImageBrush ImageSource="{Binding url}" Stretch="UniformToFill"></ImageBrush>
+                                                </Ellipse.Fill>
+                                            </Ellipse>
+                                            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding name}" TextTrimming="CharacterEllipsis" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" Margin="35,0,0,0"></TextBlock>
+                                            <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding resume}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" Margin="35,0,0,0"></TextBlock>
+                                        </Grid>
                                     </StackPanel>
                                 </DataTemplate>
                             </GridView.ItemTemplate>
@@ -614,24 +839,24 @@
                 </PivotItem>
             </Pivot>
         </Grid>
-        <Grid x:Name="black_background" Grid.Row="0" Grid.RowSpan="2" Background="Black" Height="{Binding Page_Height}" Width="{Binding Page_Width}" Opacity="0.5" Visibility="Collapsed"></Grid>
+        <Grid x:Name="black_background" Grid.Row="0" Grid.RowSpan="2" Height="{Binding Page_Height}" Width="{Binding Page_Width}" Opacity="0.8" Visibility="Collapsed"></Grid>
         <Popup x:Name="detail_popup" Grid.Row="0" Grid.RowSpan="2" IsLightDismissEnabled="True" Closed="detail_popup_Closed" IsOpen="False">
             <Popup.Child>
                 <Grid Height="{Binding Page_Height}" Width="{Binding Page_Width}">
-                    <Grid Height="{Binding Detail_Height}" Width="{Binding Detail_Height,Converter={StaticResource DetailMarginConverter},ConverterParameter=0.55}" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Rectangle Height="{Binding Detail_Height}" Width="{Binding Detail_Height,Converter={StaticResource DetailMarginConverter},ConverterParameter=0.55}" RadiusX="7" RadiusY="7" Fill="{Binding Source={StaticResource APPTheme},Path=Foreground_Color_Brush}"></Rectangle>
+                    <Grid Height="{Binding Detail_Height}" Width="{Binding Page_Height-100,Converter={StaticResource DetailMarginConverter},ConverterParameter=0.55}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Rectangle Height="{Binding Detail_Height}" Width="{Binding Page_Height,Converter={StaticResource DetailMarginConverter},ConverterParameter=0.55}" RadiusX="7" RadiusY="7" Fill="{Binding Source={StaticResource APPTheme},Path=Foreground_Color_Brush}"></Rectangle>
                         <Grid Margin="25,25,25,25">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"></RowDefinition>
                                 <RowDefinition Height="1*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Rectangle x:Name="detail_img_re" Grid.Row="0" Height="{Binding ElementName=detail_sc,Path=Height}" Width="{Binding ElementName=detail_sc,Path=Height}" RadiusX="7" RadiusY="7" Stroke="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" StrokeThickness="1">
-                                <Rectangle.Fill>
+                            <Ellipse x:Name="detail_img_re" Grid.Row="0" Height="{Binding ElementName=detail_sc,Path=Height}" Width="200" Stroke="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" StrokeThickness="1">
+                                <Ellipse.Fill>
                                     <ImageBrush x:Name="detail_img" Stretch="UniformToFill"></ImageBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
+                                </Ellipse.Fill>
+                            </Ellipse>
                             <ScrollViewer x:Name="detail_sc" Grid.Row="1" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled">
-                                <StackPanel>
+                                <StackPanel Width="300">
                                     <TextBlock x:Name="detail_title" Grid.Row="1" FontSize="17" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" Margin="0,20,0,15"></TextBlock>
                                     <TextBlock x:Name="detail_content" Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" TextWrapping="Wrap"></TextBlock>
                                 </StackPanel>
