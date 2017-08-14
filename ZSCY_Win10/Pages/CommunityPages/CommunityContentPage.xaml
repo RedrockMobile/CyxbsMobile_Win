@@ -12,37 +12,36 @@
     mc:Ignorable="d"
     Background="#ececec">
     <Page.Resources>
-        <converters:CommunityItemPhotoFlipViewHeighConverter x:Key="CommunityItemPhotoFlipViewHeighConverter"/>
+        <converters:CommunityItemPhotoFlipViewHeighConverter x:Key="CommunityItemPhotoFlipViewHeighConverter" />
         <!--根据图片数量动态选择数据模板-->
         <util:ImgDataTemplateSelector x:Key="ImgDataTemplateSelector">
             <util:ImgDataTemplateSelector.NoPhotoTemplate>
                 <DataTemplate  x:DataType="models:Img">
-                    <Grid Width="0" Height="0"/>
+                    <Grid Width="0" Height="0" />
                 </DataTemplate>
             </util:ImgDataTemplateSelector.NoPhotoTemplate>
             <util:ImgDataTemplateSelector.OnePhotoTemplate>
                 <DataTemplate  x:DataType="models:Img">
                     <Grid MaxWidth="280">
-                        <Image Source="{x:Bind ImgSrc}" Stretch="UniformToFill"/>
+                        <Image Source="{x:Bind ImgSrc}" Stretch="UniformToFill" />
                     </Grid>
                 </DataTemplate>
             </util:ImgDataTemplateSelector.OnePhotoTemplate>
             <util:ImgDataTemplateSelector.TwoPhotoTemplate>
                 <DataTemplate x:DataType="models:Img">
                     <Grid MinWidth="150" MaxWidth="160">
-                        <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill"/>
+                        <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill" />
                     </Grid>
                 </DataTemplate>
             </util:ImgDataTemplateSelector.TwoPhotoTemplate>
             <util:ImgDataTemplateSelector.MorePhotoTemplate>
                 <DataTemplate x:DataType="models:Img">
                     <Grid Height="100" Width="100">
-                        <Image Source="{Binding ImgSmallSrc}" Stretch="UniformToFill"/>
+                        <Image Source="{Binding ImgSmallSrc}" Stretch="UniformToFill" />
                     </Grid>
                 </DataTemplate>
             </util:ImgDataTemplateSelector.MorePhotoTemplate>
         </util:ImgDataTemplateSelector>
-
 
         <!--根据热门类型动态选择数据模板-->
         <util:HotOrBBDDSelector x:Key="HotFeedsDataTemplateSelector">
@@ -66,7 +65,7 @@
                         <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind article_photo_src}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                             <GridView.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3" />
                                 </ItemsPanelTemplate>
                             </GridView.ItemsPanel>
                         </GridView>
@@ -82,7 +81,7 @@
                             <Button Style="{StaticResource LikeCommentButton}">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Margin="10,5">
-                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray" />
                                         <TextBlock Text="{x:Bind remark_num,Mode=OneWay}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
                                     </StackPanel>
                                 </Button.Content>
@@ -111,7 +110,7 @@
                         <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind img}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                             <GridView.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3" />
                                 </ItemsPanelTemplate>
                             </GridView.ItemsPanel>
                         </GridView>
@@ -127,7 +126,7 @@
                             <Button Style="{StaticResource LikeCommentButton}">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Margin="10,5">
-                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray" />
                                         <TextBlock Text="{x:Bind remark_num,Mode=OneWay}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
                                     </StackPanel>
                                 </Button.Content>
@@ -143,33 +142,31 @@
         </Style>
     </Page.Resources>
     <Grid Background="#ececec">
-        <ScrollViewer Name="contentScrollViewer" ViewChanged="contentScrollViewer_ViewChanged" Grid.Row="0" Margin="0,0,0,50" >
+        <ScrollViewer Name="contentScrollViewer" ViewChanged="contentScrollViewer_ViewChanged" Grid.Row="0" Margin="0,0,0,50">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
                     <ListView ItemTemplateSelector="{StaticResource HotFeedsDataTemplateSelector}" ItemsSource="{x:Bind ViewModel.feeds}" ItemContainerStyle="{StaticResource ItemContainerStyle}" SelectionMode="None" IsItemClickEnabled="False">
-
                     </ListView>
-
                 </Grid>
 
                 <Grid Grid.Row="1" Margin="0,5,0,0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid Background="White">
-                        <TextBlock Text="评论" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text="评论" VerticalAlignment="Center" Margin="5" />
                     </Grid>
                     <ListView Name="markListView" Margin="-12,0" IsItemClickEnabled="True" ItemClick="markListView_ItemClick" SelectionMode="None" Grid.Row="1">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                <Setter Property="Margin" Value="0,5"/>
+                                <Setter Property="Margin" Value="0,5" />
                             </Style>
                         </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
@@ -177,7 +174,7 @@
                                 <Grid Background="#fafafa">
                                     <Grid Margin="10">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="30"/>
+                                            <ColumnDefinition Width="30" />
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
@@ -195,13 +192,13 @@
                                         </StackPanel>
                                         <TextBlock Margin="10,0,0,0" Grid.Column="1" Grid.Row="1" Text="{Binding content}" Foreground="#555" TextWrapping="WrapWholeWords"></TextBlock>
                                     </Grid>
-                                    <Line Stroke="#e7e7e7" StrokeThickness="1" X1="0" X2="{Binding ActualWidth, ElementName=page, Mode=OneWay}"/>
+                                    <Line Stroke="#e7e7e7" StrokeThickness="1" X1="0" X2="{Binding ActualWidth, ElementName=page, Mode=OneWay}" />
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
                     <Grid Name="NoMarkGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Visibility="Collapsed">
-                        <TextBlock Text="快来发表第一条评论吧~" Foreground="#888" Margin="0,20" HorizontalAlignment="Center"/>
+                        <TextBlock Text="快来发表第一条评论吧~" Foreground="#888" Margin="0,20" HorizontalAlignment="Center" />
                     </Grid>
                 </Grid>
             </Grid>
@@ -209,8 +206,8 @@
 
         <Grid Name="sendMarkGrid" Margin="5" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <TextBox Name="sendMarkTextBox" Grid.Column="0"  PlaceholderText="输入你的评论" MaxHeight="50" TextWrapping="Wrap" TextChanged="sendMarkTextBox_TextChanged"></TextBox>
             <Grid Grid.Column="1" Margin="5,0,0,0">
@@ -220,14 +217,14 @@
         </Grid>
 
         <!--图像-->
-        <Grid Name="CommunityItemPhotoGrid" Visibility="Collapsed" >
-            <Grid Background="Black" Name="CommunityItemPhotoBackGrid" Opacity="0.5" Tapped="CommunityItemPhoto_Tapped"/>
+        <Grid Name="CommunityItemPhotoGrid" Visibility="Collapsed">
+            <Grid Background="Black" Name="CommunityItemPhotoBackGrid" Opacity="0.5" Tapped="CommunityItemPhoto_Tapped" />
             <FlipView Name="CommunityItemPhotoFlipView">
                 <FlipView.ItemTemplate>
                     <DataTemplate>
                         <ScrollViewer Name="scrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" ZoomMode="Enabled" MaxZoomFactor="4" MinZoomFactor="0.8">
                             <Grid Name="grid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <ProgressRing Name="progressRing" Visibility="Visible" IsActive="True"/>
+                                <ProgressRing Name="progressRing" Visibility="Visible" IsActive="True" />
                                 <Image Name="CommunityItemPhotoImage" Stretch="Uniform" Source="{Binding ImgSrc}" Tapped="CommunityItemPhoto_Tapped" Holding="CommunityItemPhotoImage_Holding" RightTapped="CommunityItemPhotoImage_RightTapped" ImageOpened="CommunityItemPhotoImage_ImageOpened" Width="{Binding ActualWidth, ElementName=mpage, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=mpage,Converter={StaticResource CommunityItemPhotoFlipViewHeighConverter}, Mode=OneWay}"></Image>
                             </Grid>
                         </ScrollViewer>
@@ -236,5 +233,4 @@
             </FlipView>
         </Grid>
     </Grid>
-
 </Page>

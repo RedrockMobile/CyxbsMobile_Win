@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using ZSCY_Win10.Data.Community;
@@ -16,6 +11,7 @@ namespace ZSCY_Win10.Util
         public DataTemplate TwoPhotoTemplate { get; set; }
         public DataTemplate MorePhotoTemplate { get; set; }
         public DataTemplate NoPhotoTemplate { get; set; }
+
         protected override DataTemplate SelectTemplateCore(System.Object item, DependencyObject container)
         {
             FrameworkElement element = container as FrameworkElement;
@@ -34,6 +30,7 @@ namespace ZSCY_Win10.Util
             }
             return null;
         }
+
         public T GetParentObject<T>(DependencyObject obj, string name) where T : FrameworkElement
         {
             DependencyObject parent = VisualTreeHelper.GetParent(obj);

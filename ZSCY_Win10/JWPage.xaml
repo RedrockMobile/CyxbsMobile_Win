@@ -8,15 +8,15 @@
     xmlns:pr="using:PullToRefresh.UWP"
     mc:Ignorable="d">
 
-    <Grid >
+    <Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualState000">
                     <VisualState.Setters>
-                        <Setter Target="JWListgrid.(Grid.ColumnSpan)" Value="2"/>
-                        <Setter Target="JWContentGrid.(Grid.ColumnSpan)" Value="2"/>
-                        <Setter Target="JWTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Stretch"/>
-                        <Setter Target="cutoffLine.(FrameworkElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="JWListgrid.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="JWContentGrid.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="JWTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Stretch" />
+                        <Setter Target="cutoffLine.(FrameworkElement.Visibility)" Value="Collapsed" />
                         <Setter Target="JWContentGrid.(FrameworkElement.Margin)">
                             <Setter.Value>
                                 <Thickness>-1,0,0,0</Thickness>
@@ -26,62 +26,62 @@
                 </VisualState>
                 <VisualState x:Name="VisualState750">
                     <VisualState.Setters>
-                        <Setter Target="JWTitleGrid.(FrameworkElement.Width)" Value="400"/>
-                        <Setter Target="JWListgrid.(FrameworkElement.Width)" Value="400"/>
-                        <Setter Target="JWTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Left"/>
-                        <Setter Target="TitlecutoffLineGrid.(FrameworkElement.Visibility)" Value="Visible"/>
+                        <Setter Target="JWTitleGrid.(FrameworkElement.Width)" Value="400" />
+                        <Setter Target="JWListgrid.(FrameworkElement.Width)" Value="400" />
+                        <Setter Target="JWTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Left" />
+                        <Setter Target="TitlecutoffLineGrid.(FrameworkElement.Visibility)" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
+            <RowDefinition Height="48" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <!--header-->
         <Grid Background="#068cfd" Grid.Row="0">
             <Grid Name="JWTitleGrid"  HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <!--<AppBarButton Name="JWBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="JWBackAppBarButton_Click"/>-->
-                    <TextBlock Name="HubSectionKBTitle" Text="教务信息" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                    <!--<AppBarButton Name="JWBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="JWBackAppBarButton_Click" />-->
+                    <TextBlock Name="HubSectionKBTitle" Text="教务信息" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <AppBarButton Name="JWRefreshAppBarButton" Icon="Refresh" Foreground="White" Click="JWRefreshAppBarButton_Click"/>
+                    <AppBarButton Name="JWRefreshAppBarButton" Icon="Refresh" Foreground="White" Click="JWRefreshAppBarButton_Click" />
                 </StackPanel>
             </Grid>
             <Grid Name="TitlecutoffLineGrid" Visibility="Collapsed" Margin="400,0,0,0" Width="1"  HorizontalAlignment="Left">
-                <Line Y1="0" Y2="48" Stroke="#58b3ff" StrokeThickness="1"/>
+                <Line Y1="0" Y2="48" Stroke="#58b3ff" StrokeThickness="1" />
             </Grid>
         </Grid>
 
         <!--实体-->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <!--列表-->
             <Grid x:Name="JWListgrid" Grid.Column="0" Background="White">
-                <pr:PullToRefreshBox x:Name="JWListpr" RefreshInvoked="JWListpr_RefreshInvoked"  VerticalAlignment="Stretch" >
+                <pr:PullToRefreshBox x:Name="JWListpr" RefreshInvoked="JWListpr_RefreshInvoked"  VerticalAlignment="Stretch">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
+                                <RowDefinition />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
-                            <ListView Name="JWListView" IsItemClickEnabled="True" ItemClick="JWListView_ItemClick" HorizontalAlignment="Stretch" >
+                            <ListView Name="JWListView" IsItemClickEnabled="True" ItemClick="JWListView_ItemClick" HorizontalAlignment="Stretch">
                                 <ListView.ItemTemplate>
-                                    <DataTemplate >
+                                    <DataTemplate>
                                         <Grid Margin="-12,0">
                                             <Grid Margin="15,10">
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition/>
+                                                    <RowDefinition />
                                                     <RowDefinition />
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="auto" />
                                                 </Grid.ColumnDefinitions>
                                                 <!--标题-->
                                                 <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" TextTrimming="WordEllipsis" HorizontalAlignment="Stretch" FontSize="16" Foreground="#333333" FontFamily="Microsoft YaHei UI" ></TextBlock>
@@ -108,11 +108,11 @@
                                 <!--列表的失败报错-->
                                 <StackPanel Name="JWListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="JWListFailedStackPanel_Tapped">
                                     <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
-                                    <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+                                    <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI" />
                                 </StackPanel>
                                 <!--继续加载-->
                                 <Grid Name="continueJWGrid" Height="50" Tapped="continueJWGrid_Tapped" Visibility="Collapsed">
-                                    <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
+                                    <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
                                 </Grid>
                             </StackPanel>
                         </Grid>
@@ -122,13 +122,13 @@
 
             <!--正文-->
             <Grid Name="JWContentGrid" Grid.Column="1">
-                <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1"/>
+                <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1" />
                 <Frame x:Name="frame" Margin="1,0,0,0">
                     <Frame.ContentTransitions>
                         <TransitionCollection>
                             <NavigationThemeTransition>
                                 <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                                    <EntranceNavigationTransitionInfo/>
+                                    <EntranceNavigationTransitionInfo />
                                 </NavigationThemeTransition.DefaultNavigationTransitionInfo>
                             </NavigationThemeTransition>
                         </TransitionCollection>

@@ -21,78 +21,73 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
+            <RowDefinition Height="48" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid Background="#068cfd" Grid.Row="0">
             <Grid Name="SetPersonInfoTitleGrid"  HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <!--<AppBarButton Name="SetPersonInfoBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="SetPersonInfoBackAppBarButton_Click"/>-->
-                    <TextBlock Name="HubSectionKBTitle" Text="新增/修改个人信息" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                    <!--<AppBarButton Name="SetPersonInfoBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="SetPersonInfoBackAppBarButton_Click" />-->
+                    <TextBlock Name="HubSectionKBTitle" Text="新增/修改个人信息" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <AppBarButton Name="SetPersonInfoOKAppBarButton" Icon="Accept" Foreground="White" IsEnabled="False" Click="SetPersonInfoOKAppBarButton_Click"/>
+                    <AppBarButton Name="SetPersonInfoOKAppBarButton" Icon="Accept" Foreground="White" IsEnabled="False" Click="SetPersonInfoOKAppBarButton_Click" />
                 </StackPanel>
             </Grid>
             <Grid Name="TitlecutoffLineGrid" Visibility="Collapsed" Margin="400,0,0,0" HorizontalAlignment="Left">
-                <Line Y1="0" Y2="48" Width="1" Stroke="#58b3ff" HorizontalAlignment="Left" StrokeThickness="1"/>
-                <TextBlock Name="SetPersonInfoContentTitleTextBlock" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                <Line Y1="0" Y2="48" Width="1" Stroke="#58b3ff" HorizontalAlignment="Left" StrokeThickness="1" />
+                <TextBlock Name="SetPersonInfoContentTitleTextBlock" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI" />
             </Grid>
         </Grid>
-        <Grid Background="White" Grid.Row="1" >
+        <Grid Background="White" Grid.Row="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch">
-                <StackPanel >
-                    <TextBox x:Name="nameTextBox" 
-                     Style="{StaticResource SetPersonInfoPageTextBoxStyle}"  
-                     Header="昵称：" 
+                <StackPanel>
+                    <TextBox x:Name="nameTextBox"
+                     Style="{StaticResource SetPersonInfoPageTextBoxStyle}"
+                     Header="昵称："
                      PlaceholderText="输入一个萌萌哒的昵称吧"
-                     TextChanged="nameTextBox_TextChanged"
-                     />
-                    <TextBox x:Name="abstractTextBox" 
-                     Style="{StaticResource SetPersonInfoPageTextBoxStyle}" 
-                     Header="简介：" 
+                     TextChanged="nameTextBox_TextChanged" />
+                    <TextBox x:Name="abstractTextBox"
+                     Style="{StaticResource SetPersonInfoPageTextBoxStyle}"
+                     Header="简介："
                      PlaceholderText="告诉我们你有多可爱吧"
                      AcceptsReturn="True"
-                     TextWrapping="Wrap"    
+                     TextWrapping="Wrap"
                      MinHeight="100"
-                     MaxLength="30"                     
-                     TextChanged="abstractTextBox_TextChanged"
-                     />
+                     MaxLength="30"
+                     TextChanged="abstractTextBox_TextChanged" />
                     <RelativePanel>
-                        <TextBlock x:Name="abstractTextBlock" 
+                        <TextBlock x:Name="abstractTextBlock"
                            Style="{StaticResource SetPersonInfoPageTextBlock}"
-                               RelativePanel.AlignLeftWithPanel="True"/>
-                        <TextBlock x:Name="abstractNumTextBlock" 
+                               RelativePanel.AlignLeftWithPanel="True" />
+                        <TextBlock x:Name="abstractNumTextBlock"
                                Text="0/30"
                                Foreground="#999999"
                                RelativePanel.AlignRightWithPanel="True"
-                               Margin="0,0,15,0"/>
+                               Margin="0,0,15,0" />
                     </RelativePanel>
-                    <TextBox x:Name="phoneTextBox" 
-                     Style="{StaticResource SetPersonInfoPageTextBoxStyle}"  
+                    <TextBox x:Name="phoneTextBox"
+                     Style="{StaticResource SetPersonInfoPageTextBoxStyle}"
                      Header="手机(可选)："
                      PlaceholderText="可爱的人肯定要留电话的呀"
                      InputScope="TelephoneNumber"
-                     TextChanged="phoneTextBox_TextChanged"
-                     />
-                    <TextBlock x:Name="phoneTextBlock" 
-                           Style="{StaticResource SetPersonInfoPageTextBlock}"/>
-                    <TextBox x:Name="qqTextBox" 
-                     Style="{StaticResource SetPersonInfoPageTextBoxStyle}"  
-                     Header="QQ(可选)：" 
+                     TextChanged="phoneTextBox_TextChanged" />
+                    <TextBlock x:Name="phoneTextBlock"
+                           Style="{StaticResource SetPersonInfoPageTextBlock}" />
+                    <TextBox x:Name="qqTextBox"
+                     Style="{StaticResource SetPersonInfoPageTextBoxStyle}"
+                     Header="QQ(可选)："
                      PlaceholderText="这句没有想到卖萌的话，放着"
                      InputScope="Number"
-                     TextChanged="qqTextBox_TextChanged"
-                     />
-                    <TextBlock x:Name="qqTextBlock" 
-                           Style="{StaticResource SetPersonInfoPageTextBlock}"/>
+                     TextChanged="qqTextBox_TextChanged" />
+                    <TextBlock x:Name="qqTextBlock"
+                           Style="{StaticResource SetPersonInfoPageTextBlock}" />
 
                     <!--信息展示--><!--
                     <StackPanel Margin="15">
                         <TextBlock x:Name="textBlockone" Text="信息：" FontSize="12" />
                         <TextBlock x:Name="textBlocktwo" TextWrapping="Wrap" FontSize="12" />
                     </StackPanel>-->
-
                 </StackPanel>
             </ScrollViewer>
         </Grid>

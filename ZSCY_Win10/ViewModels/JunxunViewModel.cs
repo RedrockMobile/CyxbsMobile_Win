@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace ZSCY_Win10.ViewModels
 {
-    class JunxunViewModel:BasePageViewModel
+    internal class JunxunViewModel : BasePageViewModel
     {
         private ObservableCollection<ZSCY_Win10.Models.junxunshipin> _junxunshipin;
+
         public ObservableCollection<ZSCY_Win10.Models.junxunshipin> Junxunshipin
         {
             get
@@ -23,8 +19,8 @@ namespace ZSCY_Win10.ViewModels
             }
         }
 
-
         private ObservableCollection<ZSCY_Win10.Models.Junxuncontents> _junxuntupian;
+
         public ObservableCollection<ZSCY_Win10.Models.Junxuncontents> Junxuntupian
         {
             get
@@ -38,7 +34,6 @@ namespace ZSCY_Win10.ViewModels
             }
         }
 
-
         private double _page_height;
         private double _page_width;
 
@@ -50,7 +45,7 @@ namespace ZSCY_Win10.ViewModels
             }
             set
             {
-                Photo_Height =_page_height = value;
+                Photo_Height = _page_height = value;
                 RaisePropertyChanged(nameof(Page_Height));
             }
         }
@@ -63,17 +58,16 @@ namespace ZSCY_Win10.ViewModels
             }
             set
             {
-                Photo_Width =_page_width = value;
+                Photo_Width = _page_width = value;
                 RaisePropertyChanged(nameof(Page_Width));
             }
         }
-
 
         public double Photo_Height
         {
             get
             {
-                return (Photo_Width/1.4);
+                return (Photo_Width / 1.4);
             }
             set
             {

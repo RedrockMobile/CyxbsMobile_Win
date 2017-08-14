@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZSCY_Win10.Common;
+﻿using ZSCY_Win10.Common;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Service;
 
@@ -18,10 +13,10 @@ namespace ZSCY_Win10.ViewModels.Community
             get { return myVar; }
             set { myVar = value; OnPropertyChanged(nameof(Item)); }
         }
+
         public CommunityMyContentViewModel(object e)
         {
             getItem(e);
-
         }
 
         private async void getItem(object e)
@@ -39,6 +34,5 @@ namespace ZSCY_Win10.ViewModels.Community
                 Item = await CommunityMyContentService.GetFeed(5, (e as MyNotification).article_id);
             }
         }
-
     }
 }

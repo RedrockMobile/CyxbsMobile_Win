@@ -1,13 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZSCY.Data
 {
-    class ScoreList
+    internal class ScoreList
     {
         public string Student { get; set; }
         public string Course { get; set; }
@@ -18,11 +13,11 @@ namespace ZSCY.Data
 
         public void GetAttribute(JObject scoreDetailJObject)
         {
-            Student = scoreDetailJObject["student"].ToString() ;
-            Course = scoreDetailJObject["course"].ToString() ;
-            Grade = scoreDetailJObject["grade"].ToString() ;
-            Property = scoreDetailJObject["property"].ToString() ;
-            Status = scoreDetailJObject["status"].ToString() ;
+            Student = scoreDetailJObject["student"].ToString();
+            Course = scoreDetailJObject["course"].ToString();
+            Grade = scoreDetailJObject["grade"].ToString();
+            Property = scoreDetailJObject["property"].ToString();
+            Status = scoreDetailJObject["status"].ToString();
             Term = scoreDetailJObject["term"].ToString();
         }
     }

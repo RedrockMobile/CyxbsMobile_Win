@@ -1,24 +1,15 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
-using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10;
@@ -35,6 +26,7 @@ namespace ZSCY.Pages
     {
         private ApplicationDataContainer appSetting;
         private static string resourceName = "ZSCY";
+
         //private ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>();
         public SearchFreeTimeNumPage()
         {
@@ -74,15 +66,12 @@ namespace ZSCY.Pages
             UmengSDK.UmengAnalytics.TrackPageStart("SearchFreeTime");
         }
 
-
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             //HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageEnd("SearchFreeTime");
         }
-
-
 
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
         {
@@ -92,7 +81,6 @@ namespace ZSCY.Pages
                 rootFrame.GoBack();
                 e.Handled = true;
             }
-
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -136,7 +124,6 @@ namespace ZSCY.Pages
                                     PeopleListMenuFlyout.Items.Add(getPeopleListMenuFlyoutItem(Personalitem.Name + "-" + Personalitem.Major + "-" + Personalitem.Stunum));
                                 }
                                 PeopleListMenuFlyout.ShowAt(AddTextBox);
-
                             }
                             else
                             {
@@ -160,13 +147,11 @@ namespace ZSCY.Pages
                         }
                         else
                             Utils.Message("学号或姓名不正确");
-
                     }
                     catch (Exception ex)
                     {
                         Debug.WriteLine(ex.Message);
                     }
-
                 }
                 AddTextBox.Text = "";
             }

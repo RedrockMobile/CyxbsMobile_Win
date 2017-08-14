@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace ZSCY_Win10.Models
 {
     public class DailyLife
     {
-
         public class Rootobject
         {
             public int Status { get; set; }
@@ -25,6 +19,5 @@ namespace ZSCY_Win10.Models
             public string resume { get; set; }
             public string[] url { get; set; }
         }
-
     }
 }

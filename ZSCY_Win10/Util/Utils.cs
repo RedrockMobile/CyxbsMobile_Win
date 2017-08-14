@@ -1,14 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
-using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
@@ -23,7 +19,7 @@ using Windows.Web.Http;
 
 namespace ZSCY_Win10.Util
 {
-    class Utils
+    internal class Utils
     {
         /// <summary>
         /// Toast
@@ -48,7 +44,6 @@ namespace ZSCY_Win10.Util
             //从通知中心删除
             await Task.Delay(3000);
             ToastNotificationManager.History.Clear();
-
         }
 
         private async static void toast_Activated(ToastNotification sender, object args)
@@ -80,11 +75,8 @@ namespace ZSCY_Win10.Util
             return Convert.ToInt32(Math.Ceiling((currentDay - firstWeekend) / 7.0)) + 1;
         }
 
-
-
-
         /// <summary>
-        ///UNICODE字符转为中文 
+        ///UNICODE字符转为中文
         /// </summary>
         /// <param name="unicodeString"></param>
         /// <returns></returns>
@@ -125,7 +117,6 @@ namespace ZSCY_Win10.Util
                 statusBar.ProgressIndicator.ProgressValue = 0;
             }
             await statusBar.ProgressIndicator.ShowAsync();
-
         }
 
         /// <summary>
@@ -210,7 +201,6 @@ namespace ZSCY_Win10.Util
                 //    return null;
                 //}
             }
-
             else
             {
                 Message("网络错误！", "错误");
@@ -286,7 +276,6 @@ namespace ZSCY_Win10.Util
                         decoder.BitmapPixelFormat, decoder.BitmapAlphaMode, bt,
                         ExifOrientationMode.IgnoreExifOrientation, ColorManagementMode.ColorManageToSRgb);
 
-
                     //下面保存图片
                     // Now that we have the pixel data, get the destination file
                     var localFolder = ApplicationData.Current.LocalFolder;
@@ -312,6 +301,5 @@ namespace ZSCY_Win10.Util
             }
             catch (Exception) { Debug.WriteLine("工具，图片异常"); }
         }
-
     }
 }

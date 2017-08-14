@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
-using Windows.Foundation;
 using Windows.Storage;
+using Windows.UI.Xaml;
 
 namespace SycnRemindBackgroundTask
 {
-
     internal sealed class SelectedWeekNum
     {
         private int weekNum;
-        private  DateTime oneWeekTime;
+        private DateTime oneWeekTime;
         private DateTime weekNumOfMonday;
+
         public SelectedWeekNum()
         {
-            if (oneWeekTime == new DateTime(1,1,1,0,0,0))
+            if (oneWeekTime == new DateTime(1, 1, 1, 0, 0, 0))
             {
                 ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
                 int num = int.Parse(appSetting.Values["nowWeek"].ToString());
@@ -30,11 +26,13 @@ namespace SycnRemindBackgroundTask
                 oneWeekTime = oneWeekFrist.AddDays(-totalDay);
             }
         }
+
         public void SetWeekTime(int i)
         {
             weekNumOfMonday = oneWeekTime.AddDays(i * 7);
             Debug.WriteLine(weekNumOfMonday);
         }
+
         public DateTime WeekNumOfMonday
         {
             get
@@ -47,6 +45,7 @@ namespace SycnRemindBackgroundTask
                 weekNumOfMonday = value;
             }
         }
+
         public int WeekNum
         {
             get
@@ -59,31 +58,29 @@ namespace SycnRemindBackgroundTask
                 weekNum = value;
             }
         }
-
     }
+
     [DataContract]
     internal sealed class DateItemModel
     {
         ///<summary>
-        /// 
+        ///
         /// </summary>
         [DataMember(Name = "week")]
         public string Week { get; set; }
+
         ///<summary>
-        /// 
+        ///
         /// </summary>
         [DataMember(Name = "class")]
         public string Class { get; set; }
 
         ///<summary>
-        /// 
+        ///
         /// </summary>
         [DataMember(Name = "day")]
         public string Day { get; set; }
-
     }
-
-
 
     [DataContract]
     internal sealed class MyRemind
@@ -97,10 +94,6 @@ namespace SycnRemindBackgroundTask
         private Visibility deleteIcon;
         public string Tag { get; set; }
 
-
-
-
-
         ///<summary>
         /// timestamp+4位随机
         /// </summary>
@@ -108,24 +101,26 @@ namespace SycnRemindBackgroundTask
         public string Id { get; set; }
 
         ///<summary>
-        /// 
+        ///
         /// </summary>
         [DataMember(Name = "stuNum")]
         public string StuNum { get; set; }
 
         ///<summary>
-        /// 
+        ///
         /// </summary>
         [DataMember(Name = "idNum")]
         public string IdNum { get; set; }
 
         ///<summary>
-        /// 
+        ///
         /// </summary>
         [DataMember(Name = "date")]
         public List<DateItemModel> DateItems { get; set; }
+
         private string _title;
         private string _content;
+
         ///<summary>
         /// 相对上课的时间，单位分钟，如1-2课上课，7.45提醒，time应为15，如果设置为8.05提醒，则设置为-5
         /// </summary>
@@ -145,7 +140,6 @@ namespace SycnRemindBackgroundTask
             set
             {
                 _title = value;
-
             }
         }
 
@@ -166,7 +160,7 @@ namespace SycnRemindBackgroundTask
         }
 
         ///<summary>
-        /// 当前学期，不传默认本学期 格式 本学期为201620171 下学期为201620172 
+        /// 当前学期，不传默认本学期 格式 本学期为201620171 下学期为201620172
         /// </summary>
         [DataMember(Name = "term")]
         public string Term { get; set; }
@@ -201,24 +195,21 @@ namespace SycnRemindBackgroundTask
     internal sealed class AddRemindReturn
     {
         ///<summary>
-        /// 
+        ///
         /// </summary>
         [DataMember(Name = "status")]
         public int Status { get; set; }
 
         ///<summary>
-        /// 
+        ///
         /// </summary>
         [DataMember(Name = "info")]
         public string Info { get; set; }
 
         ///<summary>
-        /// 
+        ///
         /// </summary>
         [DataMember(Name = "id")]
         public string Id { get; set; }
     }
-
-
-
 }

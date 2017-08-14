@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
 {
@@ -38,6 +34,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         public string elec_month { get; set; }//抄表月份
 
         private string _elec_perday = "";
+
         public string elec_perday//每日平均用量
         {
             get
@@ -51,6 +48,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         }
 
         private double _elec_percent;
+
         public double elec_percent//百分比
         {
             get
@@ -64,6 +62,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         }
 
         private string _elec_chargeBalance = "";
+
         public string elec_chargeBalance//电费余额
         {
             get
@@ -77,6 +76,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         }
 
         private string _elec_dumpEnergy = "";
+
         public string elec_dumpEnergy//电量剩余度数
         {
             get
@@ -96,7 +96,6 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         public string spend { get; set; }
     }//半年内消耗电费的月份和度数
 
-
     public class ElectricityByRoomNum
     {
         public int status { get; set; }//网络状态
@@ -114,6 +113,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         public string elec_month { get; set; }//抄表月份
 
         private string _elec_perday = "";
+
         public string elec_perday//每日平均用量
         {
             get
@@ -127,6 +127,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         }
 
         private double _elec_percent;
+
         public double elec_percent//百分比
         {
             get
@@ -140,6 +141,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         }
 
         private string _elec_chargeBalance = "";
+
         public string elec_chargeBalance//电费余额
         {
             get
@@ -153,6 +155,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         }
 
         private string _elec_dumpEnergy = "";
+
         public string elec_dumpEnergy//电量剩余度数
         {
             get

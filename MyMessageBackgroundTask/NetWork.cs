@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -12,7 +10,7 @@ using Windows.Storage.Streams;
 
 namespace MyMessageBackgroundTask
 {
-     class NetWork
+    internal class NetWork
     {
         public static async Task<string> getHttpWebRequest(string api, List<KeyValuePair<String, String>> paramList = null, int PostORGet = 0, bool fulluri = false)
         {
@@ -47,7 +45,6 @@ namespace MyMessageBackgroundTask
                             content = response.Content.ReadAsStringAsync().Result;
                         //else if (response.StatusCode == HttpStatusCode.NotFound)
                         //    Utils.Message("Oh...服务器又跪了，给我们点时间修好它");
-
                     }
                     catch (Exception e)
                     {
@@ -61,7 +58,6 @@ namespace MyMessageBackgroundTask
                 //    return "";
                 //else
                 return content;
-
             });
         }
 
@@ -134,18 +130,15 @@ namespace MyMessageBackgroundTask
                                 await streamSave.WriteAsync(bytes, 0, bytes.Length);
                             }
                             return true;
-
                         }
                         else
                         {
                             return false;
-
                         }
                     }
                     else
                     {
                         return false;
-
                     }
                 }
                 catch (Exception)
@@ -154,6 +147,5 @@ namespace MyMessageBackgroundTask
                 }
             });
         }
-
     }
 }

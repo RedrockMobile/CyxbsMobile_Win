@@ -7,12 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:ZSCY_Win10.Data.Community"
     xmlns:converter="using:ZSCY_Win10.Util.Converter"
-    xmlns:util="using:ZSCY_Win10.Util"   
+    xmlns:util="using:ZSCY_Win10.Util"
     mc:Ignorable="d">
     <Page.Resources>
-        <converter:GenderNameConverter x:Key="GenderNameConverter"/>
-        <converter:GenderColorConverter x:Key="GenderColorConverter"/>
-        <converter:CommunityItemPhotoFlipViewHeighConverter x:Key="CommunityItemPhotoFlipViewHeighConverter"/>
+        <converter:GenderNameConverter x:Key="GenderNameConverter" />
+        <converter:GenderColorConverter x:Key="GenderColorConverter" />
+        <converter:CommunityItemPhotoFlipViewHeighConverter x:Key="CommunityItemPhotoFlipViewHeighConverter" />
         <Style x:Key="NickNamestyle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
@@ -26,27 +26,27 @@
         <util:ImgDataTemplateSelector x:Key="ImgDataTemplateSelector">
             <util:ImgDataTemplateSelector.NoPhotoTemplate>
                 <DataTemplate  x:DataType="model:Img">
-                    <Grid Width="0" Height="0"/>
+                    <Grid Width="0" Height="0" />
                 </DataTemplate>
             </util:ImgDataTemplateSelector.NoPhotoTemplate>
             <util:ImgDataTemplateSelector.OnePhotoTemplate>
                 <DataTemplate  x:DataType="model:Img">
                     <Grid MaxWidth="280">
-                        <Image Source="{x:Bind ImgSrc}" Stretch="UniformToFill"/>
+                        <Image Source="{x:Bind ImgSrc}" Stretch="UniformToFill" />
                     </Grid>
                 </DataTemplate>
             </util:ImgDataTemplateSelector.OnePhotoTemplate>
             <util:ImgDataTemplateSelector.TwoPhotoTemplate>
                 <DataTemplate x:DataType="model:Img">
                     <Grid MinWidth="150" MaxWidth="160">
-                        <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill"/>
+                        <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill" />
                     </Grid>
                 </DataTemplate>
             </util:ImgDataTemplateSelector.TwoPhotoTemplate>
             <util:ImgDataTemplateSelector.MorePhotoTemplate>
                 <DataTemplate x:DataType="model:Img">
                     <Grid Height="100" Width="100">
-                        <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill"/>
+                        <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill" />
                     </Grid>
                 </DataTemplate>
             </util:ImgDataTemplateSelector.MorePhotoTemplate>
@@ -70,7 +70,7 @@
                 <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind photo_src}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                            <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3" />
                         </ItemsPanelTemplate>
                     </GridView.ItemsPanel>
                 </GridView>
@@ -78,7 +78,7 @@
                     <Button Style="{StaticResource LikeCommentButton}"  Click="LikeButton_Click" IsEnabled="False">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Margin="10,5">
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="Gray"/>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="Gray" />
                                 <TextBlock Text="{x:Bind like_num,Mode=OneWay}" Foreground="Gray" Margin="5,0,5,2"></TextBlock>
                             </StackPanel>
                         </Button.Content>
@@ -86,7 +86,7 @@
                     <Button Style="{StaticResource LikeCommentButton}" IsEnabled="False">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Margin="10,5">
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray" />
                                 <TextBlock Text="{x:Bind remark_num,Mode=OneWay,Converter={StaticResource NotifyTypeValueConverter}}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
                             </StackPanel>
                         </Button.Content>
@@ -100,9 +100,9 @@
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualState000">
                     <VisualState.Setters>
-                        <Setter Target="infoListGrid.(Grid.ColumnSpan)" Value="2"/>
-                        <Setter Target="MyContentGrid.(Grid.ColumnSpan)" Value="2"/>
-                        <Setter Target="cutoffLine.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="infoListGrid.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="MyContentGrid.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="cutoffLine.(UIElement.Visibility)" Value="Collapsed" />
                         <Setter Target="frame.(FrameworkElement.Margin)">
                             <Setter.Value>
                                 <Thickness>-1,0,0,0</Thickness>
@@ -112,43 +112,43 @@
                 </VisualState>
                 <VisualState x:Name="VisualState800">
                     <VisualState.Setters>
-                        <Setter Target="infoListGrid.(FrameworkElement.Width)" Value="400"/>
+                        <Setter Target="infoListGrid.(FrameworkElement.Width)" Value="400" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
+            <RowDefinition Height="48" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid Background="#068cfd" Grid.Row="0">
             <Grid Name="MyTitleGrid"  HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <TextBlock Name="HubSectionKBTitle" Text="详细资料" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                    <TextBlock Name="HubSectionKBTitle" Text="详细资料" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI" />
                 </StackPanel>
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid Name="infoListGrid" Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Background="White">
                     <StackPanel Orientation="Horizontal">
                         <Ellipse Width="60" Height="60" HorizontalAlignment="Left" Margin="20,10,15,10" VerticalAlignment="Center">
                             <Ellipse.Fill>
-                                <ImageBrush Stretch="Fill" ImageSource="{x:Bind ViewModel.Info.photo_thumbnail_src,Mode=OneWay}"/>
+                                <ImageBrush Stretch="Fill" ImageSource="{x:Bind ViewModel.Info.photo_thumbnail_src,Mode=OneWay}" />
                             </Ellipse.Fill>
                         </Ellipse>
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" >
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{x:Bind ViewModel.Info.nickname,Mode=OneWay}" Style="{StaticResource NickNamestyle}" FontSize="19"></TextBlock>
-                                <FontIcon Name="font" Margin="10,0" FontSize="20" FontFamily="Segoe UI Emoji" VerticalAlignment="Center" Glyph="{x:Bind ViewModel.Info.gender,Mode=OneWay,Converter={StaticResource GenderNameConverter}}" Foreground="{x:Bind ViewModel.Info.gender,Mode=OneWay,Converter={StaticResource GenderColorConverter}}"/>
+                                <FontIcon Name="font" Margin="10,0" FontSize="20" FontFamily="Segoe UI Emoji" VerticalAlignment="Center" Glyph="{x:Bind ViewModel.Info.gender,Mode=OneWay,Converter={StaticResource GenderNameConverter}}" Foreground="{x:Bind ViewModel.Info.gender,Mode=OneWay,Converter={StaticResource GenderColorConverter}}" />
                             </StackPanel>
                             <TextBlock Text="{x:Bind ViewModel.Info.introduction,Mode=OneWay}" Style="{StaticResource Intro}" Foreground="#FFB0B0B0" FontSize="13"></TextBlock>
                         </StackPanel>
@@ -157,7 +157,7 @@
                 <Grid Grid.Row="1" Margin="0,10,0,10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition/>
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" VerticalAlignment="Center" Background="White" Height="48">
                         <TextBlock Text="近期动态" TextAlignment="Left" VerticalAlignment="Center" Foreground="#FF868686" Margin="10"></TextBlock>
@@ -175,22 +175,21 @@
                     <!--<ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.MyFeedlist}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding content}"/>
+                        <TextBlock Text="{Binding content}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>-->
-
                 </Grid>
             </Grid>
 
             <Grid Name="MyContentGrid" Grid.Column="1">
-                <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1"/>
+                <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1" />
                 <Frame x:Name="frame" Margin="1,0,0,0" Visibility="Collapsed">
                     <Frame.ContentTransitions>
                         <TransitionCollection>
                             <NavigationThemeTransition>
                                 <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                                    <EntranceNavigationTransitionInfo/>
+                                    <EntranceNavigationTransitionInfo />
                                 </NavigationThemeTransition.DefaultNavigationTransitionInfo>
                             </NavigationThemeTransition>
                         </TransitionCollection>
@@ -199,14 +198,14 @@
             </Grid>
 
             <!--图像-->
-            <Grid Name="CommunityItemPhotoGrid"  Grid.ColumnSpan="2" Visibility="Collapsed" >
-                <Grid Background="Black" Name="CommunityItemPhotoBackGrid" Opacity="0.5" Tapped="CommunityItemPhoto_Tapped"/>
+            <Grid Name="CommunityItemPhotoGrid"  Grid.ColumnSpan="2" Visibility="Collapsed">
+                <Grid Background="Black" Name="CommunityItemPhotoBackGrid" Opacity="0.5" Tapped="CommunityItemPhoto_Tapped" />
                 <FlipView Name="CommunityItemPhotoFlipView">
                     <FlipView.ItemTemplate>
                         <DataTemplate>
                             <ScrollViewer Name="scrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" ZoomMode="Enabled" MaxZoomFactor="4" MinZoomFactor="0.8">
                                 <Grid Name="grid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <ProgressRing Name="progressRing" Visibility="Visible" IsActive="True"/>
+                                    <ProgressRing Name="progressRing" Visibility="Visible" IsActive="True" />
                                     <Image Name="CommunityItemPhotoImage" Stretch="Uniform" Source="{Binding ImgSrc}" Tapped="CommunityItemPhoto_Tapped" Holding="CommunityItemPhotoImage_Holding" RightTapped="CommunityItemPhotoImage_RightTapped" ImageOpened="CommunityItemPhotoImage_ImageOpened" Width="{Binding ActualWidth, ElementName=mpage, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=mpage,Converter={StaticResource CommunityItemPhotoFlipViewHeighConverter}, Mode=OneWay}"></Image>
                                 </Grid>
                             </ScrollViewer>
@@ -215,9 +214,5 @@
                 </FlipView>
             </Grid>
         </Grid>
-
-
-
-
     </Grid>
 </Page>

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json.Linq;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 
 namespace ZSCY_Win10.Data.Community
 {
-    public class Img:IFeeds
+    public class Img : IFeeds
     {
         public string ImgSrc { get; set; }
         public string ImgSmallSrc { get; set; }
@@ -19,7 +14,7 @@ namespace ZSCY_Win10.Data.Community
             string imgsmall = imgJObjcet["img_small_src"].ToString();
             if (img == "")
             {
-                ImgSrc = ImgSmallSrc ="ms-appx:///Assets/StoreLogo.scale-400.png";
+                ImgSrc = ImgSmallSrc = "ms-appx:///Assets/StoreLogo.scale-400.png";
                 Debug.WriteLine("没有图片");
             }
             else

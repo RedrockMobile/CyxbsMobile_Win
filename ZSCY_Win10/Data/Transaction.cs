@@ -1,31 +1,29 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZSCY_Win10.Util;
 
 namespace ZSCY_Win10.Data
 {
-   public class DateInTransaction
+    public class DateInTransaction
     {
         //字段class 很强势
         [JsonProperty(PropertyName = "class")]
         public int _class { get; set; }
+
         public int day { get; set; }
         public int[] week { get; set; }
         public int weekLength { get; set; }
     }
 
-   public class Transaction
+    public class Transaction
     {
         public long id { get; set; }
+
         //这个高级用法并没有卵用
         //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string time { get; set; }
+
         public string title { get; set; }
         public string content { get; set; }
         public List<DateInTransaction> date { get; set; }
@@ -34,13 +32,12 @@ namespace ZSCY_Win10.Data
 
         public void GetAttribute(JObject TransationDetailJObject)
         {
-
             //接口改了 现在事项在哪节课/周数/星期存在date集合里 2016年11月17日23:07:23
             id = (long)TransationDetailJObject["id"];
 
             //time可以为空了 额
             if (TransationDetailJObject["time"] != null)
-                time =TransationDetailJObject["time"].ToString();
+                time = TransationDetailJObject["time"].ToString();
             else time = "";
             title = TransationDetailJObject["title"].ToString();
             content = TransationDetailJObject["content"].ToString();

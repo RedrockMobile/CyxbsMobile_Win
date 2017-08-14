@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 using ZSCY_Win10.Data.Community;
 
@@ -13,7 +9,7 @@ namespace ZSCY_Win10.Util.Converter
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             Img[] src = value as Img[];
-            if (src==null)
+            if (src == null)
             {
                 return "";
             }

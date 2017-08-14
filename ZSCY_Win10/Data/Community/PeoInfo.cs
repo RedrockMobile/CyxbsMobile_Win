@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Windows.Storage;
 
 namespace ZSCY_Win10.Data.Community
 {
     public class PeoInfo : IFeeds
     {
-        ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
-        public PeoInfo() { }
+        private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+        public PeoInfo()
+        {
+        }
+
         public PeoInfo(string nickname, string introduction, string phone, string qq)
         {
             this.nickname = nickname;
@@ -54,7 +53,6 @@ namespace ZSCY_Win10.Data.Community
             updated_time = feedsJObject["updated_time"].ToString();
             phone = feedsJObject["phone"].ToString();
             qq = feedsJObject["qq"].ToString();
-
         }
     }
 }

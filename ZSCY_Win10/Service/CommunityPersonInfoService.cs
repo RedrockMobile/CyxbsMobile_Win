@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using ZSCY_Win10.Data.Community;
@@ -14,8 +12,9 @@ namespace ZSCY_Win10.Service
     public class CommunityPersonInfoService
     {
         public static ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
-        const string api = "cyxbsMobile/index.php/Home/Person/search";
+        private const string api = "cyxbsMobile/index.php/Home/Person/search";
         private static string resourceName = "ZSCY";
+
         public static async Task<PeoInfo> GetPerson(string stunum_other)
         {
             var vault = new Windows.Security.Credentials.PasswordVault();
@@ -45,7 +44,8 @@ namespace ZSCY_Win10.Service
             catch (Exception) { }
             return null;
         }
-        public static async Task<List<MyFeed>> GetMyFeeds(string stunum_other,int page = 0, int size = 15)
+
+        public static async Task<List<MyFeed>> GetMyFeeds(string stunum_other, int page = 0, int size = 15)
         {
             //TODO:未登陆时 不传入参数stuNum和idNum
             return await Task.Run(async () =>

@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 
 namespace LiveTileBackgroundTask
 {
-    class Util
+    internal class Util
     {
-        static int largeTileGroupCount = 0;
+        private static int largeTileGroupCount = 0;
+
         public static async void UpdateTile(List<ClassList> tempList1, List<Transaction> tempList2, int nowWeek, string weekDay)
         {
             //为应用创建磁贴更新
@@ -22,7 +19,9 @@ namespace LiveTileBackgroundTask
             updater.Clear();
             int itemCount = 0;
             List<int> correctCount = new List<int>(0);
+
             #region 创建动态磁贴XML文档
+
             //1：创建动态磁贴模板
             string tileXml = "<tile>" +
                     "<visual>" +
@@ -59,7 +58,9 @@ namespace LiveTileBackgroundTask
                         "</binding>" +
                     "</visual>" +
                  "</tile>";
-            #endregion
+
+            #endregion 创建动态磁贴XML文档
+
             for (int i = 0; i < tempList1.Count; i++)
             {
                 int[] weeks = tempList1[i].Week;

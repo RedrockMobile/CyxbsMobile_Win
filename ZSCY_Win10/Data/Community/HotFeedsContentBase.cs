@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace ZSCY_Win10.Data.Community
 {
@@ -11,6 +6,7 @@ namespace ZSCY_Win10.Data.Community
     {
         public JWZXFeeds contentbase { get; set; }
         public string content { get; set; }
+
         public void GetAttributes(JObject feedsJObject)
         {
             if (feedsJObject["id"] != null)

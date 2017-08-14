@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZSCY.Models
+﻿namespace ZSCY.Models
 {
     //就业率
     public class WorkRootobject
@@ -20,5 +14,4 @@ namespace ZSCY.Models
         public string college { get; set; }
         public string ratio { get; set; }
     }
-
 }

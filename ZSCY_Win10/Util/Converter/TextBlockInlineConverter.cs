@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
@@ -12,7 +8,8 @@ namespace ZSCY_Win10.Util.Converter
 {
     public class TextBlockInlineConverter : IValueConverter
     {
-        static SolidColorBrush TagColor= new SolidColorBrush(Color.FromArgb(255, 80, 125, 175));
+        private static SolidColorBrush TagColor = new SolidColorBrush(Color.FromArgb(255, 80, 125, 175));
+
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null)

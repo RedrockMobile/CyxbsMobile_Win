@@ -10,54 +10,54 @@
     d:DesignWidth="400">
 
     <Grid>
-        <Border x:Name="OutBorder" Background="#55000000" 
-                VerticalAlignment="Stretch" 
-                HorizontalAlignment="Stretch"/>
+        <Border x:Name="OutBorder" Background="#55000000"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch" />
 
-        <StackPanel x:Name="ContentGrid" Background="White" 
+        <StackPanel x:Name="ContentGrid" Background="White"
               Margin="45,45"
               Orientation="Vertical"
               VerticalAlignment="Center" Height="150" Width="300">
 
             <Grid Padding="20">
                 <TextBlock x:Name="tbContent"
-                           Grid.Row="0" 
-                           TextWrapping="Wrap"  
+                           Grid.Row="0"
+                           TextWrapping="Wrap"
                            HorizontalAlignment="Center" />
             </Grid>
 
             <Grid Padding="15" VerticalAlignment="Bottom">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="15"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" x:Name="btnLeft" 
-                        Content="现在登录！" 
+                <Button Grid.Column="0" x:Name="btnLeft"
+                        Content="现在登录！"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        BorderThickness="0" 
+                        BorderThickness="0"
                         Click="LeftButton_Click"
                         Background="LightBlue"
                         Foreground="White"
                         MaxWidth="150"
-                        MinWidth="100"/>
-                <Button 
-                    Grid.Column="2" 
-                    x:Name="btnRight" 
-                    Content="随便逛逛~" 
+                        MinWidth="100" />
+                <Button
+                    Grid.Column="2"
+                    x:Name="btnRight"
+                    Content="随便逛逛~"
                     Click="RightButton_Click"
                     HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Center"
-                    VerticalAlignment="Center"  
+                    VerticalAlignment="Center"
                     VerticalContentAlignment="Center"
                     BorderThickness="0"
                     Background="LightGray"
                     Foreground="White"
                     MaxWidth="150"
-                    MinWidth="100"/>
+                    MinWidth="100" />
             </Grid>
         </StackPanel>
     </Grid>

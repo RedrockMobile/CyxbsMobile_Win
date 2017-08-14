@@ -1,17 +1,14 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using ZSCY_Win10.ViewModels;
 
 namespace ZSCY_Win10.Models
 {
-    class LFDetailPageModel
+    internal class LFDetailPageModel
     {
         public async Task<LFDetailPageViewModel> GetDetail(string id)
         {
@@ -28,6 +25,7 @@ namespace ZSCY_Win10.Models
             }
             return LFDPVM;
         }
+
         protected async Task<string> GetJson(string Uri)
         {
             var uri = new Uri(Uri);
@@ -49,6 +47,7 @@ namespace ZSCY_Win10.Models
             }
             return content;
         }
+
         protected LFDetailPageViewModel JsonToObject(string Json)
         {
             var LFDetailViewMode = new LFDetailPageViewModel();

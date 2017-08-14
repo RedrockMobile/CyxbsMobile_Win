@@ -11,29 +11,29 @@
 
     <Grid Background="#fff">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="73*"/>
-            <ColumnDefinition Width="47*"/>
+            <ColumnDefinition Width="73*" />
+            <ColumnDefinition Width="47*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel VerticalAlignment="Top" Orientation="Horizontal" Grid.Row="0" Background="#068cfd" Grid.ColumnSpan="2" Grid.RowSpan="2" >
+        <StackPanel VerticalAlignment="Top" Orientation="Horizontal" Grid.Row="0" Background="#068cfd" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <!--<TextBlock Text="找空闲" FontSize="35" VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" Margin="15,0,0,0"></TextBlock>
-                <TextBlock  Text="第" Margin="5,0,0,0" Foreground="White"  FontSize="20"  VerticalAlignment="Bottom" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
-                <TextBlock Name="HubSectionKBNum" Text=" "  Foreground="White"  FontSize="20"  VerticalAlignment="Bottom" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
-                <TextBlock  Text="周"  Foreground="White"  FontSize="20"  VerticalAlignment="Bottom" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped"/>
+                <TextBlock  Text="第" Margin="5,0,0,0" Foreground="White"  FontSize="20"  VerticalAlignment="Bottom" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped" />
+                <TextBlock Name="HubSectionKBNum" Text=" "  Foreground="White"  FontSize="20"  VerticalAlignment="Bottom" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped" />
+                <TextBlock  Text="周"  Foreground="White"  FontSize="20"  VerticalAlignment="Bottom" FontWeight="Light" FontFamily="Microsoft YaHei UI" Tapped="HubSectionKBNum_Tapped" />
                 <FlyoutBase.AttachedFlyout>
-                    <Flyout x:Name="KBNumFlyout" >
+                    <Flyout x:Name="KBNumFlyout">
                         <StackPanel Margin="10">
-                            <TextBlock Text="输入要查询的周次" FontSize="20"/>
-                            <Grid >
+                            <TextBlock Text="输入要查询的周次" FontSize="20" />
+                            <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
-                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBox  Grid.Column="0" Name="KBNumFlyoutTextBox" PlaceholderText="输入要查询的周次" InputScope="Number"/>
-                                <AppBarButton Grid.Column="1"  Name="KBNumSearchButton" Icon="Zoom" Click="KBNumSearchButton_Click"/>
+                                <TextBox  Grid.Column="0" Name="KBNumFlyoutTextBox" PlaceholderText="输入要查询的周次" InputScope="Number" />
+                                <AppBarButton Grid.Column="1"  Name="KBNumSearchButton" Icon="Zoom" Click="KBNumSearchButton_Click" />
                             </Grid>
                         </StackPanel>
                     </Flyout>
@@ -48,11 +48,11 @@
             <Grid  Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <TextBox Name="AddTextBox" PlaceholderText="请输入学号或姓名" Grid.Column="0" KeyUp="AddTextBox_KeyUp"></TextBox>
                 <Grid Grid.Column="1" Margin="5,0,0,0">
-                    <Button Name="AddButton" RequestedTheme="Light" VerticalAlignment="Top" Content="添加" Click="AddButton_Click"/>
+                    <Button Name="AddButton" RequestedTheme="Light" VerticalAlignment="Top" Content="添加" Click="AddButton_Click" />
                     <ProgressRing Name="AddProgressRing" />
                 </Grid>
             </Grid>
@@ -68,8 +68,6 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Grid>
-
-
         </Grid>
     </Grid>
 
@@ -77,17 +75,17 @@
         <CommandBar Name="commandBar">
             <AppBarButton Name="DeleteAppBarToggleButton" Icon="Delete" Label="清空" Click="DeleteAppBarToggleButton_Click"></AppBarButton>
             <!--<AppBarButton Name="FilterAppBarToggleButton" Icon="Filter" Label="第 周" Click="FilterAppBarToggleButton_Click"></AppBarButton>-->
-            <AppBarButton Name="ForwardAppBarToggleButton" Icon="Forward" Label="下一步" Click="ForwardAppBarToggleButton_Click"/>
+            <AppBarButton Name="ForwardAppBarToggleButton" Icon="Forward" Label="下一步" Click="ForwardAppBarToggleButton_Click" />
             <!--<FlyoutBase.AttachedFlyout>
-                <Flyout x:Name="KBNumFlyout" >
+                <Flyout x:Name="KBNumFlyout">
                     <StackPanel Margin="10" Width="300">
-                        <TextBlock Text="输入要查询的周次" Foreground="#333" FontSize="15"/>
-                        <Grid >
+                        <TextBlock Text="输入要查询的周次" Foreground="#333" FontSize="15" />
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBox VerticalAlignment="Center" Grid.Column="0" Name="KBNumFlyoutTextBox" PlaceholderText="输入学号以查询" InputScope="Number" KeyUp="KBNumFlyoutTextBox_KeyUp"/>
+                            <TextBox VerticalAlignment="Center" Grid.Column="0" Name="KBNumFlyoutTextBox" PlaceholderText="输入学号以查询" InputScope="Number" KeyUp="KBNumFlyoutTextBox_KeyUp" />
                             <AppBarButton Grid.Column="1"  Name="KBNumSearchButton" Icon="Zoom" Click="KBNumSearchButton_Click" />
                         </Grid>
                     </StackPanel>

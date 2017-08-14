@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 
 namespace ZSCY_Win10.Util.Converter
 {
     public class ExpandingConverter0 : IValueConverter
     {
-
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-
             int n = value.ToString().Length;
             char[] a = value.ToString().ToCharArray();
 
@@ -20,7 +14,6 @@ namespace ZSCY_Win10.Util.Converter
             {
                 if (App.isReduced[0])
                 {
-
                     string s = "";
                     for (int i = 0; i < 50; i++)
                     {
@@ -32,7 +25,6 @@ namespace ZSCY_Win10.Util.Converter
                 {
                     return value.ToString();
                 }
-
             }
             else
             {
@@ -45,5 +37,4 @@ namespace ZSCY_Win10.Util.Converter
             throw new NotImplementedException();
         }
     }
-    
 }

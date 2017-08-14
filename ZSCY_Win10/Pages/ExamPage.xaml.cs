@@ -3,23 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Phone.UI.Input;
 using Windows.Storage;
-using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Util;
@@ -34,8 +24,9 @@ namespace ZSCY.Pages
     public sealed partial class ExamPage : Page
     {
         private ApplicationDataContainer appSetting;
-        int IsExamOrRe;
+        private int IsExamOrRe;
         private static string resourceName = "ZSCY";
+
         public ExamPage()
         {
             this.InitializeComponent();
@@ -83,7 +74,7 @@ namespace ZSCY.Pages
             {
 #if DEBUG
                 paramList.Add(new KeyValuePair<string, string>("stu", "2014214136"));
-#else   
+#else
                 //paramList.Add(new KeyValuePair<string, string>("stu", appSetting.Values["stuNum"].ToString()));
                 paramList.Add(new KeyValuePair<string, string>("stu", credentialList[0].UserName));
 #endif
@@ -110,8 +101,8 @@ namespace ZSCY.Pages
                             examList.Add(examitem);
                         }
                         examList = examList.OrderBy(x => x.DateTime).ToList();
-                        var nonzeroweek = from x in examList where x.Begin_time=="待定" select x;//    examList.Select(x => !x.DateTime.Contains("周0")).ToList();
-                        var zeroweek = from x in examList where x.Begin_time!="待定" select x;// examList.Select(x => x.DateTime.Contains("周0"));
+                        var nonzeroweek = from x in examList where x.Begin_time == "待定" select x;//    examList.Select(x => !x.DateTime.Contains("周0")).ToList();
+                        var zeroweek = from x in examList where x.Begin_time != "待定" select x;// examList.Select(x => x.DateTime.Contains("周0"));
                         List<ExamList> orderedlist = new List<ExamList>();
                         orderedlist.AddRange(zeroweek);
                         orderedlist.AddRange(nonzeroweek);
@@ -169,7 +160,6 @@ namespace ZSCY.Pages
             //StatusBar statusBar = StatusBar.GetForCurrentView();
             //await statusBar.ProgressIndicator.HideAsync();
         }
-
 
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)

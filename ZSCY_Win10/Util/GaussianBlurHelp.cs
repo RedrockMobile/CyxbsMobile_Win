@@ -1,9 +1,4 @@
 ﻿using Microsoft.Graphics.Canvas.Effects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
@@ -11,7 +6,7 @@ using Windows.UI.Xaml.Hosting;
 
 namespace ZSCY_Win10.Util
 {
-    class GaussianBlurHelp
+    internal class GaussianBlurHelp
     {
         public static void InitializeBlur(UIElement uiElement)
         {
@@ -45,7 +40,6 @@ namespace ZSCY_Win10.Util
             effectFactory.Dispose();
             gausianBlur.Dispose();
             backdropBrush.Dispose();
-
         }
     }
 }

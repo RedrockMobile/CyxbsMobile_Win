@@ -1,19 +1,14 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZSCY_Win10.Util;
 
 namespace ZSCY_Win10.Models.RemindModels
 {
-    public class RemindListModel:DataBaseModel
+    public class RemindListModel : DataBaseModel
     {
-       
         private bool _IsRewrite;
         private RemindBackupModel _Remind;
         private string _DayAndClass;
+
         public bool IsRewrite
         {
             get
@@ -24,9 +19,10 @@ namespace ZSCY_Win10.Models.RemindModels
             set
             {
                 _IsRewrite = value;
-                OnProperChanged(nameof(IsRewrite));  
+                OnProperChanged(nameof(IsRewrite));
             }
         }
+
         public void JsonToModel()
         {
             Remind = new RemindBackupModel();
@@ -36,6 +32,7 @@ namespace ZSCY_Win10.Models.RemindModels
             Remind.IdNum = user.Password;
             Remind.StuNum = user.UserName;
         }
+
         public string ClassTime()
         {
             string temp = "";

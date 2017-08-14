@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZSCY.Models
+﻿namespace ZSCY.Models
 {
-
     //男女比例
     public class SexRootobject
     {
@@ -22,5 +15,4 @@ namespace ZSCY.Models
         public string MenRatio { get; set; }
         public string WomenRatio { get; set; }
     }
-
 }

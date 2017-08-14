@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZSCY_Win10.ViewModels
+﻿namespace ZSCY_Win10.ViewModels
 {
     public class FirstPageViewModel : BasePageViewModel
     {
         private double _page_height;
+
         public double Page_Height
         {
             get
@@ -23,6 +18,7 @@ namespace ZSCY_Win10.ViewModels
         }
 
         private double _page_width;
+
         public double Page_Width
         {
             get

@@ -2,19 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Util;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -26,11 +18,11 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
     /// </summary>
     public sealed partial class InfoPublish : Page
     {
-        bool islost = true;
-        string temptype;
+        private bool islost = true;
+        private string temptype;
         private static string resourceName = "ZSCY";
 
-        List<TempItemClass> tic = new List<TempItemClass>() {
+        private List<TempItemClass> tic = new List<TempItemClass>() {
             new TempItemClass { type="一卡通",IconV=Visibility.Collapsed},
             new TempItemClass { type="钱包",IconV=Visibility.Collapsed},
             new TempItemClass { type="电子产品",IconV=Visibility.Collapsed},
@@ -57,16 +49,19 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
         {
             SelRemindGrid.Visibility = Visibility.Visible;
         }
+
         private void SelRemindBackgroupGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             SelRemindGrid.Visibility = Visibility.Collapsed;
         }
+
         private void e1_Tapped(object sender, TappedRoutedEventArgs e)
         {
             islost = true;
             e2.Fill = new SolidColorBrush(Color.FromArgb(255, 217, 217, 217));
             e1.Fill = new SolidColorBrush(Color.FromArgb(255, 65, 165, 255));
         }
+
         private void e2_Tapped(object sender, TappedRoutedEventArgs e)
         {
             islost = false;
@@ -79,6 +74,7 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
             temptype = ((TempItemClass)sender).type;
             Debug.WriteLine(temptype);
         }
+
         public class TempItemClass
         {
             public string type { get; set; }
@@ -100,7 +96,7 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
 
         private void DatePickerFlyout_DatePicked(DatePickerFlyout sender, DatePickedEventArgs args)
         {
-            timebox.Text = args.NewDate.UtcDateTime.ToString().Substring(0, args.NewDate.UtcDateTime.ToString().Length-7);
+            timebox.Text = args.NewDate.UtcDateTime.ToString().Substring(0, args.NewDate.UtcDateTime.ToString().Length - 7);
         }
 
         private async void publishBtn_Click(object sender, RoutedEventArgs e)

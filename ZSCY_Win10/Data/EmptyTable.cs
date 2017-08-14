@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ZSCY_Win10.Data
 {
-    class EmptyTable:EmptyClassDayLesson
+    internal class EmptyTable : EmptyClassDayLesson
     {
-        public Dictionary<string,int[]> nameweek { get; set; }
+        public Dictionary<string, int[]> nameweek { get; set; }
     }
 }

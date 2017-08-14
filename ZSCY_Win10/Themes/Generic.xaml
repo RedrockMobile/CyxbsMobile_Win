@@ -4,7 +4,7 @@
     xmlns:local="using:ZSCY_Win10.Resouces">
 
     <!--圆形进度条-->
-    <Style TargetType="local:CircularProgressBar" >
+    <Style TargetType="local:CircularProgressBar">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:CircularProgressBar">
@@ -23,7 +23,7 @@
                         <!--StrokeDashArray="{TemplateBinding RingLength}"  TemplateBinding RingWidth-->
                         <Ellipse  Name="ForegroudColor" Stroke="{TemplateBinding RingForegroundColor}" StrokeThickness="{TemplateBinding RingWidth}" StrokeDashArray="{TemplateBinding RingLength}" RenderTransformOrigin="0.5,0.5" StrokeDashCap="Round">
                             <Ellipse.RenderTransform>
-                                <RotateTransform Angle="-90"/>
+                                <RotateTransform Angle="-90" />
                             </Ellipse.RenderTransform>
                         </Ellipse>
 

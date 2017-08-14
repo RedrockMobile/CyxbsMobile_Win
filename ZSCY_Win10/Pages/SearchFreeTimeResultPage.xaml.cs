@@ -3,19 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Util;
@@ -31,14 +22,16 @@ namespace ZSCY.Pages
     {
         private ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>();
         private ObservableCollection<FreeList> mFreeList = new ObservableCollection<FreeList>();
-        string[] kb;
+        private string[] kb;
         private int week;
-        int[,] freeclasstime = new int[7, 6]; //7*6数组
+        private int[,] freeclasstime = new int[7, 6]; //7*6数组
+
         public SearchFreeTimeResultPage()
         {
             this.InitializeComponent();
             FreeListView.ItemsSource = mFreeList;
         }
+
         /// <summary>
         /// 在此页将要在 Frame 中显示时进行调用。
         /// </summary>
@@ -68,7 +61,6 @@ namespace ZSCY.Pages
                 rootFrame.GoBack();
                 e.Handled = true;
             }
-
         }
 
         private async void initFree()

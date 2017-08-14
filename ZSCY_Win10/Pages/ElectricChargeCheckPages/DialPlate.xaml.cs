@@ -1,31 +1,18 @@
-﻿using System;
-using Windows.UI;
+﻿using Microsoft.Graphics.Canvas.Brushes;
+using System;
+using System.ComponentModel;
 using System.Numerics;
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Effects;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Microsoft.Graphics.Canvas.Brushes;
-using System.ComponentModel;
-using System.Diagnostics;
-
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
 {
-    public sealed partial class DialPlate : UserControl,INotifyPropertyChanged
+    public sealed partial class DialPlate : UserControl, INotifyPropertyChanged
     {
         public DialPlate()
         {
@@ -50,9 +37,10 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
 
         public string DumpEnergyProperty   //电量剩余度数，注意长度不建议长于8位,表盘会溢出,string型,默认值--
         {
-            get {   return (string)GetValue(_dumpEnergyProperty); }
-            set {   SetValue(_dumpEnergyProperty, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DumpEnergyProperty")); }
+            get { return (string)GetValue(_dumpEnergyProperty); }
+            set { SetValue(_dumpEnergyProperty, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DumpEnergyProperty")); }
         }
+
         private static readonly DependencyProperty _dumpEnergyProperty = DependencyProperty.Register("Balance", typeof(string), typeof(DialPlate), new PropertyMetadata("--"));
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -74,14 +62,15 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
             brush.Center = new Vector2(200, 200);
 
             args.DrawingSession.FillCircle(200, 200, 200, brush);
-
         }
+
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             this.BGCycle.RemoveFromVisualTree();
             this.BGCycle = null;
         }
     }
+
     public class PercentValueToPoint : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -93,6 +82,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         {
             throw new NotImplementedException();
         }
+
         public Point GetPoint(double percent, double radius = 202)
         {
             double percentRad = percent / 100 * Math.PI;
@@ -100,6 +90,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
             return temp;
         }
     }
+
     public class PercentValueToPoint2 : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -111,6 +102,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
         {
             throw new NotImplementedException();
         }
+
         public Point GetPoint(double percent, double radius = 205)
         {
             double percentRad = percent / 100 * Math.PI;

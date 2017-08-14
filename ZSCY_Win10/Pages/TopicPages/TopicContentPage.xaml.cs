@@ -1,23 +1,11 @@
-﻿using LLQ;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Controls;
@@ -38,7 +26,7 @@ namespace ZSCY_Win10.Pages.TopicPages
         public int Topic_id;
         private static string resourceName = "ZSCY";
         public Topic para = new Topic();
-        ObservableCollection<Articles> al = new ObservableCollection<Articles>();
+        private ObservableCollection<Articles> al = new ObservableCollection<Articles>();
 
         public TopicContentPage()
         {
@@ -112,6 +100,7 @@ namespace ZSCY_Win10.Pages.TopicPages
         {
             this.Frame.Navigate(typeof(CommunityPage));
         }
+
         public Frame ArticlesFrame { get { return this.cframe; } }
 
         private void Join_Tapped(object sender, TappedRoutedEventArgs e)
@@ -122,12 +111,10 @@ namespace ZSCY_Win10.Pages.TopicPages
 
         private void likeButton_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void PhotoGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
-
         }
 
         private void TopicArticles_ItemClick(object sender, ItemClickEventArgs e)
@@ -146,15 +133,15 @@ namespace ZSCY_Win10.Pages.TopicPages
                     if (item.is_my_Like == "true")
                     {
                         item.is_my_Like = temp = "false";
-                        item.like_num =await LikeClick("7",item.article_id.ToString(),"false");
+                        item.like_num = await LikeClick("7", item.article_id.ToString(), "false");
                     }
                     else
                     {
                         item.is_my_Like = temp = "true";
-                        item.like_num =await LikeClick("7",item.article_id.ToString(),"true");
+                        item.like_num = await LikeClick("7", item.article_id.ToString(), "true");
                     }
             //LLQNotifier.Default.Notify(new LikeButtonClickEvent() { is_like = temp, num_id = num_id });
-            //Debug.WriteLine(num_id); 
+            //Debug.WriteLine(num_id);
         }
 
         public async Task<string> LikeClick(string type_id, string article_id, string yOn)

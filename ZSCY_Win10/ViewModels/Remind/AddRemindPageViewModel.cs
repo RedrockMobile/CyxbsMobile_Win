@@ -1,17 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZSCY_Win10.Models.RemindModels;
-using Windows.UI.Xaml;
-using ZSCY_Win10.Util.Remind;
-using ZSCY_Win10.Controls;
 using System.Diagnostics;
-using System.Collections.Generic;
-using ZSCY_Win10.Util;
+using System.Threading.Tasks;
+using Windows.UI.Xaml;
+using ZSCY_Win10.Models.RemindModels;
 using ZSCY_Win10.Resource;
-using Newtonsoft.Json;
+using ZSCY_Win10.Util;
+using ZSCY_Win10.Util.Remind;
 
 namespace ZSCY_Win10.ViewModels.Remind
 {
@@ -32,8 +28,8 @@ namespace ZSCY_Win10.ViewModels.Remind
                     new AddRemindModel._BeforeTimeClass() { BeforeTimeString = "提前一个小时", BeforeTime = new TimeSpan(1, 0, 0) ,IconVisibility=Visibility.Collapsed }
                }
             );
-
         }
+
         private AddRemindModel _RemindModel;
 
         public AddRemindModel RemindModel
@@ -49,6 +45,7 @@ namespace ZSCY_Win10.ViewModels.Remind
                 RaisePropertyChanged(nameof(RemindModel));
             }
         }
+
         public async void AddRemind(string content, string title)
         {
             List<RemindSystemModel> remindSystemList = new List<RemindSystemModel>();
@@ -60,7 +57,7 @@ namespace ZSCY_Win10.ViewModels.Remind
                 int indexBefore = App.indexBefore;
                 string json = "";
                 var temp = await AddRemindBakcup(content, title, weekString, indexBefore);
-                AddRemindBackModel backInfo=new AddRemindBackModel();
+                AddRemindBackModel backInfo = new AddRemindBackModel();
                 if (!temp.Item1.Equals(""))
                     backInfo = JsonConvert.DeserializeObject<AddRemindBackModel>(temp.Item1);
                 json = temp.Item2;
@@ -70,14 +67,13 @@ namespace ZSCY_Win10.ViewModels.Remind
                     localId = await RemindSystemUtil.AddAllRemind(remindSystemList, beforeTime);
 
                 DatabaseMethod.ToDatabase(backInfo.Id.ToString(), json, localId);
-
             }
             catch (Exception n)
             {
                 Debug.WriteLine(n);
             }
         }
-       
+
         private static string GetSelWeek(string content, string title, List<RemindSystemModel> remindSystemList)
         {
             string weekString = "";
@@ -85,7 +81,6 @@ namespace ZSCY_Win10.ViewModels.Remind
             {
                 GetSelClassTime(content, title, remindSystemList, week);
                 weekString += $"{week + 1},";
-               
             }
             weekString = weekString.Remove(weekString.Length - 1);
             return weekString;
@@ -109,19 +104,18 @@ namespace ZSCY_Win10.ViewModels.Remind
                     localId = await RemindSystemUtil.AddAllRemind(remindSystemList, beforeTime);
                 DatabaseMethod.EditItem(remind.Num, remind.Id, json, localId);
                 //DatabaseMethod.ToDatabase(remind.Id.ToString(), json, localId);
-
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
             }
         }
+
         private static void GetSelClassTime(string content, string title, List<RemindSystemModel> remindSystemList, int week)
         {
             DateTime oneWeekTime = WeekNumClass.OneWeek();
             foreach (var item in App.SelCoursList)
             {
-
                 DateTime remindTime = oneWeekTime.Add(item.NowTime()).AddDays(week * 7);
                 if (remindTime < DateTime.Now)
                 {
@@ -151,7 +145,6 @@ namespace ZSCY_Win10.ViewModels.Remind
                 remindBackup.Time = Convert.ToInt32(App.addRemindViewModel.RemindModel.BeforeTime[indexBefore].BeforeTime.TotalMinutes);
             remindBackup.DateItems = new List<DateModel>();
 
-
             foreach (var item in App.SelCoursList)
             {
                 remindBackup.DateItems.Add(new DateModel()
@@ -171,7 +164,6 @@ namespace ZSCY_Win10.ViewModels.Remind
             }
             finally
             {
-
             }
             return
                new Tuple<string, string>
@@ -179,8 +171,8 @@ namespace ZSCY_Win10.ViewModels.Remind
                 returnString,
                 json
                );
-
         }
+
         private async Task<RemindBackupModel> EditRemindBackup(string content, string title, string week, int indexBefore, RemindListModel remind)
         {
             var user = GetCredential.getCredential("ZSCY");

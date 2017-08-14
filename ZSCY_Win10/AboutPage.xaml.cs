@@ -1,21 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel.Store;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Phone.UI.Input;
-using Windows.System;
+﻿using System.Diagnostics;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
@@ -51,14 +37,11 @@ namespace ZSCY_Win10
             //HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageStart("AboutPage");
         }
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             //HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
             UmengSDK.UmengAnalytics.TrackPageEnd("AboutPage");
         }
-
-
-
-
     }
 }

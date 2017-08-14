@@ -3,19 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Util;
@@ -30,7 +22,8 @@ namespace ZSCY_Win10
     public sealed partial class JWPage : Page
     {
         private int page = 1;
-        ObservableCollection<JWList> JWList = new ObservableCollection<JWList>();
+        private ObservableCollection<JWList> JWList = new ObservableCollection<JWList>();
+
         public JWPage()
         {
             this.InitializeComponent();
@@ -83,8 +76,6 @@ namespace ZSCY_Win10
             UmengSDK.UmengAnalytics.TrackPageStart("JWPage");
         }
 
-
-
         private async void getJWCache()
         {
             JWList = await getCache();
@@ -97,7 +88,6 @@ namespace ZSCY_Win10
             //{
             //    JWList.Add(JWListitem);
             //}
-
         }
 
         public static async Task<ObservableCollection<JWList>> getCache()
@@ -115,6 +105,7 @@ namespace ZSCY_Win10
             App.JWListCache = JWList;
             UmengSDK.UmengAnalytics.TrackPageEnd("JWPage");
         }
+
         private async void initJWList(int page = 1)
         {
             JWListFailedStackPanel.Visibility = Visibility.Collapsed;
@@ -254,8 +245,6 @@ namespace ZSCY_Win10
 
         private void JWListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
-
             JWList JWItem = new JWList(((JWList)e.ClickedItem).ID, ((JWList)e.ClickedItem).Title, ((JWList)e.ClickedItem).Date, ((JWList)e.ClickedItem).Read, ((JWList)e.ClickedItem).Content == null ? "加载中..." : ((JWList)e.ClickedItem).Content);
 
             Debug.WriteLine("JWListgrid.Width" + JWListgrid.Width);

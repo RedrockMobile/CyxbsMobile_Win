@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using ZSCY_Win10.Data.Community;
@@ -14,8 +12,10 @@ namespace ZSCY_Win10.Service
     public class CommunityMyContentService
     {
         public static ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+
         //const string api = "cyxbsMobile/index.php/Home/Article/searchContent";
-        const string api = "cyxbsMobile/index.php/Home/NewArticle/searchContent";
+        private const string api = "cyxbsMobile/index.php/Home/NewArticle/searchContent";
+
         private static string resourceName = "ZSCY";
 
         public static async Task<MyFeed> GetFeed(int type_id, string article_id)
@@ -56,7 +56,6 @@ namespace ZSCY_Win10.Service
             }
             catch (Exception) { }
             return null;
-
         }
 
         public static async Task<HotFeed> GetHotFeed(int type_id, string article_id)
@@ -89,7 +88,6 @@ namespace ZSCY_Win10.Service
             }
             catch (Exception) { }
             return null;
-
         }
     }
 }

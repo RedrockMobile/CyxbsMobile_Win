@@ -3,20 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
-using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
@@ -34,20 +26,19 @@ namespace ZSCY_Win10.Pages.CommunityPages
     /// </summary>
     public sealed partial class CommunityMyContentPage : Page
     {
-        CommunityMyContentViewModel ViewModel;
-        List<Img> clickImgList = new List<Img>();
-        bool isMark2Peo = false;//是否有回复某人
-        string Mark2PeoNum = "0";
-        ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
-        ObservableCollection<Mark> markList = new ObservableCollection<Mark>();
-        NavigationEventArgs ee;
-        int clickImfIndex = 0;
-        int remarkPage = 0;
-        double oldmarkScrollViewerOffset = 0;
-        bool isfirst = true;
-        bool issend = false;
+        private CommunityMyContentViewModel ViewModel;
+        private List<Img> clickImgList = new List<Img>();
+        private bool isMark2Peo = false;//是否有回复某人
+        private string Mark2PeoNum = "0";
+        private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private ObservableCollection<Mark> markList = new ObservableCollection<Mark>();
+        private NavigationEventArgs ee;
+        private int clickImfIndex = 0;
+        private int remarkPage = 0;
+        private double oldmarkScrollViewerOffset = 0;
+        private bool isfirst = true;
+        private bool issend = false;
         private static string resourceName = "ZSCY";
-
 
         public CommunityMyContentPage()
         {
@@ -101,7 +92,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 App.isPerInfoContentImgShow = false;
                 //if (Utils.getPhoneWidth() > 800)
                 //{
-
                 //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                 //}
                 //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
@@ -110,8 +100,8 @@ namespace ZSCY_Win10.Pages.CommunityPages
 
         private void LikeButton_Click(object sender, RoutedEventArgs e)
         {
-
         }
+
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             ee = e;
@@ -135,8 +125,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 type_id = "5";
                 id = (ee.Parameter as MyNotification).article_id;
             }
-
-
 
             //if (ViewModel.BBDD != null)
             //{
@@ -300,7 +288,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             }
             //if (clickMarkItem.stunum != appSetting.Values["stuNum"].ToString())
             if (clickMarkItem.stunum != credentialList[0].UserName)
-                {
+            {
                 sendMarkTextBox.Text = "回复 " + clickMarkItem.nickname + " : " + sendMarkTextBox.Text;
                 Mark2PeoNum = clickMarkItem.stunum;
             }
@@ -363,6 +351,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             {
             }
         }
+
         private void CommunityItemPhotoImage_ImageOpened(object sender, RoutedEventArgs e)
         {
             DependencyObject x = VisualTreeHelper.GetParent(sender as Image);

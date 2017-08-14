@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml.Data;
 
 namespace ZSCY_Win10.Util.Converter
 {
-    class StarFillConverter : IValueConverter
+    internal class StarFillConverter : IValueConverter
     {
-        ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
-
+        private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -42,7 +37,6 @@ namespace ZSCY_Win10.Util.Converter
                 }
             }
             return "/Assets/starun.png";
-
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

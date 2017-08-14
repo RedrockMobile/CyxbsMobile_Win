@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZSCY.Data
 {
-    class EmptyRoomList
+    internal class EmptyRoomList
     {
         public string Room { get; set; }
         public string[] RoomArray { get; set; }

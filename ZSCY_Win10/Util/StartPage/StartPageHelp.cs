@@ -1,19 +1,16 @@
 ﻿using SQLite.Net;
 using SQLite.Net.Platform.WinRT;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
 using ZSCY_Win10.Data.StartPage;
-using ZSCY_Win10.Models.StartPageModels;
 
 namespace ZSCY_Win10.Util.StartPage
 {
@@ -22,11 +19,13 @@ namespace ZSCY_Win10.Util.StartPage
         public readonly static string StartImageDB = Path.Combine(ApplicationData.Current.LocalFolder.Path, "StartImage.db");
         private string ImagePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "");
         private static StorageFolder _ImagesPath;
+
         public static StorageFolder ImagesPath
         {
             get => _ImagesPath;
             private set => _ImagesPath = value;
         }
+
         static StartPageHelp()
         {
             GetDBPath();
@@ -36,6 +35,7 @@ namespace ZSCY_Win10.Util.StartPage
         {
             ImagesPath = await ApplicationData.Current.LocalFolder.CreateFolderAsync("images_cache", CreationCollisionOption.OpenIfExists);
         }
+
         public static bool HasImage()
         {
             using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), StartPageHelp.StartImageDB))
@@ -50,8 +50,9 @@ namespace ZSCY_Win10.Util.StartPage
                 }
             }
         }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="url"></param>
         /// <param name="name"></param>
@@ -61,9 +62,11 @@ namespace ZSCY_Win10.Util.StartPage
             WriteableBitmap wb = await GetWriteableBitmapAsync(url);
             await SaveImageAsync(wb, name);
         }
+
         #region 数据库方法
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="dataItem"></param>
         /// <returns>true：数据库中无此数据，并已经插入</returns>
@@ -82,6 +85,7 @@ namespace ZSCY_Win10.Util.StartPage
             }
             return isSuccess;
         }
+
         public static bool GetImageFromDB(ref Database databaseTemp)
         {
             bool isSuccess = false;
@@ -89,7 +93,6 @@ namespace ZSCY_Win10.Util.StartPage
             {
                 try
                 {
-
                     var list = conn.Table<Database>();
                     var array = list.ToList();
                     array.Sort((x, y) =>
@@ -130,14 +133,12 @@ namespace ZSCY_Win10.Util.StartPage
                 }
                 catch (Exception ex)
                 {
-
                     conn.CreateTable<Database>();
                 }
-
-
             }
             return isSuccess;
         }
+
         public static void DeleteDatabase(Database dataItem)
         {
             using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), StartImageDB))
@@ -146,8 +147,10 @@ namespace ZSCY_Win10.Util.StartPage
             }
         }
 
-        #endregion
+        #endregion 数据库方法
+
         #region 图片缓存辅助方法
+
         public static DateTime GetTime(string time)
         {
             DateTime dt = new DateTime();
@@ -161,13 +164,12 @@ namespace ZSCY_Win10.Util.StartPage
             }
             return dt;
         }
+
         private async static Task<IBuffer> getBufferHttp(string url)
         {
-
             Windows.Web.Http.HttpClient http = new Windows.Web.Http.HttpClient();
             var response = await http.GetBufferAsync(new Uri(url));
             return response;
-
         }
 
         private async static Task<WriteableBitmap> GetWriteableBitmapAsync(string url)
@@ -240,8 +242,8 @@ namespace ZSCY_Win10.Util.StartPage
             {
                 return;
             }
-
         }
-        #endregion
+
+        #endregion 图片缓存辅助方法
     }
 }

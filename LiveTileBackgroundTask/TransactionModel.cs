@@ -1,29 +1,29 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiveTileBackgroundTask
 {
-    class DateInTransaction
+    internal class DateInTransaction
     {
         //字段class 很强势
         [JsonProperty(PropertyName = "class")]
         public int _Class { get; set; }
+
         public int Day { get; set; }
         public int[] Week { get; set; }
         public int WeekLength { get; set; }
     }
 
-    class Transaction
+    internal class Transaction
     {
         public long id { get; set; }
+
         //这个高级用法并没有卵用
         //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Time { get; set; }
+
         public string Title { get; set; }
         public string Content { get; set; }
         public List<DateInTransaction> Date { get; set; }
@@ -31,7 +31,6 @@ namespace LiveTileBackgroundTask
 
         public void GetAttribute(JObject TransationDetailJObject)
         {
-
             //接口改了 现在事项在哪节课/周数/星期存在date集合里 2016年11月17日23:07:23
             id = (long)TransationDetailJObject["id"];
 
@@ -52,7 +51,6 @@ namespace LiveTileBackgroundTask
                 _templist = Date[i].Week.ToList<int>();
                 Date[i].WeekLength = _templist.Count;
             }
-
         }
     }
 }

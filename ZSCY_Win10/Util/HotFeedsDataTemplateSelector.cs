@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using ZSCY_Win10.Data.Community;
 
@@ -20,13 +15,11 @@ namespace ZSCY_Win10.Util
             if (element != null && item != null)
             {
                 HotFeed h = item as HotFeed;
-                if (h!=null&&h.content.contentbase != null)
+                if (h != null && h.content.contentbase != null)
                     return nBBDDTemplate;
                 else return BBDDTemplate;
             }
             return null;
         }
-
-
     }
 }

@@ -11,18 +11,18 @@
     Background="#068cfd">
 
     <Page.Resources>
-        <converter:FreeisTiVisConverter x:Key="FreeisTiVisConverter"/>
-        <converter:FreeisCoVisConverter x:Key="FreeisCoVisConverter"/>
-        <converter:FreeWeekdayCoVisConverter x:Key="FreeWeekdayCoVisConverter"/>
-        <converter:FreeTimeCoVisConverter x:Key="FreeTimeCoVisConverter"/>
+        <converter:FreeisTiVisConverter x:Key="FreeisTiVisConverter" />
+        <converter:FreeisCoVisConverter x:Key="FreeisCoVisConverter" />
+        <converter:FreeWeekdayCoVisConverter x:Key="FreeWeekdayCoVisConverter" />
+        <converter:FreeTimeCoVisConverter x:Key="FreeTimeCoVisConverter" />
     </Page.Resources>
 
     <Grid Background="#fff">
         <Grid.RowDefinitions>
-            <!--<RowDefinition Height="auto"/>-->
+            <!--<RowDefinition Height="auto" />-->
             <RowDefinition />
         </Grid.RowDefinitions>
-        <!--<StackPanel VerticalAlignment="Top" Orientation="Horizontal" Grid.Row="0" Background="#068cfd" >
+        <!--<StackPanel VerticalAlignment="Top" Orientation="Horizontal" Grid.Row="0" Background="#068cfd">
             <TextBlock Text="找空闲" FontSize="35" VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" Margin="15,0,0,0"></TextBlock>
         </StackPanel>-->
 
@@ -32,23 +32,19 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-                            <TextBlock Text="{Binding weekday,Converter={StaticResource FreeWeekdayCoVisConverter}}" Visibility="{Binding vis,Converter={StaticResource FreeisTiVisConverter}}" FontSize="15" Foreground="#068cfd"/>
-                            <StackPanel Visibility="{Binding vis,Converter={StaticResource FreeisCoVisConverter}}" >
+                            <TextBlock Text="{Binding weekday,Converter={StaticResource FreeWeekdayCoVisConverter}}" Visibility="{Binding vis,Converter={StaticResource FreeisTiVisConverter}}" FontSize="15" Foreground="#068cfd" />
+                            <StackPanel Visibility="{Binding vis,Converter={StaticResource FreeisCoVisConverter}}">
                                 <TextBlock Text="{Binding time,Converter={StaticResource FreeTimeCoVisConverter}}" Margin="0,0,0,1" FontSize="25" Foreground="#333" VerticalAlignment="Center"></TextBlock>
                                 <Line Margin="0,0,0,10" X1="0" X2="{Binding ActualWidth, ElementName=page, Mode=OneWay}" Stroke="Black" StrokeThickness="1"></Line>
                             </StackPanel>
                         </Grid>
-
                     </DataTemplate>
                 </ListView.ItemTemplate>
-
             </ListView>
 
-
-
             <StackPanel Name="FreeLoddingStackPanel" VerticalAlignment="Center">
-                <TextBlock Name="FreeLoddingTextBlock" HorizontalAlignment="Center" FontSize="15" Margin="0,0,0,5" Foreground="#333" Text="正在加载..."/>
-                <ProgressBar Name="FreeLoddingProgressBar" IsIndeterminate="False" Value="0"/>
+                <TextBlock Name="FreeLoddingTextBlock" HorizontalAlignment="Center" FontSize="15" Margin="0,0,0,5" Foreground="#333" Text="正在加载..." />
+                <ProgressBar Name="FreeLoddingProgressBar" IsIndeterminate="False" Value="0" />
             </StackPanel>
         </Grid>
     </Grid>

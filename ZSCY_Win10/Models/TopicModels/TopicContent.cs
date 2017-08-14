@@ -1,11 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Models.TopicModels;
 
 namespace ZSCY_Win10.Models.Topic

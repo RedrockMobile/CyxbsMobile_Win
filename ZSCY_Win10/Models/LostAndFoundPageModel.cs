@@ -1,10 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Media.Imaging;
@@ -12,9 +9,10 @@ using ZSCY_Win10.ViewModels;
 
 namespace ZSCY_Win10.Models
 {
-    class LostAndFoundPageModel
+    internal class LostAndFoundPageModel
     {
-        string[] catalog = { "", "一卡通", "钱包", "钥匙", "电子产品", "雨伞", "衣物", "其他" };
+        private string[] catalog = { "", "一卡通", "钱包", "钥匙", "电子产品", "雨伞", "衣物", "其他" };
+
         public async Task<LostAndFoundPageViewModel> LoadItems(string uri, int cat = 0)
         {
             LostAndFoundPageViewModel LFPVM = new LostAndFoundPageViewModel();
@@ -36,7 +34,7 @@ namespace ZSCY_Win10.Models
             }
             return LFPVM;
         }
-        
+
         protected async Task<string> GetJson(string Uri)
         {
             var uri = new Uri(Uri);
@@ -58,6 +56,7 @@ namespace ZSCY_Win10.Models
             }
             return content;
         }
+
         protected LostAndFoundPageViewModel JsonToObject(string Json)
         {
             //var lostAndFoundPageViewMode = new LostAndFoundPageViewMode();

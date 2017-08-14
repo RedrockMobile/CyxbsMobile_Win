@@ -4,12 +4,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.Storage.Streams;
@@ -19,8 +15,6 @@ using Windows.UI.Text;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
@@ -49,18 +43,21 @@ namespace ZSCY_Win10
         private string hubSectionChange = "KBHubSection";
         private string kb = "";
         private string stuNum = "";
+
         //private  ObservableCollection<Group>  morepageclass=new ObservableCollection<Group>();
         private ObservableDictionary morepageclass = new ObservableDictionary();
+
         //private  ObservableCollection<Morepageclass> morepageclass= new ObservableCollection<Morepageclass>();
         //private string[,,] classtime = new string[7, 6,*];
-        string[,][] classtime = new string[7, 6][];
+        private string[,][] classtime = new string[7, 6][];
 
-        List<ClassList> classList = new List<ClassList>();
-        ObservableCollection<JWList> JWList = new ObservableCollection<JWList>();
+        private List<ClassList> classList = new List<ClassList>();
+        private ObservableCollection<JWList> JWList = new ObservableCollection<JWList>();
 
-        Grid backweekgrid = new Grid();
+        private Grid backweekgrid = new Grid();
 
-        IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
+        private IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
+
         public ObservableDictionary Morepageclass
         {
             get
@@ -68,6 +65,7 @@ namespace ZSCY_Win10
                 return morepageclass;
             }
         }
+
         public MainPage_m()
         {
             this.InitializeComponent();
@@ -90,6 +88,7 @@ namespace ZSCY_Win10
             //initKB();
             initJW();
         }
+
         private void SetKebiaoGridBorder()
         {
             //边框
@@ -167,7 +166,6 @@ namespace ZSCY_Win10
 
             await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 2, 140, 253), Colors.White, text: "课表刷新中...", isIndeterminate: true);
 
-
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
 
@@ -180,7 +178,6 @@ namespace ZSCY_Win10
                 kb = kbtemp;
                 Debug.WriteLine("DateTimeOffset.Now.ToString()" + DateTimeOffset.Now.ToString());
                 appSetting.Values["HttpTime"] = DateTimeOffset.Now.Year.ToString() + "/" + DateTimeOffset.Now.Month.ToString() + "/" + DateTimeOffset.Now.Day.ToString();
-
             }
             Debug.WriteLine("kb->" + kb);
             if (kb != "")
@@ -236,32 +233,32 @@ namespace ZSCY_Win10
             StatusBar statusBar = StatusBar.GetForCurrentView();
             await statusBar.ProgressIndicator.HideAsync();
         }
+
         public DateTime GetWeekFirstDayMon(DateTime datetime)
         {
-            //星期一为第一天   
+            //星期一为第一天
             int weeknow = Convert.ToInt32(datetime.DayOfWeek);
 
-            //因为是以星期一为第一天，所以要判断weeknow等于0时，要向前推6天。   
+            //因为是以星期一为第一天，所以要判断weeknow等于0时，要向前推6天。
             weeknow = (weeknow == 0 ? (7 - 1) : (weeknow - 1));
             int daydiff = (-1) * weeknow;
 
-            //本周第一天   
+            //本周第一天
             string FirstDay = datetime.AddDays(daydiff).ToString("yyyy-MM-dd");
             return Convert.ToDateTime(FirstDay);
         }
 
         public DateTime GetWeekLastDaySun(DateTime datetime)
         {
-            //星期天为最后一天   
+            //星期天为最后一天
             int weeknow = Convert.ToInt32(datetime.DayOfWeek);
             weeknow = (weeknow == 0 ? 7 : weeknow);
             int daydiff = (7 - weeknow);
 
-            //本周最后一天   
+            //本周最后一天
             string LastDay = datetime.AddDays(daydiff).ToString("yyyy-MM-dd");
             return Convert.ToDateTime(LastDay);
         }
-
 
         /// <summary>
         /// 显示课表
@@ -273,7 +270,6 @@ namespace ZSCY_Win10
             for (int i = 0; i < 7; i++)
                 for (int j = 0; j < 6; j++)
                     classtime[i, j] = null;
-
 
             kebiaoGrid.Children.Clear();
             SetKebiaoGridBorder();
@@ -325,9 +321,7 @@ namespace ZSCY_Win10
                 }
             }
             appSettingclass.Values.Clear();
-
         }
-
 
         /// <summary>
         /// 课程格子的填充
@@ -336,7 +330,6 @@ namespace ZSCY_Win10
         /// <param name="ClassColor">颜色数组，0~9</param>
         private void SetClass(ClassList item, int ClassColor)
         {
-
             Color[] colors = new Color[]{
                    //Color.FromArgb(255,132, 191, 19),
                    //Color.FromArgb(255,67, 182, 229),
@@ -447,7 +440,7 @@ namespace ZSCY_Win10
             paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
             string jw = await NetWork.getHttpWebRequest("api/jwNewsList", paramList);
             Debug.WriteLine("jw->" + jw);
-             JWListProgressStackPanel.Visibility = Visibility.Collapsed;
+            JWListProgressStackPanel.Visibility = Visibility.Collapsed;
             if (jw != "")
             {
                 JObject obj = JObject.Parse(jw);
@@ -566,8 +559,6 @@ namespace ZSCY_Win10
             if (e.NavigationMode == NavigationMode.Forward || e.NavigationMode == NavigationMode.New)
                 initKB();
 
-
-
             //PushNotificationChannel channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
             // 如果本地设置中没有相关键，表明是第一次使用
             // 需要存储URL，并发送给服务器
@@ -590,7 +581,6 @@ namespace ZSCY_Win10
 
             //System.Diagnostics.Debug.WriteLine(channel.Uri);
             //SendURL(channel.Uri);
-
         }
 
         /// <summary>
@@ -627,9 +617,8 @@ namespace ZSCY_Win10
             //}
             //this.MoreHubSection.DataContext = morepageclass;
             //this.fuck.ItemsSource = morepageclass;
-
-
         }
+
         //离开页面时，取消事件
         protected async override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -638,7 +627,6 @@ namespace ZSCY_Win10
             await statusBar.ProgressIndicator.HideAsync();
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
             //this.navigationHelper.OnNavigatedFrom(e);
-
         }
 
         private async void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)//重写后退按钮，如果要对所有页面使用，可以放在App.Xaml.cs的APP初始化函数中重写。
@@ -685,6 +673,7 @@ namespace ZSCY_Win10
                         JWRefreshAppBarButton.Visibility = Visibility.Collapsed;
                         MoreSwitchAppBarButton.Visibility = Visibility.Collapsed;
                         break;
+
                     case "JWHubSection":
                         // MoreBlueGRGrid.Opacity = 0;
 
@@ -694,6 +683,7 @@ namespace ZSCY_Win10
                         JWRefreshAppBarButton.Visibility = Visibility.Visible;
                         MoreSwitchAppBarButton.Visibility = Visibility.Collapsed;
                         break;
+
                     case "MoreHubSection":
                         //MoreGRGrid.Margin = new Thickness(-20,0,0,0);
                         //MoveMoreBlueGRGrid.Begin();
@@ -717,7 +707,6 @@ namespace ZSCY_Win10
         /// <param name="e"></param>
         private void KBRefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-
             //stuNum = appSetting.Values["stuNum"].ToString();
             var vault = new Windows.Security.Credentials.PasswordVault();
             var credentialList = vault.FindAllByResource(resourceName);
@@ -776,7 +765,6 @@ namespace ZSCY_Win10
             initJW();
         }
 
-
         /// <summary>
         /// 切换账号
         /// </summary>
@@ -802,11 +790,13 @@ namespace ZSCY_Win10
             else
                 Utils.Message("请输入正确的学号");
         }
+
         private void HubSectionKBNum_Tapped(object sender, TappedRoutedEventArgs e)
         {
             KBNumFlyout.ShowAt(MainHub);
             HubSectionKBNum.SelectAll();
         }
+
         private void KBNumSearchButton_Click(object sender, RoutedEventArgs e)
         {
             if (KBNumFlyoutTextBox.Text != "" && KBNumFlyoutTextBox.Text.IndexOf(".") == -1)
@@ -823,13 +813,11 @@ namespace ZSCY_Win10
                 Utils.Message("请输入正确的周次");
         }
 
-
         private void continueJWGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             page++;
             initJW(page);
         }
-
 
         private async void ItemView_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -845,16 +833,20 @@ namespace ZSCY_Win10
                 case "ClassRoom":
                     Frame.Navigate(typeof(EmptyRoomsPage));
                     break;
+
                 case "Calendar":
                     Frame.Navigate(typeof(CalendarPage));
                     break;
+
                 case "FreeTime":
                     //Frame.Navigate(typeof(SearchFreeTimeNumPage));
                     break;
+
                 case "Card":
                     var a = await Launcher.LaunchUriAsync(new Uri("cquptcard:"));
                     Debug.WriteLine(a);
                     break;
+
                 default:
                     break;
             }

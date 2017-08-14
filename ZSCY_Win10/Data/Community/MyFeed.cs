@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Diagnostics;
 using Windows.Storage;
 using ZSCY_Win10.Common;
@@ -25,6 +21,7 @@ namespace ZSCY_Win10.Data.Community
         public string created_time { get; set; }
         public string updated_time { get; set; }
         public string like_num { get; set; }
+
         public string remark_num
         {
             get
@@ -37,6 +34,7 @@ namespace ZSCY_Win10.Data.Community
                 OnPropertyChanged(nameof(remark_num));
             }
         }
+
         public string nickname
         {
             get
@@ -49,6 +47,7 @@ namespace ZSCY_Win10.Data.Community
                 OnPropertyChanged();
             }
         }
+
         public string headimg
         {
             get
@@ -61,7 +60,6 @@ namespace ZSCY_Win10.Data.Community
                 OnPropertyChanged();
             }
         }
-
 
         public void GetAttributes(JObject feedsJObject, bool myfeed = false)
         {
@@ -126,7 +124,6 @@ namespace ZSCY_Win10.Data.Community
                 catch (Exception e)
                 {
                     Debug.WriteLine(e.Message);
-
                 }
             }
         }

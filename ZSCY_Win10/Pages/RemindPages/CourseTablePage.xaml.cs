@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using System.Linq;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using ZSCY_Win10.Models.RemindModels;
 
@@ -29,6 +20,7 @@ namespace ZSCY_Win10.Pages.RemindPages
         private static SolidColorBrush MainGridBorderBrush = new SolidColorBrush(Color.FromArgb(255, 246, 246, 246));
         private static SolidColorBrush MainRectUnselectColor = new SolidColorBrush(Colors.White);
         private static SolidColorBrush MainRectSelectColor = new SolidColorBrush(Color.FromArgb(255, 65, 162, 255));
+
         /// <summary>
         /// 关于行的需要除以2
         /// </summary>
@@ -49,7 +41,6 @@ namespace ZSCY_Win10.Pages.RemindPages
              };
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
-
 
         private void InitializeCourseTable()
         {
@@ -89,10 +80,9 @@ namespace ZSCY_Win10.Pages.RemindPages
                     Grid.SetRowSpan(MainGrid, 2);
                     Grid.SetColumn(MainGrid, j);
                     MainRect.Tapped += MainRect_Tapped;
-
                 }
-
         }
+
         private void SelectCourse(Rectangle mainRect, int r, int c, bool isReload = false)
         {
             if (mainRect.Fill == MainRectUnselectColor)
@@ -108,6 +98,7 @@ namespace ZSCY_Win10.Pages.RemindPages
                 App.SelCoursList.RemoveAt(index);
             }
         }
+
         /// <summary>
         /// 选择
         /// </summary>
@@ -127,7 +118,6 @@ namespace ZSCY_Win10.Pages.RemindPages
             App.addRemindViewModel.RemindModel.DayAndClass = "";
             if (App.SelCoursList.Count > 0)
             {
-
                 var list = App.SelCoursList.OrderBy(x => x.DayNum).ThenBy(y => y.ClassNum).ToList<SelCourseModel>();
                 foreach (var item in list)
                 {
@@ -138,7 +128,6 @@ namespace ZSCY_Win10.Pages.RemindPages
             }
             this.Visibility = Visibility.Collapsed;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-
         }
     }
 }

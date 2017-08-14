@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
-using ZSCY.Models;
 
 namespace ZSCY_Win10.Models.RemindModels
 {
@@ -19,6 +14,7 @@ namespace ZSCY_Win10.Models.RemindModels
             FontColor = new SolidColorBrush(Color.FromArgb(255, 89, 89, 89));
             BackgroundColor = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
         }
+
         public static DateTime OneWeek()
         {
             ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
@@ -27,12 +23,13 @@ namespace ZSCY_Win10.Models.RemindModels
             int today = day == 0 ? 7 : day;
             int totalDay = (num - 1) * 7 + today - 1;
             DateTime oneWeekFrist = DateTime.Now - DateTime.Now.TimeOfDay;
-           oneWeekFrist= oneWeekFrist.AddDays(-totalDay);
+            oneWeekFrist = oneWeekFrist.AddDays(-totalDay);
 #if DEBUG
             oneWeekFrist = new DateTime(2017, 2, 27);
 #endif
             return oneWeekFrist;
         }
+
         public void SelectItem()
         {
             if (!IsSelected)
@@ -48,11 +45,13 @@ namespace ZSCY_Win10.Models.RemindModels
                 BackgroundColor.Color = Color.FromArgb(255, 255, 255, 255);
             }
         }
+
         private int _WeekNum;
         private bool _IsSelected;
         private SolidColorBrush _FontColor;
         private SolidColorBrush _BackgroundColor;
         public static int NextId = 1;
+
         public int WeekNum
         {
             get

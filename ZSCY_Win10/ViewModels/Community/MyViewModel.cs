@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using ZSCY_Win10.Common;
@@ -13,11 +11,12 @@ namespace ZSCY_Win10.ViewModels.Community
 {
     public class MyViewModel : ViewModelBase
     {
-        ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
 
         public ObservableCollection<MyNotification> MyNotify { get; private set; } = new ObservableCollection<MyNotification>();
         public ObservableCollection<MyFeed> MyFeedlist { get; private set; } = new ObservableCollection<MyFeed>();
         private PeoInfo info;
+
         public PeoInfo Info
         {
             get
@@ -31,12 +30,15 @@ namespace ZSCY_Win10.ViewModels.Community
                 OnPropertyChanged(nameof(Info));
             }
         }
+
         public int notificationspage = 0;
         public int feedspage = 0;
+
         public MyViewModel()
         {
             Get();
         }
+
         private async Task Get()
         {
             getNotifications();
@@ -74,6 +76,5 @@ namespace ZSCY_Win10.ViewModels.Community
                 MyFeedlist.Add(f[i]);
             }
         }
-
     }
 }

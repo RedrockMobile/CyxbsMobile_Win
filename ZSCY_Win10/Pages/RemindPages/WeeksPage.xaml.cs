@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI;
+﻿using System.Linq;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.ViewModels.Remind;
 
@@ -25,16 +15,14 @@ namespace ZSCY_Win10.Pages.RemindPages
     /// </summary>
     public sealed partial class WeeksPage : Page
     {
+        private WeeksPageViewModel viewmodel = new WeeksPageViewModel();
 
-        WeeksPageViewModel viewmodel = new WeeksPageViewModel();
         public WeeksPage()
         {
             this.InitializeComponent();
             WeekListGridView.ItemsSource = viewmodel.WeekNumList;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
-
-
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -58,7 +46,6 @@ namespace ZSCY_Win10.Pages.RemindPages
             }
             this.Visibility = Visibility.Collapsed;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-
         }
 
         private void SelWeek_Tapped(object sender, TappedRoutedEventArgs e)

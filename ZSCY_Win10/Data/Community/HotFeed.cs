@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using ZSCY_Win10.Common;
 
 namespace ZSCY_Win10.Data.Community
@@ -25,6 +21,7 @@ namespace ZSCY_Win10.Data.Community
         public string time { get; set; }
         public HotFeedsContentBase content { get; set; }
         public Img[] img { get; set; }
+
         public string like_num
         {
             get
@@ -37,6 +34,7 @@ namespace ZSCY_Win10.Data.Community
                 OnPropertyChanged(nameof(like_num));
             }
         }
+
         public string remark_num
         {
             get
@@ -49,6 +47,7 @@ namespace ZSCY_Win10.Data.Community
                 OnPropertyChanged(nameof(remark_num));
             }
         }
+
         public string is_my_Like
         {
             get
@@ -129,8 +128,8 @@ namespace ZSCY_Win10.Data.Community
                             else
                             {
                                 img[j] = new Img();
-                                img[j].ImgSrc =  i[j];
-                                img[j].ImgSmallSrc =  i[j];
+                                img[j].ImgSrc = i[j];
+                                img[j].ImgSmallSrc = i[j];
                             }
                         }
                         else
@@ -139,7 +138,6 @@ namespace ZSCY_Win10.Data.Community
                             img[j].ImgSrc = img[j].ImgSmallSrc = "";
                         }
                     }
-
                 }
                 catch (Exception e)
                 {

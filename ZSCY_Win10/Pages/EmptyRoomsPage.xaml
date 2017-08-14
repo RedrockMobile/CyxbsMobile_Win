@@ -11,20 +11,19 @@
     x:Name="itemPage"
     Background="#068cfd">
 
-
     <Grid Name="itemStackPanel">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="LightGray">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1 *"/>
-                <ColumnDefinition Width="1 *"/>
-                <ColumnDefinition Width="1 *"/>
-                <ColumnDefinition Width="1 *"/>
-                <ColumnDefinition Width="1 *"/>
-                <ColumnDefinition Width="1 *"/>
+                <ColumnDefinition Width="1 *" />
+                <ColumnDefinition Width="1 *" />
+                <ColumnDefinition Width="1 *" />
+                <ColumnDefinition Width="1 *" />
+                <ColumnDefinition Width="1 *" />
+                <ColumnDefinition Width="1 *" />
             </Grid.ColumnDefinitions>
             <Grid Name="Time08Grid" Tapped="Time08Grid_Tapped" Background="#d3d3d3" Grid.Column="0"></Grid>
             <StackPanel VerticalAlignment="Center" Margin="5" Grid.Column="0" Tapped="Time08Grid_Tapped">
@@ -69,29 +68,29 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <!--<Grid  Grid.Row="0">
-                    <StackPanel Orientation="Horizontal" >
-                        <Image Source="../Assets/anInterestingCircle.png" Height="30"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="../Assets/anInterestingCircle.png" Height="30" />
                         <TextBlock Text=" 查询记录" FontSize="25" VerticalAlignment="Center" Foreground="#068cfd" />
                     </StackPanel>
                 </Grid>-->
 
-                <Grid Grid.Row="0" >
+                <Grid Grid.Row="0">
                     <ListView ItemsSource="{x:Bind emptyRoomAndFloor}" SelectionMode="None">
                         <ListView.ItemTemplate>
-                            <DataTemplate >
+                            <DataTemplate>
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="0.2*"/>
+                                        <RowDefinition Height="0.2*" />
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
                                     <StackPanel Orientation="Horizontal" Grid.Row="0">
-                                        <Image Source="../Assets/aCircle.png" Height="10"/>
-                                        <TextBlock Text="{Binding Floor}" Foreground="#333" FontSize="20"/>
+                                        <Image Source="../Assets/aCircle.png" Height="10" />
+                                        <TextBlock Text="{Binding Floor}" Foreground="#333" FontSize="20" />
                                     </StackPanel>
                                     <GridView ItemsSource="{Binding Rooms}" SelectionMode="None" Margin="0,0,10,0" Grid.Row="1">
                                         <GridView.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding}" Foreground="#333" FontSize="15"/>
+                                                <TextBlock Text="{Binding}" Foreground="#333" FontSize="15" />
                                             </DataTemplate>
                                         </GridView.ItemTemplate>
                                     </GridView>
@@ -100,10 +99,10 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </Grid>
-                
+
                 <StackPanel Name="ListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="ListFailedStackPanel_Tapped">
                     <Image Name="ListFailedStackPanelImage" Source="../Assets/ic_failed.png" Height="80" Width="80" HorizontalAlignment="Center" />
-                    <TextBlock Name="ListFailedStackPanelTextBlock" Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+                    <TextBlock Name="ListFailedStackPanelTextBlock" Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI" />
                 </StackPanel>
             </Grid>
         </ScrollViewer>
@@ -111,7 +110,7 @@
 
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton Name="FilterAppBarToggleButton" Icon="Filter" Label="二教" Click="FilterAppBarToggleButton_Click"/>
+            <AppBarButton Name="FilterAppBarToggleButton" Icon="Filter" Label="二教" Click="FilterAppBarToggleButton_Click" />
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

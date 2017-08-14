@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
@@ -29,10 +22,11 @@ namespace ZSCY_Win10.Pages.CommunityPages
     /// </summary>
     public sealed partial class CommunityPersonInfo : Page
     {
-        CommunityPersonInfoViewModel ViewModel;
-        double infoListScrollableHeight = 0;
-        List<Img> clickImgList = new List<Img>();
-        int clickImfIndex = 0;
+        private CommunityPersonInfoViewModel ViewModel;
+        private double infoListScrollableHeight = 0;
+        private List<Img> clickImgList = new List<Img>();
+        private int clickImfIndex = 0;
+
         public CommunityPersonInfo()
         {
             this.InitializeComponent();
@@ -55,11 +49,11 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 cutoffLine.Y2 = e.NewSize.Height;
             };
         }
+
         public Frame ContentFrame { get { return this.frame; } }
 
         private void PhotoGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
-
             Img img = e.ClickedItem as Img;
             GridView gridView = sender as GridView;
             clickImgList = ((Img[])gridView.ItemsSource).ToList();
@@ -71,8 +65,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
             //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
-
-
 
         private void CommunityItemPhoto_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -102,7 +94,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 }
                 else
                 {
-
                     if (Frame.CanGoBack)
                     {
                         Frame.GoBack();
@@ -116,8 +107,8 @@ namespace ZSCY_Win10.Pages.CommunityPages
 
         private void LikeButton_Click(object sender, RoutedEventArgs e)
         {
-
         }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ViewModel = new CommunityPersonInfoViewModel(e.Parameter.ToString());

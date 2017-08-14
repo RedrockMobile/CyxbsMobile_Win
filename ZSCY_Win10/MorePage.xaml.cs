@@ -1,24 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using ZSCY.Data;
 using ZSCY.Pages;
 using ZSCY_Win10.Common;
 using ZSCY_Win10.Data;
@@ -31,13 +19,14 @@ namespace ZSCY_Win10
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    /// 
+    ///
     public sealed partial class MorePage : Page
     {
-        ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
-        ObservableDictionary morepageclass = new ObservableDictionary();
+        private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private ObservableDictionary morepageclass = new ObservableDictionary();
         public static int isFreeRe = 0;
         private static string resourceName = "ZSCY";
+
         public MorePage()
         {
             this.InitializeComponent();
@@ -77,8 +66,6 @@ namespace ZSCY_Win10
             };
         }
 
-
-
         public ObservableDictionary Morepageclass
         {
             get
@@ -86,6 +73,7 @@ namespace ZSCY_Win10
                 return morepageclass;
             }
         }
+
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             var group = await DataSource.Get();
@@ -103,10 +91,7 @@ namespace ZSCY_Win10
         {
         }
 
-
         public Frame MoreFrame { get { return this.frame; } }
-
-
 
         private void MoreBackAppBarButton_Click(object sender, RoutedEventArgs e)
         {
@@ -162,7 +147,6 @@ namespace ZSCY_Win10
 
         private async void MoreListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
             var item = e.ClickedItem as Morepageclass;
             if ((MoreListgrid.Width == 300) || item.UniqueID == "Card")
             {
@@ -268,6 +252,7 @@ namespace ZSCY_Win10
                         MoreFrame.Visibility = Visibility.Visible;
                         isFreeRe = 0;
                         break;
+
                     case "FreeTime":
                         if (count > 0)
                         {
@@ -288,22 +273,23 @@ namespace ZSCY_Win10
                         var a = await Launcher.LaunchUriAsync(new Uri("cquptcard:"));
                         MoreFrame.Visibility = Visibility.Collapsed;
                         break;
+
                     case "freshMan":
                         Frame.Navigate(typeof(FirstPage));
                         MoreFrame.Visibility = Visibility.Collapsed;
                         isFreeRe = 0;
                         break;
+
                     case "Electricity":
                         Frame.Navigate(typeof(ElectricityPage));
                         MoreFrame.Visibility = Visibility.Collapsed;
                         isFreeRe = 0;
                         break;
+
                     default:
                         break;
                 }
             }
         }
     }
-
-
 }

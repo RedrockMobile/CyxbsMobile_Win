@@ -1,28 +1,20 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
-using ZSCY_Win10;
 using ZSCY_Win10.Data;
 using ZSCY_Win10.Util;
 
@@ -36,8 +28,10 @@ namespace ZSCY.Pages
     public sealed partial class SearchFreeTimeResultPage_new : Page
     {
         private ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>(); //存放学号的List
+
         //private List<List<ClassListLight>> forsearchlist = new List<List<ClassListLight>>();//存放查到学号的课
         private Dictionary<string, List<ClassListLight>> forsearchlist = new Dictionary<string, List<ClassListLight>>();
+
         private ObservableCollection<ClassListLight> result = new ObservableCollection<ClassListLight>();
         private ObservableCollection<EmptyTable> termresult = new ObservableCollection<EmptyTable>();
         private ObservableCollection<People> peoplelist = new ObservableCollection<People>();
@@ -45,11 +39,14 @@ namespace ZSCY.Pages
         private bool weekorterm = false;//查询的是周还是学期，周false,学期true;
         public bool IsBusy = false;
         private string[,][] ResultName = new string[7, 6][];
-        int week; //周次，-100为学期
-        int week_old; //周次，切换到学期后保存切换前的周次
-        bool showWeekend = false;
+        private int week; //周次，-100为学期
+        private int week_old; //周次，切换到学期后保存切换前的周次
+        private bool showWeekend = false;
+
         #region 一些方法太多了。。
+
         private ApplicationDataContainer appSetting;
+
         public SearchFreeTimeResultPage_new()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
@@ -184,6 +181,7 @@ namespace ZSCY.Pages
                 }
             }
         }
+
         /// <summary>
         /// 给每个时间指定颜色，根据名字，尽量不同。。。
         /// </summary>
@@ -219,6 +217,7 @@ namespace ZSCY.Pages
                 }
             }
         }
+
         /// <summary>
         /// 给一个课程格子设置颜色，并添加到视图中
         /// </summary>
@@ -294,7 +293,6 @@ namespace ZSCY.Pages
             kebiaoGrid.Children.Add(BackGrid);
         }
 
-
         private void BackGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             peoplelist.Clear();
@@ -312,21 +310,27 @@ namespace ZSCY.Pages
                 case "0":
                     week = "一";
                     break;
+
                 case "1":
                     week = "二";
                     break;
+
                 case "2":
                     week = "三";
                     break;
+
                 case "3":
                     week = "四";
                     break;
+
                 case "4":
                     week = "五";
                     break;
+
                 case "5":
                     week = "六";
                     break;
+
                 case "6":
                     week = "日";
                     break;
@@ -337,22 +341,27 @@ namespace ZSCY.Pages
                     nowclass = "1-2节";
                     time = "8:00 - 9:40 AM";
                     break;
+
                 case 1:
                     nowclass = "3-4节";
                     time = "10:05 - 11:45 AM";
                     break;
+
                 case 2:
                     nowclass = "5-6节";
                     time = "14:00 - 15:40 PM";
                     break;
+
                 case 3:
                     nowclass = "7-8节";
                     time = "16:05 - 17:45 PM";
                     break;
+
                 case 4:
                     nowclass = "9-10节";
                     time = "19:00 - 20:40 PM";
                     break;
+
                 case 5:
                     nowclass = "11-12节";
                     time = "20:50 - 22:30 PM";
@@ -371,7 +380,6 @@ namespace ZSCY.Pages
                 {
                     peoplelist.Add(new People { name = temp[i] });
                 }
-
             }
             else
             {
@@ -382,7 +390,6 @@ namespace ZSCY.Pages
                     if (weeks.Length != 0)
                         weekstr = WeeknumConverter(weeks);
                     peoplelist.Add(new People { name = temp[i], weekstostr = weekstr });
-
                 }
             }
             if (FreeDetailGrid.Visibility == Visibility.Collapsed)
@@ -439,6 +446,7 @@ namespace ZSCY.Pages
                 }
             }
         }
+
         /// <summary>
         /// 输入周查课表
         /// </summary>
@@ -467,6 +475,7 @@ namespace ZSCY.Pages
             else
                 Utils.Message("请输入正确的周次");
         }
+
         /// <summary>
         /// 学期和周的切换
         /// </summary>
@@ -505,6 +514,7 @@ namespace ZSCY.Pages
                 showFreeKB(result, showWeekend);
             }
         }
+
         /// <summary>
         /// 显示隐藏周末
         /// </summary>
@@ -538,7 +548,6 @@ namespace ZSCY.Pages
         /// <returns>友好的字符串</returns>
         private string WeeknumConverter(int[] weeks)
         {
-
             int len = weeks.Length;
             Array.Sort(weeks);
             if (len == 18)
@@ -590,7 +599,9 @@ namespace ZSCY.Pages
                 }
             }
         }
-        #endregion
+
+        #endregion 一些方法太多了。。
+
         private async Task GetData(EmptyClass ec)
         {
             IsBusy = true;

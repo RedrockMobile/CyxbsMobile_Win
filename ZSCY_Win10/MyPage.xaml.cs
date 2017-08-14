@@ -1,24 +1,14 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
-using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Pages.CommunityPages;
 using ZSCY_Win10.Util;
@@ -33,12 +23,13 @@ namespace ZSCY_Win10
     /// </summary>
     public sealed partial class MyPage : Page
     {
-        ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
-        MyViewModel ViewModel;
-        List<Img> clickImgList = new List<Img>();
-        double myTidingsOldScrollableHeight = 0;
-        double aboutMeOldScrollableHeight = 0;
-        int clickImfIndex = 0;
+        private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private MyViewModel ViewModel;
+        private List<Img> clickImgList = new List<Img>();
+        private double myTidingsOldScrollableHeight = 0;
+        private double aboutMeOldScrollableHeight = 0;
+        private int clickImfIndex = 0;
+
         public MyPage()
         {
             this.InitializeComponent();
@@ -88,6 +79,7 @@ namespace ZSCY_Win10
                 cutoffLine.Y2 = e.NewSize.Height;
             };
         }
+
         public Frame MyFrame { get { return this.frame; } }
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
@@ -130,8 +122,6 @@ namespace ZSCY_Win10
             e.Handled = true;
         }
 
-
-
         private void aboutMe_Click(object sender, RoutedEventArgs e)
         {
             aboutMeGrid.Visibility = Visibility.Visible;
@@ -151,7 +141,6 @@ namespace ZSCY_Win10
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
-
 
         private void EditAppBarButton_Click(object sender, RoutedEventArgs e)
         {
@@ -174,7 +163,6 @@ namespace ZSCY_Win10
 
         private void LikeButton_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void CommunityItemPhoto_Tapped(object sender, TappedRoutedEventArgs e)
@@ -255,6 +243,7 @@ namespace ZSCY_Win10
             {
             }
         }
+
         private void CommunityItemPhotoImage_ImageOpened(object sender, RoutedEventArgs e)
         {
             DependencyObject x = VisualTreeHelper.GetParent(sender as Image);
@@ -263,8 +252,5 @@ namespace ZSCY_Win10
             ProgressRing p = z as ProgressRing;
             p.IsActive = false;
         }
-
     }
-
-
 }

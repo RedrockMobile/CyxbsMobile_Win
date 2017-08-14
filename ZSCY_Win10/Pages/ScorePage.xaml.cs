@@ -2,22 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Phone.UI.Input;
 using Windows.Storage;
-using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Util;
@@ -33,6 +22,7 @@ namespace ZSCY.Pages
     {
         private ApplicationDataContainer appSetting;
         private static string resourceName = "ZSCY";
+
         public ScorePage()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
@@ -59,7 +49,7 @@ namespace ZSCY.Pages
         }
 
         //离开页面时，取消事件
-        protected  override void OnNavigatedFrom(NavigationEventArgs e)
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             //StatusBar statusBar = StatusBar.GetForCurrentView();
             UmengSDK.UmengAnalytics.TrackPageEnd("ScorePage");
@@ -136,4 +126,3 @@ namespace ZSCY.Pages
         }
     }
 }
-

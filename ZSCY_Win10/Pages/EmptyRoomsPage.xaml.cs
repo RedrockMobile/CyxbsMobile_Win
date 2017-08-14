@@ -3,20 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
@@ -32,33 +25,34 @@ namespace ZSCY.Pages
     /// </summary>
     public sealed partial class EmptyRoomsPage : Page
     {
-        int maxFloor;
-        bool isBuildEight = false;
-        string BuildEight;
+        private int maxFloor;
+        private bool isBuildEight = false;
+        private string BuildEight;
 
         private ApplicationDataContainer appSetting;
-        Color gridColorGray = new Color();
-        Color gridColorBlue = new Color();
-        Boolean[] gridColor = new Boolean[]{
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-        };      
+        private Color gridColorGray = new Color();
+        private Color gridColorBlue = new Color();
 
-        string[] emptyReslut = new string[6]; //保存返回值
-        string[][] emptyRoomReslut = new string[6][]; //保存返回的教室值
+        private Boolean[] gridColor = new Boolean[]{
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+        };
 
-        string NowWeek;
-        string buildNum = "2";
-        string NowWeekday;
+        private string[] emptyReslut = new string[6]; //保存返回值
+        private string[][] emptyRoomReslut = new string[6][]; //保存返回的教室值
 
-        bool isShowEmpty = true;
+        private string NowWeek;
+        private string buildNum = "2";
+        private string NowWeekday;
 
-        ObservableCollection<EmptyRoomList> emptyRoomList = new ObservableCollection<EmptyRoomList>();
-        ObservableCollection<EmptyRoomList> emptyRoomAndFloor = new ObservableCollection<EmptyRoomList>();
+        private bool isShowEmpty = true;
+
+        private ObservableCollection<EmptyRoomList> emptyRoomList = new ObservableCollection<EmptyRoomList>();
+        private ObservableCollection<EmptyRoomList> emptyRoomAndFloor = new ObservableCollection<EmptyRoomList>();
 
         public EmptyRoomsPage()
         {
@@ -75,7 +69,6 @@ namespace ZSCY.Pages
                     emptyRoomReslut[i][j] = "";
             }
             NowWeekday = (Int16.Parse(Utils.GetWeek()) == 0 ? 7 : Int16.Parse(Utils.GetWeek())).ToString();
-         
         }
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
@@ -92,7 +85,6 @@ namespace ZSCY.Pages
         {
             UmengSDK.UmengAnalytics.TrackPageStart("EmptyRoomsPage");
         }
-
 
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -118,9 +110,7 @@ namespace ZSCY.Pages
                     emptyRoomReslut[0][i] = "";
                 ShowEmpty();
             }
-
         }
-
 
         private void Time10Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -212,7 +202,6 @@ namespace ZSCY.Pages
             }
         }
 
-
         //private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         //{
         //    JXLButton.Content = (sender as MenuFlyoutItem).Text;
@@ -300,7 +289,6 @@ namespace ZSCY.Pages
 
         private void ShowEmpty()
         {
-
 #if DEBUG
             for (int i = 0; i < 6; i++)
             {
@@ -371,7 +359,6 @@ namespace ZSCY.Pages
                 //创建maxFloor个List对象
                 for (int i = 0; i < maxFloor; i++)
                 {
-
                     EmptyRoomList er = new EmptyRoomList();
                     er.Floor = " #" + (i + 1).ToString();
                     er.Rooms = new List<string>();
@@ -388,9 +375,11 @@ namespace ZSCY.Pages
                             case "1":
                                 BuildEight = " 红楼";
                                 break;
+
                             case "2":
                                 BuildEight = " 绿楼";
                                 break;
+
                             case "3":
                                 BuildEight = " 蓝楼";
                                 break;
@@ -405,7 +394,6 @@ namespace ZSCY.Pages
             }
         }
 
-
         private void ListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
             ListFailedStackPanel.Visibility = Visibility.Collapsed;
@@ -418,7 +406,6 @@ namespace ZSCY.Pages
             if (isShowEmpty)
                 ShowEmpty();
         }
-
 
         private MenuFlyoutItem getJXLMenuFlyoutItem(string text)
         {
@@ -437,15 +424,19 @@ namespace ZSCY.Pages
                 case "二教":
                     buildNum = "2";
                     break;
+
                 case "三教":
                     buildNum = "3";
                     break;
+
                 case "四教":
                     buildNum = "4";
                     break;
+
                 case "五教":
                     buildNum = "5";
                     break;
+
                 case "八教":
                     buildNum = "8";
                     break;
@@ -472,8 +463,6 @@ namespace ZSCY.Pages
 
         private void FilterAppBarToggleButton_Click(object sender, RoutedEventArgs e)
         {
-
-
             MenuFlyout JXLMenuFlyout = new MenuFlyout();
 
             JXLMenuFlyout.Items.Add(getJXLMenuFlyoutItem("二教"));

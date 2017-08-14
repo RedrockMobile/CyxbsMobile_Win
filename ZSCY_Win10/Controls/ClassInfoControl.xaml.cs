@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.System.Profile;
+﻿using System.Collections.Generic;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Data;
+
 //using ZSCY_Win10.Models.RemindPage;
-using ZSCY_Win10.Util.Converter;
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace ZSCY_Win10.Controls
@@ -27,8 +18,10 @@ namespace ZSCY_Win10.Controls
     public sealed partial class ClassInfoControl : UserControl
     {
         private Popup m_Popup;
+
         //判断课程个数
-        bool istype1 = true;
+        private bool istype1 = true;
+
         public ClassInfoControl(List<ClassList> cl, List<Transaction> mmr, ExamList el)
         {
             this.InitializeComponent();
@@ -49,7 +42,6 @@ namespace ZSCY_Win10.Controls
                 if (e.NewSize.Width > 450)
                 {
                     state = "VisualState800";
-
                 }
                 VisualStateManager.GoToState(this, state, true);
             };
@@ -68,21 +60,27 @@ namespace ZSCY_Win10.Controls
                     case '1':
                         ei.Week += " 星期一";
                         break;
+
                     case '2':
                         ei.Week += " 星期二";
                         break;
+
                     case '3':
                         ei.Week += " 星期三";
                         break;
+
                     case '4':
                         ei.Week += " 星期四";
                         break;
+
                     case '5':
                         ei.Week += " 星期五";
                         break;
+
                     case '6':
                         ei.Week += " 星期六";
                         break;
+
                     case '7':
                         ei.Week += " 星期日";
                         break;
@@ -166,7 +164,7 @@ namespace ZSCY_Win10.Controls
                     mrl.Add(temp);
                 }
             }
-            else 
+            else
             {
                 //mrl.Add(new Transaction { title = "没做完 别看" });
                 transactionGridson.Visibility = Visibility.Collapsed;
@@ -195,10 +193,12 @@ namespace ZSCY_Win10.Controls
             this.Width = e.Size.Width;
             this.Height = e.Size.Height;
         }
+
         private void MessagePopupWindow_Unloaded(object sender, RoutedEventArgs e)
         {
             Window.Current.SizeChanged -= MessagePopupWindow_SizeChanged; ;
         }
+
         public void ShowWIndow()
         {
             m_Popup.IsOpen = true;
@@ -217,12 +217,14 @@ namespace ZSCY_Win10.Controls
                     classinfoheader0.Text = "\uEA3B";
                     classinfoheader1.Text = "\uEA3A";
                     break;
+
                 case 1:
                     classinfoheader0.Text = "\uEA3A";
                     classinfoheader1.Text = "\uEA3B";
                     break;
             }
         }
+
         private void classBtn_Click(object sender, RoutedEventArgs e)
         {
             classBtn.Background = new SolidColorBrush(Color.FromArgb(255, 65, 162, 255));
@@ -239,6 +241,7 @@ namespace ZSCY_Win10.Controls
                 else type2.Visibility = Visibility.Visible;
             }
         }
+
         private void transactonBtn_Click(object sender, RoutedEventArgs e)
         {
             transactonBtn.Background = new SolidColorBrush(Color.FromArgb(255, 65, 162, 255));
@@ -256,7 +259,6 @@ namespace ZSCY_Win10.Controls
                 examGrid.Visibility = Visibility.Collapsed;
                 transactionGrid.Visibility = Visibility.Visible;
             }
-
         }
 
         private void examBtn_Click(object sender, RoutedEventArgs e)

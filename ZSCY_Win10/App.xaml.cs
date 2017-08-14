@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using UmengSDK;
 using Windows.ApplicationModel;
@@ -13,25 +12,17 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Networking.PushNotifications;
 using Windows.Storage;
 using Windows.System.Profile;
-using Windows.UI.Notifications;
-using Windows.UI.Popups;
 using Windows.UI.StartScreen;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Data;
 using ZSCY_Win10.Models.RemindModels;
-using ZSCY_Win10.Pages.CommunityPages;
 using ZSCY_Win10.Pages.StartPages;
 using ZSCY_Win10.Util;
 using ZSCY_Win10.ViewModels.Community;
@@ -67,10 +58,11 @@ namespace ZSCY_Win10
     /// </summary>
     sealed partial class App : Application
     {
+        private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
 
-        ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         //public static JWList[] jwlistCache;
         public static ObservableCollection<JWList> JWListCache = new ObservableCollection<JWList>();
+
         public static ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>();
         public static bool showpane = true;
         public static MobileServiceClient MobileService = new MobileServiceClient("https://cqupt.azurewebsites.net");
@@ -86,7 +78,9 @@ namespace ZSCY_Win10
         public static bool[] isLoading = { false, false, false, false, false, false, false, false };
         private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
         private static string resourceName = "ZSCY";
+
         #region 事件提醒
+
         //public static TimeSet[,] timeSet = new TimeSet[6, 7];
         //public static SelTimeStringViewModel SelectedTime = new SelTimeStringViewModel();
         //public static ObservableCollection<SelectedWeekNum> selectedWeekNumList = new ObservableCollection<SelectedWeekNum>();
@@ -97,16 +91,19 @@ namespace ZSCY_Win10
         //public static ObservableCollection<MyRemind> remindList = new ObservableCollection<MyRemind>();
 
         public static string RemindListDBPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db");
+
         /// <summary>
         /// 防止改写事件内容是触发导航加载
         /// </summary>
         public static bool isLoad = false;
+
         public static List<int> SelWeekList = new List<int>();
         public static List<SelCourseModel> SelCoursList = new List<SelCourseModel>();
         public static AddRemindPageViewModel addRemindViewModel = new AddRemindPageViewModel();
         public static int indexBefore = -1;
 
-        #endregion
+        #endregion 事件提醒
+
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。
@@ -162,10 +159,8 @@ namespace ZSCY_Win10
                 addBackgroundTask();
             }
 
-
             //监听异常
             CoreApplication.UnhandledErrorDetected += CoreApplication_UnhandledErrorDetected;
-
         }
 
         private async void CoreApplication_UnhandledErrorDetected(object sender, UnhandledErrorDetectedEventArgs e)
@@ -176,7 +171,6 @@ namespace ZSCY_Win10
             }
             catch (Exception ex)
             {
-
                 StorageFile file = null;
                 if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                     file = await ApplicationData.Current.LocalFolder.CreateFileAsync("ZSCY_Mobile_Log.txt", CreationCollisionOption.OpenIfExists);
@@ -203,7 +197,6 @@ namespace ZSCY_Win10
             backgroundName.Add("RemindBackgroundTask");
             try
             {
-    
                 foreach (var item in backgroundName)
                 {
                     var list = from i in BackgroundTaskRegistration.AllTasks
@@ -248,6 +241,7 @@ namespace ZSCY_Win10
             jumpList.Items.Clear();
             await jumpList.SaveAsync();
         }
+
         private Windows.UI.StartScreen.JumpListItem CreateJumpListItemTask(string u, string description, string uri)
         {
             var taskItem = JumpListItem.CreateWithArguments(
@@ -256,6 +250,7 @@ namespace ZSCY_Win10
             taskItem.Logo = new Uri(uri);
             return taskItem;
         }
+
         private async void SetSystemGroupAsync()
         {
             var jumpList = await Windows.UI.StartScreen.JumpList.LoadCurrentAsync();
@@ -266,8 +261,6 @@ namespace ZSCY_Win10
             await jumpList.SaveAsync();
         }
 
-
-
         /// <summary>
         /// 在应用程序由最终用户正常启动时进行调用。
         /// 将在启动应用程序以打开特定文件等情况下使用。
@@ -275,7 +268,6 @@ namespace ZSCY_Win10
         /// <param name="e">有关启动请求和过程的详细信息。</param>
         protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
             //#if DEBUG
             //            if (System.Diagnostics.Debugger.IsAttached)
             //            {
@@ -380,7 +372,6 @@ namespace ZSCY_Win10
                 }
             }
 
-
             Window.Current.Activate();
 
             // 确保当前窗口处于活动状态
@@ -388,10 +379,8 @@ namespace ZSCY_Win10
             await UmengAnalytics.StartTrackAsync("57317d07e0f55a28fe002bec", "Marketplace_Win10"); //公共
                                                                                                    //await InitNotificationsAsync();
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size { Width = 400, Height = 480 });
-
-
-
         }
+
         private async void OnResuming(object sender, object e)
         {
             //await UmengAnalytics.StartTrackAsync("55cd8c8be0f55a20ba00440d", "Marketplace_Win10"); //私有
@@ -403,7 +392,7 @@ namespace ZSCY_Win10
         /// </summary>
         ///<param name="sender">导航失败的框架</param>
         ///<param name="e">有关导航失败的详细信息</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
@@ -422,6 +411,7 @@ namespace ZSCY_Win10
             await UmengAnalytics.EndTrackAsync();
             deferral.Complete();
         }
+
         private async Task InitNotificationsAsync()
         {
             try
@@ -433,7 +423,6 @@ namespace ZSCY_Win10
                 // Register the channel URI with Notification Hubs.
                 await App.MobileService.GetPush().RegisterAsync(channel.Uri);
                 Debug.WriteLine(channel.Uri);
-
             }
             catch (Exception channel)
             {
@@ -457,6 +446,5 @@ namespace ZSCY_Win10
             }
             //Window.Current.Activate();
         }
-
     }
 }

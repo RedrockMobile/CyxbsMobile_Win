@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Pages;
@@ -56,7 +45,6 @@ namespace ZSCY.Pages
                     second_frame_trans.X = this.Width;
                 }
             }
-
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -68,7 +56,6 @@ namespace ZSCY.Pages
                 viewmodel.Page_Height = this.Height;
                 viewmodel.Page_Width = this.ActualWidth;
             }
-
         }
 
         public void Second_Page_Forwoard() //页面前进方法
@@ -90,8 +77,8 @@ namespace ZSCY.Pages
 
         private void FirstPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-                //viewmodel.Page_Height = e.NewSize.Height;
-                viewmodel.Page_Width = 375;//375是个人认为比较合适的宽度
+            //viewmodel.Page_Height = e.NewSize.Height;
+            viewmodel.Page_Width = 375;//375是个人认为比较合适的宽度
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

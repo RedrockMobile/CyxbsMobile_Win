@@ -1,21 +1,16 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZSCY_Win10.Data;
 
 namespace ZSCY_Win10.Data
 {
-    class ClassListLight:EmptyClassDayLesson
+    internal class ClassListLight : EmptyClassDayLesson
     {
         public int Begin_lesson { get; set; }
         public int Period { get; set; } //2节连上，3节连上
+
         //public int[] LessonLast { get; set; }
         public int[] Week { get; set; } //上课的周次
+
         //public string Course { get; set; }
         public string[] Name { get; set; }
 
@@ -34,6 +29,7 @@ namespace ZSCY_Win10.Data
             //}
             return cll;
         }
+
         public ClassListLight getattribute(JObject classDetailJObject)
         {
             Hash_day = (int)classDetailJObject["hash_day"];
@@ -66,6 +62,6 @@ namespace ZSCY_Win10.Data
     public class People
     {
         public string name { get; set; }
-        public string weekstostr{get;set;}
+        public string weekstostr { get; set; }
     }
 }

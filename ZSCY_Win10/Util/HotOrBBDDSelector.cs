@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using ZSCY_Win10.Data.Community;
 
@@ -24,7 +19,7 @@ namespace ZSCY_Win10.Util
                 {
                     if (h.content.content != null)
                     {
-                        h.content.contentbase = new JWZXFeeds { content = h.content.content ,title=h.nick_name};
+                        h.content.contentbase = new JWZXFeeds { content = h.content.content, title = h.nick_name };
                     }
                     return nBBDDTemplate;
                 }

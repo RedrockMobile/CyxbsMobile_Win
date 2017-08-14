@@ -10,9 +10,9 @@
     xmlns:converter="using:ZSCY_Win10.Util.Converter"
     mc:Ignorable="d">
     <Page.Resources>
-        <converter:GenderNameConverter x:Key="GenderNameConverter"/>
-        <converter:GenderColorConverter x:Key="GenderColorConverter"/>
-        <converter:CommunityItemPhotoFlipViewHeighConverter x:Key="CommunityItemPhotoFlipViewHeighConverter"/>
+        <converter:GenderNameConverter x:Key="GenderNameConverter" />
+        <converter:GenderColorConverter x:Key="GenderColorConverter" />
+        <converter:CommunityItemPhotoFlipViewHeighConverter x:Key="CommunityItemPhotoFlipViewHeighConverter" />
         <Style x:Name="LikedTextBlock" x:Key="LikedTextBlock" TargetType="TextBlock">
             <Setter Property="FontSize" Value="14"></Setter>
             <Setter Property="Foreground" Value="Gray"></Setter>
@@ -32,22 +32,21 @@
             <util:ImgDataTemplateSelector.OnePhotoTemplate>
                 <DataTemplate  x:DataType="model:Img">
                     <Grid MaxWidth="280">
-                        <Image  Source="{x:Bind ImgSrc}" Stretch="UniformToFill"/>
+                        <Image  Source="{x:Bind ImgSrc}" Stretch="UniformToFill" />
                     </Grid>
                 </DataTemplate>
             </util:ImgDataTemplateSelector.OnePhotoTemplate>
             <util:ImgDataTemplateSelector.TwoPhotoTemplate>
                 <DataTemplate x:DataType="model:Img">
                     <Grid MinWidth="150" MaxWidth="160">
-                        <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill"/>
+                        <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill" />
                     </Grid>
                 </DataTemplate>
-
             </util:ImgDataTemplateSelector.TwoPhotoTemplate>
             <util:ImgDataTemplateSelector.MorePhotoTemplate>
                 <DataTemplate x:DataType="model:Img">
                     <Grid Height="100" Width="100">
-                        <Image Source="{Binding ImgSmallSrc}" Stretch="UniformToFill"/>
+                        <Image Source="{Binding ImgSmallSrc}" Stretch="UniformToFill" />
                     </Grid>
                 </DataTemplate>
             </util:ImgDataTemplateSelector.MorePhotoTemplate>
@@ -75,8 +74,8 @@
                         </StackPanel>
                         <Grid Margin="0,5" Background="#FFF8F8F8">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Image Grid.Column="0" Source="{Binding article_photo_src,Converter={StaticResource GetOneorNonePicValueConverter}}" MinHeight="0" MinWidth="0" MaxWidth="60" MaxHeight="60" Stretch="UniformToFill" Margin=" 5"></Image>
                             <TextBlock Grid.Column="1" Margin="10" Text="{x:Bind article_content}" TextWrapping="Wrap" MaxLines="5"></TextBlock>
@@ -103,8 +102,8 @@
                         </StackPanel>
                         <Grid Margin="0,5" Background="#FFF8F8F8">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <!--<Image Grid.Column="0" Source="{x:Bind photo_src}" Height="60" Width="60" Stretch="UniformToFill"></Image>-->
                             <Image Grid.Column="0" Source="{Binding article_photo_src,Converter={StaticResource GetOneorNonePicValueConverter}}" MinHeight="0" MinWidth="0" MaxWidth="60" MaxHeight="60" Stretch="UniformToFill" Margin=" 5"></Image>
@@ -133,7 +132,7 @@
                 <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind photo_src}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                            <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3" />
                         </ItemsPanelTemplate>
                     </GridView.ItemsPanel>
                 </GridView>
@@ -141,7 +140,7 @@
                     <Button Style="{StaticResource LikeCommentButton}"  Click="LikeButton_Click" IsEnabled="False">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Margin="10,5">
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="Gray"/>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" Foreground="Gray" />
                                 <TextBlock Text="{x:Bind like_num,Mode=OneWay}" Foreground="Gray" Margin="5,0,5,2"></TextBlock>
                             </StackPanel>
                         </Button.Content>
@@ -149,7 +148,7 @@
                     <Button Style="{StaticResource LikeCommentButton}" IsEnabled="False">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Margin="10,5">
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray" />
                                 <TextBlock Text="{x:Bind remark_num,Mode=OneWay}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
                             </StackPanel>
                         </Button.Content>
@@ -163,86 +162,86 @@
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualState000">
                     <VisualState.Setters>
-                        <Setter Target="MyListGrid.(Grid.ColumnSpan)" Value="2"/>
-                        <Setter Target="MyContentGrid.(Grid.ColumnSpan)" Value="2"/>
-                        <Setter Target="aboutMeGrid.(Grid.ColumnSpan)" Value="2"/>
-                        <Setter Target="myTidingsGrid.(Grid.ColumnSpan)" Value="2"/>
-                        <Setter Target="MyTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Stretch"/>
-                        <Setter Target="cutoffLine.(FrameworkElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="MyListGrid.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="MyContentGrid.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="aboutMeGrid.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="myTidingsGrid.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="MyTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Stretch" />
+                        <Setter Target="cutoffLine.(FrameworkElement.Visibility)" Value="Collapsed" />
                         <Setter Target="MyContentGrid.(FrameworkElement.Margin)">
                             <Setter.Value>
                                 <Thickness>-1,0,0,0</Thickness>
                             </Setter.Value>
                         </Setter>
-                        <Setter Target="grid.(FrameworkElement.MinHeight)" Value="0"/>
-                        <!--<Setter Target="grid1.(FrameworkElement.MinHeight)" Value="0"/>-->
-                        <Setter Target="MyListGrid.(FrameworkElement.MinHeight)" Value="0"/>
-                        <Setter Target="MyContentGrid.(FrameworkElement.MinHeight)" Value="0"/>
-                        <Setter Target="frame.(FrameworkElement.MinHeight)" Value="0"/>
+                        <Setter Target="grid.(FrameworkElement.MinHeight)" Value="0" />
+                        <!--<Setter Target="grid1.(FrameworkElement.MinHeight)" Value="0" />-->
+                        <Setter Target="MyListGrid.(FrameworkElement.MinHeight)" Value="0" />
+                        <Setter Target="MyContentGrid.(FrameworkElement.MinHeight)" Value="0" />
+                        <Setter Target="frame.(FrameworkElement.MinHeight)" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualState800">
                     <VisualState.Setters>
-                        <Setter Target="MyTitleGrid.(FrameworkElement.Width)" Value="400"/>
-                        <Setter Target="MyListGrid.(FrameworkElement.Width)" Value="400"/>
-                        <Setter Target="aboutMeGrid.(FrameworkElement.Width)" Value="400"/>
-                        <Setter Target="myTidingsGrid.(FrameworkElement.Width)" Value="400"/>
-                        <Setter Target="MyTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Left"/>
-                        <Setter Target="TitlecutoffLineGrid.(FrameworkElement.Visibility)" Value="Visible"/>
+                        <Setter Target="MyTitleGrid.(FrameworkElement.Width)" Value="400" />
+                        <Setter Target="MyListGrid.(FrameworkElement.Width)" Value="400" />
+                        <Setter Target="aboutMeGrid.(FrameworkElement.Width)" Value="400" />
+                        <Setter Target="myTidingsGrid.(FrameworkElement.Width)" Value="400" />
+                        <Setter Target="MyTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Left" />
+                        <Setter Target="TitlecutoffLineGrid.(FrameworkElement.Visibility)" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
+            <RowDefinition Height="48" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <!--header-->
         <Grid Background="#068cfd" Grid.Row="0">
             <Grid Name="MyTitleGrid"  HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <!--<AppBarButton Name="MyBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="MyBackAppBarButton_Click"/>-->
-                    <TextBlock Name="HubSectionKBTitle" Text="个人中心" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                    <!--<AppBarButton Name="MyBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="MyBackAppBarButton_Click" />-->
+                    <TextBlock Name="HubSectionKBTitle" Text="个人中心" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <!--<AppBarButton Name="CommunityMyAppBarButton" Icon="Contact" Foreground="White" Click="CommunityMyAppBarButton_Click"></AppBarButton>-->
-                    <AppBarButton Name="EditAppBarButton" Icon="Edit" Foreground="White" Click="EditAppBarButton_Click"/>
+                    <AppBarButton Name="EditAppBarButton" Icon="Edit" Foreground="White" Click="EditAppBarButton_Click" />
                 </StackPanel>
             </Grid>
             <Grid Name="TitlecutoffLineGrid" Visibility="Collapsed" Margin="400,0,0,0" HorizontalAlignment="Left">
-                <Line Y1="0" Y2="48" Width="1" Stroke="#58b3ff" HorizontalAlignment="Left" StrokeThickness="1"/>
-                <TextBlock Name="MyContentTitleTextBlock" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                <Line Y1="0" Y2="48" Width="1" Stroke="#58b3ff" HorizontalAlignment="Left" StrokeThickness="1" />
+                <TextBlock Name="MyContentTitleTextBlock" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI" />
             </Grid>
         </Grid>
 
         <!--实体-->
         <Grid x:Name="myPageGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid Name="MyListGrid" Grid.Column="0" HorizontalAlignment="Stretch">
                 <ScrollViewer VerticalScrollBarVisibility="Hidden">
                     <Grid VerticalAlignment="Top" Margin="0,10,0,0" HorizontalAlignment="Stretch">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="1" Background="White" HorizontalAlignment="Center">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Ellipse Width="60" Height="60" HorizontalAlignment="Left" Margin="20,10,15,10" VerticalAlignment="Center">
                                     <Ellipse.Fill>
-                                        <ImageBrush Stretch="Fill" ImageSource="{x:Bind ViewModel.Info.photo_thumbnail_src,Mode=OneWay}"/>
+                                        <ImageBrush Stretch="Fill" ImageSource="{x:Bind ViewModel.Info.photo_thumbnail_src,Mode=OneWay}" />
                                     </Ellipse.Fill>
                                 </Ellipse>
-                                <StackPanel Orientation="Vertical" VerticalAlignment="Center" >
+                                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{x:Bind ViewModel.Info.nickname,Mode=OneWay}" Style="{StaticResource NickNamestyle}" FontSize="19"></TextBlock>
-                                        <FontIcon Name="font" Margin="10,0" FontSize="20" FontFamily="Segoe UI Emoji" VerticalAlignment="Center" Glyph="{x:Bind ViewModel.Info.gender,Mode=OneWay,Converter={StaticResource GenderNameConverter}}" Foreground="{x:Bind ViewModel.Info.gender,Mode=OneWay,Converter={StaticResource GenderColorConverter}}"/>
+                                        <FontIcon Name="font" Margin="10,0" FontSize="20" FontFamily="Segoe UI Emoji" VerticalAlignment="Center" Glyph="{x:Bind ViewModel.Info.gender,Mode=OneWay,Converter={StaticResource GenderNameConverter}}" Foreground="{x:Bind ViewModel.Info.gender,Mode=OneWay,Converter={StaticResource GenderColorConverter}}" />
                                     </StackPanel>
                                     <TextBlock Text="{x:Bind ViewModel.Info.introduction,Mode=OneWay}" Style="{StaticResource Intro}" Foreground="#FFB0B0B0" TextWrapping="WrapWholeWords" FontSize="13"></TextBlock>
                                 </StackPanel>
@@ -251,8 +250,8 @@
                         <Button Name="aboutMe" Background="#58B3FF" Margin="10,20,10,0" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="40" Click="aboutMe_Click">
                             <Grid Width="{Binding ActualWidth,ElementName=aboutMe}">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
                                 <FontIcon Foreground="White" FontFamily="Segoe MDL2 Assets" FontSize="20" Glyph="&#xE168;" Margin="5,0,0,0" />
                                 <TextBlock Foreground="White" Text="与我相关" Grid.Column="1" FontSize="18" VerticalAlignment="Center" Margin="15,0,0,0"></TextBlock>
@@ -261,8 +260,8 @@
                         <Button Name="myTidings" Background="#58B3FF" Margin="10,20,10,10" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="40" Click="myTidings_Click">
                             <Grid Width="{Binding ActualWidth,ElementName=myTidings}">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
                                 <FontIcon Foreground="White" FontFamily="Segoe MDL2 Assets" FontSize="20" Glyph="&#xE121;" Margin="5,0,0,0" />
                                 <TextBlock Foreground="White" Text="我的动态" Grid.Column="1" FontSize="18" VerticalAlignment="Center" Margin="15,0,0,0" ></TextBlock>
@@ -279,7 +278,7 @@
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                <Setter Property="Margin" Value="0,5"/>
+                                <Setter Property="Margin" Value="0,5" />
                             </Style>
                         </ListView.ItemContainerStyle>
                     </ListView>
@@ -292,7 +291,7 @@
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                <Setter Property="Margin" Value="0,5"/>
+                                <Setter Property="Margin" Value="0,5" />
                             </Style>
                         </ListView.ItemContainerStyle>
                     </ListView>
@@ -301,13 +300,13 @@
 
             <!--正文-->
             <Grid Name="MyContentGrid" Grid.Column="1">
-                <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1"/>
+                <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1" />
                 <Frame x:Name="frame" Margin="1,0,0,0" Visibility="Collapsed">
                     <Frame.ContentTransitions>
                         <TransitionCollection>
                             <NavigationThemeTransition>
                                 <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                                    <EntranceNavigationTransitionInfo/>
+                                    <EntranceNavigationTransitionInfo />
                                 </NavigationThemeTransition.DefaultNavigationTransitionInfo>
                             </NavigationThemeTransition>
                         </TransitionCollection>
@@ -316,8 +315,8 @@
             </Grid>
 
             <!--图像-->
-            <Grid Name="CommunityItemPhotoGrid" Grid.ColumnSpan="2" Visibility="Collapsed" >
-                <Grid Background="Black" Name="CommunityItemPhotoBackGrid" Grid.ColumnSpan="2" Opacity="0.5" Tapped="CommunityItemPhoto_Tapped"/>
+            <Grid Name="CommunityItemPhotoGrid" Grid.ColumnSpan="2" Visibility="Collapsed">
+                <Grid Background="Black" Name="CommunityItemPhotoBackGrid" Grid.ColumnSpan="2" Opacity="0.5" Tapped="CommunityItemPhoto_Tapped" />
                 <!--<ScrollViewer VerticalScrollMode="Disabled" HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden">-->
                 <!--<ListView Name="CommunityItemPhotoListView"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                     <ListView.ItemContainerStyle>
@@ -341,7 +340,7 @@
                         <DataTemplate>
                             <ScrollViewer Name="scrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" ZoomMode="Enabled" MaxZoomFactor="4" MinZoomFactor="0.8">
                                 <Grid Name="grid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <ProgressRing Name="progressRing" Visibility="Visible" IsActive="True"/>
+                                    <ProgressRing Name="progressRing" Visibility="Visible" IsActive="True" />
                                     <Image Name="CommunityItemPhotoImage" Stretch="Uniform" Source="{Binding ImgSrc}" Tapped="CommunityItemPhoto_Tapped" Holding="CommunityItemPhotoImage_Holding" RightTapped="CommunityItemPhotoImage_RightTapped" ImageOpened="CommunityItemPhotoImage_ImageOpened" Width="{Binding ActualWidth, ElementName=mpage, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=mpage,Converter={StaticResource CommunityItemPhotoFlipViewHeighConverter}, Mode=OneWay}"></Image>
                                 </Grid>
                             </ScrollViewer>
@@ -352,7 +351,7 @@
                 <!--<Image Name="CommunityItemPhotoImage" Grid.ColumnSpan="2"  Tapped="CommunityItemPhoto_Tapped"></Image>-->
                 <!--<Button Name="backImgButton" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Center" Click="backImgButton_Click">
                     <Button.Content>
-                        <FontIcon FontFamily="Segoe UI" Glyph="&#x003C;" Foreground="Gray"/>
+                        <FontIcon FontFamily="Segoe UI" Glyph="&#x003C;" Foreground="Gray" />
                     </Button.Content>
                 </Button>
                 <Button Name="nextImgButton" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Center" Click="nextImgButton_Click">
@@ -362,8 +361,5 @@
                 </Button>-->
             </Grid>
         </Grid>
-
-
     </Grid>
 </Page>
-

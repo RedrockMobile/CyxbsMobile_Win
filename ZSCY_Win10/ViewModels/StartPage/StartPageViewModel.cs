@@ -1,28 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZSCY_Win10.Models.StartPageModels;
-using System.Threading.Tasks;
-using Windows.Storage.Streams;
-using Windows.Graphics.Imaging;
-using Windows.Storage;
-using Windows.UI.Xaml.Media.Imaging;
-using System.IO;
-using System.Runtime.InteropServices.WindowsRuntime;
-using ZSCY_Win10.Util.StartPage;
-using SQLite.Net;
-using SQLite.Net.Platform.WinRT;
-using ZSCY_Win10.Util;
-using ZSCY_Win10.Resource;
-using Newtonsoft.Json;
-using ZSCY_Win10.Data.StartPage;
-using Windows.UI.ViewManagement;
-using Windows.System.Profile;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net.NetworkInformation;
-using System.Diagnostics;
+using Windows.System.Profile;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
+using ZSCY_Win10.Data.StartPage;
+using ZSCY_Win10.Models.StartPageModels;
+using ZSCY_Win10.Resource;
+using ZSCY_Win10.Util;
+using ZSCY_Win10.Util.StartPage;
 
 namespace ZSCY_Win10.ViewModels.StartPage
 {
@@ -34,6 +21,7 @@ namespace ZSCY_Win10.ViewModels.StartPage
                 DownLoadImage();
             SetImage();
         }
+
         /// <summary>
         /// 判断数据库是否有图片
         /// </summary>
@@ -61,7 +49,6 @@ namespace ZSCY_Win10.ViewModels.StartPage
             }
             else
             {
-
                 Model.HasPictrue = true;
                 Model.PictrueSource = @"Assets/SplashScreen.png";
 
@@ -82,6 +69,7 @@ namespace ZSCY_Win10.ViewModels.StartPage
                 }
             }
         }
+
         private async void DownLoadImage()
         {
             string content = "";
@@ -122,8 +110,8 @@ namespace ZSCY_Win10.ViewModels.StartPage
 #endif
             }
         }
+
         private StartPageModel model;
         public StartPageModel Model { get => model ?? (model = new StartPageModel()); set => model = value; }
-
     }
 }

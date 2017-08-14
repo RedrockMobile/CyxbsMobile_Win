@@ -16,54 +16,54 @@
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualState000">
                     <VisualState.Setters>
-                        <Setter Target="MoreListgrid.(Grid.ColumnSpan)" Value="2"/>
-                        <Setter Target="MoreContentGrid.(Grid.ColumnSpan)" Value="2"/>
-                        <Setter Target="MoreTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Stretch"/>
-                        <Setter Target="cutoffLine.(FrameworkElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="MoreListgrid.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="MoreContentGrid.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="MoreTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Stretch" />
+                        <Setter Target="cutoffLine.(FrameworkElement.Visibility)" Value="Collapsed" />
                         <Setter Target="MoreContentGrid.(FrameworkElement.Margin)">
                             <Setter.Value>
                                 <Thickness>-1,0,0,0</Thickness>
                             </Setter.Value>
                         </Setter>
-                        <Setter Target="grid.(FrameworkElement.MinHeight)" Value="0"/>
-                        <Setter Target="grid1.(FrameworkElement.MinHeight)" Value="0"/>
-                        <Setter Target="MoreListgrid.(FrameworkElement.MinHeight)" Value="0"/>
-                        <Setter Target="MoreContentGrid.(FrameworkElement.MinHeight)" Value="0"/>
-                        <Setter Target="frame.(FrameworkElement.MinHeight)" Value="0"/>
+                        <Setter Target="grid.(FrameworkElement.MinHeight)" Value="0" />
+                        <Setter Target="grid1.(FrameworkElement.MinHeight)" Value="0" />
+                        <Setter Target="MoreListgrid.(FrameworkElement.MinHeight)" Value="0" />
+                        <Setter Target="MoreContentGrid.(FrameworkElement.MinHeight)" Value="0" />
+                        <Setter Target="frame.(FrameworkElement.MinHeight)" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualState700">
                     <VisualState.Setters>
-                        <Setter Target="MoreTitleGrid.(FrameworkElement.Width)" Value="300"/>
-                        <Setter Target="MoreListgrid.(FrameworkElement.Width)" Value="300"/>
-                        <Setter Target="MoreTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Left"/>
-                        <Setter Target="TitlecutoffLineGrid.(FrameworkElement.Visibility)" Value="Visible"/>
+                        <Setter Target="MoreTitleGrid.(FrameworkElement.Width)" Value="300" />
+                        <Setter Target="MoreListgrid.(FrameworkElement.Width)" Value="300" />
+                        <Setter Target="MoreTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Left" />
+                        <Setter Target="TitlecutoffLineGrid.(FrameworkElement.Visibility)" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
+            <RowDefinition Height="48" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <!--header-->
         <Grid Background="#068cfd" Grid.Row="0">
             <Grid Name="MoreTitleGrid"  HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <!--<AppBarButton Name="MoreBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="MoreBackAppBarButton_Click"/>-->
-                    <TextBlock Name="HubSectionKBTitle" Text="更多" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                    <!--<AppBarButton Name="MoreBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="MoreBackAppBarButton_Click" />-->
+                    <TextBlock Name="HubSectionKBTitle" Text="更多" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI" />
                 </StackPanel>
             </Grid>
             <Grid Name="TitlecutoffLineGrid" Visibility="Collapsed" Margin="300,0,0,0" HorizontalAlignment="Left">
-                <Line Y1="0" Y2="48" Width="1" Stroke="#58b3ff" HorizontalAlignment="Left" StrokeThickness="1"/>
-                <TextBlock Name="MoreContentTitleTextBlock" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                <Line Y1="0" Y2="48" Width="1" Stroke="#58b3ff" HorizontalAlignment="Left" StrokeThickness="1" />
+                <TextBlock Name="MoreContentTitleTextBlock" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI" />
             </Grid>
         </Grid>
 
         <!--实体-->
         <Grid x:Name="grid1" Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
@@ -72,7 +72,7 @@
                 <ScrollViewer VerticalScrollBarVisibility="Hidden">
                     <ListView Name="MoreListView" IsItemClickEnabled="True" ItemClick="MoreListView_ItemClick" ItemsSource="{Binding items}">
                         <ListView.ItemTemplate>
-                            <DataTemplate >
+                            <DataTemplate>
                                 <Grid Margin="-12,0">
                                     <Grid Margin="15,9">
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
@@ -91,13 +91,13 @@
 
             <!--正文-->
             <Grid Name="MoreContentGrid" Grid.Column="1">
-                <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1"/>
+                <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1" />
                 <Frame x:Name="frame" Margin="1,0,0,0">
                     <Frame.ContentTransitions>
                         <TransitionCollection>
                             <NavigationThemeTransition>
                                 <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                                    <EntranceNavigationTransitionInfo/>
+                                    <EntranceNavigationTransitionInfo />
                                 </NavigationThemeTransition.DefaultNavigationTransitionInfo>
                             </NavigationThemeTransition>
                         </TransitionCollection>

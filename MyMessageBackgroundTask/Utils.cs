@@ -1,29 +1,22 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
-using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Streams;
-using Windows.System;
-using Windows.UI;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.Web.Http;
 
 namespace MyMessageBackgroundTask
 {
-    class Utils
+    internal class Utils
     {
         /// <summary>
         /// Toast
@@ -74,8 +67,6 @@ namespace MyMessageBackgroundTask
             nt.Show(notification);
         }
 
-
-
         /// <summary>
         /// 获取当前日期是今年的第几周
         /// </summary>
@@ -93,11 +84,8 @@ namespace MyMessageBackgroundTask
             return Convert.ToInt32(Math.Ceiling((currentDay - firstWeekend) / 7.0)) + 1;
         }
 
-
-
-
         /// <summary>
-        ///UNICODE字符转为中文 
+        ///UNICODE字符转为中文
         /// </summary>
         /// <param name="unicodeString"></param>
         /// <returns></returns>
@@ -123,7 +111,6 @@ namespace MyMessageBackgroundTask
             outStr = (char)int.Parse(str.Remove(0, 2), System.Globalization.NumberStyles.HexNumber);
             return outStr;
         }
-
 
         /// <summary>
         /// 弹出对话框
@@ -207,7 +194,6 @@ namespace MyMessageBackgroundTask
                 //    return null;
                 //}
             }
-
             else
             {
                 Message("网络错误！", "错误");
@@ -282,7 +268,6 @@ namespace MyMessageBackgroundTask
                     var pixelProvider = await decoder.GetPixelDataAsync(
                         decoder.BitmapPixelFormat, decoder.BitmapAlphaMode, bt,
                         ExifOrientationMode.IgnoreExifOrientation, ColorManagementMode.ColorManageToSRgb);
-
 
                     //下面保存图片
                     // Now that we have the pixel data, get the destination file

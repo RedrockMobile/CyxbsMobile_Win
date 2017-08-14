@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Models;
 using ZSCY_Win10.Resource;
@@ -26,9 +14,10 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
     /// </summary>
     public sealed partial class LFDetailPage : Page
     {
-        APPTheme AppTheme = new APPTheme();
-        LFDetailPageViewModel VM;
-        LFDetailPageModel Model = new LFDetailPageModel();
+        private APPTheme AppTheme = new APPTheme();
+        private LFDetailPageViewModel VM;
+        private LFDetailPageModel Model = new LFDetailPageModel();
+
         public LFDetailPage()
         {
             this.InitializeComponent();

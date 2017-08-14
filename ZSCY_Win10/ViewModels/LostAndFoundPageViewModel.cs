@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace ZSCY_Win10.ViewModels
 {
-    class LostAndFoundPageViewModel
+    internal class LostAndFoundPageViewModel
     {
         public string next_page_url { get; set; }
         public ObservableCollection<LFItem> data = new ObservableCollection<LFItem>();
     }
-    class LFItem
+
+    internal class LFItem
     {
         public string pro_id;
         public string connect_name;

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
@@ -13,7 +9,6 @@ namespace ZSCY_Win10.Util.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-
             if (value == null)
             {
                 Color gray = Color.FromArgb(255, 167, 167, 167);
@@ -50,6 +45,7 @@ namespace ZSCY_Win10.Util.Converter
             throw new NotImplementedException();
         }
     }
+
     public class RemindListWeek : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -62,9 +58,9 @@ namespace ZSCY_Win10.Util.Converter
             throw new NotImplementedException();
         }
     }
+
     public class AddRemindShowString : IValueConverter
     {
-
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null)
@@ -73,7 +69,6 @@ namespace ZSCY_Win10.Util.Converter
             }
             else
             {
-
                 string[] temp = value.ToString().Split(',');
                 //莫名的多一个""
                 if (temp.Length - 1 > 6)
@@ -86,11 +81,9 @@ namespace ZSCY_Win10.Util.Converter
                 }
                 else
                 {
-
                     return value;
                 }
             }
-
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
@@ -98,6 +91,7 @@ namespace ZSCY_Win10.Util.Converter
             throw new NotImplementedException();
         }
     }
+
     public class AddRmindShowWeekNum : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -108,7 +102,6 @@ namespace ZSCY_Win10.Util.Converter
             }
             else
             {
-
                 string[] temp = value.ToString().Split('、');
                 if (temp.Length - 1 > 10)
                 {
@@ -133,6 +126,4 @@ namespace ZSCY_Win10.Util.Converter
             throw new NotImplementedException();
         }
     }
-
-
 }

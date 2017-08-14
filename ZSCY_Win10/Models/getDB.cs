@@ -1,11 +1,6 @@
 ﻿using SQLite.Net;
 using SQLite.Net.Platform.WinRT;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZSCY.Models
 {
@@ -20,6 +15,7 @@ namespace ZSCY.Models
 
             return conn;
         }
+
         public static SQLiteConnection GetDbxsqConnection()
         {
             var conn = new SQLiteConnection(new SQLitePlatformWinRT(), DBPath);

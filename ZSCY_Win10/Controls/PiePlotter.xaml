@@ -10,8 +10,8 @@
     d:DesignWidth="480">
 
     <Grid>
-        <Grid x:Name="LayoutRoot" 
-              HorizontalAlignment="Center" 
-              VerticalAlignment="Center"/>
+        <Grid x:Name="LayoutRoot"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center" />
     </Grid>
 </UserControl>

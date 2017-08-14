@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net.NetworkInformation;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using ZSCY_Win10.Util.Remind;
 using ZSCY_Win10.ViewModels.Remind;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -28,6 +18,7 @@ namespace ZSCY_Win10.Pages.RemindPages
     public sealed partial class RemindListPage : Page
     {
         private RemindListViewModel viewmodel;
+
         public RemindListPage()
         {
             this.InitializeComponent();
@@ -60,7 +51,6 @@ namespace ZSCY_Win10.Pages.RemindPages
             SystemNavigationManager.GetForCurrentView().BackRequested -= RemindListPage_BackRequested;
         }
 
-   
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -73,6 +63,7 @@ namespace ZSCY_Win10.Pages.RemindPages
                 viewmodel.GetData();
             }
         }
+
         private void RewriteRemindGridButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             int index = RemindListView.SelectedIndex;
@@ -93,7 +84,6 @@ namespace ZSCY_Win10.Pages.RemindPages
             {
                 await new MessageDialog("请打开网络!!!").ShowAsync();
             }
-
         }
 
         private async void RefreshListView_RefreshInvoked(DependencyObject sender, object args)

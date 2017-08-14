@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Store;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -19,10 +15,6 @@ using Windows.UI.Popups;
 using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Pages;
 using ZSCY_Win10.Util.Remind;
@@ -94,6 +86,7 @@ namespace ZSCY_Win10
                 e.Handled = true;
             }
         }
+
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -134,11 +127,13 @@ namespace ZSCY_Win10
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
+
         private async void LikeAppBarToggleButton_Click(object sender, RoutedEventArgs e)
         {
             //LikeAppBarToggleButton.IsChecked = false;
             await Launcher.LaunchUriAsync(new Uri("zune:reviewapp?appid=" + CurrentApp.AppId)); //用于商店app，自动获取ID
         }
+
         private async void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             var dig = new MessageDialog("若应用无法使用，请尝试清除数据，清除数据后会应用将返回登陆界面。\n\n是否继续？", "警告");
@@ -279,7 +274,6 @@ namespace ZSCY_Win10
 #if DEBUG
             //foreach (var item in filesinthefolder)
             //{
-
             //    if (item.Name == "Assets")
             //    {
             //        var f2 = await item.GetFilesAsync();
@@ -341,7 +335,6 @@ namespace ZSCY_Win10
                     appSetting.Values["OpacityTile"] = false;
                     copy = true;
                     Debug.WriteLine("Blue->Alpha");
-
                 }
                 if (copy)
                 {
@@ -366,7 +359,6 @@ namespace ZSCY_Win10
                 //await Task.Delay(1000);
                 //updater150.Update(newTile150);
 
-
                 //string tileString71 = "<tile>" +
                 //                "<visual version=\"2\">" +
                 //                    "<binding template=\"TileSquare71x71Image\">" +
@@ -382,18 +374,11 @@ namespace ZSCY_Win10
                 //updater71.EnableNotificationQueue(false);
                 //await Task.Delay(1000);
                 //updater71.Update(newTile71);
-
-
-
-
             }
             catch (Exception)
             {
                 OpacityToggleSwitch.IsEnabled = true;
             }
-
-
-
 
             //XmlDocument TileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileSquare150x150Image);
             //XmlNodeList TileImage = TileXml.GetElementsByTagName("image");
@@ -405,21 +390,18 @@ namespace ZSCY_Win10
             //TileUpdater.EnableNotificationQueue(true);
             //TileUpdater.AddToSchedule(Schedule);
 
-
             //TileNotification newTile = new TileNotification(TileXml);
             //TileUpdater updater = TileUpdateManager.CreateTileUpdaterForApplication();
             //updater.EnableNotificationQueue(false);
             //updater.Update(newTile);
 
-
             //var Logo1 = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/SmallLogo.scale-240.png", UriKind.Absolute));
             //var Logo2 = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Square71x71Logo.scale-240.png", UriKind.Absolute));
-
         }
 
         private void AllKBGrayToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            //appSetting.Values["AllKBGray"] = !AllKBGrayToggleSwitch.IsOn;          
+            //appSetting.Values["AllKBGray"] = !AllKBGrayToggleSwitch.IsOn;
             appSetting.Values["AllKBGray"] = true;
         }
 
@@ -428,18 +410,17 @@ namespace ZSCY_Win10
             appSetting.Values["isUseingBackgroundTask"] = backGroundToastToggleSwitch.IsOn;
             Debug.WriteLine(appSetting.Values["isUseingBackgroundTask"].ToString());
         }
+
         private void DelectRemind()
         {
             try
             {
-
                 List<string> RemindTagList = new List<string>();
                 //RemindTagList = DatabaseMethod.ClearRemindItem() as List<string>;
                 RemindTagList = DatabaseMethod.ClearRemindItem();
                 var notifier = ToastNotificationManager.CreateToastNotifier();
                 if (RemindTagList != null)
                 {
-
                     for (int i = 0; i < RemindTagList.Count(); i++)
                     {
                         var scheduledNotifs = notifier.GetScheduledToastNotifications()
@@ -480,8 +461,6 @@ namespace ZSCY_Win10
                 Windows.Storage.Provider.FileUpdateStatus status =
                     await Windows.Storage.CachedFileManager.CompleteUpdatesAsync(saveFile);
             }
-
-
         }
     }
 }

@@ -4,28 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
-using ZSCY.Pages;
 using ZSCY.Models;
-using ZSCY_Win10.ViewModels;
-using Windows.UI;
-using Windows.UI.Xaml.Media.Animation;
+using ZSCY.Pages;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -34,8 +25,7 @@ namespace ZSCY_Win10.Pages
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    /// 
-    
+    ///
 
     public sealed partial class BigDataPage : Page
     {
@@ -44,17 +34,18 @@ namespace ZSCY_Win10.Pages
         private int pivot_index;
 
         //男女比例
-        List<ZSCY.Models.SexDatum> sexList = new List<SexDatum>();
+        private List<ZSCY.Models.SexDatum> sexList = new List<SexDatum>();
 
         //就业率
-        List<ZSCY.Models.WorkDatum> workList = new List<WorkDatum>();
+        private List<ZSCY.Models.WorkDatum> workList = new List<WorkDatum>();
 
         //最难科目
-        List<ZSCY.Models.CourseDatum> collegeList = new List<ZSCY.Models.CourseDatum>();
+        private List<ZSCY.Models.CourseDatum> collegeList = new List<ZSCY.Models.CourseDatum>();
 
         //最难科目 的combobox的index
-        int _thisCollegeIndex;
-        int _thisMajorIndex;
+        private int _thisCollegeIndex;
+
+        private int _thisMajorIndex;
 
         public BigDataPage()
         {
@@ -76,8 +67,8 @@ namespace ZSCY_Win10.Pages
             }
         }
 
-       protected override async void OnNavigatedTo(NavigationEventArgs e)
-       {
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
             base.OnNavigatedTo(e);
             if (e.NavigationMode == NavigationMode.New)
             {
@@ -90,8 +81,8 @@ namespace ZSCY_Win10.Pages
                 CourseTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 51, 51, 51));
                 WorkTextBlock.Foreground = new SolidColorBrush(Color.FromArgb(255, 51, 51, 51));
             }
-
         }
+
         private async Task First_Step()
         {
             StorageFile file;
@@ -100,6 +91,7 @@ namespace ZSCY_Win10.Pages
             string uri = "";
 
             #region 得到次级标题Header列表
+
             file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Json/BigDate_Header_Lists.json", UriKind.Absolute));
             json = await FileIO.ReadTextAsync(file);
             json_object = (JObject)JsonConvert.DeserializeObject(json);
@@ -112,9 +104,11 @@ namespace ZSCY_Win10.Pages
                 header_lists.Add(item);
             }
             viewmodel.Header = header_lists;
-            #endregion
+
+            #endregion 得到次级标题Header列表
 
             #region 得到男女比例选择栏 -> 学院
+
             uri = "http://www.yangruixin.com/test/apiRatio.php";
             List<KeyValuePair<String, String>> SexParamList = new List<KeyValuePair<String, String>>();
             SexParamList.Add(new KeyValuePair<string, string>("RequestType", "SexRatio"));
@@ -133,9 +127,11 @@ namespace ZSCY_Win10.Pages
                 //绑定数据
                 sexRatio_ComboBox.ItemsSource = sexList;
             }
-            #endregion
+
+            #endregion 得到男女比例选择栏 -> 学院
 
             #region 得到就业率选择栏 -> 学院
+
             uri = "http://www.yangruixin.com/test/apiRatio.php";
             List<KeyValuePair<String, String>> WorkParamList = new List<KeyValuePair<String, String>>();
             WorkParamList.Add(new KeyValuePair<string, string>("RequestType", "WorkRatio"));
@@ -154,10 +150,11 @@ namespace ZSCY_Win10.Pages
                 //绑定数据
                 workRatio_ComboBox.ItemsSource = workList;
             }
-            #endregion
 
+            #endregion 得到就业率选择栏 -> 学院
 
             #region 得到最难科目选择栏 -> 学院+专业
+
             uri = "http://www.yangruixin.com/test/apiRatio.php";
             List<KeyValuePair<String, String>> FailParamList = new List<KeyValuePair<String, String>>();
             FailParamList.Add(new KeyValuePair<string, string>("RequestType", "FailPlus"));
@@ -177,7 +174,8 @@ namespace ZSCY_Win10.Pages
                 //绑定数据
                 collegeCourse_ComboBox.ItemsSource = collegeList;
             }
-            #endregion
+
+            #endregion 得到最难科目选择栏 -> 学院+专业
         }
 
         //Pivot.Header 切换效果实现  (有bug)
@@ -205,10 +203,10 @@ namespace ZSCY_Win10.Pages
         {
             FirstPage.firstpage.Second_Page_Back();
             Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
-
         }
 
-        bool isExit = false;
+        private bool isExit = false;
+
         private void OnBackPressed(object sender, BackPressedEventArgs e)
         {
             FirstPage.firstpage.Second_Page_Back();
@@ -254,7 +252,6 @@ namespace ZSCY_Win10.Pages
             }
         }
 
-
         //脑残版数据绑定  男女比例
         private void sexRatio_ComboBox_DropDownClosed(object sender, object e)
         {
@@ -264,7 +261,6 @@ namespace ZSCY_Win10.Pages
             int index = sexRatio_ComboBox.SelectedIndex;
             double __menRatio = Convert.ToDouble(sexList[index].MenRatio);
             double __womenRatio = Convert.ToDouble(sexList[index].WomenRatio);
-
 
             //保留两位小数
             double _menRatio = Math.Round(__menRatio, 2);
@@ -282,7 +278,7 @@ namespace ZSCY_Win10.Pages
 
             var storyBoard = new Storyboard();
             var extendAnimation1 = new DoubleAnimation { Duration = new Duration(TimeSpan.FromSeconds(0.5)), From = 0, To = _menRatio, EnableDependentAnimation = true };
-    
+
             extendAnimation1.EasingFunction = circleEase;
 
             Storyboard.SetTarget(extendAnimation1, MenRatioCPB);
@@ -346,8 +342,7 @@ namespace ZSCY_Win10.Pages
             storyBoard.Begin();
         }
 
-
-        //最难科目 第一个下拉框 -> 学院 
+        //最难科目 第一个下拉框 -> 学院
         private void collegeCourse_ComboBox_DropDownClosed(object sender, object e)
         {
             if (collegeCourse_ComboBox.SelectedItem == null)
@@ -358,9 +353,8 @@ namespace ZSCY_Win10.Pages
 
             //最难科目 第二个下拉框 -> 专业
             marjorCourse_ComboBox.ItemsSource = collegeList[_thisCollegeIndex].major;
-
-
         }
+
         //最难科目 第二个下拉框 -> 专业
         private void marjorCourse_ComboBox_DropDownClosed(object sender, object e)
         {
@@ -422,9 +416,6 @@ namespace ZSCY_Win10.Pages
 
             storyBoard.AutoReverse = false;
             storyBoard.Begin();
-
-
         }
-
     }
 }

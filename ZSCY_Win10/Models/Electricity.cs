@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZSCY_Win10.Models
 {
@@ -36,7 +32,8 @@ namespace ZSCY_Win10.Models
         public string elec_end { get; set; }//当前表的度数
         public string elec_free { get; set; }//每月免费额度
         public string elec_month { get; set; }//抄表月份
-        string elec_Perday = "";
+        private string elec_Perday = "";
+
         public string elec_perday
         {
             get
@@ -56,7 +53,6 @@ namespace ZSCY_Win10.Models
         public string spend { get; set; }
     }//半年内消耗电费的月份和度数
 
-
     public class ElectricityByRoomNum
     {
         public int status { get; set; }//网络状态
@@ -72,7 +68,8 @@ namespace ZSCY_Win10.Models
         public string elec_end { get; set; }//当前表的度数
         public string elec_free { get; set; }//每月免费额度
         public string elec_month { get; set; }//抄表月份
-        string elec_Perday = "";
+        private string elec_Perday = "";
+
         public string elec_perday
         {
             get

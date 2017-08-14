@@ -1,18 +1,11 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Storage;
+﻿using System.Collections.ObjectModel;
 
 namespace ZSCY_Win10.ViewModels
 {
     public class FengCaiViewModel : BasePageViewModel
     {
         private ObservableCollection<ZSCY.Models.fengcaiheaders> _header;
+
         public ObservableCollection<ZSCY.Models.fengcaiheaders> Header
         {
             get
@@ -27,6 +20,7 @@ namespace ZSCY_Win10.ViewModels
         }
 
         private ObservableCollection<ZSCY.Models.zuzhi> _zuzhi;
+
         public ObservableCollection<ZSCY.Models.zuzhi> ZuZhi
         {
             get
@@ -41,6 +35,7 @@ namespace ZSCY_Win10.ViewModels
         }
 
         private ObservableCollection<ZSCY.Models.zuzhi_intro> _zuzhi_intro;
+
         public ObservableCollection<ZSCY.Models.zuzhi_intro> Zuzhi_Intro
         {
             get
@@ -55,6 +50,7 @@ namespace ZSCY_Win10.ViewModels
         }
 
         private ObservableCollection<ZSCY.Models.zuimei> _zuimei;
+
         public ObservableCollection<ZSCY.Models.zuimei> ZuiMei
         {
             get
@@ -83,6 +79,7 @@ namespace ZSCY_Win10.ViewModels
         //}
 
         private ObservableCollection<ZSCY.Models.yuanchuang> _yuanchuang;
+
         public ObservableCollection<ZSCY.Models.yuanchuang> YuanChuang
         {
             get
@@ -97,6 +94,7 @@ namespace ZSCY_Win10.ViewModels
         }
 
         private ObservableCollection<ZSCY.Models.xuezi> _xuezi;
+
         public ObservableCollection<ZSCY.Models.xuezi> XueZi
         {
             get
@@ -111,6 +109,7 @@ namespace ZSCY_Win10.ViewModels
         }
 
         private ObservableCollection<ZSCY.Models.teacher> _teacher;
+
         public ObservableCollection<ZSCY.Models.teacher> Teacher
         {
             get

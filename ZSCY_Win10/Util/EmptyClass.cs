@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ZSCY_Win10.Data;
 
 namespace ZSCY_Win10.Util
 {
-    class EmptyClass
+    internal class EmptyClass
     {
         /// <summary>
         /// 要查询的周次
         /// </summary>
         public int Weeknum { get; set; }
+
         /// <summary>
         /// 所有学号的课程，数据源
         /// </summary>
@@ -22,7 +20,6 @@ namespace ZSCY_Win10.Util
 
         public EmptyClass(int weeknum, Dictionary<string, List<ClassListLight>> searchlist)
         {
-
             this.Weeknum = weeknum;
             this.Searchlist = searchlist;
             if (weeknum < 0 && weeknum != -100)
@@ -30,6 +27,7 @@ namespace ZSCY_Win10.Util
                 this.Weeknum = 11;
             }
         }
+
         /// <summary>
         /// 异步获取结果
         /// </summary>
@@ -38,7 +36,6 @@ namespace ZSCY_Win10.Util
         /// <returns></returns>
         public async Task getfreetimeasync(ObservableCollection<ClassListLight> weekresult, ObservableCollection<EmptyTable> termresult)
         {
-
             //所有人的名字
             string[] names = (from n in Searchlist.Keys select n).ToArray();
             //星期，时间段，人名数组
@@ -66,7 +63,7 @@ namespace ZSCY_Win10.Util
                     }
                 }
                 //clist = clist.OrderBy(x => x.Hash_day).ToList();
-                //筛选出该周内所有不在同一时间上课的课    
+                //筛选出该周内所有不在同一时间上课的课
                 //按上课周几和上课时段分组，如果某个组长度小于总人数则选择这个组//即得到不是所有人都有课的时间，
                 var diisclist = from n in clist group n by new { n.Hash_day, n.Hash_lesson } into g where g.Count() < names.Length select g;
                 //将结果从IEnumerable<T>转成List
@@ -105,7 +102,7 @@ namespace ZSCY_Win10.Util
                 //我要怎么做呢，怎么做呢，既然要查学期，那么就按课的时间差吧，从星期一第一节到星期天
                 //查每个人，每个时间段有课情况
                 //查到所有这个时间段的周：EX :星期一第一二节课，  得到一个周的列表   1,2,3,4,5,6     得到每个人的周列表，2,4,6,8    1,3,5,7 ，找出都没课的周
-                //怎么找呢   
+                //怎么找呢
                 //找出每个人没课的周 7,8,9,10  1,3,4,7,9,10  2,4,5,8,10
                 //那么就得到了           张三            历史           王五
                 //那么这个类就应该是 周，时间，姓名[]，那几周空[]----周，时间，  键值对（名字，有空的周[]）
@@ -120,7 +117,7 @@ namespace ZSCY_Win10.Util
                         foreach (var key in Searchlist.Keys)
                         {
                             IEnumerable<int[]> a = from n in Searchlist[key] where n.Hash_day == i && n.Hash_lesson == j select n.Week;
-                            //var b=from x in Searchlist group x.Value by x.Key into g 
+                            //var b=from x in Searchlist group x.Value by x.Key into g
                             List<int[]> listweek = a.ToList();
                             List<int> onweeks = new List<int>();
                             for (int m = 0; m < listweek.Count; m++)
@@ -147,11 +144,9 @@ namespace ZSCY_Win10.Util
                     }
                 }
             }
-
         }
 
-
-        public  ObservableCollection<ClassListLight> getweekresult()
+        public ObservableCollection<ClassListLight> getweekresult()
         {
             string[] names = (from n in Searchlist.Keys select n).ToArray();
             List<ClassListLight> clist = new List<ClassListLight>();
@@ -177,7 +172,7 @@ namespace ZSCY_Win10.Util
                 }
             }
             //clist = clist.OrderBy(x => x.Hash_day).ToList();
-            //筛选出该周内所有不在同一时间上课的课    
+            //筛选出该周内所有不在同一时间上课的课
             //按上课周几和上课时段分组，如果某个组长度小于总人数则选择这个组//即得到不是所有人都有课的时间，
             var diisclist = from n in clist group n by new { n.Hash_day, n.Hash_lesson } into g where g.Count() < names.Length select g;
             //将结果从IEnumerable<T>转成List
@@ -210,7 +205,8 @@ namespace ZSCY_Win10.Util
             }
             return w;
         }
-        public  ObservableCollection<EmptyTable> gettermresult()
+
+        public ObservableCollection<EmptyTable> gettermresult()
         {
             string[] names = (from n in Searchlist.Keys select n).ToArray();
             List<ClassListLight> clist = new List<ClassListLight>();
@@ -225,7 +221,7 @@ namespace ZSCY_Win10.Util
                     foreach (var key in Searchlist.Keys)
                     {
                         IEnumerable<int[]> a = from n in Searchlist[key] where n.Hash_day == i && n.Hash_lesson == j select n.Week;
-                        //var b=from x in Searchlist group x.Value by x.Key into g 
+                        //var b=from x in Searchlist group x.Value by x.Key into g
                         List<int[]> listweek = a.ToList();
                         List<int> onweeks = new List<int>();
                         for (int m = 0; m < listweek.Count; m++)
@@ -253,6 +249,7 @@ namespace ZSCY_Win10.Util
             }
             return t;
         }
+
         public void getfreetime(ObservableCollection<ClassListLight> weekresult, ObservableCollection<EmptyTable> termresult)
         {
             //所有人的名字
@@ -282,7 +279,7 @@ namespace ZSCY_Win10.Util
                     }
                 }
                 //clist = clist.OrderBy(x => x.Hash_day).ToList();
-                //筛选出该周内所有不在同一时间上课的课    
+                //筛选出该周内所有不在同一时间上课的课
                 //按上课周几和上课时段分组，如果某个组长度小于总人数则选择这个组//即得到不是所有人都有课的时间，
                 var diisclist = from n in clist group n by new { n.Hash_day, n.Hash_lesson } into g where g.Count() < names.Length select g;
                 //将结果从IEnumerable<T>转成List
@@ -321,7 +318,7 @@ namespace ZSCY_Win10.Util
                 //我要怎么做呢，怎么做呢，既然要查学期，那么就按课的时间差吧，从星期一第一节到星期天
                 //查每个人，每个时间段有课情况
                 //查到所有这个时间段的周：EX :星期一第一二节课，  得到一个周的列表   1,2,3,4,5,6     得到每个人的周列表，2,4,6,8    1,3,5,7 ，找出都没课的周
-                //怎么找呢   
+                //怎么找呢
                 //找出每个人没课的周 7,8,9,10  1,3,4,7,9,10  2,4,5,8,10
                 //那么就得到了           张三            历史           王五
                 //那么这个类就应该是 周，时间，姓名[]，那几周空[]----周，时间，  键值对（名字，有空的周[]）
@@ -336,7 +333,7 @@ namespace ZSCY_Win10.Util
                         foreach (var key in Searchlist.Keys)
                         {
                             IEnumerable<int[]> a = from n in Searchlist[key] where n.Hash_day == i && n.Hash_lesson == j select n.Week;
-                            //var b=from x in Searchlist group x.Value by x.Key into g 
+                            //var b=from x in Searchlist group x.Value by x.Key into g
                             List<int[]> listweek = a.ToList();
                             List<int> onweeks = new List<int>();
                             for (int m = 0; m < listweek.Count; m++)
@@ -364,6 +361,7 @@ namespace ZSCY_Win10.Util
                 }
             }
         }
+
         private class ClassListLigthCompare : IEqualityComparer<ClassListLight>
         {
             public bool Equals(ClassListLight x, ClassListLight y)

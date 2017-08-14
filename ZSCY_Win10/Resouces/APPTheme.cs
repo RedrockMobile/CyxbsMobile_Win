@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI;
+﻿using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
@@ -154,7 +149,6 @@ namespace ZSCY_Win10.Resource
             }
         }
 
-
         //内容文字尺寸
         public int Content_Size
         {
@@ -179,10 +173,10 @@ namespace ZSCY_Win10.Resource
             {
                 SetValue(Second_Content_Size_DP, value);
             }
-
         }
-   
+
         private SolidColorBrush line_Color;
+
         /// <summary>
         /// 分割线颜色
         /// </summary>
@@ -200,6 +194,7 @@ namespace ZSCY_Win10.Resource
         }
 
         private SolidColorBrush Font_Bule;
+
         /// <summary>
         /// 强调字体
         /// </summary>
@@ -216,8 +211,7 @@ namespace ZSCY_Win10.Resource
             }
         }
 
-
-        public static readonly DependencyProperty Font_Blue_Dp = DependencyProperty.Register("Font_Blue", typeof(SolidColorBrush),typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 140, 196, 246))));
+        public static readonly DependencyProperty Font_Blue_Dp = DependencyProperty.Register("Font_Blue", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 140, 196, 246))));
         public static readonly DependencyProperty APP_Color_Brush_DP = DependencyProperty.Register("APP_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 6, 140, 253)))); //蓝色色调
 
         public static readonly DependencyProperty Gary_Color_Brush_DP = DependencyProperty.Register("Gary_Color_Brush", typeof(SolidColorBrush), typeof(APPTheme), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(255, 136, 136, 136)))); //5b5b5b

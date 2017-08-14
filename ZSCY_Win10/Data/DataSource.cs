@@ -15,7 +15,7 @@ namespace ZSCY_Win10.Data
         public string ItemPage { get; set; }
         public string Itemimgsrc { get; set; }
 
-        public Morepageclass(string name, string src,string id,string page)
+        public Morepageclass(string name, string src, string id, string page)
         {
             this.Itemimgsrc = src;
             this.Itemname = name;
@@ -27,55 +27,53 @@ namespace ZSCY_Win10.Data
         {
             return this.Itemname;
         }
-
-
     }
 
     public class Group
     {
         public Group()
         {
-            this.items= new ObservableCollection<Morepageclass>();
+            this.items = new ObservableCollection<Morepageclass>();
         }
-        public  ObservableCollection<Morepageclass> items { get;private set; }
-    }
 
+        public ObservableCollection<Morepageclass> items { get; private set; }
+    }
 
     public sealed class DataSource
     {
-        private static DataSource ds=new DataSource();
-        private  ObservableCollection<Group>  group=new ObservableCollection<Group>();
+        private static DataSource ds = new DataSource();
+        private ObservableCollection<Group> group = new ObservableCollection<Group>();
 
         public ObservableCollection<Group> Group
         {
             get { return group; }
         }
-        public static  async Task<IEnumerable<Group>> Get()
+
+        public static async Task<IEnumerable<Group>> Get()
         {
             await ds.GetItemsAsync();
             return ds.Group;
         }
+
         private async Task GetItemsAsync()
         {
             Uri dataUri = new Uri("ms-appx:///Data/moreitems.json");
             try
             {
-
-            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(dataUri);
-            string jsonText = await FileIO.ReadTextAsync(file);
-            JsonObject jsonObject= JsonObject.Parse(jsonText);
-            JsonArray jsonArray = jsonObject["Items"].GetArray();
-            Group g=new Group();
-            foreach (JsonValue item in jsonArray)
-            {
-                JsonObject i = item.GetObject();
-                g.items.Add(new Morepageclass(i["Itemname"].GetString(),i["Itemimgsrc"].GetString(),i["UniqueId"].GetString(),i["ItemPage"].GetString()));
-            }
-            this.Group.Add(g);
+                StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(dataUri);
+                string jsonText = await FileIO.ReadTextAsync(file);
+                JsonObject jsonObject = JsonObject.Parse(jsonText);
+                JsonArray jsonArray = jsonObject["Items"].GetArray();
+                Group g = new Group();
+                foreach (JsonValue item in jsonArray)
+                {
+                    JsonObject i = item.GetObject();
+                    g.items.Add(new Morepageclass(i["Itemname"].GetString(), i["Itemimgsrc"].GetString(), i["UniqueId"].GetString(), i["ItemPage"].GetString()));
+                }
+                this.Group.Add(g);
             }
             catch (Exception exception)
             {
-                
                 Debug.WriteLine(exception.Message);
             }
         }

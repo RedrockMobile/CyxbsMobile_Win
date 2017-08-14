@@ -23,15 +23,15 @@
             <TextBlock Name="ContentTextBlock" TextWrapping="WrapWholeWords" Foreground="#333" FontSize="16"></TextBlock>
         </StackPanel>-->
 
-        <Grid >
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <TextBlock Name="TitleTextBlock" Margin="15,7,0,0" Grid.Row="0" Foreground="#333" FontSize="18" TextWrapping="WrapWholeWords" FontWeight="Bold"></TextBlock>
-            <Grid Margin="15,10" Grid.Row="1" >
+            <Grid Margin="15,10" Grid.Row="1">
                 <TextBlock Name="DateReadTextBlock" Foreground="#737373" FontSize="12"></TextBlock>
             </Grid>
             <Grid Grid.Row="2">
@@ -40,6 +40,5 @@
             </Grid>
             <WebView Name="ContentWebView" Margin="15,0" Grid.Row="3" ></WebView>
         </Grid>
-
     </Grid>
 </Page>

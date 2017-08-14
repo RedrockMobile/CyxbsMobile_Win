@@ -3,17 +3,14 @@ using SQLite.Net.Platform.WinRT;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Security.Credentials;
 using ZSCY_Win10.Models.RemindModels;
 using ZSCY_Win10.Resource;
 
 namespace ZSCY_Win10.Util.Remind
 {
-    class DatabaseMethod
+    internal class DatabaseMethod
     {
         public static List<string> ClearRemindItem()
         {
@@ -32,6 +29,7 @@ namespace ZSCY_Win10.Util.Remind
             }
             return TagList;
         }
+
         public static async void DeleteRemindItem(int num)
         {
             string tag = "";
@@ -56,12 +54,10 @@ namespace ZSCY_Win10.Util.Remind
                     await NetWork.getHttpWebRequest(Api.DeleteRemindApi, RemindWebRequest.deleteRemind(remind), 0, true);
                     conn.Delete<DataBaseModel>(item.Num);
                 }
-
             }
             string[] TagArray = tag.Split(',');
             RemindSystemUtil.DeleteRemind(TagArray);
         }
-
 
         public static ObservableCollection<DataBaseModel> ToModel()
         {
@@ -78,6 +74,7 @@ namespace ZSCY_Win10.Util.Remind
             }
             return modelList;
         }
+
         public static DataBaseModel ToModel(string id)
         {
             DataBaseModel item = new DataBaseModel();
@@ -110,7 +107,6 @@ namespace ZSCY_Win10.Util.Remind
         //    //    up.Delete(x => x.Id == id && x.Id_system == id_system);
         //    //else
         //    //{
-
         //    //}
         //    up.Delete(x => x.Num == num);
         //    //if (id != null && id_system == null)
@@ -122,16 +118,13 @@ namespace ZSCY_Win10.Util.Remind
         //    RemindListDB temp = new RemindListDB() { Id = id, Id_system = id_system, json = json };
         //    conn.Insert(temp);
 
-
         //}
         //public static void ReadDatabase(Visibility visibility)
         //{
         //    try
         //    {
-
         //        using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
         //        {
-
         //            App.remindList.Clear();
         //            var list = conn.Table<RemindListDB>();
         //            foreach (var item in list)
@@ -213,17 +206,17 @@ namespace ZSCY_Win10.Util.Remind
 
         //}
         #endregion
+
         public static void ToDatabase(string id, string json, string id_system)
         {
             using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
             {
-
                 conn.CreateTable<DataBaseModel>();
 
                 conn.Insert(new DataBaseModel() { Id = id, Id_system = id_system, json = json });
             }
-
         }
+
         public static void ClearDatabase()
         {
             using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
@@ -232,6 +225,7 @@ namespace ZSCY_Win10.Util.Remind
                 conn.CreateTable<DataBaseModel>();
             }
         }
+
         public static void EditItem(int num, string id, string json, string id_system)
         {
             using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), App.RemindListDBPath))
@@ -240,12 +234,12 @@ namespace ZSCY_Win10.Util.Remind
                 ToDatabase(id, json, id_system);
             }
         }
+
         public static string DataReset()
         {
             string tag = "";
 
             return tag;
-
         }
     }
 }

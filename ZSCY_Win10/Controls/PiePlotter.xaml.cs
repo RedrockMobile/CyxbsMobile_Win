@@ -1,20 +1,10 @@
-﻿using ZSCY.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using ZSCY.Models;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -23,7 +13,9 @@ namespace ZSCY_Win10.Controls
     public sealed partial class PiePlotter : UserControl
     {
         #region Dependency Properties
+
         public static readonly DependencyProperty HoleSizeProperty = DependencyProperty.Register("HoleSize", typeof(double), typeof(PiePlotter), new PropertyMetadata(0.0));
+
         public double HoleSize      //内圆大小
         {
             get { return (double)GetValue(HoleSizeProperty); }
@@ -34,6 +26,7 @@ namespace ZSCY_Win10.Controls
         }
 
         public static readonly DependencyProperty PieWidthProperty = DependencyProperty.Register("PieWidth", typeof(double), typeof(PiePlotter), new PropertyMetadata(0.0));
+
         public double PieWidth      //饼图宽度
         {
             get { return (double)GetValue(PieWidthProperty); }
@@ -42,7 +35,8 @@ namespace ZSCY_Win10.Controls
                 SetValue(PieWidthProperty, value);
             }
         }
-        #endregion
+
+        #endregion Dependency Properties
 
         private List<PiePiece> piePieces = new List<PiePiece>();
         private PieDataItem CurrentItem;
@@ -94,12 +88,13 @@ namespace ZSCY_Win10.Controls
             NotifyChange();
         }
 
-        void piece_Tapped(object sender, TappedRoutedEventArgs e)
+        private void piece_Tapped(object sender, TappedRoutedEventArgs e)
         {
             PiePiece piePiece = sender as PiePiece;
             CurrentItem = piePiece.Tag as PieDataItem;
             ShowPie();
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void NotifyChange([CallerMemberName]string property = null)

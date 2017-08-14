@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -24,9 +14,10 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
     public sealed partial class SetRoomPage : Page
     {
         private static string byRoomNumUri = "http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ElectricityQuery/ElectricityQuery/queryElecByRoom";
-        List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
-        ApplicationDataContainer roomSettings = ApplicationData.Current.LocalSettings;
-        NetWork netWork = new NetWork();
+        private List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
+        private ApplicationDataContainer roomSettings = ApplicationData.Current.LocalSettings;
+        private NetWork netWork = new NetWork();
+
         public SetRoomPage()
         {
             this.InitializeComponent();
@@ -36,6 +27,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
                 RoomTextBox.Text = roomSettings.Values["room"].ToString();
             }
         }
+
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.GoBack();
@@ -57,7 +49,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
             if (ComboBox.SelectedItem == null || RoomTextBox.Text.ToString().Length != 3 || electricityData.elec_inf.elec_spend == null)
             {
                 var msgPopup = new MessagePopup(); //MessagePop构造方法可传string型参数作为弹窗的提示
-                msgPopup.ShowWindow();              
+                msgPopup.ShowWindow();
             }
             else
             {

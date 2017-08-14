@@ -10,17 +10,16 @@
     xmlns:converters="using:ZSCY_Win10.Util.Converter"
     xmlns:util="using:ZSCY_Win10.Util"
     xmlns:models="using:ZSCY_Win10.Data.Community"
-    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
-    Background="White"
-    >
+    Background="White">
     <Page.Resources>
-        <converters:CommunityItemPhotoFlipViewHeighConverter x:Key="CommunityItemPhotoFlipViewHeighConverter"/>
+        <converters:CommunityItemPhotoFlipViewHeighConverter x:Key="CommunityItemPhotoFlipViewHeighConverter" />
         <!--根据图片数量动态选择数据模板-->
         <util:ImgDataTemplateSelector x:Key="ImgDataTemplateSelector">
             <util:ImgDataTemplateSelector.NoPhotoTemplate>
                 <DataTemplate  x:DataType="models:Img">
-                    <Grid Width="0" Height="0"/>
+                    <Grid Width="0" Height="0" />
                 </DataTemplate>
             </util:ImgDataTemplateSelector.NoPhotoTemplate>
             <util:ImgDataTemplateSelector.OnePhotoTemplate>
@@ -33,14 +32,14 @@
             <util:ImgDataTemplateSelector.TwoPhotoTemplate>
                 <DataTemplate x:DataType="models:Img">
                     <Grid MinWidth="150" MaxWidth="160">
-                        <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill"/>
+                        <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill" />
                     </Grid>
                 </DataTemplate>
             </util:ImgDataTemplateSelector.TwoPhotoTemplate>
             <util:ImgDataTemplateSelector.MorePhotoTemplate>
                 <DataTemplate x:DataType="models:Img">
                     <Grid Height="100" Width="100">
-                        <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill"/>
+                        <Image Source="{x:Bind ImgSmallSrc}" Stretch="UniformToFill" />
                     </Grid>
                 </DataTemplate>
             </util:ImgDataTemplateSelector.MorePhotoTemplate>
@@ -67,7 +66,7 @@
                         <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind img}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                             <GridView.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3" />
                                 </ItemsPanelTemplate>
                             </GridView.ItemsPanel>
                         </GridView>
@@ -83,7 +82,7 @@
                             <Button Style="{StaticResource LikeCommentButton}" IsEnabled="False">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Margin="10,5">
-                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray" />
                                         <TextBlock Text="{x:Bind remark_num,Mode=OneWay}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
                                     </StackPanel>
                                 </Button.Content>
@@ -112,7 +111,7 @@
                         <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind img}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                             <GridView.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3" />
                                 </ItemsPanelTemplate>
                             </GridView.ItemsPanel>
                         </GridView>
@@ -128,7 +127,7 @@
                             <Button Style="{StaticResource LikeCommentButton}" IsEnabled="False">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Margin="10,5">
-                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray" />
                                         <TextBlock Text="{x:Bind remark_num}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
                                     </StackPanel>
                                 </Button.Content>
@@ -158,7 +157,7 @@
                 <GridView Name="PhotoGrid" Margin="0,10,0,0" IsItemClickEnabled="True" ItemClick="PhotoGrid_ItemClick" MinHeight="0" ItemsSource="{x:Bind article_photo_src}" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource ImgDataTemplateSelector}">
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                            <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3" />
                         </ItemsPanelTemplate>
                     </GridView.ItemsPanel>
                 </GridView>
@@ -174,7 +173,7 @@
                     <Button Style="{StaticResource LikeCommentButton}" IsEnabled="False">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" Margin="10,5">
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray"/>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;" Foreground="Gray" />
                                 <TextBlock Text="{x:Bind remark_num,Mode=OneWay}"   Foreground="Gray" Margin="5,0,5,2"></TextBlock>
                             </StackPanel>
                         </Button.Content>
@@ -188,20 +187,20 @@
         </Style>
         <!--动态的列表样式-->
         <Style x:Name="FeedsListView" x:Key="FeedsListView" TargetType="ListView">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="IsItemClickEnabled" Value="True"/>
-            <Setter Property="SelectionMode" Value="None"/>
-            <Setter Property="ItemTemplate" Value="{StaticResource ListDataTemplate}"/>
-            <Setter Property="ItemContainerStyle" Value="{StaticResource ItemContainerStyle}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="IsItemClickEnabled" Value="True" />
+            <Setter Property="SelectionMode" Value="None" />
+            <Setter Property="ItemTemplate" Value="{StaticResource ListDataTemplate}" />
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ItemContainerStyle}" />
         </Style>
         <Style x:Name="HotFeedsListView" x:Key="HotFeedsListView" TargetType="ListView">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="IsItemClickEnabled" Value="True"/>
-            <Setter Property="SelectionMode" Value="None"/>
-            <Setter Property="ItemTemplateSelector" Value="{StaticResource HotFeedsDataTemplateSelector}"/>
-            <Setter Property="ItemContainerStyle" Value="{StaticResource ItemContainerStyle}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="IsItemClickEnabled" Value="True" />
+            <Setter Property="SelectionMode" Value="None" />
+            <Setter Property="ItemTemplateSelector" Value="{StaticResource HotFeedsDataTemplateSelector}" />
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ItemContainerStyle}" />
         </Style>
     </Page.Resources>
     <Grid x:Name="grid" Background="White">
@@ -209,59 +208,59 @@
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualState000">
                     <VisualState.Setters>
-                        <Setter Target="CommunityListgrid.(Grid.ColumnSpan)" Value="2"/>
-                        <Setter Target="CommunityContentGrid.(Grid.ColumnSpan)" Value="2"/>
-                        <Setter Target="CommunityTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Stretch"/>
-                        <Setter Target="cutoffLine.(FrameworkElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="CommunityListgrid.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="CommunityContentGrid.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="CommunityTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Stretch" />
+                        <Setter Target="cutoffLine.(FrameworkElement.Visibility)" Value="Collapsed" />
                         <Setter Target="CommunityContentGrid.(FrameworkElement.Margin)">
                             <Setter.Value>
                                 <Thickness>-1,0,0,0</Thickness>
                             </Setter.Value>
                         </Setter>
-                        <Setter Target="grid.(FrameworkElement.MinHeight)" Value="0"/>
-                        <Setter Target="grid1.(FrameworkElement.MinHeight)" Value="0"/>
-                        <Setter Target="CommunityListgrid.(FrameworkElement.MinHeight)" Value="0"/>
-                        <Setter Target="CommunityContentGrid.(FrameworkElement.MinHeight)" Value="0"/>
-                        <Setter Target="cframe.(FrameworkElement.MinHeight)" Value="0"/>
+                        <Setter Target="grid.(FrameworkElement.MinHeight)" Value="0" />
+                        <Setter Target="grid1.(FrameworkElement.MinHeight)" Value="0" />
+                        <Setter Target="CommunityListgrid.(FrameworkElement.MinHeight)" Value="0" />
+                        <Setter Target="CommunityContentGrid.(FrameworkElement.MinHeight)" Value="0" />
+                        <Setter Target="cframe.(FrameworkElement.MinHeight)" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualState800">
                     <VisualState.Setters>
-                        <Setter Target="CommunityTitleGrid.(FrameworkElement.Width)" Value="400"/>
-                        <Setter Target="CommunityListgrid.(FrameworkElement.Width)" Value="400"/>
-                        <Setter Target="CommunityTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Left"/>
-                        <Setter Target="TitlecutoffLineGrid.(FrameworkElement.Visibility)" Value="Visible"/>
+                        <Setter Target="CommunityTitleGrid.(FrameworkElement.Width)" Value="400" />
+                        <Setter Target="CommunityListgrid.(FrameworkElement.Width)" Value="400" />
+                        <Setter Target="CommunityTitleGrid.(FrameworkElement.HorizontalAlignment)" Value="Left" />
+                        <Setter Target="TitlecutoffLineGrid.(FrameworkElement.Visibility)" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
+            <RowDefinition Height="48" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <!--header-->
         <Grid Background="#068cfd" Grid.Row="0">
             <Grid Name="CommunityTitleGrid"  HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <!--<AppBarButton Name="CommunityBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="CommunityBackAppBarButton_Click"/>-->
-                    <TextBlock Name="HubSectionKBTitle" Text="社区" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                    <!--<AppBarButton Name="CommunityBackAppBarButton" Icon="Back" Foreground="White" Visibility="Collapsed" Click="CommunityBackAppBarButton_Click" />-->
+                    <TextBlock Name="HubSectionKBTitle" Text="社区" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <!--<AppBarButton Name="CommunityMyAppBarButton" Icon="Contact" Foreground="White" Click="CommunityMyAppBarButton_Click"></AppBarButton>-->
-                    <AppBarButton Name="CommunityAddAppBarButton" Icon="Add" Foreground="White" Click="CommunityAddAppBarButton_Click"/>
-                    <AppBarButton Name="CommunityRefreshAppBarButton" Icon="Refresh" Foreground="White" Click="CommunityRefreshAppBarButton_Click"/>
+                    <AppBarButton Name="CommunityAddAppBarButton" Icon="Add" Foreground="White" Click="CommunityAddAppBarButton_Click" />
+                    <AppBarButton Name="CommunityRefreshAppBarButton" Icon="Refresh" Foreground="White" Click="CommunityRefreshAppBarButton_Click" />
                 </StackPanel>
             </Grid>
             <Grid Name="TitlecutoffLineGrid" Visibility="Collapsed" Margin="400,0,0,0" HorizontalAlignment="Left">
-                <Line Y1="0" Y2="48" Width="1" Stroke="#58b3ff" HorizontalAlignment="Left" StrokeThickness="1"/>
-                <TextBlock Name="CommunityContentTitleTextBlock" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                <Line Y1="0" Y2="48" Width="1" Stroke="#58b3ff" HorizontalAlignment="Left" StrokeThickness="1" />
+                <TextBlock Name="CommunityContentTitleTextBlock" Foreground="White" Margin="10,0,0,0"  FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI" />
             </Grid>
         </Grid>
 
         <!--实体-->
         <Grid x:Name="grid1" Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
@@ -273,15 +272,15 @@
                         <PivotItem.Header>
                             <TextBlock Text="热门动态" FontSize="15"></TextBlock>
                         </PivotItem.Header>
-                        <pr:PullToRefreshBox x:Name="RMDTListpr" Background="#FFE6E6E6" RefreshInvoked="CommunityListpr_RefreshInvoked"  VerticalAlignment="Stretch"  Margin="-12,0" >
+                        <pr:PullToRefreshBox x:Name="RMDTListpr" Background="#FFE6E6E6" RefreshInvoked="CommunityListpr_RefreshInvoked"  VerticalAlignment="Stretch"  Margin="-12,0">
                             <ScrollViewer Name="RMDTScrollViewer" ViewChanged="RMDTScrollViewer_ViewChanged" VerticalScrollBarVisibility="Auto">
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
+                                        <RowDefinition />
+                                        <RowDefinition />
                                     </Grid.RowDefinitions>
                                     <!--热门动态的ListView-->
-                                    <ListView Name="RMDTListView" Style="{StaticResource HotFeedsListView}" ItemsSource="{x:Bind ViewModel.HotFeeds}" ItemClick="RMDTListView_ItemClick"/>
+                                    <ListView Name="RMDTListView" Style="{StaticResource HotFeedsListView}" ItemsSource="{x:Bind ViewModel.HotFeeds}" ItemClick="RMDTListView_ItemClick" />
                                     <StackPanel Grid.Row="1">
                                         <!--列表的加载条-->
                                         <StackPanel Name="RMDTListProgressStackPanel" VerticalAlignment="Center" Margin="0,20">
@@ -291,11 +290,11 @@
                                         <!--列表的失败报错-->
                                         <StackPanel Name="RMDTListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="CommunityListFailedStackPanel_Tapped">
                                             <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
-                                            <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+                                            <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI" />
                                         </StackPanel>
                                         <!--继续加载-->
                                         <!--<Grid Name="continueCommunityRMDTGrid" Height="50" Tapped="continueCommunityGrid_Tapped" Visibility="Collapsed">
-                                            <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
+                                            <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
                                         </Grid>-->
                                     </StackPanel>
                                 </Grid>
@@ -307,24 +306,24 @@
                         <PivotItem.Header>
                             <TextBlock Text="哔哔叨叨" FontSize="15"></TextBlock>
                         </PivotItem.Header>
-                        <pr:PullToRefreshBox x:Name="BBDDListpr" Background="#FFE6E6E6" RefreshInvoked="CommunityListpr_RefreshInvoked"  VerticalAlignment="Stretch"  Margin="-12,0" >
+                        <pr:PullToRefreshBox x:Name="BBDDListpr" Background="#FFE6E6E6" RefreshInvoked="CommunityListpr_RefreshInvoked"  VerticalAlignment="Stretch"  Margin="-12,0">
                             <ScrollViewer Name="BBDDScrollViewer" ViewChanged="BBDDScrollViewer_ViewChanged" VerticalScrollBarVisibility="Auto">
                                 <Grid Margin="0 3 0 0">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="165"/>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition/>
+                                        <RowDefinition Height="165" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition />
                                     </Grid.RowDefinitions>
                                     <!--话题板块-->
                                     <Grid Grid.Row="0" Background="White">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition/>
-                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition />
+                                            <RowDefinition Height="auto" />
                                         </Grid.RowDefinitions>
-                                        <Grid >
-                                            <Grid >
-                                                <TextBlock Margin="5 12 0 0"  
-                                                Text="热门话题" FontSize="15" Foreground="DarkGray"/>
+                                        <Grid>
+                                            <Grid>
+                                                <TextBlock Margin="5 12 0 0"
+                                                Text="热门话题" FontSize="15" Foreground="DarkGray" />
                                             </Grid>
                                         </Grid>
                                         <Grid Grid.Row="1">
@@ -332,9 +331,9 @@
                                                 <GridView.ItemTemplate>
                                                     <DataTemplate>
                                                         <Grid Margin="0 0 0 0">
-                                                            <Image Source="{Binding imgdata}" Height="110" Width="120" Stretch="UniformToFill"/>
+                                                            <Image Source="{Binding imgdata}" Height="110" Width="120" Stretch="UniformToFill" />
                                                             <TextBlock Text="{Binding keyword}" FontSize="15" Foreground="{Binding color}" TextWrapping="WrapWholeWords"
-                                                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                       HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         </Grid>
                                                     </DataTemplate>
                                                 </GridView.ItemTemplate>
@@ -358,11 +357,11 @@
                                         <!--列表的失败报错-->
                                         <StackPanel Name="BBDDListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="CommunityListFailedStackPanel_Tapped">
                                             <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
-                                            <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+                                            <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI" />
                                         </StackPanel>
                                         <!--继续加载-->
                                         <!--<Grid Name="continueCommunityBBDDGrid" Height="50" Tapped="continueCommunityGrid_Tapped" Visibility="Collapsed">
-                                            <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
+                                            <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
                                         </Grid>-->
                                     </StackPanel>
                                 </Grid>
@@ -375,17 +374,17 @@
                         <PivotItem.Header>
                             <TextBlock Text="官方资讯" FontSize="15"></TextBlock>
                         </PivotItem.Header>
-                        <pr:PullToRefreshBox x:Name="GFZXListpr" RefreshInvoked="CommunityListpr_RefreshInvoked"  VerticalAlignment="Stretch"  Margin="-12,0" >
+                        <pr:PullToRefreshBox x:Name="GFZXListpr" RefreshInvoked="CommunityListpr_RefreshInvoked"  VerticalAlignment="Stretch"  Margin="-12,0">
                             <ScrollViewer VerticalScrollBarVisibility="Hidden">
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
+                                        <RowDefinition />
+                                        <RowDefinition />
                                     </Grid.RowDefinitions>
                                     -->
                     <!--官方资讯的ListView-->
                     <!--
-                                    <ListView Name="GFZXListView" Style="{StaticResource FeedsListView}" ItemsSource="{x:Bind ViewModel.OfficalFeeds}"/>
+                                    <ListView Name="GFZXListView" Style="{StaticResource FeedsListView}" ItemsSource="{x:Bind ViewModel.OfficalFeeds}" />
                                     <StackPanel Grid.Row="1">
                                         -->
                     <!--列表的加载条-->
@@ -399,12 +398,12 @@
                     <!--
                                         <StackPanel Name="GFZXListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="CommunityListFailedStackPanel_Tapped">
                                             <Image Source="Assets/ic_failed.png" Width="80" HorizontalAlignment="Center" />
-                                            <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+                                            <TextBlock Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI" />
                                         </StackPanel>
                                         -->
                     <!--继续加载-->
                     <!--<Grid Name="continueCommunityGFZXGrid" Height="50" Tapped="continueCommunityGrid_Tapped" Visibility="Collapsed">
-                                            <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI"/>
+                                            <TextBlock VerticalAlignment="Center" Text="继续加载..." HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" Margin="0,5" FontFamily="Microsoft YaHei UI" />
                                         </Grid>-->
                     <!--
                                     </StackPanel>
@@ -413,18 +412,17 @@
                         </pr:PullToRefreshBox>
                     </PivotItem>-->
                 </Pivot>
-
             </Grid>
 
             <!--正文-->
             <Grid Name="CommunityContentGrid" Grid.Column="1">
-                <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1"/>
+                <Line Name="cutoffLine" Stroke="Gray" StrokeThickness="1" />
                 <Frame x:Name="cframe" Margin="1,0,0,0" Visibility="Collapsed">
                     <Frame.ContentTransitions>
                         <TransitionCollection>
                             <NavigationThemeTransition>
                                 <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                                    <EntranceNavigationTransitionInfo/>
+                                    <EntranceNavigationTransitionInfo />
                                 </NavigationThemeTransition.DefaultNavigationTransitionInfo>
                             </NavigationThemeTransition>
                         </TransitionCollection>
@@ -433,15 +431,15 @@
             </Grid>
 
             <!--图像-->
-            <Grid Name="CommunityItemPhotoGrid" Grid.ColumnSpan="2" Visibility="Collapsed" >
-                <Grid Background="Black" Name="CommunityItemPhotoBackGrid" Grid.ColumnSpan="2" Opacity="0.5" Tapped="CommunityItemPhoto_Tapped"/>
+            <Grid Name="CommunityItemPhotoGrid" Grid.ColumnSpan="2" Visibility="Collapsed">
+                <Grid Background="Black" Name="CommunityItemPhotoBackGrid" Grid.ColumnSpan="2" Opacity="0.5" Tapped="CommunityItemPhoto_Tapped" />
                 <FlipView Name="CommunityItemPhotoFlipView">
                     <FlipView.ItemTemplate>
                         <DataTemplate>
                             <!--ToDo 图片发大后的移动-->
                             <ScrollViewer Name="scrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" ZoomMode="Enabled"  MaxZoomFactor="4" MinZoomFactor="0.8">
                                 <Grid Name="grid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <ProgressRing Name="progressRing" Visibility="Visible" IsActive="True"/>
+                                    <ProgressRing Name="progressRing" Visibility="Visible" IsActive="True" />
                                     <Image Name="CommunityItemPhotoImage" Stretch="Uniform" Source="{Binding ImgSrc}" Tapped="CommunityItemPhoto_Tapped" Holding="CommunityItemPhotoImage_Holding" RightTapped="CommunityItemPhotoImage_RightTapped" ImageOpened="CommunityItemPhotoImage_ImageOpened" Width="{Binding ActualWidth, ElementName=mpage, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=mpage,Converter={StaticResource CommunityItemPhotoFlipViewHeighConverter}, Mode=OneWay}"></Image>
                                 </Grid>
                             </ScrollViewer>

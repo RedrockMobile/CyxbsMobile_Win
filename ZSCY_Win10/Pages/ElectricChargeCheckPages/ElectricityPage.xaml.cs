@@ -1,20 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using ZSCY_Win10.Models;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -25,14 +15,15 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
     /// </summary>
     public sealed partial class ElectricityPage : Page
     {
-        ApplicationDataContainer settings = ApplicationData.Current.LocalSettings;
+        private ApplicationDataContainer settings = ApplicationData.Current.LocalSettings;
         private static string byStuNumUri = "http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ElectricityQuery/ElectricityQuery/getElectric";
         private static string byRoomNumUri = "http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ElectricityQuery/ElectricityQuery/queryElecByRoom";
-        List<KeyValuePair<string, string>> paramIniList = new List<KeyValuePair<string, string>>();
-        List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
+        private List<KeyValuePair<string, string>> paramIniList = new List<KeyValuePair<string, string>>();
+        private List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
         private static string resourceName = "ZSCY";
         private static string stuNum = "";
-        NetWork netWork = new NetWork();
+        private NetWork netWork = new NetWork();
+
         public ElectricityPage()
         {
             this.InitializeComponent();
@@ -125,7 +116,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
             }
         }
 
-        private void OnNavigateToPage(object sender, RoutedEventArgs e) 
+        private void OnNavigateToPage(object sender, RoutedEventArgs e)
         {
             var temp = sender as MenuFlyoutItem;
             if (temp.Name == "SetRemain")
@@ -141,7 +132,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
                 {
                     this.frame.Navigate(typeof(SettedPage), true);          //设置过寝室且距离上次设置时间超过30天，进入可再设置页面
                 }
-                else if(bool.Parse(settings.Values["isBindingRoom"].ToString()) && timeSpan.TotalDays < 30)
+                else if (bool.Parse(settings.Values["isBindingRoom"].ToString()) && timeSpan.TotalDays < 30)
                 {
                     this.frame.Navigate(typeof(SettedPage), false);         //设置过寝室且距离上次设置时间小于30天，进入不可再设置页面
                 }
@@ -155,7 +146,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
                 var msgPopup = new MessagePopup("即将上线，敬请期待");
                 msgPopup.ShowWindow();
             }
-                //this.frame.Navigate(typeof(CheckRecentChargePage), e);
+            //this.frame.Navigate(typeof(CheckRecentChargePage), e);
             frame.Visibility = Visibility.Visible;
         }
     }

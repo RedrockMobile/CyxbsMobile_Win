@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZSCY.Models
+﻿namespace ZSCY.Models
 {
-   public  class richangshenghuo
+    public class richangshenghuo
     {
         public string Name { get; set; }
         public string Address { get; set; }

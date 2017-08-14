@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZSCY_Win10.Models.RemindModels;
 using ZSCY_Win10.Util.Remind;
 
@@ -15,8 +12,8 @@ namespace ZSCY_Win10.ViewModels.Remind
         public RemindListViewModel()
         {
             RemindListOC = new ObservableCollection<RemindListModel>();
-           
         }
+
         private ObservableCollection<RemindListModel> _RemindListOC;
 
         internal ObservableCollection<RemindListModel> RemindListOC
@@ -31,20 +28,21 @@ namespace ZSCY_Win10.ViewModels.Remind
                 _RemindListOC = value;
             }
         }
+
         public void DeleteRemind(int num)
         {
             DatabaseMethod.DeleteRemindItem(num);
         }
+
         public void Rewrite()
         {
-
             foreach (var item in RemindListOC)
             {
                 item.IsRewrite = item.IsRewrite ? false : true;
             }
         }
 
-        public async void RefreshList(bool e=false)
+        public async void RefreshList(bool e = false)
         {
             bool isRewrite;
             if (e)
@@ -52,7 +50,7 @@ namespace ZSCY_Win10.ViewModels.Remind
                 isRewrite = e;
             }
             else
-             isRewrite = RemindListOC.Count > 0 ? RemindListOC[0].IsRewrite : false;
+                isRewrite = RemindListOC.Count > 0 ? RemindListOC[0].IsRewrite : false;
             RemindListOC.Clear();
             var remindList = await RemindSystemUtil.SyncRemindList();
             DatabaseMethod.ClearDatabase();
@@ -78,6 +76,7 @@ namespace ZSCY_Win10.ViewModels.Remind
                 DatabaseMethod.ToDatabase(temp.Id, temp.json, temp.Id_system);
             }
         }
+
         public void ReloadList()
         {
             RemindListOC.Clear();
@@ -97,9 +96,9 @@ namespace ZSCY_Win10.ViewModels.Remind
                 RemindListOC.Add(temp);
             }
         }
+
         private List<RemindSystemModel> OnceRemind(RemindBackupModel remind)
         {
-
             DateTime oneWeekTime = WeekNumClass.OneWeek();
             List<RemindSystemModel> remindList = new List<RemindSystemModel>();
             foreach (var item in remind.DateItems)

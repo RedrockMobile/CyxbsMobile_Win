@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.Serialization;
-using System.Collections.ObjectModel;
-using SQLite.Net;
-using SQLite.Net.Platform.WinRT;
-using System.IO;
-using ZSCY.Models;
+﻿using System.Collections.ObjectModel;
 using ZSCY_Win10.Models;
 
 namespace ZSCY_Win10.ViewModels
@@ -16,6 +6,7 @@ namespace ZSCY_Win10.ViewModels
     public class StrategyViewModel : BasePageViewModel
     {
         private ObservableCollection<SchoolBuildings.Datum> schoolbuildings;
+
         public ObservableCollection<SchoolBuildings.Datum> SchoolBuildings
         {
             get
@@ -30,6 +21,7 @@ namespace ZSCY_Win10.ViewModels
         }
 
         private ObservableCollection<Dormitory.Datum> dormitory;
+
         public ObservableCollection<Dormitory.Datum> Dormitory
         {
             get
@@ -42,7 +34,9 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Dormitory));
             }
         }
+
         private ObservableCollection<Canteen.Datum> canteen;
+
         public ObservableCollection<Canteen.Datum> Canteen
         {
             get
@@ -55,7 +49,9 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Canteen));
             }
         }
+
         private ObservableCollection<DailyLife.Datum> dailylife;
+
         public ObservableCollection<DailyLife.Datum> DailyLife
         {
             get
@@ -67,9 +63,10 @@ namespace ZSCY_Win10.ViewModels
                 dailylife = value;
                 RaisePropertyChanged(nameof(DailyLife));
             }
-
         }
+
         private ObservableCollection<BeautyInNear.Datum> beautyinnear;
+
         public ObservableCollection<BeautyInNear.Datum> BeautyInNear
         {
             get
@@ -82,7 +79,9 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(BeautyInNear));
             }
         }
+
         private ObservableCollection<Eat.Datum> eat;
+
         public ObservableCollection<Eat.Datum> Eat
         {
             get
@@ -95,6 +94,7 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Eat));
             }
         }
+
         private double _page_height;
         private double _page_width;
 
@@ -124,7 +124,6 @@ namespace ZSCY_Win10.ViewModels
             }
         }
 
-
         public double Photo_Height
         {
             get
@@ -149,6 +148,4 @@ namespace ZSCY_Win10.ViewModels
             }
         }
     }
-
 }
-

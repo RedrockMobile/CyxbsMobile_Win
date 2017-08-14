@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using ZSCY_Win10.Common;
 
 namespace ZSCY_Win10.Data.Community
@@ -27,6 +23,7 @@ namespace ZSCY_Win10.Data.Community
         public string photo_src { get; set; }//头像
         public string photo_thumbnail_src { get; set; }
         public string stunum { get; set; }
+
         public string like_num
         {
             get
@@ -39,6 +36,7 @@ namespace ZSCY_Win10.Data.Community
                 OnPropertyChanged(nameof(like_num));
             }
         }
+
         public string remark_num
         {
             get
@@ -114,14 +112,12 @@ namespace ZSCY_Win10.Data.Community
                         {
                             article_photo_src[j] = new Img();
                             article_photo_src[j].ImgSrc = article_photo_src[j].ImgSmallSrc = "";
-
                         }
                     }
                 }
                 catch (Exception e)
                 {
                     Debug.WriteLine(e.Message);
-
                 }
             }
             //if (UserHead == "")

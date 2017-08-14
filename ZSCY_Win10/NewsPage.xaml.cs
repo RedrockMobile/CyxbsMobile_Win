@@ -3,21 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Data;
@@ -33,11 +24,11 @@ namespace ZSCY_Win10
     public sealed partial class NewsPage : Page
     {
         private int page = 0;
-        ObservableCollection<NewsList> JWList = new ObservableCollection<NewsList>();
-        ObservableCollection<NewsList> XWList = new ObservableCollection<NewsList>();
-        ObservableCollection<NewsList> CYList = new ObservableCollection<NewsList>();
-        ObservableCollection<NewsList> XSList = new ObservableCollection<NewsList>();
-        int[] pagestatus = new int[] { 0, 0, 0, 0 };
+        private ObservableCollection<NewsList> JWList = new ObservableCollection<NewsList>();
+        private ObservableCollection<NewsList> XWList = new ObservableCollection<NewsList>();
+        private ObservableCollection<NewsList> CYList = new ObservableCollection<NewsList>();
+        private ObservableCollection<NewsList> XSList = new ObservableCollection<NewsList>();
+        private int[] pagestatus = new int[] { 0, 0, 0, 0 };
 
         public NewsPage()
         {
@@ -95,8 +86,6 @@ namespace ZSCY_Win10
             UmengSDK.UmengAnalytics.TrackPageStart("JWPage");
         }
 
-
-
         //private async void getJWCache()
         //{
         //    JWList = await getCache();
@@ -127,6 +116,7 @@ namespace ZSCY_Win10
             //App.JWListCache = JWList;
             UmengSDK.UmengAnalytics.TrackPageEnd("JWPage");
         }
+
         private async void initNewsList(string type, int page = 0)
         {
             int[] temp = pagestatus;
@@ -136,14 +126,17 @@ namespace ZSCY_Win10
                     JWListFailedStackPanel.Visibility = Visibility.Collapsed;
                     JWListProgressStackPanel.Visibility = Visibility.Visible;
                     break;
+
                 case "xwgg":
                     XWListFailedStackPanel.Visibility = Visibility.Collapsed;
                     XWListProgressStackPanel.Visibility = Visibility.Visible;
                     break;
+
                 case "cyxw ":
                     CYListFailedStackPanel.Visibility = Visibility.Collapsed;
                     CYListProgressStackPanel.Visibility = Visibility.Visible;
                     break;
+
                 case "xsjz ":
                     XSListFailedStackPanel.Visibility = Visibility.Collapsed;
                     XSListProgressStackPanel.Visibility = Visibility.Visible;
@@ -161,12 +154,15 @@ namespace ZSCY_Win10
                 case "jwzx":
                     JWListProgressStackPanel.Visibility = Visibility.Collapsed;
                     break;
+
                 case "xwgg":
                     XWListProgressStackPanel.Visibility = Visibility.Collapsed;
                     break;
+
                 case "cyxw ":
                     CYListProgressStackPanel.Visibility = Visibility.Collapsed;
                     break;
+
                 case "xsjz ":
                     XSListProgressStackPanel.Visibility = Visibility.Collapsed;
                     break;
@@ -187,7 +183,6 @@ namespace ZSCY_Win10
                         Newsitem.GetListAttribute((JObject)NewsListArray[i]);
                         if (Newsitem.Title != "")
                         {
-
                             //请求正文
                             List<KeyValuePair<String, String>> contentparamList = new List<KeyValuePair<String, String>>();
                             contentparamList.Add(new KeyValuePair<string, string>("type", type));
@@ -231,7 +226,6 @@ namespace ZSCY_Win10
                                     content = content.Replace("MicrosoftInternetExplorer4", "");
                                     content = content.Replace("Normal07.8磅02falsefalsefalse", "");
 
-
                                     //while (content.StartsWith("\r\n "))
                                     //    content = content.Substring(3);
                                     //while (content.StartsWith("\r\n"))
@@ -255,19 +249,21 @@ namespace ZSCY_Win10
                                         case "jwzx":
                                             JWList.Add(new NewsList { Title = Newsitem.Title, Date = Newsitem.Date, Read = Newsitem.Read, Content = content, Content_all = newsContent, ID = Newsitem.ID });
                                             break;
+
                                         case "xwgg":
                                             XWList.Add(new NewsList { Title = Newsitem.Title, Date = Newsitem.Date, Read = Newsitem.Read, Content = content, Content_all = newsContent, ID = Newsitem.ID });
                                             break;
+
                                         case "cyxw ":
                                             CYList.Add(new NewsList { Title = Newsitem.Title, Date = Newsitem.Date, Read = Newsitem.Read, Content = content, Content_all = newsContent, ID = Newsitem.ID });
                                             break;
+
                                         case "xsjz ":
                                             XSList.Add(new NewsList { Title = Newsitem.Title, Date = Newsitem.Date, Read = Newsitem.Read, Content = content, Content_all = newsContent, ID = Newsitem.ID });
                                             break;
                                     }
                                 }
                             }
-
                         }
                     }
                     //JWListView.ItemsSource = JWList;
@@ -276,12 +272,15 @@ namespace ZSCY_Win10
                         case "jwzx":
                             continueJWGrid.Visibility = Visibility.Visible;
                             break;
+
                         case "xwgg":
                             continueXWGrid.Visibility = Visibility.Visible;
                             break;
+
                         case "cyxw ":
                             continueCYGrid.Visibility = Visibility.Visible;
                             break;
+
                         case "xsjz ":
                             continueXSGrid.Visibility = Visibility.Visible;
                             break;
@@ -295,14 +294,17 @@ namespace ZSCY_Win10
                             JWListFailedStackPanel.Visibility = Visibility.Visible;
                             continueJWGrid.Visibility = Visibility.Collapsed;
                             break;
+
                         case "xwgg":
                             XWListFailedStackPanel.Visibility = Visibility.Visible;
                             continueXWGrid.Visibility = Visibility.Collapsed;
                             break;
+
                         case "cyxw ":
                             CYListFailedStackPanel.Visibility = Visibility.Visible;
                             continueCYGrid.Visibility = Visibility.Collapsed;
                             break;
+
                         case "xsjz ":
                             XSListFailedStackPanel.Visibility = Visibility.Visible;
                             continueXSGrid.Visibility = Visibility.Collapsed;
@@ -318,14 +320,17 @@ namespace ZSCY_Win10
                         JWListFailedStackPanel.Visibility = Visibility.Visible;
                         continueJWGrid.Visibility = Visibility.Collapsed;
                         break;
+
                     case "xwgg":
                         XWListFailedStackPanel.Visibility = Visibility.Visible;
                         continueXWGrid.Visibility = Visibility.Collapsed;
                         break;
+
                     case "cyxw ":
                         CYListFailedStackPanel.Visibility = Visibility.Visible;
                         continueCYGrid.Visibility = Visibility.Collapsed;
                         break;
+
                     case "xsjz ":
                         XSListFailedStackPanel.Visibility = Visibility.Visible;
                         continueXSGrid.Visibility = Visibility.Collapsed;
@@ -367,21 +372,23 @@ namespace ZSCY_Win10
                     type = "jwzx";
                     continueJWGrid.Visibility = Visibility.Collapsed;
                     break;
+
                 case 1:
                     type = "xwgg";
                     continueXWGrid.Visibility = Visibility.Collapsed;
                     break;
+
                 case 2:
                     type = "cyxw ";
                     continueCYGrid.Visibility = Visibility.Collapsed;
                     break;
+
                 case 3:
                     type = "xsjz ";
                     continueXSGrid.Visibility = Visibility.Collapsed;
                     break;
             }
             initNewsList(type, page);
-
         }
 
         /// <summary>
@@ -397,12 +404,15 @@ namespace ZSCY_Win10
                 case 0:
                     type = "jwzx";
                     break;
+
                 case 1:
                     type = "xwgg";
                     break;
+
                 case 2:
                     type = "cyxw ";
                     break;
+
                 case 3:
                     type = "xsjz ";
                     break;
@@ -417,7 +427,6 @@ namespace ZSCY_Win10
         /// <param name="e"></param>
         private void NewsRefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-
             page = 0;
             string type = "";
             pagestatus[NewsPivot.SelectedIndex]++;
@@ -428,16 +437,19 @@ namespace ZSCY_Win10
                     JWList.Clear();
                     continueJWGrid.Visibility = Visibility.Collapsed;
                     break;
+
                 case 1:
                     type = "xwgg";
                     XWList.Clear();
                     continueXWGrid.Visibility = Visibility.Collapsed;
                     break;
+
                 case 2:
                     type = "cyxw ";
                     CYList.Clear();
                     continueCYGrid.Visibility = Visibility.Collapsed;
                     break;
+
                 case 3:
                     type = "xsjz ";
                     XSList.Clear();
@@ -586,7 +598,6 @@ namespace ZSCY_Win10
             XSListView.SelectedIndex = -1;
         }
 
-
         private void DownloadAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             AnnexListView.SelectedIndex = -1;
@@ -615,7 +626,6 @@ namespace ZSCY_Win10
             }
         }
 
-
         /// <summary>
         /// 下拉刷新
         /// </summary>
@@ -633,16 +643,19 @@ namespace ZSCY_Win10
                     JWList.Clear();
                     continueJWGrid.Visibility = Visibility.Collapsed;
                     break;
+
                 case 1:
                     type = "xwgg";
                     XWList.Clear();
                     continueXWGrid.Visibility = Visibility.Collapsed;
                     break;
+
                 case 2:
                     type = "cyxw ";
                     CYList.Clear();
                     continueCYGrid.Visibility = Visibility.Collapsed;
                     break;
+
                 case 3:
                     type = "xsjz ";
                     XSList.Clear();
@@ -665,12 +678,15 @@ namespace ZSCY_Win10
                 case 0:
                     type = "jwzx";
                     break;
+
                 case 1:
                     type = "xwgg";
                     break;
+
                 case 2:
                     type = "cyxw ";
                     break;
+
                 case 3:
                     type = "xsjz ";
                     break;

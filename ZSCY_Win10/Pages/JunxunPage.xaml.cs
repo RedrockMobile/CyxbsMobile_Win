@@ -5,14 +5,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.System;
@@ -21,16 +17,12 @@ using Windows.UI.Text;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using ZSCY.Pages;
 using ZSCY_Win10.Models;
-using ZSCY_Win10.ViewModels;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -50,13 +42,15 @@ namespace ZSCY_Win10.Pages
 
         ////     与当前窗口关联的 SystemNavigationManager 对象。
         //public static SystemNavigationManager GetForCurrentView();
-        
+
         //public string college { get; set; }
         public int pivot_index;
+
         private double[] pivotitem1_ver_offest;
         private ZSCY_Win10.ViewModels.JunxunViewModel viewmodel;
-        List<string> mylist = new List<string>();
-        public JunxunPage():base()
+        private List<string> mylist = new List<string>();
+
+        public JunxunPage() : base()
         {
             this.InitializeComponent();
             viewmodel = new ZSCY_Win10.ViewModels.JunxunViewModel();
@@ -77,23 +71,22 @@ namespace ZSCY_Win10.Pages
         //pivot选项改变
         private async void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-                try
+            try
+            {
+                if (pivot.SelectedIndex < 0)
                 {
-                    if (pivot.SelectedIndex < 0)
-                    {
-                        pivot.SelectedIndex = pivot_index = 0;
-                    }
-                    (((pivot.Items[pivot_index] as PivotItem).Header as Grid).Children[0] as TextBlock).Foreground = App.APPTheme.Content_Header_Color_Brush;
-                    (((pivot.Items[pivot_index] as PivotItem).Header as Grid).Children[1] as Line).Visibility = Visibility.Collapsed;
-                    pivot_index = pivot.SelectedIndex;
-                    (((pivot.Items[pivot_index] as PivotItem).Header as Grid).Children[0] as TextBlock).Foreground = App.APPTheme.APP_Color_Brush;
-                    (((pivot.Items[pivot_index] as PivotItem).Header as Grid).Children[1] as Line).Visibility = Visibility.Visible;
-
+                    pivot.SelectedIndex = pivot_index = 0;
                 }
-                catch (Exception)
-                {
-                    return;
-                }
+                (((pivot.Items[pivot_index] as PivotItem).Header as Grid).Children[0] as TextBlock).Foreground = App.APPTheme.Content_Header_Color_Brush;
+                (((pivot.Items[pivot_index] as PivotItem).Header as Grid).Children[1] as Line).Visibility = Visibility.Collapsed;
+                pivot_index = pivot.SelectedIndex;
+                (((pivot.Items[pivot_index] as PivotItem).Header as Grid).Children[0] as TextBlock).Foreground = App.APPTheme.APP_Color_Brush;
+                (((pivot.Items[pivot_index] as PivotItem).Header as Grid).Children[1] as Line).Visibility = Visibility.Visible;
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         private async Task First_Step()
@@ -102,6 +95,7 @@ namespace ZSCY_Win10.Pages
             JObject json_object;
 
             #region 得到军训视频内容
+
             json = await ZSCY_Win10.Util.Request.JunxunShipin_Request();
             if (json != null)
             {
@@ -119,9 +113,11 @@ namespace ZSCY_Win10.Pages
                 }
                 viewmodel.Junxunshipin = junxunshipin_lists;
             }
-            #endregion
+
+            #endregion 得到军训视频内容
 
             #region 得到军训图片内容
+
             json = await ZSCY_Win10.Util.Request.JunxunTupian_Request();
             if (json != null)
             {
@@ -142,7 +138,7 @@ namespace ZSCY_Win10.Pages
                 var result = (root)serializer.ReadObject(ms);
                 root contentlist = result;
                 var contentli = contentlist.Data;
-                for(int i=0;i<contentli.title.Count;i++)
+                for (int i = 0; i < contentli.title.Count; i++)
                 {
                     Models.Junxuncontents item = new Models.Junxuncontents();
                     item.title0 = contentli.title[i];
@@ -153,18 +149,19 @@ namespace ZSCY_Win10.Pages
                 viewmodel.Junxuntupian = junxuntupian_lists;
                 //viewmodel.Junxuntupian = contentli;
             }
-            #endregion
+
+            #endregion 得到军训图片内容
         }
+
         //返回上一级的请求
         private void PC_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e)
         {
             FirstPage.firstpage.Second_Page_Back();
             Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
-
         }
 
         //按下返回按钮
-        bool isExit = false;
+        private bool isExit = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -220,6 +217,7 @@ namespace ZSCY_Win10.Pages
             JObject json_object;
 
             #region 得到贴士介绍
+
             file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Json/junxun_tieshi.json", UriKind.Absolute));
             json = await FileIO.ReadTextAsync(file);
             json_object = (JObject)JsonConvert.DeserializeObject(json);
@@ -236,7 +234,9 @@ namespace ZSCY_Win10.Pages
                 }
                 intro_lists.Add(item);
             }
-            #endregion
+
+            #endregion 得到贴士介绍
+
             jx_content.Children.Clear();
             for (int i = 0; i < intro_lists[0].tieshi.Count; i++)
             {
@@ -250,6 +250,7 @@ namespace ZSCY_Win10.Pages
                 }
             }
         }
+
         private TextBlock New_TextBlock(int p, string content)
         {
             TextBlock tb = new TextBlock();
@@ -327,50 +328,53 @@ namespace ZSCY_Win10.Pages
             await Launcher.LaunchUriAsync(new Uri(viewmodel.Junxunshipin[1].url));
         }
 
-		Point point_new = new Point();
-		Point point_old = new Point();
-		private void myimage_PointerExited(object sender, PointerRoutedEventArgs e)
-		{
-			isPoint = false;
-		}
-		bool isPoint = false;
-		private void myimage_Tapped(object sender, TappedRoutedEventArgs e)
-		{
-			Image temp = sender as Image;
-			string a = (temp.Source as BitmapImage).UriSource.ToString();
-			int index = -10;
-			for (int i = 0; i < mylist.Count; i++)
-			{
-					if (a.Equals(mylist[i]))
-					{
-						index = i;
-					}
-			}
-			myflip.ItemsSource = mylist;
-			back_background.Visibility = Visibility.Collapsed;
-			//back_background_sb.Begin();
-			Photos_popup.IsOpen = false;
-		}
+        private Point point_new = new Point();
+        private Point point_old = new Point();
 
-		private void myimage_PointerMoved(object sender, PointerRoutedEventArgs e)
-		{
-			if(isPoint)
-			{
-				point_new = e.GetCurrentPoint((sender as Image).Parent as ScrollViewer).Position;
-				((sender as Image).Parent as ScrollViewer).ChangeView(((sender as Image).Parent as ScrollViewer).HorizontalOffset - point_new.X + point_old.X, ((sender as Image).Parent as ScrollViewer).VerticalOffset - point_new.Y + point_old.Y, ((sender as Image).Parent as ScrollViewer).ZoomFactor, true);
-				point_old = point_new;
-			}
-		}
+        private void myimage_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            isPoint = false;
+        }
 
-		private void myimage_PointerPressed(object sender, PointerRoutedEventArgs e)
-		{
-			point_old = e.GetCurrentPoint((sender as Image).Parent as ScrollViewer).Position;
-			isPoint = true;
-		}
+        private bool isPoint = false;
 
-		private void myimage_PointerReleased(object sender, PointerRoutedEventArgs e)
-		{
-			isPoint = false;
-		}
-	}
+        private void myimage_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Image temp = sender as Image;
+            string a = (temp.Source as BitmapImage).UriSource.ToString();
+            int index = -10;
+            for (int i = 0; i < mylist.Count; i++)
+            {
+                if (a.Equals(mylist[i]))
+                {
+                    index = i;
+                }
+            }
+            myflip.ItemsSource = mylist;
+            back_background.Visibility = Visibility.Collapsed;
+            //back_background_sb.Begin();
+            Photos_popup.IsOpen = false;
+        }
+
+        private void myimage_PointerMoved(object sender, PointerRoutedEventArgs e)
+        {
+            if (isPoint)
+            {
+                point_new = e.GetCurrentPoint((sender as Image).Parent as ScrollViewer).Position;
+                ((sender as Image).Parent as ScrollViewer).ChangeView(((sender as Image).Parent as ScrollViewer).HorizontalOffset - point_new.X + point_old.X, ((sender as Image).Parent as ScrollViewer).VerticalOffset - point_new.Y + point_old.Y, ((sender as Image).Parent as ScrollViewer).ZoomFactor, true);
+                point_old = point_new;
+            }
+        }
+
+        private void myimage_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            point_old = e.GetCurrentPoint((sender as Image).Parent as ScrollViewer).Position;
+            isPoint = true;
+        }
+
+        private void myimage_PointerReleased(object sender, PointerRoutedEventArgs e)
+        {
+            isPoint = false;
+        }
+    }
 }

@@ -1,14 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiveTileBackgroundTask
 {
-    class ClassList
+    internal class ClassList
     {
         public int coler { get; set; }
         public int Hash_day { get; set; }

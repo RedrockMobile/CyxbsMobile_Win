@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
 namespace ZSCY_Win10.Util.Converter.RemindConverter
 {
-    class IsRewriteConverter : IValueConverter
+    internal class IsRewriteConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -18,7 +14,7 @@ namespace ZSCY_Win10.Util.Converter.RemindConverter
                 exclusive = true;
             else
                 exclusive = false;
-            if ((bool)value^exclusive)
+            if ((bool)value ^ exclusive)
             {
                 return Visibility.Visible;
             }

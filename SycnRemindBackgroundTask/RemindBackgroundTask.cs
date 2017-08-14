@@ -1,14 +1,8 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Windows.Security.Credentials;
-
 
 namespace SycnRemindBackgroundTask
 {
@@ -34,7 +28,6 @@ namespace SycnRemindBackgroundTask
                     //上传上次未上传的
                     foreach (var item in list)
                     {
-
                         if (item.Id == null)
                         {
                             string content = "";
@@ -55,8 +48,6 @@ namespace SycnRemindBackgroundTask
                                 tempRemind.StuNum = null;
                                 DatabaseMethod.EditDatabase(item.Num, id, JsonConvert.SerializeObject(tempRemind), item.Id_system);
                             }
-
-
                         }
                     }
 
@@ -64,7 +55,6 @@ namespace SycnRemindBackgroundTask
                 BackgroundTaskDeferral deferral2 = taskInstance.GetDeferral();
                 if (isLoad)
                 {
-
                 }
                 else
                 {
@@ -75,10 +65,8 @@ namespace SycnRemindBackgroundTask
             }
             catch (Exception)
             {
-
                 throw;
             }
-
         }
     }
 }

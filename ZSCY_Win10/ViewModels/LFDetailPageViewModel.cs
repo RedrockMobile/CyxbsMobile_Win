@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Media.Imaging;
+﻿using Windows.UI.Xaml.Media.Imaging;
 
 namespace ZSCY_Win10.ViewModels
 {
-    class LFDetailPageViewModel
+    internal class LFDetailPageViewModel
     {
         public string connect_name;
         public string connect_phone;

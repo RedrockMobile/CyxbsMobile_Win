@@ -1,13 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZSCY_Win10.Models.TopicModels
 {
-    class TopicRemark
+    internal class TopicRemark
     {
         public string nickname { get; set; }
         public string photo_src { get; set; }
@@ -19,7 +14,7 @@ namespace ZSCY_Win10.Models.TopicModels
             nickname = TopicContentDetailJObject["nickname"].ToString();
             photo_src = TopicContentDetailJObject["photo_src"].ToString();
             created_time = TopicContentDetailJObject["created_time"].ToString();
-            content=TopicContentDetailJObject["content"].ToString();
+            content = TopicContentDetailJObject["content"].ToString();
         }
     }
 }

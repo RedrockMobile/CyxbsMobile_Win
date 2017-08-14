@@ -13,10 +13,9 @@ namespace ZSCY_Win10.Util.Converter
             if (classroom.Length > 12)
             {
                 string pattern = "[A-Za-z0-9]+$";
-                Regex reg = new Regex(pattern,RegexOptions.None);
+                Regex reg = new Regex(pattern, RegexOptions.None);
                 if (Regex.IsMatch(classroom, pattern))
                 {
-
                     MatchCollection mc = reg.Matches(classroom);
                     foreach (Match item in mc)
                     {

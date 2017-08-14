@@ -11,12 +11,12 @@
     FontWeight="Light"
     Background="White">
 
-    <ScrollViewer Background="White" ZoomMode="Enabled" MinZoomFactor="0.8" MaxZoomFactor="2.5" HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
+    <ScrollViewer Background="White" ZoomMode="Enabled" MinZoomFactor="0.8" MaxZoomFactor="2.5" HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <ScrollViewer.Content>
             <Grid>
-                <ProgressBar IsIndeterminate="True"/>
+                <ProgressBar IsIndeterminate="True" />
                 <Grid Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <ProgressRing Name="progress" Visibility="Visible" IsActive="True"/>
+                    <ProgressRing Name="progress" Visibility="Visible" IsActive="True" />
                     <Image Name="CalendarImage" Source="http://www.cqupt.edu.cn/cqupt/img/public/xl.png" Stretch="Uniform" ></Image>
                 </Grid>
             </Grid>

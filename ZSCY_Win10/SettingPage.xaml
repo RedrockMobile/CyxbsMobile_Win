@@ -13,9 +13,9 @@
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualState750">
                     <VisualState.Setters>
-                        <Setter Target="importKB2calendarButton.(FrameworkElement.HorizontalAlignment)" Value="Left"/>
-                        <Setter Target="importKB2calendarButton.(FrameworkElement.Width)" Value="200"/>
-                        <Setter Target="importKB2calendarButton.(FrameworkElement.MaxWidth)" Value="200"/>
+                        <Setter Target="importKB2calendarButton.(FrameworkElement.HorizontalAlignment)" Value="Left" />
+                        <Setter Target="importKB2calendarButton.(FrameworkElement.Width)" Value="200" />
+                        <Setter Target="importKB2calendarButton.(FrameworkElement.MaxWidth)" Value="200" />
                         <!--<Setter Target="importKB2calendarButton.(FrameworkElement.Margin)">
                             <Setter.Value>
                                 <Thickness>20,0,0,0</Thickness>
@@ -26,12 +26,12 @@
                                 <Thickness>20,0,0,0</Thickness>
                             </Setter.Value>
                         </Setter>-->
-                        <Setter Target="ClearButton.(FrameworkElement.HorizontalAlignment)" Value="Left"/>
-                        <Setter Target="ClearButton.(FrameworkElement.Width)" Value="200"/>
-                        <Setter Target="ClearButton.(FrameworkElement.MaxWidth)" Value="200"/>
+                        <Setter Target="ClearButton.(FrameworkElement.HorizontalAlignment)" Value="Left" />
+                        <Setter Target="ClearButton.(FrameworkElement.Width)" Value="200" />
+                        <Setter Target="ClearButton.(FrameworkElement.MaxWidth)" Value="200" />
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="750"/>
+                        <AdaptiveTrigger MinWindowWidth="750" />
                     </VisualState.StateTriggers>
                 </VisualState>
             </VisualStateGroup>
@@ -39,43 +39,42 @@
         <Grid>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="48"/>
+                <RowDefinition Height="48" />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid Background="#068cfd" Grid.Row="0">
                 <Grid Name="SetTitleGrid"  HorizontalAlignment="Stretch">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                        <!--<AppBarToggleButton Name="BackAppBarToggleButton" Visibility="Collapsed" Icon="Back" Foreground="White" Click="BackAppBarToggleButton_Click"/>-->
-                        <TextBlock Name="HubSectionKBTitle" Text="设置" Foreground="White" Margin="10,0,0,0"  FontSize="20" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI"/>
+                        <!--<AppBarToggleButton Name="BackAppBarToggleButton" Visibility="Collapsed" Icon="Back" Foreground="White" Click="BackAppBarToggleButton_Click" />-->
+                        <TextBlock Name="HubSectionKBTitle" Text="设置" Foreground="White" Margin="10,0,0,0"  FontSize="20" FontWeight="Light" VerticalAlignment="Center" FontFamily="Microsoft YaHei UI" />
                     </StackPanel>
                 </Grid>
                 <Grid Name="TitlecutoffLineGrid" Visibility="Collapsed" Margin="400,0,0,0" Width="1"  HorizontalAlignment="Left">
-                    <Line Y1="0" Y2="48" Stroke="Gray" StrokeThickness="1"/>
+                    <Line Y1="0" Y2="48" Stroke="Gray" StrokeThickness="1" />
                 </Grid>
             </Grid>
             <Grid Margin="10" Grid.Row="1">
                 <Pivot>
                     <PivotItem Header="功能">
                         <StackPanel Margin="0,10">
-                            <TextBlock Text="实验室功能" Margin="0,0,0,10" Foreground="#333" Style="{StaticResource TitleTextBlockStyle}"/>
-                            <Button Name="importKB2calendarButton" Foreground="#333" HorizontalAlignment="Stretch"    Content="订阅当前账号课表到日历"  Click="importKB2calendarButton_Click"/>
+                            <TextBlock Text="实验室功能" Margin="0,0,0,10" Foreground="#333" Style="{StaticResource TitleTextBlockStyle}" />
+                            <Button Name="importKB2calendarButton" Foreground="#333" HorizontalAlignment="Stretch"    Content="订阅当前账号课表到日历"  Click="importKB2calendarButton_Click" />
 
-                            <!--<TextBlock Text="学期课表将非当前周置为灰色" Visibility="Visible" FontSize="20" Foreground="Gray" Margin="0,10"/>
+                            <!--<TextBlock Text="学期课表将非当前周置为灰色" Visibility="Visible" FontSize="20" Foreground="Gray" Margin="0,10" />
                             <ToggleSwitch  Name="AllKBGrayToggleSwitch" Visibility="Visible" IsOn="False" OnContent="开" OffContent="关" Toggled="AllKBGrayToggleSwitch_Toggled" Foreground="Black" />-->
 
-
-                            <TextBlock Text="使用透明磁贴" Visibility="Collapsed" FontSize="20" Foreground="Gray" Margin="0,10"/>
+                            <TextBlock Text="使用透明磁贴" Visibility="Collapsed" FontSize="20" Foreground="Gray" Margin="0,10" />
                             <ToggleSwitch  Name="OpacityToggleSwitch" Visibility="Collapsed" IsOn="False" OnContent="开" OffContent="关" Toggled="OpacityToggleSwitch_Toggled" Foreground="Black" />
-                            <TextBlock  Text="社区新消息推送通知" Visibility="Visible" FontSize="20" Foreground="#333" Margin="0,10"/>
+                            <TextBlock  Text="社区新消息推送通知" Visibility="Visible" FontSize="20" Foreground="#333" Margin="0,10" />
                             <ToggleSwitch  Name="backGroundToastToggleSwitch" Visibility="Visible" OnContent="开" OffContent="关" Toggled="backGroundToastToggleSwitch_Toggled" Foreground="Black" />
-                            <TextBlock Text="提取错误日志文件" Visibility="Visible" FontSize="20" Foreground="#333" Margin="0,10"/>
+                            <TextBlock Text="提取错误日志文件" Visibility="Visible" FontSize="20" Foreground="#333" Margin="0,10" />
                             <Button Name="Error" Foreground="#333"  Content="另存为日志文件"  Click="Error_ClickAsync" />
                         </StackPanel>
                     </PivotItem>
-                    <PivotItem Header="重置"  >
+                    <PivotItem Header="重置">
                         <StackPanel Margin="0,10">
-                            <TextBlock Text="删除缓存" Margin="0,0,0,10" Foreground="#333" Style="{StaticResource TitleTextBlockStyle}"/>
-                            <Button Name="ClearButton" HorizontalAlignment="Stretch"  Foreground="#333" Content="删除所有缓存"    Click="ClearButton_Click"/>
+                            <TextBlock Text="删除缓存" Margin="0,0,0,10" Foreground="#333" Style="{StaticResource TitleTextBlockStyle}" />
+                            <Button Name="ClearButton" HorizontalAlignment="Stretch"  Foreground="#333" Content="删除所有缓存"    Click="ClearButton_Click" />
                         </StackPanel>
                     </PivotItem>
                 </Pivot>
@@ -86,7 +85,7 @@
                         <TransitionCollection>
                             <NavigationThemeTransition>
                                 <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                                    <EntranceNavigationTransitionInfo/>
+                                    <EntranceNavigationTransitionInfo />
                                 </NavigationThemeTransition.DefaultNavigationTransitionInfo>
                             </NavigationThemeTransition>
                         </TransitionCollection>
@@ -94,13 +93,12 @@
                 </Frame>
             </Grid>
         </Grid>
-        
     </Grid>
     <Page.BottomAppBar>
         <CommandBar Name="commandbar" Margin="48,0,0,0" HorizontalAlignment="Right">
-            <AppBarButton Label="切换账号" Icon="Switch" Click="SwitchAppBarButton_Click"/>
-            <AppBarButton Name="LikeAppBarToggleButton" Icon="Like" Label="好评我" Click="LikeAppBarToggleButton_Click"/>
-            <AppBarButton Name="AboutAppBarToggleButton" Icon="Help" Label="关于" Click="AboutAppBarToggleButton_Click"/>
+            <AppBarButton Label="切换账号" Icon="Switch" Click="SwitchAppBarButton_Click" />
+            <AppBarButton Name="LikeAppBarToggleButton" Icon="Like" Label="好评我" Click="LikeAppBarToggleButton_Click" />
+            <AppBarButton Name="AboutAppBarToggleButton" Icon="Help" Label="关于" Click="AboutAppBarToggleButton_Click" />
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

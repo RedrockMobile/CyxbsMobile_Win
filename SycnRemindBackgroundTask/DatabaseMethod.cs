@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SQLite.Net;
+﻿using SQLite.Net;
 using SQLite.Net.Platform.WinRT;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Windows.UI.Notifications;
-
-using Windows.Security.Credentials;
-using Newtonsoft.Json;
-using Windows.UI.Xaml;
-using Windows.Storage;
 using System.IO;
-using System.Diagnostics;
+using System.Linq;
+using Windows.Storage;
 
 namespace SycnRemindBackgroundTask
 {
@@ -21,7 +12,6 @@ namespace SycnRemindBackgroundTask
     {
         public static List<string> ClearRemindItem()
         {
-
             var conn = new SQLiteConnection(new SQLitePlatformWinRT(), Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db"));
 
             //foreach (var item in list)
@@ -43,7 +33,7 @@ namespace SycnRemindBackgroundTask
             foreach (var item in list)
             {
                 string[] itemList =
-                    item.Id_system != null ? item.Id_system.Split(',') :new string[0];
+                    item.Id_system != null ? item.Id_system.Split(',') : new string[0];
 
                 for (int i = 0; i < itemList.Count(); i++)
                 {
@@ -57,6 +47,7 @@ namespace SycnRemindBackgroundTask
             conn.Dispose();
             return TagList;
         }
+
         //public static async void DeleteRemindItem(string tag)
         //{
         //    using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db")))
@@ -109,6 +100,7 @@ namespace SycnRemindBackgroundTask
             }
             return modelList;
         }
+
         public static RemindListDB ToModel(string id)
         {
             RemindListDB item = new RemindListDB();
@@ -120,6 +112,7 @@ namespace SycnRemindBackgroundTask
             }
             return item;
         }
+
         public static void EditDatabase(int num, string id, string json, string id_system)
         {
             var conn = new SQLiteConnection(new SQLitePlatformWinRT(), Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db"));
@@ -144,17 +137,14 @@ namespace SycnRemindBackgroundTask
             RemindListDB temp = new RemindListDB() { Id = id, Id_system = id_system, json = json };
             conn.Insert(temp);
             conn.Dispose();
-
         }
 
         //public static void ReadDatabase(Visibility visibility)
         //{
         //    try
         //    {
-
         //        using (var conn = new SQLiteConnection(new SQLitePlatformWinRT(), Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db")))
         //        {
-
         //            App.remindList.Clear();
         //            var list = conn.Table<RemindListDB>();
         //            foreach (var item in list)
@@ -242,8 +232,8 @@ namespace SycnRemindBackgroundTask
                 conn.CreateTable<RemindListDB>();
                 conn.Insert(new RemindListDB() { Id = id, Id_system = id_system, json = json });
             }
-
         }
+
         public static string[] id_systemToArray(string id)
         {
             var conn = new SQLiteConnection(new SQLitePlatformWinRT(), Path.Combine(ApplicationData.Current.LocalFolder.Path, "RemindList.db"));

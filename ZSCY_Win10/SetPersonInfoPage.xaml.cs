@@ -22,7 +22,8 @@ namespace ZSCY_Win10
     /// </summary>
     public sealed partial class SetPersonInfoPage : Page
     {
-        ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+
         public SetPersonInfoPage()
         {
             this.InitializeComponent();
@@ -38,18 +39,25 @@ namespace ZSCY_Win10
                 }
             };
         }
+
         private static string resourceName = "ZSCY";
+
         //昵称
-        string nametext;
+        private string nametext;
+
         //简介
-        string abstracttext;
+        private string abstracttext;
+
         //手机
-        string phonetext;
+        private string phonetext;
+
         //QQ
-        string qqtext;
-        bool completeness1 = true;
-        bool completeness2 = true;
-        NavigationEventArgs ee;
+        private string qqtext;
+
+        private bool completeness1 = true;
+        private bool completeness2 = true;
+        private NavigationEventArgs ee;
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ee = e;

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZSCY_Win10.Common;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Service;
@@ -12,9 +8,10 @@ namespace ZSCY_Win10.ViewModels.Community
 {
     public class CommunityPersonInfoViewModel : ViewModelBase
     {
-        int page = 0;
-        string stunum = "";
+        private int page = 0;
+        private string stunum = "";
         private PeoInfo info;
+
         public PeoInfo Info
         {
             get
@@ -28,6 +25,7 @@ namespace ZSCY_Win10.ViewModels.Community
                 OnPropertyChanged(nameof(Info));
             }
         }
+
         public ObservableCollection<MyFeed> MyFeedlist { get; private set; } = new ObservableCollection<MyFeed>();
 
         public CommunityPersonInfoViewModel(string stunum)
@@ -35,6 +33,7 @@ namespace ZSCY_Win10.ViewModels.Community
             this.stunum = stunum;
             Get();
         }
+
         public async void Get()
         {
             //TODO:暂时没找出毛病 白天问问部长杰哥

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using System;
 
 namespace ZSCY_Win10.Data.Community
 {
-
-
     public class JWZXFeeds : HotFeedsContentBase, IFeeds
     {
         public string id { get; set; }
@@ -19,13 +13,14 @@ namespace ZSCY_Win10.Data.Community
         public string title { get; set; }
         public string content { get; set; }
         public string content_short { get; set; }
+
         public void GetAttributes(JObject feedsJObject)
         {
             id = feedsJObject["id"].ToString();
             articleid = feedsJObject["articleid"].ToString();
             head = feedsJObject["head"].ToString();
             date = feedsJObject["date"].ToString();
-            read = feedsJObject["read"] != null ? feedsJObject["read"].ToString():"0";
+            read = feedsJObject["read"] != null ? feedsJObject["read"].ToString() : "0";
             title = feedsJObject["title"].ToString();
             content = feedsJObject["content"].ToString();
             try
@@ -47,5 +42,4 @@ namespace ZSCY_Win10.Data.Community
             content = content.Replace("Normal07.8磅02falsefalsefalse", "");
         }
     }
-
 }

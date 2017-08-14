@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ZSCY.Models
@@ -24,8 +22,8 @@ namespace ZSCY.Models
         {
             //返回内容
             string _content = "";
-            return await Task.Run(() => {
-
+            return await Task.Run(() =>
+            {
                 if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
                 {
                     try

@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZSCY.Data
 {
@@ -36,7 +31,6 @@ namespace ZSCY.Data
         public string Content { get; set; }
         public string Content_all { get; set; }
 
-
         public void GetListAttribute(JObject NewsListJObject)
         {
             ID = NewsListJObject["id"].ToString();
@@ -47,5 +41,4 @@ namespace ZSCY.Data
             Read = NewsListJObject["read"] != null ? NewsListJObject["read"].ToString() : "";
         }
     }
-
 }

@@ -14,7 +14,6 @@
     <Page.Resources>
         <DataTemplate x:Key="examcontent">
             <Grid>
-
             </Grid>
         </DataTemplate>
         <!--<Style TargetType="ListViewItem">
@@ -37,15 +36,14 @@
                     <DataTemplate>
                         <Grid Margin="0,0,10,0" Height="100">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="80"/>
-                                <ColumnDefinition Width="35"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="35" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Vertical" Margin="0">
-                                <Line X1="35" Y1="0" X2="35" Y2="30" Stroke="#FF3498DB" StrokeThickness="2" Stretch="Fill"/>
+                                <Line X1="35" Y1="0" X2="35" Y2="30" Stroke="#FF3498DB" StrokeThickness="2" Stretch="Fill" />
                                 <TextBlock Text="{Binding DateTime ,Converter={StaticResource ExamDateConverter}}" TextAlignment="Center"></TextBlock>
-                                <Line X1="35" Y1="0" X2="35" Y2="30" Stroke="#FF3498DB" StrokeThickness="2" Stretch="Fill"/>
-
+                                <Line X1="35" Y1="0" X2="35" Y2="30" Stroke="#FF3498DB" StrokeThickness="2" Stretch="Fill" />
                             </StackPanel>
                             <Grid Grid.Column="1">
                                 <Image Source="{Binding DateTime,Converter={StaticResource StarFillConverter}}" Height="25" Width="25" HorizontalAlignment="Center"></Image>
@@ -53,34 +51,34 @@
                             <Border Grid.Column="2" BorderThickness="0,0,0,0" CornerRadius="5" Background="#58B3FF" Height="90">
                                 <Border.BorderBrush>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                        <GradientStop Color="#FFC9C9C9" Offset="0"/>
-                                        <GradientStop Color="#FFC9C9C9" Offset="0.98"/>
-                                        <GradientStop Color="#FFF0F0F0" Offset="1"/>
+                                        <GradientStop Color="#FFC9C9C9" Offset="0" />
+                                        <GradientStop Color="#FFC9C9C9" Offset="0.98" />
+                                        <GradientStop Color="#FFF0F0F0" Offset="1" />
                                     </LinearGradientBrush>
                                 </Border.BorderBrush>
-                                <Grid >
+                                <Grid>
                                     <Grid.Resources>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Foreground" Value="White"></Setter>
                                         </Style>
                                     </Grid.Resources>
                                         <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
                                     </Grid.RowDefinitions>
                                     <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5,5,5,0">
-                                        <Image Source="../Assets/dialog_course_type_white.png" Margin="0,0,5,0" Height="20"/>
+                                        <Image Source="../Assets/dialog_course_type_white.png" Margin="0,0,5,0" Height="20" />
                                         <TextBlock Text="{Binding Course}"></TextBlock>
                                     </StackPanel>
                                     <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5,5,5,0">
-                                        <Image Source="../Assets/dialog_course_add_white.png" Margin="0,0,5,0" Height="20"/>
+                                        <Image Source="../Assets/dialog_course_add_white.png" Margin="0,0,5,0" Height="20" />
                                         <TextBlock Text="{Binding Classroom}"></TextBlock>
                                         <TextBlock Text="@"></TextBlock>
-                                        <TextBlock Text="{Binding Seat}"/>
+                                        <TextBlock Text="{Binding Seat}" />
                                     </StackPanel>
                                     <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5,5,5,0">
-                                        <Image Source="../Assets/dialog_course_time_white.png" Margin="0,0,5,0" Height="20"/>
+                                        <Image Source="../Assets/dialog_course_time_white.png" Margin="0,0,5,0" Height="20" />
                                         <TextBlock Text="{Binding DateTime,Converter={StaticResource ExamTimeConverter}}"></TextBlock>
                                     </StackPanel>
                                 </Grid>
@@ -91,22 +89,22 @@
                             <Grid Margin="-12,0">
                                 <Grid Margin="10,20">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
+                                        <RowDefinition />
+                                        <RowDefinition />
                                     </Grid.RowDefinitions>
-                                    <TextBlock Text="{Binding Course}" Foreground="#068cfd" FontSize="25" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
+                                    <TextBlock Text="{Binding Course}" Foreground="#068cfd" FontSize="25" FontWeight="Light" FontFamily="Microsoft YaHei UI" />
                                     <Grid  Grid.Row="1">
                                         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                                            <Image Source="../Assets/dialog_course_time.png" Margin="0,0,5,0" Height="20"/>
-                                            <TextBlock Text="{Binding DateTime}" Foreground="#333" FontSize="12" VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
+                                            <Image Source="../Assets/dialog_course_time.png" Margin="0,0,5,0" Height="20" />
+                                            <TextBlock Text="{Binding DateTime}" Foreground="#333" FontSize="12" VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" />
                                         </StackPanel>
                                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                            <Image Source="../Assets/dialog_course_add.png" Margin="0,0,5,0" Height="20"/>
-                                            <TextBlock Text="{Binding Classroom}" Foreground="#333" FontSize="14" VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
+                                            <Image Source="../Assets/dialog_course_add.png" Margin="0,0,5,0" Height="20" />
+                                            <TextBlock Text="{Binding Classroom}" Foreground="#333" FontSize="14" VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" />
                                         </StackPanel>
                                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                            <Image Source="../Assets/dialog_course_type.png" Margin="0,0,5,0" Height="20"/>
-                                            <TextBlock Text="{Binding Seat}" Foreground="#333" FontSize="14" VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
+                                            <Image Source="../Assets/dialog_course_type.png" Margin="0,0,5,0" Height="20" />
+                                            <TextBlock Text="{Binding Seat}" Foreground="#333" FontSize="14" VerticalAlignment="Center" FontWeight="Light" FontFamily="Microsoft YaHei UI" />
                                         </StackPanel>
                                     </Grid>
                                 </Grid>
@@ -118,9 +116,9 @@
             </ListView>
             <StackPanel Name="ListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center" Margin="0,20" Tapped="ListFailedStackPanel_Tapped">
                 <Image Name="ListFailedStackPanelImage" Source="../Assets/ic_failed.png" Height="80" Width="80" HorizontalAlignment="Center" />
-                <TextBlock Name="ListFailedStackPanelTextBlock" Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+                <TextBlock Name="ListFailedStackPanelTextBlock" Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI" />
             </StackPanel>
-            <ProgressRing Name="progress" Visibility="Visible" IsActive="True"  Height="60" Width="60"/>
+            <ProgressRing Name="progress" Visibility="Visible" IsActive="True"  Height="60" Width="60" />
         </Grid>
     </Grid>
 </Page>

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace ZSCY.Data
 {
@@ -17,7 +12,6 @@ namespace ZSCY.Data
     {
         public ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>();
         //public int week { get; set; }
-
     }
 
     public class FreeList

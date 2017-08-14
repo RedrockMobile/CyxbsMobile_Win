@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using ZSCY_Win10.Common;
 using ZSCY_Win10.Data.Community;
 
@@ -14,6 +9,7 @@ namespace ZSCY_Win10.ViewModels.Community
         private BBDDFeed bbdd;
         private HotFeed hot;
         public ObservableCollection<ViewModelBase> feeds { get; set; } = new ObservableCollection<ViewModelBase>();
+
         public HotFeed hotfeed
         {
             get { return hot; }

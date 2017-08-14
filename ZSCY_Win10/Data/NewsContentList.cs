@@ -1,15 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZSCY_Win10.Data
 {
-    class NewsContentList
+    internal class NewsContentList
     {
-
         public class Rootobject
         {
             public int state { get; set; }
@@ -35,10 +30,9 @@ namespace ZSCY_Win10.Data
 
             public void GetAttribute(JObject AnnexDetailJObject)
             {
-                name = AnnexDetailJObject["name"].ToString() ;
+                name = AnnexDetailJObject["name"].ToString();
                 address = AnnexDetailJObject["address"].ToString();
             }
         }
-
     }
 }

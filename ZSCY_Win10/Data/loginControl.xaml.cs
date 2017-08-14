@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -31,13 +21,13 @@ namespace ZSCY_Win10.Data
             m_Popup.Child = this;
             this.Loaded += MessagePopupWindow_Loaded;
             this.Unloaded += MessagePopupWindow_Unloaded;
-
         }
 
         public loginControl(string showMsg) : this()
         {
             this.m_TextBlockContent = showMsg;
         }
+
         private void MessagePopupWindow_Loaded(object sender, RoutedEventArgs e)
         {
             this.tbContent.Text = m_TextBlockContent;
@@ -54,7 +44,6 @@ namespace ZSCY_Win10.Data
         {
             Window.Current.SizeChanged -= MessagePopupWindow_SizeChanged; ;
         }
-
 
         public void ShowWIndow()
         {
@@ -79,6 +68,7 @@ namespace ZSCY_Win10.Data
         }
 
         public event EventHandler<RoutedEventArgs> LeftClick;
+
         public event EventHandler<RoutedEventArgs> RightClick;
     }
 }

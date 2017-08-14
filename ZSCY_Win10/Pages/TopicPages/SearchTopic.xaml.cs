@@ -2,20 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using ZSCY_Win10.Controls;
 using ZSCY_Win10.Models.TopicModels;
@@ -52,7 +41,7 @@ namespace ZSCY_Win10.Pages.TopicPages
                 cutoffLine.Y2 = e.NewSize.Height;
             };
             GetBaseTopInfo();
-            
+
             AllTopic.ItemsSource = TopicList;
             SearchTopicGridView.ItemsSource = SearchTopicList;
         }
@@ -120,7 +109,7 @@ namespace ZSCY_Win10.Pages.TopicPages
 
         private void AllTopic_ItemClick(object sender, ItemClickEventArgs e)
         {
-            this.Frame.Navigate(typeof(TopicContentPage),e.ClickedItem,new DrillInNavigationTransitionInfo());
+            this.Frame.Navigate(typeof(TopicContentPage), e.ClickedItem, new DrillInNavigationTransitionInfo());
         }
 
         private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)

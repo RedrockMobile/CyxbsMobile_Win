@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace ZSCY_Win10.Controls
 {
-    public class NavMenuListView:ListView
+    public class NavMenuListView : ListView
     {
         private SplitView splitViewHost;
+
         public NavMenuListView()
         {
             this.SelectionMode = ListViewSelectionMode.Single;
@@ -89,8 +84,8 @@ namespace ZSCY_Win10.Controls
         public event EventHandler<ListViewItem> ItemInvoked;
 
         /// <summary>
-        /// Custom keyboarding logic to enable movement via the arrow keys without triggering selection 
-        /// until a 'Space' or 'Enter' key is pressed. 
+        /// Custom keyboarding logic to enable movement via the arrow keys without triggering selection
+        /// until a 'Space' or 'Enter' key is pressed.
         /// </summary>
         /// <param name="e"></param>
         protected override void OnKeyDown(KeyRoutedEventArgs e)

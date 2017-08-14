@@ -16,324 +16,324 @@
         <local:ClassList x:Key="pl"></local:ClassList>
         <local:ClassList x:Key="pl2"></local:ClassList>
         <local:ExamList x:Key="ei"></local:ExamList>
-        <converter:RemindListWeek x:Key="RemindListWeek"/>
-        <converter:BeforeTimeRemind x:Key="BeforeTimeRemind"/>
-        <converter:BeforeTimeIconColor x:Key="BeforeTimeIconColor"/>
+        <converter:RemindListWeek x:Key="RemindListWeek" />
+        <converter:BeforeTimeRemind x:Key="BeforeTimeRemind" />
+        <converter:BeforeTimeIconColor x:Key="BeforeTimeIconColor" />
     </UserControl.Resources>
-    <Grid >
-        <Border x:Name="OutBorder" Background="#55000000" 
-                VerticalAlignment="Stretch" 
-                HorizontalAlignment="Stretch" Tapped="cancelBtn_Click"/>
+    <Grid>
+        <Border x:Name="OutBorder" Background="#55000000"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch" Tapped="cancelBtn_Click" />
         <Grid Name="outGrid" Background="White" Margin="35,10,35,10" VerticalAlignment="Center" Height="600" Width="400">
             <Grid.RowDefinitions>
-                <RowDefinition Height="80"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid Name="contentAll" Grid.Row="0" Padding="20">
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
                     Name="cancel" Tapped="cancelBtn_Click"
-                    FontFamily="Segoe MDL2 Assets" 
-                    Text="&#xE00E;" 
-                    Margin="0 0 0 0" FontSize="20"/>
+                    FontFamily="Segoe MDL2 Assets"
+                    Text="&#xE00E;"
+                    Margin="0 0 0 0" FontSize="20" />
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Button FontSize="16" Name="classBtn"
-                        Foreground="White" BorderThickness="0.5" 
-                        BorderBrush="#41A2FF" Background="#41A2FF" 
+                        Foreground="White" BorderThickness="0.5"
+                        BorderBrush="#41A2FF" Background="#41A2FF"
                         HorizontalAlignment="Center" Height="38" Width="80" Click="classBtn_Click">
-                        <TextBlock Name="classtb" Text="课程" VerticalAlignment="Center"/>
+                        <TextBlock Name="classtb" Text="课程" VerticalAlignment="Center" />
                     </Button>
-                    <Button FontSize="16" Name="transactonBtn" Foreground="#41A2FF"  
-                        BorderThickness="0.5" BorderBrush="#41A2FF" 
-                        Background="Transparent" HorizontalAlignment="Center" 
+                    <Button FontSize="16" Name="transactonBtn" Foreground="#41A2FF"
+                        BorderThickness="0.5" BorderBrush="#41A2FF"
+                        Background="Transparent" HorizontalAlignment="Center"
                         Height="38" Width="80" Click="transactonBtn_Click">
-                        <TextBlock Name="transactiontb" Text="事项" VerticalAlignment="Center"/>
+                        <TextBlock Name="transactiontb" Text="事项" VerticalAlignment="Center" />
                     </Button>
-                    <Button Visibility="Collapsed" FontSize="16" Name="examBtn" Foreground="#41A2FF"  
-                        BorderThickness="0.5" BorderBrush="#41A2FF" 
-                        Background="Transparent" HorizontalAlignment="Center" 
+                    <Button Visibility="Collapsed" FontSize="16" Name="examBtn" Foreground="#41A2FF"
+                        BorderThickness="0.5" BorderBrush="#41A2FF"
+                        Background="Transparent" HorizontalAlignment="Center"
                         Height="38" Width="80" Click="examBtn_Click">
-                        <TextBlock Name="examtb" Text="考试" VerticalAlignment="Center"/>
+                        <TextBlock Name="examtb" Text="考试" VerticalAlignment="Center" />
                     </Button>
                 </StackPanel>
             </Grid>
             <!--课程Grid-->
             <Grid Grid.Row="1"  Visibility="Visible" Name="type1" DataContext="{StaticResource pl}">
                 <Grid.RowDefinitions>
-                    <RowDefinition  Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition  Height="Auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <StackPanel/>
+                <StackPanel />
                 <Grid Margin="0 -20 0 0" Name="classGrid" Visibility="Visible">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="90*"/>
-                        <RowDefinition Height="90*"/>
-                        <RowDefinition Height="90*"/>
-                        <RowDefinition Height="90*"/>
-                        <RowDefinition Height="90*"/>
-                        <RowDefinition Height="90*"/>
+                        <RowDefinition Height="90*" />
+                        <RowDefinition Height="90*" />
+                        <RowDefinition Height="90*" />
+                        <RowDefinition Height="90*" />
+                        <RowDefinition Height="90*" />
+                        <RowDefinition Height="90*" />
                     </Grid.RowDefinitions>
                     <RelativePanel Grid.Row="0" Margin="0 10 0 0">
                         <Line X1="0" X2="400" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                         <Line X1="0" X2="400" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                        <Image Margin="10 10 0 10" 
-                       Name="_img" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\course_03.png" Height="38" Width="38"/>
+                        <Image Margin="10 10 0 10"
+                       Name="_img" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\course_03.png" Height="38" Width="38" />
                         <TextBlock RelativePanel.RightOf="_img"
                            Margin="20 0 0 0" Text="课程" FontSize="16" FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
                         <TextBlock RelativePanel.AlignRightWithPanel="True"
                            Margin="0 0 20 0" TextTrimming="CharacterEllipsis"
                            RelativePanel.AlignVerticalCenterWithPanel="True"
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Course}" VerticalAlignment="Center"/>
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Course}" VerticalAlignment="Center" />
                     </RelativePanel>
-                    <RelativePanel Grid.Row="1" >
+                    <RelativePanel Grid.Row="1">
                         <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                         <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                        <Image Margin="10 10 0 10" Name="_img1" 
-                       RelativePanel.AlignLeftWithPanel="True" 
-                       RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\teacher_03.png" Height="38" Width="38"/>
-                        <TextBlock RelativePanel.RightOf="_img1" 
+                        <Image Margin="10 10 0 10" Name="_img1"
+                       RelativePanel.AlignLeftWithPanel="True"
+                       RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\teacher_03.png" Height="38" Width="38" />
+                        <TextBlock RelativePanel.RightOf="_img1"
                            Margin="20 0 0 0" Text="老师" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
-                        <TextBlock RelativePanel.AlignRightWithPanel="True" 
+                        <TextBlock RelativePanel.AlignRightWithPanel="True"
                            Margin="0 0 20 0"
-                           RelativePanel.AlignVerticalCenterWithPanel="True" 
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Teacher}" VerticalAlignment="Center"/>
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Teacher}" VerticalAlignment="Center" />
                     </RelativePanel>
-                    <RelativePanel Grid.Row="2" >
+                    <RelativePanel Grid.Row="2">
                         <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                         <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                        <Image Margin="10 10 0 10" Name="_img2" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\address_03.png" Height="38" Width="38"/>
+                        <Image Margin="10 10 0 10" Name="_img2" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\address_03.png" Height="38" Width="38" />
                         <TextBlock RelativePanel.RightOf="_img2"
                            Margin="20 0 0 0" Text="地点" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
                         <TextBlock RelativePanel.AlignRightWithPanel="True"
-                           Margin="0 0 20 0" 
-                           RelativePanel.AlignVerticalCenterWithPanel="True" 
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Classroom }" VerticalAlignment="Center"/>
+                           Margin="0 0 20 0"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Classroom }" VerticalAlignment="Center" />
                     </RelativePanel>
-                    <RelativePanel Grid.Row="3" >
+                    <RelativePanel Grid.Row="3">
                         <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                         <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                        <Image Margin="10 10 0 10" Name="_img3" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\time_03.png" Height="38" Width="38"/>
-                        <TextBlock RelativePanel.RightOf="_img3" 
+                        <Image Margin="10 10 0 10" Name="_img3" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\time_03.png" Height="38" Width="38" />
+                        <TextBlock RelativePanel.RightOf="_img3"
                            Margin="20 0 0 0" Text="时间" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
                         <TextBlock RelativePanel.AlignRightWithPanel="True"
-                           Margin="0 0 20 0" 
-                           RelativePanel.AlignVerticalCenterWithPanel="True" 
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Day}" VerticalAlignment="Center"/>
+                           Margin="0 0 20 0"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Day}" VerticalAlignment="Center" />
                     </RelativePanel>
-                    <RelativePanel Grid.Row="4" >
+                    <RelativePanel Grid.Row="4">
                         <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                         <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                        <Image Margin="10 10 0 10" Name="_img4" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\type_03.png" Height="38" Width="38"/>
-                        <TextBlock RelativePanel.RightOf="_img4" 
+                        <Image Margin="10 10 0 10" Name="_img4" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\type_03.png" Height="38" Width="38" />
+                        <TextBlock RelativePanel.RightOf="_img4"
                            Margin="20 0 0 0" Text="类型" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
                         <TextBlock RelativePanel.AlignRightWithPanel="True"
-                           Margin="0 0 20 0" 
-                           RelativePanel.AlignVerticalCenterWithPanel="True" 
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Type}" VerticalAlignment="Center"/>
+                           Margin="0 0 20 0"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Type}" VerticalAlignment="Center" />
                     </RelativePanel>
-                    <RelativePanel Grid.Row="5" >
+                    <RelativePanel Grid.Row="5">
                         <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                         <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                        <Image Margin="10 10 0 10" Name="_img5" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\weeks_03.png" Height="38" Width="38"/>
-                        <TextBlock RelativePanel.RightOf="_img5" 
+                        <Image Margin="10 10 0 10" Name="_img5" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\weeks_03.png" Height="38" Width="38" />
+                        <TextBlock RelativePanel.RightOf="_img5"
                            Margin="20 0 0 0" Text="周数" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
-                        <TextBlock RelativePanel.AlignRightWithPanel="True" 
-                           Margin="0 0 20 0" 
-                           RelativePanel.AlignVerticalCenterWithPanel="True" 
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=RawWeek}" VerticalAlignment="Center"/>
+                        <TextBlock RelativePanel.AlignRightWithPanel="True"
+                           Margin="0 0 20 0"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=RawWeek}" VerticalAlignment="Center" />
                     </RelativePanel>
                 </Grid>
                 <Line X1="0" X2="400" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                 <Line X1="0" X2="400" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                 <Grid Margin="0 -20 0 0"
-                      Name="noclassGrid" 
+                      Name="noclassGrid"
                       Visibility="Collapsed" Background="#fefefe" Height="300">
                     <StackPanel VerticalAlignment="Center">
-                        <Image Source="..\Assets\noclassBoy_03.png" Width="300" VerticalAlignment="Center"/>
-                        <TextBlock Margin="0 15 0 0" Text="没课的日子总是充满对课堂的思念" HorizontalAlignment="Center" Foreground="#717171"/>
+                        <Image Source="..\Assets\noclassBoy_03.png" Width="300" VerticalAlignment="Center" />
+                        <TextBlock Margin="0 15 0 0" Text="没课的日子总是充满对课堂的思念" HorizontalAlignment="Center" Foreground="#717171" />
                     </StackPanel>
                 </Grid>
             </Grid>
             <Grid Grid.Row="1" Name="type2" Margin="0 -15 0 0" Visibility="Collapsed">
                 <Grid.RowDefinitions>
-                    <RowDefinition  Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition  Height="Auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <StackPanel Margin="0 20 0 0"
-                Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" >
+                Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
                     <TextBlock Text="&#xEA3B;"  Margin="0 0 10 0"
                         Name="classinfoheader0" FontSize="15"
-                        FontFamily="Segoe MDL2 Assets" 
-                        Foreground="#41A2FF" Tapped="classinfoheader0_Tapped"/>
-                    <TextBlock Text="&#xEA3A;" 
+                        FontFamily="Segoe MDL2 Assets"
+                        Foreground="#41A2FF" Tapped="classinfoheader0_Tapped" />
+                    <TextBlock Text="&#xEA3A;"
                         Name="classinfoheader1" FontSize="15"
-                        FontFamily="Segoe MDL2 Assets" 
-                        Foreground="#41A2FF" Tapped="classinfoheader1_Tapped"/>
+                        FontFamily="Segoe MDL2 Assets"
+                        Foreground="#41A2FF" Tapped="classinfoheader1_Tapped" />
                 </StackPanel>
                 <Pivot x:Name="type2pivot" Grid.Row="0" Margin="0 -20 0 0" SelectionChanged="pivot_SelectionChanged">
                     <Pivot.ItemContainerStyle>
                         <Style TargetType="PivotItem">
-                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Margin" Value="0" />
                         </Style>
                     </Pivot.ItemContainerStyle>
                     <PivotItem>
                         <Grid Margin="0 -30 0 0" DataContext="{StaticResource pl}">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="90*"/>
-                                <RowDefinition Height="90*"/>
-                                <RowDefinition Height="90*"/>
-                                <RowDefinition Height="90*"/>
-                                <RowDefinition Height="90*"/>
-                                <RowDefinition Height="90*"/>
+                                <RowDefinition Height="90*" />
+                                <RowDefinition Height="90*" />
+                                <RowDefinition Height="90*" />
+                                <RowDefinition Height="90*" />
+                                <RowDefinition Height="90*" />
+                                <RowDefinition Height="90*" />
                             </Grid.RowDefinitions>
                             <RelativePanel Grid.Row="0" Margin="0 10 0 0">
                                 <Line X1="0" X2="400" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                 <Line X1="0" X2="400" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                <Image Margin="10 10 0 10" 
-                       Name="img" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\course_03.png" Height="38" Width="38"/>
+                                <Image Margin="10 10 0 10"
+                       Name="img" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\course_03.png" Height="38" Width="38" />
                                 <TextBlock RelativePanel.RightOf="img"
                            Margin="20 0 0 0" Text="课程" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
                                 <TextBlock RelativePanel.AlignRightWithPanel="True"
-                           Margin="0 0 20 0" 
-                           RelativePanel.AlignVerticalCenterWithPanel="True"
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Course}" VerticalAlignment="Center"/>
-                            </RelativePanel>
-                            <RelativePanel Grid.Row="1" >
-                                <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                <Image Margin="10 10 0 10" Name="img1" 
-                       RelativePanel.AlignLeftWithPanel="True" 
-                       RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\teacher_03.png" Height="38" Width="38"/>
-                                <TextBlock RelativePanel.RightOf="img1" 
-                           Margin="20 0 0 0" Text="老师" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
-                                <TextBlock RelativePanel.AlignRightWithPanel="True" 
                            Margin="0 0 20 0"
-                           RelativePanel.AlignVerticalCenterWithPanel="True" 
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Teacher}" VerticalAlignment="Center"/>
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Course}" VerticalAlignment="Center" />
                             </RelativePanel>
-                            <RelativePanel Grid.Row="2" >
+                            <RelativePanel Grid.Row="1">
                                 <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                 <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                <Image Margin="10 10 0 10" Name="img2" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\address_03.png" Height="38" Width="38"/>
+                                <Image Margin="10 10 0 10" Name="img1"
+                       RelativePanel.AlignLeftWithPanel="True"
+                       RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\teacher_03.png" Height="38" Width="38" />
+                                <TextBlock RelativePanel.RightOf="img1"
+                           Margin="20 0 0 0" Text="老师" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
+                                <TextBlock RelativePanel.AlignRightWithPanel="True"
+                           Margin="0 0 20 0"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Teacher}" VerticalAlignment="Center" />
+                            </RelativePanel>
+                            <RelativePanel Grid.Row="2">
+                                <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                <Image Margin="10 10 0 10" Name="img2" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\address_03.png" Height="38" Width="38" />
                                 <TextBlock RelativePanel.RightOf="img2"
                            Margin="20 0 0 0" Text="地点" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
                                 <TextBlock RelativePanel.AlignRightWithPanel="True"
-                           Margin="0 0 20 0" 
-                           RelativePanel.AlignVerticalCenterWithPanel="True" 
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Classroom }" VerticalAlignment="Center"/>
+                           Margin="0 0 20 0"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Classroom }" VerticalAlignment="Center" />
                             </RelativePanel>
-                            <RelativePanel Grid.Row="3" >
+                            <RelativePanel Grid.Row="3">
                                 <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                 <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                <Image Margin="10 10 0 10" Name="img3" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\time_03.png" Height="38" Width="38"/>
-                                <TextBlock RelativePanel.RightOf="img3" 
+                                <Image Margin="10 10 0 10" Name="img3" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\time_03.png" Height="38" Width="38" />
+                                <TextBlock RelativePanel.RightOf="img3"
                            Margin="20 0 0 0" Text="时间" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
                                 <TextBlock RelativePanel.AlignRightWithPanel="True"
-                           Margin="0 0 20 0" 
-                           RelativePanel.AlignVerticalCenterWithPanel="True" 
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Day}" VerticalAlignment="Center"/>
+                           Margin="0 0 20 0"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Day}" VerticalAlignment="Center" />
                             </RelativePanel>
-                            <RelativePanel Grid.Row="4" >
+                            <RelativePanel Grid.Row="4">
                                 <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                 <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                <Image Margin="10 10 0 10" Name="img4" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\type_03.png" Height="38" Width="38"/>
-                                <TextBlock RelativePanel.RightOf="img4" 
+                                <Image Margin="10 10 0 10" Name="img4" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\type_03.png" Height="38" Width="38" />
+                                <TextBlock RelativePanel.RightOf="img4"
                            Margin="20 0 0 0" Text="类型" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
                                 <TextBlock RelativePanel.AlignRightWithPanel="True"
-                           Margin="0 0 20 0" 
-                           RelativePanel.AlignVerticalCenterWithPanel="True" 
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Type}" VerticalAlignment="Center"/>
+                           Margin="0 0 20 0"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Type}" VerticalAlignment="Center" />
                             </RelativePanel>
-                            <RelativePanel Grid.Row="5" >
+                            <RelativePanel Grid.Row="5">
                                 <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                 <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                <Image Margin="10 10 0 10" Name="img5" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\weeks_03.png" Height="38" Width="38"/>
-                                <TextBlock RelativePanel.RightOf="img5" 
+                                <Image Margin="10 10 0 10" Name="img5" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\weeks_03.png" Height="38" Width="38" />
+                                <TextBlock RelativePanel.RightOf="img5"
                            Margin="20 0 0 0" Text="周数" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
-                                <TextBlock RelativePanel.AlignRightWithPanel="True" 
-                           Margin="0 0 20 0" 
-                           RelativePanel.AlignVerticalCenterWithPanel="True" 
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=RawWeek}" VerticalAlignment="Center"/>
+                                <TextBlock RelativePanel.AlignRightWithPanel="True"
+                           Margin="0 0 20 0"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=RawWeek}" VerticalAlignment="Center" />
                             </RelativePanel>
                         </Grid>
                     </PivotItem>
                     <PivotItem>
                         <Grid Margin="0 -30 0 0" DataContext="{StaticResource pl2}">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="110*"/>
-                                <RowDefinition Height="110*"/>
-                                <RowDefinition Height="110*"/>
-                                <RowDefinition Height="110*"/>
-                                <RowDefinition Height="110*"/>
-                                <RowDefinition Height="110*"/>
+                                <RowDefinition Height="110*" />
+                                <RowDefinition Height="110*" />
+                                <RowDefinition Height="110*" />
+                                <RowDefinition Height="110*" />
+                                <RowDefinition Height="110*" />
+                                <RowDefinition Height="110*" />
                             </Grid.RowDefinitions>
                             <RelativePanel Grid.Row="0" Margin="0 10 0 0">
                                 <Line X1="0" X2="400" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                 <Line X1="0" X2="400" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                <Image Margin="10 10 0 10" 
-                       Name="img_" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\course_03.png" Height="38" Width="38"/>
+                                <Image Margin="10 10 0 10"
+                       Name="img_" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\course_03.png" Height="38" Width="38" />
                                 <TextBlock RelativePanel.RightOf="img_"
                            Margin="20 0 0 0" Text="课程" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
                                 <TextBlock RelativePanel.AlignRightWithPanel="True"
-                           Margin="0 0 20 0" 
-                           RelativePanel.AlignVerticalCenterWithPanel="True"
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Course}" VerticalAlignment="Center"/>
-                            </RelativePanel>
-                            <RelativePanel Grid.Row="1" >
-                                <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                <Image Margin="10 10 0 10" Name="img1_" 
-                       RelativePanel.AlignLeftWithPanel="True" 
-                       RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\teacher_03.png" Height="38" Width="38"/>
-                                <TextBlock RelativePanel.RightOf="img1_" 
-                           Margin="20 0 0 0" Text="老师" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
-                                <TextBlock RelativePanel.AlignRightWithPanel="True" 
                            Margin="0 0 20 0"
-                           RelativePanel.AlignVerticalCenterWithPanel="True" 
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Teacher}" VerticalAlignment="Center"/>
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Course}" VerticalAlignment="Center" />
                             </RelativePanel>
-                            <RelativePanel Grid.Row="2" >
+                            <RelativePanel Grid.Row="1">
                                 <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                 <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                <Image Margin="10 10 0 10" Name="img2_" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\address_03.png" Height="38" Width="38"/>
+                                <Image Margin="10 10 0 10" Name="img1_"
+                       RelativePanel.AlignLeftWithPanel="True"
+                       RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\teacher_03.png" Height="38" Width="38" />
+                                <TextBlock RelativePanel.RightOf="img1_"
+                           Margin="20 0 0 0" Text="老师" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
+                                <TextBlock RelativePanel.AlignRightWithPanel="True"
+                           Margin="0 0 20 0"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Teacher}" VerticalAlignment="Center" />
+                            </RelativePanel>
+                            <RelativePanel Grid.Row="2">
+                                <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
+                                <Image Margin="10 10 0 10" Name="img2_" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\address_03.png" Height="38" Width="38" />
                                 <TextBlock RelativePanel.RightOf="img2_"
                            Margin="20 0 0 0" Text="地点" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
                                 <TextBlock RelativePanel.AlignRightWithPanel="True"
-                           Margin="0 0 20 0" 
-                           RelativePanel.AlignVerticalCenterWithPanel="True" 
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Classroom }" VerticalAlignment="Center"/>
+                           Margin="0 0 20 0"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Classroom }" VerticalAlignment="Center" />
                             </RelativePanel>
-                            <RelativePanel Grid.Row="3" >
+                            <RelativePanel Grid.Row="3">
                                 <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                 <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                <Image Margin="10 10 0 10" Name="img3_" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\time_03.png" Height="38" Width="38"/>
-                                <TextBlock RelativePanel.RightOf="img3_" 
+                                <Image Margin="10 10 0 10" Name="img3_" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\time_03.png" Height="38" Width="38" />
+                                <TextBlock RelativePanel.RightOf="img3_"
                            Margin="20 0 0 0" Text="时间" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
                                 <TextBlock RelativePanel.AlignRightWithPanel="True"
-                           Margin="0 0 20 0" 
-                           RelativePanel.AlignVerticalCenterWithPanel="True" 
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Day}" VerticalAlignment="Center"/>
+                           Margin="0 0 20 0"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Day}" VerticalAlignment="Center" />
                             </RelativePanel>
-                            <RelativePanel Grid.Row="4" >
+                            <RelativePanel Grid.Row="4">
                                 <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                 <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                <Image Margin="10 10 0 10" Name="img4_" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\type_03.png" Height="38" Width="38"/>
-                                <TextBlock RelativePanel.RightOf="img4_" 
+                                <Image Margin="10 10 0 10" Name="img4_" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\type_03.png" Height="38" Width="38" />
+                                <TextBlock RelativePanel.RightOf="img4_"
                            Margin="20 0 0 0" Text="类型" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
                                 <TextBlock RelativePanel.AlignRightWithPanel="True"
-                           Margin="0 0 20 0" 
-                           RelativePanel.AlignVerticalCenterWithPanel="True" 
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Type}" VerticalAlignment="Center"/>
+                           Margin="0 0 20 0"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=Type}" VerticalAlignment="Center" />
                             </RelativePanel>
-                            <RelativePanel Grid.Row="5" >
+                            <RelativePanel Grid.Row="5">
                                 <Line X1="10" X2="390" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                 <Line X1="10" X2="390" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                                <Image Margin="10 10 0 10" Name="img5_" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\weeks_03.png" Height="38" Width="38"/>
-                                <TextBlock RelativePanel.RightOf="img5_" 
+                                <Image Margin="10 10 0 10" Name="img5_" RelativePanel.AlignLeftWithPanel="True"  RelativePanel.AlignVerticalCenterWithPanel="True"   Source="..\Assets\weeks_03.png" Height="38" Width="38" />
+                                <TextBlock RelativePanel.RightOf="img5_"
                            Margin="20 0 0 0" Text="周数" FontSize="16"   FontFamily="YouYuan"  RelativePanel.AlignVerticalCenterWithPanel="True" />
-                                <TextBlock RelativePanel.AlignRightWithPanel="True" 
-                           Margin="0 0 20 0" 
-                           RelativePanel.AlignVerticalCenterWithPanel="True" 
-                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=RawWeek}" VerticalAlignment="Center"/>
+                                <TextBlock RelativePanel.AlignRightWithPanel="True"
+                           Margin="0 0 20 0"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"
+                           HorizontalAlignment="Right" FontSize="18" FontFamily="YouYuan" Text="{Binding Path=RawWeek}" VerticalAlignment="Center" />
                             </RelativePanel>
                         </Grid>
                     </PivotItem>
@@ -343,26 +343,26 @@
                             <Grid x:Name="RootElement" Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
                                 <Grid.Resources>
                                     <Style x:Key="BaseContentControlStyle" TargetType="ContentControl">
-                                        <Setter Property="FontFamily" Value="Segoe UI"/>
-                                        <Setter Property="FontWeight" Value="SemiBold"/>
-                                        <Setter Property="FontSize" Value="15"/>
+                                        <Setter Property="FontFamily" Value="Segoe UI" />
+                                        <Setter Property="FontWeight" Value="SemiBold" />
+                                        <Setter Property="FontSize" Value="15" />
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="ContentControl">
-                                                    <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" OpticalMarginAlignment="TrimSideBearings" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                                    <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" OpticalMarginAlignment="TrimSideBearings" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                                                 </ControlTemplate>
                                             </Setter.Value>
                                         </Setter>
                                     </Style>
                                     <Style x:Key="TitleContentControlStyle" BasedOn="{StaticResource BaseContentControlStyle}" TargetType="ContentControl">
-                                        <Setter Property="FontFamily" Value="{ThemeResource PivotTitleFontFamily}"/>
-                                        <Setter Property="FontWeight" Value="{ThemeResource PivotTitleThemeFontWeight}"/>
-                                        <Setter Property="FontSize" Value="{ThemeResource PivotTitleFontSize}"/>
+                                        <Setter Property="FontFamily" Value="{ThemeResource PivotTitleFontFamily}" />
+                                        <Setter Property="FontWeight" Value="{ThemeResource PivotTitleThemeFontWeight}" />
+                                        <Setter Property="FontSize" Value="{ThemeResource PivotTitleFontSize}" />
                                     </Style>
                                 </Grid.Resources>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="Orientation">
@@ -372,17 +372,17 @@
                                         </VisualState>
                                     </VisualStateGroup>
                                     <VisualStateGroup x:Name="NavigationButtonsVisibility">
-                                        <VisualState x:Name="NavigationButtonsHidden"/>
+                                        <VisualState x:Name="NavigationButtonsHidden" />
                                         <VisualState x:Name="NavigationButtonsVisible">
                                         </VisualState>
                                     </VisualStateGroup>
                                     <VisualStateGroup x:Name="HeaderStates">
-                                        <VisualState x:Name="HeaderDynamic"/>
+                                        <VisualState x:Name="HeaderDynamic" />
                                         <VisualState x:Name="HeaderStatic">
                                         </VisualState>
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
-                                <ContentControl x:Name="TitleContentControl" ContentTemplate="{TemplateBinding TitleTemplate}" Content="{TemplateBinding Title}" IsTabStop="False" Margin="{StaticResource PivotPortraitThemePadding}" Style="{StaticResource TitleContentControlStyle}" Visibility="Collapsed"/>
+                                <ContentControl x:Name="TitleContentControl" ContentTemplate="{TemplateBinding TitleTemplate}" Content="{TemplateBinding Title}" IsTabStop="False" Margin="{StaticResource PivotPortraitThemePadding}" Style="{StaticResource TitleContentControlStyle}" Visibility="Collapsed" />
                                 <Grid Grid.Row="1">
                                     <ScrollViewer x:Name="ScrollViewer" BringIntoViewOnFocusChange="False" HorizontalSnapPointsAlignment="Center" HorizontalSnapPointsType="MandatorySingle" HorizontalScrollBarVisibility="Hidden" Margin="{TemplateBinding Padding}" Template="{StaticResource ScrollViewerScrollBarlessTemplate}" VerticalSnapPointsType="None" VerticalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled" VerticalContentAlignment="Stretch" ZoomMode="Disabled">
                                         -->
@@ -391,30 +391,30 @@
                                         <PivotPanel x:Name="Panel" VerticalAlignment="Stretch">
                                             <Grid x:Name="PivotLayoutElement">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="*" />
                                                 </Grid.RowDefinitions>
                                                 <Grid.RenderTransform>
-                                                    <CompositeTransform x:Name="PivotLayoutElementTranslateTransform"/>
+                                                    <CompositeTransform x:Name="PivotLayoutElementTranslateTransform" />
                                                 </Grid.RenderTransform>
-                                                <ContentPresenter x:Name="LeftHeaderPresenter" Grid.Row="1"  ContentTemplate="{TemplateBinding LeftHeaderTemplate}" Content="{TemplateBinding LeftHeader}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                                                <ContentPresenter x:Name="RightHeaderPresenter" Grid.Row="1"  ContentTemplate="{TemplateBinding RightHeaderTemplate}" Content="{TemplateBinding RightHeader}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                                <ContentPresenter x:Name="LeftHeaderPresenter" Grid.Row="1"  ContentTemplate="{TemplateBinding LeftHeaderTemplate}" Content="{TemplateBinding LeftHeader}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                                                <ContentPresenter x:Name="RightHeaderPresenter" Grid.Row="1"  ContentTemplate="{TemplateBinding RightHeaderTemplate}" Content="{TemplateBinding RightHeader}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                                                 <ContentControl x:Name="HeaderClipper" Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Stretch" UseSystemFocusVisuals="True" Visibility="Collapsed">
                                                     <ContentControl.Clip>
-                                                        <RectangleGeometry x:Name="HeaderClipperGeometry"/>
+                                                        <RectangleGeometry x:Name="HeaderClipperGeometry" />
                                                     </ContentControl.Clip>
                                                     <Grid Background="Transparent">
-                                                        <PivotHeaderPanel x:Name="StaticHeader" Visibility="Collapsed"/>
+                                                        <PivotHeaderPanel x:Name="StaticHeader" Visibility="Collapsed" />
                                                         <PivotHeaderPanel x:Name="Header">
                                                             <PivotHeaderPanel.RenderTransform>
                                                                 <TransformGroup>
-                                                                    <CompositeTransform x:Name="HeaderTranslateTransform"/>
-                                                                    <CompositeTransform x:Name="HeaderOffsetTranslateTransform"/>
+                                                                    <CompositeTransform x:Name="HeaderTranslateTransform" />
+                                                                    <CompositeTransform x:Name="HeaderOffsetTranslateTransform" />
                                                                 </TransformGroup>
                                                             </PivotHeaderPanel.RenderTransform>
                                                         </PivotHeaderPanel>
@@ -423,8 +423,8 @@
                                                 <ItemsPresenter x:Name="PivotItemPresenter" Grid.ColumnSpan="3" Grid.Row="0">
                                                     <ItemsPresenter.RenderTransform>
                                                         <TransformGroup>
-                                                            <TranslateTransform x:Name="ItemsPresenterTranslateTransform"/>
-                                                            <CompositeTransform x:Name="ItemsPresenterCompositeTransform"/>
+                                                            <TranslateTransform x:Name="ItemsPresenterTranslateTransform" />
+                                                            <CompositeTransform x:Name="ItemsPresenterCompositeTransform" />
                                                         </TransformGroup>
                                                     </ItemsPresenter.RenderTransform>
                                                 </ItemsPresenter>
@@ -441,20 +441,20 @@
             <Grid Grid.Row="1" Visibility="Collapsed" Name="transactionGrid" Background="#f5f5f5">
                 <!--事件页面-->
                 <Grid Name="transactionGridson" Visibility="Visible">
-                    <ListView x:Name="RemindListView" Grid.Column="0" >
+                    <ListView x:Name="RemindListView" Grid.Column="0">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
                                 <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
-                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Background" Value="Transparent" />
                                 <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
-                                <Setter Property="TabNavigation" Value="Local"/>
-                                <Setter Property="IsHoldingEnabled" Value="True"/>
-                                <Setter Property="Padding" Value="12,0,12,0"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-                                <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}"/>
-                                <Setter Property="MinHeight" Value="{ThemeResource ListViewItemMinHeight}"/>
+                                <Setter Property="TabNavigation" Value="Local" />
+                                <Setter Property="IsHoldingEnabled" Value="True" />
+                                <Setter Property="Padding" Value="12,0,12,0" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}" />
+                                <Setter Property="MinHeight" Value="{ThemeResource ListViewItemMinHeight}" />
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="ListViewItem">
@@ -481,63 +481,63 @@
           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
           ContentMargin="{TemplateBinding Padding}"
-          CheckMode="Inline"/>
+          CheckMode="Inline" />
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
                             </Style>
                         </ListView.ItemContainerStyle>
-                        <ListView.ItemTemplate >
+                        <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid >
+                                <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto" />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <Line Margin="14,0" Y1="0" Grid.Column="0" Y2="180" StrokeThickness="3" Stroke="White"/>
-                                    <Ellipse Width="12" Grid.Column="0" Fill="#9ACEFF" Height="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Line Margin="14,0" Y1="0" Grid.Column="0" Y2="180" StrokeThickness="3" Stroke="White" />
+                                    <Ellipse Width="12" Grid.Column="0" Fill="#9ACEFF" Height="12" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                     <Grid Grid.Column="1"  x:Name="RemindContent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
                                         <Grid Margin="0,10" Grid.Column="1"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="White">
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="50"/>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="50" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="20" />
                                             </Grid.RowDefinitions>
                                             <Grid Grid.Row="0">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="auto" />
                                                 </Grid.ColumnDefinitions>
-                                                <TextBlock Text="{Binding title}" Foreground="#343434" Grid.Column="0" Margin="5,0"/>
+                                                <TextBlock Text="{Binding title}" Foreground="#343434" Grid.Column="0" Margin="5,0" />
                                                 <!--<TextBlock Text="{Binding ClassDay}" Grid.Column="1" Foreground="#5393FF" />-->
                                             </Grid>
-                                            <TextBlock Text="{Binding content}" Grid.Row="1" Foreground="#878787" TextWrapping="Wrap" Margin="5,0,0,50"/>
+                                            <TextBlock Text="{Binding content}" Grid.Row="1" Foreground="#878787" TextWrapping="Wrap" Margin="5,0,0,50" />
                                             <Grid Grid.Row="2" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,1,0,0" BorderBrush="Gray">
-                                                <TextBlock Text="{Binding week}" Foreground="#5393FF" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding week}" Foreground="#5393FF" HorizontalAlignment="Left" VerticalAlignment="Center" />
                                                 <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE916;" Foreground="{x:Bind Time, Converter={StaticResource BeforeTimeIconColor}}" VerticalAlignment="Center" Margin="5,0"/>
-                                                    <TextBlock x:Name="BeforeTimeTextBlock" Text="{Binding Time, Converter={StaticResource BeforeTimeRemind}}" Foreground="#A6A6A6" VerticalAlignment="Center"/>
+                                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE916;" Foreground="{x:Bind Time, Converter={StaticResource BeforeTimeIconColor}}" VerticalAlignment="Center" Margin="5,0" />
+                                                    <TextBlock x:Name="BeforeTimeTextBlock" Text="{Binding Time, Converter={StaticResource BeforeTimeRemind}}" Foreground="#A6A6A6" VerticalAlignment="Center" />
                                                 </StackPanel>-->
                                             </Grid>
                                             <!--<Grid Grid.Row="0" Grid.RowSpan="3" Visibility="{x:Bind Rewrite, Mode=OneWay}">
                                                 <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                    <Rectangle.Fill >
+                                                    <Rectangle.Fill>
                                                         <LinearGradientBrush StartPoint="0,0">
-                                                            <GradientStop Color="#33FFFFFF" Offset="0.20"/>
-                                                            <GradientStop Color="#66FFFFFF" Offset="0.40"/>
-                                                            <GradientStop Color="#99FFFFFF" Offset="0.60"/>
-                                                            <GradientStop Color="#CCFFFFFF" Offset="0.80"/>
-                                                            <GradientStop Color="#D8FFFFFF" Offset="1.00"/>
+                                                            <GradientStop Color="#33FFFFFF" Offset="0.20" />
+                                                            <GradientStop Color="#66FFFFFF" Offset="0.40" />
+                                                            <GradientStop Color="#99FFFFFF" Offset="0.60" />
+                                                            <GradientStop Color="#CCFFFFFF" Offset="0.80" />
+                                                            <GradientStop Color="#D8FFFFFF" Offset="1.00" />
                                                         </LinearGradientBrush>
                                                     </Rectangle.Fill>
                                                 </Rectangle>
                                             </Grid>-->
                                         </Grid>
-                                        <Polygon Grid.Column="0" Points="10,0 0,10 10,20" Fill="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                        <Polygon Grid.Column="0" Points="10,0 0,10 10,20" Fill="White" HorizontalAlignment="Left" VerticalAlignment="Center" />
                                     </Grid>
                                 </Grid>
                             </DataTemplate>
@@ -548,8 +548,8 @@
                 <Line X1="0" X2="400" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                 <Grid Name="notransactionGrid" Visibility="Collapsed" Background="#fefefe">
                     <StackPanel VerticalAlignment="Center" Margin="0 -200 0 0">
-                        <Image Source="..\Assets\girl_03.png" VerticalAlignment="Center"/>
-                        <TextBlock Text="昨天的安排才是今朝的努力,明天的梦想" HorizontalAlignment="Center" Foreground="#717171"/>
+                        <Image Source="..\Assets\girl_03.png" VerticalAlignment="Center" />
+                        <TextBlock Text="昨天的安排才是今朝的努力,明天的梦想" HorizontalAlignment="Center" Foreground="#717171" />
                     </StackPanel>
                 </Grid>
             </Grid>
@@ -561,27 +561,27 @@
                 <Grid Background="#f5f5f5" Margin="0 0 0 0" Height="400">
                     <Grid Name="examInfo" Background="White" VerticalAlignment="Top" Margin="25 20 25 20" Height="150" Width="450">
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
-                        <RelativePanel >
+                        <RelativePanel>
                             <Image Source="..\Assets\course_03.png" RelativePanel.AlignLeftWithPanel="True" Margin="10 10 0 10"
-                              Name="exm" RelativePanel.AlignVerticalCenterWithPanel="True" Height="28" Width="28"/>
+                              Name="exm" RelativePanel.AlignVerticalCenterWithPanel="True" Height="28" Width="28" />
                             <TextBlock Text="{Binding Path=Course}" RelativePanel.RightOf="exm" FontSize="20" Margin="10 10 0 10" FontFamily="YouYuan"
-                                   RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                                   RelativePanel.AlignVerticalCenterWithPanel="True" />
                         </RelativePanel>
-                        <RelativePanel Grid.Row="1" >
-                            <TextBlock Text="{Binding Path=Week}" RelativePanel.AlignVerticalCenterWithPanel="True" 
+                        <RelativePanel Grid.Row="1">
+                            <TextBlock Text="{Binding Path=Week}" RelativePanel.AlignVerticalCenterWithPanel="True"
                                    FontSize="16" FontFamily="YouYuan"
-                                  Margin="15 0 0 0"/>
+                                  Margin="15 0 0 0" />
                             <Line X1="10" X2="340" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                             <Line X1="10" X2="340" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
-                        </RelativePanel >
-                        <RelativePanel Grid.Row="2"  >
-                            <TextBlock Text="{Binding Path=Begin_time}" Margin="15 0 0 0" 
+                        </RelativePanel>
+                        <RelativePanel Grid.Row="2">
+                            <TextBlock Text="{Binding Path=Begin_time}" Margin="15 0 0 0"
                                    FontSize="16" FontFamily="YouYuan"
-                                 RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                                 RelativePanel.AlignVerticalCenterWithPanel="True" />
                             <Line X1="10" X2="340" Y1="0" Y2="1" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                             <Line X1="10" X2="340" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                         </RelativePanel>
@@ -591,4 +591,3 @@
         </Grid>
     </Grid>
 </UserControl>
-

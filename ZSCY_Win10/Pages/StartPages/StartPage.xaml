@@ -10,17 +10,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Page.Resources>
-        <convert:UrlConvert x:Key="UrlConvert"/>
-        <convert:BackgroundImageConvert x:Key="BackgroundImageConvert"/>
+        <convert:UrlConvert x:Key="UrlConvert" />
+        <convert:BackgroundImageConvert x:Key="BackgroundImageConvert" />
     </Page.Resources>
-    <Grid Background="#058BFE" >
-        <Image Name="BackgroundImage"  Source="{Binding ElementName=page,Path=ViewModel.Model.PictrueSource,Converter={StaticResource UrlConvert}}" 
-               HorizontalAlignment="Stretch" Stretch="UniformToFill" Visibility="{Binding ElementName=page,Path=ViewModel.Model.HasPictrue,Converter={StaticResource BackgroundImageConvert}}"/>
-        <Canvas Name="Glass" Background="Transparent" HorizontalAlignment="Stretch" 
-                VerticalAlignment="Stretch"/>
-        <Image Name="MainImage"  Source="{Binding ElementName=page,Path=ViewModel.Model.PictrueSource,Converter={StaticResource UrlConvert}}" 
-               HorizontalAlignment="{Binding ElementName=page,Path=ViewModel.Model.HorMode}" VerticalAlignment="{Binding ElementName=page,Path=ViewModel.Model.VerMode}" Stretch="{Binding ElementName=page,Path=ViewModel.Model.StretchMode}"/>
+    <Grid Background="#058BFE">
+        <Image Name="BackgroundImage"  Source="{Binding ElementName=page,Path=ViewModel.Model.PictrueSource,Converter={StaticResource UrlConvert}}"
+               HorizontalAlignment="Stretch" Stretch="UniformToFill" Visibility="{Binding ElementName=page,Path=ViewModel.Model.HasPictrue,Converter={StaticResource BackgroundImageConvert}}" />
+        <Canvas Name="Glass" Background="Transparent" HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch" />
+        <Image Name="MainImage"  Source="{Binding ElementName=page,Path=ViewModel.Model.PictrueSource,Converter={StaticResource UrlConvert}}"
+               HorizontalAlignment="{Binding ElementName=page,Path=ViewModel.Model.HorMode}" VerticalAlignment="{Binding ElementName=page,Path=ViewModel.Model.VerMode}" Stretch="{Binding ElementName=page,Path=ViewModel.Model.StretchMode}" />
         <ProgressRing Name="WaitRing" IsActive="{Binding ElementName=page,Path=ViewModel.Model.HasPictrue}" HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                      Width="30" Height="30" Foreground="White" Margin="0,70"/>
+                      Width="30" Height="30" Foreground="White" Margin="0,70" />
     </Grid>
 </Page>

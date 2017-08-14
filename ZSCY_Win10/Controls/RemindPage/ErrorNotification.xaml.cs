@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -23,6 +13,7 @@ namespace ZSCY_Win10.Controls.RemindPage
         private string content;
         private TimeSpan showTime;
         private Popup popup;
+
         public ErrorNotification()
         {
             this.InitializeComponent();
@@ -33,23 +24,25 @@ namespace ZSCY_Win10.Controls.RemindPage
             this.Loaded += Notification_Loaded;
             this.Unloaded += Notification_Unloaded;
         }
-        public ErrorNotification(string content, TimeSpan showTime):this()
+
+        public ErrorNotification(string content, TimeSpan showTime) : this()
         {
             this.content = content;
             this.showTime = showTime;
         }
-        public ErrorNotification(string content):this(content,TimeSpan.FromSeconds(1))
-        {
 
+        public ErrorNotification(string content) : this(content, TimeSpan.FromSeconds(1))
+        {
         }
+
         public void Show()
         {
             this.popup.IsOpen = true;
         }
+
         private void Notification_Unloaded(object sender, RoutedEventArgs e)
         {
             Window.Current.SizeChanged -= Current_SizeChanged;
-
         }
 
         private void Current_SizeChanged(object sender, WindowSizeChangedEventArgs e)

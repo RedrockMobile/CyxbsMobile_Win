@@ -3,32 +3,24 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI;
-using Windows.UI.Core;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using ZSCY.Data;
-using ZSCY_Win10.Data;
-using ZSCY_Win10.Util;
-using Windows.UI.Popups;
 using ZSCY_Win10.Controls;
-using ZSCY_Win10.Pages.RemindPages;
+using ZSCY_Win10.Data;
 using ZSCY_Win10.Pages.AddRemindPage;
-using Windows.UI.Xaml.Media.Animation;
+using ZSCY_Win10.Pages.RemindPages;
+using ZSCY_Win10.Util;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
@@ -43,15 +35,16 @@ namespace ZSCY_Win10
         private string kb = "";
         private int wOa = 1;
         private static string resourceName = "ZSCY";
-        ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
-        IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
-        Grid backweekgrid = new Grid();
-        TextBlock[] DateOnKBTextBlock = new TextBlock[7] { new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock() };
-        List<ClassList> classList = new List<ClassList>();
-        List<Transaction> transationList = new List<Transaction>();
-        string[,][] classtime = new string[7, 6][];
-        long[,][] transactiontime = new long[7, 6][];
+        private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
+        private Grid backweekgrid = new Grid();
+        private TextBlock[] DateOnKBTextBlock = new TextBlock[7] { new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock(), new TextBlock() };
+        private List<ClassList> classList = new List<ClassList>();
+        private List<Transaction> transationList = new List<Transaction>();
+        private string[,][] classtime = new string[7, 6][];
+        private long[,][] transactiontime = new long[7, 6][];
         private Dictionary<string, int> colorlist = new Dictionary<string, int>(); //课表格子颜色
+
         public KBPage()
         {
             this.InitializeComponent();
@@ -107,8 +100,7 @@ namespace ZSCY_Win10
             }
 #if DEBUG
             TestButton.Visibility = Visibility.Visible;
-#endif        
-
+#endif
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -156,7 +148,6 @@ namespace ZSCY_Win10
                 KBZoomAppBarButton.IsEnabled = false;
                 ShowMoreAppBarButton.IsEnabled = false;
             }
-
         }
 
         //离开页面时，取消事件
@@ -184,7 +175,7 @@ namespace ZSCY_Win10
             if (week == 0)
             {
                 Grid backgrid = new Grid();
-                //TODO:改动 当日空课表的背景色 
+                //TODO:改动 当日空课表的背景色
                 backgrid.Background = new SolidColorBrush(Color.FromArgb(255, 254, 245, 207));
                 backgrid.SetValue(Grid.RowProperty, 0);
                 backgrid.SetValue(Grid.ColumnProperty, (Int16.Parse(Utils.GetWeek()) + 6) % 7);
@@ -196,7 +187,6 @@ namespace ZSCY_Win10
                 backweekgrid.SetValue(Grid.RowSpanProperty, 2);
                 KebiaoWeekTitleGrid.Children.Remove(backweekgrid);
                 KebiaoWeekTitleGrid.Children.Add(backweekgrid);
-
             }
             else
             {
@@ -217,9 +207,8 @@ namespace ZSCY_Win10
             KebiaoWeek.SetValue(Grid.ColumnProperty, (Int16.Parse(Utils.GetWeek()) == 0 ? 6 : Int16.Parse(Utils.GetWeek()) - 1));
             KebiaoWeek.SetValue(Grid.RowProperty, 1);
             KebiaoWeekTitleGrid.Children.Add(KebiaoWeek);
-
-
         }
+
         //TODO:未登陆时 没有课表
         private async void initKB(bool isRefresh = false)
         {
@@ -256,9 +245,7 @@ namespace ZSCY_Win10
                 {
                     HubSectionKBTitle.Text = "我的课表";
                     HubSectionKBTitle.FontSize = 18;
-
                 }
-
             }
             catch { }
 
@@ -266,7 +253,6 @@ namespace ZSCY_Win10
             paramList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
             //if (isRefresh)
             //    paramList.Add(new KeyValuePair<string, string>("forceFetch", "true"));
-
 
             string kbtemp = await NetWork.getHttpWebRequest("redapi2/api/kebiao", paramList); //新
                                                                                               //string kbtemp = await NetWork.getHttpWebRequest("api/kebiao", paramList); //旧
@@ -347,30 +333,30 @@ namespace ZSCY_Win10
             DateTime weekend = GetWeekLastDaySun(now);
             this.HubSectionKBDate.Text = weekstart.Month + "." + weekstart.Day + "--" + weekend.Month + "." + weekend.Day;
             ShowWeekOnKB(weekstart);
-
         }
+
         public DateTime GetWeekFirstDayMon(DateTime datetime)
         {
-            //星期一为第一天   
+            //星期一为第一天
             int weeknow = Convert.ToInt32(datetime.DayOfWeek);
 
-            //因为是以星期一为第一天，所以要判断weeknow等于0时，要向前推6天。   
+            //因为是以星期一为第一天，所以要判断weeknow等于0时，要向前推6天。
             weeknow = (weeknow == 0 ? (7 - 1) : (weeknow - 1));
             int daydiff = (-1) * weeknow;
 
-            //本周第一天   
+            //本周第一天
             string FirstDay = datetime.AddDays(daydiff).ToString("yyyy-MM-dd");
             return Convert.ToDateTime(FirstDay);
         }
 
         public DateTime GetWeekLastDaySun(DateTime datetime)
         {
-            //星期天为最后一天   
+            //星期天为最后一天
             int weeknow = Convert.ToInt32(datetime.DayOfWeek);
             weeknow = (weeknow == 0 ? 7 : weeknow);
             int daydiff = (7 - weeknow);
 
-            //本周最后一天   
+            //本周最后一天
             string LastDay = datetime.AddDays(daydiff).ToString("yyyy-MM-dd");
             return Convert.ToDateTime(LastDay);
         }
@@ -526,7 +512,7 @@ namespace ZSCY_Win10
                             if (Array.IndexOf(classitem.Week, nowWEEK) != -1)
                             {
                                 //当前课与当前时段的事件在同一周
-                                //如果本周任意一节课与事件事件冲突 
+                                //如果本周任意一节课与事件事件冲突
                                 if (transactionitem.date[i].day == classitem.Hash_day && transactionitem.date[i]._class == classitem.Hash_lesson)
                                 { isInClassGrid = true; break; }
                             }
@@ -537,10 +523,12 @@ namespace ZSCY_Win10
                             case 1:
                                 RightC = 0;
                                 break;
+
                             case 2:
                             case 3:
                                 RightC = 1;
                                 break;
+
                             case 4:
                             case 5:
                                 RightC = 2;
@@ -656,10 +644,12 @@ namespace ZSCY_Win10
                         case 1:
                             RightC = 0;
                             break;
+
                         case 2:
                         case 3:
                             RightC = 1;
                             break;
+
                         case 4:
                         case 5:
                             RightC = 2;
@@ -768,7 +758,6 @@ namespace ZSCY_Win10
             classNameTextBlock.Margin = new Thickness(0, 3, 0, 3);
             classNameTextBlock.Foreground = new SolidColorBrush(Colors.White);
 
-
             StackPanel classTeaStackPanel = new StackPanel();
             Image classTeaImage = new Image();
             TextBlock classTeaTextBlock = new TextBlock();
@@ -783,7 +772,6 @@ namespace ZSCY_Win10
             classTeaStackPanel.Children.Add(classTeaImage);
             classTeaStackPanel.Children.Add(classTeaTextBlock);
             classTeaStackPanel.Margin = new Thickness(0, 3, 0, 3);
-
 
             StackPanel classAddStackPanel = new StackPanel();
             Image classAddImage = new Image();
@@ -832,7 +820,7 @@ namespace ZSCY_Win10
             bool secondTimeAdd = false;
             if (contentstring == null)
             {
-                //clear出了无法理解的问题..暂时用一个判断吧 聊胜于无           
+                //clear出了无法理解的问题..暂时用一个判断吧 聊胜于无
                 var vault = new Windows.Security.Credentials.PasswordVault();
                 var credentialList = vault.FindAllByResource(resourceName);
                 credentialList[0].RetrievePassword();
@@ -908,7 +896,6 @@ namespace ZSCY_Win10
             //foreach (var transactionItem in transationList) {
             //    if (item.Week == transactionItem.week && item.Lesson == transactionItem.classToLesson)
             //    {
-
             //    }
             //}
 
@@ -1043,7 +1030,6 @@ namespace ZSCY_Win10
             var control2 = new ClassInfoControl(cl, tl, null);
             control2.ShowWIndow();
 
-
             //for (int i = 0; i < temp.Length; i++)
             //{
             //    ClassList c = classList.Find(p => p._Id.Equals(temp[i]));
@@ -1122,8 +1108,6 @@ namespace ZSCY_Win10
                 HubSectionKBDate.Text = weekstart.Month + "." + weekstart.Day + "--" + weekend.Month + "." + weekend.Day;
             }
         }
-
-
 
         private void KBSearchButton_Click(object sender, RoutedEventArgs e)
         {
@@ -1206,7 +1190,6 @@ namespace ZSCY_Win10
             }
         }
 
-
         private void KBZoomFlyoutTextBox_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
@@ -1238,12 +1221,12 @@ namespace ZSCY_Win10
 
         private void AddRemind_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(AddRemindPage),"add");
+            Frame.Navigate(typeof(AddRemindPage), "add");
         }
 
         private void RemindList_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(RemindListPage),false);
+            Frame.Navigate(typeof(RemindListPage), false);
         }
 
         private void TestButton_Click(object sender, RoutedEventArgs e)

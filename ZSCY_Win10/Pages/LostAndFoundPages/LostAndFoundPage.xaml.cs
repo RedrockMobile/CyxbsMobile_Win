@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Models;
@@ -27,13 +18,14 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
     /// </summary>
     public sealed partial class LostAndFoundPage : Page
     {
-        APPTheme AppTheme = new APPTheme();
-        LostAndFoundPageModel Model = new LostAndFoundPageModel();
-        LostAndFoundPageViewModel[] VM = new LostAndFoundPageViewModel[8];//
-        bool[] IsItemLoaded = { false, false, false, false, false, false, false, false };
-        ObservableCollection<bool> IsProgressRingActive = new ObservableCollection<bool>();
-        bool isComboxLoaded = false;
-        string BaseUrl;
+        private APPTheme AppTheme = new APPTheme();
+        private LostAndFoundPageModel Model = new LostAndFoundPageModel();
+        private LostAndFoundPageViewModel[] VM = new LostAndFoundPageViewModel[8];//
+        private bool[] IsItemLoaded = { false, false, false, false, false, false, false, false };
+        private ObservableCollection<bool> IsProgressRingActive = new ObservableCollection<bool>();
+        private bool isComboxLoaded = false;
+        private string BaseUrl;
+
         public LostAndFoundPage()
         {
             for (byte i = 0; i < 8; i++)
@@ -47,7 +39,7 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
 
         private void LostAndFoundPageAddAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(InfoPublish));        
+            Frame.Navigate(typeof(InfoPublish));
         }
 
         private async void LostAndFoundPageRefreshAppBarButton_Click(object sender, RoutedEventArgs e)
@@ -100,11 +92,12 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
             var temp = e.ClickedItem as LFItem;
             Frame.Navigate(typeof(LFDetailPage), temp.pro_id, new CommonNavigationTransitionInfo());
         }
-        protected override void OnNavigatedTo(NavigationEventArgs e)            
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (!IsItemLoaded[0])
             {
-                    BaseUrl = "http://hongyan.cqupt.edu.cn/laf/api/view/found/";
+                BaseUrl = "http://hongyan.cqupt.edu.cn/laf/api/view/found/";
             }
         }
 
@@ -165,6 +158,7 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
             isComboxLoaded = true;
         }
     }
+
     public class BoolToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -177,6 +171,7 @@ namespace ZSCY_Win10.Pages.LostAndFoundPages
             throw new NotImplementedException();
         }
     }
+
     public class ObservableCollectionBoolToBoolConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

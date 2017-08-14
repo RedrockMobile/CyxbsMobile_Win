@@ -2,21 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.StartScreen;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Util;
 
@@ -29,8 +21,9 @@ namespace ZSCY_Win10
     /// </summary>
     public sealed partial class LoginPage : Page
     {
-        ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         private static string resourceName = "ZSCY";
+
         public LoginPage()
         {
             this.InitializeComponent();
@@ -58,7 +51,6 @@ namespace ZSCY_Win10
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             mlogin();
-
         }
 
         private async void mlogin()
@@ -142,6 +134,7 @@ namespace ZSCY_Win10
             jumpList.Items.Clear();
             await jumpList.SaveAsync();
         }
+
         private Windows.UI.StartScreen.JumpListItem CreateJumpListItemTask(string u, string description, string uri)
         {
             var taskItem = JumpListItem.CreateWithArguments(
@@ -150,6 +143,7 @@ namespace ZSCY_Win10
             taskItem.Logo = new Uri(uri);
             return taskItem;
         }
+
         private async void SetSystemGroupAsync()
         {
             var jumpList = await Windows.UI.StartScreen.JumpList.LoadCurrentAsync();
@@ -168,8 +162,8 @@ namespace ZSCY_Win10
         private void IdNumPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             isLoginButtonEnable();
-
         }
+
         private void isLoginButtonEnable()
         {
             if (StuNumTextBox.Text != "" && IdNumPasswordBox.Password != "")

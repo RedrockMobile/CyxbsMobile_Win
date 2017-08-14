@@ -2,18 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Core;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
 using ZSCY_Win10.Util;
@@ -37,6 +27,7 @@ namespace ZSCY_Win10
         {
             //e.Handled = true;
         }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             var JWItem = (JWList)e.Parameter;
@@ -49,7 +40,6 @@ namespace ZSCY_Win10
             DateReadTextBlock.Text = "发布时间:" + JWItem.Date + "阅读人数:" + JWItem.Read;
             UmengSDK.UmengAnalytics.TrackPageStart("JWContentPage");
         }
-
 
         private async void getContent(string ID)
         {

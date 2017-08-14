@@ -24,8 +24,8 @@
                         <DataTemplate>
                             <Grid Margin="-12,0">
                                 <Grid Margin="10,20,15,20">
-                                    <TextBlock Text="{Binding Course}" FontSize="20" Foreground="#068cfd" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
-                                    <TextBlock Text="{Binding Grade}" HorizontalAlignment="Right" FontSize="20" Foreground="#333" FontWeight="Light" FontFamily="Microsoft YaHei UI"/>
+                                    <TextBlock Text="{Binding Course}" FontSize="20" Foreground="#068cfd" FontWeight="Light" FontFamily="Microsoft YaHei UI" />
+                                    <TextBlock Text="{Binding Grade}" HorizontalAlignment="Right" FontSize="20" Foreground="#333" FontWeight="Light" FontFamily="Microsoft YaHei UI" />
                                 </Grid>
                                 <Line X1="0" X2="999999" Y1="0" Y2="1" Height="1" VerticalAlignment="Top" Stroke="#E6E6E6" StrokeThickness="1"></Line>
                                 <Line X1="0" X2="999999" Y1="1" Y2="0" Height="1" VerticalAlignment="Bottom" Stroke="#E6E6E6" StrokeThickness="1"></Line>
@@ -35,9 +35,9 @@
                 </ListView>
                 <StackPanel Name="ListFailedStackPanel" Visibility="Collapsed" VerticalAlignment="Center"  Margin="0,20" Tapped="ListFailedStackPanel_Tapped">
                     <Image Name="ListFailedStackPanelImage" Source="../Assets/ic_failed.png" Height="80" Width="80" HorizontalAlignment="Center" />
-                    <TextBlock Name="ListFailedStackPanelTextBlock" Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI"  />
+                    <TextBlock Name="ListFailedStackPanelTextBlock" Text="加载失败，点击重试" HorizontalAlignment="Center" FontWeight="Light" Foreground="Gray" FontSize="15" FontFamily="Microsoft YaHei UI" />
                 </StackPanel>
-                <ProgressRing Name="progress" Visibility="Visible" IsActive="True"  Height="60" Width="60"/>
+                <ProgressRing Name="progress" Visibility="Visible" IsActive="True"  Height="60" Width="60" />
             </Grid>
         </ScrollViewer>
     </Grid>

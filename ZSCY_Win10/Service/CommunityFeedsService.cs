@@ -1,26 +1,22 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Data.Json;
-using Newtonsoft.Json.Linq;
+using Windows.Storage;
 using ZSCY_Win10.Data.Community;
 using ZSCY_Win10.Util;
-using System.Collections.ObjectModel;
-using Windows.Storage;
 
 namespace ZSCY_Win10.Service
 {
     public class CommunityFeedsService
     {
-
         //const string hotFeeds = @"cyxbsMobile/index.php/Home/Article/searchHotArticle";
         //const string bbddfeeds = @"cyxbsMobile/index.php/Home/Article/listArticle";
         //TODO:新的api 可不传参数stuNum和idNum
-        const string hotFeeds = @"cyxbsMobile/index.php/Home/NewArticle/searchHotArticle";
-        const string bbddfeeds = @"cyxbsMobile/index.php/Home/NewArticle/listArticle";
+        private const string hotFeeds = @"cyxbsMobile/index.php/Home/NewArticle/searchHotArticle";
+
+        private const string bbddfeeds = @"cyxbsMobile/index.php/Home/NewArticle/listArticle";
         public static string[] feedsapi = { hotFeeds, bbddfeeds };
         public static ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         private static string resourceName = "ZSCY";
@@ -51,7 +47,6 @@ namespace ZSCY_Win10.Service
                 }
                 catch
                 {
-
                 }
                 paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
                 paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
@@ -98,7 +93,6 @@ namespace ZSCY_Win10.Service
                         }
                     }
                     return feedslist;
-
                 }
                 catch (Newtonsoft.Json.JsonReaderException)
                 {
@@ -134,7 +128,6 @@ namespace ZSCY_Win10.Service
                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
                try
                {
-
                    var vault = new Windows.Security.Credentials.PasswordVault();
                    var credentialList = vault.FindAllByResource(resourceName);
                    credentialList[0].RetrievePassword();
@@ -148,7 +141,6 @@ namespace ZSCY_Win10.Service
                }
                catch
                {
-
                }
                paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
                paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));

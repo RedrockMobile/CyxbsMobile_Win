@@ -4,19 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Controls;
 using ZSCY_Win10.Models.TopicModels;
@@ -31,10 +23,10 @@ namespace ZSCY_Win10.Pages.TopicPages
     /// </summary>
     public sealed partial class TopicArticlesConent : Page
     {
-        ObservableCollection<Articles> al = new ObservableCollection<Articles>();
-        ObservableCollection<TopicRemark> rl = new ObservableCollection<TopicRemark>();
-        Articles para = new Articles();
-        int Articles_id = 0;
+        private ObservableCollection<Articles> al = new ObservableCollection<Articles>();
+        private ObservableCollection<TopicRemark> rl = new ObservableCollection<TopicRemark>();
+        private Articles para = new Articles();
+        private int Articles_id = 0;
         private static string resourceName = "ZSCY";
 
         public TopicArticlesConent()
@@ -43,6 +35,7 @@ namespace ZSCY_Win10.Pages.TopicPages
             //监听注册
             LLQNotifier.Default.Register(this);
         }
+
         //[SubscriberCallback(typeof(LikeButtonClickEvent), NotifyPriority.Lowest, ThreadMode.Current)]
         //public void LikeChanged(LikeButtonClickEvent Event)
         //{
@@ -116,7 +109,6 @@ namespace ZSCY_Win10.Pages.TopicPages
 
         private void TopicItemPhotoImage_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
         }
 
         private async void sendMarkButton_Click(object sender, RoutedEventArgs e)
@@ -206,7 +198,7 @@ namespace ZSCY_Win10.Pages.TopicPages
                         item.is_my_Like = temp = "true";
                         item.like_num = await LikeClick("7", item.article_id.ToString(), "true");
                     }
-            //Debug.WriteLine(num_id); 
+            //Debug.WriteLine(num_id);
         }
 
         public async Task<string> LikeClick(string type_id, string article_id, string yOn)
@@ -243,8 +235,6 @@ namespace ZSCY_Win10.Pages.TopicPages
 
         private void PhotoGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
-
         }
-
     }
 }

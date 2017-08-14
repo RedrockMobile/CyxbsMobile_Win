@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZSCY.Models
+﻿namespace ZSCY.Models
 {
     public class ruxue_page : BaseModel
     {
@@ -69,9 +62,9 @@ namespace ZSCY.Models
         //            xueshengshouce = value;
         //            RaisePropertyChanged(nameof(Xueshengshouce));
         //        }}
-        private string []icon;
+        private string[] icon;
 
-        public string []Icon
+        public string[] Icon
         {
             get
             {

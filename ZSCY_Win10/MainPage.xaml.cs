@@ -9,9 +9,11 @@ using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
+using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
+using Windows.System.Profile;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -23,13 +25,9 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Controls;
-using ZSCY.Pages;
-using ZSCY_Win10.Util;
-using ZSCY_Win10.Data;
-using Windows.Phone.UI.Input;
-using Windows.ApplicationModel.Background;
 using ZSCY_Win10.Pages.LostAndFoundPages;
-using Windows.System.Profile;
+using ZSCY_Win10.Util;
+
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
 namespace ZSCY_Win10
@@ -39,11 +37,12 @@ namespace ZSCY_Win10
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         private static string resourceName = "ZSCY";
         private Point currentPoint; //最新的，当前的点
         private Point oldPoint;//上一个点
         private bool isPoint = false;
+
         private List<NavMenuItem> navlist = new List<NavMenuItem>(
             new[]
             {
@@ -91,7 +90,9 @@ namespace ZSCY_Win10
                 },
             }
             );
+
         public static MainPage Current = null;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -146,7 +147,7 @@ namespace ZSCY_Win10
                     NavMenuList.Margin = new Thickness(0, 48, 0, 0);
                 }
             };
-            //TODO:未登录时 没有名字 
+            //TODO:未登录时 没有名字
             //if (appSetting.Values.ContainsKey("idNum"))
             try
             {
@@ -190,7 +191,8 @@ namespace ZSCY_Win10
             catch { }
         }
 
-        bool isExit = false;
+        private bool isExit = false;
+
         private void OnBackPressed(object sender, BackPressedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
@@ -289,7 +291,6 @@ namespace ZSCY_Win10
                 {
                     Debug.WriteLine("缓存头像文件不存在");
                 }
-
             }
         }
 
@@ -315,7 +316,6 @@ namespace ZSCY_Win10
                 {
                 }
             }
-
         }
 
         public Frame AppFrame { get { return this.frame; } }
@@ -331,6 +331,7 @@ namespace ZSCY_Win10
             bool ignored = false;
             this.BackRequested(ref ignored);
         }
+
         private void BackRequested(ref bool handled)
         {
             // Get a hold of the current frame so that we can inspect the app back stack.
@@ -346,6 +347,7 @@ namespace ZSCY_Win10
                 this.AppFrame.GoBack();//后退
             }
         }
+
         //private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         //{
         //    SplitSet.IsPaneOpen = !SplitSet.IsPaneOpen;
@@ -442,7 +444,6 @@ namespace ZSCY_Win10
                                             BackOpacityGrid.Visibility = Visibility.Collapsed;
                                             loadingStackPanel.Visibility = Visibility.Collapsed;
                                             this.AppFrame.Navigate(typeof(SetPersonInfoPage), item.DestPage);
-
                                         }
                                         else if (null != result && result.Label == "暂时不了")
                                         {
@@ -524,6 +525,7 @@ namespace ZSCY_Win10
                 }
             }
         }
+
         /// <summary>
         /// Ensures the nav menu reflects reality when navigation is triggered outside of
         /// the nav menu buttons.
@@ -557,6 +559,7 @@ namespace ZSCY_Win10
                 if (container != null) container.IsTabStop = true;
             }
         }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
@@ -571,14 +574,17 @@ namespace ZSCY_Win10
                         NavMenuList.SelectedItem = 0;
                         this.AppFrame.Navigate(navlist[0].DestPage, navlist[0].Arguments);
                         break;
+
                     case "/jwzx":
                         NavMenuList.SelectedItem = 1;
                         this.AppFrame.Navigate(navlist[2].DestPage, navlist[2].Arguments);
                         break;
+
                     case "/more":
                         NavMenuList.SelectedItem = 2;
                         this.AppFrame.Navigate(navlist[5].DestPage, navlist[5].Arguments);
                         break;
+
                     default:
                         NavMenuList.SelectedItem = 0;
                         this.AppFrame.Navigate(navlist[0].DestPage, navlist[0].Arguments);
@@ -591,9 +597,9 @@ namespace ZSCY_Win10
                 this.AppFrame.Navigate(navlist[0].DestPage, navlist[0].Arguments);
             }
         }
+
         private void OnNavigatedToPage(object sender, NavigationEventArgs e)
         {
-
             // After a successful navigation set keyboard focus to the loaded page
             if (e.Content is Page && e.Content != null)
             {
@@ -608,7 +614,7 @@ namespace ZSCY_Win10
             ((Page)sender).Loaded -= Page_Loaded;
         }
 
-        #endregion
+        #endregion Navigation
 
         public Rect TogglePaneButtonRect
         {
@@ -704,8 +710,8 @@ namespace ZSCY_Win10
 
         private void ManipulationStackPanel_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
         {
-
         }
+
         //TODO:未登录时不能选择上传头像
         private async void headimgRectangle_Tapped(object sender, TappedRoutedEventArgs e)
         {

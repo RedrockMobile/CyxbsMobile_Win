@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZSCY_Win10.Models.RemindModels
 {
@@ -13,7 +9,8 @@ namespace ZSCY_Win10.Models.RemindModels
         private string _Title;
         private string _Content;
         private DateTime _RemindTime;
-        [DataMember(Name ="title")]
+
+        [DataMember(Name = "title")]
         public string Title
         {
             get
@@ -26,8 +23,8 @@ namespace ZSCY_Win10.Models.RemindModels
                 _Title = value;
             }
         }
-        [DataMember(Name = "content")]
 
+        [DataMember(Name = "content")]
         public string Content
         {
             get

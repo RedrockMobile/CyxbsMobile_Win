@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace ZSCY_Win10.Data.Community
 {
-    class Mark
+    internal class Mark
     {
         public string stunum { get; set; }
         public string nickname { get; set; }

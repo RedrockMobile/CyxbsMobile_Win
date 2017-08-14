@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -22,7 +18,7 @@ namespace ZSCY_Win10.Common
     /// <example>
     /// 若要利用 NavigationHelper，请执行下面两步或
     /// 以 BasicPage 或除 BlankPage 以外的任何页项开始。
-    /// 
+    ///
     /// 1) 在某处创建一个 NavigationHelper 实例(如
     ///     页面的构造函数中)，并注册 LoadState 和
     ///     SaveState 事件的回调。
@@ -34,22 +30,22 @@ namespace ZSCY_Win10.Common
     ///         this.navigationHelper.LoadState += navigationHelper_LoadState;
     ///         this.navigationHelper.SaveState += navigationHelper_SaveState;
     ///     }
-    ///     
+    ///
     ///     private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
     ///     { }
     ///     private async void navigationHelper_SaveState(object sender, LoadStateEventArgs e)
     ///     { }
     /// </code>
-    /// 
+    ///
     /// 2) 在以下情况下注册页面以调入 NavigationHelper: 该页面
-    ///      通过重写 <see cref="Windows.UI.Xaml.Controls.Page.OnNavigatedTo"/> 
+    ///      通过重写 <see cref="Windows.UI.Xaml.Controls.Page.OnNavigatedTo"/>
     ///     和 <see cref="Windows.UI.Xaml.Controls.Page.OnNavigatedFrom"/> 事件以参与导航。
     /// <code>
     ///     protected override void OnNavigatedTo(NavigationEventArgs e)
     ///     {
     ///         navigationHelper.OnNavigatedTo(e);
     ///     }
-    ///     
+    ///
     ///     protected override void OnNavigatedFrom(NavigationEventArgs e)
     ///     {
     ///         navigationHelper.OnNavigatedFrom(e);
@@ -65,14 +61,14 @@ namespace ZSCY_Win10.Common
         /// <summary>
         /// 初始化 <see cref="NavigationHelper"/> 类的新实例。
         /// </summary>
-        /// <param name="page">对当前页面的引用，用于导航。 
+        /// <param name="page">对当前页面的引用，用于导航。
         /// 此引用可操纵帧，并确保
         /// 仅在页面占用整个窗口时产生导航请求。</param>
         public NavigationHelper(Page page)
         {
             this.Page = page;
 
-            // 当此页是可视化树的一部分时，进行两个更改: 
+            // 当此页是可视化树的一部分时，进行两个更改:
             // 1) 将应用程序视图状态映射到页的可视状态
             // 2) 处理用于在 Windows 中向前和向后移动的
             this.Page.Loaded += (sender, e) =>
@@ -109,14 +105,14 @@ namespace ZSCY_Win10.Common
 
         #region 导航支持
 
-        RelayCommand _goBackCommand;
-        RelayCommand _goForwardCommand;
+        private RelayCommand _goBackCommand;
+        private RelayCommand _goForwardCommand;
 
         /// <summary>
         /// 如果 Frame 管理其导航历史记录，则 <see cref="RelayCommand"/> 用于绑定到后退按钮的 Command 属性
         /// 以导航到后退导航历史记录中的最新项
         ///。
-        /// 
+        ///
         /// <see cref="RelayCommand"/> 被设置为使用虚拟方法 <see cref="GoBack"/>
         /// 作为执行操作，并将 <see cref="CanGoBack"/> 用于 CanExecute。
         /// </summary>
@@ -137,10 +133,11 @@ namespace ZSCY_Win10.Common
                 _goBackCommand = value;
             }
         }
+
         /// <summary>
         /// 如果 Frame 管理其导航历史记录，则 <see cref="RelayCommand"/> 用于导航到
         /// 前进历史记录中的最新项。
-        /// 
+        ///
         /// <see cref="RelayCommand"/> 被设置为使用虚拟方法 <see cref="GoForward"/>
         /// 作为执行操作，并将 <see cref="CanGoForward"/> 用于 CanExecute。
         /// </summary>
@@ -170,6 +167,7 @@ namespace ZSCY_Win10.Common
         {
             return this.Frame != null && this.Frame.CanGoBack;
         }
+
         /// <summary>
         /// <see cref="GoForwardCommand"/> 属性使用的虚拟方法，用于
         /// 确定 <see cref="Frame"/> 能否前进。
@@ -191,6 +189,7 @@ namespace ZSCY_Win10.Common
         {
             if (this.Frame != null && this.Frame.CanGoBack) this.Frame.GoBack();
         }
+
         /// <summary>
         /// <see cref="GoForwardCommand"/> 属性使用的虚拟方法，用于
         /// 调用 <see cref="Windows.UI.Xaml.Controls.Frame.GoForward"/> 方法。
@@ -215,6 +214,7 @@ namespace ZSCY_Win10.Common
             }
         }
 #else
+
         /// <summary>
         /// 当此页处于活动状态并占用整个窗口时，在每次
         /// 击键(包括系统键，如 Alt 组合键)时调用。    用于检测页之间的键盘
@@ -286,9 +286,10 @@ namespace ZSCY_Win10.Common
                 if (forwardPressed) this.GoForwardCommand.Execute(null);
             }
         }
+
 #endif
 
-        #endregion
+        #endregion 导航支持
 
         #region 进程生命期管理
 
@@ -300,6 +301,7 @@ namespace ZSCY_Win10.Common
         /// 在从以前的会话重新创建页时提供的已保存状态。
         /// </summary>
         public event LoadStateEventHandler LoadState;
+
         /// <summary>
         /// 在当前页上注册此事件以保留
         /// 与当前页关联的状态，以防
@@ -368,13 +370,14 @@ namespace ZSCY_Win10.Common
             frameState[_pageKey] = pageState;
         }
 
-        #endregion
+        #endregion 进程生命期管理
     }
 
     /// <summary>
     /// 代表将处理 <see cref="NavigationHelper.LoadState"/> 事件的方法
     /// </summary>
     public delegate void LoadStateEventHandler(object sender, LoadStateEventArgs e);
+
     /// <summary>
     /// 代表将处理 <see cref="NavigationHelper.SaveState"/> 事件的方法
     /// </summary>
@@ -386,10 +389,11 @@ namespace ZSCY_Win10.Common
     public class LoadStateEventArgs : EventArgs
     {
         /// <summary>
-        /// 最初请求此页时传递给 <see cref="Frame.Navigate(Type, Object)"/> 
+        /// 最初请求此页时传递给 <see cref="Frame.Navigate(Type, Object)"/>
         /// 的参数值。
         /// </summary>
         public Object NavigationParameter { get; private set; }
+
         /// <summary>
         /// 此页在以前会话期间保留的状态
         /// 的字典。 首次访问某页时，此项将为 null。
@@ -400,7 +404,7 @@ namespace ZSCY_Win10.Common
         /// 初始化 <see cref="LoadStateEventArgs"/> 类的新实例。
         /// </summary>
         /// <param name="navigationParameter">
-        /// 最初请求此页时传递给 <see cref="Frame.Navigate(Type, Object)"/> 
+        /// 最初请求此页时传递给 <see cref="Frame.Navigate(Type, Object)"/>
         /// 的参数值。
         /// </param>
         /// <param name="pageState">
@@ -414,6 +418,7 @@ namespace ZSCY_Win10.Common
             this.PageState = pageState;
         }
     }
+
     /// <summary>
     /// 一个类，用于存放在某页尝试保存状态时所需的事件数据。
     /// </summary>

@@ -1,23 +1,19 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Security.Credentials;
 using Windows.UI.Notifications;
 using ZSCY_Win10.Models.RemindModels;
 using ZSCY_Win10.Resource;
 
 namespace ZSCY_Win10.Util.Remind
 {
-    class RemindSystemUtil
+    internal class RemindSystemUtil
     {
-
         private static async Task AddRemind(RemindSystemModel remind, TimeSpan beforeTime)
         {
             remind.Id = Guid.NewGuid();
@@ -26,9 +22,9 @@ namespace ZSCY_Win10.Util.Remind
                 addNotification(remind, beforeTime);
             });
         }
+
         private static void addNotification(RemindSystemModel remind, TimeSpan beforeTime)
         {
-
             ScheduledToastNotification scheduledNotifi = GenerateAlarmNotification(remind, beforeTime);
 
             ToastNotificationManager.CreateToastNotifier().AddToSchedule(scheduledNotifi);
@@ -64,98 +60,101 @@ namespace ZSCY_Win10.Util.Remind
             {
                 Tag = GetTag(remind)
             };
-
         }
+
         [DataContract]
         private class GetRemindData
         {
             [DataMember(Name = "data")]
             public List<DataModel> DataList;
+
             ///<summary>
-            /// 
+            ///
             /// </summary>
             [DataMember(Name = "status")]
             public int Status { get; set; }
 
             ///<summary>
-            /// 
+            ///
             /// </summary>
             [DataMember(Name = "info")]
             public string Info { get; set; }
 
             ///<summary>
-            /// 
+            ///
             /// </summary>
             [DataMember(Name = "term")]
             public int Term { get; set; }
 
             ///<summary>
-            /// 
+            ///
             /// </summary>
             [DataMember(Name = "stuNum")]
             public long StuNum { get; set; }
         }
+
         [DataContract]
         private class DataModel
         {
             ///<summary>
-            /// 
+            ///
             /// </summary>
             [DataMember(Name = "id")]
             public long Id { get; set; }
 
             ///<summary>
-            /// 
+            ///
             /// </summary>
             [DataMember(Name = "time")]
             public int? Time { get; set; }
 
             ///<summary>
-            /// 
+            ///
             /// </summary>
             [DataMember(Name = "title")]
             public string Title { get; set; }
 
             ///<summary>
-            /// 
+            ///
             /// </summary>
             [DataMember(Name = "content")]
             public string Content { get; set; }
 
             ///<summary>
-            /// 
+            ///
             /// </summary>
             [DataMember(Name = "updated_time")]
             public string Updated_Time { get; set; }
 
             ///<summary>
-            /// 
+            ///
             /// </summary>
             [DataMember(Name = "date")]
             public List<DateItemModel> DateItems { get; set; }
-          
         }
+
         [DataContract]
         private class DateItemModel
         {
             ///<summary>
-            /// 
+            ///
             /// </summary>
             [DataMember(Name = "class")]
             public int Class { get; set; }
 
             ///<summary>
-            /// 
+            ///
             /// </summary>
             [DataMember(Name = "day")]
             public int Day { get; set; }
 
             ///<summary>
-            /// 
+            ///
             /// </summary>
             [DataMember(Name = "week")]
             public List<int> WeekItems { get; set; }
         }
+
         private static void GetRemindJsonToModel(ref ObservableCollection<RemindBackupModel> remindList, string json)
         {
             //GetRemindData remindData = new GetRemindData();
@@ -173,7 +172,7 @@ namespace ZSCY_Win10.Util.Remind
                 foreach (var dateItem in item.DateItems)
                 {
                     string week = "";
-                    for(int i=0;i<dateItem.WeekItems.Count;i++)
+                    for (int i = 0; i < dateItem.WeekItems.Count; i++)
                     {
                         week += dateItem.WeekItems[i] + ",";
                     }
@@ -189,9 +188,8 @@ namespace ZSCY_Win10.Util.Remind
             }
         }
 
-
-
         private static string id;
+
         public static string GetTag(RemindSystemModel remind)
         {
             string temp = remind.Id.GetHashCode().ToString();
@@ -199,6 +197,7 @@ namespace ZSCY_Win10.Util.Remind
             // Tag needs to be 16 chars or less, so hash the Id
             return temp;
         }
+
         public static void DeleteRemind(string[] TagArray)
         {
             var notifier = ToastNotificationManager.CreateToastNotifier();
@@ -225,30 +224,33 @@ namespace ZSCY_Win10.Util.Remind
             }
             return id;
         }
-        public static async Task<string> AddEditRemind(List<RemindSystemModel> remind,TimeSpan beforeTime)
+
+        public static async Task<string> AddEditRemind(List<RemindSystemModel> remind, TimeSpan beforeTime)
         {
             id = "";
-            foreach(var item in remind)
+            foreach (var item in remind)
             {
                 await AddRemind(item, beforeTime);
             }
             return id;
         }
+
         public static async Task<ObservableCollection<RemindBackupModel>> SyncRemindList()
         {
             ObservableCollection<RemindBackupModel> remindList = new ObservableCollection<RemindBackupModel>();
             List<KeyValuePair<string, string>> paramList = RemindWebRequest.getRemind();
-            string json = await NetWork.getHttpWebRequest(Api.GetRemindApi,paramList, 0, true);
+            string json = await NetWork.getHttpWebRequest(Api.GetRemindApi, paramList, 0, true);
             GetRemindJsonToModel(ref remindList, json);
             return remindList;
-
         }
+
         public static async Task<string> SyncAllRemind(RemindSystemModel remind)
         {
             id = "";
-          
+
             return id;
         }
+
         //    public static async void SyncRemind()
         //    {
         //        List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
@@ -262,7 +264,6 @@ namespace ZSCY_Win10.Util.Remind
         //        }
         //        catch
         //        {
-
         //            Debug.WriteLine("网络问题请求失败");
         //        }
         //        //相当于MyRemind
@@ -270,7 +271,6 @@ namespace ZSCY_Win10.Util.Remind
 
         //        try
         //        {
-
         //            getRemid = await JsonConvert.DeserializeObjectAsync<GetRemindModel>(content);
         //        }
         //        catch (Exception e)
@@ -314,7 +314,6 @@ namespace ZSCY_Win10.Util.Remind
         //        var notifier = ToastNotificationManager.CreateToastNotifier();
         //        if (RemindTagList != null)
         //        {
-
         //            for (int i = 0; i < RemindTagList.Count(); i++)
         //            {
         //                var scheduledNotifs = notifier.GetScheduledToastNotifications()
@@ -335,8 +334,6 @@ namespace ZSCY_Win10.Util.Remind
         //        }
         //        DatabaseMethod.ReadDatabase(Windows.UI.Xaml.Visibility.Collapsed);
 
-
         //}
-
     }
 }

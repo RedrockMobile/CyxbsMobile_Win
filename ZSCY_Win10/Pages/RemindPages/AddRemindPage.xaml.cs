@@ -1,27 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Networking.Connectivity;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Controls;
 using ZSCY_Win10.Models.RemindModels;
-using ZSCY_Win10.Util.Remind;
-using static ZSCY_Win10.Util.Remind.RemindSystemUtil;
-
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -32,8 +20,9 @@ namespace ZSCY_Win10.Pages.RemindPages
     /// </summary>
     public sealed partial class AddRemindPage : Page
     {
-        string pageType = "";
-        RemindListModel editRemind;
+        private string pageType = "";
+        private RemindListModel editRemind;
+
         public AddRemindPage()
         {
             this.InitializeComponent();
@@ -51,7 +40,6 @@ namespace ZSCY_Win10.Pages.RemindPages
                     Frame2.Width = e.NewSize.Width;
                     SplitLine1.Visibility = Visibility.Collapsed;
                     state = "VisualState000";
-
                 }
                 if (e.NewSize.Width > 800)
                 {
@@ -59,15 +47,14 @@ namespace ZSCY_Win10.Pages.RemindPages
                     Frame2.Width = e.NewSize.Width - 400;
                     SplitLine1.Visibility = Visibility.Visible;
                     state = "VisualState800";
-
                 }
                 VisualStateManager.GoToState(this, state, true);
-
             };
             SelRemindListView.ItemsSource = App.addRemindViewModel.RemindModel.BeforeTime;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             SystemNavigationManager.GetForCurrentView().BackRequested += AddRemindPage_BackRequested;
         }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -77,13 +64,11 @@ namespace ZSCY_Win10.Pages.RemindPages
                 editRemind = e.Parameter as RemindListModel;
                 ReloadData();
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-
             }
             else
             {
                 ClearAllData();
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-
             }
         }
 
@@ -138,6 +123,7 @@ namespace ZSCY_Win10.Pages.RemindPages
             SelectedRemindTextBlock.Text = App.addRemindViewModel.RemindModel.BeforeTime[index].BeforeTimeString;
             return index;
         }
+
         private void AddRemindPage_BackRequested(object sender, BackRequestedEventArgs e)
         {
             if (!pageType.Equals("add"))
@@ -166,7 +152,6 @@ namespace ZSCY_Win10.Pages.RemindPages
             else
             {
                 SaveMethod(content, title);
-
             }
         }
 
@@ -174,7 +159,6 @@ namespace ZSCY_Win10.Pages.RemindPages
         {
             if (pageType.Equals("add"))
             {
-
                 App.addRemindViewModel.AddRemind(content, title);
                 ClearAllData();
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
@@ -202,9 +186,7 @@ namespace ZSCY_Win10.Pages.RemindPages
                 {
                     await new MessageDialog("请打开网络!!!").ShowAsync();
                 }
-
             }
-
         }
 
         private void TimeGridButton_Tapped(object sender, TappedRoutedEventArgs e)
@@ -226,6 +208,7 @@ namespace ZSCY_Win10.Pages.RemindPages
         {
             SelRemindGrid.Visibility = Visibility.Collapsed;
         }
+
         private void SelRemindListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (App.indexBefore == -1)
@@ -244,7 +227,6 @@ namespace ZSCY_Win10.Pages.RemindPages
                 SelectedRemindTextBlock.Text = App.addRemindViewModel.RemindModel.BeforeTime[App.indexBefore].BeforeTimeString;
             SelRemindGrid.Visibility = Visibility.Collapsed;
         }
-
 
         private void ClearAllData()
         {

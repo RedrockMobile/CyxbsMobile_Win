@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 
 namespace ZSCY_Win10.Util.Converter
 {
-    class itemScrollViewerHeighConverter : IValueConverter
+    internal class itemScrollViewerHeighConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -20,7 +16,7 @@ namespace ZSCY_Win10.Util.Converter
         }
     }
 
-    class EmptyitemScrollViewerHeighConverter : IValueConverter
+    internal class EmptyitemScrollViewerHeighConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -33,7 +29,7 @@ namespace ZSCY_Win10.Util.Converter
         }
     }
 
-    class EmptyitemWidthScrollViewerHeighConverter : IValueConverter
+    internal class EmptyitemWidthScrollViewerHeighConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {

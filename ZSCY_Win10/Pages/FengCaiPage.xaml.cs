@@ -1,35 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Graphics.Canvas.Effects;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Phone.UI.Input;
 using Windows.Storage;
+using Windows.System;
+using Windows.UI;
+using Windows.UI.Composition;
+using Windows.UI.Core;
+using Windows.UI.Text;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using Windows.UI.Core;
-using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.System;
-using Windows.UI.Text;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Shapes;
 using ZSCY_Win10;
-using Windows.Phone.UI.Input;
-using Windows.UI.ViewManagement;
-using Windows.UI.Composition;
-using Windows.UI.Xaml.Hosting;
-using Microsoft.Graphics.Canvas.Effects;
-using Windows.UI;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -45,9 +39,9 @@ namespace ZSCY.Pages
         private double[] pivotitem1_ver_offest;
         private ZSCY_Win10.ViewModels.FengCaiViewModel viewmodel;
         public static FengCaiPage fengcaipage;
-        PaneThemeTransition PaneAnim = new PaneThemeTransition { Edge = EdgeTransitionLocation.Right };
+        private PaneThemeTransition PaneAnim = new PaneThemeTransition { Edge = EdgeTransitionLocation.Right };
 
-        public FengCaiPage():base()
+        public FengCaiPage() : base()
         {
             this.InitializeComponent();
             pivot_index = 0;
@@ -71,14 +65,14 @@ namespace ZSCY.Pages
             Transitions = new TransitionCollection();
             Transitions.Add(PaneAnim);
             ManipulationMode = ManipulationModes.TranslateX;
-
         }
+
         private void PC_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e)
         {
             FirstPage.firstpage.Second_Page_Back();
             Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
-
         }
+
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -116,6 +110,7 @@ namespace ZSCY.Pages
             JObject json_object;
 
             #region 得到Header列表
+
             file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Json/fengcai_header_lists.json", UriKind.Absolute));
             json = await FileIO.ReadTextAsync(file);
             json_object = (JObject)JsonConvert.DeserializeObject(json);
@@ -128,9 +123,11 @@ namespace ZSCY.Pages
                 header_lists.Add(item);
             }
             viewmodel.Header = header_lists;
-            #endregion
+
+            #endregion 得到Header列表
 
             #region 得到组织列表
+
             file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Json/fengcai_zuzhi_lists.json", UriKind.Absolute));
             json = await FileIO.ReadTextAsync(file);
             json_object = (JObject)JsonConvert.DeserializeObject(json);
@@ -143,9 +140,11 @@ namespace ZSCY.Pages
                 zuzhi_lists.Add(item);
             }
             viewmodel.ZuZhi = zuzhi_lists;
-            #endregion
+
+            #endregion 得到组织列表
 
             #region 得到组织介绍
+
             file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Json/fengcai_zuzhi_intro.json", UriKind.Absolute));
             json = await FileIO.ReadTextAsync(file);
             json_object = (JObject)JsonConvert.DeserializeObject(json);
@@ -163,9 +162,11 @@ namespace ZSCY.Pages
                 intro_lists.Add(item);
             }
             viewmodel.Zuzhi_Intro = intro_lists;
-            #endregion
+
+            #endregion 得到组织介绍
 
             #region 得到原创重邮内容
+
             json = await ZSCY_Win10.Util.Request.YuanChuang_Request();
             if (json != null)
             {
@@ -188,28 +189,32 @@ namespace ZSCY.Pages
                 }
                 viewmodel.YuanChuang = yc_lists;
             }
-            #endregion
+
+            #endregion 得到原创重邮内容
 
             #region 得到最美重邮内容
+
             json = await ZSCY_Win10.Util.Request.ZuiMei_Request();
             if (json != null)
             {
                 json_object = (JObject)JsonConvert.DeserializeObject(json);
                 JArray data = (JArray)json_object["Data"];
-				ObservableCollection<Models.zuimei> zuimei_lists = new ObservableCollection<Models.zuimei>();
-				for (int i = 0; i < data.Count; i++)
+                ObservableCollection<Models.zuimei> zuimei_lists = new ObservableCollection<Models.zuimei>();
+                for (int i = 0; i < data.Count; i++)
                 {
-					Models.zuimei item = new Models.zuimei();
-					item.content = data[i]["content"].ToString();
-					item.title = data[i]["title"].ToString();
-					item.url = data[i]["url"].ToString();
-					zuimei_lists.Add(item);
-				}
+                    Models.zuimei item = new Models.zuimei();
+                    item.content = data[i]["content"].ToString();
+                    item.title = data[i]["title"].ToString();
+                    item.url = data[i]["url"].ToString();
+                    zuimei_lists.Add(item);
+                }
                 viewmodel.ZuiMei = zuimei_lists;
             }
-            #endregion
+
+            #endregion 得到最美重邮内容
 
             #region 得到优秀学子内容
+
             json = await ZSCY_Win10.Util.Request.XueZi_Request();
             if (json != null)
             {
@@ -227,9 +232,11 @@ namespace ZSCY.Pages
                 }
                 viewmodel.XueZi = xuezi_lists;
             }
-            #endregion
+
+            #endregion 得到优秀学子内容
 
             #region 得到优秀教师内容
+
             json = await ZSCY_Win10.Util.Request.Teather_Request();
             if (json != null)
             {
@@ -245,27 +252,29 @@ namespace ZSCY.Pages
                 }
                 viewmodel.Teacher = teacher_lists;
             }
-            #endregion
+
+            #endregion 得到优秀教师内容
         }
 
         #region 实现高斯模糊
+
         private void Forestglass(UIElement glasshost)
         {
             Visual hostVisual = ElementCompositionPreview.GetElementVisual(glasshost);
             Compositor compositor = hostVisual.Compositor;
             var glassEfect = new GaussianBlurEffect
             {
-                BlurAmount=15.0f,
-                BorderMode=EffectBorderMode.Hard,
-                Source=new ArithmeticCompositeEffect
+                BlurAmount = 15.0f,
+                BorderMode = EffectBorderMode.Hard,
+                Source = new ArithmeticCompositeEffect
                 {
-                    MultiplyAmount=0,
-                    Source1Amount=0.5f,
-                    Source2Amount=0.5f,
-                    Source1=new CompositionEffectSourceParameter("backdropBrush"),
-                    Source2=new ColorSourceEffect
+                    MultiplyAmount = 0,
+                    Source1Amount = 0.5f,
+                    Source2Amount = 0.5f,
+                    Source1 = new CompositionEffectSourceParameter("backdropBrush"),
+                    Source2 = new ColorSourceEffect
                     {
-                        Color=Color.FromArgb(255,245,245,245)
+                        Color = Color.FromArgb(255, 245, 245, 245)
                     }
                 }
             };
@@ -280,7 +289,9 @@ namespace ZSCY.Pages
             bindSizeAnimation.SetReferenceParameter("hostVisual", hostVisual);
             glassVisual.StartAnimation("Size", bindSizeAnimation);
         }
-        #endregion
+
+        #endregion 实现高斯模糊
+
         private void PivotItem1_Add_Content(int p)
         {
             zuzhi_content.Children.Clear();
@@ -361,11 +372,13 @@ namespace ZSCY.Pages
                 return;
             }
         }
-        Rectangle rect_old; // 上一次选中的 Rectangle
-        Rectangle rect_current; // 当前选中的 Rectangle
-        double posi_previous; // 手指点击屏幕时，记录当前的 pivot 中 ScrollViewer.HorizontalOffset
-        ScrollViewer pivot_sv;
-        bool IsMoving = false;//手指是否在滑动中
+
+        private Rectangle rect_old; // 上一次选中的 Rectangle
+        private Rectangle rect_current; // 当前选中的 Rectangle
+        private double posi_previous; // 手指点击屏幕时，记录当前的 pivot 中 ScrollViewer.HorizontalOffset
+        private ScrollViewer pivot_sv;
+        private bool IsMoving = false;//手指是否在滑动中
+
         private void zuzhi_listview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             pivotitem1_ver_offest[zuzhi_listview_index] = zuzhi_sc.VerticalOffset;
@@ -410,7 +423,6 @@ namespace ZSCY.Pages
             }
 
             IsMoving = false;
-
         }
 
         private async void yc_listview_ItemClick(object sender, ItemClickEventArgs e)
@@ -463,7 +475,8 @@ namespace ZSCY.Pages
             FirstPage.firstpage.Second_Page_Back();
         }
 
-        bool isExit = false;
+        private bool isExit = false;
+
         private void OnBackPressed(object sender, BackPressedEventArgs e)
         {
             FirstPage.firstpage.Second_Page_Back();
@@ -529,9 +542,9 @@ namespace ZSCY.Pages
             (rect_old.RenderTransform as CompositeTransform).ScaleX = 1;
             rect_current.Opacity = 1;
             SB_Slide.Stop();
-
         }
-        void Rect_Slide()
+
+        private void Rect_Slide()
         {
             if (rect_old != null && rect_current != null)
             {
@@ -547,12 +560,15 @@ namespace ZSCY.Pages
                 SB_Slide.Begin();
             }
         }
+
         public Rect GetBounds(FrameworkElement childElement, FrameworkElement parentElement)
         {
             GeneralTransform transform = childElement.TransformToVisual(parentElement);
             return transform.TransformBounds(new Rect(0, 0, childElement.ActualWidth, childElement.ActualHeight));
         }
-        bool firstRectInited = false;
+
+        private bool firstRectInited = false;
+
         private void rect_Loaded(object sender, RoutedEventArgs e)
         {
             var r = sender as Rectangle;

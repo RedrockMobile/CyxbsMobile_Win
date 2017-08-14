@@ -1,41 +1,24 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using ZSCY.Models;
-using ZSCY_Win10.Resource;
-using ZSCY_Win10.ViewModels;
-using SQLite.Net;
-using SQLite.Net.Platform.WinRT;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Runtime.Serialization.Json;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Storage;
+using Windows.Phone.UI.Input;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using ZSCY_Win10;
-using Windows.Phone.UI.Input;
-using Windows.UI.ViewManagement;
-using ZSCY_Win10.Models;
-using Windows.UI.Xaml.Media.Imaging;
-using ZSCY_Win10.Util;
 using ZSCY_Win10.Data;
+using ZSCY_Win10.Models;
+using ZSCY_Win10.Util;
+using ZSCY_Win10.ViewModels;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -48,13 +31,14 @@ namespace ZSCY.Pages
     public sealed partial class StrategyPage : Page
     {
         private int pivot_index;
-        StrategyViewModel viewmodel = new StrategyViewModel();
-        SQLiteHelper1 sqliteHelper1 = new SQLiteHelper1();
-        SQLiteHelper2 sqliteHelper2 = new SQLiteHelper2();
-        ObservableCollection<XSQqqData> xsqqqlist = new ObservableCollection<XSQqqData>();
-        ObservableCollection<LXQqqData> lxqqqlist = new ObservableCollection<LXQqqData>();
-        ObservableCollection<XSQqqData> xsqqqlist_result = new ObservableCollection<XSQqqData>();
-        ObservableCollection<LXQqqData> lxqqqlist_result = new ObservableCollection<LXQqqData>();
+        private StrategyViewModel viewmodel = new StrategyViewModel();
+        private SQLiteHelper1 sqliteHelper1 = new SQLiteHelper1();
+        private SQLiteHelper2 sqliteHelper2 = new SQLiteHelper2();
+        private ObservableCollection<XSQqqData> xsqqqlist = new ObservableCollection<XSQqqData>();
+        private ObservableCollection<LXQqqData> lxqqqlist = new ObservableCollection<LXQqqData>();
+        private ObservableCollection<XSQqqData> xsqqqlist_result = new ObservableCollection<XSQqqData>();
+        private ObservableCollection<LXQqqData> lxqqqlist_result = new ObservableCollection<LXQqqData>();
+
         public StrategyPage()
         {
             this.InitializeComponent();
@@ -82,12 +66,10 @@ namespace ZSCY.Pages
         {
             FirstPage.firstpage.Second_Page_Back();
             Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
-
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-
             base.OnNavigatedTo(e);
             if (e.NavigationMode == NavigationMode.New)
             {
@@ -98,12 +80,14 @@ namespace ZSCY.Pages
                 SchoolBudings_Get();
             }
         }
+
         private void back_but_Click(object sender, RoutedEventArgs e)
         {
             FirstPage.firstpage.Second_Page_Back();
         }
 
-        bool isExit = false;
+        private bool isExit = false;
+
         private void OnBackPressed(object sender, BackPressedEventArgs e)
         {
             FirstPage.firstpage.Second_Page_Back();
@@ -148,6 +132,7 @@ namespace ZSCY.Pages
                 }//Frame在其他页面并且事件未处理
             }
         }
+
         public async Task<string> HttpClient(string type)
         {
             string result = null;
@@ -170,6 +155,7 @@ namespace ZSCY.Pages
             }
             return result;
         }
+
         private async void SchoolBudings_Get()
         {
             try
@@ -187,6 +173,7 @@ namespace ZSCY.Pages
                 return;
             }
         }
+
         private async void Dormitory_Get()
         {
             try
@@ -204,6 +191,7 @@ namespace ZSCY.Pages
                 return;
             }
         }
+
         private async void Canteen_Get()
         {
             try
@@ -221,6 +209,7 @@ namespace ZSCY.Pages
                 return;
             }
         }
+
         private async void DailyLife_Get()
         {
             try
@@ -238,6 +227,7 @@ namespace ZSCY.Pages
                 return;
             }
         }
+
         private async void Eat_Get()
         {
             try
@@ -255,6 +245,7 @@ namespace ZSCY.Pages
                 return;
             }
         }
+
         private async void BeautyInNear_Get()
         {
             try
@@ -301,13 +292,13 @@ namespace ZSCY.Pages
                 Canteen_Get();
                 App.isLoading[2] = true;
             }
-            if (SPivot.SelectedIndex ==4 && !App.isLoading[4])
+            if (SPivot.SelectedIndex == 4 && !App.isLoading[4])
             {
                 sqliteHelper1.CreateDB();
                 sqliteHelper2.CreateDB();
                 List<XSQqqData> temp = sqliteHelper1.CheckData("重庆邮电大学总群：");
                 List<LXQqqData> temp1 = sqliteHelper2.CheckData("海南：");//随便搜索一下，看一下有没有表在
-                if (temp.Count==0)
+                if (temp.Count == 0)
                 {
                     List<XSQqqData> a = new List<XSQqqData>();
                     a.Add(new XSQqqData() { college = "重庆邮电大学总群：", qq = "636208141" });
@@ -332,9 +323,8 @@ namespace ZSCY.Pages
                         sqliteHelper1.AddData(item);
                     }
                 }
-                if (temp.Count==0)
+                if (temp.Count == 0)
                 {
-
                     List<LXQqqData> b = new List<LXQqqData>();
                     b.Add(new LXQqqData() { area = "海南：", qq = "9334029" });
                     b.Add(new LXQqqData() { area = "贵州：", qq = "601631814" });
@@ -441,6 +431,7 @@ namespace ZSCY.Pages
             back_background_sb.Begin();
             image_popup.IsOpen = true;
         }
+
         private void image_popup_Closed(object sender, object e)
         {
             bigImageBrush.ImageSource = null;
@@ -452,17 +443,22 @@ namespace ZSCY.Pages
         {
             image_popup.IsOpen = false;
         }
+
         private void bigImageGroup_Tapped(object sender, TappedRoutedEventArgs e)
         {
             imagegroup_popup.IsOpen = false;
         }
-        Point Point_new = new Point();
-        Point Point_old = new Point();
+
+        private Point Point_new = new Point();
+        private Point Point_old = new Point();
+
         private void bigImage_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             isPoint = false;
         }
-        bool isPoint = false;
+
+        private bool isPoint = false;
+
         private void bigImage_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
             if (isPoint)
@@ -472,11 +468,13 @@ namespace ZSCY.Pages
                 Point_old = Point_new;
             }
         }
+
         private void bigImage_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             Point_old = e.GetCurrentPoint(bigimage_sc).Position;
             isPoint = true;
         }
+
         private void bigimagegroup_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
             if (isPoint)
@@ -497,18 +495,19 @@ namespace ZSCY.Pages
         {
             isPoint = false;
         }
+
         private void ImageGroup_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Image temp = sender as Image;
-            string a= (temp.Source as BitmapImage).UriSource.ToString();
-            int index=-10;
-            for(int i=0;i<viewmodel.Dormitory.Count;i++)
+            string a = (temp.Source as BitmapImage).UriSource.ToString();
+            int index = -10;
+            for (int i = 0; i < viewmodel.Dormitory.Count; i++)
             {
-                for(int j=0;j<viewmodel.Dormitory[i].url.Count;j++)
+                for (int j = 0; j < viewmodel.Dormitory[i].url.Count; j++)
                 {
-                    if(a.Equals(viewmodel.Dormitory[i].url[j]))
+                    if (a.Equals(viewmodel.Dormitory[i].url[j]))
                     {
-                        index =i;
+                        index = i;
                     }
                 }
             }
@@ -517,6 +516,7 @@ namespace ZSCY.Pages
             back_background_sb.Begin();
             imagegroup_popup.IsOpen = true;
         }
+
         private void ImageGroup1_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Image temp = sender as Image;
@@ -551,7 +551,7 @@ namespace ZSCY.Pages
 
         private void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            if(SearchBox.Text=="")
+            if (SearchBox.Text == "")
             {
                 qqstackpanel.Visibility = Visibility.Visible;
                 searchresult.Visibility = Visibility.Collapsed;
@@ -562,7 +562,7 @@ namespace ZSCY.Pages
             qqstackpanel.Visibility = Visibility.Collapsed;
             searchresult.Visibility = Visibility.Visible;
             List<XSQqqData> temp = sqliteHelper1.CheckData(SearchBox.Text);
-            foreach(XSQqqData item in temp)
+            foreach (XSQqqData item in temp)
             {
                 xsqqqlist_result.Add(item);
             }

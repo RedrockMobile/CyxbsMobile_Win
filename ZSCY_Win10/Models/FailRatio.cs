@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZSCY.Models
+﻿namespace ZSCY.Models
 {
     //最难科目
     public class CourseRootobject
@@ -32,5 +26,4 @@ namespace ZSCY.Models
         public string course { get; set; }
         public string ratio { get; set; }
     }
-
 }

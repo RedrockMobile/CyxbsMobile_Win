@@ -1,12 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -14,10 +11,10 @@ using Windows.Storage.Streams;
 
 namespace ZSCY_Win10.Util
 {
-    class NetWork
+    internal class NetWork
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="api"></param>
         /// <param name="paramList"></param>
@@ -57,7 +54,6 @@ namespace ZSCY_Win10.Util
                             content = response.Content.ReadAsStringAsync().Result;
                         //else if (response.StatusCode == HttpStatusCode.NotFound)
                         //    Utils.Message("Oh...服务器又跪了，给我们点时间修好它");
-
                     }
                     catch (Exception e)
                     {
@@ -71,7 +67,6 @@ namespace ZSCY_Win10.Util
                 //    return "";
                 //else
                 return content;
-
             });
         }
 
@@ -144,18 +139,15 @@ namespace ZSCY_Win10.Util
                                 await streamSave.WriteAsync(bytes, 0, bytes.Length);
                             }
                             return true;
-
                         }
                         else
                         {
                             return false;
-
                         }
                     }
                     else
                     {
                         return false;
-
                     }
                 }
                 catch (Exception)
@@ -164,6 +156,7 @@ namespace ZSCY_Win10.Util
                 }
             });
         }
+
         public static async Task<string> RatioRequest(string key, string value)
         {
             HttpClient httpclient = new HttpClient();
@@ -173,12 +166,9 @@ namespace ZSCY_Win10.Util
             {
                 {key,value}
             });
-            var response = await httpclient.PostAsync(uri,content);
+            var response = await httpclient.PostAsync(uri, content);
             json = await response.Content.ReadAsStringAsync();
             return json;
         }
-
-
-
     }
 }

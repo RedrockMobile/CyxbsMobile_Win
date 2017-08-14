@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using ZSCY.Models;
@@ -18,6 +13,7 @@ namespace ZSCY_Win10.Models.StartPageModels
         private HorizontalAlignment _HorMode;
         private VerticalAlignment _VerMode;
         private Stretch _StretchMode;
+
         public HorizontalAlignment HorMode
         {
             get { return _HorMode; }
@@ -27,6 +23,7 @@ namespace ZSCY_Win10.Models.StartPageModels
                 RaisePropertyChanged(nameof(HorMode));
             }
         }
+
         public VerticalAlignment VerMode
         {
             get { return _VerMode; }
@@ -36,6 +33,7 @@ namespace ZSCY_Win10.Models.StartPageModels
                 RaisePropertyChanged(nameof(VerMode));
             }
         }
+
         public Stretch StretchMode
         {
             get { return _StretchMode; }
@@ -45,6 +43,7 @@ namespace ZSCY_Win10.Models.StartPageModels
                 RaisePropertyChanged(nameof(StretchMode));
             }
         }
+
         public string PictrueSource
         {
             get
@@ -57,6 +56,7 @@ namespace ZSCY_Win10.Models.StartPageModels
                 RaisePropertyChanged(nameof(PictrueSource));
             }
         }
+
         public bool HasPictrue
         {
             get
@@ -69,7 +69,5 @@ namespace ZSCY_Win10.Models.StartPageModels
                 RaisePropertyChanged(nameof(HasPictrue));
             }
         }
-
-
     }
 }

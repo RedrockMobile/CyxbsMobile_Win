@@ -10,18 +10,18 @@
     d:DesignWidth="400">
 
     <Grid>
-        <Border Background="#55000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <Border Background="#55000000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
         <Grid CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="200">
             <Grid.Background>
                 <ImageBrush ImageSource="ms-appx:///Assets/ElectricityPageLogo/PopWindow.png" />
             </Grid.Background>
             <Grid.RowDefinitions>
-                <RowDefinition Height="7*"/>
-                <RowDefinition Height="4*"/>
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="4*" />
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="1">
-                <TextBlock x:Name="tbContent" Text="{x:Bind MessageText}" FontSize="14" Foreground="#777777" HorizontalAlignment="Center" Height="30"/>
+                <TextBlock x:Name="tbContent" Text="{x:Bind MessageText}" FontSize="14" Foreground="#777777" HorizontalAlignment="Center" Height="30" />
                 <Button HorizontalAlignment="Center" Click="Button_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
@@ -30,19 +30,19 @@
                                     <VisualStateGroup>
                                         <VisualState x:Name="Normal">
                                             <Storyboard>
-                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
                                             </Storyboard>
                                         </VisualState>
                                         <VisualState x:Name="PointerOver">
                                             <Storyboard>
-                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
                                             </Storyboard>
                                         </VisualState>
                                         <VisualState x:Name="Pressed">
                                             <Storyboard>
-                                                <PointAnimation Storyboard.TargetName="ButtonLinearGradientBrush" Duration="0" Storyboard.TargetProperty="StartPoint" From="0,0" To="0,1" AutoReverse="True"/>
-                                                <PointAnimation Storyboard.TargetName="ButtonLinearGradientBrush" Duration="0" Storyboard.TargetProperty="EndPoint" From="0,1" To="0,0" AutoReverse="True"/>
-                                                <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                                <PointAnimation Storyboard.TargetName="ButtonLinearGradientBrush" Duration="0" Storyboard.TargetProperty="StartPoint" From="0,0" To="0,1" AutoReverse="True" />
+                                                <PointAnimation Storyboard.TargetName="ButtonLinearGradientBrush" Duration="0" Storyboard.TargetProperty="EndPoint" From="0,1" To="0,0" AutoReverse="True" />
+                                                <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
                                             </Storyboard>
                                         </VisualState>
                                     </VisualStateGroup>
@@ -50,13 +50,13 @@
                                 <Rectangle x:Name="Rectangle" Width="160" Height="32" RadiusX="3" RadiusY="3">
                                     <Rectangle.Fill>
                                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" x:Name="ButtonLinearGradientBrush">
-                                            <GradientStop Color="#13D7FF" Offset="0"/>
-                                            <GradientStop Color="#12D0FF" Offset="0.65"/>
-                                            <GradientStop Color="#0AB4FF" Offset="1"/>
+                                            <GradientStop Color="#13D7FF" Offset="0" />
+                                            <GradientStop Color="#12D0FF" Offset="0.65" />
+                                            <GradientStop Color="#0AB4FF" Offset="1" />
                                         </LinearGradientBrush>
                                     </Rectangle.Fill>
                                 </Rectangle>
-                                <TextBlock Text="确  定" Foreground="White" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Text="确  定" Foreground="White" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Grid>
                         </ControlTemplate>
                     </Button.Template>

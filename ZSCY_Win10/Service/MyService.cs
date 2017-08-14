@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using ZSCY_Win10.Data.Community;
@@ -63,6 +61,7 @@ namespace ZSCY_Win10.Service
 
             return null;
         }
+
         public static async Task<List<MyFeed>> GetMyFeeds(int page = 0, int size = 15)
         {
             return await Task.Run(async () =>
@@ -77,7 +76,7 @@ namespace ZSCY_Win10.Service
                 paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
                 paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
                 paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
-                
+
                 string response = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Article/searchtrends", paramList);
                 Debug.WriteLine(response);
                 //response = Utils.ConvertUnicodeStringToChinese(response);
@@ -93,7 +92,7 @@ namespace ZSCY_Win10.Service
                             for (int i = 0; i < bbddarray.Count; i++)
                             {
                                 MyFeed f = new MyFeed();
-                                f.GetAttributes((JObject)bbddarray[i],false);
+                                f.GetAttributes((JObject)bbddarray[i], false);
                                 feeds.Add(f);
                             }
                         }
@@ -106,8 +105,8 @@ namespace ZSCY_Win10.Service
             return null;
         }
 
+        private const string api = "cyxbsMobile/index.php/Home/Person/search";
 
-        const string api = "cyxbsMobile/index.php/Home/Person/search";
         public static async Task<PeoInfo> GetPerson()
         {
             var vault = new Windows.Security.Credentials.PasswordVault();

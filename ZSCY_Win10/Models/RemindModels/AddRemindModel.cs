@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
 namespace ZSCY_Win10.Models.RemindModels
@@ -13,6 +10,7 @@ namespace ZSCY_Win10.Models.RemindModels
         public AddRemindModel()
         {
         }
+
         private string _Title;
         private string _Content;
         private string _DayAndClass;
@@ -88,7 +86,7 @@ namespace ZSCY_Win10.Models.RemindModels
             }
         }
 
-        public class _BeforeTimeClass:INotifyPropertyChanged
+        public class _BeforeTimeClass : INotifyPropertyChanged
         {
             private string _BeforeTimeString;
             private TimeSpan _BeforeTime;
@@ -136,6 +134,5 @@ namespace ZSCY_Win10.Models.RemindModels
                 }
             }
         }
-
     }
 }

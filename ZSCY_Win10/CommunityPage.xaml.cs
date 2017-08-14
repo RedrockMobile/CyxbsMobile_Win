@@ -3,30 +3,20 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using ZSCY_Win10.Common;
 using ZSCY_Win10.Controls;
 using ZSCY_Win10.Data.Community;
-using ZSCY_Win10.Models;
 using ZSCY_Win10.Models.TopicModels;
-using ZSCY_Win10.Pages;
 using ZSCY_Win10.Pages.CommunityPages;
 using ZSCY_Win10.Pages.TopicPages;
 using ZSCY_Win10.Service;
@@ -43,16 +33,16 @@ namespace ZSCY_Win10
     public sealed partial class CommunityPage : Page
     {
         private int page = 0;
-        ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         private static string resourceName = "ZSCY";
-        int[] pagestatus = new int[] { 0, 0, 0, 0 };
-        CommunityViewModel ViewModel { get; set; }
-        double hotOldScrollableHeight = 0;
-        double BBDDOldScrollableHeight = 0;
-        List<Img> clickImgList = new List<Img>();
-        int clickImfIndex = 0;
-        bool isPersonInfo = false;
-        ObservableCollection<Topic> topicList = new ObservableCollection<Topic>();
+        private int[] pagestatus = new int[] { 0, 0, 0, 0 };
+        private CommunityViewModel ViewModel { get; set; }
+        private double hotOldScrollableHeight = 0;
+        private double BBDDOldScrollableHeight = 0;
+        private List<Img> clickImgList = new List<Img>();
+        private int clickImfIndex = 0;
+        private bool isPersonInfo = false;
+        private ObservableCollection<Topic> topicList = new ObservableCollection<Topic>();
 
         public CommunityPage()
         {
@@ -76,7 +66,6 @@ namespace ZSCY_Win10
                     //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     //    HubSectionKBTitle.Text = CommunityContentTitleTextBlock.Text;
                     //}
-
                 }
                 if (!App.showpane)
                 {
@@ -104,6 +93,7 @@ namespace ZSCY_Win10
             //CommunityFrame.Navigate(typeof(CommunityContentPage));
             //RMDTListView.ContainerContentChanging += RMDTListView_ContainerContentChanging;
         }
+
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.NavigationCacheMode = NavigationCacheMode.Required;
@@ -155,7 +145,6 @@ namespace ZSCY_Win10
             }
         }
 
-
         /// <summary>
         /// 下拉刷新
         /// </summary>
@@ -174,12 +163,14 @@ namespace ZSCY_Win10
                     //RMDTList.Clear();
                     //continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
                     break;
+
                 case 1:
                     type = "BBDD";
                     ViewModel.getbbdd(1, 15, 5, true);
                     //BBDDList.Clear();
                     //continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
                     break;
+
                 case 2:
                     type = "GFZX ";
                     //GFZXList.Clear();
@@ -207,12 +198,14 @@ namespace ZSCY_Win10
                     //RMDTList.Clear();
                     //continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
                     break;
+
                 case 1:
                     type = "BBDD";
                     ViewModel.getbbdd(1, 15, 5, true);
                     //BBDDList.Clear();
                     //continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
                     break;
+
                 case 2:
                     type = "GFZX ";
                     //GFZXList.Clear();
@@ -237,10 +230,12 @@ namespace ZSCY_Win10
                     type = "RMDT";
                     //continueCommunityRMDTGrid.Visibility = Visibility.Collapsed;
                     break;
+
                 case 1:
                     type = "BBDD";
                     //continueCommunityBBDDGrid.Visibility = Visibility.Collapsed;
                     break;
+
                 case 2:
                     type = "GFZX ";
                     //continueCommunityGFZXGrid.Visibility = Visibility.Collapsed;
@@ -262,9 +257,11 @@ namespace ZSCY_Win10
                 case 0:
                     type = "RMDT";
                     break;
+
                 case 1:
                     type = "BBDD";
                     break;
+
                 case 2:
                     type = "GFZX ";
                     break;
@@ -289,9 +286,11 @@ namespace ZSCY_Win10
                 case 0:
                     type = "RMDT";
                     break;
+
                 case 1:
                     type = "BBDD";
                     break;
+
                 case 2:
                     type = "GFZX ";
                     break;
@@ -526,8 +525,6 @@ namespace ZSCY_Win10
             //nextImgButton.Visibility = Visibility.Collapsed;
         }
 
-
-
         private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
             //if (appSetting.Values.ContainsKey("idNum"))
@@ -620,8 +617,8 @@ namespace ZSCY_Win10
                             Topic item = new Topic();
                             item.GetAttribute((JObject)TopicArray[i]);
                             if (item.imgdata.Equals(""))
-                            { item.imgdata = "/Assets/base.jpg"; item.color = "DarkGray"; }                     
-                            item.keyword =$"#{item.keyword}#";
+                            { item.imgdata = "/Assets/base.jpg"; item.color = "DarkGray"; }
+                            item.keyword = $"#{item.keyword}#";
                             topicList.Add(item);
                         }
                     }

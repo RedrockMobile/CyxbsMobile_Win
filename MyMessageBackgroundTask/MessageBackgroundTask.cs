@@ -4,9 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Windows.Storage;
 using Windows.Storage.Streams;
@@ -19,6 +16,7 @@ namespace MyMessageBackgroundTask
         private static string idNum = "";
         private static string resourceName = "ZSCY";
         private ApplicationDataContainer appSetting = ApplicationData.Current.LocalSettings; //本地存储
+
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             if (bool.Parse(appSetting.Values["isUseingBackgroundTask"].ToString()))

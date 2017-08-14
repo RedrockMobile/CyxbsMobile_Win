@@ -14,18 +14,18 @@
                 <TextBlock
                     Text="Scheduled Toasts"
                     Style="{ThemeResource TitleTextBlockStyle}"
-                    Margin="20"/>
+                    Margin="20" />
             </ListView.Header>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <RichTextBlock>
                         <Paragraph>
-                            <Run Text="Tag: "/>
-                            <Run Text="{Binding Tag}"/>
+                            <Run Text="Tag: " />
+                            <Run Text="{Binding Tag}" />
                         </Paragraph>
                         <Paragraph>
-                            <Run Text="DeliveryTime: "/>
-                            <Run Text="{Binding DeliveryTime}"/>
+                            <Run Text="DeliveryTime: " />
+                            <Run Text="{Binding DeliveryTime}" />
                         </Paragraph>
                     </RichTextBlock>
                 </DataTemplate>
