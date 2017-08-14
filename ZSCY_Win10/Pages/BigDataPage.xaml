@@ -1,17 +1,16 @@
 ﻿<Page
-    x:Class="ZSCY.Pages.BigDataPage"
+    x:Class="ZSCY_Win10.Pages.BigDataPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ZSCY.Pages"
-    xmlns:controls="using:ZSCY_Win10.Controls"
-    xmlns:converter="using:ZSCY_Win10.Util.Converter"
-    xmlns:viewmodel="using:ZSCY_Win10.ViewModels"
+    xmlns:local="using:ZSCY_Win10.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:cpb ="using:ZSCY_Win10.Resouces"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
     <Page.Resources>
-        <Style x:Key="BigDataPivotStyle" TargetType="Pivot">
+
+        <Style x:Key="CQUPT_BigDataPivotStyle" TargetType="Pivot">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="ItemsPanel">
@@ -216,7 +215,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="BigDataPivotItemStyle" TargetType="PivotItem">
+        <Style x:Key="CQUPT_BigDataPivotItemStyle" TargetType="PivotItem">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Margin" Value="0,0,0,0"/>
             <Setter Property="Padding" Value="0"/>
@@ -240,7 +239,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="BigDataComboBox" TargetType="ComboBox">
+        <Style x:Key="CQUPT_BigDataComboBox" TargetType="ComboBox">
             <Setter Property="Padding" Value="12,5,0,7"/>
             <Setter Property="MinWidth" Value="{ThemeResource ComboBoxThemeMinWidth}"/>
             <Setter Property="Foreground" Value="#007ACC"/>
@@ -406,18 +405,19 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <converter:DetailMarginConverter x:Key="DetailMarginConverter"></converter:DetailMarginConverter>
+        <!--converter:DetailMarginConverter x:Key="DetailMarginConverter"></-->
         <Storyboard x:Name="black_background_sb">
             <DoubleAnimation From="0" To="0.5" Storyboard.TargetName="black_background" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4"></DoubleAnimation>
         </Storyboard>
+        <!--圆形数据条动画-->
+        <Storyboard x:Name="circularProgressBarAnimation">
+
+        </Storyboard>
+
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="#007ACC"/>
         </Style>
     </Page.Resources>
-
-    <Page.DataContext>
-        <viewmodel:BigDataViewModel/>
-    </Page.DataContext>
 
     <Grid x:Name="RootGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -435,263 +435,255 @@
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00E;" />
                 </Button>-->
             </Grid>
-            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="大数据" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Foreground_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="重邮数据" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Foreground_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Grid>
-
         <!--数据页面-->
         <Grid Grid.Row="1">
-            <Pivot x:Name="pivot" Style="{StaticResource BigDataPivotStyle}" SelectionChanged="pivot_SelectionChanged">
-                <!--男女比例-->
-                <PivotItem>
+            <Pivot Name="Pivot" Style="{StaticResource CQUPT_BigDataPivotStyle}" Grid.Row="1" SelectionChanged="Pivot_SelectionChanged">
+                <!--菜单1 男女比例-->
+                <PivotItem Style="{StaticResource CQUPT_BigDataPivotItemStyle}">
                     <PivotItem.Header>
                         <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
                             <Grid.RenderTransform>
                                 <TranslateTransform X="0" Y="2"></TranslateTransform>
                             </Grid.RenderTransform>
-                            <TextBlock Text="男女比例" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                            <Line Visibility="Collapsed" X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom"></Line>
+                            <TextBlock  Text="{Binding Header[0].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <Line X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom"></Line>
                         </Grid>
                     </PivotItem.Header>
+                    <!--内容-->
                     <Grid Margin="0 15 0 0">
-                        <Grid.Resources>
-                            <Storyboard x:Name="a_sb">
-                                <DoubleAnimation x:Name="a_sb_d" Storyboard.TargetName="a" Storyboard.TargetProperty="Ratio"
-                                 Duration="0:0:2" From="0" EnableDependentAnimation="True">
-                                    <DoubleAnimation.EasingFunction>
-                                        <CircleEase EasingMode="EaseInOut"></CircleEase>
-                                    </DoubleAnimation.EasingFunction>
-                                </DoubleAnimation>
-                            </Storyboard>
-                            <Storyboard x:Name="b_sb">
-                                <DoubleAnimation x:Name="b_sb_d" Storyboard.TargetName="b" Storyboard.TargetProperty="Ratio"
-                                 Duration="0:0:2" From="0" EnableDependentAnimation="True">
-                                    <DoubleAnimation.EasingFunction>
-                                        <CircleEase EasingMode="EaseInOut"></CircleEase>
-                                    </DoubleAnimation.EasingFunction>
-                                </DoubleAnimation>
-                            </Storyboard>
-                        </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="4.5*"/>
-                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Margin="10 0 0 0">
-                            <ComboBox PlaceholderText="请选择学院" x:Name="comboBox0" Grid.Row="0"
-                                  DropDownClosed="comboBox0_DropDownClosed"
-                                  Style="{StaticResource BigDataComboBox}" HorizontalAlignment="Stretch" Height="44" >
+
+
+                        <StackPanel Grid.Row="0"  Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <ComboBox x:Name="sexRatio_ComboBox" Header="请选择学院" Width="300"  DropDownClosed="sexRatio_ComboBox_DropDownClosed" IsEnabled="True">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding}"/>
+                                            <TextBlock Text="{Binding college}" Visibility="Visible"/>
+                                            <TextBlock x:Name="MenRatioTxt" Text="{Binding MenRatio}" Visibility="Collapsed"></TextBlock>
+                                            <TextBlock x:Name="WomenRatioTxt" Text="{Binding WomenRatio}" Visibility="Collapsed"></TextBlock>
+                                        </StackPanel>
+
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+                        </StackPanel>
+                        <Grid Grid.Row="1">
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0">
+
+                                <!--<Ellipse Width="255" Height="255" Stroke="CornflowerBlue" StrokeThickness="1"></Ellipse>-->
+                                <!--<Ellipse Width="250" Height="250" Stroke="CornflowerBlue" StrokeThickness="30"></Ellipse>-->
+
+                                <!--男-->
+                                <cpb:CircularProgressBar x:Name="MenRatioCPB" CircularWidth="250.00" RingBackgroundColor="#FDFEFF" RingForegroundColor="#B9E5FE" RingWidth="30.00" ProgressNum="0.01" />
+                                <Ellipse Width="252" Height="252" Stroke="#E1F8FF" StrokeThickness="2"></Ellipse>
+                                <Ellipse Width="191" Height="191" Stroke="#E1F8FF" StrokeThickness="2"></Ellipse>
+                                <!--女-->
+                                <cpb:CircularProgressBar x:Name="WomenRatioCPB" CircularWidth="170.00" RingBackgroundColor="#FFFDFF" RingForegroundColor="#FFD2E3" RingWidth="30.00" ProgressNum="0.01" />
+                                <Ellipse Width="172" Height="172" Stroke="#FFF3F5" StrokeThickness="2"></Ellipse>
+                                <Ellipse Width="110" Height="110" Stroke="#FFF3F5" StrokeThickness="2"></Ellipse>
+                                    <Grid>
+                                    <StackPanel Orientation="Vertical" Margin="-30,400,0,0">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Ellipse Width="30" Height="30" Fill="#B9E5FE"></Ellipse>
+                                                <Ellipse Width="30" Height="30" Stroke="#99D2F3" StrokeThickness="2"></Ellipse>
+                                            </Grid>
+                                            <TextBlock Text="男生" Foreground="Gray" FontSize="23" Margin="10,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                        <TextBlock></TextBlock>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Ellipse Width="30" Height="30" Fill="#FFD2E3"></Ellipse>
+                                                <Ellipse Width="30" Height="30" Stroke="#F0BAD0" StrokeThickness="2"></Ellipse>
+                                            </Grid>
+                                            <TextBlock Text="女生" Foreground="Gray" FontSize="23" Margin="10,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+
+                            </Grid>
+
+                        </Grid>
+
+                    </Grid>
+
+                </PivotItem>
+                <!--菜单2 最难科目-->
+                <PivotItem Style="{StaticResource CQUPT_BigDataPivotItemStyle}">
+                    <PivotItem.Header>
+                        <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
+                            <Grid.RenderTransform>
+                                <TranslateTransform X="0" Y="2"></TranslateTransform>
+                            </Grid.RenderTransform>
+                            <TextBlock x:Name ="CourseTextBlock"  Text="{Binding Header[1].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <Line x:Name="Line2"  X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom"></Line>
+                        </Grid>
+                    </PivotItem.Header>
+                    <!--内容-->
+                    <Grid Margin="0 15 0 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0"  Margin="0,0,0,0" VerticalAlignment="Center"  HorizontalAlignment="Center">
+                            <ComboBox x:Name="collegeCourse_ComboBox" Header="请选择学院" Width="300"  DropDownClosed="collegeCourse_ComboBox_DropDownClosed">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding college}"/>
+
                                         </StackPanel>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
+
                             </ComboBox>
                         </StackPanel>
-                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top">
-                            <Grid>
-                                <controls:Ring x:Name="a" Opacity="0" RingBackgroundColor="#FF199ED8" RingForegroundColor="#FF199ED8" HoleWidth="250" Ratio="0.1" Breadth="20"/>
-                                <controls:Ring x:Name="b" Opacity="0" RingBackgroundColor="#FFFFC6DC" RingForegroundColor="#FFFFC6DC" HoleWidth="200" Ratio="0.1" Breadth="20"/>
-                                <TextBlock x:Name="a_ratio" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,69,220" RenderTransformOrigin="0.5,0.5" >
-                                    <TextBlock.RenderTransform>
-                                        <CompositeTransform Rotation="-20"/>
-                                    </TextBlock.RenderTransform></TextBlock>
-                                <TextBlock x:Name="b_ratio" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,68,169" RenderTransformOrigin="0.5,0.5" >
-                                    <TextBlock.RenderTransform>
-                                        <CompositeTransform Rotation="-20"/>
-                                    </TextBlock.RenderTransform></TextBlock>
+                        <StackPanel Grid.Row="1" Margin="0,0,0,0" VerticalAlignment="Center"  HorizontalAlignment="Center">
+                            <ComboBox x:Name="marjorCourse_ComboBox" Header="请选择专业" Width="300"   DropDownClosed="marjorCourse_ComboBox_DropDownClosed">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding major}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2"  Orientation="Vertical"  VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,20">
+                                <!--外-->
+                                <cpb:CircularProgressBar x:Name="OutsideCourseRatioCPB" CircularWidth="330.00" RingBackgroundColor="#FFFFFB" RingForegroundColor="#FBFEB9" RingWidth="30.00" ProgressNum="0.01" />
+                                <Ellipse Width="332" Height="332" Stroke="#FCF9E7" StrokeThickness="2"></Ellipse> 
+                                <Ellipse Width="271" Height="271" Stroke="#FCF9E7" StrokeThickness="2"></Ellipse>
+
+                                <!--中-->
+                                <cpb:CircularProgressBar x:Name="CentralCourseRatioCPB" CircularWidth="250.00" RingBackgroundColor="#F9FFFF" RingForegroundColor="#9EFCEE" RingWidth="30.00" ProgressNum="0.01" />
+                                <Ellipse Width="252" Height="252" Stroke="#D8FFF9" StrokeThickness="2"></Ellipse> 
+                                <Ellipse Width="191" Height="191" Stroke="#D8FFF9" StrokeThickness="2"></Ellipse> 
+
+                                <!--内-->
+                                <cpb:CircularProgressBar x:Name="InnerCourseRatioCPB" CircularWidth="170.00" RingBackgroundColor="#F8FCFF" RingForegroundColor="#B7E5FD" RingWidth="30.00" ProgressNum="0.01" />
+                                    <Ellipse Width="172" Height="172" Stroke="#D0F4FF" StrokeThickness="2"></Ellipse>
+                                    <Ellipse Width="110" Height="111" Stroke="#D0F4FF" StrokeThickness="2"></Ellipse>
                             </Grid>
-                        </ScrollViewer>
-                        <StackPanel Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <StackPanel Orientation="Horizontal">
-                                <Ellipse Stroke="Black" StrokeThickness="1" Fill="#FF199ED8" Height="20" Width="20"></Ellipse>
-                                <TextBlock Text="男" HorizontalAlignment="Center" Foreground="Black"></TextBlock>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0">
+                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="60,0,0,0">
+                                    <Ellipse Width="30" Height="30" Fill="#FBFEB9"></Ellipse>
+                                    <Ellipse Width="30" Height="30" Stroke="#EDD86E" StrokeThickness="2"></Ellipse>
+                                </Grid>
+                                <TextBlock x:Name="courseTextBlock_1" Foreground="Gray" FontSize="23" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"></TextBlock>
+                                <TextBlock x:Name="ratioTextBlock_1" Visibility="Collapsed"></TextBlock>
                             </StackPanel>
-                            <TextBlock></TextBlock>
-                            <StackPanel  Orientation="Horizontal">
-                                <Ellipse Stroke="Black" StrokeThickness="1" Fill="#FFFFC6DC" Height="20" Width="20"></Ellipse>
-                                <TextBlock Text="女" HorizontalAlignment="Center" Foreground="Black"></TextBlock>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,10,0,0">
+                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="60,0,0,0">
+                                    <Ellipse Width="30" Height="30" Fill="#9EFCEE"></Ellipse>
+                                    <Ellipse Width="30" Height="30" Stroke="#70ECD9" StrokeThickness="2"></Ellipse>
+                                </Grid>
+                                <TextBlock x:Name="courseTextBlock_2" Foreground="Gray" FontSize="23" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"></TextBlock>
+                                <TextBlock x:Name="ratioTextBlock_2" Visibility="Collapsed"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,10,0,0">
+                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="60,0,0,0">
+                                    <Ellipse Width="30" Height="30" Fill="#B7E5FD"></Ellipse>
+                                    <Ellipse Width="30" Height="30" Stroke="#89CEF1" StrokeThickness="2"></Ellipse>
+                                </Grid>
+                                <TextBlock x:Name="courseTextBlock_3" Foreground="Gray" FontSize="23" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"></TextBlock>
+                                <TextBlock x:Name="ratioTextBlock_3" Visibility="Collapsed"></TextBlock>
                             </StackPanel>
                         </StackPanel>
+
                     </Grid>
                 </PivotItem>
 
-                <!--最难科目-->
-                <PivotItem>
+
+
+                <!--菜单3 就业比列-->
+                <PivotItem Style="{StaticResource CQUPT_BigDataPivotItemStyle}">
                     <PivotItem.Header>
                         <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
                             <Grid.RenderTransform>
                                 <TranslateTransform X="0" Y="2"></TranslateTransform>
                             </Grid.RenderTransform>
-                            <TextBlock Text="最难科目" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                            <Line Visibility="Collapsed" X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom"></Line>
+                            <TextBlock x:Name ="WorkTextBlock"  Text="{Binding Header[2].header}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <Line x:Name="Line3"  X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom"></Line>
                         </Grid>
                     </PivotItem.Header>
+                    <!--内容-->
                     <Grid Margin="0 15 0 0">
-                        <Grid.Resources>
-                            <Storyboard x:Name="c_sb">
-                                <DoubleAnimation x:Name="c_sb_d" Storyboard.TargetName="c" Storyboard.TargetProperty="Ratio"
-                                 Duration="0:0:2" From="0" EnableDependentAnimation="True">
-                                    <DoubleAnimation.EasingFunction>
-                                        <CircleEase EasingMode="EaseInOut"></CircleEase>
-                                    </DoubleAnimation.EasingFunction>
-                                </DoubleAnimation>
-                            </Storyboard>
-                            <Storyboard x:Name="d_sb">
-                                <DoubleAnimation x:Name="d_sb_d" Storyboard.TargetName="d" Storyboard.TargetProperty="Ratio"
-                                 Duration="0:0:2" From="0" EnableDependentAnimation="True">
-                                    <DoubleAnimation.EasingFunction>
-                                        <CircleEase EasingMode="EaseInOut"></CircleEase>
-                                    </DoubleAnimation.EasingFunction>
-                                </DoubleAnimation>
-                            </Storyboard>
-                            <Storyboard x:Name="f_sb">
-                                <DoubleAnimation x:Name="f_sb_d" Storyboard.TargetName="f" Storyboard.TargetProperty="Ratio"
-                                 Duration="0:0:2" From="0" EnableDependentAnimation="True">
-                                    <DoubleAnimation.EasingFunction>
-                                        <CircleEase EasingMode="EaseInOut"></CircleEase>
-                                    </DoubleAnimation.EasingFunction>
-                                </DoubleAnimation>
-                            </Storyboard>
-                        </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="4.5*"/>
-                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Margin="10 0 0 0">
-                            <ComboBox  PlaceholderText="请选择学院" x:Name="comboBox1"
-                                  DropDownClosed="comboBox1_DropDownClosed" 
-                                  Style="{StaticResource BigDataComboBox}" HorizontalAlignment="Stretch" Height="40">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding }"/>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <ComboBox PlaceholderText="请选择专业" x:Name="comboBox2"
-                                  DropDownClosed="comboBox2_DropDownClosed" 
-                                  Style="{StaticResource BigDataComboBox}" HorizontalAlignment="Stretch" Height="40" Margin="0,5,0,0">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding }"/>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                        </StackPanel>
-                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                            <Grid>
-                                <controls:Ring x:Name="c" Opacity="0" RingBackgroundColor="#FF007EB6" RingForegroundColor="#FF007EB6" HoleWidth="270" Ratio="0.1" Breadth="20"/>
-                                <controls:Ring x:Name="d" Opacity="0" RingBackgroundColor="#FF199ED8" RingForegroundColor="#FF199ED8" HoleWidth="220" Ratio="0.1" Breadth="20"/>
-                                <controls:Ring x:Name="f" Opacity="0" RingBackgroundColor="#FF7FC1FF" RingForegroundColor="#FF7FC1FF" HoleWidth="170" Ratio="0.1" Breadth="20"/>
-                                <TextBlock x:Name="c_ratio" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,71,240" RenderTransformOrigin="0.5,0.5" >
-                                    <TextBlock.RenderTransform>
-                                        <CompositeTransform Rotation="-20"/>
-                                    </TextBlock.RenderTransform></TextBlock>
-                                <TextBlock x:Name="d_ratio" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,69,188" RenderTransformOrigin="0.5,0.5" >
-                                    <TextBlock.RenderTransform>
-                                        <CompositeTransform Rotation="-20"/>
-                                    </TextBlock.RenderTransform></TextBlock>
-                                <TextBlock x:Name="f_ratio" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,68,132" RenderTransformOrigin="0.5,0.5" >
-                                    <TextBlock.RenderTransform>
-                                        <CompositeTransform Rotation="-20"/>
-                                    </TextBlock.RenderTransform></TextBlock>
-                            </Grid>
-                        </ScrollViewer>
-                        <StackPanel  Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                            <StackPanel x:Name="c_text_sp" Opacity="0" Orientation="Horizontal">
-                                <Ellipse Stroke="Black" StrokeThickness="1" Fill="#FF007EB6" Height="20" Width="20"></Ellipse>
-                                <TextBlock x:Name="c_text" HorizontalAlignment="Center" Foreground="Black"></TextBlock>
-                            </StackPanel>
-                            <StackPanel x:Name="d_text_sp" Opacity="0" Orientation="Horizontal" Margin="0,5">
-                                <Ellipse Stroke="Black" StrokeThickness="1" Fill="#FF199ED8" Height="20" Width="20"></Ellipse>
-                                <TextBlock x:Name="d_text" HorizontalAlignment="Center" Foreground="Black"></TextBlock>
-                            </StackPanel>
-                            <StackPanel x:Name="e_text_sp" Opacity="0" Orientation="Horizontal">
-                                <Ellipse Stroke="Black" StrokeThickness="1" Fill="#FF7FC1FF" Height="20" Width="20"></Ellipse>
-                                <TextBlock x:Name="e_text" HorizontalAlignment="Center" Foreground="Black"></TextBlock>
-                            </StackPanel>
-                        </StackPanel>
-                    </Grid>
-                </PivotItem>
 
-                <!--就业率-->
-                <PivotItem>
-                    <PivotItem.Header>
-                        <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
-                            <Grid.RenderTransform>
-                                <TranslateTransform X="0" Y="2"></TranslateTransform>
-                            </Grid.RenderTransform>
-                            <TextBlock Text="毕业去向" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                            <Line Visibility="Collapsed" X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom"></Line>
-                        </Grid>
-                    </PivotItem.Header>
-                    <Grid Margin="0 15 0 0">
-                        <Grid.Resources>
-                            <Storyboard x:Name="g_sb">
-                                <DoubleAnimation x:Name="g_sb_d" Storyboard.TargetName="g" Storyboard.TargetProperty="Ratio"
-                                 Duration="0:0:2" From="0" EnableDependentAnimation="True">
-                                    <DoubleAnimation.EasingFunction>
-                                        <CircleEase EasingMode="EaseInOut"></CircleEase>
-                                    </DoubleAnimation.EasingFunction>
-                                </DoubleAnimation>
-                            </Storyboard>
-                            <Storyboard x:Name="h_sb">
-                                <DoubleAnimation x:Name="h_sb_d" Storyboard.TargetName="h" Storyboard.TargetProperty="Ratio"
-                                 Duration="0:0:2" From="0" EnableDependentAnimation="True">
-                                    <DoubleAnimation.EasingFunction>
-                                        <CircleEase EasingMode="EaseInOut"></CircleEase>
-                                    </DoubleAnimation.EasingFunction>
-                                </DoubleAnimation>
-                            </Storyboard>
-                        </Grid.Resources>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="4.5*"/>
-                            <RowDefinition Height="2*"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Margin="10 0 0 0">
-                            <ComboBox  x:Name="comboBox3" PlaceholderText="请选择学院"
-                                  DropDownClosed="comboBox3_DropDownClosed" 
-                                  Style="{StaticResource BigDataComboBox}" Height="44" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        <StackPanel Grid.Row="0"  Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <ComboBox x:Name="workRatio_ComboBox" Header="请选择学院" Width="300"  DropDownClosed="workRatio_ComboBox_DropDownClosed">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding }"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding college}"/>
+                                            <TextBlock Text="{Binding ratio}" Visibility="Collapsed"/>
+                                        </StackPanel>
+
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
+
                         </StackPanel>
-                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top">
-                            <Grid>
-                                <controls:Ring x:Name="g" Opacity="0" RingBackgroundColor="#FF199ED8" RingForegroundColor="#FF199ED8" HoleWidth="250" Ratio="0.1" Breadth="20"/>
-                                <controls:Ring x:Name="h" Opacity="0" RingBackgroundColor="#FF7FC1FF" RingForegroundColor="#FF7FC1FF" HoleWidth="200" Ratio="0.1" Breadth="20"/>
-                                <TextBlock x:Name="g_ratio" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,69,220" RenderTransformOrigin="0.5,0.5" >
-                                    <TextBlock.RenderTransform>
-                                        <CompositeTransform Rotation="-20"/>
-                                    </TextBlock.RenderTransform>
-                                </TextBlock>
-                                <TextBlock x:Name="h_ratio" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,68,169" RenderTransformOrigin="0.5,0.5" >
-                                    <TextBlock.RenderTransform>
-                                        <CompositeTransform Rotation="-20"/>
-                                    </TextBlock.RenderTransform>
-                                </TextBlock>
+                        <Grid Grid.Row="1" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0">
+
+                                <!--<Ellipse Width="255" Height="255" Stroke="CornflowerBlue" StrokeThickness="1"></Ellipse>-->
+                                <!--<Ellipse Width="250" Height="250" Stroke="CornflowerBlue" StrokeThickness="30"></Ellipse>-->
+
+                                <!--已就业-->
+                                <cpb:CircularProgressBar x:Name="WorkRatioCPB" CircularWidth="250.00" RingBackgroundColor="#F9FFFF" RingForegroundColor="#9EFCEE" RingWidth="30.00" ProgressNum="0.01"/>
+                                <Ellipse Width="252" Height="252" Stroke="#DAFFF9" StrokeThickness="2"></Ellipse>
+                                <Ellipse Width="191" Height="191" Stroke="#DAFFF9" StrokeThickness="2"></Ellipse>
+
+                                <!--未就业-->
+                                <cpb:CircularProgressBar x:Name="UnemployedRatioCPB" CircularWidth="170.00" RingBackgroundColor="#F8FCFF" RingForegroundColor="#B8E4FD" RingWidth="30.00" ProgressNum="0.01" />
+                                <Ellipse Width="172" Height="172" Stroke="#D0F3FD" StrokeThickness="2"></Ellipse>
+                                <Ellipse Width="110" Height="110" Stroke="#D0F3FD" StrokeThickness="2"></Ellipse>
+                                <Grid>
+                                    <StackPanel Orientation="Vertical" Margin="-30,400,0,0">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Ellipse Width="30" Height="30" Fill="#9EFCEE"></Ellipse>
+                                                <Ellipse Width="30" Height="30" Stroke="#70EBD5" StrokeThickness="2"></Ellipse>
+                                            </Grid>
+                                            <TextBlock Text="已就业" Foreground="Gray" FontSize="23" Margin="10,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                        <TextBlock></TextBlock>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Ellipse Width="30" Height="30" Fill="#B8E4FD"></Ellipse>
+                                                <Ellipse Width="30" Height="30" Stroke="#87D0EF" StrokeThickness="2"></Ellipse>
+                                            </Grid>
+                                            <TextBlock Text="未就业" Foreground="Gray" FontSize="23" Margin="10,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+
                             </Grid>
-                        </ScrollViewer>
-                        <StackPanel  Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <StackPanel  Orientation="Horizontal">
-                                <Ellipse Stroke="Black" StrokeThickness="1" Fill="#FF199ED8" Height="20" Width="20"></Ellipse>
-                                <TextBlock Text="已就业" HorizontalAlignment="Center" Foreground="Black"></TextBlock>
-                            </StackPanel>
-                            <TextBlock></TextBlock>
-                            <StackPanel Orientation="Horizontal">
-                                <Ellipse Stroke="Black" StrokeThickness="1" Fill="#FF7FC1FF" Height="20" Width="20"></Ellipse>
-                                <TextBlock Text="未就业" HorizontalAlignment="Center" Foreground="Black"></TextBlock>
-                            </StackPanel>
-                        </StackPanel>
+
+                        </Grid>
+
+
                     </Grid>
                 </PivotItem>
             </Pivot>
         </Grid>
     </Grid>
+
 </Page>

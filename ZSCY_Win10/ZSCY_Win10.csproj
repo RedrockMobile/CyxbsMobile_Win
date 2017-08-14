@@ -258,6 +258,7 @@
     <Content Include="Json\strategy_header_lists.json" />
     <Content Include="Json\必备清单.json" />
     <Content Include="Json\junxun_tieshi.json" />
+    <Content Include="Json\BigDate_Header_Lists.json" />
     <None Include="ZSCY_Win10_StoreKey.pfx" />
     <None Include="ZSCY_Win10_TemporaryKey.pfx" />
   </ItemGroup>
@@ -325,6 +326,7 @@
     <Compile Include="Data\XSQqqData.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\BeautyInNear.cs" />
+    <Compile Include="Models\BigData.cs" />
     <Compile Include="Models\CareerRatio.cs" />
     <Compile Include="Models\DailyLife.cs" />
     <Compile Include="Models\Dormitory.cs" />
@@ -339,6 +341,7 @@
     <Compile Include="Models\junxun_tieshi.cs" />
     <Compile Include="Models\LFDetailPageModel.cs" />
     <Compile Include="Models\LostAndFoundPageModel.cs" />
+    <Compile Include="Models\NewStudentsPageNetworkRequest.cs" />
     <Compile Include="Models\PieDataItem.cs" />
     <Compile Include="Models\PiePiece.cs" />
     <Compile Include="Models\qindan_content.cs" />
@@ -359,6 +362,7 @@
     <Compile Include="Models\richangshenghuo.cs" />
     <Compile Include="Models\ruxue_page.cs" />
     <Compile Include="Models\SchoolBuildings.cs" />
+    <Compile Include="Models\SexDatum.cs" />
     <Compile Include="Models\SexRatio.cs" />
     <Compile Include="Models\StrategyHeader.cs" />
     <Compile Include="Models\SubjectRatio.cs" />
@@ -369,6 +373,7 @@
     <Compile Include="Models\TopicModels\Topic.cs" />
     <Compile Include="Models\TopicModels\TopicContent.cs" />
     <Compile Include="Models\TopicModels\TopicRemark.cs" />
+    <Compile Include="Models\WorkDatum.cs" />
     <Compile Include="Models\WorkRatio.cs" />
     <Compile Include="Models\xuezi.cs" />
     <Compile Include="Models\yuanchuang.cs" />
@@ -532,6 +537,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resouces\Api.cs" />
     <Compile Include="Resouces\APPTheme.cs" />
+    <Compile Include="Resouces\CircularProgressBar.cs" />
     <Compile Include="Service\CommunityFeedsService.cs" />
     <Compile Include="Service\CommunityMyContentService.cs" />
     <Compile Include="Service\CommunityPersonInfoService.cs" />
@@ -817,8 +823,8 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\BigDataPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\CalendarPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -1001,7 +1007,7 @@
     <SDKReference Include="Microsoft.VCLibs.120, Version=14.0">
       <Name>Microsoft Visual C++ 2013 Runtime Package for Windows Universal</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.19.3">
+    <SDKReference Include="SQLite.UWP.2015, Version=3.20.0">
       <Name>SQLite for Universal Windows Platform</Name>
     </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.15063.0">
