@@ -453,20 +453,33 @@
                         </Grid>
                     </PivotItem.Header>
                     <Grid Margin="0 15 0 0">
+                        <Grid.Resources>
+                            <Storyboard x:Name="a_sb">
+                                <DoubleAnimation x:Name="a_sb_d" Storyboard.TargetName="a" Storyboard.TargetProperty="Ratio"
+                                 Duration="0:0:2" From="0" EnableDependentAnimation="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase EasingMode="EaseInOut"></CircleEase>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                            <Storyboard x:Name="b_sb">
+                                <DoubleAnimation x:Name="b_sb_d" Storyboard.TargetName="b" Storyboard.TargetProperty="Ratio"
+                                 Duration="0:0:2" From="0" EnableDependentAnimation="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase EasingMode="EaseInOut"></CircleEase>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="4.5*"/>
+                            <RowDefinition Height="2*"/>
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.9*"/>
-                            <ColumnDefinition Width="0.1*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Row="0" Grid.Column="0" Margin="10 0 0 0">
-                            <ComboBox Header="请选择院系" x:Name="comboBox0" Grid.Row="0"
-                                  DropDownClosed="comboBox0_DropDownClosed" 
-                                  Style="{StaticResource BigDataComboBox}">
+                        <StackPanel Grid.Row="0" Margin="10 0 0 0">
+                            <ComboBox PlaceholderText="请选择学院" x:Name="comboBox0" Grid.Row="0"
+                                  DropDownClosed="comboBox0_DropDownClosed"
+                                  Style="{StaticResource BigDataComboBox}" HorizontalAlignment="Stretch" Height="44" >
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
@@ -475,36 +488,32 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <ComboBox Header="请选择专业" x:Name="comboBox1" Grid.Row="1"
-                                  DropDownClosed="comboBox1_DropDownClosed"
-                                  Style="{StaticResource BigDataComboBox}">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding}"/>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
                         </StackPanel>
-                        <StackPanel Grid.Row="0" Grid.Column="2" Margin="0 0 10 0">
-                            <StackPanel Margin="0 0 0 -10">
-                                <TextBlock Text="男生:" Grid.Column="1"/>
-                                <TextBlock Foreground="#b9e6fc" x:Name="Male" Text="人数及比例" Margin="0 5 0 0" 
-                                           TextTrimming="CharacterEllipsis" FontSize="18" Tapped="MaleAndFemale_Tapped"/>
-                            </StackPanel>
-                            <StackPanel Margin="0 20 0 0" BorderThickness="0 0.5 0 0" BorderBrush="#FFB4A2A2">
-                                <TextBlock Text="女生:" Grid.Column="1" Margin="0 9 0 0"/>
-                                <TextBlock Foreground="#cfcdfc" x:Name="Female" Text="人数及比例" Margin="0 5 0 0" 
-                                           TextTrimming="CharacterEllipsis" FontSize="18" Tapped="MaleAndFemale_Tapped"/>
-                            </StackPanel>
-                        </StackPanel>
-                        <TextBlock x:Name="TextBlock1" Grid.Row="1" Grid.ColumnSpan="3"
-                                   FontSize="15" Foreground="#007ACC" 
-                                   Margin="0 10 0 10" HorizontalAlignment="Center"/>
-                        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3"
-                                      BorderBrush="#FF877676" BorderThickness="0 0.5 0 0">
-                            <controls:PiePlotter x:Name="piePlotter0" Width="330" Height="330"                                
-                                   PieWidth="330" HoleSize="0.15" Margin="0 20 0 0"/>
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top">
+                            <Grid>
+                                <controls:Ring x:Name="a" Opacity="0" RingBackgroundColor="#FF199ED8" RingForegroundColor="#FF199ED8" HoleWidth="250" Ratio="0.1" Breadth="20"/>
+                                <controls:Ring x:Name="b" Opacity="0" RingBackgroundColor="#FFFFC6DC" RingForegroundColor="#FFFFC6DC" HoleWidth="200" Ratio="0.1" Breadth="20"/>
+                                <TextBlock x:Name="a_ratio" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,69,220" RenderTransformOrigin="0.5,0.5" >
+                                    <TextBlock.RenderTransform>
+                                        <CompositeTransform Rotation="-20"/>
+                                    </TextBlock.RenderTransform></TextBlock>
+                                <TextBlock x:Name="b_ratio" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,68,169" RenderTransformOrigin="0.5,0.5" >
+                                    <TextBlock.RenderTransform>
+                                        <CompositeTransform Rotation="-20"/>
+                                    </TextBlock.RenderTransform></TextBlock>
+                            </Grid>
                         </ScrollViewer>
+                        <StackPanel Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Stroke="Black" StrokeThickness="1" Fill="#FF199ED8" Height="20" Width="20"></Ellipse>
+                                <TextBlock Text="男" HorizontalAlignment="Center" Foreground="Black"></TextBlock>
+                            </StackPanel>
+                            <TextBlock></TextBlock>
+                            <StackPanel  Orientation="Horizontal">
+                                <Ellipse Stroke="Black" StrokeThickness="1" Fill="#FFFFC6DC" Height="20" Width="20"></Ellipse>
+                                <TextBlock Text="女" HorizontalAlignment="Center" Foreground="Black"></TextBlock>
+                            </StackPanel>
+                        </StackPanel>
                     </Grid>
                 </PivotItem>
 
@@ -520,20 +529,50 @@
                         </Grid>
                     </PivotItem.Header>
                     <Grid Margin="0 15 0 0">
+                        <Grid.Resources>
+                            <Storyboard x:Name="c_sb">
+                                <DoubleAnimation x:Name="c_sb_d" Storyboard.TargetName="c" Storyboard.TargetProperty="Ratio"
+                                 Duration="0:0:2" From="0" EnableDependentAnimation="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase EasingMode="EaseInOut"></CircleEase>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                            <Storyboard x:Name="d_sb">
+                                <DoubleAnimation x:Name="d_sb_d" Storyboard.TargetName="d" Storyboard.TargetProperty="Ratio"
+                                 Duration="0:0:2" From="0" EnableDependentAnimation="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase EasingMode="EaseInOut"></CircleEase>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                            <Storyboard x:Name="f_sb">
+                                <DoubleAnimation x:Name="f_sb_d" Storyboard.TargetName="f" Storyboard.TargetProperty="Ratio"
+                                 Duration="0:0:2" From="0" EnableDependentAnimation="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase EasingMode="EaseInOut"></CircleEase>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="4.5*"/>
+                            <RowDefinition Height="2*"/>
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.9*"/>
-                            <ColumnDefinition Width="0.1*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Row="0" Grid.Column="0" Margin="10 0 0 0">
-                            <ComboBox Header="请选择学院" x:Name="comboBox2"
+                        <StackPanel Grid.Row="0" Margin="10 0 0 0">
+                            <ComboBox  PlaceholderText="请选择学院" x:Name="comboBox1"
+                                  DropDownClosed="comboBox1_DropDownClosed" 
+                                  Style="{StaticResource BigDataComboBox}" HorizontalAlignment="Stretch" Height="40">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding }"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <ComboBox PlaceholderText="请选择专业" x:Name="comboBox2"
                                   DropDownClosed="comboBox2_DropDownClosed" 
-                                  Style="{StaticResource BigDataComboBox}">
+                                  Style="{StaticResource BigDataComboBox}" HorizontalAlignment="Stretch" Height="40" Margin="0,5,0,0">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding }"/>
@@ -541,24 +580,43 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                         </StackPanel>
-                        <StackPanel Grid.Row="0" Grid.Column="2" Margin="0 0 10 0">
-                            <TextBlock Text="科目难度排行："/>
-                            <TextBlock x:Name="Sub1" Foreground="#cfcdfc" FontSize="18" TextTrimming="CharacterEllipsis" Tapped="Subjects_Tapped" Text="认真学习~" Margin="0 10 0 0"/>
-                            <TextBlock x:Name="Sub2" Foreground="#b9e6fe" FontSize="18" TextTrimming="CharacterEllipsis" Tapped="Subjects_Tapped"/>
-                            <TextBlock x:Name="Sub3" Foreground="#fec7e3" FontSize="18" TextTrimming="CharacterEllipsis" Tapped="Subjects_Tapped"/>
-                        </StackPanel>
-                        <TextBlock x:Name="TextBlock2" Grid.Row="1" Grid.ColumnSpan="3"
-                                   FontSize="15" Foreground="#007ACC" 
-                                   Margin="0 20 0 10" HorizontalAlignment="Center"/>
-                        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3"
-                                      BorderBrush="#FF877676" BorderThickness="0 0.5 0 0">
-                            <controls:PiePlotter x:Name="piePlotter1" Width="330" Height="330"
-                                              PieWidth="330" HoleSize="0.15" Margin="0 20 0 0"/>
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                            <Grid>
+                                <controls:Ring x:Name="c" Opacity="0" RingBackgroundColor="#FF007EB6" RingForegroundColor="#FF007EB6" HoleWidth="270" Ratio="0.1" Breadth="20"/>
+                                <controls:Ring x:Name="d" Opacity="0" RingBackgroundColor="#FF199ED8" RingForegroundColor="#FF199ED8" HoleWidth="220" Ratio="0.1" Breadth="20"/>
+                                <controls:Ring x:Name="f" Opacity="0" RingBackgroundColor="#FF7FC1FF" RingForegroundColor="#FF7FC1FF" HoleWidth="170" Ratio="0.1" Breadth="20"/>
+                                <TextBlock x:Name="c_ratio" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,71,240" RenderTransformOrigin="0.5,0.5" >
+                                    <TextBlock.RenderTransform>
+                                        <CompositeTransform Rotation="-20"/>
+                                    </TextBlock.RenderTransform></TextBlock>
+                                <TextBlock x:Name="d_ratio" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,69,188" RenderTransformOrigin="0.5,0.5" >
+                                    <TextBlock.RenderTransform>
+                                        <CompositeTransform Rotation="-20"/>
+                                    </TextBlock.RenderTransform></TextBlock>
+                                <TextBlock x:Name="f_ratio" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,68,132" RenderTransformOrigin="0.5,0.5" >
+                                    <TextBlock.RenderTransform>
+                                        <CompositeTransform Rotation="-20"/>
+                                    </TextBlock.RenderTransform></TextBlock>
+                            </Grid>
                         </ScrollViewer>
+                        <StackPanel  Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                            <StackPanel x:Name="c_text_sp" Opacity="0" Orientation="Horizontal">
+                                <Ellipse Stroke="Black" StrokeThickness="1" Fill="#FF007EB6" Height="20" Width="20"></Ellipse>
+                                <TextBlock x:Name="c_text" HorizontalAlignment="Center" Foreground="Black"></TextBlock>
+                            </StackPanel>
+                            <StackPanel x:Name="d_text_sp" Opacity="0" Orientation="Horizontal" Margin="0,5">
+                                <Ellipse Stroke="Black" StrokeThickness="1" Fill="#FF199ED8" Height="20" Width="20"></Ellipse>
+                                <TextBlock x:Name="d_text" HorizontalAlignment="Center" Foreground="Black"></TextBlock>
+                            </StackPanel>
+                            <StackPanel x:Name="e_text_sp" Opacity="0" Orientation="Horizontal">
+                                <Ellipse Stroke="Black" StrokeThickness="1" Fill="#FF7FC1FF" Height="20" Width="20"></Ellipse>
+                                <TextBlock x:Name="e_text" HorizontalAlignment="Center" Foreground="Black"></TextBlock>
+                            </StackPanel>
+                        </StackPanel>
                     </Grid>
                 </PivotItem>
 
-                <!--毕业去向-->
+                <!--就业率-->
                 <PivotItem>
                     <PivotItem.Header>
                         <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
@@ -570,20 +628,33 @@
                         </Grid>
                     </PivotItem.Header>
                     <Grid Margin="0 15 0 0">
+                        <Grid.Resources>
+                            <Storyboard x:Name="g_sb">
+                                <DoubleAnimation x:Name="g_sb_d" Storyboard.TargetName="g" Storyboard.TargetProperty="Ratio"
+                                 Duration="0:0:2" From="0" EnableDependentAnimation="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase EasingMode="EaseInOut"></CircleEase>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                            <Storyboard x:Name="h_sb">
+                                <DoubleAnimation x:Name="h_sb_d" Storyboard.TargetName="h" Storyboard.TargetProperty="Ratio"
+                                 Duration="0:0:2" From="0" EnableDependentAnimation="True">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CircleEase EasingMode="EaseInOut"></CircleEase>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="4.5*"/>
+                            <RowDefinition Height="2*"/>
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.9*"/>
-                            <ColumnDefinition Width="0.1*"/>                            
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Row="0" Grid.Column="0" Margin="10 0 0 0">
-                            <ComboBox Header="请选择学院" x:Name="comboBox3"
+                        <StackPanel Grid.Row="0" Margin="10 0 0 0">
+                            <ComboBox  x:Name="comboBox3" PlaceholderText="请选择学院"
                                   DropDownClosed="comboBox3_DropDownClosed" 
-                                  Style="{StaticResource BigDataComboBox}">
+                                  Style="{StaticResource BigDataComboBox}" Height="44" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding }"/>
@@ -591,57 +662,36 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                         </StackPanel>
-                        <StackPanel Grid.Row="0" Grid.Column="2" Margin="0 0 10 0">
-                            <TextBlock Text="毕业走向："/>
-                            <TextBlock x:Name="Road1" Text="就业: " Foreground="#cfcdfc" TextTrimming="CharacterEllipsis" Tapped="Road_Tapped" Margin="0 10 0 0" FontSize="18"/>
-                            <TextBlock x:Name="Road2" Text="出国留学: " Foreground="#fec7e3" TextTrimming="CharacterEllipsis" Tapped="Road_Tapped" FontSize="18"/>
-                            <TextBlock x:Name="Road3" Text="待业: " Foreground="#9efcee" TextTrimming="CharacterEllipsis" Tapped="Road_Tapped" FontSize="18"/>
-                            <TextBlock x:Name="Road4" Text="自由职业: " Foreground="#b9e6fe" TextTrimming="CharacterEllipsis" Tapped="Road_Tapped" FontSize="18"/>
-                        </StackPanel>
-                        <TextBlock x:Name="TextBlock3" Grid.Row="1" Grid.ColumnSpan="3"
-                                   FontSize="15" Foreground="#FF007ACC" 
-                                   Margin="0 20 0 10" HorizontalAlignment="Center"/>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" BorderBrush="#FF877676" Tapped="Road_Tapped"
-                                      BorderThickness="0 0.5 0 0" Grid.ColumnSpan="3" Grid.Row="2">
-                            <controls:PiePlotter x:Name="piePlotter2" Width="330" Height="330"
-                                              PieWidth="330" HoleSize="0.15" Margin="0 20 0 0"/>
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top">
+                            <Grid>
+                                <controls:Ring x:Name="g" Opacity="0" RingBackgroundColor="#FF199ED8" RingForegroundColor="#FF199ED8" HoleWidth="250" Ratio="0.1" Breadth="20"/>
+                                <controls:Ring x:Name="h" Opacity="0" RingBackgroundColor="#FF7FC1FF" RingForegroundColor="#FF7FC1FF" HoleWidth="200" Ratio="0.1" Breadth="20"/>
+                                <TextBlock x:Name="g_ratio" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,69,220" RenderTransformOrigin="0.5,0.5" >
+                                    <TextBlock.RenderTransform>
+                                        <CompositeTransform Rotation="-20"/>
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
+                                <TextBlock x:Name="h_ratio" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,68,169" RenderTransformOrigin="0.5,0.5" >
+                                    <TextBlock.RenderTransform>
+                                        <CompositeTransform Rotation="-20"/>
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
+                            </Grid>
                         </ScrollViewer>
+                        <StackPanel  Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel  Orientation="Horizontal">
+                                <Ellipse Stroke="Black" StrokeThickness="1" Fill="#FF199ED8" Height="20" Width="20"></Ellipse>
+                                <TextBlock Text="已就业" HorizontalAlignment="Center" Foreground="Black"></TextBlock>
+                            </StackPanel>
+                            <TextBlock></TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Stroke="Black" StrokeThickness="1" Fill="#FF7FC1FF" Height="20" Width="20"></Ellipse>
+                                <TextBlock Text="未就业" HorizontalAlignment="Center" Foreground="Black"></TextBlock>
+                            </StackPanel>
+                        </StackPanel>
                     </Grid>
                 </PivotItem>
             </Pivot>
         </Grid>
-
-        <!--弹出Popup-->
-        <Grid x:Name="black_background" Grid.Row="0" Grid.RowSpan="2" Background="Black" Opacity="0.5" Visibility="Collapsed"/>
-        <Popup x:Name="detail_popup" Grid.Row="0" Grid.RowSpan="2" IsLightDismissEnabled="True" Closed="detail_popup_Closed" IsOpen="False">
-            <Popup.Child>
-                <Grid Height="{Binding Page_Height}" Width="{Binding Page_Width}">
-                    <Grid Height="{Binding Detail_Height}" 
-                          Width="{Binding Detail_Height,Converter={StaticResource DetailMarginConverter},ConverterParameter=0.55}" 
-                          HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Rectangle Height="{Binding Detail_Height}" 
-                                   Width="{Binding Detail_Height,Converter={StaticResource DetailMarginConverter},ConverterParameter=0.55}" 
-                                   RadiusX="7" RadiusY="7" Fill="{Binding Source={StaticResource APPTheme},Path=Foreground_Color_Brush}"/>
-                        <Grid Margin="25,25,25,25">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock x:Name="detail_title" Grid.Row="0" FontSize="20" 
-                                       Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" 
-                                       HorizontalAlignment="Center" Margin="0,20,0,10"/>
-                            <TextBlock x:Name="detail_content" Grid.Row="1" 
-                                       Foreground="{Binding Source={StaticResource APPTheme},Path=Gary_Color_Brush}" 
-                                       TextWrapping="Wrap" Margin="0,5,0,15"/>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Popup.Child>
-            <Popup.ChildTransitions>
-                <TransitionCollection>
-                    <PaneThemeTransition Edge="Bottom"></PaneThemeTransition>
-                </TransitionCollection>
-            </Popup.ChildTransitions>
-        </Popup>
     </Grid>
 </Page>

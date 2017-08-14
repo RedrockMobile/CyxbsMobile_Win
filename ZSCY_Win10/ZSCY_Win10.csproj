@@ -243,9 +243,10 @@
     <Content Include="Assets\type.png" />
     <Content Include="Assets\type_03.png" />
     <Content Include="Assets\weeks_03.png" />
-    <Content Include="Assets\首页1.png" />
-    <Content Include="Assets\首页2.png" />
-    <Content Include="Assets\首页3.png" />
+    <Content Include="Assets\首页1.0.png" />
+    <Content Include="Assets\首页2.0.png" />
+    <Content Include="Assets\首页3.0.png" />
+    <Content Include="Assets\首页4.0.png" />
     <Content Include="Data\moreitems.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -256,6 +257,7 @@
     <Content Include="Json\fengcai_zuzhi_lists.json" />
     <Content Include="Json\strategy_header_lists.json" />
     <Content Include="Json\必备清单.json" />
+    <Content Include="Json\junxun_tieshi.json" />
     <None Include="ZSCY_Win10_StoreKey.pfx" />
     <None Include="ZSCY_Win10_TemporaryKey.pfx" />
   </ItemGroup>
@@ -287,6 +289,7 @@
     <Compile Include="Controls\RemindPage\ErrorNotification.xaml.cs">
       <DependentUpon>ErrorNotification.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Ring.cs" />
     <Compile Include="Data\ClassList.cs" />
     <Compile Include="Data\ClassListLight.cs" />
     <Compile Include="Data\CommunityImageList.cs" />
@@ -309,6 +312,7 @@
     <Compile Include="Data\loginControl.xaml.cs">
       <DependentUpon>loginControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\LXQqqData.cs" />
     <Compile Include="Data\NewsContentList.cs" />
     <Compile Include="Data\NewsList.cs" />
     <Compile Include="Data\JWList.cs" />
@@ -318,11 +322,21 @@
     <Compile Include="Data\Transaction.cs" />
     <Compile Include="Data\StartPage\Database.cs" />
     <Compile Include="Data\StartPage\ImageList.cs" />
+    <Compile Include="Data\XSQqqData.cs" />
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\BeautyInNear.cs" />
     <Compile Include="Models\CareerRatio.cs" />
+    <Compile Include="Models\DailyLife.cs" />
+    <Compile Include="Models\Dormitory.cs" />
+    <Compile Include="Models\Eat.cs" />
     <Compile Include="Models\Electricity.cs" />
+    <Compile Include="Models\FailRatio.cs" />
     <Compile Include="Models\fengcaiheaders.cs" />
     <Compile Include="Models\getDB.cs" />
+    <Compile Include="Models\Junxuncontents.cs" />
+    <Compile Include="Models\junxunshipin.cs" />
+    <Compile Include="Models\junxuntupian.cs" />
+    <Compile Include="Models\junxun_tieshi.cs" />
     <Compile Include="Models\LFDetailPageModel.cs" />
     <Compile Include="Models\LostAndFoundPageModel.cs" />
     <Compile Include="Models\PieDataItem.cs" />
@@ -332,6 +346,7 @@
     <Compile Include="Models\QQGroup_DB.cs" />
     <Compile Include="Models\RemindModels\AddRemindBackModel.cs" />
     <Compile Include="Models\RemindModels\AddRemindModel.cs" />
+    <Compile Include="Models\Canteen.cs" />
     <Compile Include="Models\RemindModels\DataBaseModel.cs" />
     <Compile Include="Models\RemindModels\DateModel.cs" />
     <Compile Include="Models\RemindModels\RemindBackupModel.cs" />
@@ -343,10 +358,10 @@
     <Compile Include="Models\RemindModels\WeekNumClass.cs" />
     <Compile Include="Models\richangshenghuo.cs" />
     <Compile Include="Models\ruxue_page.cs" />
+    <Compile Include="Models\SchoolBuildings.cs" />
     <Compile Include="Models\SexRatio.cs" />
     <Compile Include="Models\StrategyHeader.cs" />
     <Compile Include="Models\SubjectRatio.cs" />
-    <Compile Include="Models\Switch.cs" />
     <Compile Include="Models\teacher.cs" />
     <Compile Include="Models\TopicModels\Articles.cs" />
     <Compile Include="Models\TopicModels\LikeButtonClickEvent.cs" />
@@ -354,11 +369,13 @@
     <Compile Include="Models\TopicModels\Topic.cs" />
     <Compile Include="Models\TopicModels\TopicContent.cs" />
     <Compile Include="Models\TopicModels\TopicRemark.cs" />
+    <Compile Include="Models\WorkRatio.cs" />
     <Compile Include="Models\xuezi.cs" />
     <Compile Include="Models\yuanchuang.cs" />
     <Compile Include="Models\zhoubianmeijing.cs" />
     <Compile Include="Models\zhoubianmeishi.cs" />
     <Compile Include="Models\StartpAgeModels\StartPageModel.cs" />
+    <Compile Include="Models\zuimei.cs" />
     <Compile Include="Models\zuzhi.cs" />
     <Compile Include="Models\zuzhi_intro.cs" />
     <Compile Include="MyPage.xaml.cs">
@@ -451,6 +468,9 @@
     <Compile Include="Pages\ImportKB2CalendarPage.xaml.cs">
       <DependentUpon>ImportKB2CalendarPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\JunxunPage.xaml.cs">
+      <DependentUpon>JunxunPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\LostAndFoundPages\InfoPublish.xaml.cs">
       <DependentUpon>InfoPublish.xaml</DependentUpon>
     </Compile>
@@ -534,6 +554,7 @@
     <Compile Include="Util\Converter\ExpandingConverter1.cs" />
     <Compile Include="Util\Converter\ExpandingConverter2.cs" />
     <Compile Include="Util\Converter\ExpandingConverter3.cs" />
+    <Compile Include="Util\Converter\ExpandingConverter4.cs" />
     <Compile Include="Util\Converter\FreeConverter.cs" />
     <Compile Include="Util\Converter\GenderColorConverter.cs" />
     <Compile Include="Util\Converter\GenderConverter.cs" />
@@ -571,6 +592,8 @@
     <Compile Include="Util\Remind\RemindSystemUtil.cs" />
     <Compile Include="Util\Remind\RemindWebRequest.cs" />
     <Compile Include="Util\Request.cs" />
+    <Compile Include="Util\SQLiteHelper1.cs" />
+    <Compile Include="Util\SQLiteHelper2.cs" />
     <Compile Include="Util\TextBlockFormatter.cs" />
     <Compile Include="Util\Utils.cs" />
     <Compile Include="Util\StartPage\StartPageHelp.cs" />
@@ -584,6 +607,7 @@
     <Compile Include="ViewModels\ElectricChargeCheckPages\CheckRecentChargePageViewModel.cs" />
     <Compile Include="ViewModels\FengCaiViewModel.cs" />
     <Compile Include="ViewModels\FirstPageViewModel.cs" />
+    <Compile Include="ViewModels\JunxunViewModel.cs" />
     <Compile Include="ViewModels\LFDetailPageViewModel.cs" />
     <Compile Include="ViewModels\LostAndFoundPageViewModel.cs" />
     <Compile Include="ViewModels\Remind\AddRemindPageViewModel.cs" />
@@ -864,6 +888,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\JunxunPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\LostAndFoundPages\InfoPublish.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -961,6 +989,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\StartPages\StartPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

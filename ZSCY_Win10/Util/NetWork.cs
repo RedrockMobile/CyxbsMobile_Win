@@ -164,8 +164,21 @@ namespace ZSCY_Win10.Util
                 }
             });
         }
-  
-      
-      
+        public static async Task<string> RatioRequest(string key, string value)
+        {
+            HttpClient httpclient = new HttpClient();
+            string uri = "http://hongyan.cqupt.edu.cn/welcome/2017/api/apiRatio.php";
+            string json = "";
+            var content = new FormUrlEncodedContent(new Dictionary<string, string>
+            {
+                {key,value}
+            });
+            var response = await httpclient.PostAsync(uri,content);
+            json = await response.Content.ReadAsStringAsync();
+            return json;
+        }
+
+
+
     }
 }

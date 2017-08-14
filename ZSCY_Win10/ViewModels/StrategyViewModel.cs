@@ -9,258 +9,145 @@ using SQLite.Net;
 using SQLite.Net.Platform.WinRT;
 using System.IO;
 using ZSCY.Models;
+using ZSCY_Win10.Models;
 
 namespace ZSCY_Win10.ViewModels
 {
-     public class StrategyViewModel:BasePageViewModel
+    public class StrategyViewModel : BasePageViewModel
     {
-       
-        private ObservableCollection<StrategyHeader> header;
-
-        //private ruxue_page ruxue;
-        public ObservableCollection<StrategyHeader> Header
+        private ObservableCollection<SchoolBuildings.Datum> schoolbuildings;
+        public ObservableCollection<SchoolBuildings.Datum> SchoolBuildings
         {
             get
             {
-                return header;
+                return schoolbuildings;
             }
-
             set
             {
-                header = value;
-                RaisePropertyChanged(nameof(Header));
+                schoolbuildings = value;
+                RaisePropertyChanged(nameof(SchoolBuildings));
             }
         }
-        private Allstring allQQInfo;
-        public Allstring AllQQInfo
+
+        private ObservableCollection<Dormitory.Datum> dormitory;
+        public ObservableCollection<Dormitory.Datum> Dormitory
         {
             get
             {
-                return allQQInfo;
+                return dormitory;
             }
-
             set
             {
-                allQQInfo = value;
-                RaisePropertyChanged(nameof(AllQQInfo));
+                dormitory = value;
+                RaisePropertyChanged(nameof(Dormitory));
             }
         }
-        private ObservableCollection<qinshiIntroduce> qsIntroduce;
-
-
-        public ObservableCollection<qinshiIntroduce> QsIntroduce
+        private ObservableCollection<Canteen.Datum> canteen;
+        public ObservableCollection<Canteen.Datum> Canteen
         {
             get
             {
-                return qsIntroduce;
+                return canteen;
             }
-
             set
             {
-                qsIntroduce = value;
-                RaisePropertyChanged(nameof(QsIntroduce));
+                canteen = value;
+                RaisePropertyChanged(nameof(Canteen));
             }
         }
-
-        private ObservableCollection<richangshenghuo> richangContent;
-        public ObservableCollection<richangshenghuo> RichangContent
+        private ObservableCollection<DailyLife.Datum> dailylife;
+        public ObservableCollection<DailyLife.Datum> DailyLife
         {
             get
             {
-                return richangContent;
+                return dailylife;
             }
-
             set
             {
-                richangContent = value;
-                RaisePropertyChanged(nameof(richangshenghuo));
+                dailylife = value;
+                RaisePropertyChanged(nameof(DailyLife));
             }
-        }
-        private ObservableCollection<zhoubianmeijing> mjContent;
 
-        public ObservableCollection<zhoubianmeijing> MjContent
+        }
+        private ObservableCollection<BeautyInNear.Datum> beautyinnear;
+        public ObservableCollection<BeautyInNear.Datum> BeautyInNear
         {
             get
             {
-                return mjContent;
+                return beautyinnear;
             }
-
             set
             {
-                mjContent = value;
-                RaisePropertyChanged(nameof(MjContent));
+                beautyinnear = value;
+                RaisePropertyChanged(nameof(BeautyInNear));
             }
         }
-        private ObservableCollection<zhoubianmeishi> msContent;
-        public ObservableCollection<zhoubianmeishi> MsContent
+        private ObservableCollection<Eat.Datum> eat;
+        public ObservableCollection<Eat.Datum> Eat
         {
             get
             {
-                return msContent;
+                return eat;
             }
-
             set
             {
-                msContent = value;
-                RaisePropertyChanged(nameof(MsContent));
+                eat = value;
+                RaisePropertyChanged(nameof(Eat));
             }
         }
+        private double _page_height;
+        private double _page_width;
 
-
-
-        private ObservableCollection<qindan_content> qdContent;
-        public ObservableCollection<qindan_content> QdContent
+        public double Page_Height
         {
             get
             {
-                return qdContent;
+                return _page_height;
             }
-
             set
             {
-                qdContent = value;
-                RaisePropertyChanged(nameof(qdContent));
+                Photo_Height = _page_height = value;
+                RaisePropertyChanged(nameof(Page_Height));
             }
         }
-        /// <summary>
-        /// 放缩键图标
-        /// </summary>
-        private ObservableCollection<string> icon;
 
-        public ObservableCollection<string> Icon
+        public double Page_Width
         {
             get
             {
-                return icon;
+                return _page_width;
             }
-
             set
             {
-                icon = value;
-                RaisePropertyChanged(nameof(Icon));
+                Photo_Width = _page_width = value;
+                RaisePropertyChanged(nameof(Page_Width));
             }
         }
-        /// <summary>
-        /// 缩放文本
-        /// </summary>
-        private ObservableCollection<string> text;
-        public ObservableCollection<string> Text
+
+
+        public double Photo_Height
         {
             get
             {
-                return text;
+                return (Photo_Width / 2.0);
             }
-
             set
             {
-                text = value;
+                RaisePropertyChanged(nameof(Photo_Height));
             }
         }
-        //public ruxue_page Ruxue
-        //{
-        //    get
-        //    {
-        //        return ruxue;
-        //    }
 
-        //    set
-        //    {
-        //        ruxue = value;
-        //        RaisePropertyChanged(nameof(Ruxue));
-        //    }
-        //}
-        private string anquan;
-        private string ruxue;
-        private string jiangxuejin;
-        private string xueshengshouce;
-        public string Anquan
+        public double Photo_Width
         {
             get
             {
-                return anquan;
+                return ((_page_width - 40.0));
             }
-
             set
             {
-                anquan = value;
-                RaisePropertyChanged(nameof(Anquan));
+                RaisePropertyChanged(nameof(Photo_Width));
             }
         }
-
-        public string Ruxue
-        {
-            get
-            {
-                return ruxue;
-            }
-
-            set
-            {
-                ruxue = value;
-                RaisePropertyChanged(nameof(Ruxue));
-
-            }
-        }
-
-        public string Jiangxuejin
-        {
-            get
-            {
-                return jiangxuejin;
-            }
-
-            set
-            {
-                jiangxuejin = value;
-                RaisePropertyChanged(nameof(Jiangxuejin));
-
-            }
-        }
-
-        public string Xueshengshouce
-        {
-            get
-            {
-                return xueshengshouce;
-            }
-
-            set
-            {
-                xueshengshouce = value;
-                RaisePropertyChanged(nameof(Xueshengshouce));
-            }
-        }
-        private string lXQ_All;
-
-        public string LXQ_All
-        {
-            get
-            {
-                return lXQ_All;
-            }
-
-            set
-            {
-                lXQ_All = value;
-                RaisePropertyChanged(nameof(LXQ_All));
-            }
-        }
-
-        public string XYQ_All
-        {
-            get
-            {
-                return xYQ_All;
-            }
-
-            set
-            {
-                xYQ_All = value;
-                RaisePropertyChanged(nameof(XYQ_All));
-            }
-        }
-
-        private string xYQ_All;
     }
 
 }

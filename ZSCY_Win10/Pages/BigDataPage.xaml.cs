@@ -21,6 +21,9 @@ using Windows.UI.Popups;
 using Windows.Phone.UI.Input;
 using System.Threading.Tasks;
 using Windows.UI.ViewManagement;
+using ZSCY_Win10.Util;
+using System.Runtime.Serialization.Json;
+using Newtonsoft.Json;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -32,18 +35,18 @@ namespace ZSCY.Pages
     public sealed partial class BigDataPage : Page
     {
         private int pivot_index = 0;
-        private int comboBox1_index = 0;
         private ZSCY_Win10.ViewModels.BigDataViewModel viewmodel;
         public static BigDataPage bigdatacaipage;
-
+        SexRatio.Rootobject srrb;
+        List<string> collegelist;
+        FailRatio.Rootobject frrb;
+        List<string> collegelist1;
+        List<string> majorlist;
+        WorkRatio.Rootobject wrrb;
+        List<string> collegelist2;
         public BigDataPage()
         {
             this.InitializeComponent();
-            comboBox0.ItemsSource = colleage;
-            comboBox1.ItemsSource = attention;
-            comboBox2.ItemsSource = colleage;
-            comboBox3.ItemsSource = colleage;
-
             viewmodel = new ZSCY_Win10.ViewModels.BigDataViewModel();
             this.DataContext = viewmodel;
             bigdatacaipage = this;
@@ -66,108 +69,186 @@ namespace ZSCY.Pages
             Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
 
         }
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            try
+            {
+                string json = await NetWork.RatioRequest("RequestType", "SexRatio");
+                var serializer = new DataContractJsonSerializer(typeof(SexRatio.Rootobject));
+                srrb = JsonConvert.DeserializeObject<SexRatio.Rootobject>(json);
+                collegelist = new List<string>();
+                foreach (SexRatio.Datum item in srrb.Data)
+                {
+                    collegelist.Add(item.college);
+                }
+                comboBox0.ItemsSource = collegelist;
+
+
+                string json1 = await NetWork.RatioRequest("RequestType", "FailPlus");
+                var serializer1 = new DataContractJsonSerializer(typeof(FailRatio.Rootobject));
+                frrb = JsonConvert.DeserializeObject<FailRatio.Rootobject>(json1);
+                collegelist1 = new List<string>();
+                foreach (FailRatio.Datum item in frrb.Data)
+                {
+                    collegelist1.Add(item.college);
+                }
+                comboBox1.ItemsSource = collegelist1;
+
+
+                string json2 = await NetWork.RatioRequest("RequestType", "WorkRatio");
+                var serializer2 = new DataContractJsonSerializer(typeof(WorkRatio.Rootobject));
+                wrrb = JsonConvert.DeserializeObject<WorkRatio.Rootobject>(json2);
+                collegelist2 = new List<string>();
+                foreach (WorkRatio.Datum item in wrrb.Data)
+                {
+                    collegelist2.Add(item.college);
+                }
+                comboBox3.ItemsSource = collegelist2;
+            }
+            catch
+            {
+                return;
+            }
+        }
         //获取当前Page的高度和宽度
         private void BigDataPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             viewmodel.Page_Width = e.NewSize.Width;
             viewmodel.Page_Height = e.NewSize.Height;
         }
-
-        public string[] colleage = {"光电工程学院",
-                                    "经济管理学院",
-                                    "国际学院",
-                                    "法学院",
-                                    "传媒艺术学院",
-                                    "通信与信息工程学院",
-                                    "计算机科学与技术学院",
-                                    "软件工程学院",
-                                    "体育学院",
-                                    "生物信息学院",
-                                    "理学院",
-                                    "先进制造工程学院",
-                                    "外国语学院",
-                                    "自动化学院" };
-        public string[] attention = { "学院都没选就想看专业，哼~" };
-
         private void comboBox0_DropDownClosed(object sender, object e)
         {
-            if (comboBox0.SelectedItem == null)
+            try
             {
-                comboBox1.ItemsSource = attention;
+                if (comboBox0.SelectedIndex == -1)
+                {
+                    return;
+                }
+                int temp = comboBox0.SelectedIndex;
+                a.Opacity = 1;
+                b.Opacity = 1;
+                a_ratio.Text = srrb.Data[temp].MenRatio.Substring(2, 2) + "." + srrb.Data[temp].MenRatio.Substring(4, 2) + "%";
+                b_ratio.Text = srrb.Data[temp].WomenRatio.Substring(2, 2) + "." + srrb.Data[temp].WomenRatio.Substring(4, 2) + "%";
+                a_sb_d.To = Convert.ToDouble(srrb.Data[temp].MenRatio);
+                b_sb_d.To = Convert.ToDouble(srrb.Data[temp].WomenRatio);
+                a_sb.Begin();
+                b_sb.Begin();
+            }
+            catch
+            {
                 return;
             }
-            comboBox1.ItemsSource = Switch.MajorSwitch(comboBox0.SelectedItem.ToString());
         }
 
         private void comboBox1_DropDownClosed(object sender, object e)
         {
-            if (comboBox1.SelectedItem == null)
-                return;
             try
             {
-                TextBlock1.Text = comboBox0.SelectedItem.ToString() + "-" + comboBox1.SelectedItem.ToString() + "专业的男女比例饼图如下";
-                Male.Text = Switch.SexRatioSwitch(comboBox1.SelectedItem.ToString()).MaleRatio.ToString() + "  " + "(" + Switch.SexRatioSwitch(comboBox1.SelectedItem.ToString()).Male.ToString() + "人)";
-                Female.Text = Switch.SexRatioSwitch(comboBox1.SelectedItem.ToString()).FemaleRatio.ToString() + "  " + "(" + Switch.SexRatioSwitch(comboBox1.SelectedItem.ToString()).Female.ToString() + "人)"; ;
+                if (comboBox1.SelectedIndex == -1)
+                {
+                    comboBox2.ItemsSource = new List<string> { "请先选择学院~" };
+                    return;
+                }
+                majorlist = new List<string>();
+                foreach (FailRatio.Major item in frrb.Data[comboBox1.SelectedIndex].major)
+                {
+                    majorlist.Add(item.major);
+                }
+                comboBox2.ItemsSource = majorlist;
             }
             catch
             {
                 return;
             }
-            List<PieDataItem> datas = new List<PieDataItem>();
-            datas.Add(new PieDataItem { Value = Switch.SexRatioSwitch(comboBox1.SelectedItem.ToString()).Male, Brush = new SolidColorBrush(Color.FromArgb(255, 185, 230, 252)) });
-            datas.Add(new PieDataItem { Value = Switch.SexRatioSwitch(comboBox1.SelectedItem.ToString()).Female, Brush = new SolidColorBrush(Color.FromArgb(255, 207, 205, 252)) });
-            piePlotter0.DataContext = datas;
-            piePlotter0.ShowPie();
         }
 
         private void comboBox2_DropDownClosed(object sender, object e)
         {
-            if (comboBox2.SelectedItem == null)
-                return;
             try
             {
-                TextBlock2.Text = comboBox2.SelectedItem.ToString() + "的最难科目饼图如下";
-                Sub1.Text = "1." + Switch.SubjectRatioSwitch(comboBox2.SelectedItem.ToString()).Hardest.ToString() + "   " + "(" + Switch.SubjectRatioSwitch(comboBox2.SelectedItem.ToString()).HardestRatio.ToString() + "%)";
-                Sub2.Text = "2." + Switch.SubjectRatioSwitch(comboBox2.SelectedItem.ToString()).Harder.ToString() + "   " + "(" + Switch.SubjectRatioSwitch(comboBox2.SelectedItem.ToString()).HarderRatio.ToString() + "%)";
-                Sub3.Text = "3." + Switch.SubjectRatioSwitch(comboBox2.SelectedItem.ToString()).Hard.ToString() + "   " + "(" + Switch.SubjectRatioSwitch(comboBox2.SelectedItem.ToString()).HardRatio.ToString() + "%)";
+                if (comboBox1.SelectedIndex == -1)
+                {
+                    return;
+                }
+                if (comboBox2.SelectedIndex == -1)
+                {
+                    return;
+                }
+                int temp = comboBox2.SelectedIndex;
+                if (frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course.Length == 2)
+                {
+                    c.Opacity = 0;
+                    c_ratio.Opacity = 0;
+                    d.Opacity = 1;
+                    f.Opacity = 1;
+                    c_text_sp.Opacity = 0;
+                    d_text_sp.Opacity = 1;
+                    e_text_sp.Opacity = 1;
+                    d_sb_d.To = Convert.ToDouble(frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[0].ratio);
+                    f_sb_d.To = Convert.ToDouble(frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[1].ratio);
+                    frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[0].ratio = frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[0].ratio.Insert(frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[0].ratio.Length, "000");
+                    frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[1].ratio = frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[1].ratio.Insert(frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[1].ratio.Length, "000");
+                    d_ratio.Text = frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[0].ratio.Substring(2, 2) + "." + frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[0].ratio.Substring(4, 2) + "%";
+                    f_ratio.Text = frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[1].ratio.Substring(2, 2) + "." + frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[1].ratio.Substring(4, 2) + "%";
+                    d_text.Text = frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[1].course;
+                    e_text.Text = frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[1].course;
+                    d_sb.Begin();
+                    f_sb.Begin();
+                }
+                if (frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course.Length == 3)
+                {
+                    c.Opacity = 1;
+                    c_ratio.Opacity = 1;
+                    d.Opacity = 1;
+                    f.Opacity = 1;
+                    c_text_sp.Opacity = 1;
+                    d_text_sp.Opacity = 1;
+                    e_text_sp.Opacity = 1;
+                    c_sb_d.To = Convert.ToDouble(frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[0].ratio);
+                    d_sb_d.To = Convert.ToDouble(frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[1].ratio);
+                    f_sb_d.To = Convert.ToDouble(frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[2].ratio);
+                    frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[0].ratio = frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[0].ratio.Insert(frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[0].ratio.Length, "000");
+                    frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[1].ratio = frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[1].ratio.Insert(frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[1].ratio.Length, "000");
+                    frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[2].ratio = frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[2].ratio.Insert(frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[2].ratio.Length, "000");
+                    c_ratio.Text = frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[0].ratio.Substring(2, 2) + "." + frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[0].ratio.Substring(4, 2) + "%";
+                    d_ratio.Text = frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[1].ratio.Substring(2, 2) + "." + frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[1].ratio.Substring(4, 2) + "%";
+                    f_ratio.Text = frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[2].ratio.Substring(2, 2) + "." + frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[2].ratio.Substring(4, 2) + "%";
+                    c_text.Text = frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[0].course;
+                    d_text.Text = frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[1].course;
+                    e_text.Text = frrb.Data[comboBox1.SelectedIndex].major[comboBox2.SelectedIndex].course[2].course;
+                    c_sb.Begin();
+                    d_sb.Begin();
+                    f_sb.Begin();
+                }
             }
             catch
             {
                 return;
             }
-            List<PieDataItem> datas = new List<PieDataItem>();
-            datas.Add(new PieDataItem { Value = Switch.SubjectRatioSwitch(comboBox2.SelectedItem.ToString()).HardestRatio, Brush = new SolidColorBrush(Color.FromArgb(255, 207, 205, 252)) });
-            datas.Add(new PieDataItem { Value = Switch.SubjectRatioSwitch(comboBox2.SelectedItem.ToString()).HarderRatio, Brush = new SolidColorBrush(Color.FromArgb(255, 185, 230, 254)) });
-            datas.Add(new PieDataItem { Value = Switch.SubjectRatioSwitch(comboBox2.SelectedItem.ToString()).HardRatio, Brush = new SolidColorBrush(Color.FromArgb(255, 254, 199, 227)) });
-            piePlotter1.DataContext = datas;
-            piePlotter1.ShowPie();
         }
-
         private void comboBox3_DropDownClosed(object sender, object e)
         {
-            if (comboBox3.SelectedItem == null)
-                return;
             try
             {
-                TextBlock3.Text = comboBox3.SelectedItem.ToString() + "的毕业去向饼图如下";
-                Road1.Text = "就业: " + Switch.CareerRatioSwitch(comboBox3.SelectedItem.ToString()).Employed.ToString() + "%";
-                Road2.Text = "出国留学: " + Switch.CareerRatioSwitch(comboBox3.SelectedItem.ToString()).Abroad.ToString() + "%";
-                Road3.Text = "待业: " + Switch.CareerRatioSwitch(comboBox3.SelectedItem.ToString()).Unemployed.ToString() + "%";
-                Road4.Text = "自由职业: " + Switch.CareerRatioSwitch(comboBox3.SelectedItem.ToString()).FreeWork.ToString() + "%";
-
+                if (comboBox3.SelectedIndex == -1)
+                {
+                    return;
+                }
+                int temp = comboBox3.SelectedIndex;
+                g.Opacity = 1;
+                h.Opacity = 1;
+                double noworkratio = 1 - Convert.ToDouble(wrrb.Data[temp].ratio);
+                g_ratio.Text = wrrb.Data[temp].ratio.Substring(2, 2) + "." + wrrb.Data[temp].ratio.Substring(4, 2) + "%";
+                h_ratio.Text = noworkratio.ToString().Substring(2, 2) + "." + noworkratio.ToString().Substring(4, 2) +"%";
+                g_sb_d.To = Convert.ToDouble(wrrb.Data[temp].ratio);
+                h_sb_d.To = Convert.ToDouble(noworkratio);
+                g_sb.Begin();
+                h_sb.Begin();
             }
             catch
             {
                 return;
             }
-            List<PieDataItem> datas = new List<PieDataItem>();
-
-            datas.Add(new PieDataItem { Value = Switch.CareerRatioSwitch(comboBox3.SelectedItem.ToString()).Employed, Brush = new SolidColorBrush(Color.FromArgb(255, 207, 205, 252)) });
-            datas.Add(new PieDataItem { Value = Switch.CareerRatioSwitch(comboBox3.SelectedItem.ToString()).Abroad, Brush = new SolidColorBrush(Color.FromArgb(255, 254, 199, 227)) });
-            datas.Add(new PieDataItem { Value = Switch.CareerRatioSwitch(comboBox3.SelectedItem.ToString()).Unemployed, Brush = new SolidColorBrush(Color.FromArgb(255, 158, 252, 238)) });
-            datas.Add(new PieDataItem { Value = Switch.CareerRatioSwitch(comboBox3.SelectedItem.ToString()).FreeWork, Brush = new SolidColorBrush(Color.FromArgb(255, 185, 230, 254)) });
-            piePlotter2.DataContext = datas;
-            piePlotter2.ShowPie();
         }
 
         private void back_but_Click(object sender, RoutedEventArgs e)
@@ -239,107 +320,6 @@ namespace ZSCY.Pages
             {
                 return;
             }
-        }
-
-        private async void MaleAndFemale_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            if (comboBox0.SelectedItem != null)
-            {
-                //MessageDialog msg = new MessageDialog(
-                //      "男生人数:" + Switch.SexRatioSwitch(comboBox1.SelectedItem.ToString()).Male.ToString() + "   " + "男生比例:" + Switch.SexRatioSwitch(comboBox1.SelectedItem.ToString()).MaleRatio.ToString() + "\n"
-                //    + "女生人数:" + Switch.SexRatioSwitch(comboBox1.SelectedItem.ToString()).Female.ToString() + "   " + "女生比例:" + Switch.SexRatioSwitch(comboBox1.SelectedItem.ToString()).FemaleRatio.ToString());
-                //msg.Title = "男女比例:";
-                //await msg.ShowAsync();
-
-                detail_title.Text = "男女比例:";
-                detail_content.Text = "男生人数:" + Switch.SexRatioSwitch(comboBox1.SelectedItem.ToString()).Male.ToString() + "   " + "男生比例:" + Switch.SexRatioSwitch(comboBox1.SelectedItem.ToString()).MaleRatio.ToString() + "\n"
-                    + "女生人数:" + Switch.SexRatioSwitch(comboBox1.SelectedItem.ToString()).Female.ToString() + "   " + "女生比例:" + Switch.SexRatioSwitch(comboBox1.SelectedItem.ToString()).FemaleRatio.ToString();
-                black_background.Visibility = Visibility.Visible;
-                black_background_sb.Begin();
-                detail_popup.IsOpen = true;
-            }
-            else
-            {
-                //await new MessageDialog("你都还没有选点我干嘛~").ShowAsync();
-
-                detail_title.Text = "男女比例:";
-                detail_content.Text = "记得先点左边的框框再来看我 \\(≧▽≦)/";
-                black_background.Visibility = Visibility.Visible;
-                black_background_sb.Begin();
-                detail_popup.IsOpen = true;
-            }
-        }
-
-        private async void Subjects_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            if (comboBox2.SelectedItem != null)
-            {
-                //MessageDialog msg = new MessageDialog(
-                //      Sub1.Text.ToString() + "\n"
-                //    + Sub2.Text.ToString() + "\n"
-                //    + Sub3.Text.ToString());
-                //msg.Title = "科目难度排行:";
-                //await msg.ShowAsync();
-
-                detail_title.Text = "科目难度排行:";
-                detail_content.Text = Sub1.Text.ToString() + "\n"
-                    + Sub2.Text.ToString() + "\n"
-                    + Sub3.Text.ToString();
-                black_background.Visibility = Visibility.Visible;
-                black_background_sb.Begin();
-                detail_popup.IsOpen = true;
-            }
-            else
-            {
-                //await new MessageDialog("你都还没有选点我干嘛~").ShowAsync();
-
-                detail_title.Text = "科目难度排行:";
-                detail_content.Text = "你都还没选，点我我怎么知道 →_→";
-                black_background.Visibility = Visibility.Visible;
-                black_background_sb.Begin();
-                detail_popup.IsOpen = true;
-            }
-        }
-
-        private async void Road_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            if (comboBox3.SelectedItem != null)
-            {
-                //MessageDialog msg = new MessageDialog(
-                //      Road1.Text.ToString() + "\n"
-                //    + Road2.Text.ToString() + "\n"
-                //    + Road3.Text.ToString() + "\n"
-                //    + Road4.Text.ToString());
-                //msg.Title = "毕业去向:";
-                //await msg.ShowAsync();
-
-                detail_title.Text = "毕业去向:";
-                detail_content.Text = Road1.Text.ToString() + "\n"
-                    + Road2.Text.ToString() + "\n"
-                    + Road3.Text.ToString() + "\n"
-                    + Road4.Text.ToString();
-                black_background.Visibility = Visibility.Visible;
-                black_background_sb.Begin();
-                detail_popup.IsOpen = true;
-            }
-            else
-            {
-                //await new MessageDialog("你都还没有选点我干嘛~").ShowAsync();
-
-                detail_title.Text = "毕业去向:";
-                detail_content.Text = "你要先点左边那个萌萌哒的框框 \\(^o^)/";
-                black_background.Visibility = Visibility.Visible;
-                black_background_sb.Begin();
-                detail_popup.IsOpen = true;
-            }
-        }
-
-        //清除Popup内容
-        private void detail_popup_Closed(object sender, object e)
-        {
-            detail_title.Text = "";
-            detail_content.Text = "";
-            black_background.Visibility = Visibility.Collapsed;
         }
     }
 }

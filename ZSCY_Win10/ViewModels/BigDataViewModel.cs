@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,6 @@ namespace ZSCY_Win10.ViewModels
     {
         private double _page_height;
         private double _page_width;
-
         public double Page_Height
         {
             get

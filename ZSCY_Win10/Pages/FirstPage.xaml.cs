@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using ZSCY_Win10.Pages;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -65,15 +66,9 @@ namespace ZSCY.Pages
             if (e.NavigationMode == NavigationMode.New)
             {
                 viewmodel.Page_Height = this.Height;
-                if (this.Width >= 800)
-                {
-                    viewmodel.Page_Width = (this.Width - 30) / 2;
-                }
-                else
-                {
-                    viewmodel.Page_Width = this.Width;
-                }
+                viewmodel.Page_Width = this.ActualWidth;
             }
+
         }
 
         public void Second_Page_Forwoard() //页面前进方法
@@ -95,16 +90,8 @@ namespace ZSCY.Pages
 
         private void FirstPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (e.NewSize.Width <= 800)
-            {
-                viewmodel.Page_Height = e.NewSize.Height;
-                viewmodel.Page_Width = e.NewSize.Width;
-            }
-            else
-            {
-                viewmodel.Page_Height = e.NewSize.Height;
-                viewmodel.Page_Width = (e.NewSize.Width - 30) / 2;
-            }
+                //viewmodel.Page_Height = e.NewSize.Height;
+                viewmodel.Page_Width = 375;//375是个人认为比较合适的宽度
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -124,11 +111,15 @@ namespace ZSCY.Pages
                     }; break;
                 case 1:
                     {
-                        second_frame.Navigate(typeof(BigDataPage));
+                        second_frame.Navigate(typeof(FengCaiPage));
                     }; break;
                 case 2:
                     {
-                        second_frame.Navigate(typeof(FengCaiPage));
+                        second_frame.Navigate(typeof(BigDataPage));
+                    }; break;
+                case 3:
+                    {
+                        second_frame.Navigate(typeof(JunxunPage));
                     }; break;
             }
         }

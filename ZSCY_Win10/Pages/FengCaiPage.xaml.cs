@@ -26,6 +26,10 @@ using Windows.UI.Xaml.Media.Imaging;
 using ZSCY_Win10;
 using Windows.Phone.UI.Input;
 using Windows.UI.ViewManagement;
+using Windows.UI.Composition;
+using Windows.UI.Xaml.Hosting;
+using Microsoft.Graphics.Canvas.Effects;
+using Windows.UI;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -41,8 +45,9 @@ namespace ZSCY.Pages
         private double[] pivotitem1_ver_offest;
         private ZSCY_Win10.ViewModels.FengCaiViewModel viewmodel;
         public static FengCaiPage fengcaipage;
+        PaneThemeTransition PaneAnim = new PaneThemeTransition { Edge = EdgeTransitionLocation.Right };
 
-        public FengCaiPage()
+        public FengCaiPage():base()
         {
             this.InitializeComponent();
             pivot_index = 0;
@@ -63,6 +68,10 @@ namespace ZSCY.Pages
                 Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Visible;
                 Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += PC_BackRequested;
             }
+            Transitions = new TransitionCollection();
+            Transitions.Add(PaneAnim);
+            ManipulationMode = ManipulationModes.TranslateX;
+
         }
         private void PC_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e)
         {
@@ -84,6 +93,14 @@ namespace ZSCY.Pages
                 await Task.Delay(100);
                 zuzhi_listview.SelectedIndex = pivot.SelectedIndex = 0;
             }
+            PaneAnim.Edge = e.NavigationMode == NavigationMode.Back ? EdgeTransitionLocation.Left : EdgeTransitionLocation.Right;
+            base.OnNavigatedTo(e);
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            PaneAnim.Edge = e.NavigationMode != NavigationMode.Back ? EdgeTransitionLocation.Left : EdgeTransitionLocation.Right;
+            base.OnNavigatingFrom(e);
         }
 
         private void FengCaiPage_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -153,53 +170,42 @@ namespace ZSCY.Pages
             if (json != null)
             {
                 json_object = (JObject)JsonConvert.DeserializeObject(json);
-                JArray data = (JArray)json_object["data"];
+                JArray data = (JArray)json_object["Data"];
                 ObservableCollection<Models.yuanchuang> yc_lists = new ObservableCollection<Models.yuanchuang>();
                 for (int i = 0; i < data.Count; i++)
                 {
                     Models.yuanchuang item = new Models.yuanchuang();
-                    item.introduction = data[i]["introduction"].ToString();
+                    //item.introduction = data[i]["introduction"].ToString();
                     item.name = data[i]["name"].ToString();
-                    item.time = data[i]["time"].ToString();
-                    item.video_url = data[i]["video_url"].ToString();
-                    JArray photo = (JArray)data[i]["photo"];
-                    for (int j = 0; j < photo.Count; j++)
-                    {
-                        item.photo_src = photo[j]["photo_src"].ToString();
-                    }
+                    item.cover = data[i]["cover"].ToString();
+                    item.url = data[i]["url"].ToString();
+                    //JArray photo = (JArray)data[i]["photo"];
+                    //for (int j = 0; j < photo.Count; j++)
+                    //{
+                    //    item.photo_src = photo[j]["photo_src"].ToString();
+                    //}
                     yc_lists.Add(item);
                 }
                 viewmodel.YuanChuang = yc_lists;
             }
             #endregion
 
-            #region 得到最美重邮文字内容
-            file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Json/fengcai_zuimei.json", UriKind.Absolute));
-            json = await FileIO.ReadTextAsync(file);
-            json_object = (JObject)JsonConvert.DeserializeObject(json);
-            JArray zuimei = (JArray)json_object["zuimei"];
-            ObservableCollection<string> zuimei_lists = new ObservableCollection<string>();
-            for (int i = 0; i < zuimei.Count; i++)
-            {
-                string content = zuimei[i]["content"].ToString();
-                zuimei_lists.Add(content);
-            }
-            viewmodel.ZuiMei = zuimei_lists;
-            #endregion
-
-            #region 得到最美重邮图片
+            #region 得到最美重邮内容
             json = await ZSCY_Win10.Util.Request.ZuiMei_Request();
             if (json != null)
             {
                 json_object = (JObject)JsonConvert.DeserializeObject(json);
-                JArray data = (JArray)json_object["data"];
-                zuimei_lists = new ObservableCollection<string>();
-                for (int i = 0; i < data.Count; i++)
+                JArray data = (JArray)json_object["Data"];
+				ObservableCollection<Models.zuimei> zuimei_lists = new ObservableCollection<Models.zuimei>();
+				for (int i = 0; i < data.Count; i++)
                 {
-                    JArray photo = (JArray)data[i]["photo"];
-                    zuimei_lists.Add(photo[0]["photo_src"].ToString());
-                }
-                viewmodel.ZuiMei_Photos = zuimei_lists;
+					Models.zuimei item = new Models.zuimei();
+					item.content = data[i]["content"].ToString();
+					item.title = data[i]["title"].ToString();
+					item.url = data[i]["url"].ToString();
+					zuimei_lists.Add(item);
+				}
+                viewmodel.ZuiMei = zuimei_lists;
             }
             #endregion
 
@@ -208,17 +214,15 @@ namespace ZSCY.Pages
             if (json != null)
             {
                 json_object = (JObject)JsonConvert.DeserializeObject(json);
-                JArray data = (JArray)json_object["data"];
+                JArray data = (JArray)json_object["Data"];
                 ObservableCollection<Models.xuezi> xuezi_lists = new ObservableCollection<Models.xuezi>();
                 for (int i = 0; i < data.Count; i++)
                 {
                     Models.xuezi item = new Models.xuezi();
-                    item.description = data[i]["description"].ToString();
-                    item.introduction = data[i]["introduction"].ToString();
+                    item.resume = data[i]["resume"].ToString();
                     item.name = data[i]["name"].ToString();
-                    JArray photo = (JArray)data[i]["photo"];
-                    item.photo_src = photo[0]["photo_src"].ToString();
-                    item.photo_thumbnail_src = photo[0]["photo_thumbnail_src"].ToString();
+                    //JArray photo = (JArray)data[i]["url"];
+                    item.url = data[i]["url"].ToString();
                     xuezi_lists.Add(item);
                 }
                 viewmodel.XueZi = xuezi_lists;
@@ -230,16 +234,13 @@ namespace ZSCY.Pages
             if (json != null)
             {
                 json_object = (JObject)JsonConvert.DeserializeObject(json);
-                JArray data = (JArray)json_object["data"];
+                JArray data = (JArray)json_object["Data"];
                 ObservableCollection<Models.teacher> teacher_lists = new ObservableCollection<Models.teacher>();
                 for (int i = 0; i < data.Count; i++)
                 {
                     Models.teacher item = new Models.teacher();
                     item.name = data[i]["name"].ToString();
-                    item.college = data[i]["college"].ToString();
-                    JArray photo = (JArray)data[i]["photo"];
-                    item.photo_src = photo[0]["photo_src"].ToString();
-                    item.photo_thumbnail_src = photo[0]["photo_thumbnail_src"].ToString();
+                    item.url = data[i]["url"].ToString();
                     teacher_lists.Add(item);
                 }
                 viewmodel.Teacher = teacher_lists;
@@ -247,6 +248,39 @@ namespace ZSCY.Pages
             #endregion
         }
 
+        #region 实现高斯模糊
+        private void Forestglass(UIElement glasshost)
+        {
+            Visual hostVisual = ElementCompositionPreview.GetElementVisual(glasshost);
+            Compositor compositor = hostVisual.Compositor;
+            var glassEfect = new GaussianBlurEffect
+            {
+                BlurAmount=15.0f,
+                BorderMode=EffectBorderMode.Hard,
+                Source=new ArithmeticCompositeEffect
+                {
+                    MultiplyAmount=0,
+                    Source1Amount=0.5f,
+                    Source2Amount=0.5f,
+                    Source1=new CompositionEffectSourceParameter("backdropBrush"),
+                    Source2=new ColorSourceEffect
+                    {
+                        Color=Color.FromArgb(255,245,245,245)
+                    }
+                }
+            };
+            var effectFactory = compositor.CreateEffectFactory(glassEfect);
+            var backdropBrush = compositor.CreateBackdropBrush();
+            var effectBrush = effectFactory.CreateBrush();
+            effectBrush.SetSourceParameter("backdropBrush", backdropBrush);
+            var glassVisual = compositor.CreateSpriteVisual();
+            glassVisual.Brush = effectBrush;
+            ElementCompositionPreview.SetElementChildVisual(glasshost, glassVisual);
+            var bindSizeAnimation = compositor.CreateExpressionAnimation("hostVisual.Size");
+            bindSizeAnimation.SetReferenceParameter("hostVisual", hostVisual);
+            glassVisual.StartAnimation("Size", bindSizeAnimation);
+        }
+        #endregion
         private void PivotItem1_Add_Content(int p)
         {
             zuzhi_content.Children.Clear();
@@ -327,7 +361,11 @@ namespace ZSCY.Pages
                 return;
             }
         }
-
+        Rectangle rect_old; // 上一次选中的 Rectangle
+        Rectangle rect_current; // 当前选中的 Rectangle
+        double posi_previous; // 手指点击屏幕时，记录当前的 pivot 中 ScrollViewer.HorizontalOffset
+        ScrollViewer pivot_sv;
+        bool IsMoving = false;//手指是否在滑动中
         private void zuzhi_listview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             pivotitem1_ver_offest[zuzhi_listview_index] = zuzhi_sc.VerticalOffset;
@@ -341,42 +379,74 @@ namespace ZSCY.Pages
                 zuzhi_sc.ChangeView(null, 0.0, null, true);
             }
             zuzhi_listview_index = zuzhi_listview.SelectedIndex;
+            zuzhi_content.Visibility = Visibility.Visible;
+            stackpanel_sb.Begin();
+
+            if (firstRectInited == false) return;
+            // 如果是当前显示项，则显示“下横线”
+            for (int i = 0; i < zuzhi_listview.Items.Count; i++)
+            {
+                if (zuzhi_listview.ContainerFromIndex(i) != null)
+                {
+                    var grid = (zuzhi_listview.ContainerFromIndex(i) as ListViewItem).ContentTemplateRoot as Grid;
+                    var rect = grid.FindName("rect") as Rectangle;
+                    (rect.RenderTransform as CompositeTransform).TranslateX = 0;// 重置横向位移为 0
+
+                    if (zuzhi_listview.SelectedIndex == i) // 当前选中项
+                    {
+                        zuzhi_listview.ScrollIntoView(zuzhi_listview.SelectedItem);//当滑动 pivot 时，如果 ListView选中项不在视图内，则显示
+                        rect_old = rect_current;
+                        rect_current = rect;
+                        if (IsMoving == false) // 非手指划动 pivot
+                        {
+                            Rect_Slide();
+                            zuzhi_listview.IsHitTestVisible = false; // 当“划动动画”在播放的时候，不再接受单击事件
+                        }
+                    }
+
+                    if (IsMoving)
+                        rect.Opacity = zuzhi_listview.SelectedIndex == i ? 1 : 0;//选中项显示下横向，否则隐藏
+                }
+            }
+
+            IsMoving = false;
+
         }
 
         private async void yc_listview_ItemClick(object sender, ItemClickEventArgs e)
         {
-            await Launcher.LaunchUriAsync(new Uri((e.ClickedItem as Models.yuanchuang).video_url));
+            await Launcher.LaunchUriAsync(new Uri((e.ClickedItem as Models.yuanchuang).url));
         }
 
-        private void XueZi_Rectangle_Loaded(object sender, RoutedEventArgs e)
-        {
-            Binding binding1 = new Binding();
-            binding1.Source = viewmodel;
-            binding1.Path = new PropertyPath("XueZi_Height");
-            (sender as Rectangle).SetBinding(Rectangle.HeightProperty, binding1);
-            Binding binding2 = new Binding();
-            binding2.Source = viewmodel;
-            binding2.Path = new PropertyPath("XueZi_Width");
-            (sender as Rectangle).SetBinding(Rectangle.WidthProperty, binding2);
-        }
+        //private void XueZi_Rectangle_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    Binding binding1 = new Binding();
+        //    binding1.Source = viewmodel;
+        //    binding1.Path = new PropertyPath("XueZi_Height");
+        //    (sender as Rectangle).SetBinding(Rectangle.HeightProperty, binding1);
+        //    Binding binding2 = new Binding();
+        //    binding2.Source = viewmodel;
+        //    binding2.Path = new PropertyPath("XueZi_Width");
+        //    (sender as Rectangle).SetBinding(Rectangle.WidthProperty, binding2);
+        //}
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is Models.xuezi)
             {
-                detail_img.ImageSource = new BitmapImage(new Uri((e.ClickedItem as Models.xuezi).photo_thumbnail_src, UriKind.Absolute));
+                detail_img.ImageSource = new BitmapImage(new Uri((e.ClickedItem as Models.xuezi).url, UriKind.Absolute));
                 detail_title.Text = (e.ClickedItem as Models.xuezi).name;
-                detail_content.Text = (e.ClickedItem as Models.xuezi).introduction;
+                detail_content.Text = (e.ClickedItem as Models.xuezi).resume;
             }
             else if (e.ClickedItem is Models.teacher)
             {
-                detail_img.ImageSource = new BitmapImage(new Uri((e.ClickedItem as Models.teacher).photo_thumbnail_src, UriKind.Absolute));
+                detail_img.ImageSource = new BitmapImage(new Uri((e.ClickedItem as Models.teacher).url, UriKind.Absolute));
                 detail_title.Text = (e.ClickedItem as Models.teacher).name;
-                detail_content.Text = (e.ClickedItem as Models.teacher).college;
             }
             detail_sc.ChangeView(null, 0, null, true);
             black_background.Visibility = Visibility.Visible;
             black_background_sb.Begin();
+            Forestglass(black_background);
             detail_popup.IsOpen = true;
         }
 
@@ -436,6 +506,64 @@ namespace ZSCY.Pages
                     });
                     e.Handled = true;
                 }//Frame在其他页面并且事件未处理
+            }
+        }
+
+        private void ScrollViewer_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
+        {
+            if (IsMoving && rect_current != null && pivot_sv != null)
+                (rect_current.RenderTransform as CompositeTransform).TranslateX = (pivot_sv.HorizontalOffset - posi_previous) / pivot_sv.ActualWidth * rect_current.ActualWidth;
+        }
+
+        private void ScrollViewer_DirectManipulationStarted(object sender, object e)
+        {
+            IsMoving = true;
+            pivot_sv = sender as ScrollViewer;
+            posi_previous = pivot_sv.HorizontalOffset;
+        }
+
+        private void SB_Slide_Completed(object sender, object e)
+        {
+            zuzhi_listview.IsHitTestVisible = true;
+            rect_old.Opacity = 0;
+            (rect_old.RenderTransform as CompositeTransform).ScaleX = 1;
+            rect_current.Opacity = 1;
+            SB_Slide.Stop();
+
+        }
+        void Rect_Slide()
+        {
+            if (rect_old != null && rect_current != null)
+            {
+                // 如果设置 Width 属性，可能会导致列表宽度发生变化，所以这里使用 Scale来缩放下横线
+                (rect_old.RenderTransform as CompositeTransform).ScaleX = rect_current.ActualWidth / rect_old.ActualWidth;
+                var old_rect = GetBounds(rect_old, zuzhi_listview);
+                var new_rect = GetBounds(rect_current, zuzhi_listview);
+
+                // 获取 ListView 单击后，两个 Item之间的距离
+                SB_Slide_TransX.KeyFrames[1].Value = new_rect.X - old_rect.X;
+
+                Storyboard.SetTarget(SB_Slide_TransX, rect_old);
+                SB_Slide.Begin();
+            }
+        }
+        public Rect GetBounds(FrameworkElement childElement, FrameworkElement parentElement)
+        {
+            GeneralTransform transform = childElement.TransformToVisual(parentElement);
+            return transform.TransformBounds(new Rect(0, 0, childElement.ActualWidth, childElement.ActualHeight));
+        }
+        bool firstRectInited = false;
+        private void rect_Loaded(object sender, RoutedEventArgs e)
+        {
+            var r = sender as Rectangle;
+            r.Loaded -= rect_Loaded;
+
+            if (!firstRectInited && zuzhi_listview.ContainerFromIndex(0) != null)
+            {
+                var grid = (zuzhi_listview.ContainerFromIndex(0) as ListViewItem).ContentTemplateRoot as Grid;
+                rect_current = grid.FindName("rect") as Rectangle;
+                rect_current.Opacity = 1;
+                firstRectInited = true;
             }
         }
     }
