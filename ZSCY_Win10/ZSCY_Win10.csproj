@@ -110,9 +110,6 @@
     <Content Include="Assets\AlphaLogo\Square150x150Logo.scale-400.png" />
     <Content Include="Assets\AlphaLogo\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\AlphaLogo\Square44x44Logo.scale-400.png" />
-    <Content Include="Assets\AlphaLogo\Square71x71Logo.scale-240.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\AlphaLogo\Square71x71Logo.scale-400.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -139,7 +136,8 @@
     <Content Include="Assets\Annex_img\Annex_xls.png" />
     <Content Include="Assets\Annex_img\Annex_zip.png" />
     <Content Include="Assets\back.png" />
-    <Content Include="Assets\BadgeLogo.scale-100.png" />
+    <Content Include="Assets\BadgeLogo.scale-200.png" />
+    <Content Include="Assets\BadgeLogo.scale-400.png" />
     <Content Include="Assets\base.jpg" />
     <Content Include="Assets\BlueLogo\Square150x150Logo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -229,12 +227,14 @@
     <Content Include="Assets\Square44x44Logo.scale-400.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Square71x71Logo.scale-200.png" />
     <Content Include="Assets\Square71x71Logo.scale-400.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\StarEmpty.png" />
     <Content Include="Assets\StarFilled.png" />
     <Content Include="Assets\starun.png" />
+    <Content Include="Assets\StoreLogo.scale-200.png" />
     <Content Include="Assets\StoreLogo.scale-400.png" />
     <Content Include="Assets\teacher_03.png" />
     <Content Include="Assets\tel.png" />
@@ -259,8 +259,6 @@
     <Content Include="Json\必备清单.json" />
     <Content Include="Json\junxun_tieshi.json" />
     <Content Include="Json\BigDate_Header_Lists.json" />
-    <None Include="ZSCY_Win10_StoreKey.pfx" />
-    <None Include="ZSCY_Win10_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutPage.xaml.cs">
@@ -1071,6 +1069,16 @@
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
