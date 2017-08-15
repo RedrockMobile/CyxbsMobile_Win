@@ -363,6 +363,8 @@
       <ReservedName>掌上重邮—重邮小帮手</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
-  <AccountPackageIdentityNames />
+  <AccountPackageIdentityNames>
+    <MainPackageIdentityName>26092662B8482.382918680B52F</MainPackageIdentityName>
+  </AccountPackageIdentityNames>
   <PackageInfoList LandingUrl="https://developer.microsoft.com/dashboard/Application?appId=9NBLGGH1ZRC6" />
 </StoreAssociation>
