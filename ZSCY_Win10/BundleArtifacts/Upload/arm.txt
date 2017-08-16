@@ -1,0 +1,7 @@
+MainPackage=C:\Users\Clever_Moon\Documents\GitHub\CyxbsMobile_Win\ZSCY_Win10\bin\ARM\Release\Upload\ZSCY_Win10_3.5.0.0_ARM.appx
+SymbolPackage=C:\Users\Clever_Moon\Documents\GitHub\CyxbsMobile_Win\ZSCY_Win10\bin\ARM\Release\Upload\ZSCY_Win10_3.5.0.0\ZSCY_Win10_3.5.0.0_ARM.appxsym
+ResourcePack=C:\Users\Clever_Moon\Documents\GitHub\CyxbsMobile_Win\ZSCY_Win10\_scale-100.appx
+ResourcePack=C:\Users\Clever_Moon\Documents\GitHub\CyxbsMobile_Win\ZSCY_Win10\_scale-125.appx
+ResourcePack=C:\Users\Clever_Moon\Documents\GitHub\CyxbsMobile_Win\ZSCY_Win10\_scale-150.appx
+ResourcePack=C:\Users\Clever_Moon\Documents\GitHub\CyxbsMobile_Win\ZSCY_Win10\_scale-240.appx
+ResourcePack=C:\Users\Clever_Moon\Documents\GitHub\CyxbsMobile_Win\ZSCY_Win10\_scale-400.appx
