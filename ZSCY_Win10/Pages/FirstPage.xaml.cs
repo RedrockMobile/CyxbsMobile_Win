@@ -54,7 +54,14 @@ namespace ZSCY.Pages
             if (e.NavigationMode == NavigationMode.New)
             {
                 viewmodel.Page_Height = this.Height;
-                viewmodel.Page_Width = this.ActualWidth;
+                if (this.Width >= 800)
+                {
+                    viewmodel.Page_Width = (this.Width - 30) / 2;
+                }
+                else
+                {
+                    viewmodel.Page_Width = this.Width;
+                }
             }
         }
 
@@ -77,8 +84,16 @@ namespace ZSCY.Pages
 
         private void FirstPage_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            //viewmodel.Page_Height = e.NewSize.Height;
-            viewmodel.Page_Width = 375;//375是个人认为比较合适的宽度
+            if (e.NewSize.Width <= 800)
+            {
+                viewmodel.Page_Height = e.NewSize.Height;
+                viewmodel.Page_Width = e.NewSize.Width;
+            }
+            else
+            {
+                viewmodel.Page_Height = e.NewSize.Height;
+                viewmodel.Page_Width = (e.NewSize.Width - 30) / 2;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

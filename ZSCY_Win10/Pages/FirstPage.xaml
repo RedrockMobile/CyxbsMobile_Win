@@ -133,17 +133,17 @@
                 <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>-->
-            <Button x:Name="b1" Grid.Row="1" HorizontalAlignment="Center" Style="{StaticResource FirstButtonStyle}" Click="Button_Click">
-                <Image Width="{Binding Page_Width}" Height="{Binding Page_Height}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="ms-appx:///Assets/首页1.0.png"></Image>
+            <Button x:Name="b1" Grid.Row="1"  Style="{StaticResource FirstButtonStyle}" Click="Button_Click">
+                <Image Width="{Binding Page_Width}" Height="{Binding Page_Height}" Source="ms-appx:///Assets/首页1.0.png"></Image>
             </Button>
-            <Button x:Name="b2" Grid.Row="2" HorizontalAlignment="Center" Style="{StaticResource FirstButtonStyle}" Click="Button_Click">
-                <Image Width="{Binding Page_Width}" Height="{Binding Page_Height}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="ms-appx:///Assets/首页2.0.png"></Image>
+            <Button x:Name="b2" Grid.Row="2"  Style="{StaticResource FirstButtonStyle}" Click="Button_Click">
+                <Image Width="{Binding Page_Width}" Height="{Binding Page_Height}" Source="ms-appx:///Assets/首页2.0.png"></Image>
             </Button>
-            <Button x:Name="b3" Grid.Row="3" HorizontalAlignment="Center" Style="{StaticResource FirstButtonStyle}" Click="Button_Click">
-                <Image Width="{Binding Page_Width}" Height="{Binding Page_Height}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="ms-appx:///Assets/首页3.0.png"></Image>
+            <Button x:Name="b3" Grid.Row="3" Style="{StaticResource FirstButtonStyle}" Click="Button_Click">
+                <Image Width="{Binding Page_Width}" Height="{Binding Page_Height}" Source="ms-appx:///Assets/首页3.0.png"></Image>
             </Button>
-            <Button x:Name="b4" Grid.Row="4" HorizontalAlignment="Center" Style="{StaticResource FirstButtonStyle}" Click="Button_Click">
-                <Image Width="{Binding Page_Width}" Height="{Binding Page_Height}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="ms-appx:///Assets/首页4.0.png"></Image>
+            <Button x:Name="b4" Grid.Row="4"  Style="{StaticResource FirstButtonStyle}" Click="Button_Click">
+                <Image Width="{Binding Page_Width}" Height="{Binding Page_Height}" Source="ms-appx:///Assets/首页4.0.png"></Image>
             </Button>
         </Grid>
         <Grid x:Name="second_frame_grid" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2">

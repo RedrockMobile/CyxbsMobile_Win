@@ -138,7 +138,7 @@ namespace ZSCY.Pages
             string result = null;
             try
             {
-                const string api = "http://www.yangruixin.com/test/apiForGuide.php?RequestType={0}";
+                const string api = "http://hongyan.cqupt.edu.cn/welcome/2017/api/apiForGuide.php?RequestType={0}";
                 HttpClient httpclient = new HttpClient();
                 HttpResponseMessage response = new HttpResponseMessage();
                 string Api = api.Replace("{0}", type);
