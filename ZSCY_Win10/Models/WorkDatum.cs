@@ -11,7 +11,8 @@
 
     public class WorkDatum
     {
-        public string college { get; set; }
-        public string ratio { get; set; }
+        public string company { get; set; }
+        public string peoples { get; set; }
     }
+
 }

@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ZSCY_Win10.Resouces">
 
-    <!--圆形进度条-->
+    <!--新生专题 -> 重邮数据-->
+    <!-- 圆形进度条-->
     <Style TargetType="local:CircularProgressBar">
         <Setter Property="Template">
             <Setter.Value>
@@ -30,6 +31,89 @@
                         <TextBlock Foreground="{TemplateBinding RingForegroundColor}" FontSize="15" HorizontalAlignment="Center" Margin="-58,8,0,0" Text="{TemplateBinding ProgressNumText}"></TextBlock>
                     </Grid>
                     <!--</Border>-->
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!--条形数据条-->
+    <Style TargetType="local:LineChart">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:LineChart">
+                    <!--
+                    <StackPanel Height="{TemplateBinding ChartHeight}"
+                                Width="{TemplateBinding ChartWidth}"
+                                Orientation="Horizontal">
+                        <TextBlock Text="{TemplateBinding Title}"
+                                   VerticalAlignment="Center"
+                                   TextAlignment="Center" />
+                        <Line x:Name="line"
+                              Stretch="Fill"
+                              Stroke="#98FCEE"
+                              StrokeEndLineCap="Round"
+                              StrokeStartLineCap="Round"
+                              StrokeThickness="16"
+                              X1="0"
+                              X2="{TemplateBinding ActualValue}"
+                              Margin="20 0 10 0" />
+                        <TextBlock Text="{TemplateBinding Label}"
+                                   VerticalAlignment="Center"
+                                   TextAlignment="Center"
+                                   FontSize="15"
+                                   FontWeight="Light" 
+                                   Foreground="Gray"/>
+                    -->
+                    <!-- 直接打人字 垃圾vs乱码 换为 utf-8 &#x4EBA; -->
+                    <!--
+                        <TextBlock Text="&#x4EBA;"
+                                   VerticalAlignment="Center"
+                                   TextAlignment="Center"
+                                   FontSize="13"
+                                   FontWeight="Light" 
+                                   Foreground="Gray"/>
+                    </StackPanel>
+                    -->
+                    <Canvas Height="{TemplateBinding ChartHeight}"
+                            Width="{TemplateBinding ChartWidth}">
+                        <TextBlock Text="{TemplateBinding Title}"
+                                   VerticalAlignment="Center"
+                                   TextAlignment="Center" 
+                                   FontSize="14"/>
+                        <StackPanel Orientation="Horizontal" 
+                                    Margin="200 0 0 0">
+                            <Line x:Name="line"
+                                    Stretch="Fill"
+                                    Stroke="#98FCEE"
+                                    StrokeEndLineCap="Round"
+                                    StrokeStartLineCap="Round"
+                                    StrokeThickness="14"
+                                    X1="0"
+                                    X2="{TemplateBinding ActualValue}"
+                                    Margin ="8 0 0 0"/>
+
+
+
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="8 0 0 0">
+                                <TextBlock Text="{TemplateBinding Label}"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center"
+                                               FontSize="15"
+                                               FontWeight="Light" 
+                                               Foreground="Gray"/>
+                                <!-- 直接打人字 垃圾vs乱码 换为 utf-8 &#x4EBA; -->
+                                <TextBlock Text="&#x4EBA;"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center"
+                                               FontSize="13"
+                                               FontWeight="Light" 
+                                               Foreground="Gray"/>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Canvas>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
