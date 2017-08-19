@@ -48,5 +48,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Header));
             }
         }
+
     }
 }

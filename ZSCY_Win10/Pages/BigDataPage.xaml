@@ -4,7 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ZSCY_Win10.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+
     xmlns:cpb ="using:ZSCY_Win10.Resouces"
+    xmlns:lc ="using:ZSCY_Win10.Resouces"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
@@ -408,9 +410,16 @@
         <Storyboard x:Name="black_background_sb">
             <DoubleAnimation From="0" To="0.5" Storyboard.TargetName="black_background" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4"></DoubleAnimation>
         </Storyboard>
-        <!--圆形数据条动画-->
-        <Storyboard x:Name="circularProgressBarAnimation">
-        </Storyboard>
+        <!--数据条动画-->
+        <!--<Storyboard x:Name="WorkRatioLineStoryboard">
+            <DoubleAnimation From="1" To="{Binding ActualValue}" Duration="00:00:5" 
+            Storyboard.TargetName="workLineChart" 
+            Storyboard.TargetProperty="ActualValue">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseInOut"></CircleEase>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>-->
 
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="#007ACC" />
@@ -439,7 +448,7 @@
         <Grid Grid.Row="1">
             <Pivot Name="Pivot" Style="{StaticResource CQUPT_BigDataPivotStyle}" Grid.Row="1" SelectionChanged="Pivot_SelectionChanged">
                 <!--菜单1 男女比例-->
-                <PivotItem Style="{StaticResource CQUPT_BigDataPivotItemStyle}">
+                <PivotItem Style="{StaticResource CQUPT_BigDataPivotItemStyle}" x:Name="testheader1">
                     <PivotItem.Header>
                         <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
                             <Grid.RenderTransform>
@@ -595,7 +604,7 @@
 
                 <!--菜单3 就业比列-->
                 <PivotItem Style="{StaticResource CQUPT_BigDataPivotItemStyle}">
-                    <PivotItem.Header>
+                    <PivotItem.Header >
                         <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
                             <Grid.RenderTransform>
                                 <TranslateTransform X="0" Y="2"></TranslateTransform>
@@ -608,58 +617,30 @@
                     <Grid Margin="0 15 0 0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-
-                        <StackPanel Grid.Row="0"  Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <ComboBox x:Name="workRatio_ComboBox" Header="请选择学院" Width="300"  DropDownClosed="workRatio_ComboBox_DropDownClosed">
-                                <ComboBox.ItemTemplate>
+                        <StackPanel Grid.Row="0"  Margin="0,50,0,0" VerticalAlignment="Center"  HorizontalAlignment="Center" Orientation="Vertical">
+                            
+                            <!--放弃lisview 改为stackpanel手动排列 为了动画-->
+                            <!--<ListView x:Name="workRatioListView" SelectionMode="None">
+                                <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding college}" />
-                                            <TextBlock Text="{Binding ratio}" Visibility="Collapsed" />
+                                        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+                                            <lc:LineChart x:Name="workLineChart" Title="{Binding company}" Label ="{Binding peoples}"  ActualValue="{Binding peoples}" ChartHeight ="30" ChartWidth="500" ></lc:LineChart>
                                         </StackPanel>
                                     </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
+                                </ListView.ItemTemplate>
+                            </ListView>-->
+                            <lc:LineChart x:Name="workLineChart_1"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
+                            <lc:LineChart x:Name="workLineChart_2"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
+                            <lc:LineChart x:Name="workLineChart_3"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
+                            <lc:LineChart x:Name="workLineChart_4"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
+                            <lc:LineChart x:Name="workLineChart_5"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
+                            <lc:LineChart x:Name="workLineChart_6"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
+                            <lc:LineChart x:Name="workLineChart_7"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
+                            <lc:LineChart x:Name="workLineChart_8"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
+                            <lc:LineChart x:Name="workLineChart_9"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
+                            <lc:LineChart x:Name="workLineChart_10"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
                         </StackPanel>
-                        <Grid Grid.Row="1" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0">
-
-                                <!--<Ellipse Width="255" Height="255" Stroke="CornflowerBlue" StrokeThickness="1"></Ellipse>-->
-                                <!--<Ellipse Width="250" Height="250" Stroke="CornflowerBlue" StrokeThickness="30"></Ellipse>-->
-
-                                <!--已就业-->
-                                <cpb:CircularProgressBar x:Name="WorkRatioCPB" CircularWidth="250.00" RingBackgroundColor="#F9FFFF" RingForegroundColor="#9EFCEE" RingWidth="30.00" ProgressNum="0.01" />
-                                <Ellipse Width="252" Height="252" Stroke="#DAFFF9" StrokeThickness="2"></Ellipse>
-                                <Ellipse Width="191" Height="191" Stroke="#DAFFF9" StrokeThickness="2"></Ellipse>
-
-                                <!--未就业-->
-                                <cpb:CircularProgressBar x:Name="UnemployedRatioCPB" CircularWidth="170.00" RingBackgroundColor="#F8FCFF" RingForegroundColor="#B8E4FD" RingWidth="30.00" ProgressNum="0.01" />
-                                <Ellipse Width="172" Height="172" Stroke="#D0F3FD" StrokeThickness="2"></Ellipse>
-                                <Ellipse Width="110" Height="110" Stroke="#D0F3FD" StrokeThickness="2"></Ellipse>
-                                <Grid>
-                                    <StackPanel Orientation="Vertical" Margin="-30,400,0,0">
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                <Ellipse Width="30" Height="30" Fill="#9EFCEE"></Ellipse>
-                                                <Ellipse Width="30" Height="30" Stroke="#70EBD5" StrokeThickness="2"></Ellipse>
-                                            </Grid>
-                                            <TextBlock Text="已就业" Foreground="Gray" FontSize="23" Margin="10,0,0,0"></TextBlock>
-                                        </StackPanel>
-                                        <TextBlock></TextBlock>
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                <Ellipse Width="30" Height="30" Fill="#B8E4FD"></Ellipse>
-                                                <Ellipse Width="30" Height="30" Stroke="#87D0EF" StrokeThickness="2"></Ellipse>
-                                            </Grid>
-                                            <TextBlock Text="未就业" Foreground="Gray" FontSize="23" Margin="10,0,0,0"></TextBlock>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </Grid>
-                            </Grid>
-                        </Grid>
                     </Grid>
                 </PivotItem>
             </Pivot>

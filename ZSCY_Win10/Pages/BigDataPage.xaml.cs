@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Tasks;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
@@ -17,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using ZSCY.Models;
 using ZSCY.Pages;
-
+using ZSCY_Win10.Resouces;
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
 namespace ZSCY_Win10.Pages
@@ -88,7 +89,7 @@ namespace ZSCY_Win10.Pages
             StorageFile file;
             string json = "";
             JObject json_object;
-            string uri = "";
+            string uri = "http://hongyan.cqupt.edu.cn/welcome/2017/api/apiRatio.php";
 
             #region 得到次级标题Header列表
 
@@ -109,7 +110,7 @@ namespace ZSCY_Win10.Pages
 
             #region 得到男女比例选择栏 -> 学院
 
-            uri = "http://www.yangruixin.com/test/apiRatio.php";
+            //uri = "http://www.yangruixin.com/test/apiRatio.php";
             List<KeyValuePair<String, String>> SexParamList = new List<KeyValuePair<String, String>>();
             SexParamList.Add(new KeyValuePair<string, string>("RequestType", "SexRatio"));
 
@@ -132,9 +133,9 @@ namespace ZSCY_Win10.Pages
 
             #region 得到就业率选择栏 -> 学院
 
-            uri = "http://www.yangruixin.com/test/apiRatio.php";
+            //uri = "http://www.yangruixin.com/test/apiRatio.php";
             List<KeyValuePair<String, String>> WorkParamList = new List<KeyValuePair<String, String>>();
-            WorkParamList.Add(new KeyValuePair<string, string>("RequestType", "WorkRatio"));
+            WorkParamList.Add(new KeyValuePair<string, string>("RequestType", "DataOfJob"));
 
             json = await ZSCY.Models.NewStudentsPageNetworkRequest.NetworkRequest(uri, WorkParamList, 0);
 
@@ -148,14 +149,26 @@ namespace ZSCY_Win10.Pages
                     workList.Add(item);
                 }
                 //绑定数据
-                workRatio_ComboBox.ItemsSource = workList;
+                //workRatioListView.ItemsSource = workList;
+                //Listview 中 datatemple 导致 无法拿到x:name 
+                //放弃listview 改为手动的 stackpanel排列  = =! 
+                workLineChart_1.Title = workList[0].company;workLineChart_1.Label = workList[0].peoples;workLineChart_1.ActualValue = Convert.ToDouble(workList[0].peoples);
+                workLineChart_2.Title = workList[1].company; workLineChart_2.Label = workList[1].peoples; workLineChart_2.ActualValue = Convert.ToDouble(workList[1].peoples);
+                workLineChart_3.Title = workList[2].company; workLineChart_3.Label = workList[2].peoples; workLineChart_3.ActualValue = Convert.ToDouble(workList[2].peoples);
+                workLineChart_4.Title = workList[3].company; workLineChart_4.Label = workList[3].peoples; workLineChart_4.ActualValue = Convert.ToDouble(workList[3].peoples);
+                workLineChart_5.Title = workList[4].company; workLineChart_5.Label = workList[4].peoples; workLineChart_5.ActualValue = Convert.ToDouble(workList[4].peoples);
+                workLineChart_6.Title = workList[5].company; workLineChart_6.Label = workList[5].peoples; workLineChart_6.ActualValue = Convert.ToDouble(workList[5].peoples);
+                workLineChart_7.Title = workList[6].company; workLineChart_7.Label = workList[6].peoples; workLineChart_7.ActualValue = Convert.ToDouble(workList[6].peoples);
+                workLineChart_8.Title = workList[7].company; workLineChart_8.Label = workList[7].peoples; workLineChart_8.ActualValue = Convert.ToDouble(workList[7].peoples);
+                workLineChart_9.Title = workList[8].company; workLineChart_9.Label = workList[8].peoples; workLineChart_9.ActualValue = Convert.ToDouble(workList[8].peoples);
+                workLineChart_10.Title = workList[9].company; workLineChart_10.Label = workList[9].peoples; workLineChart_10.ActualValue = Convert.ToDouble(workList[9].peoples);
             }
 
             #endregion 得到就业率选择栏 -> 学院
 
             #region 得到最难科目选择栏 -> 学院+专业
 
-            uri = "http://www.yangruixin.com/test/apiRatio.php";
+            //uri = "http://www.yangruixin.com/test/apiRatio.php";
             List<KeyValuePair<String, String>> FailParamList = new List<KeyValuePair<String, String>>();
             FailParamList.Add(new KeyValuePair<string, string>("RequestType", "FailPlus"));
 
@@ -178,9 +191,12 @@ namespace ZSCY_Win10.Pages
             #endregion 得到最难科目选择栏 -> 学院+专业
         }
 
+       
+
         //Pivot.Header 切换效果实现  (有bug)
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            #region 标题切换
             try
             {
                 if (Pivot.SelectedIndex < 0)
@@ -197,6 +213,57 @@ namespace ZSCY_Win10.Pages
             {
                 return;
             }
+            #endregion
+
+            //就业数据动画
+            #region 就业数据动画
+            Debug.WriteLine("PivotHeader Index is " + Pivot.SelectedIndex );
+            if(Pivot.SelectedIndex == 2)
+            {
+                try
+                {
+                    //WorkRatioLineStoryboard.Begin();
+                    //动画
+                    WorkLineStoryboardBegin(workLineChart_1);
+                    WorkLineStoryboardBegin(workLineChart_2);
+                    WorkLineStoryboardBegin(workLineChart_3);
+                    WorkLineStoryboardBegin(workLineChart_4);
+                    WorkLineStoryboardBegin(workLineChart_5);
+                    WorkLineStoryboardBegin(workLineChart_6);
+                    WorkLineStoryboardBegin(workLineChart_7);
+                    WorkLineStoryboardBegin(workLineChart_8);
+                    WorkLineStoryboardBegin(workLineChart_9);
+                    WorkLineStoryboardBegin(workLineChart_10);
+
+                }
+                catch(Exception)
+                {
+                    return;
+                }
+            }
+            #endregion
+        }
+
+        private void WorkLineStoryboardBegin(LineChart item)
+        {
+            CircleEase circleEase = new CircleEase();
+            circleEase.EasingMode = EasingMode.EaseInOut;
+
+            var storyBoard = new Storyboard();
+
+            var extendAnimation = new DoubleAnimation { Duration = new Duration(TimeSpan.FromSeconds(0.5)), From = 0, To = item.ActualValue, EnableDependentAnimation = true };
+
+            extendAnimation.EasingFunction = circleEase;
+
+            Storyboard.SetTarget(extendAnimation, item);
+            Storyboard.SetTargetProperty(extendAnimation, "ActualValue");
+
+            extendAnimation.EasingFunction = circleEase;
+            storyBoard.Children.Add(extendAnimation);
+
+
+            storyBoard.AutoReverse = false;
+            storyBoard.Begin();
         }
 
         private void PC_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e)
@@ -289,50 +356,6 @@ namespace ZSCY_Win10.Pages
             extendAnimation2.EasingFunction = circleEase;
 
             Storyboard.SetTarget(extendAnimation2, WomenRatioCPB);
-            Storyboard.SetTargetProperty(extendAnimation2, "ProgressNum");
-
-            storyBoard.Children.Add(extendAnimation1);
-            storyBoard.Children.Add(extendAnimation2);
-
-            storyBoard.AutoReverse = false;
-            storyBoard.Begin();
-        }
-
-        //脑残版数据绑定  就业率比例
-        private void workRatio_ComboBox_DropDownClosed(object sender, object e)
-        {
-            if (workRatio_ComboBox.SelectedItem == null)
-                return;
-
-            int index = workRatio_ComboBox.SelectedIndex;
-
-            double __workRatio = Convert.ToDouble(workList[index].ratio);
-            double __unemployedRatio = 1 - __workRatio;
-
-            //保留两位小数
-            double _workRatio = Math.Round(__workRatio, 2);
-            double _unemployedRatio = Math.Round(__unemployedRatio, 2);
-            Debug.WriteLine("workRatio_ComboBox.SelectedIndex " + index);
-            Debug.WriteLine(_workRatio + "    " + _unemployedRatio);
-
-            //storyboard 定义的动画最后的 to已赋值 不需要赋值
-            //WorkRatioCPB.ProgressNum = _workRatio;
-            // UnemployedRatioCPB.ProgressNum = _unemployedRatio;
-
-            //动画
-            CircleEase circleEase = new CircleEase();
-            circleEase.EasingMode = EasingMode.EaseInOut;
-            var storyBoard = new Storyboard();
-            var extendAnimation1 = new DoubleAnimation { Duration = new Duration(TimeSpan.FromSeconds(0.5)), From = 0, To = _workRatio, EnableDependentAnimation = true };
-
-            extendAnimation1.EasingFunction = circleEase;
-            Storyboard.SetTarget(extendAnimation1, WorkRatioCPB);
-            Storyboard.SetTargetProperty(extendAnimation1, "ProgressNum");
-
-            var extendAnimation2 = new DoubleAnimation { Duration = new Duration(TimeSpan.FromSeconds(0.5)), From = 0, To = _unemployedRatio, EnableDependentAnimation = true };
-
-            extendAnimation2.EasingFunction = circleEase;
-            Storyboard.SetTarget(extendAnimation2, UnemployedRatioCPB);
             Storyboard.SetTargetProperty(extendAnimation2, "ProgressNum");
 
             storyBoard.Children.Add(extendAnimation1);

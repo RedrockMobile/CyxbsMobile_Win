@@ -542,6 +542,7 @@
     <Compile Include="Resouces\Api.cs" />
     <Compile Include="Resouces\APPTheme.cs" />
     <Compile Include="Resouces\CircularProgressBar.cs" />
+    <Compile Include="Resouces\LineChart.cs" />
     <Compile Include="Service\CommunityFeedsService.cs" />
     <Compile Include="Service\CommunityMyContentService.cs" />
     <Compile Include="Service\CommunityPersonInfoService.cs" />
