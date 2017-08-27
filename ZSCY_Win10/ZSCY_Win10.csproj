@@ -20,7 +20,7 @@
     <PackageCertificateKeyFile>ZSCY_Win10_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>23260B373F7E477BFC3D53B2B6DBB3B4A7C9EA44</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>55565609E5575E5DD76F2F54ADE9DB07A2DCCEC8</PackageCertificateThumbprint>
     <AppxBundle>Always</AppxBundle>
     <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
   </PropertyGroup>

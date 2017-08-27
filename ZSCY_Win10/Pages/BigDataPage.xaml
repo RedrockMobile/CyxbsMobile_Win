@@ -426,7 +426,7 @@
         </Style>
     </Page.Resources>
 
-    <Grid x:Name="RootGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="RootGrid" x:FieldModifier="Public" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
             <RowDefinition Height="*" />
@@ -446,7 +446,7 @@
         </Grid>
         <!--数据页面-->
         <Grid Grid.Row="1">
-            <Pivot Name="Pivot" Style="{StaticResource CQUPT_BigDataPivotStyle}" Grid.Row="1" SelectionChanged="Pivot_SelectionChanged">
+            <Pivot Name="myPivot" Style="{StaticResource CQUPT_BigDataPivotStyle}" Grid.Row="1" SelectionChanged="Pivot_SelectionChanged">
                 <!--菜单1 男女比例-->
                 <PivotItem Style="{StaticResource CQUPT_BigDataPivotItemStyle}" x:Name="testheader1">
                     <PivotItem.Header>
@@ -619,27 +619,19 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0"  Margin="0,50,0,0" VerticalAlignment="Center"  HorizontalAlignment="Center" Orientation="Vertical">
-                            
-                            <!--放弃lisview 改为stackpanel手动排列 为了动画-->
-                            <!--<ListView x:Name="workRatioListView" SelectionMode="None">
+
+                            <ListView x:Name="workRatioListView" SelectionMode="None">
                                 <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+                                    <DataTemplate >
+                                        <!--<StackPanel x:Name="workRatioStackPanel" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
                                             <lc:LineChart x:Name="workLineChart" Title="{Binding company}" Label ="{Binding peoples}"  ActualValue="{Binding peoples}" ChartHeight ="30" ChartWidth="500" ></lc:LineChart>
-                                        </StackPanel>
+                                        </StackPanel>-->
+                                        <!--不能套StackPanel visual tree helper 会找不到x:name-->
+                                        <lc:LineChart x:Name="workLineChart" Title="{Binding company}" Label ="{Binding peoples}"  ActualValue="{Binding peoples}" ChartHeight ="30" ChartWidth="500" ></lc:LineChart>
+
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
-                            </ListView>-->
-                            <lc:LineChart x:Name="workLineChart_1"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
-                            <lc:LineChart x:Name="workLineChart_2"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
-                            <lc:LineChart x:Name="workLineChart_3"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
-                            <lc:LineChart x:Name="workLineChart_4"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
-                            <lc:LineChart x:Name="workLineChart_5"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
-                            <lc:LineChart x:Name="workLineChart_6"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
-                            <lc:LineChart x:Name="workLineChart_7"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
-                            <lc:LineChart x:Name="workLineChart_8"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
-                            <lc:LineChart x:Name="workLineChart_9"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
-                            <lc:LineChart x:Name="workLineChart_10"  ChartHeight ="40" ChartWidth="500" ></lc:LineChart>
+                            </ListView>
                         </StackPanel>
                     </Grid>
                 </PivotItem>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.UI.Xaml;
@@ -8,6 +9,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Shapes;
+using ZSCY.Pages;
+using ZSCY_Win10.Pages;
 // The Templated Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234235
 
 
@@ -17,9 +22,10 @@ namespace ZSCY_Win10.Resouces
     {
         public LineChart()
         {
-            this.DefaultStyleKey = typeof(LineChart); 
-           
+            this.DefaultStyleKey = typeof(LineChart);
+ 
         }
+
 
         public double ChartHeight
         {

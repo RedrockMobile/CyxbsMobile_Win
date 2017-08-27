@@ -75,7 +75,7 @@ namespace ZSCY_Win10.Pages
             {
                 await First_Step();
                 await Task.Delay(100);
-                Pivot.SelectedIndex = pivot_index = 0;
+                myPivot.SelectedIndex = pivot_index = 0;
                 //载入界面显示的第一个 pivot index是0，手动隐藏 index 1/2的 横线
                 Line2.Visibility = Line3.Visibility = Visibility.Collapsed;
                 //载入界面显示的第一个 pivot index是0，手动改变index 1/2的颜色
@@ -149,19 +149,9 @@ namespace ZSCY_Win10.Pages
                     workList.Add(item);
                 }
                 //绑定数据
-                //workRatioListView.ItemsSource = workList;
+                workRatioListView.ItemsSource = workList;
                 //Listview 中 datatemple 导致 无法拿到x:name 
                 //放弃listview 改为手动的 stackpanel排列  = =! 
-                workLineChart_1.Title = workList[0].company;workLineChart_1.Label = workList[0].peoples;workLineChart_1.ActualValue = Convert.ToDouble(workList[0].peoples);
-                workLineChart_2.Title = workList[1].company; workLineChart_2.Label = workList[1].peoples; workLineChart_2.ActualValue = Convert.ToDouble(workList[1].peoples);
-                workLineChart_3.Title = workList[2].company; workLineChart_3.Label = workList[2].peoples; workLineChart_3.ActualValue = Convert.ToDouble(workList[2].peoples);
-                workLineChart_4.Title = workList[3].company; workLineChart_4.Label = workList[3].peoples; workLineChart_4.ActualValue = Convert.ToDouble(workList[3].peoples);
-                workLineChart_5.Title = workList[4].company; workLineChart_5.Label = workList[4].peoples; workLineChart_5.ActualValue = Convert.ToDouble(workList[4].peoples);
-                workLineChart_6.Title = workList[5].company; workLineChart_6.Label = workList[5].peoples; workLineChart_6.ActualValue = Convert.ToDouble(workList[5].peoples);
-                workLineChart_7.Title = workList[6].company; workLineChart_7.Label = workList[6].peoples; workLineChart_7.ActualValue = Convert.ToDouble(workList[6].peoples);
-                workLineChart_8.Title = workList[7].company; workLineChart_8.Label = workList[7].peoples; workLineChart_8.ActualValue = Convert.ToDouble(workList[7].peoples);
-                workLineChart_9.Title = workList[8].company; workLineChart_9.Label = workList[8].peoples; workLineChart_9.ActualValue = Convert.ToDouble(workList[8].peoples);
-                workLineChart_10.Title = workList[9].company; workLineChart_10.Label = workList[9].peoples; workLineChart_10.ActualValue = Convert.ToDouble(workList[9].peoples);
             }
 
             #endregion 得到就业率选择栏 -> 学院
@@ -193,21 +183,21 @@ namespace ZSCY_Win10.Pages
 
        
 
-        //Pivot.Header 切换效果实现  (有bug)
+        //myPivot.Header 切换效果实现  (有bug)
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             #region 标题切换
             try
             {
-                if (Pivot.SelectedIndex < 0)
+                if (myPivot.SelectedIndex < 0)
                 {
-                    Pivot.SelectedIndex = pivot_index = 0;
+                    myPivot.SelectedIndex = pivot_index = 0;
                 }
-                (((Pivot.Items[pivot_index] as PivotItem).Header as Grid).Children[0] as TextBlock).Foreground = App.APPTheme.Content_Header_Color_Brush;
-                (((Pivot.Items[pivot_index] as PivotItem).Header as Grid).Children[1] as Line).Visibility = Visibility.Collapsed;
-                pivot_index = Pivot.SelectedIndex;
-                (((Pivot.Items[pivot_index] as PivotItem).Header as Grid).Children[0] as TextBlock).Foreground = App.APPTheme.APP_Color_Brush;
-                (((Pivot.Items[pivot_index] as PivotItem).Header as Grid).Children[1] as Line).Visibility = Visibility.Visible;
+                (((myPivot.Items[pivot_index] as PivotItem).Header as Grid).Children[0] as TextBlock).Foreground = App.APPTheme.Content_Header_Color_Brush;
+                (((myPivot.Items[pivot_index] as PivotItem).Header as Grid).Children[1] as Line).Visibility = Visibility.Collapsed;
+                pivot_index = myPivot.SelectedIndex;
+                (((myPivot.Items[pivot_index] as PivotItem).Header as Grid).Children[0] as TextBlock).Foreground = App.APPTheme.APP_Color_Brush;
+                (((myPivot.Items[pivot_index] as PivotItem).Header as Grid).Children[1] as Line).Visibility = Visibility.Visible;
             }
             catch (Exception)
             {
@@ -215,28 +205,55 @@ namespace ZSCY_Win10.Pages
             }
             #endregion
 
+
             //就业数据动画
             #region 就业数据动画
-            Debug.WriteLine("PivotHeader Index is " + Pivot.SelectedIndex );
-            if(Pivot.SelectedIndex == 2)
+            Debug.WriteLine("PivotHeader Index is " + myPivot.SelectedIndex );
+
+            if(myPivot.SelectedIndex == 2)
             {
                 try
                 {
-                    //WorkRatioLineStoryboard.Begin();
-                    //动画
-                    WorkLineStoryboardBegin(workLineChart_1);
-                    WorkLineStoryboardBegin(workLineChart_2);
-                    WorkLineStoryboardBegin(workLineChart_3);
-                    WorkLineStoryboardBegin(workLineChart_4);
-                    WorkLineStoryboardBegin(workLineChart_5);
-                    WorkLineStoryboardBegin(workLineChart_6);
-                    WorkLineStoryboardBegin(workLineChart_7);
-                    WorkLineStoryboardBegin(workLineChart_8);
-                    WorkLineStoryboardBegin(workLineChart_9);
-                    WorkLineStoryboardBegin(workLineChart_10);
+                    //Sun, 27 Aug 2017 16:34:35 GMT
+                    //改用VisualTreeHelper 
+                    //动画不完美 第一次切入无动画 随后切换才会显示
+                    //应该是 手动设置pivot header index的原因
+                    List<LineChart> myLineChartList = new List<LineChart>();
+                    FindChildren<LineChart>(myLineChartList, workRatioListView);
+                    Debug.WriteLine("LineChart has been found! Total: " + myLineChartList.Count);
+                    foreach (var _lineChart in myLineChartList)
+                    {
+                        if (_lineChart != null)
+                        {
+                            
+                            LineChart lineChart = _lineChart as LineChart;
 
+                            CircleEase circleEase = new CircleEase();
+                            circleEase.EasingMode = EasingMode.EaseInOut;
+
+                            var storyBoard = new Storyboard();
+
+                            var extendAnimation = new DoubleAnimation { Duration = new Duration(TimeSpan.FromSeconds(0.5)), From = 0, To = lineChart.ActualValue, EnableDependentAnimation = true };
+
+                            extendAnimation.EasingFunction = circleEase;
+
+                            Storyboard.SetTarget(extendAnimation, lineChart);
+                            Storyboard.SetTargetProperty(extendAnimation, "ActualValue");
+
+                            extendAnimation.EasingFunction = circleEase;
+                            storyBoard.Children.Add(extendAnimation);
+
+
+                            storyBoard.AutoReverse = false;
+                            storyBoard.Begin();
+                        }
+
+                    }
+                    // LineChart _lineChart = FindFirstVisualChild<LineChart>(workRatioListView, "workLineChart");
+                    
+                    
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     return;
                 }
@@ -244,27 +261,64 @@ namespace ZSCY_Win10.Pages
             #endregion
         }
 
-        private void WorkLineStoryboardBegin(LineChart item)
+
+
+        //遍历实例化树
+        internal static void FindChildren<T>(List<T> results, DependencyObject startNode)
+  where T : DependencyObject
         {
-            CircleEase circleEase = new CircleEase();
-            circleEase.EasingMode = EasingMode.EaseInOut;
-
-            var storyBoard = new Storyboard();
-
-            var extendAnimation = new DoubleAnimation { Duration = new Duration(TimeSpan.FromSeconds(0.5)), From = 0, To = item.ActualValue, EnableDependentAnimation = true };
-
-            extendAnimation.EasingFunction = circleEase;
-
-            Storyboard.SetTarget(extendAnimation, item);
-            Storyboard.SetTargetProperty(extendAnimation, "ActualValue");
-
-            extendAnimation.EasingFunction = circleEase;
-            storyBoard.Children.Add(extendAnimation);
-
-
-            storyBoard.AutoReverse = false;
-            storyBoard.Begin();
+            int count = VisualTreeHelper.GetChildrenCount(startNode);
+            for (int i = 0; i < count; i++)
+            {
+                DependencyObject current = VisualTreeHelper.GetChild(startNode, i);
+                if ((current.GetType()).Equals(typeof(T)) || (current.GetType().GetTypeInfo().IsSubclassOf(typeof(T))))
+                {
+                    T asType = (T)current;
+                    results.Add(asType);
+                }
+                FindChildren<T>(results, current);
+            }
         }
+        
+        private childItem FindVisualChild<childItem>(DependencyObject obj)
+    where childItem : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                if (child != null && child is childItem)
+                    return (childItem)child;
+                else
+                {
+                    childItem childOfChild = FindVisualChild<childItem>(child);
+                    if (childOfChild != null)
+                        return childOfChild;
+                }
+            }
+            return null;
+        }
+        public T FindFirstVisualChild<T>(DependencyObject obj, string childName) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                if (child != null && child is T && child.GetValue(NameProperty).ToString() == childName)
+                {
+                    return (T)child;
+                }
+                else
+                {
+                    T childOfChild = FindFirstVisualChild<T>(child, childName);
+                    if (childOfChild != null)
+                    {
+                        return childOfChild;
+                    }
+                }
+            }
+            return null;
+        }
+
+       
 
         private void PC_BackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e)
         {
