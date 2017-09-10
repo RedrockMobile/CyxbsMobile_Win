@@ -82,19 +82,19 @@ namespace ZSCY_Win10.ViewModels.StartPage
             foreach (var item in imageList.Data)
             {
                 DateTime tempTime = StartPageHelp.GetTime(item.StartTime);
-#if DEBUG
-                string imageName = item.ImageUrl.Substring(item.ImageUrl.LastIndexOf('/') + 1);
-                dbTemp.Name = item.Name;
-                dbTemp.StartTime = item.StartTime;
-                dbTemp.TargetUrl = item.TargetUrl;
-                dbTemp.Id = item.Id;
-                dbTemp.Url = StartPageHelp.ImagesPath.Path + "\\" + imageName;
-                if (StartPageHelp.InserDatabase(dbTemp))
-                {
-                    await StartPageHelp.DownloadPictrue(item.ImageUrl, imageName);
-                }
-#else
-                if (tempTime > DateTime.Now)
+
+                //string imageName = item.ImageUrl.Substring(item.ImageUrl.LastIndexOf('/') + 1);
+                //dbTemp.Name = item.Name;
+                //dbTemp.StartTime = item.StartTime;
+                //dbTemp.TargetUrl = item.TargetUrl;
+                //dbTemp.Id = item.Id;
+                //dbTemp.Url = StartPageHelp.ImagesPath.Path + "\\" + imageName;
+                //if (StartPageHelp.InserDatabase(dbTemp))
+                //{
+                //    await StartPageHelp.DownloadPictrue(item.ImageUrl, imageName);
+                //}
+
+                if (tempTime > DateTime.Now.AddHours(-12))
                 {
                     string imageName = item.ImageUrl.Substring(item.ImageUrl.LastIndexOf('/') + 1);
                     dbTemp.Name = item.Name;
@@ -107,7 +107,8 @@ namespace ZSCY_Win10.ViewModels.StartPage
                         await StartPageHelp.DownloadPictrue(item.ImageUrl, imageName);
                     }
                 }
-#endif
+
+
             }
         }
 
