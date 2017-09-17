@@ -94,7 +94,7 @@ namespace ZSCY_Win10.ViewModels.StartPage
                 //    await StartPageHelp.DownloadPictrue(item.ImageUrl, imageName);
                 //}
                 //24小时内显示
-                if (tempTime > DateTime.Now.AddHours(-24))
+                if (tempTime > DateTime.Now.AddHours(-24)&&DateTime.Now>tempTime)
                 {
                     string imageName = item.ImageUrl.Substring(item.ImageUrl.LastIndexOf('/') + 1);
                     dbTemp.Name = item.Name;
