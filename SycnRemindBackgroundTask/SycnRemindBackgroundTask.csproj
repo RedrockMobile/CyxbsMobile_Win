@@ -119,7 +119,7 @@
     <SDKReference Include="Microsoft.VCLibs.120, Version=14.0">
       <Name>Microsoft Visual C++ 2013 Runtime Package for Windows Universal</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.20.0">
+    <SDKReference Include="SQLite.UWP.2015, Version=3.20.1">
       <Name>SQLite for Universal Windows Platform</Name>
     </SDKReference>
   </ItemGroup>
@@ -136,6 +136,9 @@
     <PackageReference Include="SQLite.Net-PCL">
       <Version>3.1.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

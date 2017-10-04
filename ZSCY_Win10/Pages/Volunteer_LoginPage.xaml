@@ -1,11 +1,11 @@
 ﻿<Page
-    x:Class="ZSCY_Win10.LoginPage"
+    x:Class="ZSCY_Win10.Pages.Volunteer_LoginPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ZSCY_Win10.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
     <Page.Resources>
 
         <!--圆角button-->
@@ -21,17 +21,6 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <!--<Border BorderBrush="{TemplateBinding Control.BorderBrush}" BorderThickness="0" CornerRadius="5" Name="PART_Background">
-                            <Border.Background>
-                                -->
-                        <!--<LinearGradientBrush EndPoint="0,0" StartPoint="0,0">
-                                    <GradientStop Color="#3CC3F5" Offset="0.5" />
-                                </LinearGradientBrush>-->
-                        <!--
-                                <SolidColorBrush Color="#3CC3F5"></SolidColorBrush>
-                            </Border.Background>
-                            <ContentPresenter Content="{TemplateBinding ContentControl.Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>-->
                         <Grid x:Name="Grid">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
@@ -110,44 +99,35 @@
             </Setter>
         </Style>
     </Page.Resources>
-    <Grid x:Name="grid" Background="#068cfd" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="VisualStateGroup">
-                <VisualState x:Name="VisualState000">
-                    <VisualState.Setters>
-                        <Setter Target="MainStackPanel.(StackPanel.Orientation)" Value="Vertical" />
-                    </VisualState.Setters>
-                </VisualState>
-
-                <VisualState x:Name="VisualState600">
-                    <VisualState.Setters>
-                        <Setter Target="MainStackPanel.(StackPanel.Orientation)" Value="Horizontal" />
-                        <Setter Target="stackPanel.(FrameworkElement.VerticalAlignment)" Value="Top" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-
-        <StackPanel Name="MainStackPanel" Orientation="Vertical" HorizontalAlignment="Center"  Margin="0,100,0,0">
-            <Image  Source="Assets\Logo.png" VerticalAlignment="Top" Margin="15,0,15,15" Height="150" Width="150" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"></Image>
-            <StackPanel x:Name="stackPanel" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Grid  Width="200">
-                    <TextBox Background="White" Width="200"  Name="StuNumTextBox" InputScope="Number" PlaceholderText="学号" Foreground="Black" TextChanged="StuNumTextBox_TextChanged" KeyUp="TextBox_KeyUp" />
-                </Grid>
-                <Grid Background="White" Margin="0,10,0,0" Width="200">
-                    <PasswordBox Background="White" Width="200"  Name="IdNumPasswordBox" PlaceholderText="身份证后六位" Foreground="Black" PasswordChanged="IdNumPasswordBox_PasswordChanged" KeyUp="TextBox_KeyUp"></PasswordBox>
-                </Grid>
-                <Grid Margin="0,20,0,0" Width="200">
-                    <Grid  Width="200">
-                        <StackPanel>
-
-                        <Button Name="LoginButton" Content="登 录" Style="{StaticResource RoundButton}"  IsEnabled="False" HorizontalAlignment="Stretch" Click="LoginButton_Click" Foreground="White" Background="#FF2884F3" />
-                        <Button Name="noLoginButton" Content="随便看看" Style="{StaticResource RoundButton}"  IsEnabled="True" HorizontalAlignment="Stretch" Click="noLoginButton_Click" Foreground="White" Background="LightGray" />
-                        </StackPanel>
-                        <ProgressRing VerticalAlignment="Center" Name="LoginProgressBar" IsActive="False" Width="50" Height="50" Margin="0,5,0,0"  Foreground="White" />
-                    </Grid>
-                </Grid>
-            </StackPanel>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Image Source="ms-appx:///Assets/VolunteerPage_background.png" Stretch="UniformToFill"></Image>
+        <StackPanel >
+            <TextBlock Name="Title" 
+                   Text="完善信息" 
+                   FontSize="25"
+                   HorizontalAlignment="Center"
+                   Foreground="White"
+                   Opacity="0.85"
+                   FontWeight="Bold"></TextBlock>
+            <TextBlock Height="300"></TextBlock>
+            <Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Image Source="ms-appx:///Assets/user_name.png"></Image>
+                    <TextBox Name="user_name" Width="{Binding ElementWidth1}" BorderThickness="0"   PlaceholderText="请输入暖青汇帐号" HorizontalAlignment="Center">
+                    </TextBox>
+                </StackPanel>
+            </Grid>
+            
+            <TextBlock Height="20"></TextBlock>
+            <Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Image Source="ms-appx:///Assets/user_password.png"></Image>
+                    <PasswordBox Name="user_password" Width="{Binding ElementWidth1}" BorderThickness="0" IsPasswordRevealButtonEnabled="True" PlaceholderText="请输入密码" HorizontalAlignment="Center"></PasswordBox>
+                </StackPanel>
+            </Grid>
+            <TextBlock Height="20"></TextBlock>
+            <Button Name="login_Button" Width="{Binding ElementWidth1}" Style="{ StaticResource RoundButton}" HorizontalAlignment="Center" Content="保存"  Click="login_Button_Click"></Button>
+            <ProgressRing Name="loading_progress" IsActive="False" Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Center"></ProgressRing>
         </StackPanel>
     </Grid>
 </Page>

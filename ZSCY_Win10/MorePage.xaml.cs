@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Navigation;
 using ZSCY.Pages;
 using ZSCY_Win10.Common;
 using ZSCY_Win10.Data;
+using ZSCY_Win10.Pages;
 using ZSCY_Win10.Pages.ElectricChargeCheckPages;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
@@ -196,6 +197,12 @@ namespace ZSCY_Win10
                             msgPopup.ShowWIndow();
                             break;
                         }
+                    case "Volunteer":
+                        MoreFrame.Navigate(typeof(VolunteerPage));
+                        MoreFrame.Visibility = Visibility.Visible;
+                        isFreeRe = 0;
+                        break;
+
                     case "Exam":
                         //if (appSetting.Values.ContainsKey("idNum"))
                         if (count > 0)
