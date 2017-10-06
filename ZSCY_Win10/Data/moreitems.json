@@ -25,12 +25,6 @@
       "Itemimgsrc": "Assets/more_reexam333.png"
     },
     {
-      "UniqueId": "Volunteer",
-      "Itemname": "志愿查询",
-      "ItemPage": "VolunteerPage",
-      "Itemimgsrc": "Assets/vticon.png"
-    },
-    {
       "UniqueId": "Socre",
       "Itemname": "成绩查询",
       "ItemPage": "ScorePage",
