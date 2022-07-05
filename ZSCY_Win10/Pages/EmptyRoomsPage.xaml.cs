@@ -82,16 +82,13 @@ namespace ZSCY.Pages
         /// <param name="e">描述如何访问此页的事件数据。
         /// 此参数通常用于配置页。</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            UmengSDK.UmengAnalytics.TrackPageStart("EmptyRoomsPage");
-        }
+        { }
 
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             //StatusBar statusBar = StatusBar.GetForCurrentView();
             //await statusBar.ProgressIndicator.HideAsync();
-            UmengSDK.UmengAnalytics.TrackPageEnd("EmptyRoomsPage");
         }
 
         private void Time08Grid_Tapped(object sender, TappedRoutedEventArgs e)

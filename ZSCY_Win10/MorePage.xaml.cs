@@ -80,17 +80,13 @@ namespace ZSCY_Win10
             var group = await DataSource.Get();
             this.Morepageclass["Group"] = group;
             InitMore();
-            UmengSDK.UmengAnalytics.TrackPageStart("MorePage");
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            UmengSDK.UmengAnalytics.TrackPageEnd("MorePage");
-        }
+        { }
 
         private void InitMore()
-        {
-        }
+        { }
 
         public Frame MoreFrame { get { return this.frame; } }
 
@@ -279,12 +275,6 @@ namespace ZSCY_Win10
                     case "Card":
                         var a = await Launcher.LaunchUriAsync(new Uri("cquptcard:"));
                         MoreFrame.Visibility = Visibility.Collapsed;
-                        break;
-
-                    case "freshMan":
-                        Frame.Navigate(typeof(FirstPage));
-                        MoreFrame.Visibility = Visibility.Collapsed;
-                        isFreeRe = 0;
                         break;
 
                     case "Electricity":

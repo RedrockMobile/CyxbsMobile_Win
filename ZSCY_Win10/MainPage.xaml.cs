@@ -25,7 +25,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using ZSCY_Win10.Controls;
-using ZSCY_Win10.Pages.LostAndFoundPages;
 using ZSCY_Win10.Util;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
@@ -51,12 +50,6 @@ namespace ZSCY_Win10
                     Image = "ms-appx:///Assets/iconfont-table.png",
                     Label = "我的课表",
                     DestPage = typeof(KBPage)
-                },
-                new NavMenuItem()
-                {
-                    Image = "ms-appx:///Assets/Lost and Found-50.png",
-                    Label = "失物招领",
-                    DestPage = typeof(LostAndFoundPage)
                 },
                 new NavMenuItem()
                 {

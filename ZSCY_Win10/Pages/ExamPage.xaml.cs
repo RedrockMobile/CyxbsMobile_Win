@@ -49,7 +49,6 @@ namespace ZSCY.Pages
             IsExamOrRe = System.Int32.Parse(e.Parameter.ToString());
             initExam();
             this.progress.IsActive = false;
-            UmengSDK.UmengAnalytics.TrackPageStart("ExamPage");
         }
 
         private async void initExam()
@@ -166,7 +165,6 @@ namespace ZSCY.Pages
         {
             //StatusBar statusBar = StatusBar.GetForCurrentView();
             //await statusBar.ProgressIndicator.HideAsync();
-            UmengSDK.UmengAnalytics.TrackPageEnd("ExamPage");
         }
 
         private void ListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)

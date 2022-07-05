@@ -551,7 +551,6 @@ namespace ZSCY_Win10
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            UmengSDK.UmengAnalytics.TrackPageStart("MainPage");
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;//注册重写后退按钮事件
                                                                        //this.navigationHelper.OnNavigatedTo(e);
             var group = await DataSource.Get();
@@ -623,7 +622,6 @@ namespace ZSCY_Win10
         protected async override void OnNavigatedFrom(NavigationEventArgs e)
         {
             StatusBar statusBar = StatusBar.GetForCurrentView();
-            UmengSDK.UmengAnalytics.TrackPageEnd("MainPage");
             await statusBar.ProgressIndicator.HideAsync();
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
             //this.navigationHelper.OnNavigatedFrom(e);

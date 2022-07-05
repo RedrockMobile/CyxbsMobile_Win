@@ -121,7 +121,6 @@ namespace ZSCY_Win10
                     initKB();
                     this.progress.IsActive = false;
                     initToday();
-                    UmengSDK.UmengAnalytics.TrackPageStart("KBPage");
                 }
                 else
                 {
@@ -154,7 +153,6 @@ namespace ZSCY_Win10
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             Debug.WriteLine("OnNavigatedFrom");
-            UmengSDK.UmengAnalytics.TrackPageEnd("KBPage");
         }
 
         private void SetKebiaoGridBorder(int week)

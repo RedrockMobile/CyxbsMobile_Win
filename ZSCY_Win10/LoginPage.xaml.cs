@@ -185,15 +185,11 @@ namespace ZSCY_Win10
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            UmengSDK.UmengAnalytics.TrackPageStart("LoginPage");
-        }
+        { }
 
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            UmengSDK.UmengAnalytics.TrackPageEnd("LoginPage");
-        }
+        { }
 
         private void noLoginButton_Click(object sender, RoutedEventArgs e)
         {

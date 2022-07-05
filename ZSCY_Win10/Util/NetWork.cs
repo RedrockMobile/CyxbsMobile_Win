@@ -36,8 +36,6 @@ namespace ZSCY_Win10.Util
                             uri = "http://hongyan.cqupt.edu.cn/" + api;
                         else
                             uri = api;
-                        httpClient.DefaultRequestHeaders.Add("API_APP", "winphone");
-                        httpClient.DefaultRequestHeaders.Add("API_TOKEN", "0zLUZA0j+OL77OsjXC0ulOz50KaI6yANZtkOk2vQIDg=");
                         System.Net.Http.HttpRequestMessage requst;
                         System.Net.Http.HttpResponseMessage response;
                         if (PostORGet == 0)
@@ -155,20 +153,6 @@ namespace ZSCY_Win10.Util
                     return false;
                 }
             });
-        }
-
-        public static async Task<string> RatioRequest(string key, string value)
-        {
-            HttpClient httpclient = new HttpClient();
-            string uri = "http://hongyan.cqupt.edu.cn/welcome/2017/api/apiRatio.php";
-            string json = "";
-            var content = new FormUrlEncodedContent(new Dictionary<string, string>
-            {
-                {key,value}
-            });
-            var response = await httpclient.PostAsync(uri, content);
-            json = await response.Content.ReadAsStringAsync();
-            return json;
         }
     }
 }

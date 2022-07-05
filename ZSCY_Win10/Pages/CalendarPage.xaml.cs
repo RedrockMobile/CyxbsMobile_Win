@@ -41,14 +41,10 @@ namespace ZSCY.Pages
         /// 此参数通常用于配置页。</param>
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            UmengSDK.UmengAnalytics.TrackPageStart("CalendarPage");
-        }
+        { }
 
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            UmengSDK.UmengAnalytics.TrackPageEnd("CalendarPage");
-        }
+        { }
     }
 }

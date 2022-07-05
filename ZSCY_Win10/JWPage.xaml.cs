@@ -73,7 +73,6 @@ namespace ZSCY_Win10
             //{
             //    getJWCache();
             //}
-            UmengSDK.UmengAnalytics.TrackPageStart("JWPage");
         }
 
         private async void getJWCache()
@@ -103,7 +102,6 @@ namespace ZSCY_Win10
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             App.JWListCache = JWList;
-            UmengSDK.UmengAnalytics.TrackPageEnd("JWPage");
         }
 
         private async void initJWList(int page = 1)

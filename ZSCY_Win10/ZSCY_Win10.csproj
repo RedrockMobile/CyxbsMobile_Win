@@ -11,7 +11,7 @@
     <AssemblyName>ZSCY_Win10</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.18362.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
@@ -270,15 +270,6 @@
     <Content Include="Data\moreitems.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DataBase\qq_Group.db" />
-    <Content Include="Json\fengcai_header_lists.json" />
-    <Content Include="Json\fengcai_zuimei.json" />
-    <Content Include="Json\fengcai_zuzhi_intro.json" />
-    <Content Include="Json\fengcai_zuzhi_lists.json" />
-    <Content Include="Json\strategy_header_lists.json" />
-    <Content Include="Json\必备清单.json" />
-    <Content Include="Json\junxun_tieshi.json" />
-    <Content Include="Json\BigDate_Header_Lists.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutPage.xaml.cs">
@@ -287,9 +278,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\CareerRatio.cs" />
-    <Compile Include="Classes\SexRatio.cs" />
-    <Compile Include="Classes\SubjectRatio.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
@@ -331,7 +319,6 @@
     <Compile Include="Data\loginControl.xaml.cs">
       <DependentUpon>loginControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\LXQqqData.cs" />
     <Compile Include="Data\NewsContentList.cs" />
     <Compile Include="Data\NewsList.cs" />
     <Compile Include="Data\JWList.cs" />
@@ -341,34 +328,14 @@
     <Compile Include="Data\Transaction.cs" />
     <Compile Include="Data\StartPage\Database.cs" />
     <Compile Include="Data\StartPage\ImageList.cs" />
-    <Compile Include="Data\XSQqqData.cs" />
     <Compile Include="Pages\VolunteerPage\httpclientPost.cs" />
     <Compile Include="Models\BaseModel.cs" />
-    <Compile Include="Models\BeautyInNear.cs" />
-    <Compile Include="Models\BigData.cs" />
-    <Compile Include="Models\CareerRatio.cs" />
-    <Compile Include="Models\DailyLife.cs" />
-    <Compile Include="Models\Dormitory.cs" />
-    <Compile Include="Models\Eat.cs" />
     <Compile Include="Models\Electricity.cs" />
-    <Compile Include="Models\FailRatio.cs" />
-    <Compile Include="Models\fengcaiheaders.cs" />
-    <Compile Include="Models\getDB.cs" />
-    <Compile Include="Models\Junxuncontents.cs" />
-    <Compile Include="Models\junxunshipin.cs" />
-    <Compile Include="Models\junxuntupian.cs" />
-    <Compile Include="Models\junxun_tieshi.cs" />
     <Compile Include="Models\LFDetailPageModel.cs" />
-    <Compile Include="Models\LostAndFoundPageModel.cs" />
-    <Compile Include="Models\NewStudentsPageNetworkRequest.cs" />
     <Compile Include="Models\PieDataItem.cs" />
     <Compile Include="Models\PiePiece.cs" />
-    <Compile Include="Models\qindan_content.cs" />
-    <Compile Include="Models\qinshiIntroduce.cs" />
-    <Compile Include="Models\QQGroup_DB.cs" />
     <Compile Include="Models\RemindModels\AddRemindBackModel.cs" />
     <Compile Include="Models\RemindModels\AddRemindModel.cs" />
-    <Compile Include="Models\Canteen.cs" />
     <Compile Include="Models\RemindModels\DataBaseModel.cs" />
     <Compile Include="Models\RemindModels\DateModel.cs" />
     <Compile Include="Models\RemindModels\RemindBackupModel.cs" />
@@ -378,14 +345,6 @@
     <Compile Include="Models\RemindModels\RemindSystemModel.cs" />
     <Compile Include="Models\RemindModels\SelCourseModel.cs" />
     <Compile Include="Models\RemindModels\WeekNumClass.cs" />
-    <Compile Include="Models\richangshenghuo.cs" />
-    <Compile Include="Models\ruxue_page.cs" />
-    <Compile Include="Models\SchoolBuildings.cs" />
-    <Compile Include="Models\SexDatum.cs" />
-    <Compile Include="Models\SexRatio.cs" />
-    <Compile Include="Models\StrategyHeader.cs" />
-    <Compile Include="Models\SubjectRatio.cs" />
-    <Compile Include="Models\teacher.cs" />
     <Compile Include="Models\TopicModels\Articles.cs" />
     <Compile Include="Models\TopicModels\LikeButtonClickEvent.cs" />
     <Compile Include="Models\TopicModels\pic.cs" />
@@ -393,16 +352,7 @@
     <Compile Include="Models\TopicModels\TopicContent.cs" />
     <Compile Include="Models\TopicModels\TopicRemark.cs" />
     <Compile Include="Models\VolunteerModel.cs" />
-    <Compile Include="Models\WorkDatum.cs" />
-    <Compile Include="Models\WorkRatio.cs" />
-    <Compile Include="Models\xuezi.cs" />
-    <Compile Include="Models\yuanchuang.cs" />
-    <Compile Include="Models\zhoubianmeijing.cs" />
-    <Compile Include="Models\zhoubianmeishi.cs" />
     <Compile Include="Models\StartpAgeModels\StartPageModel.cs" />
-    <Compile Include="Models\zuimei.cs" />
-    <Compile Include="Models\zuzhi.cs" />
-    <Compile Include="Models\zuzhi_intro.cs" />
     <Compile Include="MyPage.xaml.cs">
       <DependentUpon>MyPage.xaml</DependentUpon>
     </Compile>
@@ -428,18 +378,6 @@
       <DependentUpon>MorePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="NavMenuItem.cs" />
-    <Compile Include="Notepad\WayData_Bus.xaml.cs">
-      <DependentUpon>WayData_Bus.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Notepad\WayData_Train.xaml.cs">
-      <DependentUpon>WayData_Train.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Notepad\WaysData_Plane.xaml.cs">
-      <DependentUpon>WaysData_Plane.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\BigDataPage.xaml.cs">
-      <DependentUpon>BigDataPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\CalendarPage.xaml.cs">
       <DependentUpon>CalendarPage.xaml</DependentUpon>
     </Compile>
@@ -484,26 +422,8 @@
     <Compile Include="Pages\ExamPage.xaml.cs">
       <DependentUpon>ExamPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\FengCaiPage.xaml.cs">
-      <DependentUpon>FengCaiPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\FirstPage.xaml.cs">
-      <DependentUpon>FirstPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\ImportKB2CalendarPage.xaml.cs">
       <DependentUpon>ImportKB2CalendarPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\JunxunPage.xaml.cs">
-      <DependentUpon>JunxunPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\LostAndFoundPages\InfoPublish.xaml.cs">
-      <DependentUpon>InfoPublish.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\LostAndFoundPages\LFDetailPage.xaml.cs">
-      <DependentUpon>LFDetailPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\LostAndFoundPages\LostAndFoundPage.xaml.cs">
-      <DependentUpon>LostAndFoundPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\NewsContentPage.xaml.cs">
       <DependentUpon>NewsContentPage.xaml</DependentUpon>
@@ -535,9 +455,6 @@
     </Compile>
     <Compile Include="Pages\SearchFreeTimeResultPage.xaml.cs">
       <DependentUpon>SearchFreeTimeResultPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\StrategyPage.xaml.cs">
-      <DependentUpon>StrategyPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\StartPages\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
@@ -624,29 +541,20 @@
     <Compile Include="Util\Remind\DatabaseMethod.cs" />
     <Compile Include="Util\Remind\RemindSystemUtil.cs" />
     <Compile Include="Util\Remind\RemindWebRequest.cs" />
-    <Compile Include="Util\Request.cs" />
-    <Compile Include="Util\SQLiteHelper1.cs" />
-    <Compile Include="Util\SQLiteHelper2.cs" />
     <Compile Include="Util\TextBlockFormatter.cs" />
     <Compile Include="Util\Utils.cs" />
     <Compile Include="Util\StartPage\StartPageHelp.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\BigDataViewModel.cs" />
     <Compile Include="ViewModels\Community\CommunityContentViewModel.cs" />
     <Compile Include="ViewModels\Community\CommunityMyContentViewModel.cs" />
     <Compile Include="ViewModels\Community\CommunityPersonInfoViewModel.cs" />
     <Compile Include="ViewModels\Community\CommunityViewModel.cs" />
     <Compile Include="ViewModels\Community\MyViewModel.cs" />
     <Compile Include="ViewModels\ElectricChargeCheckPages\CheckRecentChargePageViewModel.cs" />
-    <Compile Include="ViewModels\FengCaiViewModel.cs" />
-    <Compile Include="ViewModels\FirstPageViewModel.cs" />
-    <Compile Include="ViewModels\JunxunViewModel.cs" />
     <Compile Include="ViewModels\LFDetailPageViewModel.cs" />
-    <Compile Include="ViewModels\LostAndFoundPageViewModel.cs" />
     <Compile Include="ViewModels\Remind\AddRemindPageViewModel.cs" />
     <Compile Include="ViewModels\Remind\RemindListViewModel.cs" />
     <Compile Include="ViewModels\Remind\WeeksPageViewModel.cs" />
-    <Compile Include="ViewModels\StrategyViewModel.cs" />
     <Compile Include="ViewModels\StartPage\StartPageViewModel.cs" />
     <Compile Include="ViewModels\VolunteerPageViewModel.cs" />
   </ItemGroup>
@@ -753,10 +661,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Package.StoreAssociation.xml" />
-    <Content Include="Notepad\anquan.txt" />
-    <Content Include="Notepad\jiangxuejin.txt" />
-    <Content Include="Notepad\ruxue.txt" />
-    <Content Include="Notepad\xueshengshouce.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -837,22 +741,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Notepad\WayData_Bus.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Notepad\WayData_Train.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Notepad\WaysData_Plane.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\BigDataPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\CalendarPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -909,33 +797,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\FengCaiPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\FirstPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\ImportKB2CalendarPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\JunxunPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\LostAndFoundPages\InfoPublish.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\LostAndFoundPages\LFDetailPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\LostAndFoundPages\LostAndFoundPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\NewsContentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -978,10 +842,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\SearchFreeTimeResultPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\StrategyPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1042,10 +902,7 @@
     <SDKReference Include="Microsoft.VCLibs.120, Version=14.0">
       <Name>Microsoft Visual C++ 2013 Runtime Package for Windows Universal</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.20.1">
-      <Name>SQLite for Universal Windows Platform</Name>
-    </SDKReference>
-    <SDKReference Include="WindowsMobile, Version=10.0.15063.0">
+    <SDKReference Include="WindowsMobile, Version=10.0.18362.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
@@ -1096,9 +953,6 @@
     </PackageReference>
     <PackageReference Include="SQLite.Net-PCL">
       <Version>3.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="UmengAnalytics">
-      <Version>3.1.0</Version>
     </PackageReference>
     <PackageReference Include="Win2D.uwp">
       <Version>1.21.0</Version>

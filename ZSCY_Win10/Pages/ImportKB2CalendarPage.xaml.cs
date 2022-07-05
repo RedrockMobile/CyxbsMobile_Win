@@ -36,14 +36,11 @@ namespace ZSCY.Pages
             credentialList[0].RetrievePassword();
             //URLTextBlock.Text = "http://hongyan.cqupt.edu.cn/api/kebiao_ics?xh=" + appSetting.Values["stuNum"].ToString();
             URLTextBlock.Text = "http://hongyan.cqupt.edu.cn/api/kebiao_ics?xh=" + credentialList[0].UserName;
-            UmengSDK.UmengAnalytics.TrackPageStart("ImportKB2CalendarPage");
         }
 
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            UmengSDK.UmengAnalytics.TrackPageEnd("ImportKB2CalendarPage");
-        }
+        { }
 
         private async void ToCalendar_Click(object sender, RoutedEventArgs e)
         {
