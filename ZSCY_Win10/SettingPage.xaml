@@ -13,15 +13,7 @@
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualState750">
                     <VisualState.Setters>
-                        <Setter Target="importKB2calendarButton.(FrameworkElement.HorizontalAlignment)" Value="Left" />
-                        <Setter Target="importKB2calendarButton.(FrameworkElement.Width)" Value="200" />
-                        <Setter Target="importKB2calendarButton.(FrameworkElement.MaxWidth)" Value="200" />
-                        <!--<Setter Target="importKB2calendarButton.(FrameworkElement.Margin)">
-                            <Setter.Value>
-                                <Thickness>20,0,0,0</Thickness>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Target="ClearButton.(FrameworkElement.Margin)">
+                        <!--<Setter Target="ClearButton.(FrameworkElement.Margin)">
                             <Setter.Value>
                                 <Thickness>20,0,0,0</Thickness>
                             </Setter.Value>
@@ -54,30 +46,19 @@
                 </Grid>
             </Grid>
             <Grid Margin="10" Grid.Row="1">
-                <Pivot>
-                    <PivotItem Header="功能">
-                        <StackPanel Margin="0,10">
-                            <TextBlock Text="实验室功能" Margin="0,0,0,10" Foreground="#333" Style="{StaticResource TitleTextBlockStyle}" />
-                            <Button Name="importKB2calendarButton" Foreground="#333" HorizontalAlignment="Stretch"    Content="订阅当前账号课表到日历"  Click="importKB2calendarButton_Click" />
-
-                            <!--<TextBlock Text="学期课表将非当前周置为灰色" Visibility="Visible" FontSize="20" Foreground="Gray" Margin="0,10" />
+                <StackPanel>
+                    <!--<TextBlock Text="学期课表将非当前周置为灰色" Visibility="Visible" FontSize="20" Foreground="Gray" Margin="0,10" />
                             <ToggleSwitch  Name="AllKBGrayToggleSwitch" Visibility="Visible" IsOn="False" OnContent="开" OffContent="关" Toggled="AllKBGrayToggleSwitch_Toggled" Foreground="Black" />-->
 
-                            <TextBlock Text="使用透明磁贴" Visibility="Collapsed" FontSize="20" Foreground="Gray" Margin="0,10" />
-                            <ToggleSwitch  Name="OpacityToggleSwitch" Visibility="Collapsed" IsOn="False" OnContent="开" OffContent="关" Toggled="OpacityToggleSwitch_Toggled" Foreground="Black" />
-                            <TextBlock  Text="社区新消息推送通知" Visibility="Visible" FontSize="20" Foreground="#333" Margin="0,10" />
-                            <ToggleSwitch  Name="backGroundToastToggleSwitch" Visibility="Visible" OnContent="开" OffContent="关" Toggled="backGroundToastToggleSwitch_Toggled" Foreground="Black" />
-                            <TextBlock Text="提取错误日志文件" Visibility="Visible" FontSize="20" Foreground="#333" Margin="0,10" />
-                            <Button Name="Error" Foreground="#333"  Content="另存为日志文件"  Click="Error_ClickAsync" />
-                        </StackPanel>
-                    </PivotItem>
-                    <PivotItem Header="重置">
-                        <StackPanel Margin="0,10">
-                            <TextBlock Text="删除缓存" Margin="0,0,0,10" Foreground="#333" Style="{StaticResource TitleTextBlockStyle}" />
-                            <Button Name="ClearButton" HorizontalAlignment="Stretch"  Foreground="#333" Content="删除所有缓存"    Click="ClearButton_Click" />
-                        </StackPanel>
-                    </PivotItem>
-                </Pivot>
+                    <TextBlock Text="使用透明磁贴" Visibility="Collapsed" FontSize="20" Foreground="Gray" Margin="0,10" />
+                    <ToggleSwitch  Name="OpacityToggleSwitch" Visibility="Collapsed" IsOn="False" OnContent="开" OffContent="关" Toggled="OpacityToggleSwitch_Toggled" Foreground="Black" />
+                    <TextBlock  Text="社区新消息推送通知" Visibility="Visible" FontSize="20" Foreground="#333" Margin="0,10" />
+                    <ToggleSwitch  Name="backGroundToastToggleSwitch" Visibility="Visible" OnContent="开" OffContent="关" Toggled="backGroundToastToggleSwitch_Toggled" Foreground="Black" />
+                    <TextBlock Text="提取错误日志文件" Visibility="Visible" FontSize="20" Foreground="#333" Margin="0,10" />
+                    <Button Name="Error" Foreground="#333"  Content="另存为日志文件"  Click="Error_ClickAsync" />
+                    <TextBlock Text="删除缓存" Visibility="Visible" FontSize="20" Foreground="#333" Margin="0,10" />
+                    <Button Name="ClearButton" HorizontalAlignment="Stretch"  Foreground="#333" Content="删除所有缓存" Click="ClearButton_Click" />
+                </StackPanel>
             </Grid>
             <Grid x:Name="about" Grid.Row="1">
                 <Frame x:Name="frame">

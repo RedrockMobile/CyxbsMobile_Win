@@ -32,37 +32,20 @@ namespace ZSCY_Win10.Service
             return await Task.Run(async () =>
             {
                 List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-                try
-                {
-                    var vault = new Windows.Security.Credentials.PasswordVault();
-                    var credentialList = vault.FindAllByResource(resourceName);
-                    credentialList[0].RetrievePassword();
-                    if (credentialList.Count > 0)
-                    {
-                        //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-                        //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-                        paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-                        paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
-                    }
-                }
-                catch
-                {
-                }
                 paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
                 paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
                 if (typeid != 0)
                     paramList.Add(new KeyValuePair<string, string>("type_id", typeid.ToString()));
-                string response = await NetWork.getHttpWebRequest(feedsapi[type], paramList);
+                JObject response = await Requests.Send(feedsapi[type]);
                 //response = Utils.ConvertUnicodeStringToChinese(response);
                 List<BBDDFeed> feeds = new List<BBDDFeed>();
                 try
                 {
-                    if (response != "" || response != "[]")
+                    if (response != null)
                     {
-                        JObject bbddfeeds = JObject.Parse(response);
-                        if (bbddfeeds["status"].ToString() == "200")
+                        if (response["status"].ToString() == "200")
                         {
-                            JArray bbddarray = JArray.Parse(bbddfeeds["data"].ToString());
+                            JArray bbddarray = JArray.Parse(response["data"].ToString());
                             for (int i = 0; i < bbddarray.Count; i++)
                             {
                                 BBDDFeed f = new BBDDFeed();
@@ -101,7 +84,7 @@ namespace ZSCY_Win10.Service
                     if (jsonobj["status"].ToString() == "200")
                     {
                         string jsonstr = jsonobj["data"].ToString();
-                        JArray feedsarray = Utils.ReadJso(response);
+                        JArray feedsarray = (JArray)(response);
                         for (int i = 0; i < feedsarray.Count; i++)
                         {
                             JObject f = (JObject)feedsarray[i];
@@ -126,34 +109,18 @@ namespace ZSCY_Win10.Service
             return await Task.Run(async () =>
            {
                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-               try
-               {
-                   var vault = new Windows.Security.Credentials.PasswordVault();
-                   var credentialList = vault.FindAllByResource(resourceName);
-                   credentialList[0].RetrievePassword();
-                   if (credentialList.Count > 0)
-                   {
-                       //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-                       //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-                       paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-                       paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
-                   }
-               }
-               catch
-               {
-               }
                paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
                paramList.Add(new KeyValuePair<string, string>("size", size.ToString()));
                if (typeid != 0)
                    paramList.Add(new KeyValuePair<string, string>("type_id", typeid.ToString()));
-               string response = await NetWork.getHttpWebRequest(feedsapi[type], paramList);
+               JObject response = await Requests.Send(feedsapi[type]);
                //response = Utils.ConvertUnicodeStringToChinese(response);
                List<HotFeed> feeds = new List<HotFeed>();
                try
                {
-                   if (response != "" || response != "[]")
+                   if (response != null)
                    {
-                       JArray hotfeed = JArray.Parse(response);
+                       JArray hotfeed = (JArray)response["data"];
                        for (int i = 0; i < hotfeed.Count; i++)
                        {
                            JObject hot = (JObject)hotfeed[i];
@@ -174,34 +141,26 @@ namespace ZSCY_Win10.Service
 
         public static async Task<string> setPraise(string type_id, string article_id, bool addORcancel)
         {
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-            //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-            paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
             paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
             paramList.Add(new KeyValuePair<string, string>("article_id", article_id));
-            string praise = "";
+            JObject praise = null;
             if (addORcancel)
             {
-                praise = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Praise/addone", paramList);
+                praise = await Requests.Send("cyxbsMobile/index.php/Home/Praise/addone");
             }
             else
             {
-                praise = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Praise/cancel", paramList);
+                praise = await Requests.Send("cyxbsMobile/index.php/Home/Praise/cancel");
             }
             Debug.WriteLine(praise);
             try
             {
-                if (praise != "")
+                if (praise != null)
                 {
-                    JObject obj = JObject.Parse(praise);
-                    if (obj["state"].ToString() == "200")
+                    if (praise["state"].ToString() == "200")
                     {
-                        return obj["like_num"].ToString();
+                        return praise["like_num"].ToString();
                     }
                     else
                         return "";

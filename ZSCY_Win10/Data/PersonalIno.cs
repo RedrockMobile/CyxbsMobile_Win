@@ -20,12 +20,8 @@ namespace ZSCY.Data
 
         public PersonalIno()
         {
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
-            //this.Stunum = appSetting.Values["stuNum"].ToString();
-            this.Stunum = credentialList[0].UserName;
+            this.Stunum = appSetting.Values["stuNum"].ToString();
             this.Name = appSetting.Values["name"].ToString();
             this.Classnum = appSetting.Values["classNum"].ToString();
             this.Major = appSetting.Values["major"].ToString();

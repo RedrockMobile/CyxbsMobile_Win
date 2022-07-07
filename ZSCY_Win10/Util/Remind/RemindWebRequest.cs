@@ -4,13 +4,11 @@ using ZSCY_Win10.Models.RemindModels;
 
 namespace ZSCY_Win10.Util.Remind
 {
-    internal class RemindWebRequest : NetWork
+    internal class RemindWebRequest : Requests
     {
-        public static List<KeyValuePair<string, string>> addRemind(RemindBackupModel myRemind)
+        public static Dictionary<string, string> addRemind(RemindBackupModel myRemind)
         {
-            List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
-            paramList.Add(new KeyValuePair<string, string>("stuNum", myRemind.StuNum));
-            paramList.Add(new KeyValuePair<string, string>("idNum", myRemind.IdNum));
+            Dictionary<string, string> paramList = new Dictionary<string, string>();
             string date = "[";
 
             for (int i = 0; i < myRemind.DateItems.Count; i++)
@@ -20,43 +18,30 @@ namespace ZSCY_Win10.Util.Remind
             }
             date = date.Remove(date.Length - 1) + "]";
 
-            paramList.Add(new KeyValuePair<string, string>("date", date));
-            paramList.Add(new KeyValuePair<string, string>("title", myRemind.Title));
-            paramList.Add(new KeyValuePair<string, string>("time", myRemind.Time.ToString()));
-            paramList.Add(new KeyValuePair<string, string>("content", myRemind.Content));
+            paramList.Add("date", date);
+            paramList.Add("title", myRemind.Title);
+            paramList.Add("time", myRemind.Time.ToString());
+            paramList.Add("content", myRemind.Content);
             return paramList;
         }
 
-        public static List<KeyValuePair<string, string>> editRemind(RemindBackupModel myRemind)
+        public static Dictionary<string, string> editRemind(RemindBackupModel myRemind)
         {
-            List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
-            paramList.Add(new KeyValuePair<string, string>("stuNum", myRemind.StuNum));
-            paramList.Add(new KeyValuePair<string, string>("idNum", myRemind.IdNum));
-            paramList.Add(new KeyValuePair<string, string>("id", myRemind.Id));
+            Dictionary<string, string> paramList = new Dictionary<string, string>();
+            paramList.Add("id", myRemind.Id);
             string dateJson = JsonConvert.SerializeObject(myRemind.DateItems);
 
-            paramList.Add(new KeyValuePair<string, string>("date", dateJson));
-            paramList.Add(new KeyValuePair<string, string>("title", myRemind.Title));
-            paramList.Add(new KeyValuePair<string, string>("time", myRemind.Time.ToString()));
-            paramList.Add(new KeyValuePair<string, string>("content", myRemind.Content));
+            paramList.Add("date", dateJson);
+            paramList.Add("title", myRemind.Title);
+            paramList.Add("time", myRemind.Time.ToString());
+            paramList.Add("content", myRemind.Content);
             return paramList;
         }
 
-        public static List<KeyValuePair<string, string>> deleteRemind(RemindBackupModel myRemind)
+        public static Dictionary<string, string> deleteRemind(RemindBackupModel myRemind)
         {
-            List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
-            paramList.Add(new KeyValuePair<string, string>("stuNum", myRemind.StuNum));
-            paramList.Add(new KeyValuePair<string, string>("idNum", myRemind.IdNum));
-            paramList.Add(new KeyValuePair<string, string>("id", myRemind.Id));
-            return paramList;
-        }
-
-        public static List<KeyValuePair<string, string>> getRemind()
-        {
-            List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
-            var user = GetCredential.getCredential("ZSCY");
-            paramList.Add(new KeyValuePair<string, string>("stuNum", user.UserName));
-            paramList.Add(new KeyValuePair<string, string>("idNum", user.Password));
+            Dictionary<string, string> paramList = new Dictionary<string, string>();
+            paramList.Add("id", myRemind.Id);
             return paramList;
         }
     }

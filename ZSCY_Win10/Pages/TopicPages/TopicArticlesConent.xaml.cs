@@ -79,11 +79,10 @@ namespace ZSCY_Win10.Pages.TopicPages
                     List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
                     paramList.Add(new KeyValuePair<string, string>("type_id", "7"));
                     paramList.Add(new KeyValuePair<string, string>("article_id", Articles_id.ToString()));
-                    string Topictemp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/NewArticleRemark/getremark", paramList);
-                    JObject Tobj = JObject.Parse(Topictemp);
-                    if (Int32.Parse(Tobj["status"].ToString()) == 200)
+                    JObject Topictemp = await Requests.Send("cyxbsMobile/index.php/Home/NewArticleRemark/getremark");
+                    if (Int32.Parse(Topictemp["status"].ToString()) == 200)
                     {
-                        JArray TopicArray = Utils.ReadJso(Topictemp);
+                        JArray TopicArray = (JArray)Topictemp["data"];
                         for (int i = 0; i < TopicArray.Count; i++)
                         {
                             TopicRemark item = new TopicRemark();
@@ -131,18 +130,15 @@ namespace ZSCY_Win10.Pages.TopicPages
                     List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
                     paramList.Add(new KeyValuePair<string, string>("article_id", id));
                     paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
-                    paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-                    paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
                     paramList.Add(new KeyValuePair<string, string>("content", sendMarkTextBox.Text));
                     paramList.Add(new KeyValuePair<string, string>("answer_user_id", "0"));
-                    string sendMark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/postremarks", paramList);
+                    JObject sendMark = await Requests.Send("cyxbsMobile/index.php/Home/ArticleRemark/postremarks");
                     Debug.WriteLine(sendMark);
                     try
                     {
-                        if (sendMark != "")
+                        if (sendMark != null)
                         {
-                            JObject obj = JObject.Parse(sendMark);
-                            if (Int32.Parse(obj["state"].ToString()) == 200)
+                            if (Int32.Parse(sendMark["state"].ToString()) == 200)
                             {
                                 Utils.Toast("评论成功");
                                 sendMarkTextBox.Text = "";
@@ -204,26 +200,20 @@ namespace ZSCY_Win10.Pages.TopicPages
         public async Task<string> LikeClick(string type_id, string article_id, string yOn)
         {
             string likenum = "";
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-            paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
             paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
             paramList.Add(new KeyValuePair<string, string>("article_id", article_id));
-            string temp = "";
+            JObject temp = null;
             if (yOn == "true")
-                temp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Praise/addone", paramList);
+                temp = await Requests.Send("cyxbsMobile/index.php/Home/Praise/addone");
             else
-                temp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Praise/cancel", paramList);
+                temp = await Requests.Send("cyxbsMobile/index.php/Home/Praise/cancel");
 
-            if (temp != "")
+            if (temp != null)
             {
-                JObject obj = JObject.Parse(temp);
-                if (obj["state"].ToString() == "200")
+                if (temp["state"].ToString() == "200")
                 {
-                    likenum = obj["like_num"].ToString();
+                    likenum = temp["like_num"].ToString();
                 }
                 else
                     likenum = "";

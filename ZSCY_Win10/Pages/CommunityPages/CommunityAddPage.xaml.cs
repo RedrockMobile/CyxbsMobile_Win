@@ -203,8 +203,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 {
                     try
                     {
-                        //string imgUp = await NetWork.headUpload(appSetting.Values["stuNum"].ToString(), imageList[i].imgAppPath, "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Photo/uploadArticle", false);
-                        string imgUp = await NetWork.headUpload(credentialList[0].UserName, imageList[i].imgAppPath, "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Photo/uploadArticle", false);
+                        string imgUp = await Requests.headUpload(appSetting.Values["stuNum"].ToString(), imageList[i].imgAppPath, "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/Home/Photo/uploadArticle", false);
                         if (imgUp != "" && imgUp.IndexOf("Request Entity Too Large") == -1)
                         {
                             JObject obj = JObject.Parse(imgUp);
@@ -281,24 +280,19 @@ namespace ZSCY_Win10.Pages.CommunityPages
             paramList.Add(new KeyValuePair<string, string>("content", addContentTextBox.Text));
             paramList.Add(new KeyValuePair<string, string>("photo_src", imgPhoto_src));
             paramList.Add(new KeyValuePair<string, string>("thumbnail_src", imgThumbnail_src));
-            //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-            //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-            paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
-            string ArticleUp = "";
+            JObject ArticleUp = null;
             if (para != null)
             {
-                ArticleUp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Topic/addTopicArticle", paramList);
+                ArticleUp = await Requests.Send("cyxbsMobile/index.php/Home/Topic/addTopicArticle");
             }
             else
-                ArticleUp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Article/addArticle", paramList);
+                ArticleUp = await Requests.Send("cyxbsMobile/index.php/Home/Article/addArticle");
             Debug.WriteLine(ArticleUp);
             try
             {
-                if (ArticleUp != "")
+                if (ArticleUp != null)
                 {
-                    JObject obj = JObject.Parse(ArticleUp);
-                    if (Int32.Parse(obj["state"].ToString()) == 200)
+                    if (Int32.Parse(ArticleUp["state"].ToString()) == 200)
                     {
                         Utils.Toast("发表成功");
                         Frame rootFrame = Window.Current.Content as Frame;

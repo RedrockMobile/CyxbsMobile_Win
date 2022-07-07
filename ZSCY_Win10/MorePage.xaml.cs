@@ -193,6 +193,7 @@ namespace ZSCY_Win10
                             msgPopup.ShowWIndow();
                             break;
                         }
+
                     case "Volunteer":
                         MoreFrame.Navigate(typeof(VolunteerPage));
                         MoreFrame.Visibility = Visibility.Visible;
@@ -216,6 +217,7 @@ namespace ZSCY_Win10
                             msgPopup.ShowWIndow();
                             break;
                         }
+
                     case "Socre":
                         //if (appSetting.Values.ContainsKey("idNum"))
                         if (count > 0)
@@ -233,23 +235,13 @@ namespace ZSCY_Win10
                             msgPopup.ShowWIndow();
                             break;
                         }
+
                     case "ClassRoom":
-                        //if (appSetting.Values.ContainsKey("idNum"))
-                        if (count > 0)
-                        {
-                            MoreFrame.Navigate(typeof(EmptyRoomsPage));
-                            MoreFrame.Visibility = Visibility.Visible;
-                            isFreeRe = 0;
-                            break;
-                        }
-                        else
-                        {
-                            var msgPopup = new Data.loginControl("您还没有登录 无法查询空教室~");
-                            msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
-                            msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
-                            msgPopup.ShowWIndow();
-                            break;
-                        }
+                        MoreFrame.Navigate(typeof(EmptyRoomsPage));
+                        MoreFrame.Visibility = Visibility.Visible;
+                        isFreeRe = 0;
+                        break;
+
                     case "Calendar":
                         MoreFrame.Navigate(typeof(CalendarPage));
                         MoreFrame.Visibility = Visibility.Visible;
@@ -272,17 +264,23 @@ namespace ZSCY_Win10
                             msgPopup.ShowWIndow();
                             break;
                         }
-                    case "Card":
-                        var a = await Launcher.LaunchUriAsync(new Uri("cquptcard:"));
-                        MoreFrame.Visibility = Visibility.Collapsed;
-                        break;
 
                     case "Electricity":
-                        Frame.Navigate(typeof(ElectricityPage));
-                        MoreFrame.Visibility = Visibility.Collapsed;
-                        isFreeRe = 0;
-                        break;
-
+                        if (count > 0)
+                        {
+                            Frame.Navigate(typeof(ElectricityPage));
+                            MoreFrame.Visibility = Visibility.Collapsed;
+                            isFreeRe = 0;
+                            break;
+                        }
+                        else
+                        {
+                            var msgPopup = new Data.loginControl("您还没有登录 无法查询电费~");
+                            msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
+                            msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
+                            msgPopup.ShowWIndow();
+                            break;
+                        }
                     default:
                         break;
                 }

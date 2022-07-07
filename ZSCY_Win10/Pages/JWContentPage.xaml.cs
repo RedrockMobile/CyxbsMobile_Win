@@ -44,15 +44,15 @@ namespace ZSCY_Win10
         {
             List<KeyValuePair<String, String>> contentparamList = new List<KeyValuePair<String, String>>();
             contentparamList.Add(new KeyValuePair<string, string>("id", ID));
-            string jwContent = await NetWork.getHttpWebRequest("api/jwNewsContent", contentparamList);
+            JObject jwContent = await Requests.Send("api/jwNewsContent");
             Debug.WriteLine("jwContent->" + jwContent);
-            if (jwContent != "")
+            if (jwContent != null)
             {
-                string JWContentText = jwContent.Replace("(\r?\n(\\s*\r?\n)+)", "\r\n");
-                JObject jwContentobj = JObject.Parse(JWContentText);
-                if (Int32.Parse(jwContentobj["status"].ToString()) == 200)
+                // string JWContentText = jwContent.Replace("(\r?\n(\\s*\r?\n)+)", "\r\n");
+                if (Int32.Parse(jwContent["status"].ToString()) == 200)
                 {
-                    string JWitemContent = jwContentobj["data"]["content"].ToString();
+                    string JWitemContent = jwContent["data"]["content"].ToString();
+                    /* 
                     while (JWitemContent.StartsWith("\r\n "))
                         JWitemContent = JWContentText.Substring(3);
                     while (JWitemContent.StartsWith("\r\n"))
@@ -61,6 +61,7 @@ namespace ZSCY_Win10
                         JWitemContent = JWContentText.Substring(2);
                     while (JWitemContent.StartsWith("\n"))
                         JWitemContent = JWitemContent.Substring(1);
+                    */
                 }
                 else
                     ContentTextBlock.Text = "加载失败";

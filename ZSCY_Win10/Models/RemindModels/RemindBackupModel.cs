@@ -18,18 +18,6 @@ namespace ZSCY_Win10.Models.RemindModels
         ///<summary>
         ///
         /// </summary>
-        [DataMember(Name = "stuNum")]
-        public string StuNum { get; set; }
-
-        ///<summary>
-        ///
-        /// </summary>
-        [DataMember(Name = "idNum")]
-        public string IdNum { get; set; }
-
-        ///<summary>
-        ///
-        /// </summary>
         [DataMember(Name = "date")]
         public List<DateModel> DateItems { get; set; }
     }

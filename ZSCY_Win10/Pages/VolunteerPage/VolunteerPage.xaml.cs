@@ -39,30 +39,25 @@ namespace ZSCY_Win10.Pages
             this.InitializeComponent();
             this.SizeChanged += (_s, _e) =>
             {
-               
+
                 //Debug.WriteLine(_e.NewSize.Width);
-               viewModel.ElementHeight=(int) _e.NewSize.Height;
+                viewModel.ElementHeight = (int)_e.NewSize.Height;
                 viewModel.ElementWidth = (int)_e.NewSize.Width;
             };
 
         }
-        
+
         ViewModels.VolunteerPageViewModel viewModel = new ViewModels.VolunteerPageViewModel();
         private static string resourceName = "ZSCY_Volunteer";
         private int pivot_index;
         private async void Confirm_login()
         {
-            
+
             try
             {
-
-                var vault = new Windows.Security.Credentials.PasswordVault();
-                var credentialList = vault.FindAllByResource(resourceName);
-                credentialList[0].RetrievePassword();
                 volunteerPage_ProgressRing.Visibility = Visibility.Visible;
                 volunteerPage_Grid.Visibility = Visibility.Collapsed;
-                await Task.Delay(2000);
-                GetAsync(credentialList[0].UserName, credentialList[0].Password);
+                GetAsync();
                 volunteerPage_ProgressRing.Visibility = Visibility.Collapsed;
                 volunteerPage_Grid.Visibility = Visibility.Visible;
                 viewModel.Line_Y1 = viewModel.Record_year1.Count * nub;
@@ -75,7 +70,7 @@ namespace ZSCY_Win10.Pages
             }
             catch (Exception)
             {
-                
+
                 var dialog = new ContentDialog();
                 dialog.Title = " ";
                 dialog.Content = "同学，请先绑定帐号哦";
@@ -87,20 +82,18 @@ namespace ZSCY_Win10.Pages
                 await dialog.ShowAsync();
             }
         }
-        private async void GetAsync(string user_name, string user_password)
+        private async void GetAsync()
         {
-
-                httpclientPost httpclient = new httpclientPost();
-                string json = await httpclient.PostHttpClient(user_name, user_password);
-                viewModel.Rootobject = JsonConvert.DeserializeObject<Models.VolunteerModel.Rootobject>(json);
-            if (viewModel.Rootobject.data.record.Length==0)
+            Newtonsoft.Json.Linq.JObject resp = await Util.Requests.Send("volunteer-message/select", method: "post", token: true, check: false);
+            viewModel.Rootobject = JsonConvert.DeserializeObject<Models.VolunteerModel.Rootobject>(resp.ToString());
+            if (viewModel.Rootobject.record.Length == 0)
             {
                 sp1.Visibility = Visibility.Collapsed;
                 none_image.Visibility = Visibility.Visible;
             }
             viewModel.Record_year1 = new ObservableCollection<Models.VolunteerModel.Record>();
             SelectyearFunction(DateTime.Now.Year, viewModel.Record_year1);
-            if(viewModel.Record_year1.Count==0)
+            if (viewModel.Record_year1.Count == 0)
             {
                 sp2.Visibility = Visibility.Collapsed;
                 none_image2.Visibility = Visibility.Visible;
@@ -149,10 +142,10 @@ namespace ZSCY_Win10.Pages
             }
 
         }
-        protected  override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            
+
             Confirm_login();
             this.DataContext = viewModel;
             viewModel.Isopened = true;
@@ -165,7 +158,7 @@ namespace ZSCY_Win10.Pages
 
             }
 
-          
+
 
         }
         int nub = 215;
@@ -173,15 +166,15 @@ namespace ZSCY_Win10.Pages
         {
 
             record.Clear();
-            foreach (var q in viewModel.Rootobject.data.record)
+            foreach (var q in viewModel.Rootobject.record)
             {
-                
+
                 if (q.start_time.Contains(year.ToString()))
                 {
                     record.Add(q);
                 }
             }
-            
+
         }
 
         private void display_Button_Click(object sender, RoutedEventArgs e)
@@ -223,16 +216,13 @@ namespace ZSCY_Win10.Pages
                 return;
             }
             SPivot_item.SelectedIndex = SPivot.SelectedIndex;
-           
+
         }
         private void Refresh()
         {
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
-            GetAsync(credentialList[0].UserName, credentialList[0].Password);
+            GetAsync();
             SPivot_item.SelectedIndex = SPivot.SelectedIndex = 0;
-          
+
         }
 
         private void scrollViewer_Loaded(object sender, RoutedEventArgs e)
@@ -241,7 +231,7 @@ namespace ZSCY_Win10.Pages
 
         }
 
-        private  void scrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        private void scrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             var sv = sender as ScrollViewer;
 
@@ -283,7 +273,7 @@ namespace ZSCY_Win10.Pages
         private void pull_refresh_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
             pull_refresh.Height += e.Delta.Translation.Y;
-            if (pull_refresh.Height>=150)
+            if (pull_refresh.Height >= 150)
             {
                 pull_refresh.Height = 150;
                 pull_text.Text = "停！停！放手！痛死了！die~~~~OAO";
@@ -292,12 +282,12 @@ namespace ZSCY_Win10.Pages
 
         private async void pull_refresh_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
         {
-            if(pull_refresh.Height == 150)
+            if (pull_refresh.Height == 150)
             {
                 pull_text.Visibility = Visibility.Collapsed;
                 refresh_Icon.Visibility = Visibility.Visible;
                 refresh_Animation1.Begin();
-                
+
                 await Task.Delay(3500);
                 Refresh();
                 refresh_Icon.Visibility = Visibility.Collapsed;
@@ -306,7 +296,7 @@ namespace ZSCY_Win10.Pages
             }
             pull_refresh.Height = 50;
             pull_text.Text = "↓向下拉刷新哦，=w=";
-            
+
         }
     }
 }

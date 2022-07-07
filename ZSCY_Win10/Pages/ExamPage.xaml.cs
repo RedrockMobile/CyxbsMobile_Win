@@ -53,42 +53,28 @@ namespace ZSCY.Pages
 
         private async void initExam()
         {
-            string exam = "";
-            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
-
+            JObject exam = null;
+            Dictionary<string, string> paramList = new Dictionary<string, string>();
+            paramList.Add("stuNum", appSetting.Values["stuNum"].ToString());
             //await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 2, 140, 253), Colors.White, text: "正在紧张安排考试...", isIndeterminate: true);
             //TODO:未登陆时 没有考试/补考信息
             if (IsExamOrRe == 2)
             {
-                //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-                //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-                paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
-                exam = await NetWork.getHttpWebRequest("api/examSchedule", paramList);
+                exam = await Requests.Send("magipoke-jwzx/examSchedule", param: paramList, method: "post", json: false);
             }
             else if (IsExamOrRe == 3)
             {
-#if DEBUG
-                paramList.Add(new KeyValuePair<string, string>("stu", "2014214136"));
-#else
-                //paramList.Add(new KeyValuePair<string, string>("stu", appSetting.Values["stuNum"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("stu", credentialList[0].UserName));
-#endif
-                exam = await NetWork.getHttpWebRequest("examapi/index.php", paramList);
+                exam = await Requests.Send("magipoke-jwzx/examReexam", param: paramList, method: "post", json: false);
             }
             Debug.WriteLine("exam->" + exam);
-            if (exam != "")
+            if (exam != null)
             {
                 try
                 {
-                    JObject obj = JObject.Parse(exam);
-                    if (Int32.Parse(obj["status"].ToString()) == 200)
+                    if (Int32.Parse(exam["status"].ToString()) == 200)
                     {
                         List<ExamList> examList = new List<ExamList>();
-                        JArray ExamListArray = Utils.ReadJso(exam);
+                        JArray ExamListArray = (JArray)exam["data"];
                         for (int i = 0; i < ExamListArray.Count; i++)
                         {
                             ExamList examitem = new ExamList();
@@ -113,7 +99,7 @@ namespace ZSCY.Pages
                             await Task.Delay(60);
                         }
                     }
-                    else if (Int32.Parse(obj["status"].ToString()) == 300)
+                    else if (Int32.Parse(exam["status"].ToString()) == 300)
                     {
                         ListFailedStackPanelTextBlock.Text = "暂无数据，过几天再来看看";
 
@@ -121,7 +107,7 @@ namespace ZSCY.Pages
                         ListFailedStackPanelImage.Visibility = Visibility.Collapsed;
                         ListFailedStackPanelTextBlock.Visibility = Visibility.Visible;
                     }
-                    else if (Int32.Parse(obj["status"].ToString()) == 0)
+                    else if (Int32.Parse(exam["status"].ToString()) == 0)
                     {
                         ListFailedStackPanelTextBlock.Text = "没补考的孩子别瞎点";
 

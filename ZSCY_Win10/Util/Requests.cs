@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -8,50 +9,77 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Microsoft.AspNetCore.WebUtilities;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace ZSCY_Win10.Util
 {
-    internal class NetWork
+    internal class Requests
     {
+        public static string baseUrl = "https://be-prod.redrock.cqupt.edu.cn/";
+        private static string resourceName = "ZSCY";
         /// <summary>
         ///
         /// </summary>
         /// <param name="api"></param>
-        /// <param name="paramList"></param>
-        /// <param name="PostORGet">默认为post请求</param>
-        /// <param name="fulluri"></param>
+        /// <param name="query"></param>
+        /// <param name="param"></param>
+        /// <param name="method">默认为get请求</param>
         /// <returns></returns>
-        public static async Task<string> getHttpWebRequest(string api, List<KeyValuePair<String, String>> paramList = null, int PostORGet = 0, bool fulluri = false)
+        public static async Task<JObject> Send(string api, Dictionary<string, string> query = null, Dictionary<string, string> param = null, bool json = true, string method = "get", bool token = false, bool check = true)
         {
-            string content = "";
-            return await Task.Run(() =>
+            JObject content = null;
+            return await Task.Run(async () =>
             {
                 if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
                 {
                     try
                     {
                         System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient();
-                        string uri;
-                        if (!fulluri)
-                            uri = "http://hongyan.cqupt.edu.cn/" + api;
+                        string uri = baseUrl + api;
+                        if (query != null) uri = QueryHelpers.AddQueryString(uri, query);
+                        System.Net.Http.HttpMethod requestMethod;
+                        if (method == "post")
+                            requestMethod = System.Net.Http.HttpMethod.Post;
+                        else if (method == "get")
+                            requestMethod = System.Net.Http.HttpMethod.Get;
+                        else if (method == "delete")
+                            requestMethod = System.Net.Http.HttpMethod.Delete;
+                        else if (method == "put")
+                            requestMethod = System.Net.Http.HttpMethod.Put;
                         else
-                            uri = api;
-                        System.Net.Http.HttpRequestMessage requst;
-                        System.Net.Http.HttpResponseMessage response;
-                        if (PostORGet == 0)
+                            throw new Exception("无效的请求");
+                        var request = new HttpRequestMessage(requestMethod, new Uri(uri));
+                        if (param != null)
+                            if (json) request.Content = new StringContent(JsonConvert.SerializeObject(param), Encoding.UTF8, "application/json");
+                            else request.Content = new FormUrlEncodedContent(param);
+                        if (token)
                         {
-                            requst = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Post, new Uri(uri));
-                            response = httpClient.PostAsync(new Uri(uri), new System.Net.Http.FormUrlEncodedContent(paramList)).Result;
+                            var vault = new Windows.Security.Credentials.PasswordVault();
+                            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", vault.Retrieve(resourceName, "token").Password.ToString());
                         }
-                        else
-                        {
-                            requst = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Get, new Uri(uri));
-                            response = httpClient.GetAsync(new Uri(uri)).Result;
-                        }
+                        var response = httpClient.SendAsync(request).Result;
                         if (response.StatusCode == HttpStatusCode.OK)
-                            content = response.Content.ReadAsStringAsync().Result;
-                        //else if (response.StatusCode == HttpStatusCode.NotFound)
-                        //    Utils.Message("Oh...服务器又跪了，给我们点时间修好它");
+                            content = JObject.Parse(response.Content.ReadAsStringAsync().Result);
+                        if (check && content != null && content["status"].ToString() == "20003" && token)
+                        {
+                            var vault = new Windows.Security.Credentials.PasswordVault();
+                            var tokenForm = new Dictionary<string, string>();
+                            tokenForm.Add("refreshToken", vault.Retrieve(resourceName, "refreshToken").Password.ToString());
+                            JObject newObj = await Requests.Send("magipoke/token/refresh", param: tokenForm, method: "post");
+                            if (newObj != null && newObj["status"].ToString() == "10000")
+                            {
+                                vault.Add(new Windows.Security.Credentials.PasswordCredential(resourceName, "refreshToken", newObj["data"]["refreshToken"].ToString()));
+                                vault.Add(new Windows.Security.Credentials.PasswordCredential(resourceName, "token", newObj["data"]["token"].ToString()));
+                                return await Send(api, query, param, json, method, token);
+                            }
+                            else
+                            {
+                                vault.Remove(vault.Retrieve(resourceName, "token"));
+                                vault.Remove(vault.Retrieve(resourceName, "refreshToken"));
+                            }
+                        }
                     }
                     catch (Exception e)
                     {
@@ -60,10 +88,8 @@ namespace ZSCY_Win10.Util
                 }
                 else
                 {
+                    Utils.Message("无网络连接，请先检查本机网络哦");
                 }
-                //if (content.IndexOf("{") != 0)
-                //    return "";
-                //else
                 return content;
             });
         }

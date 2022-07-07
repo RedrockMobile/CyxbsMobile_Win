@@ -28,9 +28,6 @@ namespace ZSCY_Win10.Models.RemindModels
             Remind = new RemindBackupModel();
             Remind = JsonConvert.DeserializeObject<RemindBackupModel>(json);
             Remind.Id = Id;
-            var user = GetCredential.getCredential("ZSCY");
-            Remind.IdNum = user.Password;
-            Remind.StuNum = user.UserName;
         }
 
         public string ClassTime()

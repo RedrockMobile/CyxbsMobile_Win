@@ -5,8 +5,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using ZSCY_Win10.Models.RemindModels;
-using ZSCY_Win10.Resource;
-using ZSCY_Win10.Util;
 using ZSCY_Win10.Util.Remind;
 
 namespace ZSCY_Win10.ViewModels.Remind
@@ -59,7 +57,7 @@ namespace ZSCY_Win10.ViewModels.Remind
                 var temp = await AddRemindBakcup(content, title, weekString, indexBefore);
                 AddRemindBackModel backInfo = new AddRemindBackModel();
                 if (!temp.Item1.Equals(""))
-                    backInfo = JsonConvert.DeserializeObject<AddRemindBackModel>(temp.Item1);
+                    backInfo = JsonConvert.DeserializeObject<AddRemindBackModel>(temp.Item1.ToString());
                 json = temp.Item2;
                 var beforeTime = RemindModel.BeforeTime[indexBefore].BeforeTime;
                 string localId = "";
@@ -134,9 +132,8 @@ namespace ZSCY_Win10.ViewModels.Remind
             }
         }
 
-        private async Task<Tuple<string, string>> AddRemindBakcup(string content, string title, string week, int indexBefore)
+        private async Task<Tuple<Newtonsoft.Json.Linq.JObject, string>> AddRemindBakcup(string content, string title, string week, int indexBefore)
         {
-            var user = GetCredential.getCredential("ZSCY");
             RemindBackupModel remindBackup = new RemindBackupModel();
             remindBackup.Content = content;
             remindBackup.Title = title;
@@ -155,18 +152,17 @@ namespace ZSCY_Win10.ViewModels.Remind
                 });
             }
             string json = JsonConvert.SerializeObject(remindBackup);
-            remindBackup.StuNum = user.UserName;
-            remindBackup.IdNum = user.Password;
-            string returnString = "";
+            Newtonsoft.Json.Linq.JObject returnString = null;
             try
             {
-                returnString = await RemindWebRequest.getHttpWebRequest(Api.AddRemindApi, RemindWebRequest.addRemind(remindBackup), 0, true);
+                var param = RemindWebRequest.addRemind(remindBackup);
+                returnString = await RemindWebRequest.Send("magipoke-reminder/Person/addTransaction", param: param, json: false, method: "post", token: true);
             }
             finally
             {
             }
             return
-               new Tuple<string, string>
+               new Tuple<Newtonsoft.Json.Linq.JObject, string>
                (
                 returnString,
                 json
@@ -175,7 +171,6 @@ namespace ZSCY_Win10.ViewModels.Remind
 
         private async Task<RemindBackupModel> EditRemindBackup(string content, string title, string week, int indexBefore, RemindListModel remind)
         {
-            var user = GetCredential.getCredential("ZSCY");
             RemindBackupModel remindBackup = new RemindBackupModel();
             remindBackup.Content = remind.Remind.Content = content;
             remindBackup.Title = remind.Remind.Title = title;
@@ -196,11 +191,8 @@ namespace ZSCY_Win10.ViewModels.Remind
                 remindBackup.DateItems.Add(temp);
                 remind.Remind.DateItems.Add(temp);
             }
-            remindBackup.StuNum = user.UserName;
-            remindBackup.IdNum = user.Password;
-            remind.Remind.StuNum = null;
-            remind.Remind.IdNum = null;
-            await RemindWebRequest.getHttpWebRequest(Api.EditRemindApi, RemindWebRequest.editRemind(remindBackup), 0, true);
+            var param = RemindWebRequest.editRemind(remindBackup);
+            await RemindWebRequest.Send("magipoke-reminder/Person/editTransaction", param: param, json: false, method: "post", token: true);
             return remind.Remind;
         }
     }

@@ -25,9 +25,6 @@ namespace ZSCY_Win10
     {
         private int page = 0;
         private ObservableCollection<NewsList> JWList = new ObservableCollection<NewsList>();
-        private ObservableCollection<NewsList> XWList = new ObservableCollection<NewsList>();
-        private ObservableCollection<NewsList> CYList = new ObservableCollection<NewsList>();
-        private ObservableCollection<NewsList> XSList = new ObservableCollection<NewsList>();
         private int[] pagestatus = new int[] { 0, 0, 0, 0 };
 
         public NewsPage()
@@ -69,45 +66,13 @@ namespace ZSCY_Win10
                 cutoffLine.Y2 = e.NewSize.Height;
             };
             Debug.WriteLine("Init");
+            initNewsList();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             JWListView.ItemsSource = JWList;
-            XWListView.ItemsSource = XWList;
-            CYListView.ItemsSource = CYList;
-            XSListView.ItemsSource = XSList;
-
-            //if (App.JWListCache.Count == 0)
-            //else
-            //{
-            //    getJWCache();
-            //}
         }
-
-        //private async void getJWCache()
-        //{
-        //    JWList = await getCache();
-        //    JWListProgressStackPanel.Visibility = Visibility.Collapsed;
-        //    continueJWGrid.Visibility = Visibility.Visible;
-        //    JWListView.ItemsSource = JWList;
-        //    if (Utils.getPhoneWidth() > 750)
-        //        JWListView.Width = 400;
-        //    //foreach (var JWListitem in App.JWListCache)
-        //    //{
-        //    //    JWList.Add(JWListitem);
-        //    //}
-
-        //}
-
-        //public static async Task<ObservableCollection<JWList>> getCache()
-        //{
-        //    return await Task.Run(() =>
-        //    {
-        //        ObservableCollection<JWList> jw = App.JWListCache;
-        //        return jw;
-        //    });
-        //}
 
         //离开页面时，取消事件
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -115,63 +80,24 @@ namespace ZSCY_Win10
             //App.JWListCache = JWList;
         }
 
-        private async void initNewsList(string type, int page = 0)
+        private async void initNewsList(int page = 1)
         {
             int[] temp = pagestatus;
-            switch (type)
-            {
-                case "jwzx":
-                    JWListFailedStackPanel.Visibility = Visibility.Collapsed;
-                    JWListProgressStackPanel.Visibility = Visibility.Visible;
-                    break;
+            JWListFailedStackPanel.Visibility = Visibility.Collapsed;
+            JWListProgressStackPanel.Visibility = Visibility.Visible;
 
-                case "xwgg":
-                    XWListFailedStackPanel.Visibility = Visibility.Collapsed;
-                    XWListProgressStackPanel.Visibility = Visibility.Visible;
-                    break;
-
-                case "cyxw ":
-                    CYListFailedStackPanel.Visibility = Visibility.Collapsed;
-                    CYListProgressStackPanel.Visibility = Visibility.Visible;
-                    break;
-
-                case "xsjz ":
-                    XSListFailedStackPanel.Visibility = Visibility.Collapsed;
-                    XSListProgressStackPanel.Visibility = Visibility.Visible;
-                    break;
-            }
-
-            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("type", type));
-            paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
-            string news = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/news/searchtitle", paramList);
+            Dictionary<string, string> query = new Dictionary<string, string>();
+            query.Add("page", page.ToString());
+            JObject news = await Requests.Send("magipoke-jwzx/jwNews/list", query: query);
             Debug.WriteLine("news->" + news);
 
-            switch (type)
+            JWListProgressStackPanel.Visibility = Visibility.Collapsed;
+
+            if (news != null)
             {
-                case "jwzx":
-                    JWListProgressStackPanel.Visibility = Visibility.Collapsed;
-                    break;
-
-                case "xwgg":
-                    XWListProgressStackPanel.Visibility = Visibility.Collapsed;
-                    break;
-
-                case "cyxw ":
-                    CYListProgressStackPanel.Visibility = Visibility.Collapsed;
-                    break;
-
-                case "xsjz ":
-                    XSListProgressStackPanel.Visibility = Visibility.Collapsed;
-                    break;
-            }
-
-            if (news != "")
-            {
-                JObject obj = JObject.Parse(news);
-                if (Int32.Parse(obj["state"].ToString()) == 200)
+                if (Int32.Parse(news["status"].ToString()) == 200)
                 {
-                    JArray NewsListArray = Utils.ReadJso(news);
+                    JArray NewsListArray = (JArray)news["data"];
                     //JWListView.ItemsSource = JWList;
 
                     for (int i = 0; i < NewsListArray.Count; i++)
@@ -182,22 +108,15 @@ namespace ZSCY_Win10
                         if (Newsitem.Title != "")
                         {
                             //请求正文
-                            List<KeyValuePair<String, String>> contentparamList = new List<KeyValuePair<String, String>>();
-                            contentparamList.Add(new KeyValuePair<string, string>("type", type));
-                            contentparamList.Add(new KeyValuePair<string, string>("articleid", Newsitem.Articleid));
-                            string newsContent = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/news/searchcontent", contentparamList);
+                            Dictionary<string, string> contentQuery = new Dictionary<string, string>();
+                            contentQuery.Add("id", Newsitem.ID.ToString());
+                            JObject newsContent = await Requests.Send("magipoke-jwzx/jwNews/content", query: contentQuery);
                             //Debug.WriteLine("newsContent->" + newsContent);
-                            if (temp[NewsPivot.SelectedIndex] != pagestatus[NewsPivot.SelectedIndex])
+                            if (newsContent != null)
                             {
-                                Debug.WriteLine("newsContent->在此退出");
-                                return;
-                            }
-                            if (newsContent != "")
-                            {
-                                JObject newsContentobj = JObject.Parse(newsContent);
-                                if (Int32.Parse(newsContentobj["state"].ToString()) == 200)
+                                if (Int32.Parse(newsContent["status"].ToString()) == 200)
                                 {
-                                    string content = (JObject.Parse(newsContentobj["data"].ToString()))["content"].ToString();
+                                    string content = newsContent["data"]["content"].ToString();
                                     string content_all = content;
                                     Debug.WriteLine("content->" + content);
                                     try
@@ -209,131 +128,26 @@ namespace ZSCY_Win10
                                     }
                                     catch (Exception) { }
 
-                                    //content.Replace("&nbsp;", "");
-
-                                    //while (content.StartsWith("\r") || content.StartsWith("\n") || content.StartsWith("\t") || content.StartsWith(" ") || content.StartsWith("&nbsp;"))
-                                    //    content = content.Substring(1);
-                                    //while (content.StartsWith("&nbsp;"))
-                                    //    content = content.Substring(6);
-                                    content = content.Replace("\r", "");
-                                    content = content.Replace("\t", "");
-                                    content = content.Replace("\n", "");
-                                    content = content.Replace("&nbsp;", "");
-                                    content = content.Replace(" ", "");
-                                    content = content.Replace("（见附件）", "见附件");
-                                    content = content.Replace("MicrosoftInternetExplorer4", "");
-                                    content = content.Replace("Normal07.8磅02falsefalsefalse", "");
-
-                                    //while (content.StartsWith("\r\n "))
-                                    //    content = content.Substring(3);
-                                    //while (content.StartsWith("\r\n"))
-                                    //    content = content.Substring(2);
-                                    //while (content.StartsWith("\n\t"))
-                                    //    content = content.Substring(2);
-                                    //while (content.StartsWith("\n"))
-                                    //    content = content.Substring(1);
-                                    //while (content.StartsWith("\r"))
-                                    //    content = content.Substring(1);
-                                    //while (content.StartsWith("\t"))
-                                    //    content = content.Substring(1);
-                                    //while (content.StartsWith("\\"))
-                                    //    content = content.Substring(1);
-                                    //content.Replace('\r', '\a');
-                                    //content.Replace('\n', '\a');
-                                    //content.Replace(" ", "");
                                     Debug.WriteLine("content->" + content);
-                                    switch (type)
-                                    {
-                                        case "jwzx":
-                                            JWList.Add(new NewsList { Title = Newsitem.Title, Date = Newsitem.Date, Read = Newsitem.Read, Content = content, Content_all = newsContent, ID = Newsitem.ID });
-                                            break;
-
-                                        case "xwgg":
-                                            XWList.Add(new NewsList { Title = Newsitem.Title, Date = Newsitem.Date, Read = Newsitem.Read, Content = content, Content_all = newsContent, ID = Newsitem.ID });
-                                            break;
-
-                                        case "cyxw ":
-                                            CYList.Add(new NewsList { Title = Newsitem.Title, Date = Newsitem.Date, Read = Newsitem.Read, Content = content, Content_all = newsContent, ID = Newsitem.ID });
-                                            break;
-
-                                        case "xsjz ":
-                                            XSList.Add(new NewsList { Title = Newsitem.Title, Date = Newsitem.Date, Read = Newsitem.Read, Content = content, Content_all = newsContent, ID = Newsitem.ID });
-                                            break;
-                                    }
+                                    JWList.Add(new NewsList { Title = Newsitem.Title, Date = Newsitem.Date, Read = Newsitem.Read, Content = content, Content_all = newsContent.ToString(), ID = Newsitem.ID });
                                 }
                             }
                         }
                     }
-                    //JWListView.ItemsSource = JWList;
-                    switch (type)
-                    {
-                        case "jwzx":
-                            continueJWGrid.Visibility = Visibility.Visible;
-                            break;
-
-                        case "xwgg":
-                            continueXWGrid.Visibility = Visibility.Visible;
-                            break;
-
-                        case "cyxw ":
-                            continueCYGrid.Visibility = Visibility.Visible;
-                            break;
-
-                        case "xsjz ":
-                            continueXSGrid.Visibility = Visibility.Visible;
-                            break;
-                    }
+                    continueJWGrid.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    switch (type)
-                    {
-                        case "jwzx":
-                            JWListFailedStackPanel.Visibility = Visibility.Visible;
-                            continueJWGrid.Visibility = Visibility.Collapsed;
-                            break;
 
-                        case "xwgg":
-                            XWListFailedStackPanel.Visibility = Visibility.Visible;
-                            continueXWGrid.Visibility = Visibility.Collapsed;
-                            break;
+                    JWListFailedStackPanel.Visibility = Visibility.Visible;
+                    continueJWGrid.Visibility = Visibility.Collapsed;
 
-                        case "cyxw ":
-                            CYListFailedStackPanel.Visibility = Visibility.Visible;
-                            continueCYGrid.Visibility = Visibility.Collapsed;
-                            break;
-
-                        case "xsjz ":
-                            XSListFailedStackPanel.Visibility = Visibility.Visible;
-                            continueXSGrid.Visibility = Visibility.Collapsed;
-                            break;
-                    }
                 }
             }
             else
             {
-                switch (type)
-                {
-                    case "jwzx":
-                        JWListFailedStackPanel.Visibility = Visibility.Visible;
-                        continueJWGrid.Visibility = Visibility.Collapsed;
-                        break;
-
-                    case "xwgg":
-                        XWListFailedStackPanel.Visibility = Visibility.Visible;
-                        continueXWGrid.Visibility = Visibility.Collapsed;
-                        break;
-
-                    case "cyxw ":
-                        CYListFailedStackPanel.Visibility = Visibility.Visible;
-                        continueCYGrid.Visibility = Visibility.Collapsed;
-                        break;
-
-                    case "xsjz ":
-                        XSListFailedStackPanel.Visibility = Visibility.Visible;
-                        continueXSGrid.Visibility = Visibility.Collapsed;
-                        break;
-                }
+                JWListFailedStackPanel.Visibility = Visibility.Visible;
+                continueJWGrid.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -363,30 +177,8 @@ namespace ZSCY_Win10
         private void continueNewsGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             page++;
-            string type = "";
-            switch (NewsPivot.SelectedIndex)
-            {
-                case 0:
-                    type = "jwzx";
-                    continueJWGrid.Visibility = Visibility.Collapsed;
-                    break;
-
-                case 1:
-                    type = "xwgg";
-                    continueXWGrid.Visibility = Visibility.Collapsed;
-                    break;
-
-                case 2:
-                    type = "cyxw ";
-                    continueCYGrid.Visibility = Visibility.Collapsed;
-                    break;
-
-                case 3:
-                    type = "xsjz ";
-                    continueXSGrid.Visibility = Visibility.Collapsed;
-                    break;
-            }
-            initNewsList(type, page);
+            continueJWGrid.Visibility = Visibility.Collapsed;
+            initNewsList(page);
         }
 
         /// <summary>
@@ -396,26 +188,7 @@ namespace ZSCY_Win10
         /// <param name="e"></param>
         private void NewsListFailedStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            string type = "";
-            switch (NewsPivot.SelectedIndex)
-            {
-                case 0:
-                    type = "jwzx";
-                    break;
-
-                case 1:
-                    type = "xwgg";
-                    break;
-
-                case 2:
-                    type = "cyxw ";
-                    break;
-
-                case 3:
-                    type = "xsjz ";
-                    break;
-            }
-            initNewsList(type);
+            initNewsList();
         }
 
         /// <summary>
@@ -426,35 +199,9 @@ namespace ZSCY_Win10
         private void NewsRefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             page = 0;
-            string type = "";
-            pagestatus[NewsPivot.SelectedIndex]++;
-            switch (NewsPivot.SelectedIndex)
-            {
-                case 0:
-                    type = "jwzx";
-                    JWList.Clear();
-                    continueJWGrid.Visibility = Visibility.Collapsed;
-                    break;
-
-                case 1:
-                    type = "xwgg";
-                    XWList.Clear();
-                    continueXWGrid.Visibility = Visibility.Collapsed;
-                    break;
-
-                case 2:
-                    type = "cyxw ";
-                    CYList.Clear();
-                    continueCYGrid.Visibility = Visibility.Collapsed;
-                    break;
-
-                case 3:
-                    type = "xsjz ";
-                    XSList.Clear();
-                    continueXSGrid.Visibility = Visibility.Collapsed;
-                    break;
-            }
-            initNewsList(type);
+            JWList.Clear();
+            continueJWGrid.Visibility = Visibility.Collapsed;
+            initNewsList();
         }
 
         private void NewsListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -480,11 +227,11 @@ namespace ZSCY_Win10
             if (((NewsList)e.ClickedItem).Content_all != "")
             {
                 JObject newsContentobj = JObject.Parse(((NewsList)e.ClickedItem).Content_all);
-                if (Int32.Parse(newsContentobj["state"].ToString()) == 200)
+                if (Int32.Parse(newsContentobj["status"].ToString()) == 200)
                 {
-                    JArray AnnexListArray = Utils.ReadJso(newsContentobj["data"].ToString(), "annex");
-                    if (AnnexListArray != null)
+                    if (newsContentobj["data"]["files"].HasValues)
                     {
+                        JArray AnnexListArray = (JArray)newsContentobj["data"]["files"];
                         ObservableCollection<NewsContentList.Annex> annexList = new ObservableCollection<NewsContentList.Annex>();
                         for (int i = 0; i < AnnexListArray.Count; i++)
                         {
@@ -538,7 +285,7 @@ namespace ZSCY_Win10
                                     Anneximg = new Uri("ms-appx:///Assets/Annex_img/Annex_other.png", UriKind.Absolute);
                                 }
 
-                                annexList.Add(new NewsContentList.Annex { name = annex.name, address = annex.address, Anneximg = Anneximg });
+                                annexList.Add(new NewsContentList.Annex { name = annex.name, fileId = annex.fileId, Anneximg = Anneximg });
                                 DownloadAppBarButton.Visibility = Visibility.Visible;
                             }
                             else
@@ -570,9 +317,6 @@ namespace ZSCY_Win10
             NewsFrame.Visibility = Visibility.Collapsed;
             NewsRefreshAppBarButton.Visibility = Visibility.Visible;
             JWListView.SelectedIndex = -1;
-            XWListView.SelectedIndex = -1;
-            CYListView.SelectedIndex = -1;
-            XSListView.SelectedIndex = -1;
         }
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
@@ -591,9 +335,6 @@ namespace ZSCY_Win10
             NewsFrame.Visibility = Visibility.Collapsed;
             NewsRefreshAppBarButton.Visibility = Visibility.Visible;
             JWListView.SelectedIndex = -1;
-            XWListView.SelectedIndex = -1;
-            CYListView.SelectedIndex = -1;
-            XSListView.SelectedIndex = -1;
         }
 
         private void DownloadAppBarButton_Click(object sender, RoutedEventArgs e)
@@ -606,16 +347,10 @@ namespace ZSCY_Win10
         {
             try
             {
-                string uri = ((NewsContentList.Annex)e.ClickedItem).address;
-                if (NewsPivot.SelectedIndex == 0)
-                {
-                    uri = await Util.NetWork.getHttpWebRequest((((NewsContentList.Annex)e.ClickedItem).address.ToString()), PostORGet: 1, fulluri: true);
-                    Debug.WriteLine(uri);
-                    uri = uri.Replace("\"", "");
-                    uri = uri.Replace("\\", "");
-                    Debug.WriteLine(uri);
-                    //uri = "http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/jwzxnews/10947.xlsx";
-                }
+                Dictionary<string, string> fileQuery = new Dictionary<string, string>();
+                fileQuery.Add("id", ((NewsContentList.Annex)e.ClickedItem).fileId);
+                string uri = (await Util.Requests.Send("magipoke-jwzx/jwNews/file", query: fileQuery)).ToString();
+                Debug.WriteLine(uri);
                 await Launcher.LaunchUriAsync(new Uri(uri));
             }
             catch (Exception)
@@ -631,69 +366,10 @@ namespace ZSCY_Win10
         /// <param name="args"></param>
         private void NewsListpr_RefreshInvoked(DependencyObject sender, object args)
         {
-            page = 0;
-            string type = "";
-            pagestatus[NewsPivot.SelectedIndex]++;
-            switch (NewsPivot.SelectedIndex)
-            {
-                case 0:
-                    type = "jwzx";
-                    JWList.Clear();
-                    continueJWGrid.Visibility = Visibility.Collapsed;
-                    break;
-
-                case 1:
-                    type = "xwgg";
-                    XWList.Clear();
-                    continueXWGrid.Visibility = Visibility.Collapsed;
-                    break;
-
-                case 2:
-                    type = "cyxw ";
-                    CYList.Clear();
-                    continueCYGrid.Visibility = Visibility.Collapsed;
-                    break;
-
-                case 3:
-                    type = "xsjz ";
-                    XSList.Clear();
-                    continueXSGrid.Visibility = Visibility.Collapsed;
-                    break;
-            }
-            initNewsList(type);
-        }
-
-        /// <summary>
-        /// Pivot切换
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void NewsPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string type = "";
-            switch (NewsPivot.SelectedIndex)
-            {
-                case 0:
-                    type = "jwzx";
-                    break;
-
-                case 1:
-                    type = "xwgg";
-                    break;
-
-                case 2:
-                    type = "cyxw ";
-                    break;
-
-                case 3:
-                    type = "xsjz ";
-                    break;
-            }
-            if (pagestatus[NewsPivot.SelectedIndex] == 0)
-            {
-                pagestatus[NewsPivot.SelectedIndex]++;
-                initNewsList(type);
-            }
+            page = 1;
+            JWList.Clear();
+            continueJWGrid.Visibility = Visibility.Collapsed;
+            initNewsList();
         }
     }
 }

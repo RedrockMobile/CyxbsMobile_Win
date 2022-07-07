@@ -51,14 +51,14 @@
                 <Image Margin="0,30,0,30" Source="../Assets/BlueLogo/Square150x150Logo.scale-400.png" Height="120" Width="120"></Image>
                 <StackPanel x:Name="stackPanel">
                     <TextBlock Name="AppTextBlock" Margin="0,0,0,10" Text="掌上重邮 For Windows 10" Foreground="#333" FontSize="25" HorizontalAlignment="Center"></TextBlock>
-                    <TextBlock Text="Version 2.1" HorizontalAlignment="Center" Foreground="#555" FontSize="20"></TextBlock>
+                    <TextBlock Text="Version 4.0" HorizontalAlignment="Center" Foreground="#555" FontSize="20"></TextBlock>
                 </StackPanel>
             </StackPanel>
 
             <StackPanel Name="AboutRedStackPanel" Margin="0,0,0,20" VerticalAlignment="Bottom">
                 <TextBlock Text="重庆邮电大学红岩网校工作站" FontSize="18" Foreground="#333" HorizontalAlignment="Center"></TextBlock>
-                <HyperlinkButton Margin="0,0,0,20" Content="http://hongyan.cqupt.edu.cn" NavigateUri="http://hongyan.cqupt.edu.cn" FontSize="18" Foreground="#333" HorizontalAlignment="Center"></HyperlinkButton>
-                <TextBlock Text="Copyright © 2014 - 2016 All Right Reserved" FontSize="15" Foreground="#777" HorizontalAlignment="Center"></TextBlock>
+                <HyperlinkButton Margin="0,0,0,20" Content="https://redrock.team" NavigateUri="https://redrock.team" FontSize="18" Foreground="#333" HorizontalAlignment="Center"></HyperlinkButton>
+                <TextBlock Text="Copyright © 2014 - 2022 All Right Reserved" FontSize="15" Foreground="#777" HorizontalAlignment="Center"></TextBlock>
             </StackPanel>
         </Grid>
     </Grid>

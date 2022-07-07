@@ -57,26 +57,14 @@ namespace ZSCY.Pages
         private async void initScore()
         {
             //await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 2, 140, 253), Colors.White, text: "正在紧张批改试卷...", isIndeterminate: true);
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
-            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-            //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-            paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
-            string score = await NetWork.getHttpWebRequest("api/examGrade", paramList);
+            JObject score = await Requests.Send("api/examGrade");
             Debug.WriteLine("score->" + score);
-#if DEBUG
-            //score = "{\"status\":200,\"term\":\"20151\",\"info\":\"success\",\"data\":[{\"student\":\"2013211594\",\"course\":\"英语口笔译基础\",\"grade\":\"99\",\"property\":\"必修\",\"status\":\"1\",\"term\":\"2\"},{\"student\":\"2013211594\",\"course\":\"英语口笔译基础\",\"grade\":\"99\",\"property\":\"必修\",\"status\":\"1\",\"term\":\"2\"},{\"student\":\"2013211594\",\"course\":\"英语口笔译基础\",\"grade\":\"99\",\"property\":\"必修\",\"status\":\"1\",\"term\":\"2\"},{\"student\":\"2013211594\",\"course\":\"英语口笔译基础\",\"grade\":\"99\",\"property\":\"必修\",\"status\":\"1\",\"term\":\"2\"},{\"student\":\"2013211594\",\"course\":\"英语口笔译基础\",\"grade\":\"99\",\"property\":\"必修\",\"status\":\"1\",\"term\":\"2\"},{\"student\":\"2013211594\",\"course\":\"英语口笔译基础\",\"grade\":\"99\",\"property\":\"必修\",\"status\":\"1\",\"term\":\"2\"},{\"student\":\"2013211594\",\"course\":\"英语口笔译基础\",\"grade\":\"99\",\"property\":\"必修\",\"status\":\"1\",\"term\":\"2\"},{\"student\":\"2013211594\",\"course\":\"英语口笔译基础\",\"grade\":\"99\",\"property\":\"必修\",\"status\":\"1\",\"term\":\"2\"},{\"student\":\"2013211594\",\"course\":\"英语口笔译基础\",\"grade\":\"99\",\"property\":\"必修\",\"status\":\"1\",\"term\":\"2\"},{\"student\":\"2013211594\",\"course\":\"英语口笔译基础\",\"grade\":\"99\",\"property\":\"必修\",\"status\":\"1\",\"term\":\"2\"},{\"student\":\"2013211594\",\"course\":\"英语口笔译基础\",\"grade\":\"99\",\"property\":\"必修\",\"status\":\"1\",\"term\":\"2\"},{\"student\":\"2013211594\",\"course\":\"英语口笔译基础\",\"grade\":\"99\",\"property\":\"必修\",\"status\":\"1\",\"term\":\"2\"},{\"student\":\"2013211594\",\"course\":\"英语口笔译基础\",\"grade\":\"99\",\"property\":\"必修\",\"status\":\"1\",\"term\":\"2\"},{\"student\":\"2013211594\",\"course\":\"英语口笔译基础\",\"grade\":\"99\",\"property\":\"必修\",\"status\":\"1\",\"term\":\"2\"}],\"version\":\"0.1.0\",\"stuNum\":\"2013211594\",\"idNum\":\"160155\"}";
-#endif
-            if (score != "")
+            if (score != null)
             {
-                JObject obj = JObject.Parse(score);
-                if (Int32.Parse(obj["status"].ToString()) == 200)
+                if (Int32.Parse(score["status"].ToString()) == 200)
                 {
                     List<ScoreList> scoreList = new List<ScoreList>();
-                    JArray ScoreListArray = Utils.ReadJso(score);
+                    JArray ScoreListArray = (JArray)score["data"];
                     for (int i = 0; i < ScoreListArray.Count; i++)
                     {
                         ScoreList classitem = new ScoreList();
@@ -85,7 +73,7 @@ namespace ZSCY.Pages
                     }
                     ScoreListView.ItemsSource = scoreList;
                 }
-                else if (Int32.Parse(obj["status"].ToString()) == 300)
+                else if (Int32.Parse(score["status"].ToString()) == 300)
                 {
                     ListFailedStackPanelTextBlock.Text = "暂无数据，过几天再来看看";
 

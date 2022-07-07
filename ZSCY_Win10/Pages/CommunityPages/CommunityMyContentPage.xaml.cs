@@ -137,29 +137,21 @@ namespace ZSCY_Win10.Pages.CommunityPages
             //    type_id = ViewModel.hotfeed.type_id;
             //}
             //TODO:未登陆时 不添加参数stuNum和idNum
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("article_id", id));
             paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
-            //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-            //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-            paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
             paramList.Add(new KeyValuePair<string, string>("size", "15"));
             paramList.Add(new KeyValuePair<string, string>("page", remarkPage.ToString()));
-            string mark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/getremark", paramList);
+            JObject mark = await Requests.Send("cyxbsMobile/index.php/Home/ArticleRemark/getremark");
             Debug.WriteLine(mark);
             try
             {
-                if (mark != "")
+                if (mark != null)
                 {
-                    JObject obj = JObject.Parse(mark);
-                    if (Int32.Parse(obj["state"].ToString()) == 200)
+                    if (Int32.Parse(mark["state"].ToString()) == 200)
                     {
                         //markList.Clear();
-                        JArray markListArray = Utils.ReadJso(mark);
+                        JArray markListArray = (JArray)mark["data"];
                         if (markListArray.Count != 0)
                         {
                             isfirst = false;
@@ -230,26 +222,18 @@ namespace ZSCY_Win10.Pages.CommunityPages
                 type_id = "5";
                 id = (ee.Parameter as MyNotification).article_id;
             }
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("article_id", id));
             paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
-            //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-            //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-            paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
             paramList.Add(new KeyValuePair<string, string>("content", sendMarkTextBox.Text));
             paramList.Add(new KeyValuePair<string, string>("answer_user_id", Mark2PeoNum));
-            string sendMark = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/ArticleRemark/postremarks", paramList);
+            JObject sendMark = await Requests.Send("cyxbsMobile/index.php/Home/ArticleRemark/postremarks");
             Debug.WriteLine(sendMark);
             try
             {
-                if (sendMark != "")
+                if (sendMark != null)
                 {
-                    JObject obj = JObject.Parse(sendMark);
-                    if (Int32.Parse(obj["state"].ToString()) == 200)
+                    if (Int32.Parse(sendMark["state"].ToString()) == 200)
                     {
                         Utils.Toast("评论成功");
                         issend = true;
@@ -275,9 +259,6 @@ namespace ZSCY_Win10.Pages.CommunityPages
         private void markListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var clickMarkItem = (Mark)e.ClickedItem;
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
             if (!isMark2Peo)
             {
                 isMark2Peo = true;
@@ -286,8 +267,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             {
                 sendMarkTextBox.Text = sendMarkTextBox.Text.Substring(sendMarkTextBox.Text.IndexOf(":") + 2);
             }
-            //if (clickMarkItem.stunum != appSetting.Values["stuNum"].ToString())
-            if (clickMarkItem.stunum != credentialList[0].UserName)
+            if (clickMarkItem.stunum != appSetting.Values["stuNum"].ToString())
             {
                 sendMarkTextBox.Text = "回复 " + clickMarkItem.nickname + " : " + sendMarkTextBox.Text;
                 Mark2PeoNum = clickMarkItem.stunum;
@@ -337,7 +317,7 @@ namespace ZSCY_Win10.Pages.CommunityPages
             if (null != result && result.Label == "是")
             {
                 Debug.WriteLine("保存图片");
-                bool saveImg = await NetWork.downloadFile(((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc, "picture", ((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", ""));
+                bool saveImg = await Requests.downloadFile(((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc, "picture", ((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", ""));
                 if (saveImg)
                 {
                     Utils.Toast("图片已保存到 \"保存的图片\"", "SavedPictures");

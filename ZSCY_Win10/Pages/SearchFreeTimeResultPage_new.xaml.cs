@@ -106,13 +106,12 @@ namespace ZSCY.Pages
                 {
                     List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
                     paramList.Add(new KeyValuePair<string, string>("stuNum", muIdList[i].uId));
-                    string kbtemp = await NetWork.getHttpWebRequest("redapi2/api/kebiao", paramList); //新
-                    if (kbtemp != "")
+                    JObject kbtemp = await Requests.Send("redapi2/api/kebiao");
+                    if (kbtemp != null)
                     {
-                        JObject job = JObject.Parse(kbtemp);
-                        if (Int32.Parse(job["status"].ToString()) == 200)
+                        if (Int32.Parse(kbtemp["status"].ToString()) == 200)
                         {
-                            JArray jarry = Utils.ReadJso(kbtemp);
+                            JArray jarry = (JArray)kbtemp["data"];
                             for (int j = 0; j < jarry.Count; j++)
                             {
                                 ClassListLight cll = new ClassListLight();

@@ -166,11 +166,6 @@ namespace ZSCY_Win10
             NavMenuList.ItemsSource = navlist;
             ActivateWindow();
             //NavMenuList.SelectedIndex = 0;
-            var a = DateTime.Now;
-            if (DateTimeOffset.Now < DateTimeOffset.Parse("2016/3/15 00:00:00"))
-                showNotice();
-            else
-                appSetting.Values.Remove("showNotice");
             //TODO:未登录时采用默认头像
             //if (appSetting.Values.ContainsKey("idNum"))
             try
@@ -238,26 +233,17 @@ namespace ZSCY_Win10
 
         private async void initHeadImage()
         {
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
-            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-            //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-            paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
-            string headimg = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/search", paramList);
-            if (headimg != "")
+            JObject headimg = await Requests.Send("cyxbsMobile/index.php/Home/Person/search");
+            if (headimg != null)
             {
                 try
                 {
-                    JObject obj = JObject.Parse(headimg);
-                    if (Int32.Parse(obj["status"].ToString()) == 200)
+                    if (Int32.Parse(headimg["status"].ToString()) == 200)
                     {
-                        if (obj["data"].ToString() != "")
+                        if (headimg["data"].ToString() != "")
                         {
-                            string a = obj["data"].ToString();
-                            JObject objdata = JObject.Parse(obj["data"].ToString());
+                            string a = headimg["data"].ToString();
+                            JObject objdata = JObject.Parse(headimg["data"].ToString());
                             headimgImageBrush.ImageSource = new BitmapImage(new Uri(objdata["photo_src"].ToString()));
                             appSetting.Values["Community_headimg_src"] = objdata["photo_src"].ToString();
 
@@ -283,30 +269,6 @@ namespace ZSCY_Win10
                 catch (Exception)
                 {
                     Debug.WriteLine("缓存头像文件不存在");
-                }
-            }
-        }
-
-        private async void showNotice()
-        {
-            if (!appSetting.Values.ContainsKey("showNotice"))
-            {
-                appSetting.Values["showNotice"] = true;
-            }
-            if (Boolean.Parse(appSetting.Values["showNotice"].ToString()))
-            {
-                var dig = new MessageDialog("[移动开发部春招]Android、iOS、Windows全平台方向开始了，有兴趣的同学请于2016年3月14日前将自己的个人介绍发送至290799684@qq.com\n邮件主题：2016移动开发部春招XX方向-姓名-学号-手机号", "通知");
-                var btnOk = new UICommand("关闭");
-                dig.Commands.Add(btnOk);
-                var btnCancel = new UICommand("不再提醒");
-                dig.Commands.Add(btnCancel);
-                var result = await dig.ShowAsync();
-                if (null != result && result.Label == "不再提醒")
-                {
-                    appSetting.Values["showNotice"] = false;
-                }
-                else if (null != result && result.Label == "关闭")
-                {
                 }
             }
         }
@@ -414,16 +376,10 @@ namespace ZSCY_Win10
                             {
                                 BackOpacityGrid.Visibility = Visibility.Visible;
                                 loadingStackPanel.Visibility = Visibility.Visible;
-                                List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-                                //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-                                //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-                                paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-                                paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
-                                string perInfo = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/search", paramList);
-                                if (perInfo != "")
+                                JObject perInfo = await Requests.Send("magipoke/Person/Search", method: "post", token: true);
+                                if (perInfo != null)
                                 {
-                                    JObject jPerInfo = JObject.Parse(perInfo);
-                                    if (jPerInfo["data"].ToString() == "")
+                                    if (perInfo["data"]["nickname"].ToString() == "")
                                     {
                                         var dig = new MessageDialog("没有完善资料不能登入友谊的小船哟");
                                         var btnOk = new UICommand("马上完善");
@@ -447,15 +403,15 @@ namespace ZSCY_Win10
                                     else
                                     {
                                         appSetting.Values["CommunityPerInfo"] = true;
-                                        appSetting.Values["Community_people_id"] = jPerInfo["data"]["id"].ToString();
-                                        appSetting.Values["Community_nickname"] = jPerInfo["data"]["nickname"].ToString();
-                                        appSetting.Values["Community_headimg_src"] = jPerInfo["data"]["photo_src"].ToString();
-                                        appSetting.Values["Community_introduction"] = jPerInfo["data"]["introduction"].ToString();
-                                        appSetting.Values["Community_phone"] = jPerInfo["data"]["phone"].ToString();
-                                        appSetting.Values["Community_qq"] = jPerInfo["data"]["qq"].ToString();
+                                        appSetting.Values["Community_people_id"] = perInfo["data"]["uid"].ToString();
+                                        appSetting.Values["Community_nickname"] = perInfo["data"]["nickname"].ToString();
+                                        appSetting.Values["Community_headimg_src"] = perInfo["data"]["photo_src"].ToString();
+                                        appSetting.Values["Community_introduction"] = perInfo["data"]["introduction"].ToString();
+                                        appSetting.Values["Community_phone"] = perInfo["data"]["phone"].ToString();
+                                        appSetting.Values["Community_qq"] = perInfo["data"]["qq"].ToString();
                                         Debug.WriteLine(appSetting.Values["Community_headimg_src"].ToString());
 
-                                        Debug.WriteLine(jPerInfo["data"]["id"].ToString());
+                                        Debug.WriteLine(perInfo["data"]["uid"].ToString());
                                         BackOpacityGrid.Visibility = Visibility.Collapsed;
                                         loadingStackPanel.Visibility = Visibility.Collapsed;
                                         if ((item.DestPage != typeof(MyPage)))
@@ -840,11 +796,7 @@ namespace ZSCY_Win10
                         pixelBuffer.ToArray());
                     await encoder.FlushAsync();
                 }
-                var vault = new Windows.Security.Credentials.PasswordVault();
-                var credentialList = vault.FindAllByResource(resourceName);
-                credentialList[0].RetrievePassword();
-                //string uphead = await NetWork.headUpload(appSetting.Values["stuNum"].ToString(), "ms-appdata:///local/temphead.png");
-                string uphead = await NetWork.headUpload(credentialList[0].UserName, "ms-appdata:///local/temphead.png");
+                string uphead = await Requests.headUpload(appSetting.Values["stuNum"].ToString(), "ms-appdata:///local/temphead.png");
                 Debug.WriteLine(uphead);
                 if (uphead != "")
                 {

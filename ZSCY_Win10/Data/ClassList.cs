@@ -20,7 +20,6 @@ namespace ZSCY.Data
         public int WeekBegin { get; set; }
         public int WeekEnd { get; set; }
         public string Type { get; set; }
-        public string Status { get; set; }
         public int Period { get; set; }
         public string _Id { get; set; }
         public int[] Week { get; set; }
@@ -40,13 +39,11 @@ namespace ZSCY.Data
             Classroom = classDetailJObject["classroom"].ToString();
             RawWeek = classDetailJObject["rawWeek"].ToString();
             WeekModel = classDetailJObject["weekModel"].ToString();
-            WeekBegin = (int)classDetailJObject["weekBegin"];
-            WeekEnd = (int)classDetailJObject["weekEnd"];
+            WeekBegin = (int)classDetailJObject["week_begin"];
+            WeekEnd = (int)classDetailJObject["week_end"];
             Type = classDetailJObject["type"] != null ? classDetailJObject["type"].ToString() : "";
-            if (classDetailJObject["status"] != null)
-                Status = classDetailJObject["status"].ToString();
             Period = (int)classDetailJObject["period"];
-            _Id = classDetailJObject["_id"] != null ? classDetailJObject["_id"].ToString() : "";
+            _Id = classDetailJObject["course_num"] != null ? classDetailJObject["course_num"].ToString() : "";
             var gradelimit = JArray.Parse(classDetailJObject["week"].ToString());
             int[] temp = new int[gradelimit.Count];
             weekLength = gradelimit.Count;
@@ -55,7 +52,6 @@ namespace ZSCY.Data
                 temp[i] = Int32.Parse(gradelimit[i].ToString());
             }
             Week = temp;
-            //Classtime = (RawWeek != "单周" && RawWeek !="双周" ? RawWeek : "") + " " +( WeekModel == "all" ? "" : (WeekModel == "double" ? "双周" : "单周")) ;
             Debug.WriteLine(RawWeek);
         }
     }

@@ -23,6 +23,7 @@ namespace ZSCY_Win10.Pages.TopicPages
     /// </summary>
     public sealed partial class TopicContentPage : Page
     {
+        private Windows.Storage.ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         public int Topic_id;
         private static string resourceName = "ZSCY";
         public Topic para = new Topic();
@@ -74,10 +75,9 @@ namespace ZSCY_Win10.Pages.TopicPages
                 try
                 {
                     List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-                    paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
+                    paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
                     paramList.Add(new KeyValuePair<string, string>("topic_id", topicid.ToString()));
-                    string Topictemp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Topic/listTopicArticle", paramList);
-                    JObject Tobj = JObject.Parse(Topictemp);
+                    JObject Tobj = await Requests.Send("cyxbsMobile/index.php/Home/Topic/listTopicArticle");
                     if (Int32.Parse(Tobj["status"].ToString()) == 200)
                     {
                         string content = Tobj["data"].ToString();
@@ -147,26 +147,20 @@ namespace ZSCY_Win10.Pages.TopicPages
         public async Task<string> LikeClick(string type_id, string article_id, string yOn)
         {
             string likenum = "";
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-            paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
             paramList.Add(new KeyValuePair<string, string>("type_id", type_id));
             paramList.Add(new KeyValuePair<string, string>("article_id", article_id));
-            string temp = "";
+            JObject temp = null;
             if (yOn == "true")
-                temp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Praise/addone", paramList);
+                temp = await Requests.Send("cyxbsMobile/index.php/Home/Praise/addone");
             else
-                temp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Praise/cancel", paramList);
+                temp = await Requests.Send("cyxbsMobile/index.php/Home/Praise/cancel");
 
-            if (temp != "")
+            if (temp != null)
             {
-                JObject obj = JObject.Parse(temp);
-                if (obj["state"].ToString() == "200")
+                if (temp["state"].ToString() == "200")
                 {
-                    likenum = obj["like_num"].ToString();
+                    likenum = temp["like_num"].ToString();
                 }
                 else
                     likenum = "";

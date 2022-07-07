@@ -572,7 +572,7 @@ namespace ZSCY_Win10
             if (null != result && result.Label == "是")
             {
                 Debug.WriteLine("保存图片");
-                bool saveImg = await NetWork.downloadFile(((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc, "picture", ((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", ""));
+                bool saveImg = await Requests.downloadFile(((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc, "picture", ((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", ""));
                 if (saveImg)
                 {
                     Utils.Toast("图片已保存到 \"保存的图片\"", "SavedPictures");
@@ -606,12 +606,11 @@ namespace ZSCY_Win10
                 try
                 {
                     List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-                    paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-                    string Topictemp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Topic/topicList", paramList);
-                    JObject Tobj = JObject.Parse(Topictemp);
+                    paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+                    JObject Tobj = await Requests.Send("cyxbsMobile/index.php/Home/Topic/topicList");
                     if (Int32.Parse(Tobj["status"].ToString()) == 200)
                     {
-                        JArray TopicArray = Utils.ReadJso(Topictemp);
+                        JArray TopicArray = (JArray)Tobj["data"];
                         for (int i = 0; i < 2; i++)
                         {
                             Topic item = new Topic();

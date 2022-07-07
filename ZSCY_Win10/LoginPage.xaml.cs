@@ -62,28 +62,27 @@ namespace ZSCY_Win10
             this.Focus(FocusState.Pointer);
             LoginButton.Visibility = Visibility.Collapsed;
             noLoginButton.Visibility = Visibility.Collapsed;
-            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("stuNum", StuNumTextBox.Text));
-            paramList.Add(new KeyValuePair<string, string>("idNum", System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(IdNumPasswordBox.Password))));
-            //paramList.Add(new KeyValuePair<string, string>("idNum", IdNumPasswordBox.Password));
-            string login = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Verify/verifyLogin", paramList);
-            Debug.WriteLine("login->" + login);
-            if (login != "")
+            var loginForm = new Dictionary<string, string>();
+            loginForm.Add("stuNum", StuNumTextBox.Text);
+            loginForm.Add("idNum", IdNumPasswordBox.Password);
+            JObject loginObj = await Requests.Send("magipoke/token", param: loginForm, method: "post");
+            Debug.WriteLine("login->" + loginObj);
+            if (loginObj != null)
             {
                 try
                 {
-                    JObject obj = JObject.Parse(login);
-                    if (Int32.Parse(obj["status"].ToString()) == 200)
+                    if (Int32.Parse(loginObj["status"].ToString()) == 10000)
                     {
-                        vault.Add(new Windows.Security.Credentials.PasswordCredential(resourceName, StuNumTextBox.Text, IdNumPasswordBox.Password));
-                        //appSetting.Values["stuNum"] = StuNumTextBox.Text;
-                        //appSetting.Values["idNum"] = IdNumPasswordBox.Password;
-                        JObject dataobj = JObject.Parse(obj["data"].ToString());
-                        appSetting.Values["name"] = dataobj["name"].ToString();
-                        appSetting.Values["classNum"] = dataobj["classNum"].ToString();
-                        appSetting.Values["gender"] = dataobj["gender"].ToString();
-                        appSetting.Values["major"] = dataobj["major"].ToString();
-                        appSetting.Values["college"] = dataobj["college"].ToString();
+                        vault.Add(new Windows.Security.Credentials.PasswordCredential(resourceName, "refreshToken", loginObj["data"]["refreshToken"].ToString()));
+                        vault.Add(new Windows.Security.Credentials.PasswordCredential(resourceName, "token", loginObj["data"]["token"].ToString()));
+                        JObject userObj = await Requests.Send("magipoke/Person/Search", method: "post", token: true);
+                        appSetting.Values["uid"] = userObj["data"]["uid"].ToString();
+                        appSetting.Values["redid"] = userObj["data"]["redid"].ToString();
+                        appSetting.Values["stuNum"] = userObj["data"]["stunum"].ToString();
+                        appSetting.Values["gender"] = userObj["data"]["gender"].ToString();
+                        appSetting.Values["grade"] = userObj["data"]["grade"].ToString();
+                        appSetting.Values["college"] = userObj["data"]["college"].ToString();
+                        appSetting.Values["name"] = userObj["data"]["username"].ToString();
                         appSetting.Values["CommunityPerInfo"] = false;
                         if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.StartScreen.JumpList"))
                         {
@@ -95,19 +94,19 @@ namespace ZSCY_Win10
                         appSetting.Values["isUseingBackgroundTask"] = true;
                         Frame.Navigate(typeof(MainPage), "/kb");
                     }
-                    else if (Int32.Parse(obj["status"].ToString()) == -100)
+                    else if (Int32.Parse(loginObj["status"].ToString()) == -100)
                     {
                         Utils.Message("学号不存在");
                         noLoginButton.Visibility = Visibility.Visible;
                     }
-                    else if (Int32.Parse(obj["status"].ToString()) == 201)
+                    else if (Int32.Parse(loginObj["status"].ToString()) == 201)
                     {
                         Utils.Message("学号或密码错误");
                         noLoginButton.Visibility = Visibility.Visible;
                     }
                     else
                     {
-                        Utils.Message(obj["info"].ToString());
+                        Utils.Message(loginObj["info"].ToString());
                         noLoginButton.Visibility = Visibility.Visible;
                     }
                 }
@@ -122,9 +121,6 @@ namespace ZSCY_Win10
             LoginProgressBar.IsActive = false;
             StuNumTextBox.IsEnabled = true;
             IdNumPasswordBox.IsEnabled = true;
-            // Debug.WriteLine(StuNumTextBox.FocusState);
-            //StuNumTextBox.Focus(FocusState.Unfocused);
-            // IdNumPasswordBox.Focus(FocusState.Pointer);
         }
 
         private async void DisableSystemJumpListAsync()

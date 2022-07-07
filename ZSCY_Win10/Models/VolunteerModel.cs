@@ -11,15 +11,8 @@ namespace ZSCY_Win10.Models
 
         public class Rootobject
         {
-            public int status { get; set; }
-            public string info { get; set; }
-            public Data data { get; set; }
-        }
-
-        public class Data
-        {
-            public string uid { get; set; }
-            public string hours { get; set; }
+            public int code { get; set; }
+            public float hours { get; set; }
             public Record[] record { get; set; }
         }
 
@@ -27,10 +20,11 @@ namespace ZSCY_Win10.Models
         {
             public string title { get; set; }
             public string content { get; set; }
-            public string address { get; set; }
+            public string addWay { get; set; }
             public string start_time { get; set; }
             public string hours { get; set; }
-            public int score { get; set; }
+            public string server_group { get; set; }
+            public string orgId { get; set; }
         }
 
     }

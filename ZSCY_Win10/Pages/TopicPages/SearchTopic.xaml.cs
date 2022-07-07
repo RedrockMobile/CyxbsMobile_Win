@@ -19,6 +19,7 @@ namespace ZSCY_Win10.Pages.TopicPages
     /// </summary>
     public sealed partial class SearchTopic : Page
     {
+        private Windows.Storage.ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         private int pivot_index = 0;
         private static string resourceName = "ZSCY";
         public ObservableCollection<Topic> TopicList = new ObservableCollection<Topic>();
@@ -56,12 +57,11 @@ namespace ZSCY_Win10.Pages.TopicPages
                 try
                 {
                     List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-                    paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-                    string Topictemp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Topic/topicList", paramList);
-                    JObject Tobj = JObject.Parse(Topictemp);
-                    if (Int32.Parse(Tobj["status"].ToString()) == 200)
+                    paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
+                    JObject Topictemp = await Requests.Send("cyxbsMobile/index.php/Home/Topic/topicList");
+                    if (Int32.Parse(Topictemp["status"].ToString()) == 200)
                     {
-                        JArray TopicArray = Utils.ReadJso(Topictemp);
+                        JArray TopicArray = (JArray)Topictemp["data"];
                         for (int i = 0; i < TopicArray.Count; i++)
                         {
                             Topic item = new Topic();

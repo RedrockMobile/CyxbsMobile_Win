@@ -110,15 +110,14 @@ namespace ZSCY_Win10
             JWListProgressStackPanel.Visibility = Visibility.Visible;
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
-            string jw = await NetWork.getHttpWebRequest("api/jwNewsList", paramList);
+            JObject jw = await Requests.Send("api/jwNewsList");
             Debug.WriteLine("jw->" + jw);
             JWListProgressStackPanel.Visibility = Visibility.Collapsed;
-            if (jw != "")
+            if (jw != null)
             {
-                JObject obj = JObject.Parse(jw);
-                if (Int32.Parse(obj["status"].ToString()) == 200)
+                if (Int32.Parse(jw["status"].ToString()) == 200)
                 {
-                    JArray JWListArray = Utils.ReadJso(jw);
+                    JArray JWListArray = (JArray)jw["data"];
                     JWListView.ItemsSource = JWList;
 
                     for (int i = 0; i < JWListArray.Count; i++)
@@ -128,16 +127,15 @@ namespace ZSCY_Win10
                         JWitem.GetListAttribute((JObject)JWListArray[i]);
                         List<KeyValuePair<String, String>> contentparamList = new List<KeyValuePair<String, String>>();
                         contentparamList.Add(new KeyValuePair<string, string>("id", JWitem.ID));
-                        string jwContent = await NetWork.getHttpWebRequest("api/jwNewsContent", contentparamList);
+                        JObject jwContent = await Requests.Send("api/jwNewsContent");
                         Debug.WriteLine("jwContent->" + jwContent);
-                        if (jwContent != "")
+                        if (jwContent != null)
                         {
-                            string JWContentText = jwContent.Replace("(\r?\n(\\s*\r?\n)+)", "\r\n");
+                            // string JWContentText = jwContent.Replace("(\r?\n(\\s*\r?\n)+)", "\r\n");
 
-                            JObject jwContentobj = JObject.Parse(JWContentText);
-                            if (Int32.Parse(jwContentobj["status"].ToString()) == 200)
+                            if (Int32.Parse(jwContent["status"].ToString()) == 200)
                             {
-                                JWitem.Content = jwContentobj["data"]["content"].ToString();
+                                JWitem.Content = jwContent["data"]["content"].ToString();
                                 while (JWitem.Content.StartsWith("\r\n "))
                                     JWitem.Content = JWitem.Content.Substring(3);
                                 while (JWitem.Content.StartsWith("\r\n"))
@@ -158,15 +156,14 @@ namespace ZSCY_Win10
                             failednum++;
                             if (failednum < 2)
                             {
-                                jwContent = await NetWork.getHttpWebRequest("api/jwNewsContent", contentparamList);
+                                jwContent = await Requests.Send("api/jwNewsContent");
                                 Debug.WriteLine("jwContent->" + jwContent);
-                                if (jwContent != "")
+                                if (jwContent != null)
                                 {
-                                    string JWContentText = jwContent.Replace("(\r?\n(\\s*\r?\n)+)", "\r\n");
-                                    JObject jwContentobj = JObject.Parse(JWContentText);
-                                    if (Int32.Parse(jwContentobj["status"].ToString()) == 200)
+                                    // string JWContentText = jwContent.Replace("(\r?\n(\\s*\r?\n)+)", "\r\n");
+                                    if (Int32.Parse(jwContent["status"].ToString()) == 200)
                                     {
-                                        JWitem.Content = jwContentobj["data"]["content"].ToString();
+                                        JWitem.Content = jwContent["data"]["content"].ToString();
                                         while (JWitem.Content.StartsWith("\r\n "))
                                             JWitem.Content = JWitem.Content.Substring(3);
                                         while (JWitem.Content.StartsWith("\r\n"))

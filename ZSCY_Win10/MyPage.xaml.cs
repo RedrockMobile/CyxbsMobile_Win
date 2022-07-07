@@ -229,7 +229,7 @@ namespace ZSCY_Win10
             if (null != result && result.Label == "是")
             {
                 Debug.WriteLine("保存图片");
-                bool saveImg = await NetWork.downloadFile(((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc, "picture", ((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", ""));
+                bool saveImg = await Requests.downloadFile(((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc, "picture", ((Img)CommunityItemPhotoFlipView.SelectedItem).ImgSrc.Replace("http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/", ""));
                 if (saveImg)
                 {
                     Utils.Toast("图片已保存到 \"保存的图片\"", "SavedPictures");

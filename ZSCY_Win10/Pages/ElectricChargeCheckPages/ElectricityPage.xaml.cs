@@ -15,6 +15,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
     /// </summary>
     public sealed partial class ElectricityPage : Page
     {
+        private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         private ApplicationDataContainer settings = ApplicationData.Current.LocalSettings;
         private static string byStuNumUri = "http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ElectricityQuery/ElectricityQuery/getElectric";
         private static string byRoomNumUri = "http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ElectricityQuery/ElectricityQuery/queryElecByRoom";
@@ -29,10 +30,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
             this.InitializeComponent();
             frame.Navigate(typeof(Page));
             //获取stuNum参数
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
-            stuNum = credentialList[0].UserName;
+            stuNum = appSetting.Values["stuNum"].ToString();
             paramIniList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
             if (!settings.Values.ContainsKey("isBindingRoom"))
             {

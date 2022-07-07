@@ -47,8 +47,7 @@ namespace ZSCY.Pages
                 credentialList[0].RetrievePassword();
                 //if (App.muIdList.Count == 0&&appSetting.Values.ContainsKey("idNum"))
                 if (App.muIdList.Count == 0 && credentialList.Count > 0)
-                    //App.muIdList.Add(new uIdList { uId = appSetting.Values["stuNum"].ToString(), uName = appSetting.Values["name"].ToString() });
-                    App.muIdList.Add(new uIdList { uId = credentialList[0].UserName, uName = appSetting.Values["name"].ToString() });
+                    App.muIdList.Add(new uIdList { uId = appSetting.Values["stuNum"].ToString(), uName = appSetting.Values["name"].ToString() });
             }
             catch { }
         }
@@ -101,17 +100,15 @@ namespace ZSCY.Pages
             {
                 string usename = AddTextBox.Text;
                 string useid = usename;
-                string peopleinfo = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/searchPeople/peopleList?stu=" + useid, PostORGet: 1);
+                JObject peopleinfo = await Requests.Send("cyxbsMobile/index.php/home/searchPeople/peopleList?stu=" + useid);
                 Debug.WriteLine("peopleinfo->" + peopleinfo);
-                //peopleinfo = "{\"state\":200,\"info\":\"success\",\"data\":[{\"stunum\":\"2014210825\",\"name\":\"\\u6768\\u5b87\",\"gender\":\"\\u7537        \",\"classnum\":\"0201410\",\"major\":\"\\u7535\\u5b50\\u5de5\\u7a0b\\u7c7b\",\"depart\":\"\\u5149\\u7535\\u5de5\\u7a0b\\u5b66\\u9662\",\"grade\":\"2014      \"},{\"stunum\":\"2015211173\",\"name\":\"\\u6768\\u5b87\",\"gender\":\"\\u7537        \",\"classnum\":\"03081502\",\"major\":\"\\u5de5\\u7a0b\\u7ba1\\u7406\",\"depart\":\"\\u7ecf\\u6d4e\\u7ba1\\u7406\\u5b66\\u9662\",\"grade\":\"2015      \"},{\"stunum\":\"2013211594\",\"name\":\"\\u6768\\u5b87\\u661f\",\"gender\":\"\\u7537        \",\"classnum\":\"0441302\",\"major\":\"\\u4fe1\\u606f\\u5b89\\u5168\",\"depart\":\"\\u8ba1\\u7b97\\u673a\\u79d1\\u5b66\\u4e0e\\u6280\\u672f\\u5b66\\u9662\",\"grade\":\"2013      \"},{\"stunum\":\"2014212099\",\"name\":\"\\u6768\\u5b87\\u822a\",\"gender\":\"\\u7537        \",\"classnum\":\"0611403\",\"major\":\"\\u751f\\u7269\\u533b\\u5b66\\u5de5\\u7a0b\",\"depart\":\"\\u751f\\u7269\\u4fe1\\u606f\\u5b66\\u9662\",\"grade\":\"2014      \"},{\"stunum\":\"2015212379\",\"name\":\"\\u6768\\u5b87\\u4f73\",\"gender\":\"\\u5973        \",\"classnum\":\"07111503\",\"major\":\"\\u6cd5\\u5b66\\u7c7b\",\"depart\":\"\\u6cd5\\u5b66\\u9662\",\"grade\":\"2015      \"},{\"stunum\":\"2015213755\",\"name\":\"\\u6768\\u5b87\\u5b81\",\"gender\":\"\\u5973        \",\"classnum\":\"12121504\",\"major\":\"\\u6570\\u5b57\\u5a92\\u4f53\\u827a\\u672f\\u4e0e\\u52a8\\u753b\\u5927\\u7c7b\",\"depart\":\"\\u4f20\\u5a92\\u827a\\u672f\\u5b66\\u9662\",\"grade\":\"2015      \"},{\"stunum\":\"2012213099\",\"name\":\"\\u6768\\u5b87\\u822a\",\"gender\":\"\\u7537        \",\"classnum\":\"0841201\",\"major\":\"\\u673a\\u68b0\\u8bbe\\u8ba1\\u5236\\u9020\\u53ca\\u5176\\u81ea\\u52a8\\u5316\",\"depart\":\"\\u5148\\u8fdb\\u5236\\u9020\\u5de5\\u7a0b\\u5b66\\u9662\",\"grade\":\"2012      \"}]}";
-                if (peopleinfo != "")
+                if (peopleinfo != null)
                 {
                     try
                     {
-                        JObject obj = JObject.Parse(peopleinfo);
-                        if (Int32.Parse(obj["state"].ToString()) == 200)
+                        if (Int32.Parse(peopleinfo["state"].ToString()) == 200)
                         {
-                            JArray PeopleListArray = Utils.ReadJso(peopleinfo);
+                            JArray PeopleListArray = (JArray)peopleinfo["data"];
                             if (PeopleListArray.Count != 1)
                             {
                                 MenuFlyout PeopleListMenuFlyout = new MenuFlyout();

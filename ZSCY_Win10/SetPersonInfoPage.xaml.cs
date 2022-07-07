@@ -98,34 +98,23 @@ namespace ZSCY_Win10
         private async void SetPersonInfoOKAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             appSetting.Values["Community_nickname"] = nameTextBox.Text;
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            //paramList.Add(new KeyValuePair<string, string>("stuNum", appSetting.Values["stuNum"].ToString()));
-            //paramList.Add(new KeyValuePair<string, string>("idNum", appSetting.Values["idNum"].ToString()));
-            //paramList.Add(new KeyValuePair<string, string>("stuuum", appSetting.Values["stuNum"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-            paramList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
-            paramList.Add(new KeyValuePair<string, string>("stuuum", credentialList[0].UserName));
             paramList.Add(new KeyValuePair<string, string>("nickname", nameTextBox.Text));
             paramList.Add(new KeyValuePair<string, string>("introduction", abstractTextBox.Text));
             paramList.Add(new KeyValuePair<string, string>("qq", qqTextBox.Text));
             paramList.Add(new KeyValuePair<string, string>("phone", phoneTextBox.Text));
-            string setinfo = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/setInfo", paramList);
+            JObject setinfo = await Requests.Send("cyxbsMobile/index.php/Home/Person/setInfo");
             try
             {
-                if (setinfo != "")
+                if (setinfo != null)
                 {
-                    JObject obj = JObject.Parse(setinfo);
-                    if (Int32.Parse(obj["status"].ToString()) == 200)
+                    if (Int32.Parse(setinfo["status"].ToString()) == 200)
                     {
-                        string perInfo = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/search", paramList);
-                        if (perInfo != "")
+                        JObject perInfo = await Requests.Send("cyxbsMobile/index.php/Home/Person/search");
+                        if (perInfo != null)
                         {
-                            JObject jPerInfo = JObject.Parse(perInfo);
-                            appSetting.Values["Community_people_id"] = jPerInfo["data"]["id"].ToString();
-                            Debug.WriteLine(jPerInfo["data"]["id"].ToString());
+                            appSetting.Values["Community_people_id"] = perInfo["data"]["id"].ToString();
+                            Debug.WriteLine(perInfo["data"]["id"].ToString());
                         }
                         var navPage = ee.Parameter;
                         if (navPage == typeof(CommunityPage))
@@ -143,7 +132,7 @@ namespace ZSCY_Win10
                             Frame.GoBack();
                         }
                     }
-                    else if (Int32.Parse(obj["status"].ToString()) == 801)
+                    else if (Int32.Parse(setinfo["status"].ToString()) == 801)
                     {
                         Utils.Toast("更新资料失败，请检查是否包含特殊词");
                     }

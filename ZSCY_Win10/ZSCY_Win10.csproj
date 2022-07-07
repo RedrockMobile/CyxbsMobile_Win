@@ -17,12 +17,17 @@
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>ZSCY_Win10_StoreKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>ZSCY_Win10_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>55565609E5575E5DD76F2F54ADE9DB07A2DCCEC8</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>
+    </PackageCertificateThumbprint>
     <AppxBundle>Always</AppxBundle>
     <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -58,7 +63,7 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -326,8 +331,6 @@
     <Compile Include="Data\ScoreList.cs" />
     <Compile Include="Data\TodoItem.cs" />
     <Compile Include="Data\Transaction.cs" />
-    <Compile Include="Data\StartPage\Database.cs" />
-    <Compile Include="Data\StartPage\ImageList.cs" />
     <Compile Include="Pages\VolunteerPage\httpclientPost.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Electricity.cs" />
@@ -422,9 +425,6 @@
     <Compile Include="Pages\ExamPage.xaml.cs">
       <DependentUpon>ExamPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ImportKB2CalendarPage.xaml.cs">
-      <DependentUpon>ImportKB2CalendarPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\NewsContentPage.xaml.cs">
       <DependentUpon>NewsContentPage.xaml</DependentUpon>
     </Compile>
@@ -478,7 +478,6 @@
       <DependentUpon>Volunteer_LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resouces\Api.cs" />
     <Compile Include="Resouces\APPTheme.cs" />
     <Compile Include="Resouces\CircularProgressBar.cs" />
     <Compile Include="Resouces\LineChart.cs" />
@@ -532,18 +531,16 @@
     <Compile Include="Util\Converter\StartPageConverts\UrlConvert.cs" />
     <Compile Include="Util\EmptyClass.cs" />
     <Compile Include="Util\GaussianBlurHelp.cs" />
-    <Compile Include="Util\GetCredential.cs" />
     <Compile Include="Util\HotFeedsDataTemplateSelector.cs" />
     <Compile Include="Util\HotOrBBDDSelector.cs" />
     <Compile Include="Util\ImgDataTemplateSelector.cs" />
-    <Compile Include="Util\NetWork.cs" />
+    <Compile Include="Util\Requests.cs" />
     <Compile Include="Util\NotifyContentTemplateSelector.cs" />
     <Compile Include="Util\Remind\DatabaseMethod.cs" />
     <Compile Include="Util\Remind\RemindSystemUtil.cs" />
     <Compile Include="Util\Remind\RemindWebRequest.cs" />
     <Compile Include="Util\TextBlockFormatter.cs" />
     <Compile Include="Util\Utils.cs" />
-    <Compile Include="Util\StartPage\StartPageHelp.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\Community\CommunityContentViewModel.cs" />
     <Compile Include="ViewModels\Community\CommunityMyContentViewModel.cs" />
@@ -677,7 +674,6 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="ZSCY_Win10_StoreKey.pfx" />
     <None Include="ZSCY_Win10_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -794,10 +790,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\ExamPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\ImportKB2CalendarPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -935,6 +927,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.ApplicationInsights.WindowsApps">
       <Version>1.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities">
+      <Version>1.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Azure.Mobile.Client">
       <Version>4.0.1</Version>

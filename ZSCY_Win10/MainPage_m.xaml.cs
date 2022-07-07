@@ -41,7 +41,7 @@ namespace ZSCY_Win10
         private int page = 1;
         private int wOa = 1;
         private string hubSectionChange = "KBHubSection";
-        private string kb = "";
+        private JObject kb = null;
         private string stuNum = "";
 
         //private  ObservableCollection<Group>  morepageclass=new ObservableCollection<Group>();
@@ -80,11 +80,7 @@ namespace ZSCY_Win10
             //this.navigationHelper = new NavigationHelper(this);
             //this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
 
-            //stuNum = appSetting.Values["stuNum"].ToString();
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
-            stuNum = credentialList[0].UserName;
+            stuNum = appSetting.Values["stuNum"].ToString();
             //initKB();
             initJW();
         }
@@ -133,13 +129,9 @@ namespace ZSCY_Win10
         /// <param name="isRefresh"> 是否为刷新</param>
         private async void initKB(bool isRefresh = false)
         {
-            //if (stuNum == appSetting.Values["stuNum"].ToString() && !isRefresh)
             try
             {
-                var vault = new Windows.Security.Credentials.PasswordVault();
-                var credentialList = vault.FindAllByResource(resourceName);
-                credentialList[0].RetrievePassword();
-                if (stuNum == credentialList[0].UserName && !isRefresh)
+                if (stuNum == appSetting.Values["stuNum"].ToString() && !isRefresh)
                 {
                     try
                     {
@@ -148,15 +140,14 @@ namespace ZSCY_Win10
                         IRandomAccessStream accessStream = await storageFileRE.OpenReadAsync();
                         using (StreamReader streamReader = new StreamReader(accessStream.AsStreamForRead((int)accessStream.Size)))
                         {
-                            kb = streamReader.ReadToEnd();
+                            kb = JObject.Parse(streamReader.ReadToEnd());
                         }
                         HubSectionKBNum.Text = "第" + appSetting.Values["nowWeek"].ToString() + "周";
                         showKB(2);
                     }
                     catch (Exception) { Debug.WriteLine("主页->课表数据缓存异常"); }
                 }
-                //if (stuNum == appSetting.Values["stuNum"].ToString())
-                if (stuNum == credentialList[0].UserName)
+                if (stuNum == appSetting.Values["stuNum"].ToString())
                 {
                     HubSectionKBTitle.Text = "我的课表";
                     HubSectionKBTitle.FontSize = 35;
@@ -169,26 +160,24 @@ namespace ZSCY_Win10
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
 
-            string kbtemp = await NetWork.getHttpWebRequest("redapi2/api/kebiao", paramList); //新
-            //string kbtemp = await NetWork.getHttpWebRequest("api/kebiao", paramList); //旧
+            JObject kbtemp = await Requests.Send("redapi2/api/kebiao"); //新
             if (!appSetting.Values.ContainsKey("HttpTime"))
                 appSetting.Values["HttpTime"] = DateTimeOffset.Now.ToString();
-            if (kbtemp != "")
+            if (kbtemp != null)
             {
                 kb = kbtemp;
                 Debug.WriteLine("DateTimeOffset.Now.ToString()" + DateTimeOffset.Now.ToString());
                 appSetting.Values["HttpTime"] = DateTimeOffset.Now.Year.ToString() + "/" + DateTimeOffset.Now.Month.ToString() + "/" + DateTimeOffset.Now.Day.ToString();
             }
             Debug.WriteLine("kb->" + kb);
-            if (kb != "")
+            if (kb != null)
             {
-                JObject obj = JObject.Parse(kb);
-                if (Int32.Parse(obj["status"].ToString()) == 200)
+                if (Int32.Parse(kb["status"].ToString()) == 200)
                 {
                     IStorageFile storageFileWR = await applicationFolder.CreateFileAsync("kb", CreationCollisionOption.OpenIfExists);
                     try
                     {
-                        await FileIO.WriteTextAsync(storageFileWR, kb);
+                        await FileIO.WriteTextAsync(storageFileWR, kb.ToString());
                     }
                     catch (Exception)
                     {
@@ -196,7 +185,7 @@ namespace ZSCY_Win10
                     }
                     //保存当前星期
 
-                    if (kbtemp == "")
+                    if (kbtemp == null)
                     {
                         Debug.WriteLine(appSetting.Values["HttpTime"].ToString());
                         DateTimeOffset d = DateTimeOffset.Parse(appSetting.Values["HttpTime"].ToString());
@@ -210,20 +199,16 @@ namespace ZSCY_Win10
                         weekday = (Int16)weekday;
                         Debug.WriteLine("weekday_后" + weekday);
                         if (weekday > 0)
-                            appSetting.Values["nowWeek"] = Int16.Parse(obj["nowWeek"].ToString()) + (Int16)(weekday + 6) / 7;
+                            appSetting.Values["nowWeek"] = Int16.Parse(kb["nowWeek"].ToString()) + (Int16)(weekday + 6) / 7;
                         else
-                            appSetting.Values["nowWeek"] = obj["nowWeek"].ToString();
+                            appSetting.Values["nowWeek"] = kb["nowWeek"].ToString();
                         Debug.WriteLine(" appSetting.Values[\"nowWeek\"]" + appSetting.Values["nowWeek"].ToString());
                     }
                     else
-                        appSetting.Values["nowWeek"] = obj["nowWeek"].ToString();
+                        appSetting.Values["nowWeek"] = kb["nowWeek"].ToString();
                     HubSectionKBNum.Text = "第" + appSetting.Values["nowWeek"].ToString() + "周";
                     //showKB(2, Int32.Parse(appSetting.Values["nowWeek"].ToString()));
-#if DEBUG
                     showKB(2);
-#else
-                    showKB(2);
-#endif
                 }
             }
             DateTime now = DateTime.Now;
@@ -274,7 +259,7 @@ namespace ZSCY_Win10
             kebiaoGrid.Children.Clear();
             SetKebiaoGridBorder();
             classList.Clear();
-            JArray ClassListArray = Utils.ReadJso(kb);
+            JArray ClassListArray = (JArray)kb["data"];
             int ColorI = 0;
             for (int i = 0; i < ClassListArray.Count; i++)
             {
@@ -438,15 +423,14 @@ namespace ZSCY_Win10
 
             List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
             paramList.Add(new KeyValuePair<string, string>("page", page.ToString()));
-            string jw = await NetWork.getHttpWebRequest("api/jwNewsList", paramList);
+            JObject jw = await Requests.Send("api/jwNewsList");
             Debug.WriteLine("jw->" + jw);
             JWListProgressStackPanel.Visibility = Visibility.Collapsed;
-            if (jw != "")
+            if (jw != null)
             {
-                JObject obj = JObject.Parse(jw);
-                if (Int32.Parse(obj["status"].ToString()) == 200)
+                if (Int32.Parse(jw["status"].ToString()) == 200)
                 {
-                    JArray JWListArray = Utils.ReadJso(jw);
+                    JArray JWListArray = (JArray)jw["data"];
                     for (int i = 0; i < JWListArray.Count; i++)
                     {
                         int failednum = 0;
@@ -454,16 +438,15 @@ namespace ZSCY_Win10
                         JWitem.GetListAttribute((JObject)JWListArray[i]);
                         List<KeyValuePair<String, String>> contentparamList = new List<KeyValuePair<String, String>>();
                         contentparamList.Add(new KeyValuePair<string, string>("id", JWitem.ID));
-                        string jwContent = await NetWork.getHttpWebRequest("api/jwNewsContent", contentparamList);
+                        JObject jwContent = await Requests.Send("api/jwNewsContent");
                         Debug.WriteLine("jwContent->" + jwContent);
-                        if (jwContent != "")
+                        if (jwContent != null)
                         {
-                            string JWContentText = jwContent.Replace("(\r?\n(\\s*\r?\n)+)", "\r\n");
+                            // string JWContentText = jwContent.Replace("(\r?\n(\\s*\r?\n)+)", "\r\n");
 
-                            JObject jwContentobj = JObject.Parse(JWContentText);
-                            if (Int32.Parse(jwContentobj["status"].ToString()) == 200)
+                            if (Int32.Parse(jwContent["status"].ToString()) == 200)
                             {
-                                JWitem.Content = jwContentobj["data"]["content"].ToString();
+                                JWitem.Content = jwContent["data"]["content"].ToString();
                                 while (JWitem.Content.StartsWith("\r\n "))
                                     JWitem.Content = JWitem.Content.Substring(3);
                                 while (JWitem.Content.StartsWith("\r\n"))
@@ -484,15 +467,14 @@ namespace ZSCY_Win10
                             failednum++;
                             if (failednum < 2)
                             {
-                                jwContent = await NetWork.getHttpWebRequest("api/jwNewsContent", contentparamList);
+                                jwContent = await Requests.Send("api/jwNewsContent");
                                 Debug.WriteLine("jwContent->" + jwContent);
-                                if (jwContent != "")
+                                if (jwContent != null)
                                 {
-                                    string JWContentText = jwContent.Replace("(\r?\n(\\s*\r?\n)+)", "\r\n");
-                                    JObject jwContentobj = JObject.Parse(JWContentText);
-                                    if (Int32.Parse(jwContentobj["status"].ToString()) == 200)
+                                    // string JWContentText = jwContent.Replace("(\r?\n(\\s*\r?\n)+)", "\r\n");
+                                    if (Int32.Parse(jwContent["status"].ToString()) == 200)
                                     {
-                                        JWitem.Content = jwContentobj["data"]["content"].ToString();
+                                        JWitem.Content = jwContent["data"]["content"].ToString();
                                         while (JWitem.Content.StartsWith("\r\n "))
                                             JWitem.Content = JWitem.Content.Substring(3);
                                         while (JWitem.Content.StartsWith("\r\n"))
@@ -705,11 +687,7 @@ namespace ZSCY_Win10
         /// <param name="e"></param>
         private void KBRefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            //stuNum = appSetting.Values["stuNum"].ToString();
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
-            stuNum = credentialList[0].UserName;
+            stuNum = appSetting.Values["stuNum"].ToString();
             wOa = 1;
             initKB(true);
         }
@@ -838,11 +816,6 @@ namespace ZSCY_Win10
 
                 case "FreeTime":
                     //Frame.Navigate(typeof(SearchFreeTimeNumPage));
-                    break;
-
-                case "Card":
-                    var a = await Launcher.LaunchUriAsync(new Uri("cquptcard:"));
-                    Debug.WriteLine(a);
                     break;
 
                 default:

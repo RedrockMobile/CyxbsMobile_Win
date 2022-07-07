@@ -4,9 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Windows.Security.Credentials;
 using ZSCY_Win10.Models.RemindModels;
-using ZSCY_Win10.Resource;
 
 namespace ZSCY_Win10.Util.Remind
 {
@@ -37,21 +35,16 @@ namespace ZSCY_Win10.Util.Remind
             {
                 var list = conn.Table<DataBaseModel>();
                 var array = list.Where(i => i.Num == num);
-                PasswordCredential user = GetCredential.getCredential("ZSCY");
-                string stuNum, idNum;
 
-                stuNum = user.UserName;
-                idNum = user.Password;
                 foreach (var item in array)
                 {
                     tag += item.Id_system;
                     RemindBackupModel remind = new RemindBackupModel()
                     {
-                        StuNum = stuNum,
                         Id = item.Id,
-                        IdNum = idNum
                     };
-                    await NetWork.getHttpWebRequest(Api.DeleteRemindApi, RemindWebRequest.deleteRemind(remind), 0, true);
+                    var param = RemindWebRequest.deleteRemind(remind);
+                    await Requests.Send("magipoke-reminder/Person/deleteTransaction", param: param, method: "post", json: false, token: true);
                     conn.Delete<DataBaseModel>(item.Num);
                 }
             }

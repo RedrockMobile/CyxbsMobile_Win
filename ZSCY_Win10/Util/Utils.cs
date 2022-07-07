@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -174,38 +172,6 @@ namespace ZSCY_Win10.Util
             long lTime = long.Parse(timeStamp + "0000000");
             TimeSpan toNow = new TimeSpan(lTime);
             return dtStart.Add(toNow);
-        }
-
-        public static JArray ReadJso(string jsonstring, string sdata = "data")
-        {
-            if (jsonstring != "")
-            {
-                JObject obj = JObject.Parse(jsonstring);
-                //if (Int32.Parse(obj[sstatus].ToString()) == 200)
-                //{
-                JObject jObject = (JObject)JsonConvert.DeserializeObject(jsonstring);
-                try
-                {
-                    string json = jObject[sdata].ToString();
-                    JArray jArray = (JArray)JsonConvert.DeserializeObject(json);
-                    return jArray;
-                }
-                catch (Exception)
-                {
-                }
-                return null;
-                //}
-                //else
-                //{
-                //    Message("请求失败", "失败");
-                //    return null;
-                //}
-            }
-            else
-            {
-                Message("网络错误！", "错误");
-                return null;
-            }
         }
 
         /// <summary>

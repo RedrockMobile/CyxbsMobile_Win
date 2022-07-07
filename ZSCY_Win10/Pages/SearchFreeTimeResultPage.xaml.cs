@@ -22,7 +22,7 @@ namespace ZSCY.Pages
     {
         private ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>();
         private ObservableCollection<FreeList> mFreeList = new ObservableCollection<FreeList>();
-        private string[] kb;
+        private JObject[] kb;
         private int week;
         private int[,] freeclasstime = new int[7, 6]; //7*6数组
 
@@ -65,7 +65,7 @@ namespace ZSCY.Pages
 
         private async void initFree()
         {
-            kb = new string[muIdList.Count];
+            kb = new JObject[muIdList.Count];
             for (int i = 0; i < muIdList.Count; i++)
             {
                 int issuccess = 0;
@@ -73,15 +73,15 @@ namespace ZSCY.Pages
                 {
                     List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
                     paramList.Add(new KeyValuePair<string, string>("stuNum", muIdList[i].uId));
-                    string kbtemp = await NetWork.getHttpWebRequest("redapi2/api/kebiao", paramList); //新
-                    if (kbtemp != "")
+                    JObject kbtemp = await Requests.Send("redapi2/api/kebiao");
+                    if (kbtemp != null)
                     {
                         kb[i] = kbtemp;
                         issuccess = 2;
                     }
                     else
                     {
-                        kb[i] = "";
+                        kb[i] = null;
                         issuccess++;
                     }
                 }
@@ -111,12 +111,12 @@ namespace ZSCY.Pages
             FreeLoddingProgressBar.Value = 0;
             for (int i = 0; i < kb.Length; i++)
             {
-                if (kb[i] != "")
+                if (kb[i] != null)
                 {
-                    JObject obj = JObject.Parse(kb[i]);
+                    JObject obj = kb[i];
                     if (Int32.Parse(obj["status"].ToString()) == 200)
                     {
-                        JArray ClassListArray = Utils.ReadJso(kb[i]);
+                        JArray ClassListArray = (JArray)obj["data"];
                         for (int j = 0; j < ClassListArray.Count; j++)
                         {
                             ClassList classitem = new ClassList();

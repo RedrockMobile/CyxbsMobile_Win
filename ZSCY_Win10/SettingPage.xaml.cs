@@ -16,7 +16,6 @@ using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using ZSCY.Pages;
 using ZSCY_Win10.Util.Remind;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
@@ -90,27 +89,6 @@ namespace ZSCY_Win10
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             //HardwareButtons.BackPressed -= HardwareButtons_BackPressed;//注册重写后退按钮事件
-        }
-
-        private async void importKB2calendarButton_Click(object sender, RoutedEventArgs e)
-        {
-            var dig = new MessageDialog("订阅课表为实验室功能，我们无法保证此功能100%可用与数据100%正确性，我们期待您的反馈。\n\n是否继续尝试？", "警告");
-            var btnOk = new UICommand("是");
-            dig.Commands.Add(btnOk);
-            var btnCancel = new UICommand("否");
-            dig.Commands.Add(btnCancel);
-            var result = await dig.ShowAsync();
-            if (null != result && result.Label == "是")
-            {
-                this.frame.Visibility = Visibility.Visible;
-                HubSectionKBTitle.Text = "订阅课表";
-                this.frame.Navigate(typeof(ImportKB2CalendarPage));
-                SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            }
-            else if (null != result && result.Label == "否")
-            {
-            }
         }
 
         private void AboutAppBarToggleButton_Click(object sender, RoutedEventArgs e)

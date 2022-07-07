@@ -32,7 +32,7 @@ namespace ZSCY_Win10
             var NewsItem = (NewsList)e.Parameter;
 
             if (NewsItem.Content == "加载中...")
-                getContent(NewsItem.Articleid);
+                getContent(NewsItem.ID);
 
             TitleTextBlock.Text = NewsItem.Title;
             //ContentTextBlock.Text = NewsItem.Content_all;
@@ -40,7 +40,7 @@ namespace ZSCY_Win10
             if (NewsItem.Content_all != "")
             {
                 JObject newsContentobj = JObject.Parse(NewsItem.Content_all);
-                if (Int32.Parse(newsContentobj["state"].ToString()) == 200)
+                if (Int32.Parse(newsContentobj["status"].ToString()) == 200)
                 {
                     ContentWebView.NavigateToString((JObject.Parse(newsContentobj["data"].ToString()))["content"].ToString());
                 }
@@ -55,43 +55,17 @@ namespace ZSCY_Win10
             }
         }
 
-        private async void getContent(string Articleid)
+        private async void getContent(string id)
         {
-            //List<KeyValuePair<String, String>> contentparamList = new List<KeyValuePair<String, String>>();
-            //contentparamList.Add(new KeyValuePair<string, string>("id", ID));
-            //string jwContent = await NetWork.getHttpWebRequest("api/jwNewsContent", contentparamList);
-            //Debug.WriteLine("jwContent->" + jwContent);
-            //if (jwContent != "")
-            //{
-            //    string JWContentText = jwContent.Replace("(\r?\n(\\s*\r?\n)+)", "\r\n");
-            //    JObject jwContentobj = JObject.Parse(JWContentText);
-            //    if (Int32.Parse(jwContentobj["status"].ToString()) == 200)
-            //    {
-            //        string JWitemContent = jwContentobj["data"]["content"].ToString();
-            //        while (JWitemContent.StartsWith("\r\n "))
-            //            JWitemContent = JWContentText.Substring(3);
-            //        while (JWitemContent.StartsWith("\r\n"))
-            //            JWitemContent = JWContentText.Substring(2);
-            //        while (JWitemContent.StartsWith("\n\t"))
-            //            JWitemContent = JWContentText.Substring(2);
-            //        while (JWitemContent.StartsWith("\n"))
-            //            JWitemContent = JWitemContent.Substring(1);
-            //    }
-            //    else
-            //        ContentTextBlock.Text = "加载失败";
-            //}
-
-            List<KeyValuePair<String, String>> contentparamList = new List<KeyValuePair<String, String>>();
-            contentparamList.Add(new KeyValuePair<string, string>("type", "jwzx"));
-            contentparamList.Add(new KeyValuePair<string, string>("articleid", Articleid));
-            string newsContent = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/home/news/searchcontent", contentparamList);
+            Dictionary<string, string> contentQuery = new Dictionary<string, string>();
+            contentQuery.Add("id", id);
+            JObject newsContent = await Requests.Send("magipoke-jwzx/jwNews/content", query: contentQuery);
             //Debug.WriteLine("newsContent->" + newsContent);
-            if (newsContent != "")
+            if (newsContent != null)
             {
-                JObject newsContentobj = JObject.Parse(newsContent);
-                if (Int32.Parse(newsContentobj["state"].ToString()) == 200)
+                if (Int32.Parse(newsContent["status"].ToString()) == 200)
                 {
-                    string content = (JObject.Parse(newsContentobj["data"].ToString()))["content"].ToString();
+                    string content = newsContent["data"]["content"].ToString();
                     ContentWebView.NavigateToString(content);
                 }
             }

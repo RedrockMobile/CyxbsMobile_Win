@@ -32,7 +32,7 @@ namespace ZSCY_Win10
     public sealed partial class KBPage : Page
     {
         private string stuNum = "";
-        private string kb = "";
+        private JObject kb = null;
         private int wOa = 1;
         private static string resourceName = "ZSCY";
         private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
@@ -108,32 +108,12 @@ namespace ZSCY_Win10
             //TODO:未登陆时 没有课表
             try
             {
-                var vault = new Windows.Security.Credentials.PasswordVault();
-                var credentialList = vault.FindAllByResource(resourceName);
-                credentialList[0].RetrievePassword();
                 Debug.WriteLine("OnNavigatedTo");
-                //if (appSetting.Values.ContainsKey("idNum"))
-                if (credentialList.Count > 0)
-                {
-                    progress.Visibility = Visibility.Visible;
-                    //stuNum = appSetting.Values["stuNum"].ToString();
-                    stuNum = credentialList[0].UserName;
-                    initKB();
-                    this.progress.IsActive = false;
-                    initToday();
-                }
-                else
-                {
-                    progress.Visibility = Visibility.Collapsed;
-                    HubSectionKBTitle.Text = "未登陆 暂无";
-                    initToday();
-                    baseInfoStackPanel.IsTapEnabled = false;
-                    HubSectionKBNum.IsTapEnabled = false;
-                    KBRefreshAppBarButton.IsEnabled = false;
-                    KBCalendarAppBarButton.IsEnabled = false;
-                    KBZoomAppBarButton.IsEnabled = false;
-                    ShowMoreAppBarButton.IsEnabled = false;
-                }
+                progress.Visibility = Visibility.Visible;
+                stuNum = appSetting.Values["stuNum"].ToString();
+                initKB();
+                this.progress.IsActive = false;
+                initToday();
             }
             catch
             {
@@ -210,15 +190,9 @@ namespace ZSCY_Win10
         //TODO:未登陆时 没有课表
         private async void initKB(bool isRefresh = false)
         {
-            string Transactiontemp = null;
-
             try
             {
-                var vault = new Windows.Security.Credentials.PasswordVault();
-                var credentialList = vault.FindAllByResource(resourceName);
-                credentialList[0].RetrievePassword();
-                //if (stuNum == appSetting.Values["stuNum"].ToString() && !isRefresh)
-                if (stuNum == credentialList[0].UserName && !isRefresh)
+                if (stuNum == appSetting.Values["stuNum"].ToString() && !isRefresh)
                 {
                     try
                     {
@@ -227,19 +201,14 @@ namespace ZSCY_Win10
                         IRandomAccessStream accessStream = await storageFileRE.OpenReadAsync();
                         using (StreamReader streamReader = new StreamReader(accessStream.AsStreamForRead((int)accessStream.Size)))
                         {
-                            kb = streamReader.ReadToEnd();
+                            kb = JObject.Parse(streamReader.ReadToEnd());
                         }
                         HubSectionKBNum.Text = " | 第" + appSetting.Values["nowWeek"].ToString() + "周";
-#if DEBUG
-                        showKB(2, 5);
-#else
                         showKB(2);
-#endif
                     }
                     catch (Exception) { Debug.WriteLine("主页->课表数据缓存异常"); }
                 }
-                //if (stuNum == appSetting.Values["stuNum"].ToString())
-                if (stuNum == credentialList[0].UserName)
+                if (stuNum == appSetting.Values["stuNum"].ToString())
                 {
                     HubSectionKBTitle.Text = "我的课表";
                     HubSectionKBTitle.FontSize = 18;
@@ -247,46 +216,26 @@ namespace ZSCY_Win10
             }
             catch { }
 
-            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
-            //if (isRefresh)
-            //    paramList.Add(new KeyValuePair<string, string>("forceFetch", "true"));
-
-            string kbtemp = await NetWork.getHttpWebRequest("redapi2/api/kebiao", paramList); //新
-                                                                                              //string kbtemp = await NetWork.getHttpWebRequest("api/kebiao", paramList); //旧
-            try
-            {
-                var vault = new Windows.Security.Credentials.PasswordVault();
-                var credentialList = vault.FindAllByResource(resourceName);
-                credentialList[0].RetrievePassword();
-                List<KeyValuePair<String, String>> TransactionparamList = new List<KeyValuePair<String, String>>();
-                TransactionparamList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-                TransactionparamList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
-                Transactiontemp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/getTransaction", TransactionparamList);
-            }
-            catch
-            {
-                NotifyPopup notifyPopup = new NotifyPopup("网络异常 无法读取事项~");
-                notifyPopup.Show();
-            }
+            var form = new Dictionary<string, string>();
+            form.Add("stu_num", stuNum);
+            JObject kbtemp = await Requests.Send("magipoke-jwzx/kebiao", param: form, json: false, method: "post");
             if (!appSetting.Values.ContainsKey("HttpTime"))
                 appSetting.Values["HttpTime"] = DateTimeOffset.Now.ToString();
-            if (kbtemp != "")
+            if (kbtemp != null)
             {
                 kb = kbtemp;
                 Debug.WriteLine("DateTimeOffset.Now.ToString()" + DateTimeOffset.Now.ToString());
                 appSetting.Values["HttpTime"] = DateTimeOffset.Now.Year.ToString() + "/" + DateTimeOffset.Now.Month.ToString() + "/" + DateTimeOffset.Now.Day.ToString();
             }
             Debug.WriteLine("kb->" + kb);
-            if (kb != "")
+            if (kb != null)
             {
-                JObject obj = JObject.Parse(kb);
-                if (Int32.Parse(obj["status"].ToString()) == 200)
+                if (Int32.Parse(kb["status"].ToString()) == 200)
                 {
                     IStorageFile storageFileWR = await applicationFolder.CreateFileAsync("kb", CreationCollisionOption.OpenIfExists);
                     try
                     {
-                        await FileIO.WriteTextAsync(storageFileWR, kb);
+                        await FileIO.WriteTextAsync(storageFileWR, kb.ToString());
                     }
                     catch (Exception)
                     {
@@ -294,7 +243,7 @@ namespace ZSCY_Win10
                     }
                     //保存当前星期
 
-                    if (kbtemp == "")
+                    if (kbtemp == null)
                     {
                         Debug.WriteLine("上次时间" + appSetting.Values["HttpTime"].ToString());
                         //DateTimeOffset d = DateTimeOffset.Parse(appSetting.Values["HttpTime"].ToString());
@@ -309,21 +258,17 @@ namespace ZSCY_Win10
                         weekday = (Int16)weekday;
                         Debug.WriteLine("weekday_后" + weekday);
                         if (weekday > 0)
-                            appSetting.Values["nowWeek"] = Int16.Parse(obj["nowWeek"].ToString()) + (Int16)(weekday + 6) / 7;
+                            appSetting.Values["nowWeek"] = Int16.Parse(kb["nowWeek"].ToString()) + (Int16)(weekday + 6) / 7;
                         else
-                            appSetting.Values["nowWeek"] = obj["nowWeek"].ToString();
+                            appSetting.Values["nowWeek"] = kb["nowWeek"].ToString();
                         Debug.WriteLine(" appSetting.Values[\"nowWeek\"]" + appSetting.Values["nowWeek"].ToString());
                     }
                     else
-                        appSetting.Values["nowWeek"] = obj["nowWeek"].ToString();
+                        appSetting.Values["nowWeek"] = kb["nowWeek"].ToString();
                     HubSectionKBNum.Text = " | 第" + appSetting.Values["nowWeek"].ToString() + "周";
                     todayNumofstuTextBlock.Text = "开学第" + ((Int16.Parse(appSetting.Values["nowWeek"].ToString()) - 1) * 7 + (Int16.Parse(Utils.GetWeek()) == 0 ? 7 : Int16.Parse(Utils.GetWeek()))).ToString() + "天";
                     //showKB(2, Int32.Parse(appSetting.Values["nowWeek"].ToString()));
-#if DEBUG
-                    showKB(2, 0, Transactiontemp);
-#else
                     showKB(2);
-#endif
                 }
             }
             DateTime now = DateTime.Now;
@@ -377,26 +322,19 @@ namespace ZSCY_Win10
             }
         }
 
-        private void showKB(int weekOrAll = 1, int week = 0, string transactioncontent = null)
+        private void showKB(int weekOrAll = 1, int week = 0)
         {
-            for (int i = 0; i < 7; i++)
-                for (int j = 0; j < 6; j++)
-                    classtime[i, j] = null;
+            for (int i = 0; i < 7; i++) for (int j = 0; j < 6; j++) classtime[i, j] = null;
 
-            for (int i = 0; i < 7; i++)
-                for (int j = 0; j < 6; j++)
-                    transactiontime[i, j] = null;
+            for (int i = 0; i < 7; i++) for (int j = 0; j < 6; j++) transactiontime[i, j] = null;
 
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
-            if (stuNum == credentialList[0].UserName)
-                GetTransaction(transactioncontent);
+            if (stuNum == appSetting.Values["stuNum"].ToString())
+                GetTransaction();
 
             kebiaoGrid.Children.Clear();
             SetKebiaoGridBorder(week);
             classList.Clear();
-            JArray ClassListArray = Utils.ReadJso(kb);
+            JArray ClassListArray = (JArray)kb["data"];
             int ColorI = 0;
             for (int i = 0; i < ClassListArray.Count; i++)
             {
@@ -813,73 +751,35 @@ namespace ZSCY_Win10
 
         //bool isGetTransactionSuccess = false;
         //新增:获取事项信息
-        private async void GetTransaction(string contentstring = null)
+        private async void GetTransaction()
         {
             bool secondTimeAdd = false;
-            if (contentstring == null)
+            try
             {
-                //clear出了无法理解的问题..暂时用一个判断吧 聊胜于无
-                var vault = new Windows.Security.Credentials.PasswordVault();
-                var credentialList = vault.FindAllByResource(resourceName);
-                credentialList[0].RetrievePassword();
-                if (credentialList[0] != null)
+                JObject Tobj = await Requests.Send("magipoke-reminder/Person/getTransaction", method: "post", token: true);
+                //isGetTransactionSuccess = true;
+                if (Int32.Parse(Tobj["status"].ToString()) == 200)
                 {
-                    try
+                    JArray TransactionArray = (JArray)Tobj["data"];
+                    for (int i = 0; i < TransactionArray.Count; i++)
                     {
-                        List<KeyValuePair<String, String>> TransactionparamList = new List<KeyValuePair<String, String>>();
-                        TransactionparamList.Add(new KeyValuePair<string, string>("stuNum", credentialList[0].UserName));
-                        TransactionparamList.Add(new KeyValuePair<string, string>("idNum", credentialList[0].Password));
-                        string Transactiontemp = await NetWork.getHttpWebRequest("cyxbsMobile/index.php/Home/Person/getTransaction", TransactionparamList);
-                        //isGetTransactionSuccess = true;
-                        JObject Tobj = JObject.Parse(Transactiontemp);
-                        if (Int32.Parse(Tobj["status"].ToString()) == 200)
+                        Transaction transactionItem = new Transaction();
+                        transactionItem.GetAttribute((JObject)TransactionArray[i]);
+                        foreach (var existItem in transationList)
                         {
-                            JArray TransactionArray = Utils.ReadJso(Transactiontemp);
-                            for (int i = 0; i < TransactionArray.Count; i++)
-                            {
-                                Transaction transactionItem = new Transaction();
-                                transactionItem.GetAttribute((JObject)TransactionArray[i]);
-                                foreach (var existItem in transationList)
-                                {
-                                    if (transactionItem.id == existItem.id)
-                                    { secondTimeAdd = true; break; }
-                                }
-                                if (!secondTimeAdd)
-                                    transationList.Add(transactionItem);
-                                Debug.WriteLine(i);
-                            }
+                            if (transactionItem.id == existItem.id)
+                            { secondTimeAdd = true; break; }
                         }
-                    }
-                    catch
-                    {
-                        NotifyPopup notifyPopup = new NotifyPopup("网络异常 无法读取事项~");
-                        notifyPopup.Show();
+                        if (!secondTimeAdd)
+                            transationList.Add(transactionItem);
+                        Debug.WriteLine(i);
                     }
                 }
             }
-            else
+            catch
             {
-                if (contentstring != null && contentstring != "")
-                {
-                    JObject Tobj = JObject.Parse(contentstring);
-                    if (Int32.Parse(Tobj["status"].ToString()) == 200)
-                    {
-                        JArray TransactionArray = Utils.ReadJso(contentstring);
-                        for (int i = 0; i < TransactionArray.Count; i++)
-                        {
-                            Transaction transactionItem = new Transaction();
-                            transactionItem.GetAttribute((JObject)TransactionArray[i]);
-                            foreach (var existItem in transationList)
-                            {
-                                if (transactionItem.id == existItem.id)
-                                { secondTimeAdd = true; break; }
-                            }
-                            if (!secondTimeAdd)
-                                transationList.Add(transactionItem);
-                            Debug.WriteLine(i);
-                        }
-                    }
-                }
+                NotifyPopup notifyPopup = new NotifyPopup("网络异常 无法读取事项~");
+                notifyPopup.Show();
             }
         }
 
@@ -1057,12 +957,8 @@ namespace ZSCY_Win10
         private void KBRefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO:未登陆时 无法刷新
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
             this.progress.IsActive = true;
-            //stuNum = appSetting.Values["stuNum"].ToString();
-            stuNum = credentialList[0].UserName;
+            stuNum = appSetting.Values["stuNum"].ToString();
             wOa = 1;
             initKB(true);
             this.progress.IsActive = false;
@@ -1206,12 +1102,8 @@ namespace ZSCY_Win10
 
         private void KebiaoAllpr_RefreshInvoked(DependencyObject sender, object args)
         {
-            var vault = new Windows.Security.Credentials.PasswordVault();
-            var credentialList = vault.FindAllByResource(resourceName);
-            credentialList[0].RetrievePassword();
             this.progress.IsActive = true;
-            //stuNum = appSetting.Values["stuNum"].ToString();
-            stuNum = credentialList[0].UserName;
+            stuNum = appSetting.Values["stuNum"].ToString();
             wOa = 1;
             initKB(true);
             this.progress.IsActive = false;

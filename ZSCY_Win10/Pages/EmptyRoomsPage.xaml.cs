@@ -246,21 +246,20 @@ namespace ZSCY.Pages
         /// <param name="isFail">是否为失败的重试，区别为若是重试，请求完不刷新界面</param>
         private async void EmptyPost(int sectionNum, bool isFail = false)
         {
-            List<KeyValuePair<String, String>> paramList = new List<KeyValuePair<String, String>>();
-            paramList.Add(new KeyValuePair<string, string>("buildNum", buildNum));
-            paramList.Add(new KeyValuePair<string, string>("sectionNum", sectionNum.ToString()));
-            paramList.Add(new KeyValuePair<string, string>("week", appSetting.Values["nowWeek"].ToString()));
-            paramList.Add(new KeyValuePair<string, string>("weekdayNum", NowWeekday));
+            Dictionary<string, string> emptyParam = new Dictionary<string, string>();
+            emptyParam.Add("buildNum", buildNum);
+            emptyParam.Add("sectionNum", (sectionNum + 1).ToString());
+            emptyParam.Add("week", appSetting.Values["nowWeek"].ToString());
+            emptyParam.Add("weekDayNum", NowWeekday);
             //await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 2, 140, 253), Colors.White, text: "正在查询空教室...", isIndeterminate: true);
-            string emptyRoom = await NetWork.getHttpWebRequest("api/roomEmpty", paramList);
+            JObject emptyRoom = await Requests.Send("magipoke-jwzx/roomEmpty", param: emptyParam, json: false, method: "post");
             Debug.WriteLine("emptyRoom->" + emptyRoom);
-            if (emptyRoom != "")
+            if (emptyRoom != null)
             {
-                JObject obj = JObject.Parse(emptyRoom);
-                if (Int32.Parse(obj["status"].ToString()) == 200)
+                if (Int32.Parse(emptyRoom["status"].ToString()) == 200)
                 {
                     EmptyRoomList emptyRoomItem = new EmptyRoomList();
-                    emptyRoomItem.GetAttribute(obj);
+                    emptyRoomItem.GetAttribute(emptyRoom);
                     emptyRoomReslut[sectionNum] = emptyRoomItem.RoomArray;
                     if (!isFail)
                         ShowEmpty();

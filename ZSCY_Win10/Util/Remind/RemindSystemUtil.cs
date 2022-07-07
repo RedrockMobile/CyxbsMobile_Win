@@ -8,7 +8,6 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.UI.Notifications;
 using ZSCY_Win10.Models.RemindModels;
-using ZSCY_Win10.Resource;
 
 namespace ZSCY_Win10.Util.Remind
 {
@@ -238,9 +237,8 @@ namespace ZSCY_Win10.Util.Remind
         public static async Task<ObservableCollection<RemindBackupModel>> SyncRemindList()
         {
             ObservableCollection<RemindBackupModel> remindList = new ObservableCollection<RemindBackupModel>();
-            List<KeyValuePair<string, string>> paramList = RemindWebRequest.getRemind();
-            string json = await NetWork.getHttpWebRequest(Api.GetRemindApi, paramList, 0, true);
-            GetRemindJsonToModel(ref remindList, json);
+            Newtonsoft.Json.Linq.JObject json = await Requests.Send("magipoke-reminder/Person/getTransaction", method: "post", token: true);
+            GetRemindJsonToModel(ref remindList, json.ToString());
             return remindList;
         }
 

@@ -34,11 +34,9 @@ namespace ZSCY.Data
         public void GetListAttribute(JObject NewsListJObject)
         {
             ID = NewsListJObject["id"].ToString();
-            Articleid = NewsListJObject["articleid"].ToString();
             Title = NewsListJObject["title"].ToString();
-            Head = NewsListJObject["head"] != null ? NewsListJObject["head"].ToString() : "";
             Date = NewsListJObject["date"].ToString();
-            Read = NewsListJObject["read"] != null ? NewsListJObject["read"].ToString() : "";
+            Read = NewsListJObject["read_count"] != null ? NewsListJObject["read_count"].ToString() : "";
         }
     }
 }

@@ -55,7 +55,7 @@ namespace ZSCY_Win10.Data
             //var gradelimit = JArray.Parse(TransationDetailJObject["date"].ToString());
             // JObject tempJobject = JObject.Parse(gradelimit.ToString());
             //string[] temp = new string[gradelimit.Count];
-            //JArray TransasctionArray = Utils.ReadJso(gradelimit.ToString(),"date");
+            //JArray TransasctionArray = (JArray)(gradelimit.ToString(),"date");
 
             //for (int i = 0; i < gradelimit.Count; ++i)
             //{

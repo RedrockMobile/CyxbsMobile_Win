@@ -61,12 +61,12 @@ namespace ZSCY_Win10.Pages
             await Task.Delay(2000);
 
             GetAsync(user_name.Text, user_password.Password);
-            if (viewModel.Rootobject.status==200)
+            if (viewModel.Rootobject.code==0)
             {
                 vault.Add(new Windows.Security.Credentials.PasswordCredential(resourceName, user_name.Text, user_password.Password));
                 this.Frame.Navigate((typeof(VolunteerPage)));
             }
-            if(viewModel.Rootobject.status == 001)
+            if(viewModel.Rootobject.code == 001)
             {
                 var dialog = new ContentDialog();
                 dialog.Title = "error";
@@ -78,7 +78,7 @@ namespace ZSCY_Win10.Pages
                 };
                 await dialog.ShowAsync();
             }
-            if (viewModel.Rootobject.status == 002)
+            if (viewModel.Rootobject.code == 002)
             {
                 var dialog = new ContentDialog();
                 dialog.Title = "error";
@@ -90,7 +90,7 @@ namespace ZSCY_Win10.Pages
                 };
                 await dialog.ShowAsync();
             }
-            if (viewModel.Rootobject.status == 003)
+            if (viewModel.Rootobject.code == 003)
             {
                 var dialog = new ContentDialog();
                 dialog.Title = "error";
@@ -102,7 +102,7 @@ namespace ZSCY_Win10.Pages
                 };
                 await dialog.ShowAsync();
             }
-            if (viewModel.Rootobject.status == 004)
+            if (viewModel.Rootobject.code == 004)
             {
                 var dialog = new ContentDialog();
                 dialog.Title = "error";
