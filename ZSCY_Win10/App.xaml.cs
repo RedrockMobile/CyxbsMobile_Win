@@ -1,17 +1,14 @@
-﻿using Microsoft.WindowsAzure.MobileServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
-using Windows.Networking.PushNotifications;
 using Windows.Storage;
 using Windows.System.Profile;
 using Windows.UI.StartScreen;
@@ -20,11 +17,9 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using ZSCY.Data;
-using ZSCY_Win10.Data;
 using ZSCY_Win10.Models.RemindModels;
 using ZSCY_Win10.Pages.StartPages;
 using ZSCY_Win10.Util;
-using ZSCY_Win10.ViewModels.Community;
 using ZSCY_Win10.ViewModels.Remind;
 
 /*
@@ -64,19 +59,12 @@ namespace ZSCY_Win10
 
         public static ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>();
         public static bool showpane = true;
-        public static MobileServiceClient MobileService = new MobileServiceClient("https://cqupt.azurewebsites.net");
-        public static string picstart = "http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/";
-        public static string picstartsmall = "http://hongyan.cqupt.edu.cn/cyxbsMobile/Public/photo/thumbnail/";
-        public static CommunityViewModel ViewModel { get; set; }
         public static int CommunityPivotState;
         public static double CommunityScrollViewerOffset;
         public static bool isPerInfoContentImgShow = false;
-        private string exampleTaskName = "MessageBackgroundTask";
         public static Resource.APPTheme APPTheme = new Resource.APPTheme();
         public static bool[] isReduced = { true, true, true, true };
         public static bool[] isLoading = { false, false, false, false, false, false, false, false };
-        private IMobileServiceTable<TodoItem> todoTable = App.MobileService.GetTable<TodoItem>();
-        private static string resourceName = "ZSCY";
 
         #region 事件提醒
 
@@ -119,10 +107,7 @@ namespace ZSCY_Win10
             {
                 try
                 {
-                    var vault = new Windows.Security.Credentials.PasswordVault();
-                    var credentialList = vault.FindAllByResource(resourceName);
-                    credentialList[0].RetrievePassword();
-                    if (JumpList.IsSupported() && credentialList.Count > 0)
+                    if (JumpList.IsSupported() && bool.Parse(appSetting.Values["isLogin"].ToString()))
                         SetSystemGroupAsync();
                     else if (JumpList.IsSupported())
                         DisableSystemJumpListAsync();
@@ -138,9 +123,14 @@ namespace ZSCY_Win10
             //{
             //    appSetting.Values["AllKBGray"] = false;
             //}
-            if (!appSetting.Values.ContainsKey("CommunityPerInfo"))
+            if (!appSetting.Values.ContainsKey("nowWeek"))
             {
-                appSetting.Values["CommunityPerInfo"] = false;
+                appSetting.Values["nowWeek"] = Util.nowWeek.GetNowWeek();
+            }
+
+            if (!appSetting.Values.ContainsKey("isLogin"))
+            {
+                appSetting.Values["isLogin"] = false;
             }
 
             if (!appSetting.Values.ContainsKey("Community_headimg_src"))
@@ -190,7 +180,6 @@ namespace ZSCY_Win10
         private async void addBackgroundTask()
         {
             List<string> backgroundName = new List<string>();
-            backgroundName.Add(exampleTaskName);
             backgroundName.Add("Toastbuilder");
             backgroundName.Add("LiveTileBackgroundTask");
             backgroundName.Add("RemindBackgroundTask");
@@ -207,11 +196,6 @@ namespace ZSCY_Win10
                     }
                 }
                 BackgroundAccessStatus status = await BackgroundExecutionManager.RequestAccessAsync();
-                BackgroundTaskBuilder builder1 = new BackgroundTaskBuilder();
-                builder1.Name = exampleTaskName;
-                builder1.TaskEntryPoint = "MyMessageBackgroundTask.MessageBackgroundTask";
-                builder1.SetTrigger(new TimeTrigger(15, false)); //定时后台任务
-                BackgroundTaskRegistration task = builder1.Register();
                 BackgroundTaskBuilder Toastbuilder = new BackgroundTaskBuilder();
                 Toastbuilder.Name = "Toastbuilder";
                 Toastbuilder.TaskEntryPoint = "MyMessageBackgroundTask.ToastBackgroundTask";
@@ -300,10 +284,7 @@ namespace ZSCY_Win10
                 try
                 {
                     //if (e.Kind == ActivationKind.Launch && (e.Arguments == "/jwzx" || e.Arguments == "/more") && appSetting.Values.ContainsKey("idNum"))
-                    var vault = new Windows.Security.Credentials.PasswordVault();
-                    var credentialList = vault.FindAllByResource(resourceName);
-                    credentialList[0].RetrievePassword();
-                    if (e.Kind == ActivationKind.Launch && (e.Arguments == "/jwzx" || e.Arguments == "/more") && credentialList.Count > 0)
+                    if (e.Kind == ActivationKind.Launch && (e.Arguments == "/jwzx" || e.Arguments == "/more") && bool.Parse(appSetting.Values["isLogin"].ToString()))
                     {
                         if (!rootFrame.Navigate(typeof(StartPage), e.Arguments))
                         {
@@ -313,7 +294,7 @@ namespace ZSCY_Win10
                     else
                     {
                         //if (!appSetting.Values.ContainsKey("idNum"))
-                        if (!(credentialList.Count > 0))
+                        if (!bool.Parse(appSetting.Values["isLogin"].ToString()))
                         {
                             //if (!rootFrame.Navigate(typeof(LoginPage), e.Arguments))
                             if (!rootFrame.Navigate(typeof(StartPage), e.Arguments))
@@ -374,7 +355,7 @@ namespace ZSCY_Win10
             Window.Current.Activate();
 
             // 确保当前窗口处于活动状态
-                                                                                                   //await InitNotificationsAsync();
+            //await InitNotificationsAsync();
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size { Width = 400, Height = 480 });
         }
 
@@ -403,24 +384,6 @@ namespace ZSCY_Win10
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: 保存应用程序状态并停止任何后台活动
             deferral.Complete();
-        }
-
-        private async Task InitNotificationsAsync()
-        {
-            try
-            {
-                // Get a channel URI from WNS.
-                var channel = await PushNotificationChannelManager
-                    .CreatePushNotificationChannelForApplicationAsync();
-
-                // Register the channel URI with Notification Hubs.
-                await App.MobileService.GetPush().RegisterAsync(channel.Uri);
-                Debug.WriteLine(channel.Uri);
-            }
-            catch (Exception channel)
-            {
-                Debug.WriteLine(channel.Message);
-            }
         }
 
         protected async override void OnActivated(IActivatedEventArgs args)

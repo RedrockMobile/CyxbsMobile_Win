@@ -37,7 +37,6 @@ namespace ZSCY_Win10
     public sealed partial class MainPage : Page
     {
         private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
-        private static string resourceName = "ZSCY";
         private Point currentPoint; //最新的，当前的点
         private Point oldPoint;//上一个点
         private bool isPoint = false;
@@ -56,18 +55,6 @@ namespace ZSCY_Win10
                     Image = "ms-appx:///Assets/iconfont-news.png",
                     Label = "资讯",
                     DestPage = typeof(NewsPage)
-                },
-                new NavMenuItem()
-                {
-                    Image = "ms-appx:///Assets/iconfont-shequ.png",
-                    Label = "社区",
-                    DestPage = typeof(CommunityPage)
-                },
-                new NavMenuItem()
-                {
-                    Image = "ms-appx:///Assets/grzx_black.png",
-                    Label = "个人中心",
-                    DestPage = typeof(MyPage)
                 },
                 new NavMenuItem()
                 {
@@ -141,20 +128,16 @@ namespace ZSCY_Win10
                 }
             };
             //TODO:未登录时 没有名字
-            //if (appSetting.Values.ContainsKey("idNum"))
             try
             {
-                var vault = new Windows.Security.Credentials.PasswordVault();
-                var credentialList = vault.FindAllByResource(resourceName);
-                credentialList[0].RetrievePassword();
-                if (credentialList.Count > 0)
+                if (appSetting.Values.ContainsKey("name"))
                     stuNameTextBlock.Text = appSetting.Values["name"].ToString();
                 else
-                    stuNameTextBlock.Text = "尚未登陆~";
+                    stuNameTextBlock.Text = "尚未登录~";
             }
             catch
             {
-                stuNameTextBlock.Text = "尚未登陆~";
+                stuNameTextBlock.Text = "尚未登录~";
             }
 
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequseted;
@@ -165,15 +148,9 @@ namespace ZSCY_Win10
             }
             NavMenuList.ItemsSource = navlist;
             ActivateWindow();
-            //NavMenuList.SelectedIndex = 0;
-            //TODO:未登录时采用默认头像
-            //if (appSetting.Values.ContainsKey("idNum"))
             try
             {
-                var vault = new Windows.Security.Credentials.PasswordVault();
-                var credentialList = vault.FindAllByResource(resourceName);
-                credentialList[0].RetrievePassword();
-                if (credentialList.Count > 0)
+                if (bool.Parse(appSetting.Values["isLogin"].ToString()))
                     initHeadImage();
             }
             catch { }
@@ -224,7 +201,6 @@ namespace ZSCY_Win10
                 }//Frame在其他页面并且事件未处理
             }
         }
-
         private async void ActivateWindow()
         {
             await Task.Delay(100);
@@ -362,115 +338,8 @@ namespace ZSCY_Win10
                 if (item.DestPage != null &&
                     item.DestPage != this.AppFrame.CurrentSourcePageType)
                 {
-                    //appSetting.Values["CommunityPerInfo"] = false;
-                    //TODO:未登录时 不能传入社区个人信息和个人信息页信息 谨慎处理
-                    //if (!bool.Parse(appSetting.Values["CommunityPerInfo"].ToString()) && (item.DestPage == typeof(MyPage) || item.DestPage == typeof(CommunityPage)))
-                    try
-                    {
-                        var vault = new Windows.Security.Credentials.PasswordVault();
-                        var credentialList = vault.FindAllByResource(resourceName);
-                        credentialList[0].RetrievePassword();
-                        if (!bool.Parse(appSetting.Values["CommunityPerInfo"].ToString()) && (item.DestPage == typeof(MyPage)))
-                        {
-                            if (credentialList.Count > 0)
-                            {
-                                BackOpacityGrid.Visibility = Visibility.Visible;
-                                loadingStackPanel.Visibility = Visibility.Visible;
-                                JObject perInfo = await Requests.Send("magipoke/Person/Search", method: "post", token: true);
-                                if (perInfo != null)
-                                {
-                                    if (perInfo["data"]["nickname"].ToString() == "")
-                                    {
-                                        var dig = new MessageDialog("没有完善资料不能登入友谊的小船哟");
-                                        var btnOk = new UICommand("马上完善");
-                                        dig.Commands.Add(btnOk);
-                                        var btnCancel = new UICommand("暂时不了");
-                                        dig.Commands.Add(btnCancel);
-                                        var result = await dig.ShowAsync();
-                                        if (null != result && result.Label == "马上完善")
-                                        {
-                                            Debug.WriteLine("添加信息");
-                                            BackOpacityGrid.Visibility = Visibility.Collapsed;
-                                            loadingStackPanel.Visibility = Visibility.Collapsed;
-                                            this.AppFrame.Navigate(typeof(SetPersonInfoPage), item.DestPage);
-                                        }
-                                        else if (null != result && result.Label == "暂时不了")
-                                        {
-                                            BackOpacityGrid.Visibility = Visibility.Collapsed;
-                                            loadingStackPanel.Visibility = Visibility.Collapsed;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        appSetting.Values["CommunityPerInfo"] = true;
-                                        appSetting.Values["Community_people_id"] = perInfo["data"]["uid"].ToString();
-                                        appSetting.Values["Community_nickname"] = perInfo["data"]["nickname"].ToString();
-                                        appSetting.Values["Community_headimg_src"] = perInfo["data"]["photo_src"].ToString();
-                                        appSetting.Values["Community_introduction"] = perInfo["data"]["introduction"].ToString();
-                                        appSetting.Values["Community_phone"] = perInfo["data"]["phone"].ToString();
-                                        appSetting.Values["Community_qq"] = perInfo["data"]["qq"].ToString();
-                                        Debug.WriteLine(appSetting.Values["Community_headimg_src"].ToString());
-
-                                        Debug.WriteLine(perInfo["data"]["uid"].ToString());
-                                        BackOpacityGrid.Visibility = Visibility.Collapsed;
-                                        loadingStackPanel.Visibility = Visibility.Collapsed;
-                                        if ((item.DestPage != typeof(MyPage)))
-                                            this.AppFrame.Navigate(item.DestPage, item.Arguments);
-                                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if ((item.DestPage != typeof(MyPage)))
-                                {
-                                    this.AppFrame.Navigate(item.DestPage, item.Arguments);
-                                    var msgPopup = new Data.loginControl("您还没有登录 不能访问个人中心~");
-                                    msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
-                                    msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
-                                    msgPopup.ShowWIndow();
-                                }
-                                else
-                                {
-                                    var msgPopup = new Data.loginControl("您还没有登录 不能访问个人中心~");
-                                    msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
-                                    msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
-                                    msgPopup.ShowWIndow();
-                                }
-                            }
-                        }
-                        else
-                        {
-                            this.AppFrame.Navigate(item.DestPage, item.Arguments);
-                            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-                        }
-                    }
-                    catch
-                    {
-                        if (!bool.Parse(appSetting.Values["CommunityPerInfo"].ToString()) && (item.DestPage == typeof(MyPage)))
-                        {
-                            if ((item.DestPage != typeof(MyPage)))
-                            {
-                                this.AppFrame.Navigate(item.DestPage, item.Arguments);
-                                var msgPopup = new Data.loginControl("您还没有登录 不能访问个人中心~");
-                                msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
-                                msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
-                                msgPopup.ShowWIndow();
-                            }
-                            else
-                            {
-                                var msgPopup = new Data.loginControl("您还没有登录 不能访问个人中心~");
-                                msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
-                                msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
-                                msgPopup.ShowWIndow();
-                            }
-                        }
-                        else
-                        {
-                            this.AppFrame.Navigate(item.DestPage, item.Arguments);
-                            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-                        }
-                    }
+                    this.AppFrame.Navigate(item.DestPage, item.Arguments);
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                 }
             }
         }
@@ -661,16 +530,13 @@ namespace ZSCY_Win10
         {
         }
 
+
         //TODO:未登录时不能选择上传头像
         private async void headimgRectangle_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            //if (appSetting.Values.ContainsKey("idNum"))
             try
             {
-                var vault = new Windows.Security.Credentials.PasswordVault();
-                var credentialList = vault.FindAllByResource(resourceName);
-                credentialList[0].RetrievePassword();
-                if (credentialList.Count > 0)
+                if (bool.Parse(appSetting.Values["isLogin"].ToString()))
                 {
                     FileOpenPicker openPicker = new FileOpenPicker();
                     openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
@@ -715,7 +581,6 @@ namespace ZSCY_Win10
                 msgPopup.ShowWIndow();
             }
         }
-
         private void BackOpacityGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             ClipHeadGrid.Visibility = Visibility.Collapsed;
@@ -796,12 +661,11 @@ namespace ZSCY_Win10
                         pixelBuffer.ToArray());
                     await encoder.FlushAsync();
                 }
-                string uphead = await Requests.headUpload(appSetting.Values["stuNum"].ToString(), "ms-appdata:///local/temphead.png");
+                JObject uphead = await Requests.Send(appSetting.Values["stuNum"].ToString()); // , "ms-appdata:///local/temphead.png"
                 Debug.WriteLine(uphead);
-                if (uphead != "")
+                if (uphead != null)
                 {
-                    JObject obj = JObject.Parse(uphead);
-                    if (Int32.Parse(obj["state"].ToString()) == 200)
+                    if (Int32.Parse(uphead["state"].ToString()) == 200)
                     {
                         ClipHeadGrid.Visibility = Visibility.Collapsed;
                         BackOpacityGrid.Visibility = Visibility.Collapsed;

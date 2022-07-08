@@ -15,6 +15,7 @@ namespace ZSCY.Pages
         public CalendarPage()
         {
             this.InitializeComponent();
+            CalendarImage.Source = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new System.Uri(ZSCY_Win10.Util.Requests.baseUrl + "magipoke-jwzx/schoolCalendar"));
             this.SizeChanged += (s, e) =>
             {
                 CalendarImage.Width = e.NewSize.Width;

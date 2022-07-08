@@ -13,10 +13,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
     /// </summary>
     public sealed partial class SetRoomPage : Page
     {
-        private static string byRoomNumUri = "http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ElectricityQuery/ElectricityQuery/queryElecByRoom";
-        private List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
         private ApplicationDataContainer roomSettings = ApplicationData.Current.LocalSettings;
-        private NetWork netWork = new NetWork();
 
         public SetRoomPage()
         {
@@ -39,11 +36,12 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
             ElectricityByRoomNum electricityData = new ElectricityByRoomNum();
             if (roomSettings.Values.ContainsKey("building") && roomSettings.Values.ContainsKey("room"))
             {
-                paramList.Add(new KeyValuePair<string, string>("building", roomSettings.Values["building"].ToString()));
-                paramList.Add(new KeyValuePair<string, string>("room", roomSettings.Values["room"].ToString()));
-                //储存ElectricityByStuNum数据的实例
-                string electricityJson = await netWork.GetElectricityByRoomNum(byRoomNumUri, paramList);
-                electricityData = netWork.ByRoomNumStringConvertToModel(electricityJson);
+
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                param.Add("building", roomSettings.Values["building"].ToString());
+                param.Add("room", roomSettings.Values["room"].ToString());
+                Newtonsoft.Json.Linq.JObject electricityObj = await Util.Requests.Send("magipoke-elecquery/getElectric", param: param, method: "post", json: false);
+                electricityData = Newtonsoft.Json.JsonConvert.DeserializeObject<ElectricityByRoomNum>(electricityObj.ToString());
             }
             //输入错误弹窗
             if (ComboBox.SelectedItem == null || RoomTextBox.Text.ToString().Length != 3 || electricityData.elec_inf.elec_spend == null)
@@ -53,8 +51,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
             }
             else
             {
-                roomSettings.Values["isBindingRoom"] = true;
-                roomSettings.Values["BindingRoomDate"] = DateTime.Now.ToString();
+                roomSettings.Values["isSettingRoom"] = true;
                 this.Frame.Navigate(typeof(SettedPage)); //设置成功之后跳转的成功画面 @Boss Qin检查下
             }
         }

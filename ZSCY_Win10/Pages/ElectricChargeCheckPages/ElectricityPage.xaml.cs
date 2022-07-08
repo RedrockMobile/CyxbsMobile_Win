@@ -17,24 +17,14 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
     {
         private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         private ApplicationDataContainer settings = ApplicationData.Current.LocalSettings;
-        private static string byStuNumUri = "http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ElectricityQuery/ElectricityQuery/getElectric";
-        private static string byRoomNumUri = "http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ElectricityQuery/ElectricityQuery/queryElecByRoom";
-        private List<KeyValuePair<string, string>> paramIniList = new List<KeyValuePair<string, string>>();
-        private List<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>();
-        private static string resourceName = "ZSCY";
-        private static string stuNum = "";
-        private NetWork netWork = new NetWork();
 
         public ElectricityPage()
         {
             this.InitializeComponent();
             frame.Navigate(typeof(Page));
-            //获取stuNum参数
-            stuNum = appSetting.Values["stuNum"].ToString();
-            paramIniList.Add(new KeyValuePair<string, string>("stuNum", stuNum));
-            if (!settings.Values.ContainsKey("isBindingRoom"))
+            if (!settings.Values.ContainsKey("isSettingRoom"))
             {
-                settings.Values["isBindingRoom"] = false;
+                settings.Values["isSettingRoom"] = false;
             }
         }
 
@@ -45,16 +35,16 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
 
         public async void IniData()//使用学号查询电费接口初始化数据
         {
-            if (bool.Parse(settings.Values["isBindingRoom"].ToString()))
+            if (bool.Parse(settings.Values["isSettingRoom"].ToString()))
             {
                 try
                 {
-                    paramList.Add(new KeyValuePair<string, string>("building", settings.Values["building"].ToString()));
-                    paramList.Add(new KeyValuePair<string, string>("room", settings.Values["room"].ToString()));
-                    //储存ElectricityByStuNum数据的实例
-                    string electricityJson = await netWork.GetElectricityByRoomNum(byRoomNumUri, paramList);
+                    Dictionary<string, string> param = new Dictionary<string, string>();
+                    param.Add("building", settings.Values["building"].ToString());
+                    param.Add("room", settings.Values["room"].ToString());
+                    Newtonsoft.Json.Linq.JObject electricityObj = await Util.Requests.Send("magipoke-elecquery/getElectric", param: param, method: "post", json: false);
                     ElectricityByRoomNum electricityData = new ElectricityByRoomNum();
-                    electricityData = netWork.ByRoomNumStringConvertToModel(electricityJson);
+                    electricityData = Newtonsoft.Json.JsonConvert.DeserializeObject<ElectricityByRoomNum>(electricityObj.ToString());
                     //本月电费消费
                     string elec_Cost = electricityData.elec_inf.elec_cost[0] + "." + electricityData.elec_inf.elec_cost[1];//Cost数组转为String
                     electricityData.elec_inf.elec_perday = elec_Cost;
@@ -65,47 +55,13 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
                     }
                     electricityData.elec_inf.elec_percent = (double.Parse(elec_Cost) / double.Parse(settings.Values["limitCharge"].ToString()) * 100);
                     dialPlate.Percent = electricityData.elec_inf.elec_percent;
-                    //电费余额
+                    //电费消费
                     electricityData.elec_inf.elec_chargeBalance = (int.Parse(electricityData.elec_inf.elec_end) - int.Parse(electricityData.elec_inf.elec_start)).ToString();
-                    this.dialPlate.BalanceProperty = electricityData.elec_inf.elec_chargeBalance;
-                    //电量剩余度数
-                    electricityData.elec_inf.elec_dumpEnergy = (30 - (int.Parse(electricityData.elec_inf.elec_end) - int.Parse(electricityData.elec_inf.elec_start))).ToString();
-                    this.dialPlate.DumpEnergyProperty = electricityData.elec_inf.elec_dumpEnergy;
+                    this.dialPlate.BalanceProperty = elec_Cost;
+                    //电量用量
+                    this.dialPlate.DumpEnergyProperty = electricityData.elec_inf.elec_spend;
                     //设置数据源
                     this.DataContext = electricityData.elec_inf;
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                }
-            }
-            else
-            {
-                try
-                {
-                    //储存ElectricityByStuNum数据的实例
-                    string electricityIniJson = await netWork.GetElectricityByStuNum(byStuNumUri, paramIniList);
-                    ElectricityByStuNum electricityIniData = new ElectricityByStuNum();
-                    electricityIniData = netWork.ByStuNumStringConvertToModel(electricityIniJson);
-                    //本月电费消费
-                    string elec_Cost = electricityIniData.data.result.current.elec_cost[0] + "." + electricityIniData.data.result.current.elec_cost[1];//Cost数组转为String
-                    electricityIniData.data.result.current.elec_perday = elec_Cost;
-                    //百分比
-                    if (!settings.Values.ContainsKey("limitCharge"))
-                    {
-                        settings.Values["limitCharge"] = 20;
-                    }
-                    electricityIniData.data.result.current.elec_percent = (double.Parse(elec_Cost) / double.Parse(settings.Values["limitCharge"].ToString()) * 100);
-                    dialPlate.Percent = electricityIniData.data.result.current.elec_percent;
-                    //电费余额
-                    electricityIniData.data.result.current.elec_chargeBalance = (int.Parse(electricityIniData.data.result.current.elec_end) - int.Parse(electricityIniData.data.result.current.elec_start)).ToString();
-                    this.dialPlate.BalanceProperty = electricityIniData.data.result.current.elec_chargeBalance;
-                    //电量剩余度数
-                    electricityIniData.data.result.current.elec_dumpEnergy = (30 - (int.Parse(electricityIniData.data.result.current.elec_end) - int.Parse(electricityIniData.data.result.current.elec_start))).ToString();
-                    this.dialPlate.DumpEnergyProperty = electricityIniData.data.result.current.elec_dumpEnergy;
-                    //设置数据源
-                    this.DataContext = electricityIniData.data.result.current;
-                    Debug.WriteLine(this.dialPlate.DumpEnergyProperty);
                 }
                 catch (Exception ex)
                 {
@@ -121,28 +77,7 @@ namespace ZSCY_Win10.Pages.ElectricChargeCheckPages
                 this.frame.Navigate(typeof(SetRemainPage), e);
             else if (temp.Name == "SetRoom")
             {
-                if (!settings.Values.ContainsKey("bindingRoomDate"))
-                {
-                    settings.Values["bindingRoomDate"] = new DateTime(1970, 1, 1, 0, 0, 0, 0).ToString();
-                }
-                TimeSpan timeSpan = DateTime.Now - DateTime.Parse(settings.Values["bindingRoomDate"].ToString());
-                if (bool.Parse(settings.Values["isBindingRoom"].ToString()) && timeSpan.TotalDays >= 30)
-                {
-                    this.frame.Navigate(typeof(SettedPage), true);          //设置过寝室且距离上次设置时间超过30天，进入可再设置页面
-                }
-                else if (bool.Parse(settings.Values["isBindingRoom"].ToString()) && timeSpan.TotalDays < 30)
-                {
-                    this.frame.Navigate(typeof(SettedPage), false);         //设置过寝室且距离上次设置时间小于30天，进入不可再设置页面
-                }
-                else
-                {
-                    this.frame.Navigate(typeof(SetRoomPage));               //从未设置过寝室，直接进入设置寝室页面
-                }
-            }
-            else
-            {
-                var msgPopup = new MessagePopup("即将上线，敬请期待");
-                msgPopup.ShowWindow();
+                this.frame.Navigate(typeof(SetRoomPage));
             }
             //this.frame.Navigate(typeof(CheckRecentChargePage), e);
             frame.Visibility = Visibility.Visible;

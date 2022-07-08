@@ -25,7 +25,6 @@ namespace ZSCY.Pages
     public sealed partial class SearchFreeTimeNumPage : Page
     {
         private ApplicationDataContainer appSetting;
-        private static string resourceName = "ZSCY";
 
         //private ObservableCollection<uIdList> muIdList = new ObservableCollection<uIdList>();
         public SearchFreeTimeNumPage()
@@ -39,14 +38,10 @@ namespace ZSCY.Pages
                 //uIdListView.Height = e.NewSize.Height - 20 - 40;
             };
             //SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
-            //TODO:未登陆时 不能自动添加自己的信息
+            //TODO:未登录时 不能自动添加自己的信息
             try
             {
-                var vault = new Windows.Security.Credentials.PasswordVault();
-                var credentialList = vault.FindAllByResource(resourceName);
-                credentialList[0].RetrievePassword();
-                //if (App.muIdList.Count == 0&&appSetting.Values.ContainsKey("idNum"))
-                if (App.muIdList.Count == 0 && credentialList.Count > 0)
+                if (App.muIdList.Count == 0 && bool.Parse(appSetting.Values["isLogin"].ToString()))
                     App.muIdList.Add(new uIdList { uId = appSetting.Values["stuNum"].ToString(), uName = appSetting.Values["name"].ToString() });
             }
             catch { }
@@ -100,13 +95,13 @@ namespace ZSCY.Pages
             {
                 string usename = AddTextBox.Text;
                 string useid = usename;
-                JObject peopleinfo = await Requests.Send("cyxbsMobile/index.php/home/searchPeople/peopleList?stu=" + useid);
+                JObject peopleinfo = await Requests.Send("magipoke-text/search/people?stu=" + useid);
                 Debug.WriteLine("peopleinfo->" + peopleinfo);
                 if (peopleinfo != null)
                 {
                     try
                     {
-                        if (Int32.Parse(peopleinfo["state"].ToString()) == 200)
+                        if (Int32.Parse(peopleinfo["status"].ToString()) == 200)
                         {
                             JArray PeopleListArray = (JArray)peopleinfo["data"];
                             if (PeopleListArray.Count != 1)
@@ -116,7 +111,7 @@ namespace ZSCY.Pages
                                 {
                                     PersonalIno Personalitem = new PersonalIno();
                                     Personalitem.GetAttribute((JObject)PeopleListArray[i]);
-                                    PeopleListMenuFlyout.Items.Add(getPeopleListMenuFlyoutItem(Personalitem.Name + "-" + Personalitem.Major + "-" + Personalitem.Stunum));
+                                    PeopleListMenuFlyout.Items.Add(getPeopleListMenuFlyoutItem(Personalitem.Name + "-" + Personalitem.College + "-" + Personalitem.Stunum));
                                 }
                                 PeopleListMenuFlyout.ShowAt(AddTextBox);
                             }
@@ -133,7 +128,7 @@ namespace ZSCY.Pages
                                     else
                                     {
                                         MenuFlyout PeopleListMenuFlyout = new MenuFlyout();
-                                        PeopleListMenuFlyout.Items.Add(getPeopleListMenuFlyoutItem(Personalitem.Name + "-" + Personalitem.Major + "-" + Personalitem.Stunum));
+                                        PeopleListMenuFlyout.Items.Add(getPeopleListMenuFlyoutItem(Personalitem.Name + "-" + Personalitem.College + "-" + Personalitem.Stunum));
                                         PeopleListMenuFlyout.ShowAt(AddTextBox);
                                     }
                                 }

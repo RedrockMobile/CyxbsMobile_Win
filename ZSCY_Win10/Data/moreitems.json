@@ -8,7 +8,7 @@
     },
     {
       "UniqueId": "ClassRoom",
-      "Itemname": "教室查询",
+      "Itemname": "空教室",
       "ItemPage": "EmptyRoomsPage",
       "Itemimgsrc": "Assets/more_empty333.png"
     },
@@ -26,19 +26,13 @@
     },
     {
       "UniqueId": "Volunteer",
-      "Itemname": "志愿查询",
+      "Itemname": "志愿信息",
       "ItemPage": "VolunteerPage",
       "Itemimgsrc": "Assets/vticon.png"
     },
     {
-      "UniqueId": "Socre",
-      "Itemname": "成绩查询",
-      "ItemPage": "ScorePage",
-      "Itemimgsrc": "Assets/more_score333.png"
-    },
-    {
       "UniqueId": "FreeTime",
-      "Itemname": "空闲查询",
+      "Itemname": "没课约",
       "ItemPage": "SearchFreeTimeNumPage.xaml",
       "Itemimgsrc": "Assets/more_freetime333.png"
     },

@@ -22,7 +22,7 @@ namespace ZSCY_Win10.Util.Converter
                 int week = Int32.Parse(w[0].Value);
                 int nowweek = Int32.Parse(appSetting.Values["nowWeek"].ToString());
                 DateTime now = DateTime.Now;
-                int dayofweek = (int)now.DayOfWeek == 0 ? 7 : (int)now.DayOfWeek;
+                int dayofweek = now.DayOfWeek == 0 ? 7 : (int)now.DayOfWeek;
                 if (nowweek == week && dayofweek > Int32.Parse(w[1].Value))
                 {
                     return "/Assets/StarFilled.png";

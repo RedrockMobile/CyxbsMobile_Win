@@ -288,9 +288,6 @@
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Common\ViewModelBase.cs" />
-    <Compile Include="CommunityPage.xaml.cs">
-      <DependentUpon>CommunityPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ClassInfoControl.xaml.cs">
       <DependentUpon>ClassInfoControl.xaml</DependentUpon>
     </Compile>
@@ -304,22 +301,11 @@
     <Compile Include="Controls\Ring.cs" />
     <Compile Include="Data\ClassList.cs" />
     <Compile Include="Data\ClassListLight.cs" />
-    <Compile Include="Data\CommunityImageList.cs" />
-    <Compile Include="Data\Community\BBDDFeed.cs" />
-    <Compile Include="Data\Community\HotFeed.cs" />
-    <Compile Include="Data\Community\IFeeds.cs" />
-    <Compile Include="Data\Community\Img.cs" />
-    <Compile Include="Data\Community\JWZXFeed.cs" />
-    <Compile Include="Data\Community\Mark.cs" />
-    <Compile Include="Data\Community\MyFeed.cs" />
-    <Compile Include="Data\Community\MyNotification.cs" />
-    <Compile Include="Data\Community\PeoInfo.cs" />
     <Compile Include="Data\DataSource.cs" />
     <Compile Include="Data\EmptyClassDayLesson.cs" />
     <Compile Include="Data\EmptyRoomList.cs" />
     <Compile Include="Data\EmptyTable.cs" />
     <Compile Include="Data\ExamList.cs" />
-    <Compile Include="Data\Community\HotFeedsContentBase.cs" />
     <Compile Include="Data\IdList.cs" />
     <Compile Include="Data\loginControl.xaml.cs">
       <DependentUpon>loginControl.xaml</DependentUpon>
@@ -328,13 +314,9 @@
     <Compile Include="Data\NewsList.cs" />
     <Compile Include="Data\JWList.cs" />
     <Compile Include="Data\PersonalIno.cs" />
-    <Compile Include="Data\ScoreList.cs" />
-    <Compile Include="Data\TodoItem.cs" />
     <Compile Include="Data\Transaction.cs" />
-    <Compile Include="Pages\VolunteerPage\httpclientPost.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Electricity.cs" />
-    <Compile Include="Models\LFDetailPageModel.cs" />
     <Compile Include="Models\PieDataItem.cs" />
     <Compile Include="Models\PiePiece.cs" />
     <Compile Include="Models\RemindModels\AddRemindBackModel.cs" />
@@ -348,22 +330,10 @@
     <Compile Include="Models\RemindModels\RemindSystemModel.cs" />
     <Compile Include="Models\RemindModels\SelCourseModel.cs" />
     <Compile Include="Models\RemindModels\WeekNumClass.cs" />
-    <Compile Include="Models\TopicModels\Articles.cs" />
-    <Compile Include="Models\TopicModels\LikeButtonClickEvent.cs" />
-    <Compile Include="Models\TopicModels\pic.cs" />
-    <Compile Include="Models\TopicModels\Topic.cs" />
-    <Compile Include="Models\TopicModels\TopicContent.cs" />
-    <Compile Include="Models\TopicModels\TopicRemark.cs" />
     <Compile Include="Models\VolunteerModel.cs" />
     <Compile Include="Models\StartpAgeModels\StartPageModel.cs" />
-    <Compile Include="MyPage.xaml.cs">
-      <DependentUpon>MyPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="NewsPage.xaml.cs">
       <DependentUpon>NewsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="JWPage.xaml.cs">
-      <DependentUpon>JWPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="KBPage.xaml.cs">
       <DependentUpon>KBPage.xaml</DependentUpon>
@@ -374,30 +344,12 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage_m.xaml.cs">
-      <DependentUpon>MainPage_m.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MorePage.xaml.cs">
       <DependentUpon>MorePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="NavMenuItem.cs" />
     <Compile Include="Pages\CalendarPage.xaml.cs">
       <DependentUpon>CalendarPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\CommunityPages\CommunityAddPage.xaml.cs">
-      <DependentUpon>CommunityAddPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\CommunityPages\CommunityContentPage.xaml.cs">
-      <DependentUpon>CommunityContentPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\CommunityPages\CommunityMyContentPage.xaml.cs">
-      <DependentUpon>CommunityMyContentPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\CommunityPages\CommunityPersonInfo.xaml.cs">
-      <DependentUpon>CommunityPersonInfo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\ElectricChargeCheckPages\CheckRecentChargePage.xaml.cs">
-      <DependentUpon>CheckRecentChargePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ElectricChargeCheckPages\DialPlate.xaml.cs">
       <DependentUpon>DialPlate.xaml</DependentUpon>
@@ -409,7 +361,6 @@
     <Compile Include="Pages\ElectricChargeCheckPages\MessagePopup.xaml.cs">
       <DependentUpon>MessagePopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ElectricChargeCheckPages\NetWork.cs" />
     <Compile Include="Pages\ElectricChargeCheckPages\SetRemainPage.xaml.cs">
       <DependentUpon>SetRemainPage.xaml</DependentUpon>
     </Compile>
@@ -428,9 +379,6 @@
     <Compile Include="Pages\NewsContentPage.xaml.cs">
       <DependentUpon>NewsContentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\JWContentPage.xaml.cs">
-      <DependentUpon>JWContentPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\RemindPages\AddRemindPage.xaml.cs">
       <DependentUpon>AddRemindPage.xaml</DependentUpon>
     </Compile>
@@ -444,32 +392,14 @@
     <Compile Include="Pages\RemindPages\WeeksPage.xaml.cs">
       <DependentUpon>WeeksPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ScorePage.xaml.cs">
-      <DependentUpon>ScorePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\SearchFreeTimeNumPage.xaml.cs">
       <DependentUpon>SearchFreeTimeNumPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\SearchFreeTimeResultPage_new.xaml.cs">
-      <DependentUpon>SearchFreeTimeResultPage_new.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SearchFreeTimeResultPage.xaml.cs">
       <DependentUpon>SearchFreeTimeResultPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\StartPages\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\TopicPages\AddTopicArticles.xaml.cs">
-      <DependentUpon>AddTopicArticles.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\TopicPages\SearchTopic.xaml.cs">
-      <DependentUpon>SearchTopic.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\TopicPages\TopicArticlesConent.xaml.cs">
-      <DependentUpon>TopicArticlesConent.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\TopicPages\TopicContentPage.xaml.cs">
-      <DependentUpon>TopicContentPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\VolunteerPage\VolunteerPage.xaml.cs">
       <DependentUpon>VolunteerPage.xaml</DependentUpon>
@@ -481,13 +411,6 @@
     <Compile Include="Resouces\APPTheme.cs" />
     <Compile Include="Resouces\CircularProgressBar.cs" />
     <Compile Include="Resouces\LineChart.cs" />
-    <Compile Include="Service\CommunityFeedsService.cs" />
-    <Compile Include="Service\CommunityMyContentService.cs" />
-    <Compile Include="Service\CommunityPersonInfoService.cs" />
-    <Compile Include="Service\MyService.cs" />
-    <Compile Include="SetPersonInfoPage.xaml.cs">
-      <DependentUpon>SetPersonInfoPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
@@ -495,29 +418,13 @@
       <DependentUpon>PiePlotter.xaml</DependentUpon>
     </Compile>
     <Compile Include="Util\Converter\AddRemind.cs" />
-    <Compile Include="Util\Converter\ClassNumConvert.cs" />
-    <Compile Include="Util\Converter\DetailMarginConverter.cs" />
     <Compile Include="Util\Converter\ExamDateConverter.cs" />
     <Compile Include="Util\Converter\ExamTimeConverter.cs" />
-    <Compile Include="Util\Converter\ExpandingConverter0.cs" />
-    <Compile Include="Util\Converter\ExpandingConverter1.cs" />
-    <Compile Include="Util\Converter\ExpandingConverter2.cs" />
-    <Compile Include="Util\Converter\ExpandingConverter3.cs" />
-    <Compile Include="Util\Converter\ExpandingConverter4.cs" />
     <Compile Include="Util\Converter\FreeConverter.cs" />
-    <Compile Include="Util\Converter\GenderColorConverter.cs" />
-    <Compile Include="Util\Converter\GenderConverter.cs" />
-    <Compile Include="Util\Converter\GenderNameConverter.cs" />
-    <Compile Include="Util\Converter\GetOneorNonePicValueConverter.cs" />
-    <Compile Include="Util\Converter\CommunityItemPhotoFlipViewHeighConverter.cs" />
-    <Compile Include="Util\Converter\itemPageConverter.cs" />
-    <Compile Include="Util\Converter\JsonConverter.cs" />
     <Compile Include="Util\Converter\KBGridConverter.cs" />
     <Compile Include="Util\Converter\KBPageConverter.cs" />
-    <Compile Include="Util\Converter\LikeValueConverter.cs" />
     <Compile Include="Util\Converter\LongClassRoomConverter.cs" />
     <Compile Include="Util\Converter\NewsConverter.cs" />
-    <Compile Include="Util\Converter\NotifyTypeValueConverter.cs" />
     <Compile Include="Util\Converter\RemindConverter\BeforeTimeIconColor.cs" />
     <Compile Include="Util\Converter\RemindConverter\CourseTimeConverter.cs" />
     <Compile Include="Util\Converter\RemindConverter\IsRewriteConverter.cs" />
@@ -527,28 +434,16 @@
     <Compile Include="Util\Converter\RemindConverter\WeekNumConverter.cs" />
     <Compile Include="Util\Converter\StarFillConverter.cs" />
     <Compile Include="Util\Converter\StartPageConverts\BackgroundImageConvert.cs" />
-    <Compile Include="Util\Converter\TextBlockInlineConverter.cs" />
     <Compile Include="Util\Converter\StartPageConverts\UrlConvert.cs" />
     <Compile Include="Util\EmptyClass.cs" />
     <Compile Include="Util\GaussianBlurHelp.cs" />
-    <Compile Include="Util\HotFeedsDataTemplateSelector.cs" />
-    <Compile Include="Util\HotOrBBDDSelector.cs" />
-    <Compile Include="Util\ImgDataTemplateSelector.cs" />
+    <Compile Include="Util\nowWeek.cs" />
     <Compile Include="Util\Requests.cs" />
-    <Compile Include="Util\NotifyContentTemplateSelector.cs" />
     <Compile Include="Util\Remind\DatabaseMethod.cs" />
     <Compile Include="Util\Remind\RemindSystemUtil.cs" />
     <Compile Include="Util\Remind\RemindWebRequest.cs" />
-    <Compile Include="Util\TextBlockFormatter.cs" />
     <Compile Include="Util\Utils.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\Community\CommunityContentViewModel.cs" />
-    <Compile Include="ViewModels\Community\CommunityMyContentViewModel.cs" />
-    <Compile Include="ViewModels\Community\CommunityPersonInfoViewModel.cs" />
-    <Compile Include="ViewModels\Community\CommunityViewModel.cs" />
-    <Compile Include="ViewModels\Community\MyViewModel.cs" />
-    <Compile Include="ViewModels\ElectricChargeCheckPages\CheckRecentChargePageViewModel.cs" />
-    <Compile Include="ViewModels\LFDetailPageViewModel.cs" />
     <Compile Include="ViewModels\Remind\AddRemindPageViewModel.cs" />
     <Compile Include="ViewModels\Remind\RemindListViewModel.cs" />
     <Compile Include="ViewModels\Remind\WeeksPageViewModel.cs" />
@@ -685,10 +580,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CommunityPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\ClassInfoControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -705,17 +596,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MyPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="NewsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="JWPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="KBPage.xaml">
       <SubType>Designer</SubType>
@@ -729,10 +612,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainPage_m.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MorePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -740,26 +619,6 @@
     <Page Include="Pages\CalendarPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\CommunityPages\CommunityAddPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\CommunityPages\CommunityContentPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\CommunityPages\CommunityMyContentPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\CommunityPages\CommunityPersonInfo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\ElectricChargeCheckPages\CheckRecentChargePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ElectricChargeCheckPages\DialPlate.xaml">
       <SubType>Designer</SubType>
@@ -797,10 +656,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\JWContentPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\RemindPages\AddRemindPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -821,15 +676,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\ScorePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\SearchFreeTimeNumPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\SearchFreeTimeResultPage_new.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -837,31 +684,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\TopicPages\AddTopicArticles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\TopicPages\SearchTopic.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\TopicPages\TopicArticlesConent.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\TopicPages\TopicContentPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\VolunteerPage\VolunteerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Volunteer_LoginPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SetPersonInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -899,20 +726,6 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LiveTileBackgroundTask\LiveTileBackgroundTask.csproj">
-      <Project>{2896bbf7-5113-482e-b827-166c0c1429e5}</Project>
-      <Name>LiveTileBackgroundTask</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MyMessageBackgroundTask\MyMessageBackgroundTask.csproj">
-      <Project>{ea70b47f-1db5-4a92-805d-9f144efa396f}</Project>
-      <Name>MyMessageBackgroundTask</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SycnRemindBackgroundTask\SycnRemindBackgroundTask.csproj">
-      <Project>{38a8cd9d-386d-408d-ba00-be6bf45ecb00}</Project>
-      <Name>SycnRemindBackgroundTask</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
@@ -931,9 +744,6 @@
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities">
       <Version>1.1.2</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Azure.Mobile.Client">
-      <Version>4.0.1</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.3.1</Version>
     </PackageReference>
@@ -949,6 +759,9 @@
     <PackageReference Include="SQLite.Net-PCL">
       <Version>3.1.1</Version>
     </PackageReference>
+    <PackageReference Include="SQLite.uwp">
+      <Version>3.38.0</Version>
+    </PackageReference>
     <PackageReference Include="Win2D.uwp">
       <Version>1.21.0</Version>
     </PackageReference>
@@ -956,6 +769,7 @@
       <Version>1.1.10</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

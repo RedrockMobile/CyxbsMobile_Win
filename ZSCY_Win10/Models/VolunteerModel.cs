@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZSCY_Win10.Models
+﻿namespace ZSCY_Win10.Models
 {
     class VolunteerModel
     {
@@ -28,8 +22,4 @@ namespace ZSCY_Win10.Models
         }
 
     }
-
-
-    
-
 }

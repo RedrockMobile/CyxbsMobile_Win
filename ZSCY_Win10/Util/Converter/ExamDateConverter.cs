@@ -24,7 +24,7 @@ namespace ZSCY_Win10.Util.Converter
                 }
                 int nowweek = Int32.Parse(appSetting.Values["nowWeek"].ToString());
                 DateTime now = DateTime.Now;
-                int dayofweek = (int)now.DayOfWeek == 0 ? 7 : (int)now.DayOfWeek;
+                int dayofweek = now.DayOfWeek == 0 ? 7 : (int)now.DayOfWeek;
                 DateTime targetdate = now.AddDays((week - nowweek) * 7 + Int32.Parse(w[1].Value) - dayofweek);
                 string weekname = date[0].Substring(date[0].Length - 2, 2);
                 string replaceweekname = "";

@@ -9,24 +9,18 @@ namespace ZSCY.Data
         private string idnum;
         private string name;
         private string gender;
-        private string clsssnum;
-        private string major;
         private string college;
-        private string classnum;
         private string depart;
         private string grade;
         private ApplicationDataContainer appSetting;
-        private static string resourceName = "ZSCY";
 
         public PersonalIno()
         {
             appSetting = ApplicationData.Current.LocalSettings; //本地存储
-            this.Stunum = appSetting.Values["stuNum"].ToString();
-            this.Name = appSetting.Values["name"].ToString();
-            this.Classnum = appSetting.Values["classNum"].ToString();
-            this.Major = appSetting.Values["major"].ToString();
-            this.College = appSetting.Values["college"].ToString();
-            this.Gender = appSetting.Values["gender"].ToString();
+            this.Stunum = "";
+            this.Name = "";
+            this.College = "";
+            this.Gender = "";
         }
 
         public string Stunum
@@ -81,32 +75,6 @@ namespace ZSCY.Data
             }
         }
 
-        public string Classnum
-        {
-            get
-            {
-                return clsssnum;
-            }
-
-            set
-            {
-                clsssnum = value;
-            }
-        }
-
-        public string Major
-        {
-            get
-            {
-                return major;
-            }
-
-            set
-            {
-                major = value;
-            }
-        }
-
         public string College
         {
             get
@@ -125,8 +93,6 @@ namespace ZSCY.Data
             stunum = PeopleDetailJObject["stunum"].ToString();
             name = PeopleDetailJObject["name"].ToString();
             gender = PeopleDetailJObject["gender"].ToString();
-            classnum = PeopleDetailJObject["classnum"].ToString();
-            major = PeopleDetailJObject["major"].ToString();
             depart = PeopleDetailJObject["depart"].ToString();
             grade = PeopleDetailJObject["grade"].ToString();
         }

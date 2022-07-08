@@ -113,7 +113,7 @@
             <Grid>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Image Source="ms-appx:///Assets/user_name.png"></Image>
-                    <TextBox Name="user_name" Width="{Binding ElementWidth1}" BorderThickness="0"   PlaceholderText="请输入暖青汇帐号" HorizontalAlignment="Center">
+                    <TextBox Name="user_name" Width="{Binding ElementWidth1}" BorderThickness="0"   PlaceholderText="请输入志愿者服务网帐号" HorizontalAlignment="Center">
                     </TextBox>
                 </StackPanel>
             </Grid>

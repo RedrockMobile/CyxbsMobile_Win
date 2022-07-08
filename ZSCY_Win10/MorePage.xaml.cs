@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using Windows.Storage;
-using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -26,7 +25,6 @@ namespace ZSCY_Win10
         private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         private ObservableDictionary morepageclass = new ObservableDictionary();
         public static int isFreeRe = 0;
-        private static string resourceName = "ZSCY";
 
         public MorePage()
         {
@@ -160,25 +158,15 @@ namespace ZSCY_Win10
             }
             //MoreFrame.Visibility = Visibility.Visible;
             MoreContentTitleTextBlock.Text = item.Itemname;
-            //TODO:未登陆时 没有 补考/考试/分数信息 可查询空闲 无法自动添加自己的信息
+            //TODO:未登录时 没有 补考/考试/分数信息 可查询空闲 无法自动添加自己的信息
             Debug.WriteLine(item.UniqueID);
             {
-                int count;
-                var vault = new Windows.Security.Credentials.PasswordVault();
-                try
-                {
-                    var credentialList = vault.FindAllByResource(resourceName);
-                    count = credentialList.Count;
-                }
-                catch
-                {
-                    count = 0;
-                }
+                bool isLogin = bool.Parse(appSetting.Values["isLogin"].ToString());
                 switch (item.UniqueID)
                 {
                     case "ReExam":
                         //if (appSetting.Values.ContainsKey("idNum"))
-                        if (count > 0)
+                        if (isLogin)
                         {
                             MoreFrame.Navigate(typeof(ExamPage), 3); ;
                             MoreFrame.Visibility = Visibility.Visible;
@@ -189,20 +177,31 @@ namespace ZSCY_Win10
                         {
                             var msgPopup = new Data.loginControl("您还没有登录 无法查看补考信息~");
                             msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
-                            msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
+                            msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去四处逛一逛~"); };
                             msgPopup.ShowWIndow();
                             break;
                         }
 
                     case "Volunteer":
-                        MoreFrame.Navigate(typeof(VolunteerPage));
-                        MoreFrame.Visibility = Visibility.Visible;
-                        isFreeRe = 0;
-                        break;
+                        if (isLogin)
+                        {
+                            MoreFrame.Navigate(typeof(VolunteerPage));
+                            MoreFrame.Visibility = Visibility.Visible;
+                            isFreeRe = 0;
+                            break;
+                        }
+                        else
+                        {
+                            var msgPopup = new Data.loginControl("您还没有登录 无法查看志愿信息~");
+                            msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
+                            msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去四处逛一逛~"); };
+                            msgPopup.ShowWIndow();
+                            break;
+                        }
 
                     case "Exam":
                         //if (appSetting.Values.ContainsKey("idNum"))
-                        if (count > 0)
+                        if (isLogin)
                         {
                             MoreFrame.Navigate(typeof(ExamPage), 2);
                             MoreFrame.Visibility = Visibility.Visible;
@@ -213,25 +212,7 @@ namespace ZSCY_Win10
                         {
                             var msgPopup = new Data.loginControl("您还没有登录 无法查看考试信息~");
                             msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
-                            msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
-                            msgPopup.ShowWIndow();
-                            break;
-                        }
-
-                    case "Socre":
-                        //if (appSetting.Values.ContainsKey("idNum"))
-                        if (count > 0)
-                        {
-                            MoreFrame.Navigate(typeof(ScorePage));
-                            MoreFrame.Visibility = Visibility.Visible;
-                            isFreeRe = 0;
-                            break;
-                        }
-                        else
-                        {
-                            var msgPopup = new Data.loginControl("您还没有登录 无法查看成绩~");
-                            msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
-                            msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
+                            msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去四处逛一逛~"); };
                             msgPopup.ShowWIndow();
                             break;
                         }
@@ -249,38 +230,17 @@ namespace ZSCY_Win10
                         break;
 
                     case "FreeTime":
-                        if (count > 0)
-                        {
-                            MoreFrame.Navigate(typeof(SearchFreeTimeNumPage));
-                            MoreFrame.Visibility = Visibility.Visible;
-                            isFreeRe = 0;
-                            break;
-                        }
-                        else
-                        {
-                            var msgPopup = new Data.loginControl("您还没有登录 无法查询空闲~");
-                            msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
-                            msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
-                            msgPopup.ShowWIndow();
-                            break;
-                        }
+                        MoreFrame.Navigate(typeof(SearchFreeTimeNumPage));
+                        MoreFrame.Visibility = Visibility.Visible;
+                        isFreeRe = 0;
+                        break;
 
                     case "Electricity":
-                        if (count > 0)
-                        {
-                            Frame.Navigate(typeof(ElectricityPage));
-                            MoreFrame.Visibility = Visibility.Collapsed;
-                            isFreeRe = 0;
-                            break;
-                        }
-                        else
-                        {
-                            var msgPopup = new Data.loginControl("您还没有登录 无法查询电费~");
-                            msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
-                            msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
-                            msgPopup.ShowWIndow();
-                            break;
-                        }
+                        Frame.Navigate(typeof(ElectricityPage));
+                        MoreFrame.Visibility = Visibility.Collapsed;
+                        isFreeRe = 0;
+                        break;
+
                     default:
                         break;
                 }

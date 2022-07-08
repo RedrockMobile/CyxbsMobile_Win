@@ -60,7 +60,7 @@ namespace ZSCY.Pages
             appSetting = ApplicationData.Current.LocalSettings;
             gridColorGray = Color.FromArgb(255, 211, 211, 211);
             gridColorBlue = Color.FromArgb(255, 6, 140, 253);
-            NowWeek = appSetting.Values["NowWeek"].ToString();
+            NowWeek = appSetting.Values["nowWeek"].ToString();
 
             for (int i = 0; i < 6; i++)
             {

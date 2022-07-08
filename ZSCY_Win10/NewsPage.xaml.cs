@@ -102,7 +102,6 @@ namespace ZSCY_Win10
 
                     for (int i = 0; i < NewsListArray.Count; i++)
                     {
-                        int failednum = 0;
                         NewsList Newsitem = new NewsList();
                         Newsitem.GetListAttribute((JObject)NewsListArray[i]);
                         if (Newsitem.Title != "")
@@ -347,9 +346,7 @@ namespace ZSCY_Win10
         {
             try
             {
-                Dictionary<string, string> fileQuery = new Dictionary<string, string>();
-                fileQuery.Add("id", ((NewsContentList.Annex)e.ClickedItem).fileId);
-                string uri = (await Util.Requests.Send("magipoke-jwzx/jwNews/file", query: fileQuery)).ToString();
+                string uri = Util.Requests.baseUrl + "magipoke-jwzx/jwNews/file?id=" + ((NewsContentList.Annex)e.ClickedItem).fileId;
                 Debug.WriteLine(uri);
                 await Launcher.LaunchUriAsync(new Uri(uri));
             }

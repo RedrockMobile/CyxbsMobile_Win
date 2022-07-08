@@ -97,7 +97,7 @@ namespace ZSCY_Win10.Controls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void NotifyChange([CallerMemberName]string property = null)
+        public void NotifyChange([CallerMemberName] string property = null)
         {
             if (this.PropertyChanged != null)
             {

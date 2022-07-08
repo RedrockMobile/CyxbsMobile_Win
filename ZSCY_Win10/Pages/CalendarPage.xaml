@@ -17,7 +17,7 @@
                 <ProgressBar IsIndeterminate="True" />
                 <Grid Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <ProgressRing Name="progress" Visibility="Visible" IsActive="True" />
-                    <Image Name="CalendarImage" Source="https://be-prod.redrock.cqupt.edu.cn/magipoke-jwzx/schoolCalendar" Stretch="Uniform" ></Image>
+                    <Image Name="CalendarImage" Stretch="Uniform" ></Image>
                 </Grid>
             </Grid>
         </ScrollViewer.Content>

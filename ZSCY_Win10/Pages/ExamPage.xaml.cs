@@ -25,7 +25,6 @@ namespace ZSCY.Pages
     {
         private ApplicationDataContainer appSetting;
         private int IsExamOrRe;
-        private static string resourceName = "ZSCY";
 
         public ExamPage()
         {
@@ -57,7 +56,7 @@ namespace ZSCY.Pages
             Dictionary<string, string> paramList = new Dictionary<string, string>();
             paramList.Add("stuNum", appSetting.Values["stuNum"].ToString());
             //await Utils.ShowSystemTrayAsync(Color.FromArgb(255, 2, 140, 253), Colors.White, text: "正在紧张安排考试...", isIndeterminate: true);
-            //TODO:未登陆时 没有考试/补考信息
+            //TODO:未登录时 没有考试/补考信息
             if (IsExamOrRe == 2)
             {
                 exam = await Requests.Send("magipoke-jwzx/examSchedule", param: paramList, method: "post", json: false);

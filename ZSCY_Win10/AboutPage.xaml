@@ -51,7 +51,7 @@
                 <Image Margin="0,30,0,30" Source="../Assets/BlueLogo/Square150x150Logo.scale-400.png" Height="120" Width="120"></Image>
                 <StackPanel x:Name="stackPanel">
                     <TextBlock Name="AppTextBlock" Margin="0,0,0,10" Text="掌上重邮 For Windows 10" Foreground="#333" FontSize="25" HorizontalAlignment="Center"></TextBlock>
-                    <TextBlock Text="Version 4.0" HorizontalAlignment="Center" Foreground="#555" FontSize="20"></TextBlock>
+                    <TextBlock Text="Version 3.0 精简修复版" HorizontalAlignment="Center" Foreground="#555" FontSize="20"></TextBlock>
                 </StackPanel>
             </StackPanel>
 

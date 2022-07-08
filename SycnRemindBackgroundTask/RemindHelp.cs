@@ -177,7 +177,7 @@ namespace SycnRemindBackgroundTask
             #endregion 返回的json格式和添加的风格不一样，转换
 
             List<string> RemindTagList = new List<string>();
-            RemindTagList = DatabaseMethod.ClearRemindItem() as List<string>;
+            RemindTagList = DatabaseMethod.ClearRemindItem();
             var notifier = ToastNotificationManager.CreateToastNotifier();
             if (RemindTagList != null)
             {

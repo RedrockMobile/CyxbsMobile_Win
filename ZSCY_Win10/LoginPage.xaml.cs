@@ -83,7 +83,7 @@ namespace ZSCY_Win10
                         appSetting.Values["grade"] = userObj["data"]["grade"].ToString();
                         appSetting.Values["college"] = userObj["data"]["college"].ToString();
                         appSetting.Values["name"] = userObj["data"]["username"].ToString();
-                        appSetting.Values["CommunityPerInfo"] = false;
+                        appSetting.Values["isLogin"] = true;
                         if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.StartScreen.JumpList"))
                         {
                             if (JumpList.IsSupported())
@@ -112,7 +112,7 @@ namespace ZSCY_Win10
                 }
                 catch (Exception)
                 {
-                    Debug.WriteLine("登陆->返回值解析异常");
+                    Debug.WriteLine("登录->返回值解析异常");
                 }
             }
             else

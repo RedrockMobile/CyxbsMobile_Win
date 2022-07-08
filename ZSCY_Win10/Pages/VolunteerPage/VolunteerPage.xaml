@@ -8,30 +8,6 @@
     xmlns:gif="using:XamlAnimatedGif"
     mc:Ignorable="d">
     <Page.Resources>
-        <Storyboard
-            x:Name="time_GridAnimation_Close"
-            Duration="0:0:0.5">
-            <DoubleAnimation
-                Storyboard.TargetName="SPivot"
-                Storyboard.TargetProperty="Height"
-                Duration="0:0:0.5"
-                From="48"
-                To="0"
-                EnableDependentAnimation="True">
-            </DoubleAnimation>
-        </Storyboard>
-        <Storyboard
-            x:Name="time_GridAnimation_Open"
-            Duration="0:0:0.5">
-            <DoubleAnimation
-                Storyboard.TargetName="SPivot"
-                Storyboard.TargetProperty="Height"
-                 Duration="0:0:0.5"
-                From="0"
-                To="48"
-                EnableDependentAnimation="True">
-            </DoubleAnimation>
-        </Storyboard>
         <Storyboard x:Name="refresh_Animation1"
                     Duration="0:0:3.5">
             <ColorAnimation 
@@ -62,19 +38,9 @@
         <Grid Name="volunteerPage_Grid"  Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="48"></RowDefinition>
-                <RowDefinition Height="48"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
-
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Background="#fe8686">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Name="time_text" Text="全部" FontSize="25" Foreground="White" VerticalAlignment="Center" ></TextBlock>
-                    <AppBarButton Name="display_Button" Icon="Sort" Click="display_Button_Click" Foreground="White" ></AppBarButton>
-                </StackPanel>
-            </Grid>
-            <Grid Grid.Row="1" Name="time_Grid" Height="48">
-                <Button Name="user_cancel" HorizontalAlignment="Right" Background="White" Content="取消已绑定帐号" BorderThickness="0" Visibility="Collapsed" Click="user_cancel_Click"></Button>
-
+            <Grid Grid.Row="0" Name="time_Grid" Height="48">
 
                 <Pivot Name="SPivot" Background="Transparent" Height="48" SelectionChanged="SPivot_SelectionChanged" >
 
@@ -137,42 +103,6 @@
                             </Grid>
                         </PivotItem.Header>
                     </PivotItem>
-
-                    <PivotItem>
-                        <PivotItem.Header>
-                            <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
-                                <Grid.RenderTransform>
-                                    <TranslateTransform X="0" Y="2"></TranslateTransform>
-                                </Grid.RenderTransform>
-                                <TextBlock Text="{Binding Time_display[5]}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                                <Line Visibility="Collapsed" X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom"></Line>
-                            </Grid>
-                        </PivotItem.Header>
-                    </PivotItem>
-
-                    <PivotItem>
-                        <PivotItem.Header>
-                            <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
-                                <Grid.RenderTransform>
-                                    <TranslateTransform X="0" Y="2"></TranslateTransform>
-                                </Grid.RenderTransform>
-                                <TextBlock Text="{Binding Time_display[6]}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                                <Line Visibility="Collapsed" X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom"></Line>
-                            </Grid>
-                        </PivotItem.Header>
-                    </PivotItem>
-
-                    <PivotItem>
-                        <PivotItem.Header>
-                            <Grid Height="50" Width="75" BorderBrush="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" BorderThickness="0,0,0,2">
-                                <Grid.RenderTransform>
-                                    <TranslateTransform X="0" Y="2"></TranslateTransform>
-                                </Grid.RenderTransform>
-                                <TextBlock Text="{Binding Time_display[7]}" FontSize="{Binding Source={StaticResource APPTheme},Path=Header_Size}" Foreground="{Binding Source={StaticResource APPTheme},Path=Content_Header_Color_Brush}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                                <Line Visibility="Collapsed" X1="0" X2="1" Y1="0" Y2="0" Stroke="{Binding Source={StaticResource APPTheme},Path=APP_Color_Brush}" StrokeThickness="3" Stretch="Fill" VerticalAlignment="Bottom"></Line>
-                            </Grid>
-                        </PivotItem.Header>
-                    </PivotItem>
                 </Pivot>
 
 
@@ -180,14 +110,13 @@
 
 
             <ScrollViewer Name="scrollViewer" 
-                      Grid.Row="2"
+                      Grid.Row="1"
                       Loaded="scrollViewer_Loaded"
                       ViewChanged="scrollViewer_ViewChanged"
                       HorizontalAlignment="Stretch"
                       Height="{Binding ElementHeight}"
                       Width="{Binding ElementWidth}"
                       Background="{Binding Source={StaticResource  APPTheme},Path=Backgorund_Color_Brush}"
-                          
                      >
                 <StackPanel>
                     <!--<ProgressRing IsActive="{Binding IsPullRefresh,Mode=OneWay}" Height="30"></ProgressRing>-->
@@ -201,27 +130,27 @@
 
                         <Pivot Name="SPivot_item" Background="Transparent">
                             <PivotItem>
-                                
+
 
                                 <Grid>
                                     <Image Name="none_image" Source="ms-appx:///Assets/none.png" Visibility="Collapsed"></Image>
                                     <StackPanel Name="sp1">
                                         <Grid  >
-                                            
-                                                
-                                                <Grid Margin="40,0,0,0" HorizontalAlignment="Left">
+
+
+                                            <Grid Margin="40,0,0,0" HorizontalAlignment="Left">
                                                 <Image Source="ms-appx:///Assets/rectangel_3.png"   MaxWidth="550"></Image>
-                                            <StackPanel  VerticalAlignment="Center">
-                                                <TextBlock Text="时长" FontSize="35" Foreground="White" HorizontalAlignment="Center" ></TextBlock>
+                                                <StackPanel  VerticalAlignment="Center">
+                                                    <TextBlock Text="时长" FontSize="35" Foreground="White" HorizontalAlignment="Center" ></TextBlock>
                                                     <Grid>
                                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                            <TextBlock  HorizontalAlignment="Center" Text="{Binding Rootobject.data.hours}" FontSize=" 70" Foreground="White"></TextBlock>
+                                                            <TextBlock  HorizontalAlignment="Center" Text="{Binding Rootobject.hours}" FontSize=" 70" Foreground="White"></TextBlock>
                                                             <TextBlock HorizontalAlignment="Center" Text="小时" Foreground="White" FontSize="35"  VerticalAlignment="Center"></TextBlock>
                                                         </StackPanel>
                                                     </Grid>
                                                 </StackPanel>
-                                                </Grid>
-                                           
+                                            </Grid>
+
                                         </Grid>
 
                                         <Grid HorizontalAlignment="Left">
@@ -307,7 +236,7 @@
                                                                                 <TextBlock Width="15"></TextBlock>
                                                                                 <Image Source="ms-appx:///Assets/adress.png" Width="15"></Image>
                                                                                 <TextBlock Width="5"></TextBlock>
-                                                                                <TextBlock Text="{Binding address}" FontSize="15" Foreground="#626262"></TextBlock>
+                                                                                <TextBlock Text="{Binding addWay}" FontSize="15" Foreground="#626262"></TextBlock>
                                                                                 <TextBlock Width="80"></TextBlock>
                                                                                 <Image Source="ms-appx:///Assets/time_icon.png" Width="15"></Image>
                                                                                 <TextBlock Width="5"></TextBlock>
@@ -389,7 +318,7 @@
                                                                                     <TextBlock Width="15"></TextBlock>
                                                                                     <Image Source="ms-appx:///Assets/adress.png" Width="15"></Image>
                                                                                     <TextBlock Width="5"></TextBlock>
-                                                                                    <TextBlock Text="{Binding address}" FontSize="15" Foreground="#626262"></TextBlock>
+                                                                                    <TextBlock Text="{Binding addWay}" FontSize="15" Foreground="#626262"></TextBlock>
                                                                                     <TextBlock Width="80"></TextBlock>
                                                                                     <Image Source="ms-appx:///Assets/time_icon.png" Width="15"></Image>
                                                                                     <TextBlock Width="5"></TextBlock>
@@ -473,7 +402,7 @@
                                                                                     <TextBlock Width="15"></TextBlock>
                                                                                     <Image Source="ms-appx:///Assets/adress.png" Width="15"></Image>
                                                                                     <TextBlock Width="5"></TextBlock>
-                                                                                    <TextBlock Text="{Binding address}" FontSize="15" Foreground="#626262"></TextBlock>
+                                                                                    <TextBlock Text="{Binding addWay}" FontSize="15" Foreground="#626262"></TextBlock>
                                                                                     <TextBlock Width="80"></TextBlock>
                                                                                     <Image Source="ms-appx:///Assets/time_icon.png" Width="15"></Image>
                                                                                     <TextBlock Width="5"></TextBlock>
@@ -557,256 +486,7 @@
                                                                                     <TextBlock Width="15"></TextBlock>
                                                                                     <Image Source="ms-appx:///Assets/adress.png" Width="15"></Image>
                                                                                     <TextBlock Width="5"></TextBlock>
-                                                                                    <TextBlock Text="{Binding address}" FontSize="15" Foreground="#626262"></TextBlock>
-                                                                                    <TextBlock Width="80"></TextBlock>
-                                                                                    <Image Source="ms-appx:///Assets/time_icon.png" Width="15"></Image>
-                                                                                    <TextBlock Width="5"></TextBlock>
-                                                                                    <TextBlock Text="{Binding hours}" FontSize="15" FontWeight="Bold" Foreground="#ff7814"></TextBlock>
-                                                                                </StackPanel>
-                                                                            </Grid>
-                                                                        </StackPanel>
-                                                                    </Grid>
-                                                                </Grid>
-                                                            </DataTemplate>
-                                                        </ListView.ItemTemplate>
-
-
-                                                    </ListView>
-                                                </Grid>
-                                            </ListViewItem>
-
-
-                                            <ListViewItem >
-                                                <Grid >
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="3*"/>
-                                                        <RowDefinition Height="22*"/>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="40"></ColumnDefinition>
-                                                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Grid Grid.Column="0">
-                                                        <Line X1="0" Y1="0" X2="0" Y2="{Binding Line_Y5}" Stroke="#fd6967" HorizontalAlignment="Center"/>
-                                                        <Grid VerticalAlignment="Top">
-                                                            <Ellipse Fill="#fd6967" Height="40" Width="40"  HorizontalAlignment="Center" ></Ellipse>
-                                                            <TextBlock Text="{Binding Year5}" FontSize="15" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                                        </Grid>
-                                                    </Grid>
-
-                                                    <ListView
-                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                     Width="{Binding ElementWidth}"
-                                     
-                                     SelectionMode="None"  
-                                     ItemsSource="{Binding Record_year5}"  
-                                                       Grid.Column="1" >
-                                                        <ListView.ItemContainerStyle>
-                                                            <Style TargetType="ListViewItem">
-                                                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                                            </Style>
-                                                        </ListView.ItemContainerStyle>
-                                                        <ListView.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <Grid>
-                                                                    <Image Source="ms-appx:///Assets/rectangel_2.png" MinWidth="400" MaxWidth="500" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
-                                                                    <Grid Name="item" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                                        <StackPanel  >
-                                                                            <TextBlock Height="20"></TextBlock>
-                                                                            <Grid>
-                                                                                <Image Source="ms-appx:///Assets/bk.png"  Width="100"  HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
-                                                                                <Grid>
-                                                                                    <StackPanel Orientation="Horizontal">
-                                                                                        <TextBlock Width="5"></TextBlock>
-                                                                                        <TextBlock Name="start_time" Text="{Binding start_time}"  Foreground="White" FontSize="15" VerticalAlignment="Center"></TextBlock>
-                                                                                    </StackPanel>
-                                                                                </Grid>
-
-                                                                            </Grid>
-
-
-                                                                            <TextBlock Height="15"></TextBlock>
-                                                                            <Grid>
-                                                                                <StackPanel Orientation="Horizontal" >
-                                                                                    <TextBlock Width="15"></TextBlock>
-                                                                                    <TextBlock Text="{Binding content}" FontSize="17" Width="280" FontWeight="Bold" TextWrapping="Wrap"></TextBlock>
-                                                                                </StackPanel>
-                                                                            </Grid>
-
-                                                                            <TextBlock Height="15"></TextBlock>
-
-                                                                            <Grid>
-                                                                                <StackPanel Orientation="Horizontal">
-                                                                                    <TextBlock Width="15"></TextBlock>
-                                                                                    <Image Source="ms-appx:///Assets/adress.png" Width="15"></Image>
-                                                                                    <TextBlock Width="5"></TextBlock>
-                                                                                    <TextBlock Text="{Binding address}" FontSize="15" Foreground="#626262"></TextBlock>
-                                                                                    <TextBlock Width="80"></TextBlock>
-                                                                                    <Image Source="ms-appx:///Assets/time_icon.png" Width="15"></Image>
-                                                                                    <TextBlock Width="5"></TextBlock>
-                                                                                    <TextBlock Text="{Binding hours}" FontSize="15" FontWeight="Bold" Foreground="#ff7814"></TextBlock>
-                                                                                </StackPanel>
-                                                                            </Grid>
-                                                                        </StackPanel>
-                                                                    </Grid>
-                                                                </Grid>
-                                                            </DataTemplate>
-                                                        </ListView.ItemTemplate>
-
-
-                                                    </ListView>
-                                                </Grid>
-                                            </ListViewItem>
-
-
-
-                                            <ListViewItem >
-                                                <Grid >
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="3*"/>
-                                                        <RowDefinition Height="22*"/>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="40"></ColumnDefinition>
-                                                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Grid Grid.Column="0">
-                                                        <Line X1="0" Y1="0" X2="0" Y2="{Binding Line_Y6}" Stroke="#fd6967" HorizontalAlignment="Center"/>
-                                                        <Grid VerticalAlignment="Top">
-                                                            <Ellipse Fill="#fd6967" Height="40" Width="40"  HorizontalAlignment="Center" ></Ellipse>
-                                                            <TextBlock Text="{Binding Year6}" FontSize="15" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                                        </Grid>
-                                                    </Grid>
-
-                                                    <ListView
-                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                     Width="{Binding ElementWidth}"
-                                      
-                                     SelectionMode="None"  
-                                     ItemsSource="{Binding Record_year6}"  
-                                                       Grid.Column="1" >
-                                                        <ListView.ItemContainerStyle>
-                                                            <Style TargetType="ListViewItem">
-                                                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                                            </Style>
-                                                        </ListView.ItemContainerStyle>
-                                                        <ListView.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <Grid>
-                                                                    <Image Source="ms-appx:///Assets/rectangel_2.png" MinWidth="400" MaxWidth="500" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
-                                                                    <Grid Name="item" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                                        <StackPanel  >
-                                                                            <TextBlock Height="20"></TextBlock>
-                                                                            <Grid>
-                                                                                <Image Source="ms-appx:///Assets/bk.png"  Width="100"  HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
-                                                                                <Grid>
-                                                                                    <StackPanel Orientation="Horizontal">
-                                                                                        <TextBlock Width="5"></TextBlock>
-                                                                                        <TextBlock Name="start_time" Text="{Binding start_time}"  Foreground="White" FontSize="15" VerticalAlignment="Center"></TextBlock>
-                                                                                    </StackPanel>
-                                                                                </Grid>
-
-                                                                            </Grid>
-
-
-                                                                            <TextBlock Height="15"></TextBlock>
-                                                                            <Grid>
-                                                                                <StackPanel Orientation="Horizontal" >
-                                                                                    <TextBlock Width="15"></TextBlock>
-                                                                                    <TextBlock Text="{Binding content}" FontSize="17" Width="280" FontWeight="Bold" TextWrapping="Wrap"></TextBlock>
-                                                                                </StackPanel>
-                                                                            </Grid>
-
-                                                                            <TextBlock Height="15"></TextBlock>
-
-                                                                            <Grid>
-                                                                                <StackPanel Orientation="Horizontal">
-                                                                                    <TextBlock Width="15"></TextBlock>
-                                                                                    <Image Source="ms-appx:///Assets/adress.png" Width="15"></Image>
-                                                                                    <TextBlock Width="5"></TextBlock>
-                                                                                    <TextBlock Text="{Binding address}" FontSize="15" Foreground="#626262"></TextBlock>
-                                                                                    <TextBlock Width="80"></TextBlock>
-                                                                                    <Image Source="ms-appx:///Assets/time_icon.png" Width="15"></Image>
-                                                                                    <TextBlock Width="5"></TextBlock>
-                                                                                    <TextBlock Text="{Binding hours}" FontSize="15" FontWeight="Bold" Foreground="#ff7814"></TextBlock>
-                                                                                </StackPanel>
-                                                                            </Grid>
-                                                                        </StackPanel>
-                                                                    </Grid>
-                                                                </Grid>
-                                                            </DataTemplate>
-                                                        </ListView.ItemTemplate>
-
-
-                                                    </ListView>
-                                                </Grid>
-                                            </ListViewItem>
-
-                                            <ListViewItem >
-                                                <Grid >
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="3*"/>
-                                                        <RowDefinition Height="22*"/>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="40"></ColumnDefinition>
-                                                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Grid Grid.Column="0">
-                                                        <Line X1="0" Y1="0" X2="0" Y2="{Binding Line_Y7}" Stroke="#fd6967" HorizontalAlignment="Center"/>
-                                                        <Grid VerticalAlignment="Top">
-                                                            <Ellipse Fill="#fd6967" Height="40" Width="40"  HorizontalAlignment="Center" ></Ellipse>
-                                                            <TextBlock Text="{Binding Year7}" FontSize="15" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                                        </Grid>
-                                                    </Grid>
-
-                                                    <ListView
-                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                     Width="{Binding ElementWidth}"
-                                     
-                                     SelectionMode="None"  
-                                     ItemsSource="{Binding Record_year7}"  
-                                                       Grid.Column="1" >
-                                                        <ListView.ItemContainerStyle>
-                                                            <Style TargetType="ListViewItem">
-                                                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                                            </Style>
-                                                        </ListView.ItemContainerStyle>
-                                                        <ListView.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <Grid>
-                                                                    <Image Source="ms-appx:///Assets/rectangel_2.png" MinWidth="400" MaxWidth="500" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
-                                                                    <Grid Name="item" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                                        <StackPanel  >
-                                                                            <TextBlock Height="20"></TextBlock>
-                                                                            <Grid>
-                                                                                <Image Source="ms-appx:///Assets/bk.png"  Width="100"  HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
-                                                                                <Grid>
-                                                                                    <StackPanel Orientation="Horizontal">
-                                                                                        <TextBlock Width="5"></TextBlock>
-                                                                                        <TextBlock Name="start_time" Text="{Binding start_time}"  Foreground="White" FontSize="15" VerticalAlignment="Center"></TextBlock>
-                                                                                    </StackPanel>
-                                                                                </Grid>
-
-                                                                            </Grid>
-
-
-                                                                            <TextBlock Height="15"></TextBlock>
-                                                                            <Grid>
-                                                                                <StackPanel Orientation="Horizontal" >
-                                                                                    <TextBlock Width="15"></TextBlock>
-                                                                                    <TextBlock Text="{Binding content}" FontSize="17" Width="280" FontWeight="Bold" TextWrapping="Wrap"></TextBlock>
-                                                                                </StackPanel>
-                                                                            </Grid>
-
-                                                                            <TextBlock Height="15"></TextBlock>
-
-                                                                            <Grid>
-                                                                                <StackPanel Orientation="Horizontal">
-                                                                                    <TextBlock Width="15"></TextBlock>
-                                                                                    <Image Source="ms-appx:///Assets/adress.png" Width="15"></Image>
-                                                                                    <TextBlock Width="5"></TextBlock>
-                                                                                    <TextBlock Text="{Binding address}" FontSize="15" Foreground="#626262"></TextBlock>
+                                                                                    <TextBlock Text="{Binding addWay}" FontSize="15" Foreground="#626262"></TextBlock>
                                                                                     <TextBlock Width="80"></TextBlock>
                                                                                     <Image Source="ms-appx:///Assets/time_icon.png" Width="15"></Image>
                                                                                     <TextBlock Width="5"></TextBlock>
@@ -830,7 +510,6 @@
                                 </Grid>
                             </PivotItem>
 
-
                             <PivotItem>
 
 
@@ -847,7 +526,7 @@
                                                     <TextBlock Text="时长" FontSize="35" Foreground="White" HorizontalAlignment="Center" ></TextBlock>
                                                     <Grid>
                                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                            <TextBlock  HorizontalAlignment="Center" Text="{Binding Rootobject.data.hours}" FontSize=" 70" Foreground="White"></TextBlock>
+                                                            <TextBlock  HorizontalAlignment="Center" Text="{Binding YearTime1}" FontSize=" 70" Foreground="White"></TextBlock>
                                                             <TextBlock HorizontalAlignment="Center" Text="小时" Foreground="White" FontSize="35"  VerticalAlignment="Center"></TextBlock>
                                                         </StackPanel>
                                                     </Grid>
@@ -939,7 +618,7 @@
                                                                                 <TextBlock Width="15"></TextBlock>
                                                                                 <Image Source="ms-appx:///Assets/adress.png" Width="15"></Image>
                                                                                 <TextBlock Width="5"></TextBlock>
-                                                                                <TextBlock Text="{Binding address}" FontSize="15" Foreground="#626262"></TextBlock>
+                                                                                <TextBlock Text="{Binding addWay}" FontSize="15" Foreground="#626262"></TextBlock>
                                                                                 <TextBlock Width="80"></TextBlock>
                                                                                 <Image Source="ms-appx:///Assets/time_icon.png" Width="15"></Image>
                                                                                 <TextBlock Width="5"></TextBlock>
@@ -962,7 +641,6 @@
                                 </Grid>
                             </PivotItem>
 
-
                             <PivotItem>
 
 
@@ -979,7 +657,7 @@
                                                     <TextBlock Text="时长" FontSize="35" Foreground="White" HorizontalAlignment="Center" ></TextBlock>
                                                     <Grid>
                                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                            <TextBlock  HorizontalAlignment="Center" Text="{Binding Rootobject.data.hours}" FontSize=" 70" Foreground="White"></TextBlock>
+                                                            <TextBlock  HorizontalAlignment="Center" Text="{Binding YearTime2}" FontSize=" 70" Foreground="White"></TextBlock>
                                                             <TextBlock HorizontalAlignment="Center" Text="小时" Foreground="White" FontSize="35"  VerticalAlignment="Center"></TextBlock>
                                                         </StackPanel>
                                                     </Grid>
@@ -1071,7 +749,7 @@
                                                                                 <TextBlock Width="15"></TextBlock>
                                                                                 <Image Source="ms-appx:///Assets/adress.png" Width="15"></Image>
                                                                                 <TextBlock Width="5"></TextBlock>
-                                                                                <TextBlock Text="{Binding address}" FontSize="15" Foreground="#626262"></TextBlock>
+                                                                                <TextBlock Text="{Binding addWay}" FontSize="15" Foreground="#626262"></TextBlock>
                                                                                 <TextBlock Width="80"></TextBlock>
                                                                                 <Image Source="ms-appx:///Assets/time_icon.png" Width="15"></Image>
                                                                                 <TextBlock Width="5"></TextBlock>
@@ -1110,7 +788,7 @@
                                                     <TextBlock Text="时长" FontSize="35" Foreground="White" HorizontalAlignment="Center" ></TextBlock>
                                                     <Grid>
                                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                            <TextBlock  HorizontalAlignment="Center" Text="{Binding Rootobject.data.hours}" FontSize=" 70" Foreground="White"></TextBlock>
+                                                            <TextBlock  HorizontalAlignment="Center" Text="{Binding YearTime3}" FontSize=" 70" Foreground="White"></TextBlock>
                                                             <TextBlock HorizontalAlignment="Center" Text="小时" Foreground="White" FontSize="35"  VerticalAlignment="Center"></TextBlock>
                                                         </StackPanel>
                                                     </Grid>
@@ -1202,7 +880,7 @@
                                                                                 <TextBlock Width="15"></TextBlock>
                                                                                 <Image Source="ms-appx:///Assets/adress.png" Width="15"></Image>
                                                                                 <TextBlock Width="5"></TextBlock>
-                                                                                <TextBlock Text="{Binding address}" FontSize="15" Foreground="#626262"></TextBlock>
+                                                                                <TextBlock Text="{Binding addWay}" FontSize="15" Foreground="#626262"></TextBlock>
                                                                                 <TextBlock Width="80"></TextBlock>
                                                                                 <Image Source="ms-appx:///Assets/time_icon.png" Width="15"></Image>
                                                                                 <TextBlock Width="5"></TextBlock>
@@ -1241,7 +919,7 @@
                                                     <TextBlock Text="时长" FontSize="35" Foreground="White" HorizontalAlignment="Center" ></TextBlock>
                                                     <Grid>
                                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                            <TextBlock  HorizontalAlignment="Center" Text="{Binding Rootobject.data.hours}" FontSize=" 70" Foreground="White"></TextBlock>
+                                                            <TextBlock  HorizontalAlignment="Center" Text="{Binding YearTime4}" FontSize=" 70" Foreground="White"></TextBlock>
                                                             <TextBlock HorizontalAlignment="Center" Text="小时" Foreground="White" FontSize="35"  VerticalAlignment="Center"></TextBlock>
                                                         </StackPanel>
                                                     </Grid>
@@ -1333,402 +1011,7 @@
                                                                                 <TextBlock Width="15"></TextBlock>
                                                                                 <Image Source="ms-appx:///Assets/adress.png" Width="15"></Image>
                                                                                 <TextBlock Width="5"></TextBlock>
-                                                                                <TextBlock Text="{Binding address}" FontSize="15" Foreground="#626262"></TextBlock>
-                                                                                <TextBlock Width="80"></TextBlock>
-                                                                                <Image Source="ms-appx:///Assets/time_icon.png" Width="15"></Image>
-                                                                                <TextBlock Width="5"></TextBlock>
-                                                                                <TextBlock Text="{Binding hours}" FontSize="15" FontWeight="Bold" Foreground="#ff7814"></TextBlock>
-                                                                            </StackPanel>
-                                                                        </Grid>
-                                                                    </StackPanel>
-                                                                </Grid>
-                                                            </DataTemplate>
-                                                        </ListView.ItemTemplate>
-
-
-                                                    </ListView>
-                                                </Grid>
-                                            </ListViewItem>
-                                        </ListView>
-                                        <TextBlock Height="30"></TextBlock>
-                                        <TextBlock  Text="已经到底部了，快去丰富你的志愿日志吧！"  FontSize="17" TextWrapping="Wrap"  HorizontalAlignment="Center"></TextBlock>
-                                    </StackPanel>
-                                </Grid>
-                            </PivotItem>
-
-
-                            <PivotItem>
-
-
-                                <Grid>
-                                    <Image Name="none_image6" Source="ms-appx:///Assets/none.png" Visibility="Collapsed"></Image>
-
-                                    <StackPanel Name="sp6">
-                                        <Grid  >
-
-
-                                            <Grid Margin="40,0,0,0" HorizontalAlignment="Left">
-                                                <Image Source="ms-appx:///Assets/rectangel_3.png"   MaxWidth="550"></Image>
-                                                <StackPanel  VerticalAlignment="Center">
-                                                    <TextBlock Text="时长" FontSize="35" Foreground="White" HorizontalAlignment="Center" ></TextBlock>
-                                                    <Grid>
-                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                            <TextBlock  HorizontalAlignment="Center" Text="{Binding Rootobject.data.hours}" FontSize=" 70" Foreground="White"></TextBlock>
-                                                            <TextBlock HorizontalAlignment="Center" Text="小时" Foreground="White" FontSize="35"  VerticalAlignment="Center"></TextBlock>
-                                                        </StackPanel>
-                                                    </Grid>
-                                                </StackPanel>
-                                            </Grid>
-
-                                        </Grid>
-
-                                        <Grid HorizontalAlignment="Left">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="ms-appx:///Assets/rectangel_1.png"></Image>
-                                                <TextBlock Width="5"></TextBlock>
-                                                <TextBlock Text="服务记录" FontSize="17" ></TextBlock>
-                                            </StackPanel>
-                                        </Grid>
-                                        <ListView 
-                                     
-                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                     Width="{Binding ElementWidth}"
-                                     SelectionMode="None"
-                                     
-                                    >
-                                            <ListView.ItemContainerStyle>
-                                                <Style TargetType="ListViewItem">
-                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                                </Style>
-                                            </ListView.ItemContainerStyle>
-                                            <ListViewItem >
-                                                <Grid >
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="3*"/>
-                                                        <RowDefinition Height="22*"/>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="40"></ColumnDefinition>
-                                                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Grid Grid.Column="0">
-                                                        <Line X1="0" Y1="0" X2="0" Y2="{Binding Line_Y5}" Stroke="#fd6967" HorizontalAlignment="Center"/>
-                                                        <Grid VerticalAlignment="Top">
-                                                            <Ellipse Fill="#fd6967" Height="40" Width="40"  HorizontalAlignment="Center" ></Ellipse>
-                                                            <TextBlock Text="{Binding Year5}" FontSize="15" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                                        </Grid>
-                                                    </Grid>
-
-                                                    <ListView
-                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                     Width="{Binding ElementWidth}"
-                                     
-                                     SelectionMode="None"  
-                                     ItemsSource="{Binding Record_year5}"  
-                                                       Grid.Column="1" >
-                                                        <ListView.ItemContainerStyle>
-                                                            <Style TargetType="ListViewItem">
-                                                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                                            </Style>
-                                                        </ListView.ItemContainerStyle>
-                                                        <ListView.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <Grid>
-                                                                    <Image Source="ms-appx:///Assets/rectangel_2.png"  MinWidth="400" MaxWidth="500" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
-
-                                                                    <StackPanel  HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                                        <TextBlock Height="20"></TextBlock>
-                                                                        <Grid>
-                                                                            <Image Source="ms-appx:///Assets/bk.png"  Width="100"  HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
-                                                                            <Grid>
-                                                                                <StackPanel Orientation="Horizontal">
-                                                                                    <TextBlock Width="5"></TextBlock>
-                                                                                    <TextBlock Name="start_time" Text="{Binding start_time}"  Foreground="White" FontSize="15" VerticalAlignment="Center"></TextBlock>
-                                                                                </StackPanel>
-                                                                            </Grid>
-
-                                                                        </Grid>
-
-
-                                                                        <TextBlock Height="15"></TextBlock>
-                                                                        <Grid>
-                                                                            <StackPanel Orientation="Horizontal" >
-                                                                                <TextBlock Width="15"></TextBlock>
-                                                                                <TextBlock Text="{Binding content}" FontSize="17" Width="280" FontWeight="Bold" TextWrapping="Wrap"></TextBlock>
-                                                                            </StackPanel>
-                                                                        </Grid>
-
-                                                                        <TextBlock Height="15"></TextBlock>
-
-                                                                        <Grid>
-                                                                            <StackPanel Orientation="Horizontal">
-                                                                                <TextBlock Width="15"></TextBlock>
-                                                                                <Image Source="ms-appx:///Assets/adress.png" Width="15"></Image>
-                                                                                <TextBlock Width="5"></TextBlock>
-                                                                                <TextBlock Text="{Binding address}" FontSize="15" Foreground="#626262"></TextBlock>
-                                                                                <TextBlock Width="80"></TextBlock>
-                                                                                <Image Source="ms-appx:///Assets/time_icon.png" Width="15"></Image>
-                                                                                <TextBlock Width="5"></TextBlock>
-                                                                                <TextBlock Text="{Binding hours}" FontSize="15" FontWeight="Bold" Foreground="#ff7814"></TextBlock>
-                                                                            </StackPanel>
-                                                                        </Grid>
-                                                                    </StackPanel>
-                                                                </Grid>
-                                                            </DataTemplate>
-                                                        </ListView.ItemTemplate>
-
-
-                                                    </ListView>
-                                                </Grid>
-                                            </ListViewItem>
-                                        </ListView>
-                                        <TextBlock Height="30"></TextBlock>
-                                        <TextBlock  Text="已经到底部了，快去丰富你的志愿日志吧！"  FontSize="17" TextWrapping="Wrap"  HorizontalAlignment="Center"></TextBlock>
-                                    </StackPanel>
-                                </Grid>
-                            </PivotItem>
-
-
-                            <PivotItem>
-
-
-                                <Grid>
-                                    <Image Name="none_image7" Source="ms-appx:///Assets/none.png" Visibility="Collapsed"></Image>
-
-                                    <StackPanel Name="sp7">
-                                        <Grid  >
-
-
-                                            <Grid Margin="40,0,0,0" HorizontalAlignment="Left">
-                                                <Image Source="ms-appx:///Assets/rectangel_3.png"   MaxWidth="550"></Image>
-                                                <StackPanel  VerticalAlignment="Center">
-                                                    <TextBlock Text="时长" FontSize="35" Foreground="White" HorizontalAlignment="Center" ></TextBlock>
-                                                    <Grid>
-                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                            <TextBlock  HorizontalAlignment="Center" Text="{Binding Rootobject.data.hours}" FontSize=" 70" Foreground="White"></TextBlock>
-                                                            <TextBlock HorizontalAlignment="Center" Text="小时" Foreground="White" FontSize="35"  VerticalAlignment="Center"></TextBlock>
-                                                        </StackPanel>
-                                                    </Grid>
-                                                </StackPanel>
-                                            </Grid>
-
-                                        </Grid>
-
-                                        <Grid HorizontalAlignment="Left">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="ms-appx:///Assets/rectangel_1.png"></Image>
-                                                <TextBlock Width="5"></TextBlock>
-                                                <TextBlock Text="服务记录" FontSize="17" ></TextBlock>
-                                            </StackPanel>
-                                        </Grid>
-                                        <ListView 
-                                     
-                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                     Width="{Binding ElementWidth}"
-                                     SelectionMode="None"
-                                     
-                                    >
-                                            <ListView.ItemContainerStyle>
-                                                <Style TargetType="ListViewItem">
-                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                                </Style>
-                                            </ListView.ItemContainerStyle>
-                                            <ListViewItem >
-                                                <Grid >
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="3*"/>
-                                                        <RowDefinition Height="22*"/>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="40"></ColumnDefinition>
-                                                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Grid Grid.Column="0">
-                                                        <Line X1="0" Y1="0" X2="0" Y2="{Binding Line_Y6}" Stroke="#fd6967" HorizontalAlignment="Center"/>
-                                                        <Grid VerticalAlignment="Top">
-                                                            <Ellipse Fill="#fd6967" Height="40" Width="40"  HorizontalAlignment="Center" ></Ellipse>
-                                                            <TextBlock Text="{Binding Year6}" FontSize="15" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                                        </Grid>
-                                                    </Grid>
-
-                                                    <ListView
-                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                     Width="{Binding ElementWidth}"
-                                     
-                                     SelectionMode="None"  
-                                     ItemsSource="{Binding Record_year6}"  
-                                                       Grid.Column="1" >
-                                                        <ListView.ItemContainerStyle>
-                                                            <Style TargetType="ListViewItem">
-                                                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                                            </Style>
-                                                        </ListView.ItemContainerStyle>
-                                                        <ListView.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <Grid>
-                                                                    <Image Source="ms-appx:///Assets/rectangel_2.png"  MinWidth="400" MaxWidth="500" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
-
-                                                                    <StackPanel  HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                                        <TextBlock Height="20"></TextBlock>
-                                                                        <Grid>
-                                                                            <Image Source="ms-appx:///Assets/bk.png"  Width="100"  HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
-                                                                            <Grid>
-                                                                                <StackPanel Orientation="Horizontal">
-                                                                                    <TextBlock Width="5"></TextBlock>
-                                                                                    <TextBlock Name="start_time" Text="{Binding start_time}"  Foreground="White" FontSize="15" VerticalAlignment="Center"></TextBlock>
-                                                                                </StackPanel>
-                                                                            </Grid>
-
-                                                                        </Grid>
-
-
-                                                                        <TextBlock Height="15"></TextBlock>
-                                                                        <Grid>
-                                                                            <StackPanel Orientation="Horizontal" >
-                                                                                <TextBlock Width="15"></TextBlock>
-                                                                                <TextBlock Text="{Binding content}" FontSize="17" Width="280" FontWeight="Bold" TextWrapping="Wrap"></TextBlock>
-                                                                            </StackPanel>
-                                                                        </Grid>
-
-                                                                        <TextBlock Height="15"></TextBlock>
-
-                                                                        <Grid>
-                                                                            <StackPanel Orientation="Horizontal">
-                                                                                <TextBlock Width="15"></TextBlock>
-                                                                                <Image Source="ms-appx:///Assets/adress.png" Width="15"></Image>
-                                                                                <TextBlock Width="5"></TextBlock>
-                                                                                <TextBlock Text="{Binding address}" FontSize="15" Foreground="#626262"></TextBlock>
-                                                                                <TextBlock Width="80"></TextBlock>
-                                                                                <Image Source="ms-appx:///Assets/time_icon.png" Width="15"></Image>
-                                                                                <TextBlock Width="5"></TextBlock>
-                                                                                <TextBlock Text="{Binding hours}" FontSize="15" FontWeight="Bold" Foreground="#ff7814"></TextBlock>
-                                                                            </StackPanel>
-                                                                        </Grid>
-                                                                    </StackPanel>
-                                                                </Grid>
-                                                            </DataTemplate>
-                                                        </ListView.ItemTemplate>
-
-
-                                                    </ListView>
-                                                </Grid>
-                                            </ListViewItem>
-                                        </ListView>
-                                        <TextBlock Height="30"></TextBlock>
-                                        <TextBlock  Text="已经到底部了，快去丰富你的志愿日志吧！"  FontSize="17" TextWrapping="Wrap"  HorizontalAlignment="Center"></TextBlock>
-                                    </StackPanel>
-                                </Grid>
-                            </PivotItem>
-
-                            <PivotItem>
-
-
-                                <Grid>
-                                    <Image Name="none_image8" Source="ms-appx:///Assets/none.png" Visibility="Collapsed"></Image>
-
-                                    <StackPanel Name="sp8">
-                                        <Grid  >
-
-
-                                            <Grid Margin="40,0,0,0" HorizontalAlignment="Left">
-                                                <Image Source="ms-appx:///Assets/rectangel_3.png"   MaxWidth="550"></Image>
-                                                <StackPanel  VerticalAlignment="Center">
-                                                    <TextBlock Text="时长" FontSize="35" Foreground="White" HorizontalAlignment="Center" ></TextBlock>
-                                                    <Grid>
-                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                            <TextBlock  HorizontalAlignment="Center" Text="{Binding Rootobject.data.hours}" FontSize=" 70" Foreground="White"></TextBlock>
-                                                            <TextBlock HorizontalAlignment="Center" Text="小时" Foreground="White" FontSize="35"  VerticalAlignment="Center"></TextBlock>
-                                                        </StackPanel>
-                                                    </Grid>
-                                                </StackPanel>
-                                            </Grid>
-
-                                        </Grid>
-
-                                        <Grid HorizontalAlignment="Left">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="ms-appx:///Assets/rectangel_1.png"></Image>
-                                                <TextBlock Width="5"></TextBlock>
-                                                <TextBlock Text="服务记录" FontSize="17" ></TextBlock>
-                                            </StackPanel>
-                                        </Grid>
-                                        <ListView 
-                                     
-                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                     Width="{Binding ElementWidth}"
-                                     SelectionMode="None"
-                                     
-                                    >
-                                            <ListView.ItemContainerStyle>
-                                                <Style TargetType="ListViewItem">
-                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                                </Style>
-                                            </ListView.ItemContainerStyle>
-                                            <ListViewItem >
-                                                <Grid >
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="3*"/>
-                                                        <RowDefinition Height="22*"/>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="40"></ColumnDefinition>
-                                                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Grid Grid.Column="0">
-                                                        <Line X1="0" Y1="0" X2="0" Y2="{Binding Line_Y7}" Stroke="#fd6967" HorizontalAlignment="Center"/>
-                                                        <Grid VerticalAlignment="Top">
-                                                            <Ellipse Fill="#fd6967" Height="40" Width="40"  HorizontalAlignment="Center" ></Ellipse>
-                                                            <TextBlock Text="{Binding Year7}" FontSize="15" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                                        </Grid>
-                                                    </Grid>
-
-                                                    <ListView
-                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                     Width="{Binding ElementWidth}"
-                                     
-                                     SelectionMode="None"  
-                                     ItemsSource="{Binding Record_year7}"  
-                                                       Grid.Column="1" >
-                                                        <ListView.ItemContainerStyle>
-                                                            <Style TargetType="ListViewItem">
-                                                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                                            </Style>
-                                                        </ListView.ItemContainerStyle>
-                                                        <ListView.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <Grid>
-                                                                    <Image Source="ms-appx:///Assets/rectangel_2.png"  MinWidth="400" MaxWidth="500" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
-
-                                                                    <StackPanel  HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                                        <TextBlock Height="20"></TextBlock>
-                                                                        <Grid>
-                                                                            <Image Source="ms-appx:///Assets/bk.png"  Width="100"  HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
-                                                                            <Grid>
-                                                                                <StackPanel Orientation="Horizontal">
-                                                                                    <TextBlock Width="5"></TextBlock>
-                                                                                    <TextBlock Name="start_time" Text="{Binding start_time}"  Foreground="White" FontSize="15" VerticalAlignment="Center"></TextBlock>
-                                                                                </StackPanel>
-                                                                            </Grid>
-
-                                                                        </Grid>
-
-
-                                                                        <TextBlock Height="15"></TextBlock>
-                                                                        <Grid>
-                                                                            <StackPanel Orientation="Horizontal" >
-                                                                                <TextBlock Width="15"></TextBlock>
-                                                                                <TextBlock Text="{Binding content}" FontSize="17" Width="280" FontWeight="Bold" TextWrapping="Wrap"></TextBlock>
-                                                                            </StackPanel>
-                                                                        </Grid>
-
-                                                                        <TextBlock Height="15"></TextBlock>
-
-                                                                        <Grid>
-                                                                            <StackPanel Orientation="Horizontal">
-                                                                                <TextBlock Width="15"></TextBlock>
-                                                                                <Image Source="ms-appx:///Assets/adress.png" Width="15"></Image>
-                                                                                <TextBlock Width="5"></TextBlock>
-                                                                                <TextBlock Text="{Binding address}" FontSize="15" Foreground="#626262"></TextBlock>
+                                                                                <TextBlock Text="{Binding addWay}" FontSize="15" Foreground="#626262"></TextBlock>
                                                                                 <TextBlock Width="80"></TextBlock>
                                                                                 <Image Source="ms-appx:///Assets/time_icon.png" Width="15"></Image>
                                                                                 <TextBlock Width="5"></TextBlock>
@@ -1751,8 +1034,6 @@
                                 </Grid>
                             </PivotItem>
                         </Pivot>
-
-
                     </Grid>
                 </StackPanel>
             </ScrollViewer>

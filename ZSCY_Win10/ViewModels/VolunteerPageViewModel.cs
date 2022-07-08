@@ -1,28 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
 
 namespace ZSCY_Win10.ViewModels
 {
-    class VolunteerPageViewModel:BasePageViewModel
+    class VolunteerPageViewModel : BasePageViewModel
     {
         public VolunteerPageViewModel()
         {
             this.year1 = DateTime.Now.Year;
-            this.year2 = DateTime.Now.Year-1;
-            this.year3 = DateTime.Now.Year-2;
-            this.year4 = DateTime.Now.Year-3;
-            this.year5 = DateTime.Now.Year-4;
-            this.year6 = DateTime.Now.Year-5;
-            this.year7 = DateTime.Now.Year-6;
+            this.year2 = DateTime.Now.Year - 1;
+            this.year3 = DateTime.Now.Year - 2;
+            this.year4 = DateTime.Now.Year - 3;
+
+            this.yearTime1 = 0;
+            this.yearTime2 = 0;
+            this.yearTime3 = 0;
+            this.yearTime4 = 0;
 
             Windows.Foundation.Size size = new Windows.Foundation.Size();
-            this._elementHeight =(int) size.Height;
-            this._elementWidth= (int)size.Width;
+            this._elementHeight = (int)size.Height;
+            this._elementWidth = (int)size.Width;
             this._elementWidth = (int)size.Width;
 
 
@@ -106,49 +103,10 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Line_Y4));
             }
         }
-        private double _line_y5;
-        public double Line_Y5
-        {
-            get
-            {
-                return _line_y5;
-            }
-            set
-            {
-                _line_y5 = value;
-                RaisePropertyChanged(nameof(Line_Y5));
-            }
-        }
-        private double _line_y6;
-        public double Line_Y6
-        {
-            get
-            {
-                return _line_y6;
-            }
-            set
-            {
-                _line_y6 = value;
-                RaisePropertyChanged(nameof(Line_Y6));
-            }
-        }
-        private double _line_y7;
-        public double Line_Y7
-        {
-            get
-            {
-                return _line_y7;
-            }
-            set
-            {
-                _line_y7 = value;
-                RaisePropertyChanged(nameof(Line_Y7));
-            }
-        }
         private int _elementWidth1;
         public int ElementWidth1
         {
-            get { return _elementWidth1-100; }
+            get { return _elementWidth1 - 100; }
             set
             {
                 _elementWidth1 = value;
@@ -158,7 +116,7 @@ namespace ZSCY_Win10.ViewModels
         private int _elementHeight;
         public int ElementHeight
         {
-            get { return _elementHeight-100; }
+            get { return _elementHeight - 100; }
             set
             {
                 _elementHeight = value;
@@ -167,6 +125,7 @@ namespace ZSCY_Win10.ViewModels
         }
 
         private int year1;
+        private double yearTime1;
         public int Year1
         {
             get { return year1; }
@@ -177,7 +136,18 @@ namespace ZSCY_Win10.ViewModels
             }
         }
 
+        public double YearTime1
+        {
+            get { return yearTime1; }
+            set
+            {
+                yearTime1 = value;
+                RaisePropertyChanged(nameof(YearTime1));
+            }
+        }
+
         private int year2;
+        public double yearTime2;
         public int Year2
         {
             get { return year2; }
@@ -187,7 +157,19 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Year2));
             }
         }
+
+        public double YearTime2
+        {
+            get { return yearTime2; }
+            set
+            {
+                yearTime2 = value;
+                RaisePropertyChanged(nameof(YearTime2));
+            }
+        }
+
         private int year3;
+        public double yearTime3;
         public int Year3
         {
             get { return year3; }
@@ -197,7 +179,19 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Year3));
             }
         }
+
+        public double YearTime3
+        {
+            get { return yearTime3; }
+            set
+            {
+                yearTime3 = value;
+                RaisePropertyChanged(nameof(YearTime3));
+            }
+        }
+
         private int year4;
+        public double yearTime4;
         public int Year4
         {
             get { return year4; }
@@ -207,45 +201,14 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Year4));
             }
         }
-        private int year5;
-        public int Year5
-        {
-            get { return year5; }
-            set
-            {
-                year5 = value;
-                RaisePropertyChanged(nameof(Year5));
-            }
-        }
-        private int year6;
-        public int Year6
-        {
-            get { return year6; }
-            set
-            {
-                year6 = value;
-                RaisePropertyChanged(nameof(Year6));
-            }
-        }
-        private int year7;
-        public int Year7
-        {
-            get { return year7; }
-            set
-            {
-                year7 = value;
-                RaisePropertyChanged(nameof(Year7));
-            }
-        }
 
-        private string elect_time;
-        public string Elect_time
+        public double YearTime4
         {
-            get { return elect_time; }
+            get { return yearTime4; }
             set
             {
-                elect_time = value;
-                RaisePropertyChanged(nameof(Elect_time));
+                yearTime4 = value;
+                RaisePropertyChanged(nameof(YearTime4));
             }
         }
 
@@ -301,42 +264,6 @@ namespace ZSCY_Win10.ViewModels
                 RaisePropertyChanged(nameof(Record_year4));
             }
         }
-        private ObservableCollection<Models.VolunteerModel.Record> record_year5;
-        public ObservableCollection<Models.VolunteerModel.Record> Record_year5
-        {
-            get { return record_year5; }
-            set
-            {
-                record_year5 = value;
-                RaisePropertyChanged(nameof(Record_year5));
-            }
-        }
-        private ObservableCollection<Models.VolunteerModel.Record> record_year6;
-        public ObservableCollection<Models.VolunteerModel.Record> Record_year6
-        {
-            get { return record_year6; }
-            set
-            {
-                record_year6 = value;
-                RaisePropertyChanged(nameof(Record_year6));
-            }
-        }
-        private ObservableCollection<Models.VolunteerModel.Record> record_year7;
-        public ObservableCollection<Models.VolunteerModel.Record> Record_year7
-        {
-            get { return record_year7; }
-            set
-            {
-                record_year7 = value;
-                RaisePropertyChanged(nameof(Record_year7));
-            }
-        }
-        
-
-
-
-
-
 
         public string[] Time_display
         {

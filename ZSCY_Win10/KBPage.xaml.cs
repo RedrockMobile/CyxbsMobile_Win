@@ -34,7 +34,6 @@ namespace ZSCY_Win10
         private string stuNum = "";
         private JObject kb = null;
         private int wOa = 1;
-        private static string resourceName = "ZSCY";
         private ApplicationDataContainer appSetting = Windows.Storage.ApplicationData.Current.LocalSettings;
         private IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
         private Grid backweekgrid = new Grid();
@@ -105,8 +104,8 @@ namespace ZSCY_Win10
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            //TODO:未登陆时 没有课表
-            try
+            //TODO:未登录时 没有课表
+            if (bool.Parse(appSetting.Values["isLogin"].ToString()) && appSetting.Values.ContainsKey("stuNum"))
             {
                 Debug.WriteLine("OnNavigatedTo");
                 progress.Visibility = Visibility.Visible;
@@ -115,10 +114,10 @@ namespace ZSCY_Win10
                 this.progress.IsActive = false;
                 initToday();
             }
-            catch
+            else
             {
                 progress.Visibility = Visibility.Collapsed;
-                HubSectionKBTitle.Text = "未登陆 暂无";
+                HubSectionKBTitle.Text = "未登录 暂无";
                 initToday();
                 baseInfoStackPanel.IsTapEnabled = false;
                 HubSectionKBNum.IsTapEnabled = false;
@@ -187,7 +186,7 @@ namespace ZSCY_Win10
             KebiaoWeekTitleGrid.Children.Add(KebiaoWeek);
         }
 
-        //TODO:未登陆时 没有课表
+        //TODO:未登录时 没有课表
         private async void initKB(bool isRefresh = false)
         {
             try
@@ -956,7 +955,7 @@ namespace ZSCY_Win10
         /// <param name="e"></param>
         private void KBRefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO:未登陆时 无法刷新
+            //TODO:未登录时 无法刷新
             this.progress.IsActive = true;
             stuNum = appSetting.Values["stuNum"].ToString();
             wOa = 1;
@@ -1038,7 +1037,7 @@ namespace ZSCY_Win10
 
         private void KBNumSearch()
         {
-            //TODO:未登陆不能选择周次
+            //TODO:未登录不能选择周次
             //KBNumSearchButton.IsChecked = false;
             if (KBNumFlyoutTextBox.Text != "" && KBNumFlyoutTextBox.Text.IndexOf(".") == -1)
             {
@@ -1061,6 +1060,7 @@ namespace ZSCY_Win10
             try
             {
                 todayNumofstuTextBlock.Text = "开学第" + ((Int16.Parse(appSetting.Values["nowWeek"].ToString()) - 1) * 7 + (Int16.Parse(Utils.GetWeek()) == 0 ? 7 : Int16.Parse(Utils.GetWeek()))).ToString() + "天";
+                HubSectionKBNum.Text = " | 第" + appSetting.Values["nowWeek"].ToString() + "周";
             }
             catch (Exception)
             {

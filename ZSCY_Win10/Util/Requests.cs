@@ -1,17 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using Windows.Storage;
-using Windows.Storage.Streams;
-using Microsoft.AspNetCore.WebUtilities;
-using Newtonsoft.Json;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ZSCY_Win10.Util
 {
@@ -78,6 +74,7 @@ namespace ZSCY_Win10.Util
                             {
                                 vault.Remove(vault.Retrieve(resourceName, "token"));
                                 vault.Remove(vault.Retrieve(resourceName, "refreshToken"));
+                                Windows.Storage.ApplicationData.Current.LocalSettings.Values["isLogin"] = false;
                             }
                         }
                     }
@@ -91,93 +88,6 @@ namespace ZSCY_Win10.Util
                     Utils.Message("无网络连接，请先检查本机网络哦");
                 }
                 return content;
-            });
-        }
-
-        public static async Task<string> headUpload(string stunum, string fileUri, string uri = "http://hongyan.cqupt.edu.cn/cyxbsMobile/index.php/home/Photo/upload", bool isPath = false)
-        {
-            Windows.Web.Http.HttpClient _httpClient = new Windows.Web.Http.HttpClient();
-            CancellationTokenSource _cts = new CancellationTokenSource();
-            Windows.Web.Http.HttpStringContent stunumStringContent = new Windows.Web.Http.HttpStringContent(stunum);
-            string head = "";
-            //IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
-            IStorageFile saveFile;
-            if (isPath)
-                saveFile = await StorageFile.GetFileFromPathAsync(fileUri);
-            else
-                saveFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(fileUri));
-
-            try
-            {
-                // 构造需要上传的文件数据
-                IRandomAccessStreamWithContentType stream1 = await saveFile.OpenReadAsync();
-                Windows.Web.Http.HttpStreamContent streamContent = new Windows.Web.Http.HttpStreamContent(stream1);
-                Windows.Web.Http.HttpMultipartFormDataContent fileContent = new Windows.Web.Http.HttpMultipartFormDataContent();
-
-                fileContent.Add(streamContent, "fold", "head.png");
-                fileContent.Add(stunumStringContent, "stunum");
-
-                Windows.Web.Http.HttpResponseMessage response =
-                    await
-                        _httpClient.PostAsync(new Uri(uri), fileContent)
-                            .AsTask(_cts.Token);
-                head = Utils.ConvertUnicodeStringToChinese(await response.Content.ReadAsStringAsync().AsTask(_cts.Token));
-                Debug.WriteLine(head);
-                return head;
-            }
-            catch (Exception)
-            {
-                Debug.WriteLine("上传头像失败,编辑页面");
-                return "";
-            }
-        }
-
-        public static async Task<bool> downloadFile(string uri, string saveUri, string filename)
-        {
-            System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient();
-            System.Net.Http.HttpResponseMessage response = new System.Net.Http.HttpResponseMessage();
-            return await Task.Run(async () =>
-            {
-                try
-                {
-                    if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
-                    {
-                        response = httpClient.GetAsync(new Uri(uri)).Result;
-                        if (response.StatusCode == HttpStatusCode.OK)
-                        {
-                            Stream stream = response.Content.ReadAsStreamAsync().Result;
-                            byte[] bytes = new byte[stream.Length];
-                            stream.Read(bytes, 0, bytes.Length);
-                            StorageFolder downFolder = null;
-                            if (saveUri == "picture")
-                            {
-                                downFolder = KnownFolders.SavedPictures;
-                            }
-                            else
-                            {
-                                downFolder = await StorageFolder.GetFolderFromPathAsync(saveUri);
-                            }
-                            var saveFile = await downFolder.CreateFileAsync(filename, CreationCollisionOption.GenerateUniqueName);
-                            using (Stream streamSave = await saveFile.OpenStreamForWriteAsync())
-                            {
-                                await streamSave.WriteAsync(bytes, 0, bytes.Length);
-                            }
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
             });
         }
     }

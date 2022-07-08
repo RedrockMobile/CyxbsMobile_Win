@@ -26,14 +26,13 @@
                     <MenuFlyout>
                         <MenuFlyoutItem  Name="SetRemain" Text="设置提醒" Click="OnNavigateToPage" />
                         <MenuFlyoutItem  Name="SetRoom" Text="设置寝室" Click="OnNavigateToPage" />
-                        <MenuFlyoutItem  Name="CheckRecentCharge" Text="查看往期电费" Click="OnNavigateToPage" />
                     </MenuFlyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="430" />
+                <RowDefinition Height="550" />
                 <RowDefinition Height="80" />
                 <RowDefinition Height="10" />
                 <RowDefinition Height="*" />
@@ -65,14 +64,9 @@
             </Grid>
             <Grid Grid.Row="2" Background="#F0F1F5" />
             <StackPanel Grid.Row="3" Padding="10">
-                <TextBlock Height="27" Text="注意事项" FontSize="18" Foreground="#9ea1a6" />
                 <RelativePanel>
                     <TextBlock Height="27" Name="FlagTb0" Text="抄表日期： " FontSize="16" Foreground="#9ea1a6" />
-                    <TextBlock Text="2016年11月30日 11：16" FontSize="16" Foreground="#9ea1a6" RelativePanel.RightOf="FlagTb0" />
-                </RelativePanel>
-                <RelativePanel>
-                    <TextBlock Height="27" Text="用电过程中如需查询，请致电 " Name="FlagTb1" FontSize="16" Foreground="#9ea1a6" />
-                    <TextBlock Text=" 023-62487902" FontSize="16" Foreground="#1bb8fa" RelativePanel.RightOf="FlagTb1" />
+                    <TextBlock Text="{Binding record_time}" FontSize="16" Foreground="#9ea1a6" RelativePanel.RightOf="FlagTb0" />
                 </RelativePanel>
             </StackPanel>
         </Grid>

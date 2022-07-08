@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Store;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.System;
 using Windows.System.Profile;
 using Windows.UI.Core;
 using Windows.UI.Notifications;
@@ -103,16 +101,17 @@ namespace ZSCY_Win10
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
-
+        /*
         private async void LikeAppBarToggleButton_Click(object sender, RoutedEventArgs e)
         {
             //LikeAppBarToggleButton.IsChecked = false;
             await Launcher.LaunchUriAsync(new Uri("zune:reviewapp?appid=" + CurrentApp.AppId)); //用于商店app，自动获取ID
         }
+        */
 
         private async void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            var dig = new MessageDialog("若应用无法使用，请尝试清除数据，清除数据后会应用将返回登陆界面。\n\n是否继续？", "警告");
+            var dig = new MessageDialog("若应用无法使用，请尝试清除数据，清除数据后会应用将返回登录界面。\n\n是否继续？", "警告");
             var btnOk = new UICommand("是");
             dig.Commands.Add(btnOk);
             var btnCancel = new UICommand("否");
@@ -139,7 +138,8 @@ namespace ZSCY_Win10
                     }
                 }
                 catch { }
-                appSetting.Values["CommunityPerInfo"] = false;
+                appSetting.Values["nowWeek"] = Util.nowWeek.GetNowWeek();
+                appSetting.Values["isLogin"] = false;
                 appSetting.Values["isUseingBackgroundTask"] = false;
                 IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
                 IStorageFile storageFileWR = await applicationFolder.CreateFileAsync("kb", CreationCollisionOption.OpenIfExists);
@@ -206,7 +206,8 @@ namespace ZSCY_Win10
                 }
             }
             catch { }
-            appSetting.Values["CommunityPerInfo"] = false;
+            appSetting.Values["nowWeek"] = Util.nowWeek.GetNowWeek();
+            appSetting.Values["isLogin"] = false;
             appSetting.Values["isUseingBackgroundTask"] = false;
             IStorageFolder applicationFolder = ApplicationData.Current.LocalFolder;
             IStorageFile storageFileWR = await applicationFolder.CreateFileAsync("kb", CreationCollisionOption.OpenIfExists);
