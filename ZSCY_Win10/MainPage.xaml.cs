@@ -569,7 +569,7 @@ namespace ZSCY_Win10
                 {
                     var msgPopup = new Data.loginControl("您还没有登录 不能上传头像哦~");
                     msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
-                    msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
+                    msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去四处逛一逛~"); };
                     msgPopup.ShowWIndow();
                 }
             }
@@ -577,7 +577,7 @@ namespace ZSCY_Win10
             {
                 var msgPopup = new Data.loginControl("您还没有登录 不能上传头像哦~");
                 msgPopup.LeftClick += (s, c) => { Frame rootFrame = Window.Current.Content as Frame; rootFrame.Navigate(typeof(LoginPage)); };
-                msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去社区逛一逛~"); };
+                msgPopup.RightClick += (s, c) => { new MessageDialog("您可以先去四处逛一逛~"); };
                 msgPopup.ShowWIndow();
             }
         }
