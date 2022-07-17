@@ -1,2 +1,2 @@
-MainPackage=C:\Users\11414\Desktop\CyxbsMobile_Win\ZSCY_Win10\bin\x86\Debug\ZSCY_Win10_4.0.1.0_x86_Debug.appx
-SymbolPackage=C:\Users\11414\Desktop\CyxbsMobile_Win\ZSCY_Win10\obj\x86\Debug\Symbols\ZSCY_Win10_4.0.1.0_x86_Debug.appxsym
+MainPackage=C:\Users\11414\Desktop\CyxbsMobile_Win\ZSCY_Win10\bin\x86\Release\ZSCY_Win10_4.0.0.0_x86.appx
+SymbolPackage=C:\Users\11414\Desktop\CyxbsMobile_Win\ZSCY_Win10\obj\x86\Release\Symbols\ZSCY_Win10_4.0.0.0_x86.appxsym

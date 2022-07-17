@@ -1,0 +1,74 @@
+name: Builder
+
+on:
+  workflow_dispatch:
+    inputs:
+      version: 
+        description: '版本号'
+        required: true
+        default: '4.0.0.0'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    env:
+      SigningCertificate: ZSCY_Win10_TemporaryKey.pfx
+      Solution_Path: .\掌上重邮.sln
+      UWP_Project_Directory: ZSCY_Win10
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+    - name: Configure Pagefile
+      uses: al-cheb/configure-pagefile-action@v1.2
+      with:
+        minimum-size: 32GB
+        maximum-size: 32GB
+        disk-root: "C:"
+
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.0.3
+
+    - name: Setup Windows SDK
+      uses: GuillaumeFalourd/setup-windows10-sdk-action@v1.6
+
+    - name: Update manifest version
+      run: |
+        [xml]$manifest = get-content ".\$env:UWP_Project_Directory\Package.appxmanifest"
+        $manifest.Package.Identity.Version = "${{github.event.inputs.version}}"
+        $manifest.save(".\$env:UWP_Project_Directory\Package.appxmanifest")
+
+    - name: Export Package Certificate Key
+      run: |
+        $PEBytes = [System.Convert]::FromBase64String("${{ secrets.ZSCY_WIN10_TEMPORARYKEY }}")
+        [System.IO.File]::WriteAllBytes(".\$env:UWP_Project_Directory\$env:SigningCertificate", $PEBytes)
+        
+    - name: Build
+      run: msbuild $env:Solution_Path /p:Platform=x86 /p:AppxBundlePlatforms="x86|x64|arm" /p:AppxPackageDir=C:\Package /p:PackageCertificateKeyFile=$env:SigningCertificate /restore
+      env:
+        BuildMode: SideloadOnly
+        Configuration: Release
+
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v2.2.4
+      with:
+        name: CyxbsMobile_Win_${{github.event.inputs.version}}_x86_x64_arm
+        path: C:\Package\ZSCY_Win10_${{github.event.inputs.version}}_Test
+
+    - name: Create archive
+      run: Compress-Archive -Path C:\Package\ZSCY_Win10_${{github.event.inputs.version}}_Test -DestinationPath C:\Package\CyxbsMobile_Win_${{github.event.inputs.version}}_x86_x64_arm.zip
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        token: "${{ secrets.GITHUB_TOKEN }}"
+        tag_name: "preview"
+        body: "${{github.event.inputs.version}}"
+        files: C:\Package\CyxbsMobile_Win_${{github.event.inputs.version}}_x86_x64_arm.zip
+        prerelease: true
+        fail_on_unmatched_files: true
